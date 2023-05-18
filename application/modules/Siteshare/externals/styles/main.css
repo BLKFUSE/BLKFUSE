@@ -1,0 +1,1888 @@
+html .siteshare_socialshare_smoothbox,
+html .seao_smoothbox_lightbox_content.siteshare_socialshare_smoothbox{
+  background: transparent;
+  border:none !important;
+  color: #fff;
+  min-width: 670px;
+}
+#global_page_siteshare-index-share #global_content_simple {
+  min-width: 670px;
+}
+.siteshare_socialshare_smoothbox a,
+.siteshare_socialshare_smoothbox a:link,
+.siteshare_socialshare_smoothbox a:visited,
+.siteshare_socialshare_smoothbox .share_heading p,
+.siteshare_socialshare_smoothbox span{
+  color: #fff;
+}
+.siteshare_socialshare_smoothbox .share_heading p {
+  width: 100%;
+  float: left;
+}
+.siteshare_socialshare_smoothbox span{
+  font-weight: normal;
+}
+.siteshare_socialshare_smoothbox h3 {
+  color: #fff;
+  border-width: 0;
+  padding: 0 5px;
+  font-size: 40px;
+  background: none;
+}
+.siteshare_socialshare_smoothbox .share_heading {
+  text-align: center;
+}
+.siteshare_socialshare_smoothbox .share_heading b {
+  display: block;
+  font-size: 12px;
+  padding: 8px 0;
+  font-weight: bold !important;
+}
+.siteshare_socialshare_smoothbox .share_heading > p > span {
+  opacity: .9;
+  font-size: 12px;
+  border-radius: 2px;
+  padding: 6px 10px;
+  border: 1px solid #dfdfdf;
+  box-sizing: border-box;
+  display: inline-block;
+  font-weight: bold;
+}
+.siteshare_socialshare_smoothbox .seao_smoothbox_lightbox_close{
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  z-index: 20;
+  background-color: #999;
+}
+.siteshare_socialshare_smoothbox .seao_smoothbox_lightbox_close i:before {
+  font-size: 17px;
+  margin: 5px 8px;
+  float: left;
+}
+.siteshare_socialshare_smoothbox .siteshare_share_tab_content_social_share ul {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+.siteshare_socialshare_smoothbox .siteshare_share_tab_content_social_share ul > li {
+  width: 17%;
+  box-shadow:none;
+  margin-top: 14px;
+  margin-bottom: 14px;
+
+}
+.siteshare_socialshare_smoothbox .siteshare_share_tab_content_social_share ul > li {
+  width: 17%;
+  box-shadow:none;
+  margin-top: 14px;
+  margin-bottom: 14px;
+
+}
+.siteshare_socialshare_smoothbox  .sharelinksblock ul > li > .menu_siteshare_social_link {
+  padding: 0;
+}
+.siteshare_socialshare_smoothbox  .sharelinksblock ul > li > .menu_siteshare_social_link:before{
+  width: 60px;
+  height: 60px;
+  font-size: 30px;
+  padding-top: 14px;
+  line-height: 30px;
+}
+.siteshare_socialshare_smoothbox  .sharelinksblock ul > li > .menu_siteshare_social_link i {
+  display: none;
+}
+.siteshare_socialshare_smoothbox .sitesharebox {
+  border-top: 1px solid #fff;
+  padding-top: 10px;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 20px;
+}
+.siteshare_buttons_toogles > i {
+  display: none;
+  padding-top: 2.5px;
+}
+.siteshare_buttons_toogles {
+  position: relative;
+  width: 48px;
+  height: 25px;
+  padding: 2px 0;
+  background-color: #ccc;
+  display: block;
+  text-align: center;
+  -webkit-transition: all 500ms ease 0s;
+  -moz-transition: all 500ms ease 0s;
+  -o-transition: all 500ms ease 0s;
+  transition: all 500ms ease 0s;
+}
+.siteshare_buttons_left .siteshare_buttons_toogles {
+  left: -48px;
+}
+.siteshare_buttons_left.siteshare_buttons:hover .siteshare_buttons_toogles {
+  left:0;
+}
+.siteshare_buttons_right .siteshare_buttons_toogles {
+  right: -48px;
+  float: right;
+}
+.siteshare_buttons_right.siteshare_buttons:hover .siteshare_buttons_toogles {
+  right:0;
+}
+.siteshare_buttons_left.siteshare_buttons ul{
+  position: relative;
+  left:0;
+  -webkit-transition: all 500ms ease 0s;
+  -moz-transition: all 500ms ease 0s;
+  -o-transition: all 500ms ease 0s;
+  transition: all 500ms ease 0s;
+}
+.siteshare_buttons_right.siteshare_buttons ul{
+  position: relative;
+  right:0;
+  -webkit-transition: all 500ms ease 0s;
+  -moz-transition: all 500ms ease 0s;
+  -o-transition: all 500ms ease 0s;
+  transition: all 500ms ease 0s;
+}
+.siteshare_buttons_left.siteshare_buttons.siteshare_buttons_hide ul{
+  left: -48px;
+}
+.siteshare_buttons_right.siteshare_buttons.siteshare_buttons_hide ul{
+  right: -48px;
+}
+.siteshare_buttons_right .siteshare_buttons_toogles > i:nth-child(2n+1):before,
+.siteshare_buttons_left .siteshare_buttons_toogles > i:nth-child(2n):before {
+  content: "\\f101";
+}
+.siteshare_buttons_right .siteshare_buttons_toogles > i:nth-child(2n):before,
+.siteshare_buttons_left .siteshare_buttons_toogles > i:nth-child(2n+1):before {
+  content: "\\f100";
+}
+
+.siteshare_buttons .siteshare_buttons_toogles > i {
+  color: #fff;
+  font-size: 20px;
+}
+.siteshare_buttons .siteshare_buttons_toogles > i:nth-child(2n) {
+  display: nonoe;
+}
+.siteshare_buttons .siteshare_buttons_toogles > i:nth-child(2n+1) {
+  display: block;
+}
+.siteshare_buttons.siteshare_buttons_hide .siteshare_buttons_toogles > i:nth-child(2n) {
+  display: block;
+}
+.siteshare_buttons.siteshare_buttons_hide .siteshare_buttons_toogles > i:nth-child(2n+1) {
+  display: none;
+}
+.siteshare_socialshare_smoothbox .sitesharebox .fa-technorati:before, .siteshare_socialshare_smoothbox .sitesharebox .fa-friend_feed:before,.siteshare_socialshare_smoothbox .sitesharebox .fa-myspace:before,
+.siteshare_socialshare_smoothbox .sitesharebox .fa-newsvine:before {
+  background-size: inherit;
+}
+
+.siteshare_buttons_popup {
+  padding: 25px 20px;
+  text-align: left;
+  max-width: 400px;
+  position: fixed;
+  bottom:0;
+  z-index: 200;
+  border-radius: 3px;
+  box-shadow: 0px 0px 60px rgba(0, 0, 0, 0.2);
+  background-color: $theme_body_background_color;
+  box-sizing: border-box;
+  opacity: 0;
+  visibility: hidden;
+}
+.siteshare_buttons_popup.siteshare_buttons_popup_botttom_right{
+  right:0;
+}
+.siteshare_buttons_popup.siteshare_buttons_popup_botttom_left{
+  left:0;
+}
+.siteshare_buttons_popup.siteshare_buttons_popup_botttom_center{
+  left:50%;
+  transform:translateX(-50%);
+}
+.siteshare_buttons_popup.siteshare_buttons_popup_center{
+  left:50%;
+  top: 50%;
+  bottom: auto;
+  transform:translate(-50%, -50%);
+}
+
+.siteshare_buttons_popup .siteshare_buttons ul li {
+  float: left;
+  padding: 1px;
+  box-sizing: border-box;
+}
+.siteshare_buttons_popup.social_3col{
+  max-width:500px;
+}
+.siteshare_buttons_popup.social_4col{
+  max-width:650px;
+}
+.siteshare_buttons_popup.social_2col .siteshare_buttons ul li.ss_icon_text {
+  width: 50%;
+}
+.siteshare_buttons_popup.social_3col .siteshare_buttons ul li.ss_icon_text {
+  width: 33.33%;
+}
+.siteshare_buttons_popup.social_4col .siteshare_buttons ul li.ss_icon_text {
+  width: 25%;
+}
+
+.siteshare_buttons_popup .siteshare_buttons ul > li > a > span {
+  display: none;
+}
+
+.siteshare_buttons_popup .siteshare_buttons ul > li > a {
+  display: block;
+}
+#TB_overlay.siteshare_smoothbox_overlay {
+  opacity: 0.8 !important;
+  z-index: 200;
+}
+@-webkit-keyframes siteshare_buttons_popup_fadeInTop { 0% { opacity: 0; -webkit-transform: translateY(30%);} 100% { opacity: 1; -webkit-transform: translateY(0);} }
+@-moz-keyframes siteshare_buttons_popup_fadeInTop { 0% { opacity: 0; -moz-transform: translateY(30%); } 100% { opacity: 1; -moz-transform: translateY(0); } }
+@-o-keyframes siteshare_buttons_popup_fadeInTop { 0% { opacity: 0; -o-transform: translateY(30%); } 100% { opacity: 1; -o-transform: translateY(0); } }
+@keyframes siteshare_buttons_popup_fadeInTop { 0% { opacity: 0; transform: translateY(30%); } 100% { opacity: 1; transform: translateY(0); } }
+
+.siteshare_buttons_popup.siteshare_buttons_popup_visible {
+  opacity: 1;
+  visibility: visible;
+  -webkit-animation: siteshare_buttons_popup_fadeInTop 1s 1 cubic-bezier(0.77,0,.175,1);
+  -moz-animation: siteshare_buttons_popup_fadeInTop 1s 1 cubic-bezier(0.77,0,.175,1);
+  -o-animation: siteshare_buttons_popup_fadeInTop 1s 1 cubic-bezier(0.77,0,.175,1);
+  animation: siteshare_buttons_popup_fadeInTop 1s 1 cubic-bezier(0.77,0,.175,1);
+}
+.siteshare_buttons_popup.siteshare_buttons_popup_hidden {
+  display:none;
+}
+.siteshare_buttons_popup .siteshare_popup_header {
+  text-align: left;
+  margin-bottom: 5px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.siteshare_buttons_popup .siteshare_popup_header .siteshare_popup_heading {
+  font-size: 20px;
+  letter-spacing: .5px;
+  box-sizing: border-box;
+
+}
+.siteshare_buttons_popup .siteshare_popup_header p {
+  color: #999;
+  font-weight: 400;
+  line-height: 1.6em;
+}
+.siteshare_buttons_popup .siteshare_popup_header p.siteshare_popup_message{
+  margin: 5px 0 10px;
+  font-size: 14px;
+}
+.siteshare_buttons_popup .siteshare_popup_header p.siteshare_popup_count b {
+  font-size: 17px;
+  font-weight: bold;
+}
+.siteshare_buttons_popup a.siteshare_popup_icon_cancel {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  color: #666;
+}
+[dir="rtl"] .siteshare_buttons_popup a.siteshare_popup_icon_cancel {
+  right: auto;
+  left: 15px;
+}
+
+[dir="rtl"] .siteshare_buttons_popup a.siteshare_popup_icon_cancel {
+  right: auto;
+  left: 15px;
+}
+/* Activity feed and Notification icons */
+.notification_type_shared_content:before,
+.activity_icon_share_on_sitegroup_group:before,
+.activity_icon_share_on_sitepage_page:before,
+.activity_icon_share_on_sitebusiness_business:before,
+.activity_icon_share_on_sitestore_store:before,
+.activity_icon_share_on_group:before,
+.activity_icon_share_on_event:before
+{
+  content: "\\f0e5";
+}
+/* Socialshare links default background color */
+.menu_siteshare_social_link:before
+{
+  content: "\\f005";
+  z-index: 10;
+}
+.sharelinksblock .menu_siteshare_social_link:before
+{
+  background-color: $theme_button_background_color;
+  color: #fff;
+}
+.sharelinksblock ul > li > .menu_siteshare_social_link:before,
+.menu_siteshare_social_link:before
+{
+  font-family: 'Font Awesome 5 Free','fontawesome';
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.siteshare_list_buttons ul{
+  clear: both;
+  display: table;
+  width: 100%;
+}
+.siteshare_list_buttons ul:after{
+  clear: both;
+}
+.siteshare_list_buttons.siteshare_1col ul > li.ss_icon_text,
+.siteshare_buttons_wp.siteshare_1col .ss_button_wp{
+  width: 100%;
+}
+.siteshare_list_buttons.siteshare_2col ul > li.ss_icon_text,
+.siteshare_buttons_wp.siteshare_2col .ss_button_wp{
+  width: 50%;
+}
+.siteshare_list_buttons.siteshare_3col ul > li.ss_icon_text,
+.siteshare_buttons_wp.siteshare_3col .ss_button_wp{
+  width: 33.33%;
+}
+.siteshare_list_buttons.siteshare_4col ul > li.ss_icon_text,
+.siteshare_buttons_wp.siteshare_4col .ss_button_wp{
+  width: 25%;
+}
+.siteshare_list_buttons.siteshare_5col ul > li.ss_icon_text,
+.siteshare_buttons_wp.siteshare_5col .ss_button_wp{
+  width: 20%;
+}
+.siteshare_list_buttons.siteshare_6col ul > li.ss_icon_text,
+.siteshare_buttons_wp.siteshare_6col .ss_button_wp{
+  width: 16.66%;
+}
+.siteshare_buttons_wp.siteshare_7col .ss_button_wp{
+  width: 14.28%;
+}
+.siteshare_buttons_wp.siteshare_8col .ss_button_wp{
+  width: 12.25%;
+}
+.siteshare_buttons_wp.siteshare_action_floating_buttons {
+  position: fixed;
+  width: 50px;
+  z-index: 20;
+}
+.siteshare_buttons_wp.siteshare_action_floating_buttons ul li.ss_button_wp a {
+  margin: 0;
+}
+.siteshare_buttons_wp.siteshare_action_floating_buttons ul li.ss_button_wp a i {
+  padding: 8px 0 2px;
+  font-size: 22px;
+  width: 100%;
+  line-height: 22px;
+  box-sizing: border-box;
+}
+.siteshare_buttons_wp ul{
+  clear: both;
+  display: table;
+  text-align: justify;
+  width: 100%;
+  font-size: 0px;
+}
+.siteshare_buttons_wp ul:after{
+  clear: both;
+}
+.siteshare_buttons_wp ul li.ss_button_wp {
+  margin: 5px 0;
+  box-sizing: border-box;
+  text-align: center;
+  min-width: 50px;
+  display: inline-block;
+}
+.siteshare_buttons_wp ul li.ss_button_wp a {
+  display: block;
+  margin: 0 5px;
+  padding-top: 5px;
+  box-sizing: border-box;
+}
+.siteshare_buttons_wp ul li.ss_button_wp:last-child a {
+	margin-right: 0px;
+}
+.siteshare_buttons_wp ul li.ss_button_wp a > i {
+  font-size: 20px;
+  width: 100%;
+}
+.siteshare_buttons_wp ul li.ss_button_wp a  span {
+  display: block;
+  font-size: 10px;
+}
+.siteshare_buttons_wp ul li.ss_button_wp a > span{
+  padding: 5px;
+
+}
+.siteshare_buttons_wp.siteshare_button_layout_box_count ul li.ss_button_wp a {
+  background-color: #f4f4f4;
+}
+.siteshare_buttons_wp.siteshare_button_layout_box_count ul li.ss_button_wp a > span{
+  background: $theme_button_background_color;
+  color: $theme_button_font_color;
+  border: 1px solid $theme_button_border_color;
+  padding: 10px 1px;
+  box-sizing: border-box;
+}
+.siteshare_buttons_wp.siteshare_button_layout_box_count ul li.ss_button_wp a > i {
+  margin: 10px 0;
+}
+.siteshare_buttons_wp.siteshare_button_layout_box_count ul li.ss_button_wp a .siteshare_count{
+  font-size: 18px;
+}
+.siteshare_buttons_wp.siteshare_button_layout_box_count .menu_siteshare_social_link {
+  background: transparent;
+}
+.siteshare_buttons_wp.siteshare_button_layout_box_count .menu_siteshare_social_link:hover{
+  background-color: rgba(0,0,0,0.24);
+}
+.siteshare_buttons_wp.siteshare_button_layout_border_count ul li.ss_button_wp a{
+  border-bottom-width: 4px;
+  border-bottom-style: solid;
+  padding-top: 0;
+}
+.siteshare_buttons_wp.siteshare_button_layout_box_2_count ul li.ss_button_wp a{
+  border-width: 1px;
+  border-style: solid;
+  padding-top: 0;
+}
+.siteshare_buttons_wp.siteshare_button_layout_box_2_count.sswob ul li.ss_button_wp a{
+  border-width: 0;
+}
+.siteshare_buttons_wp.siteshare_button_layout_box_2_count a i {
+  background-color: $theme_body_background_color;
+}
+.siteshare_buttons_wp.siteshare_button_layout_box_2_count.sswob a i {
+  background-color: #f4f4f4;
+}
+.siteshare_buttons_wp.siteshare_button_layout_box_2_count a span {
+  color: #fff;
+}
+.siteshare_buttons_wp.siteshare_button_layout_box_2_count a:hover i {
+  background-color: transparent;
+}
+.siteshare_buttons_wp.siteshare_button_layout_border_count a{
+  background:transparent;
+}
+
+.siteshare_buttons_wp.siteshare_button_layout_box_2_count ul li.ss_button_wp i,
+.siteshare_buttons_wp.siteshare_button_layout_border_count ul li.ss_button_wp i{
+  font-size: 22px;
+  width: 100%;
+  line-height: 22px;
+  padding: 10px 0;
+  box-sizing: border-box;
+  background-size: 22px;
+}
+
+.siteshare_buttons_wp ul li.ss_button_wp a .siteshare_count {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.siteshare_buttons_wp.siteshare_button_layout_box_2_count .menu_siteshare_social_link:hover,
+.siteshare_buttons_wp.siteshare_button_layout_box_2_count .menu_siteshare_social_link:hover i,
+.siteshare_buttons_wp.siteshare_button_layout_border_count .menu_siteshare_social_link:hover,
+.siteshare_buttons_wp.siteshare_button_layout_border_count .menu_siteshare_social_link:hover i
+{
+  color: #fff;
+}
+.siteshare_buttons_wp .menu_siteshare_social_link,
+.siteshare_buttons_wp .menu_siteshare_social_link:hover
+{
+  background-color: $theme_button_background_color;
+}
+.siteshare_buttons_wp .menu_siteshare_social_link i{
+  color: $theme_button_font_color;
+}
+/* Left and Right Socialshare links default background color */
+.siteshare_buttons .menu_siteshare_social_link
+{
+  background-color: $theme_button_background_color;
+  color: $theme_button_font_color;
+}
+/* Socialshare links border color */
+.siteshare_buttons_wp .menu_siteshare_social_link
+{
+  border-color: $theme_button_background_color;
+}
+.siteshare_buttons_wp .siteshare_social_link_twitter
+{
+  border-color: #4EA4DD;
+}
+.siteshare_buttons_wp .siteshare_social_link_more
+{
+  border-color: #F5DA18;
+}
+.siteshare_buttons_wp .siteshare_social_link_facebook
+{
+  border-color: #3D5998;
+}
+.siteshare_buttons_wp .siteshare_social_link_sms
+{
+  border-color: #FFBD00;
+}
+.siteshare_buttons_wp .siteshare_social_link_whatsapp
+{
+  border-color: #25D366;
+}
+.siteshare_buttons_wp .siteshare_social_link_linkedin
+{
+  border-color: #3271B8;
+}
+.siteshare_buttons_wp .siteshare_social_link_myspace
+{
+  border-color: #003399;
+}
+.siteshare_buttons_wp .siteshare_social_link_friend_feed
+{
+  border-color: #87A9D9;
+}
+.siteshare_buttons_wp .siteshare_social_link_newsvine
+{
+  border-color: #03652C;
+}
+.siteshare_buttons_wp .siteshare_social_link_reddit
+{
+  border-color: #F54B00;
+}
+.siteshare_buttons_wp .siteshare_social_link_technorati
+{
+  border-color: #3AAE01;
+}
+.siteshare_buttons_wp .siteshare_social_link_delicious
+{
+  border-color: #0076E8;
+}
+.siteshare_buttons_wp .siteshare_social_link_digg
+{
+  border-color: #101010;
+}
+.siteshare_buttons_wp .siteshare_social_link_googleplus
+{
+  border-color: #DB4437;
+}
+.siteshare_buttons_wp .siteshare_social_link_stumbleupon
+{
+  border-color: #EB4B23;
+}
+.siteshare_buttons_wp .siteshare_social_link_pinterest
+{
+  border-color: #BD081C;
+}
+.siteshare_buttons_wp .siteshare_social_link_share
+{
+  border-color: #4CAF50;
+}
+.siteshare_buttons_wp .siteshare_social_link_skype
+{
+  border-color: #00AFF0;
+}
+.siteshare_buttons_wp .siteshare_social_link_mailgoogle
+{
+  border-color: #D80403;
+}
+.siteshare_buttons_wp .siteshare_social_link_mail
+{
+  border-color: #7D7D7D;
+}
+.siteshare_buttons_wp .siteshare_social_link_bookmark
+{
+  border-color: #FFA520;
+}
+.siteshare_buttons_wp .siteshare_social_link_flipboard
+{
+  border-color: #BE1A19;
+}
+.siteshare_buttons_wp .siteshare_social_link_rediff
+{
+  border-color: #EC2127;
+}
+.siteshare_buttons_wp .siteshare_social_link_vk
+{
+  border-color: #4c6c91;
+}
+.siteshare_buttons_wp .siteshare_social_link_yahoomail
+{
+  border-color: #9F07D4;
+}
+
+/* Socialshare links background color */
+.siteshare_buttons .siteshare_social_link_twitter,
+.siteshare_buttons_wp .siteshare_social_link_twitter:hover,
+.siteshare_buttons_wp .siteshare_social_link_twitter,
+.sharelinksblock .siteshare_social_link_twitter:before
+{
+  background-color: #4EA4DD;
+}
+.siteshare_buttons .siteshare_social_link_more,
+.siteshare_buttons_wp .siteshare_social_link_more:hover,
+.siteshare_buttons_wp .siteshare_social_link_more,
+.sharelinksblock .siteshare_social_link_more:before
+{
+  background-color: #F5DA18;
+}
+.siteshare_buttons .siteshare_social_link_facebook,
+.siteshare_buttons_wp .siteshare_social_link_facebook:hover,
+.siteshare_buttons_wp .siteshare_social_link_facebook,
+.sharelinksblock .siteshare_social_link_facebook:before
+{
+  background-color: #3D5998;
+}
+.siteshare_buttons .siteshare_social_link_sms,
+.siteshare_buttons_wp .siteshare_social_link_sms:hover,
+.siteshare_buttons_wp .siteshare_social_link_sms,
+.sharelinksblock .siteshare_social_link_sms:before
+{
+  background-color: #FFBD00;
+}
+.siteshare_buttons .siteshare_social_link_whatsapp,
+.siteshare_buttons_wp .siteshare_social_link_whatsapp:hover,
+.siteshare_buttons_wp .siteshare_social_link_whatsapp,
+.sharelinksblock .siteshare_social_link_whatsapp:before
+{
+  background-color: #25D366;
+}
+.siteshare_buttons .siteshare_social_link_linkedin,
+.siteshare_buttons_wp .siteshare_social_link_linkedin:hover,
+.siteshare_buttons_wp .siteshare_social_link_linkedin,
+.sharelinksblock .siteshare_social_link_linkedin:before
+{
+  background-color: #3271B8;
+}
+.siteshare_buttons .siteshare_social_link_myspace,
+.siteshare_buttons_wp .siteshare_social_link_myspace:hover,
+.siteshare_buttons_wp .siteshare_social_link_myspace,
+.sharelinksblock .siteshare_social_link_myspace:before
+{
+  background-color: #003399;
+}
+.siteshare_buttons .siteshare_social_link_friend_feed,
+.siteshare_buttons_wp .siteshare_social_link_friend_feed:hover,
+.siteshare_buttons_wp .siteshare_social_link_friend_feed,
+.sharelinksblock .siteshare_social_link_friend_feed:before
+{
+  background-color: #87A9D9;
+}
+.siteshare_buttons .siteshare_social_link_newsvine,
+.siteshare_buttons_wp .siteshare_social_link_newsvine:hover,
+.siteshare_buttons_wp .siteshare_social_link_newsvine,
+.sharelinksblock .siteshare_social_link_newsvine:before
+{
+  background-color: #03652C;
+}
+.siteshare_buttons .siteshare_social_link_reddit,
+.siteshare_buttons_wp .siteshare_social_link_reddit:hover,
+.siteshare_buttons_wp .siteshare_social_link_reddit,
+.sharelinksblock .siteshare_social_link_reddit:before
+{
+  background-color: #F54B00;
+}
+.siteshare_buttons .siteshare_social_link_technorati,
+.siteshare_buttons_wp .siteshare_social_link_technorati:hover,
+.siteshare_buttons_wp .siteshare_social_link_technorati,
+.sharelinksblock .siteshare_social_link_technorati:before
+{
+  background-color: #3AAE01;
+}
+.siteshare_buttons .siteshare_social_link_delicious,
+.siteshare_buttons_wp .siteshare_social_link_delicious:hover,
+.siteshare_buttons_wp .siteshare_social_link_delicious,
+.siteshare_share_tab_content_social_share .siteshare_social_link_delicious:before
+{
+  background-color: #0076E8;
+}
+.siteshare_buttons .siteshare_social_link_digg,
+.siteshare_buttons_wp .siteshare_social_link_digg:hover,
+.siteshare_buttons_wp .siteshare_social_link_digg,
+.sharelinksblock .siteshare_social_link_digg:before
+{
+  background-color: #101010;
+}
+.siteshare_buttons .siteshare_social_link_googleplus,
+.siteshare_buttons_wp .siteshare_social_link_googleplus:hover,
+.siteshare_buttons_wp .siteshare_social_link_googleplus,
+.sharelinksblock .siteshare_social_link_googleplus:before
+{
+  background-color: #DB4437;
+}
+.siteshare_buttons .siteshare_social_link_stumbleupon,
+.siteshare_buttons_wp .siteshare_social_link_stumbleupon:hover,
+.siteshare_buttons_wp .siteshare_social_link_stumbleupon,
+.sharelinksblock .siteshare_social_link_stumbleupon:before
+{
+  background-color: #EB4B23;
+}
+.siteshare_buttons .siteshare_social_link_pinterest,
+.siteshare_buttons_wp .siteshare_social_link_pinterest:hover,
+.siteshare_buttons_wp .siteshare_social_link_pinterest,
+.sharelinksblock .siteshare_social_link_pinterest:before
+{
+  background-color: #BD081C;
+}
+.siteshare_buttons .siteshare_social_link_share,
+.siteshare_buttons_wp .siteshare_social_link_share:hover,
+.siteshare_buttons_wp .siteshare_social_link_share,
+.sharelinksblock .siteshare_social_link_share:before
+{
+  background-color: #4CAF50;
+}
+.siteshare_buttons .siteshare_social_link_skype,
+.siteshare_buttons_wp .siteshare_social_link_skype:hover,
+.siteshare_buttons_wp .siteshare_social_link_skype,
+.sharelinksblock .siteshare_social_link_skype:before
+{
+  background-color: #00AFF0;
+}
+.siteshare_buttons .siteshare_social_link_mailgoogle,
+.siteshare_buttons_wp .siteshare_social_link_mailgoogle:hover,
+.siteshare_buttons_wp .siteshare_social_link_mailgoogle,
+.sharelinksblock .siteshare_social_link_mailgoogle:before
+{
+  background-color: #D80403;
+}
+.siteshare_buttons .siteshare_social_link_mail,
+.siteshare_buttons_wp .siteshare_social_link_mail:hover,
+.siteshare_buttons_wp .siteshare_social_link_mail,
+.sharelinksblock .siteshare_social_link_mail:before
+{
+  background-color: #7D7D7D;
+}
+.siteshare_buttons .siteshare_social_link_bookmark,
+.siteshare_buttons_wp .siteshare_social_link_bookmark:hover,
+.siteshare_buttons_wp .siteshare_social_link_bookmark,
+.sharelinksblock .siteshare_social_link_bookmark:before
+{
+  background-color: #FFA520;
+}
+.siteshare_buttons .siteshare_social_link_flipboard,
+.siteshare_buttons_wp .siteshare_social_link_flipboard:hover,
+.siteshare_buttons_wp .siteshare_social_link_flipboard,
+.sharelinksblock .siteshare_social_link_flipboard:before
+{
+  background-color: #BE1A19;
+}
+.siteshare_buttons .siteshare_social_link_rediff,
+.siteshare_buttons_wp .siteshare_social_link_rediff:hover,
+.siteshare_buttons_wp .siteshare_social_link_rediff,
+.sharelinksblock .siteshare_social_link_rediff:before
+{
+  background-color: #EC2127;
+}
+.siteshare_buttons .siteshare_social_link_vk,
+.siteshare_buttons_wp .siteshare_social_link_vk:hover,
+.siteshare_buttons_wp .siteshare_social_link_vk,
+.sharelinksblock .siteshare_social_link_vk:before
+{
+  background-color: #4c6c91;
+}
+.siteshare_buttons .siteshare_social_link_yahoomail,
+.siteshare_buttons_wp .siteshare_social_link_yahoomail:hover,
+.siteshare_buttons_wp .siteshare_social_link_yahoomail,
+.sharelinksblock .siteshare_social_link_yahoomail:before
+{
+  background-color: #9F07D4;
+}
+.siteshare_buttons.siteshare_list_buttons ul > li.ss_icon_text > a {
+  /*padding: 2px 2px 2px 0;*/
+  height: 40px;
+}
+.siteshare_buttons.siteshare_list_buttons ul > li.ss_icon_text > a:before{
+  height: 18px;
+	width: auto;
+}
+.siteshare_buttons.siteshare_list_buttons ul > li.ss_icon_text > a > span{
+  font-size: 12px;
+  height: 31px;
+  padding: 0;
+  padding-left: 10px;
+  line-height: 31px;
+  text-overflow: ellipsis;
+}
+.siteshare_list_buttons.ss_icon_text_buttons ul > li.ss_icon_text > a > span{
+  text-shadow: none;
+  font-weight: normal;
+  background-color: $theme_body_background_color;
+  text-overflow: ellipsis;
+}
+
+.siteshare_list_buttons.ss_round ul > li > a {
+  border-radius: 25px;
+}
+.siteshare_list_buttons.ss_round.ss_icon_text_buttons ul > li.ss_icon_text > a > span:first-child {
+  border-radius: 0 25px 25px 0;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .menu_siteshare_social_link i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .menu_siteshare_social_link > span
+{
+  color: $theme_button_background_color;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_facebook i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_facebook > span{
+  color: #3D5998;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_twitter i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_twitter > span
+{
+  color: #4EA4DD;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_more i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_more > span
+{
+  color: #F5DA18;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_sms i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_sms > span
+{
+  color: #FFBD00;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_whatsapp i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_whatsapp > span
+{
+  color: #25D366;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_linkedin i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_linkedin > span
+{
+  color: #3271B8;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_myspace i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_myspace > span
+{
+  color: #003399;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_friend_feed i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_friend_feed > span
+{
+  color: #87A9D9;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_newsvine i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_newsvine > span
+{
+  color: #03652C;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_reddit i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_reddit > span
+{
+  color: #F54B00;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_technorati i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_technorati > span
+{
+  color: #3AAE01;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_delicious i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_delicious > span
+{
+  color: #0076E8;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_digg i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_digg > span
+{
+  color: #101010;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_googleplus i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_googleplus > span
+{
+  color: #DB4437;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_stumbleupon i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_stumbleupon > span
+{
+  color: #EB4B23;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_pinterest i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_pinterest > span
+{
+  color: #BD081C;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_share i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_share > span
+{
+  color: #4CAF50;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_skype i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_skype > span
+{
+  color: #00AFF0;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_mailgoogle i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_mailgoogle > span
+{
+  color: #D80403;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_mail i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_mail > span
+{
+  color: #7D7D7D;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_bookmark i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_bookmark > span
+{
+  color: #FFA520;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_flipboard i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_flipboard > span
+{
+  color: #BE1A19;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_rediff i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_rediff > span
+{
+  color: #EC2127;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_vk i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_vk > span
+{
+  color: #4c6c91;
+}
+.siteshare_buttons_wp ul li.ss_button_wp .siteshare_social_link_yahoomail i,
+.siteshare_buttons.ss_icon_text_buttons ul > li.ss_icon_text > .siteshare_social_link_yahoomail > span
+{
+  color: #9F07D4;
+}
+/* Social share icons (Which are not available in font icons) */
+.siteshare_buttons .fa-technorati,
+.siteshare_buttons_wp.siteshare_button_layout_border_count .menu_siteshare_social_link:hover .fa-technorati,
+.siteshare_buttons_wp.siteshare_button_layout_box_2_count .menu_siteshare_social_link:hover .fa-technorati,
+.sitesharebox .fa-technorati:before
+{
+  background-image: url(~/application/modules/Siteshare/externals/images/technoratii.png);
+}
+.siteshare_buttons .fa-friend_feed,
+.siteshare_buttons_wp.siteshare_button_layout_border_count .menu_siteshare_social_link:hover .fa-friend_feed,
+.siteshare_buttons_wp.siteshare_button_layout_box_2_count .menu_siteshare_social_link:hover .fa-friend_feed,
+.sitesharebox .fa-friend_feed:before
+{
+  background-image: url(~/application/modules/Siteshare/externals/images/friendfeed.png);
+}
+.siteshare_buttons .fa-myspace,
+.siteshare_buttons_wp.siteshare_button_layout_border_count .menu_siteshare_social_link:hover .fa-myspace,
+.siteshare_buttons_wp.siteshare_button_layout_box_2_count .menu_siteshare_social_link:hover .fa-myspace,
+.sitesharebox .fa-myspace:before
+{
+  background-image: url(~/application/modules/Siteshare/externals/images/myspace.png);
+}
+.siteshare_buttons .fa-newsvine,
+.siteshare_buttons_wp.siteshare_button_layout_border_count .menu_siteshare_social_link:hover .fa-newsvine,
+.siteshare_buttons_wp.siteshare_button_layout_box_2_count .menu_siteshare_social_link:hover .fa-newsvine,
+.sitesharebox .fa-newsvine:before
+{
+  background-image: url(~/application/modules/Siteshare/externals/images/newsvine.png);
+}
+.siteshare_buttons .fa-flipboard,
+.siteshare_buttons_wp.siteshare_button_layout_border_count .menu_siteshare_social_link:hover .fa-flipboard,
+.siteshare_buttons_wp.siteshare_button_layout_box_2_count .menu_siteshare_social_link:hover .fa-flipboard,
+.sitesharebox .fa-flipboard:before
+{
+  background-image: url(~/application/modules/Siteshare/externals/images/flipboard.png);
+}
+.siteshare_buttons .fa-rediff,
+.siteshare_buttons_wp.siteshare_button_layout_border_count .menu_siteshare_social_link:hover .fa-rediff,
+.siteshare_buttons_wp.siteshare_button_layout_box_2_count .menu_siteshare_social_link:hover .fa-rediff,
+.sitesharebox .fa-rediff:before
+{
+  background-image: url(~/application/modules/Siteshare/externals/images/rediff.png);
+}
+.siteshare_buttons_wp .fa-technorati
+{
+  background-image: url(~/application/modules/Siteshare/externals/images/technoratii_active.png);
+}
+.siteshare_buttons_wp .fa-friend_feed
+{
+  background-image: url(~/application/modules/Siteshare/externals/images/friendfeed_active.png);
+}
+.siteshare_buttons_wp .fa-myspace
+{
+  background-image: url(~/application/modules/Siteshare/externals/images/myspace_active.png);
+}
+.siteshare_buttons_wp .fa-newsvine
+{
+  background-image: url(~/application/modules/Siteshare/externals/images/newsvine_active.png);
+}
+.siteshare_buttons_wp .fa-flipboard
+{
+  background-image: url(~/application/modules/Siteshare/externals/images/flipboard_active.png);
+}
+.siteshare_buttons_wp .fa-rediff
+{
+  background-image: url(~/application/modules/Siteshare/externals/images/rediff_active.png);
+}
+
+.sitesharebox .fa-technorati:before,
+.sitesharebox .fa-friend_feed:before,
+.sitesharebox .fa-myspace:before,
+.sitesharebox .fa-newsvine:before,
+.sitesharebox .fa-rediff:before
+{
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+}
+.sitesharebox .fa-flipboard:before
+{
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.siteshare_buttons_wp .menu_siteshare_social_link:before {
+  content: '';
+}
+.siteshare_buttons_wp .fa-technorati,
+.siteshare_buttons_wp .fa-friend_feed,
+.siteshare_buttons_wp .fa-myspace,
+.siteshare_buttons_wp .fa-flipboard,
+.siteshare_buttons_wp .fa-newsvine,
+.siteshare_buttons_wp .fa-rediff {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+}
+
+/* Left and right block icons */
+.siteshare_buttons .fa-technorati,
+.siteshare_buttons .fa-friend_feed,
+.siteshare_buttons .fa-myspace,
+.siteshare_buttons .fa-flipboard
+{
+  background-size: 15px;
+  background-position: 18px center;
+  background-repeat: no-repeat;
+}
+.siteshare_buttons .fa-newsvine,
+.siteshare_buttons .fa-rediff
+{
+  background-size: 12px;
+  background-position: 18px center;
+  background-repeat: no-repeat;
+}
+.fa-technorati:before,
+.fa-friend_feed:before,
+.fa-myspace:before,
+.fa-newsvine:before,
+.fa-rediff:before,
+.fa-flipboard:before
+{
+  content: '';
+  margin-left: 12px;
+}
+.siteshare_list_buttons .fa-technorati:before,
+.siteshare_list_buttons .fa-friend_feed:before,
+.siteshare_list_buttons .fa-myspace:before,
+.siteshare_list_buttons .fa-newsvine:before,
+.siteshare_list_buttons .fa-rediff:before,
+.siteshare_list_buttons .fa-flipboard:before
+{
+  margin-left: 0;
+  margin-right: 0;
+}
+/* Share Popup */
+.siteshare_share_popup.sharelinksblock
+{
+  width: 100%;
+  position: relative;
+}
+.sharelinksblock .tabs_alt > ul .cancelbtn::before {
+  content: "\\f00d";
+  font-family: 'Font Awesome 5 Free','fontawesome';
+}
+.sharelinksblock > h3
+{
+  display: none;
+}
+.sitesharebox
+{
+  margin: 10px;
+  overflow: hidden;
+  clear: both;
+}
+.sharelinksblock ul > li > .menu_siteshare_social_link:before,
+.sharelinksblock .menu_siteshare_social_link:before
+{
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+  margin-bottom: 6px;
+  display: block;
+  padding-top: 10px;
+  box-sizing: border-box;
+  font-size: 20px;
+  line-height: 20px;
+}
+.siteshare_share_tab_content_share textarea,
+.siteshare_share_tab_content_share input[type="text"]
+{
+  border-left: 0;
+  border-right: 0;
+  border-top:0;
+  max-width: 100%;
+  width: 100%;
+  background-color: transparent;
+}
+.siteshare_share_tab_content_share #type-label
+{
+  display: none;
+}
+
+.siteshare_share_tab_content_share #buttons-wrapper #cancel{display:inline-block;}
+
+.siteshare_share_tab_content_share select
+{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+  padding: 9px 0;
+  width: 100%;
+  max-width: 100%;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0;
+  box-sizing: border-box;
+  background-color: transparent;
+}
+.siteshare_share_tab_content_share #type-element
+{
+  position: relative;
+  max-width: 100%;
+}
+.siteshare_share_tab_content_share #type-element:before
+{
+  content: '\\f0d7';
+  font-family: 'Font Awesome 5 Free','fontawesome';
+  position: absolute;
+  right: 8px;
+  top: 10px;
+}
+.siteshare_share_tab_content_share
+{
+  padding-bottom: 50px;
+}
+.siteshare_share_tab_content_share #buttons-wrapper
+{
+  position: absolute;
+  bottom: 10px;
+  right :0;
+  padding-right:0 !important;
+  margin-right: 30px;
+}
+
+.siteshare_share_tab_content_share #buttons-wrapper button
+{
+  margin-left: 10px;
+}
+.siteshare_share_tab_content_share #buttons-wrapper .composer_twitter_toggle,
+.siteshare_share_tab_content_share #buttons-wrapper .composer_facebook_toggle
+{
+  float: left;
+}
+.sitesharebox .sharebox_photo
+{
+  width: 100%;
+  background-repeat: no-repeat;
+  height: 200px;
+  background-size: cover;
+  background-position: 50% center;
+  margin-bottom: 10px;
+  border: 1px solid $theme_border_color;
+  box-sizing: border-box;
+}
+
+/* Share Tabs */
+.sharelinksblock div.tabs_alt
+{
+  margin: 15px 0px 0 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
+}
+.sharelinksblock .tabs_alt > ul  {
+  position: relative;
+  background-color: transparent;
+}
+.sharelinksblock .tabs_alt > ul > li {
+  border: none;
+  display: inline-block !important;
+}
+.sharelinksblock .tabs_alt > ul > li.active
+{
+  background-color: transparent;
+  border-top: 1px solid $theme_border_color;
+}
+.sharelinksblock .tabs_alt > ul .cancelbtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.sharelinksblock .tabs_alt > ul .cancelbtn::before {
+  content: "\\f00d";
+  font-family: 'Font Awesome 5 Free','fontawesome';
+}
+
+/* Popup Socialshare links style */
+.siteshare_share_tab_content_social_share ul > li
+{
+  margin: 6px 1%;
+  border-radius: 2px;
+  box-sizing: border-box;
+  display: inline-block;
+  width: 22%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.sharelinksblock ul > li > .menu_siteshare_social_link
+{
+  padding: 10px 15px;
+  display: block;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+  text-shadow: 1px 0 0 rgba(0,0,0,.3);
+}
+[dir="rtl"] .siteshare_share_tab_content_social_share ul > li > a.fa-newsvine,
+[dir="rtl"] .siteshare_share_tab_content_social_share ul > li > a.fa-technorati,
+[dir="rtl"] .siteshare_share_tab_content_social_share ul > li > a.fa-myspace,
+[dir="rtl"] .siteshare_share_tab_content_social_share ul > li > a.fa-friend_feed
+{
+  padding-right: 34px;
+}
+.siteshare_share_tab_content_social_share ul > li > .menu_siteshare_social_link:hover
+{
+  opacity: .9;
+}
+.menu_siteshare_social_link:hover
+{
+  text-decoration: none;
+}
+.siteshare_sendemail_success {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  color: #fff;
+  font-size: 25px;
+  text-align: center;
+  transform: translateY(50%);
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+.siteshare_sendemail_success i {
+  color: greenyellow;
+}
+.share_heading.share_sendemail_heading  p {
+  float: none;
+}
+.siteshare_form_sendemail_popup {
+  clear: both;
+}
+.global_form_box.siteshare_sendemail_form{
+  background-color: transparent;
+  margin-top: 5px;
+}
+.global_form_box.siteshare_sendemail_form .form-element input,
+.global_form_box.siteshare_sendemail_form .form-element textarea{
+  width: 100%;
+}
+.global_form_box.siteshare_sendemail_form .form-elements #send-label {
+  display: none;
+}
+.global_form_box.siteshare_sendemail_form .form-elements #send-element {
+  text-align: right;
+}
+.global_form_box.siteshare_sendemail_form .form-elements #send-element button {
+  padding: 15px 20px;
+}
+.siteshare_socialshare_smoothbox .global_form_box.siteshare_sendemail_form .form-element p{
+  font-size: 12px;
+}
+.siteshare_socialshare_smoothbox .global_form_box.siteshare_sendemail_form .form-element,
+.siteshare_socialshare_smoothbox .global_form_box.siteshare_sendemail_form .form-label {
+  color: #fff;
+}
+.siteshare_socialshare_smoothbox .global_form_box.siteshare_sendemail_form .form-wrapper + .form-wrapper {
+  margin-top: 10px;
+}
+/* Left and Right Socialshare links style */
+.siteshare_floating_buttons
+{
+  position: fixed;
+  display: block;
+  top: 20%;
+  z-index: 22;
+}
+.siteshare_floating_buttons ul > li
+{
+  display: block;
+  width: 48px;
+  float: left;
+  clear: both;
+  overflow: hidden;
+}
+.siteshare_buttons.siteshare_floating_buttons ul > li > a {
+  padding: 8px 15px;
+}
+.siteshare_floating_buttons ul > li:hover
+{
+  width: 300px;
+  -moz-transition: all 0.3s ease-in 0s;
+  -ms-transition: all 0.3s ease-in 0s;
+  -o-transition: all 0.3s ease-in 0s;
+  -webkit-transition: all 0.3s ease-in 0s;
+  transition: all 0.3s ease-in 0s;
+}
+.siteshare_floating_buttons .siteshare_count{
+  font-size: 11px;
+  line-height: 11px;
+  clear: both;
+  display: block;
+  margin: 5px 0 -5px 2px;
+  width: 48px;
+  margin-left: -15px;
+  text-align: center;
+}
+.siteshare_buttons ul > li.icon_button a > span:first-child {
+  display: none;
+}
+.siteshare_buttons ul > li.icon_button a > span.siteshare_count {
+  display: inline-block;
+}
+.siteshare_buttons ul > li.ss_icon_text a > span .siteshare_count {
+  padding: 0 10px;
+  float: right;
+}
+.siteshare_buttons ul > li.ss_icon_text a > .siteshare_count {
+  display: none;
+}
+.siteshare_buttons.siteshare_list_buttons ul > li.icon_button a > .siteshare_count {
+  position: absolute;
+  bottom: 1px;
+  padding: 0;
+  margin: 0;
+  font-size: 11px;
+  line-height: 11px;
+  left:50%;
+  transform:translateX(-50%);
+}
+.siteshare_buttons ul > li > a
+{
+  padding: 12px 15px;
+  box-sizing: border-box;
+  color: #fff;
+  font-family: $theme_font_family;
+  font-weight: 700;
+  text-shadow: 1px 0 0 rgba(0,0,0,.3);
+  text-decoration: none;
+  display: inline-block;
+  /*  height: 48px;*/
+  line-height: 24px;
+  margin-bottom: 0;
+  opacity: 1;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+  vertical-align: top;
+  white-space: nowrap;
+  moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: left;
+}
+.siteshare_list_buttons ul > li.ss_icon_text,
+.siteshare_list_buttons ul > li.ss_icon_text > a{
+  display: block;
+  line-height: inherit;
+  vertical-align: middle;
+
+}
+.siteshare_list_buttons ul > li.ss_icon_text {
+  margin: 2px 0;
+  display: block;
+  padding: 0 3px;
+  box-sizing: border-box !important;
+}
+.siteshare_list_buttons ul > li.ss_icon_text {
+  display: inline-block;
+  float: left;
+}
+.siteshare_list_buttons ul > li.ss_icon_text > a{
+  padding: 5px 5px 5px 0;
+}
+
+.siteshare_list_buttons ul > li.ss_icon_text > a > span {
+  padding-left: 15px;
+  padding-top: 9px;
+  border-left: 1px solid;
+  height: 29px;
+  overflow: hidden;
+  display: block;
+}
+.siteshare_list_buttons ul > li.ss_icon_text > a:before {
+  float: left;
+}
+.siteshare_buttons ul > li.ss_icon_text > a:before {
+  height: 20px;
+  width: 20px;
+  padding: 9px 14px;
+  line-height: 11px;
+}
+.siteshare_buttons.siteshare_list_buttons ul > li.icon_button {
+  display: inline-block;
+  margin-bottom: 2px;
+}
+.siteshare_buttons.siteshare_list_buttons ul > li.icon_button > a {
+  height: inherit;
+  margin: 5px 3px;
+}
+.siteshare_buttons ul > li > a:before
+{
+  height: 19px;
+  width: 19px;
+  font-size: 20px;
+  display: inline-block;
+  text-align: center;
+  font-weight: normal;
+  vertical-align: top;
+}
+.siteshare_buttons ul > li > a:link,
+.siteshare_buttons ul > li > a:visited
+{
+  color: #fff;
+}
+.siteshare_floating_buttons ul > li > a:before
+{
+  margin-right: 15px;
+}
+.siteshare_buttons ul > li > a.fa-technorati:before,
+.siteshare_buttons ul > li > a.fa-friend_feed:before,
+.siteshare_buttons ul > li > a.fa-myspace:before,
+.siteshare_buttons ul > li > a.fa-newsvine:before
+{
+  margin-right: 2px;
+}
+
+/* Left Socialshare links style */
+.siteshare_buttons_left
+{
+  	left: 0;
+  	right: auto;
+}
+/*.siteshare_buttons_left ul > li:hover > a
+{
+  border-radius: 0 8px 8px 0;
+}
+.siteshare_buttons_left ul > li:first-child
+{
+  border-top-right-radius: 8px;
+}
+.siteshare_buttons_left ul > li:last-child
+{
+  border-bottom-right-radius: 8px;
+}*/
+.siteshare_action_buttons_left
+{
+  left: 0;
+  right: auto;
+}
+
+.siteshare_action_buttons_right
+{
+  right: 0;
+  left: auto;
+}
+
+/* Right Socialshare links style */
+.siteshare_buttons_right
+{
+  right: 0;
+  left: auto;
+}
+/*.siteshare_buttons_right ul > li:hover > a
+{
+  border-radius: 8px 0px 0px 8px;
+}
+.siteshare_buttons_right ul > li:first-child
+{
+  border-top-left-radius: 8px;
+}
+.siteshare_buttons_right ul > li:last-child
+{
+  border-bottom-left-radius: 8px;
+}*/
+.siteshare_buttons_right ul > li
+{
+  text-align: right;
+  float: right;
+}
+#TB_window.siteshare_smoothbox_overlay {
+  opacity: 0.8 !important;
+  z-index: 200;
+}
+#TB_window.siteshare_smoothbox_window {
+  border: none;
+  border-radius: 3px;
+  background-color: transparent;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  z-index: 200;
+}
+#TB_window.siteshare_smoothbox_window #TB_ajaxContent {
+  overflow-y: auto;
+}
+
+/*Tell a Friend CSS*/
+
+.siteshare_smoothbox_lightbox_overlay {
+    bottom: 0;
+    display: none;
+    height: auto;
+    left: 0;
+    min-height: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 600;
+    width: 100%;
+    background: rgba(0, 0, 0, .8) !important;
+}
+.siteshare_smoothbox_lightbox_content_wrapper {
+    left: 0;
+    overflow-y: auto;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 700;
+    display: block;
+    top: 0;
+    bottom: 0;
+}
+.siteshare_smoothbox_lightbox_content_html {
+    position: relative;
+  padding: 10px;
+  overflow: hidden;
+}
+html .siteshare_socialshare_smoothbox, html .siteshare_smoothbox_lightbox_content.siteshare_socialshare_smoothbox {
+  background: transparent;
+    border: none !important;
+    color: #fff;
+    width: 670px;
+}
+siteshare_socialshare_smoothbox a, .siteshare_socialshare_smoothbox a:link, .siteshare_socialshare_smoothbox a:visited, .siteshare_socialshare_smoothbox .share_heading p, .siteshare_socialshare_smoothbox span {
+    color: #fff;
+}
+.siteshare_socialshare_smoothbox .siteshare_smoothbox_lightbox_close {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    z-index: 20;
+    background-color: #999;
+}
+.siteshare_socialshare_smoothbox .siteshare_smoothbox_lightbox_close i:before {
+  font-size: 17px;
+  margin: 5px 8px;
+  float: left;
+}
+.siteshare_socialshare_smoothbox .share_heading {
+    text-align: center;
+}
+.siteshare_socialshare_smoothbox h3 {
+    color: #fff;
+    border-width: 0;
+    padding: 0 5px;
+    font-size: 40px;
+    background: none;
+}
+.siteshare_socialshare_smoothbox .share_heading p {
+    width: 100%;
+    float: none;
+}
+.siteshare_form_sendemail_popup {
+    clear: both;
+}
+.siteshare_smoothbox_lightbox_content {
+    z-index: 1001;
+    background-color: #efefef;
+    margin: 100px auto;
+    margin-top: 100px;
+    position: relative;
+    min-width: 300px;
+    max-width: 600px;
+    border-radius: 3px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    -webkit-transition: all .4s ease-in-out;
+    -moz-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+.siteshare_socialshare_smoothbox .siteshare_smoothbox_lightbox_close i::before {
+    font-size: 17px;
+    margin: 5px 8px;
+    float: left;
+}
+.siteshare_share_tab_content_social_share.siteshare_list_buttons ul {
+  width:100%;
+  display: table;
+  text-align: left;
+  padding: 10px 0;
+  box-sizing: border-box;
+}
+.siteshare_share_tab_content_social_share.siteshare_list_buttons .ss_icon_text{
+  display: inline-block;
+  padding: 5px;
+  box-shadow: none;
+  width: 33%;
+  box-sizing: border-box;
+}
+.siteshare_share_tab_content_social_share.siteshare_list_buttons .ss_icon_text a {
+  background-image: none;
+}
+.siteshare_share_tab_content_social_share.siteshare_buttons.siteshare_list_buttons ul > li.ss_icon_text > a:before{
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  line-height: 30px;
+}
+.siteshare_share_tab_content_social_share.ss_icon_text_buttons ul > li a > span{
+  text-align: left;
+  padding-left: 10px;
+}
+.dblock {
+    display: block !important;
+}
+
+.siteshare_dnone {
+    display: none !important;
+}
+#TB_ajaxContent > div {
+  display: inline-block;
+}
+/* Responsive Style */
+
+@media only screen and (max-width: 768px)
+{
+  /* Left and Right share links */
+  .layout_siteshare_share_buttons
+  {
+    display:block !important;
+  }
+  .siteshare_socialshare_smoothbox .siteshare_share_tab_content_social_share ul > li {
+    width: 22%;
+  }
+
+  .siteshare_buttons_popup {
+    left:0;
+    right:0;
+    transform:none;
+    width:100%;
+    max-width: 100%;
+  }
+  .siteshare_buttons_popup.social_2col,
+  .siteshare_buttons_popup.social_3col,
+  .siteshare_buttons_popup.social_4col{
+    max-width: 100%;
+  }
+  .siteshare_buttons_popup.social_3col .siteshare_buttons ul li.ss_icon_text,
+  .siteshare_buttons_popup.social_4col .siteshare_buttons ul li.ss_icon_text {
+    width: 50%;
+  }
+html .siteshare_socialshare_smoothbox, html .seao_smoothbox_lightbox_content.siteshare_socialshare_smoothbox {
+  min-width: 100%;
+  width: 100%;
+  }
+.seao_smoothbox_lightbox_content_wrapper {
+	position: fixed;
+	overflow-y: auto;
+}
+}
+@media only screen and (max-width: 450px)
+{
+  #global_page_siteshare-index-share #global_content_simple {
+    width: 100%;
+    min-width: 100%;
+  }
+  div.tabs>ul, div.tabs_alt>ul {
+    white-space: normal;
+  }
+  /* Share Popup */
+  .sharelinksblock
+  {
+    display: block;
+  }
+  .siteshare_share_popup.sharelinksblock
+  {
+    width: 100%;
+  }
+  .siteshare_share_tab_content_social_share ul > li > .menu_siteshare_social_link
+  {
+    font-weight: 400;
+    font-size: 12px;
+  }
+  .seaocore_share_popup.sharelinksblock
+  {
+    width: 100%;
+  }
+  .siteshare_share_tab_content_social_share ul > li
+  {
+    width: 47%;
+  }
+  /* Left and Right share links */
+  .layout_siteshare_share_buttons
+  {
+    margin-top: 15px;
+    overflow: hidden;
+  }
+  .siteshare_floating_buttons
+  {
+    position: fixed;
+    top: auto !important;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+    min-height: 34px;
+  }
+  .siteshare_buttons.siteshare_floating_buttons ul > li > a > span.siteshare_count
+  {
+    display: none;
+  }
+  .siteshare_buttons_right.siteshare_buttons.siteshare_floating_buttons ul,
+  .siteshare_buttons_left.siteshare_buttons.siteshare_floating_buttons ul {
+    display: table;
+    width: 90%;
+    left:10%;
+  }
+  .siteshare_floating_buttons ul > li
+  {
+    clear: none;
+    margin: 0;
+    display: table-cell;
+    width: auto;
+    float: none;
+    border-radius: 0;
+    height: auto;
+  }
+  div.siteshare_floating_buttons ul > li:hover {
+    width: auto;
+  }
+  .siteshare_buttons.siteshare_floating_buttons ul > li > a,
+  .siteshare_floating_buttons ul > li > a {
+    display: block;
+    padding: 5px;
+    height: auto;
+  }
+  .siteshare_floating_buttons ul > li:hover a
+  {
+    border-radius: 0;
+  }
+  .siteshare_floating_buttons ul > li span {
+    display: none;
+  }
+  .siteshare_floating_buttons ul > li > a::before {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .siteshare_floating_buttons ul > li,
+  .siteshare_buttons_right ul > li:first-child,
+  .siteshare_buttons_right ul > li:last-child,
+  .siteshare_buttons_left ul > li:first-child,
+  .siteshare_buttons_left ul > li:last-child
+  {
+    border-radius: 0;
+  }
+  .siteshare_floating_buttons ul > li:hover
+  {
+    width: auto;
+  }
+  .siteshare_socialshare_smoothbox .siteshare_share_tab_content_social_share ul > li {
+    width: 30%;
+  }
+  .siteshare_buttons_right.siteshare_buttons.siteshare_floating_buttons .siteshare_buttons_toogles,
+  .siteshare_buttons_left.siteshare_buttons.siteshare_floating_buttons .siteshare_buttons_toogles {
+    width:10%;
+    position: fixed;
+    left:0;
+    bottom: 0;
+    height: 34px;
+    padding: 0;
+  }
+  .siteshare_buttons_toogles i {
+    padding-top: 6px;
+  }
+  .siteshare_buttons_left.siteshare_buttons.siteshare_floating_buttons.siteshare_buttons_hide,
+  .siteshare_buttons_right.siteshare_buttons.siteshare_floating_buttons.siteshare_buttons_hide {
+    right: 90%;
+    -webkit-transition: all 500ms ease 0s;
+    -moz-transition: all 500ms ease 0s;
+    -o-transition: all 500ms ease 0s;
+    transition: all 500ms ease 0s;
+  }
+  .siteshare_buttons_left.siteshare_buttons.siteshare_floating_buttons.siteshare_buttons_hide ul,
+  .siteshare_buttons_right.siteshare_buttons.siteshare_floating_buttons.siteshare_buttons_hide ul {
+    left: -150%;
+    right: 100%;
+    bottom:0;
+    position: fixed;
+  }
+  .siteshare_socialshare_smoothbox h3 {
+    font-size: 20px;
+  }
+  .siteshare_socialshare_smoothbox .seao_smoothbox_lightbox_close {
+    position: absolute;
+    top: 0;
+  }
+  .global_form_box.siteshare_sendemail_form .form-elements #send-element {
+    margin-top: 15px;
+    text-align: center;
+  }
+  .siteshare_socialshare_smoothbox .share_heading p {
+    display: none;
+  }
+  .siteshare_buttons_right .siteshare_buttons_toogles > i:nth-child(2n):before,
+  .siteshare_buttons_left .siteshare_buttons_toogles > i:nth-child(2n):before {
+    content: "\\f101";
+  }
+  .siteshare_buttons_right .siteshare_buttons_toogles > i:nth-child(2n+1):before,
+  .siteshare_buttons_left .siteshare_buttons_toogles > i:nth-child(2n+1):before {
+    content: "\\f100";
+  }
+  .siteshare_socialshare_smoothbox .siteshare_smoothbox_lightbox_close {
+    position: absolute;
+    top: 0;
+  }
+  .sharelinksblock .tabs_alt > ul > li {
+  	display: block !important;
+  }
+.siteshare_buttons_wp ul li.ss_button_wp a span {
+	font-size: 10px;
+}
+}
+@media only screen and (max-width: 360px) {
+.siteshare_list_buttons[class^="siteshare_"] ul > li.ss_icon_text {
+	width: 100%;
+}
+}
+@media only screen and (min-width: 769px)
+{
+  .siteshare_social_link_sms_li, .siteshare_social_link_whatsapp_li{
+    display: none !important;
+  }
+}
+@media only screen and (min-width: 480px)
+{
+  #global_content_simple .siteshare_social_link_sms_li, #global_content_simple .siteshare_social_link_whatsapp_li{
+    display: none !important;
+  }
+}
+

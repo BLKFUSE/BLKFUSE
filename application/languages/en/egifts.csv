@@ -1,0 +1,44 @@
+"gift";"gift"
+"gifts";"gifts"
+"Gift";"Gift"
+"Gifts";"Gifts"
+"Browse Gifts";"Browse Gifts"
+"My Gifts";"My Gifts"
+"Please Type your message it required";"Please Type your message it required"
+"Please select a member for sending gift it required.";"Please select a member for sending gift it required."
+"Please select gift it required.";"Please select gift it required."
+"Please select a member for sending gift";"Please select a member for sending gift"
+"submit";"submit"
+"Sorry! Somethings went wrong.";"Sorry! Somethings went wrong."
+"Please Select any gift these are required";"Please Select any gift these are required"
+"Public";"Public"
+"Private";"Private"
+"Choose Your gift";"Choose Your gift"
+"Buy";"Buy"
+"Your name and message will be displayed to all";"Your name and message will be displayed to all"
+"Your name and message will be visible to the recipient(s)";"Your name and message will be visible to the recipient(s)"
+"ACTIVITY_TYPE_EGIFT_SEND_GIFT";"When someone sends a gift to a member."
+"ACTIVITY_TYPE_EGIFT_MADE_PAYMENT";"When someone makes payment for the gift purchase."
+"_EMAIL_EGIFT_SEND_GIFT_TITLE";"When gift sent to the member"
+"_EMAIL_EGIFT_SEND_GIFT_DESCRIPTION";"This email will be sent to the member when someone sends a gift to any member."
+"_EMAIL_EGIFT_SEND_GIFT_SUBJECT";"[sender_title] has sent a gift to you."
+"_EMAIL_EGIFT_SEND_GIFT_BODY";"[header]
+
+[sender_title] has sent a gift [gift_title] to you.
+
+http://[host][object_link]
+
+[footer]"
+"_EMAIL_EGIFT_MADE_PAYMENT_TITLE";"When someone makes payment for the gift."
+"_EMAIL_EGIFT_MADE_PAYMENT_DESCRIPTION";"This email will be sent to the site admin when someone makes payment for the gift purchase."
+"_EMAIL_EGIFT_MADE_PAYMENT_SUBJECT";"Member has made payment for the gift."
+"_EMAIL_EGIFT_MADE_PAYMENT_BODY";"[header]
+
+[sender_title] has made payment for the Gift [gift_title] purchased.
+
+http://[host][object_link]
+
+[footer]"
+
+"ITEM_TYPE_EGIFTS_GIFT";"Gifts"
+"SNS - Virtual Gifts Plugin";"Virtual Gifts Plugin"

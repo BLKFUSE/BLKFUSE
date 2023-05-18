@@ -1,0 +1,240 @@
+.sesthought_load_more_btn{
+  background-color:$theme_button_background_color;
+  color:$theme_button_font_color !important;
+}
+.sesthought_load_more_btn:hover{
+  background-color:$theme_button_background_color_hover;
+}
+.item_icon_sesthought_thought:before{
+	font-family:'Font Awesome 5 Free';
+	content:"\\f10d";
+	font-weight:600;
+}
+.sesthoughts_list_item > section,
+.sesthoughts_list_item ._content ._des .sesthought_expand:before,
+.sesthoughts_list_item ._options_pulldown,
+.sesthought_item_view_popup ._options_pulldown{
+  background-color:$theme_list_background_color;
+}
+.sesthoughts_list_item ._options_pulldown a:hover{
+  background-color:$theme_list_background_color_hover;
+}
+.sesthought_create_form #title-element:before{
+	color:$theme_font_color_light;
+}
+.sesthought_create_form h3{
+	background-color:$theme_headline_background_color;
+	color:$theme_headline_color;
+}
+.sesthought_create_form li input:checked + label:before,
+.sesthought_composer_media_wrapper li input:checked + label:before{
+	color:$theme_button_background_color;
+}
+/*Thought Text*/
+.sesthought_img, .sesthought_video{
+  margin-bottom:10px;
+  text-align:center !important;
+}
+.sesthought_img img{
+  max-width:100%;
+  vertical-align:middle;
+}
+.sesthought_title{
+	font-weight:bold;
+	margin-bottom:5px;
+	font-size:17px;
+}
+.sesthought_thought{
+	font-size:17px;
+	line-height:25px;
+}
+.sesthought_thought:before{
+	font-family:'Font Awesome 5 Free';
+	content:"\\f10d";
+	font-weight:600;
+	margin-right:5px;
+	color:$theme_font_color_light;
+}
+.sesthought_thought_src,
+.sesthought_thought_link{
+	margin-top:10px;
+}
+.sesthought_thought_link{
+	text-align:right;
+}
+.sesthoughts_other_listing .sesthought_title,
+.sesthoughts_other_listing .sesthought_thought{
+	font-size:15px;
+}
+/*Generic Layout Container*/
+[class*='layout_sesthought_'], [id^='global_page_sesthought-'] .layout_core_content{clear:both;margin-bottom:15px;}
+[class*='layout_sesthought_']:after, [id^='global_page_sesthought-'] .layout_core_content:after{clear:both;content:'';display:block;}
+[class*='tab_layout_sesthought_']{margin:0;clear:none;}
+
+/*Create Form*/
+.sesthought_create_popup{
+	width:600px;
+}
+.sesthought_create_form{
+	padding:15px;
+}
+.sesthought_create_form h3{
+	border-bottom-width:1px;
+	position:relative;
+	font-size:16px;
+	font-weight:600;
+	padding:15px;
+	margin:-15px -15px 10px;
+	border-radius:3px 3px 0px 0px;
+}
+.sesthought_create_form h3 + p{
+	margin-top:5px;
+	margin-bottom:20px;
+}
+.sesthought_create_form .form-wrapper:after,
+.sesthought_create_form .form-element:after{
+	clear:both;
+	display:block;
+	content:"";
+}
+.sesthought_create_form .form-wrapper + .form-wrapper{
+	border-top-width:1px;
+	border-top-style:dashed;
+}
+.sesthought_create_form #buttons-wrapper{
+	padding-top:15px;
+}
+.sesthought_create_form .form-label{
+	display:none;
+}
+.sesthought_create_form input[type="text"],
+.sesthought_create_form input[type="file"],
+.sesthought_create_form select,
+.sesthought_create_form textarea{
+	background-color:transparent !important;
+	border-width:0 !important;
+	width:100% !important;
+	max-width:100% !important;
+	padding:10px 0;
+  outline:none !important;
+}
+.sesthought_create_form #title-element:before{
+	font-family:'Font Awesome 5 Free';
+	content:"\\f10d";
+	font-weight:600;
+	margin-right:5px;
+	position:absolute;
+	font-size:20px;
+	opacity:.7;
+	margin-top:10px;
+}
+[dir="rtl"] .sesthought_create_form #title-element:before{
+  margin-right:0;
+	margin-left:5px;	
+}
+.sesthought_create_form #title-element textarea{
+	font-size:17px;
+	line-height:25px;
+	text-indent:25px;
+}
+.sesthought_create_form #source-element{
+	position:relative;
+}
+.sesthought_create_form #source-element input{
+	padding-left:25px;
+}
+[dir="rtl"] .sesthought_create_form #source-element input{
+	padding-left:0;
+	padding-right:25px;
+}
+.sesthought_create_form #source-element:before{
+	font-family:'Font Awesome 5 Free';
+	content:"\\2501";
+	position:absolute;
+	left:0;
+	top:9px;
+}
+[dir="rtl"] .sesthought_create_form #source-element:before{
+  left:auto;
+	right:0;	
+}
+.sesthought_create_form #mediatype-wrapper{
+	border-width:2px;
+	border-style:dashed;
+	background-color:rgba(0,0,0,.03);
+	padding:20px 0;
+	margin-bottom:10px;
+}
+.sesthought_create_form #mediatype-wrapper li{
+	position:relative;
+	float:left;
+	width:50%;
+	cursor:pointer;
+	padding:15px 0;
+}
+.sesthought_create_form #mediatype-wrapper li + li{
+	border-left-width:2px;
+}
+.sesthought_create_form #mediatype-wrapper li input[type="radio"]{
+	position:absolute;
+	left:0;
+	top:0;
+	right:0;
+	bottom:0;
+	height:100%;
+	width:100%;
+	opacity:0;
+	cursor:pointer;
+}
+.sesthought_create_form #mediatype-wrapper li label{
+	text-align:center;
+	font-weight:bold;
+}
+.sesthought_create_form #mediatype-wrapper li input + label:before{
+	font-family:'Font Awesome 5 Free';
+	content:"\\f030";
+	font-weight:600;
+	font-size:25px;
+	margin:0 10px 0 0;
+	opacity:.7;
+	display:inline-block;
+	vertical-align:middle;
+}
+.sesthought_create_form #mediatype-wrapper li input#mediatype-2 + label:before{
+	content:"\\f03d";
+}
+.sesthought_create_form #photo-wrapper,
+.sesthought_create_form #video-wrapper{
+	border-top-width:0;
+}
+@media only screen and (max-width:767px){
+	.sesthought_create_popup{
+		width:100%;
+	}
+}
+.sesthought_browse_menu .sesthought_create_right_btn > a{
+	color:$theme_button_background_color !important;
+	border:1px solid $theme_button_background_color;
+}
+.sesthoughts_list_item ._date,
+.sesthoughts_list_item ._content ._tags,
+.sesthoughts_list_item ._content ._stats,
+.sesthoughts_sidebar_listing ._stats,
+.sesthoughts_sidebar_listing ._owner_info,
+.sesthoughts_sidebar_listing ._owner_info ._social > a i:before,
+.sesthought_item_view_popup ._info ._date,
+.sesthought_item_view_popup ._cont ._tags,
+.sesthought_item_view_popup .sesadvcmt_comments .sesadvcmt_comments_stats .comments_stats_likes,
+.sesthought_item_view_popup .sesadvcmt_comments .sesadvcmt_comments_stats .comments_stats_comments,
+.sesthoughts_item_view ._info ._date,
+.sesthoughts_item_view ._tags,
+.sesthoughts_item_view ._options a,
+.sesthought_cat_iconlist_count,
+.sesthoughts_list_item ._content ._des .sesthought_expand,
+.sesthoughts_list_item ._options_pulldown a,
+.sesthought_item_view_popup ._options_pulldown a,
+.sesthought_thought_src,
+.sesthought_thought_link,
+.sesthought_create_form h3 + p{
+	font-size:$theme_font_size_small;
+}

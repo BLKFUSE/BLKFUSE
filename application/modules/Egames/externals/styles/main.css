@@ -1,0 +1,41 @@
+
+/*Icons*/
+.item_icon_egames_game:before{
+  font-family: 'Font Awesome 5 Free';
+  content:"\\f11b";
+  font-weight:700;
+}
+.activity_icon_like_egames_game:before{
+  font-family: 'Font Awesome 5 Free';
+  content:"\\f164";
+  font-weight:400;
+}
+.activity_icon_comment_egames_game:before{
+  font-family: 'Font Awesome 5 Free';
+  content:"\\f075";
+  font-weight:400;
+}
+/*Feed*/
+.feed_attachment_egames_game{
+  display:block;
+  border-width:1px;
+}
+.feed_attachment_egames_game > div > a{
+  background-color:$theme_list_background_color_alt;
+  display:block;
+  text-align:center;
+}
+.feed_attachment_egames_game > div > a img{
+  vertical-align:middle;
+  max-width:100% !important;
+  max-height:100% !important;
+}
+.feed_attachment_egames_game > div > div{
+  padding:10px;
+}
+
+/*Button*/
+.egames_view_top_play_btn a{
+  background-color:$theme_button_background_color;
+  color:$theme_button_font_color !important;
+}

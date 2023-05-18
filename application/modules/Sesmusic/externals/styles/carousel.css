@@ -1,0 +1,133 @@
+/* $Id:carousel.css 2015-3-1 00:00:00 SocialEngineSolutions $*/
+.sesmusic_carousel_wrapper{
+	position:relative;
+	-moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  box-sizing:border-box;
+}
+.sesmusic_carousel_wrapper .owl-stage-outer{
+	overflow:hidden;
+}
+.sesmusic_carousel_wrapper .owl-stage{
+	display:flex;
+}
+.sesmusic_carousel_wrapper .owl-stage .owl-item{
+	padding:0 3px;
+}
+.sesmusic_carousel_wrapper .owl-stage .sesalbum_list_grid{
+	margin:0;
+	width:100%;
+}
+.sesmusic_carousel_wrapper .owl-dots.disabled{
+	display:none;
+}
+.sesmusic_carousel_wrapper .owl-nav > div{
+	border-width:1px;
+	border-radius:50%;
+	cursor:pointer;
+	height:30px;
+	width:30px;
+	justify-content:center;
+	align-items:center;
+	display:flex;
+	position: absolute;
+  top: 40%;
+	opacity:0;
+	transition:all .5s ease;
+}
+.sesmusic_carousel_wrapper:hover .owl-nav > div{
+	opacity:1;
+}
+.sesmusic_carousel_wrapper .owl-nav > div:hover{
+	background-image:url(../images/transprant-bg.png);
+}
+.sesmusic_carousel_wrapper .owl-nav > div.disabled{
+	opacity:.8;
+	cursor:default;
+}
+.sesmusic_carousel_wrapper .owl-nav > .owl-next {
+  right: 0;
+}
+.sesmusic_carousel{
+  overflow:hidden;
+  width:100%;
+}
+.sesmusic_carousel_wrapper .sesmusic_item_grid{
+  padding:5px;
+  box-shadow:none;
+	margin:0;
+}
+.sesmusic_carousel_wrapper .sesmusic_item_info_label{
+	transition:all .5s ease;
+}
+.sesmusic_carousel_wrapper .sesmusic_item_grid:hover .sesmusic_item_info_label{
+	opacity:0;
+}
+/*Horizontal Carousel*/
+.sesmusic_carousel_h_wrapper .sesmusic_carousel_nav a{
+	box-shadow:0px 0px 3px rgba(0, 0, 0, .5);
+	background-color:#fff;
+	border-radius:50%;
+	margin-top:-13px;
+	top:50%;
+	position:absolute;
+	transition:all 0.3s ease 0s;
+	height:35px;
+	line-height:35px;
+	padding:0;
+	text-align:center;
+	width:35px;
+}
+.sesmusic_carousel_h_wrapper a.sesmusic_carousel_nav_pre{
+  	left:15px;
+}
+.sesmusic_carousel_h_wrapper:hover a.sesmusic_carousel_nav_pre{
+  	left:5px;
+}
+.sesmusic_carousel_h_wrapper a.sesmusic_carousel_nav_nxt{
+	right:15px;
+}
+.sesmusic_carousel_h_wrapper:hover a.sesmusic_carousel_nav_nxt{
+  right:5px;
+}
+.sesmusic_carousel_h_wrapper .sesmusic_carousel_nav a i:before{
+	color:#222;
+	float:left;
+	font-size:22px;
+	margin-top:6px;
+}
+.sesmusic_carousel_h_wrapper:hover a.sesmusic_carousel_nav_pre i:before{
+	margin-right:2px;
+}
+.sesmusic_carousel_h_wrapper:hover a.sesmusic_carousel_nav_nxt i:before{
+	margin-left:2px;
+}
+
+
+/*Vertical Carousel*/
+.sesmusic_carousel_v_wrapper .sesmusic_item_grid{
+  margin:0 !important;
+}
+.sesmusic_carousel_v_wrapper .sesmusic_carousel_nav{
+  clear:both;
+  margin-top:10px;
+  text-align:center;
+}
+.sesmusic_carousel_v_wrapper .sesmusic_carousel_nav a{
+	box-shadow:0 0 1px rgba(0, 0, 0, .1);
+	border-radius:2px;
+	border-width:1px;
+	display:inline-block;
+	height:25px;
+	line-height:25px;
+	padding:0;
+	text-align:center;
+	width:25px;
+}
+.sesmusic_carousel_v_wrapper .sesmusic_carousel_nav a:hover{
+	background-image:url(../images/transprant-bg.png);
+}
+.sesmusic_carousel_v_wrapper .sesmusic_carousel_nav a i:before{
+  font-size:22px;
+  float:left;
+}

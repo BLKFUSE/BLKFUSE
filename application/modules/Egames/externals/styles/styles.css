@@ -1,0 +1,333 @@
+
+/*BROWSE SEARCH START*/
+.egames_browse_search *{
+  box-sizing:border-box;
+}
+.layout_middle .egames_browse_search .global_form_box{
+  padding:0 !important;
+}
+.layout_middle .egames_browse_search .form-elements{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:flex-end;
+}
+.layout_middle .egames_browse_search .form-elements > .form-wrapper{
+  margin:0 !important;
+  padding:10px;
+  width:20%;
+}
+.layout_middle .egames_browse_search .form-elements > #submit-wrapper{
+  width:auto;
+}
+.layout_middle .egames_browse_search #submit-label{
+  display: none;
+}
+@media (max-width:767px){
+  .layout_middle .egames_browse_search .form-elements > .form-wrapper{
+    width:50%;
+  }
+}
+@media (max-width:540px){
+  .layout_middle .egames_browse_search .form-elements > .form-wrapper{
+    width:100%;
+  }
+  .layout_middle .egames_browse_search .form-elements > #submit-wrapper{
+    width:100%;
+  }
+  .layout_middle .egames_browse_search .form-elements > #submit-wrapper button{
+    width:100%;
+  }
+}
+/*BROWSE SEARCH END*/
+/*LISTING START*/
+.egames_listing{
+  display:flex;
+  flex-wrap:wrap;
+  margin:0 -10px;
+}
+.egames_listing_item{
+  width:20%;
+  padding:10px;
+}
+.egames_listing_item_thumb a{
+  position:relative;
+  padding-bottom:100%;
+  overflow:hidden;
+  display:block;
+}
+.egames_listing_item_thumb a img{
+  position:absolute;
+  left:0;
+  top:0;
+  height:100%;
+  width:100%;
+  object-fit:cover;
+}
+.egames_listing_item_info{
+  padding:15px 15px 0;
+}
+.egames_listing_item_info ._title{
+  text-align:center;
+  font-weight:bold;
+}
+
+@media (max-width:1024px){
+  .egames_listing_item{
+    width:25%;
+  }
+}
+@media (max-width:767px){
+  .egames_listing_item{
+    width:33.33%;
+    padding:5px;
+  }
+}
+@media (max-width:540px){
+  .egames_listing_item{
+    width:50%;
+  }
+}
+/*LISTING END*/
+/*MANAGE LISTING START*/
+.egames_manage_listing > div + div{
+  margin-top:20px;
+}
+.egames_manage_listing_item{
+  display:flex;
+  flex-wrap:wrap;
+}
+.egames_manage_listing_item_thumb{
+  margin-right:15px;
+}
+[dir="rtl"] .egames_manage_listing_item_thumb{
+  margin-right:0;
+  margin-left:15px;
+}
+.egames_manage_listing_item_thumb a{
+  height:100px;
+  width:100px;
+  display:block;
+}
+.egames_manage_listing_item_thumb a img{
+  height:100%;
+  width:100%;
+  object-fit:cover;
+}
+.egames_manage_listing_item_info{
+  flex:1;
+}
+.egames_manage_listing_item_info ._title{
+  font-size:17px;
+  font-weight:bold;
+}
+.egames_manage_listing_item_info ._stats{
+  margin-top:5px;
+  display:flex;
+}
+.egames_manage_listing_item_info ._stats > div + div{
+  margin-left:15px;
+}
+[dir="rtl"] .egames_manage_listing_item_info ._stats > div + div{
+  margin-left:0;
+  margin-right:15px;
+}
+.egames_manage_listing_item_info ._stats > div i{
+  margin-right:5px;
+}
+[dir="rtl"] .egames_manage_listing_item_info ._stats > div i{
+  margin-right:0;
+  margin-left:5px;
+}
+.egames_manage_listing_item_options{
+  position:relative;
+}
+.egames_manage_listing_item_options > a > i{
+  height:24px;
+  width:24px;
+}
+.egames_manage_listing_item_options > a > i svg{
+  height:16px;
+  width:16px;
+}
+.egames_manage_listing_item_options .sesbasic_pulldown_options{
+  right:-10px;
+  margin-top:10px;
+}
+[dir="rtl"] .egames_manage_listing_item_options .sesbasic_pulldown_options{
+  left:-10px;
+  right:auto;
+}
+.egames_manage_listing_item_options .sesbasic_pulldown_options li a:before{
+  margin-right:5px;
+}
+[dir="rtl"] .egames_manage_listing_item_options .sesbasic_pulldown_options li a:before{
+  margin-right:0;
+  margin-left:5px;
+}
+/*MANAGE LISTING END*/
+/*GAME VIEW START*/
+.layout_egames_game_view{
+  padding:0 !important
+}
+.egames_view_top{
+  position:relative;
+}
+.egames_view_top_bg{
+  position:absolute;
+  left:0;
+  top:0;
+  right:0;
+  bottom:0;
+  overflow:hidden;
+}
+.egames_view_top_bg span{
+  display:block;
+  height:100%;
+  background-size:cover;
+  filter:blur(50px);
+}
+.egames_view_top_content{
+  background-color:rgba(0, 0, 0, .2);
+  position:relative;
+  padding:50px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+}
+.egames_view_top_content .egames_view_photo{
+  width:170px;
+  height:170px;
+  margin-bottom:30px;
+  border:4px solid #fff;
+  border-radius:5px;
+} 
+.egames_view_top_content .egames_view_photo img{
+  height:100%;
+  width:100%;
+  object-fit:cover;
+}
+.egames_view_top_content .egames_view_title{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.egames_view_top_content h1{
+  color:#fff;
+  text-transform:uppercase;
+  font-weight:700;
+  letter-spacing:1px;
+  font-size:30px;
+  text-align:center !important;
+  line-height:120%;
+}
+.egames_view_top_content .egames_view_option{
+  margin-left:10px;
+  position:relative;
+}
+[dir="rtl"] .egames_view_top_content .egames_view_option{
+  margin-right:10px;
+  margin-left:0;
+}
+.egames_view_top_content .egames_view_option > a{
+  height:36px;
+  width:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background-color:rgba(255, 255, 255, .2);
+}
+.egames_view_top_content .egames_view_option > a i{
+  width:20px;
+}
+.egames_view_top_content .egames_view_option > a i svg{
+  fill:#fff;
+}
+.egames_view_top_content .egames_view_option .sesbasic_pulldown_options{
+  right:0;
+  margin-top:15px;
+}
+.egames_view_top_content .egames_view_option .sesbasic_pulldown_options a:before{
+  margin-right:5px;
+}
+[dir="rtl"] .egames_view_top_content .egames_view_option .sesbasic_pulldown_options a:before{
+  margin-right:0;
+  margin-left:5px;
+}
+.egames_view_top_content .egames_view_category{
+  margin-top:10px;
+}
+.egames_view_top_content .egames_view_category a{
+  color:#fff;
+  font-weight:bold;
+}
+.egames_view_top_play_btn{
+  margin-top:40px;
+}
+.egames_view_top_play_btn a{
+  display:inline-block;
+  font-size:20px;
+  width:250px;
+  max-width:100%;
+  text-align:center;
+  padding:10px;
+  border:1px solid #fff;
+  letter-spacing:1px;
+  font-weight:bold;
+}
+.egames_view_top_play_btn a:hover{
+  opacity:.8;
+}
+.egames_view_main{
+  padding:20px;
+}
+.egames_view_main .egames_view_des > p{
+  margin:0;	
+}
+.egames_view_top_fullscreen{
+  position:absolute;
+  bottom:10px;
+  right:10px;
+}
+.egames_view_top_fullscreen a{
+  color:#fff;
+  font-size:24px;
+} 
+.egames_fullscreen #iframe_content{
+  position:fixed;
+  left:0;
+  top:0;
+  right:0;
+  bottom:0;
+  height:100vh !important;
+  width:100% !important;
+  z-index:111;
+}
+.egames_fullscreen #iframe_content iframe{
+  height:100% !important;
+  width:100% i !important;
+}
+#iframe_content #egames_view_top_smallscreen{
+  display:none !important;
+}
+.egames_fullscreen #iframe_content #egames_view_top_smallscreen{
+  display:block !important;
+}
+@media (max-width:767px){
+  .egames_view_top_content{
+    padding:30px 20px;
+  }
+  .egames_view_top_content h1{
+    font-size:25px;
+  }
+  .egames_view_top_content .egames_view_option > a{
+    height:30px;
+    width:30px;
+  }
+  .egames_view_top_content .egames_view_option > a i{
+    height:16px;
+    width:16px;
+  }
+}
+/*GAME VIEW END*/

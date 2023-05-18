@@ -1,0 +1,29 @@
+.tickvideo_icon_download{background-image:url(~/application/modules/Tickvideo/externals/images/download.png);}
+.tickvideo_icon_import{background-image:url(~/application/modules/Tickvideo/externals/images/import.png);}
+.tickvideo_import_faq{
+  margin-bottom: 10px;
+}
+.tickvideo_import_faq ol{
+  padding-left: 20px;
+  list-style-type: decimal;
+}
+.tickvideo_import_faq li{
+  margin: 5px 0;
+  line-height: 1.5;
+}
+.tickvideo_import_faq li ul{
+  list-style-type:disc;
+  padding-left: 20px;
+}
+.tickvideo_import_faq li ul b{
+  font-weight: bold;
+}
+.tickvideo_progress .upload-status-current{
+  margin-bottom: 15px;
+}
+.tickvideo_progress .progress{
+  background-position: +50% 0;
+  margin-right: 0.5em;
+  vertical-align: middle;
+  background-image: url(~/externals/fancyupload/assets/progress-bar/progress.gif);
+}

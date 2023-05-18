@@ -1,0 +1,373 @@
+
+/*Common Classes*/
+.edating_users_notification .tip {
+  margin-bottom: 15px;
+  display: block;
+}
+.generic_layout_container[class*='layout_edating_'] .tip {
+  margin-top: 10px;
+}
+/*Browse User Start*/
+.edating_users_section {
+  padding: 30px 0px;
+}
+.edating_users_section .edating_users {
+  max-width: 500px;
+  margin: 0 auto;
+}
+.edating_users .edating_user_panel {
+  border-radius: 10px;
+  border-width: 1px;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.edating_user_photo{
+  position: relative;
+}
+.edating_user_photo .edating_item {
+  height: 350px;
+}
+.edating_item .bg_item_photo {
+border: none;
+}
+.edating_user_panel .edating_profile_action{
+  display: block;
+  text-align: center;
+  margin-top: -25px;
+}
+.edating_profile_action > a {
+  border-width: 1px;
+  margin: 3px;
+  width: 50px;
+  height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  position: relative;
+  transition: 0.2s ease-out;
+}
+.edating_profile_action > a > i {
+  font-size: 22px;
+}
+.edating_profile_action > a.like {
+  color: #dd1a56;
+}
+.edating_user_panel .edating_user_title {
+  padding: 15px 15px 25px;
+  text-align: center;
+}
+.edating_profile_action > a:hover {
+  transform: scale(1.1);
+}
+.edating_user_panel .edating_user_title > a {
+  padding-bottom: 10px;
+  font-size: 24px;
+  font-weight: 500;
+  display: block;
+}
+.edating_user_panel .user_info{
+  padding: 0px 15px 10px;
+}
+.edating_user_photo .owl-stage-outer {
+  position: relative;
+}
+.edating_user_photo > .owl-stage-outer > .owl-stage {
+  display: flex;
+  overflow: hidden;
+}
+.edating_user_panel .owl-prev,
+.edating_user_panel .owl-next {
+  position: absolute;
+  top: 50%;
+  bottom: 0;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 50px;
+  cursor: pointer;
+  transform: translate(0px, -50%);
+  font-size: 25px;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+.edating_user_panel .owl-prev.disabled,
+.edating_user_panel .owl-next.disabled{
+  display:none !important;
+}
+.edating_user_panel .owl-prev {
+  left: 0;
+}
+.edating_user_panel .owl-next {
+  right: 0;
+}
+.edating_users_section .profile_fields > ul > li > span + span{
+  width:inherit;
+}
+.edating_users .owl-nav.disabled,
+.edating_users .owl-dots{
+display: none;
+}
+.edating_users .sesbasic_tip {
+  margin: 50px 0;
+}
+.edating_users .sesbasic_tip span {
+  font-weight: 600;
+}
+.edating_users .sesbasic_tip img {
+  margin: 0 5px 15px;
+}
+/*Browse User End*/
+
+/* Dating Photos */
+.edating_photos_form .form-label {
+  display: none;
+}
+.edating_dating_photos_wrapper{
+  display: flex;
+  flex-wrap: wrap;
+  margin: 10px 0px;
+}
+.edating_dating_photos {
+  width: 20%;
+  text-align: center;
+}
+.edating_dating_photos_wrapper .edating_dating_photos {
+  padding-top: 15px;
+}
+.edating_dating_photos_wrapper .edating_dating_photos + .edating_dating_photos{
+  padding-left: 15px;
+}
+[dir="rtl"] .edating_dating_photos_wrapper .edating_dating_photos + .edating_dating_photos{
+  padding-left: 0px;
+  padding-right: 15px;
+}
+.edating_dating_photos img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+.edating_dating_photos .edating_option_btn{
+  text-align: center;
+  padding: 10px;
+  font-weight: 600;
+  font-size: 14px;
+}
+.edating_dating_photos_innerpart {
+  border-width: 1px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.edating_dating_photos_innerpart > .edating_option_btn a {
+  font-weight: 600;
+  text-align: center;
+  display: inline-block;
+}
+.edating_dating_photos .user_main_photo img{
+  border-width: 2px;
+}
+.edating_photos_form .global_form > div > div h3 {
+  padding:15px 0;
+  margin: 0;
+  border: none;
+  font-weight: 600;
+}
+.layout_middle > div > .edating_photos_form form.global_form, 
+.layout_middle > div > div.edating_photos_form > form.global_form{
+  margin: 0;
+}
+.edating_photos_form .global_form >div > div{
+  background-color: transparent;
+}
+.edating_photos_form .global_form > div > div > h3+p {
+  font-size: 13px;
+  margin-top: 0px;
+  padding: 0;
+  max-width: 100%;
+  line-height: 140%;
+  box-sizing: border-box;
+}
+.edating_photos_form .global_form > div > div > h3+div, 
+.edating_photos_form .global_form > div > div > h3+p+div {
+  margin-top: 20px;
+}
+
+/* User Listing Start */
+
+.edating_users_listing .edating_users_listing_item {
+  margin-bottom: 20px;
+}
+.edating_users_listing_item > article {
+  border-width: 1px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  height: 100%;
+  margin-top: 15px;
+}
+.edating_users_photo > span.bg_item_photo{
+  padding-top: 70%;
+  border:none;
+}
+.edating_users_listing_content{
+  padding: 10px;
+}
+.edating_users_listing_content .edating_username a{
+  font-size: 18px;
+  font-weight: 600;
+  display: block;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.edating_users_date{
+  text-align: center;
+  font-size: 13px;
+}
+[dir="rtl"] .edating_users_date{
+  text-align: center;
+}
+.edating_users_date > p{
+  margin-bottom: 0px;
+}
+.edating_users_listing_btns{
+  margin-top:auto;
+  padding: 15px 0px;
+  display: flex;
+  justify-content: center;
+}
+.layout_edating_mutual_likes .edating_users_listing_btns{
+  flex-direction: column;
+}
+.edating_users_listing_btns a{
+  font-size: 15px;
+  padding: 8px 40px;
+  border-width: 1px;
+  font-weight: 600;
+  display: block;
+}
+/* User Listing End */
+
+/* Accept and reject button */
+.edating_users_listing_btns a.dating_accept{
+	background:#23c774;
+	border-radius:5px;
+	color:#fff !important;
+	margin-right:5px;
+}
+.edating_users_listing_btns a.dating_reject{
+	background:#f54d4d;
+	border-radius:5px;
+	color:#fff !important;
+}
+.edating_users_listing_btns a.buttonlink{
+  line-height: inherit;
+}
+.layout_edating_mutual_likes .buttonlink.sesbasic_link_btn{
+  padding: 6px 20px;
+  font-weight: normal;
+  font-size: 14px;
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.edating_users_listing_btns .icon_friend_remove{
+  margin-bottom:10px;
+}
+.edating_users_date .fa-heart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  transition: all 0.2s ease-in-out;
+}
+[dir="rtl"] .edating_users_date .fa-heart{
+  left:10px;
+  right: inherit;
+}
+.edating_users_listing_item article:hover .edating_users_date .fa-heart {
+  transform: scale(1.1);
+}
+.generic_layout_container[class*="layout_edating_"] .pages{
+  text-align: center;
+}
+/* Update Profile User Listing */
+.edating_users_cover_bg{
+  height: 120px;
+  position: absolute;
+  width: 100%;
+}
+.edating_users_cover_bg img{
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+}
+.edating_users_photo {
+  width: 150px;
+  height: 150px;
+  margin: 30px auto 0;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  border-width: 3px;
+}
+/* Browser Search Start */
+.edating_vertical_view .browse-range-wrapper select, 
+.edating_horizontal_view .browse-range-wrapper select {
+  width: 49%;
+}
+.edating_horizontal_view .browsemembers_criteria > ul{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.edating_horizontal_view .browsemembers_criteria > ul > li.browse-separator-wrapper,
+.edating_browse_search_form.edating_vertical_view .browse-separator-wrapper{
+ display: none;
+}
+.edating_horizontal_view .browsemembers_criteria > ul > li + li{
+  margin-top: 0px;
+  margin-left: 7px;
+}
+.edating_horizontal_view .browsemembers_criteria > ul > li{
+  width: 32%;
+  margin-bottom: 15px;
+}
+.edating_horizontal_view .browsemembers_criteria > ul > li.browse-separator-wrapper ~ li{
+  width: auto;
+  margin-top: 15px;
+  margin-right: 15px;
+}
+.edating_horizontal_view .browse-range-wrapper select + select{
+margin-left:2px;
+}
+.edating_horizontal_view .browsemembers_criteria button{
+  margin-top: 0px;
+}
+/* Browser Search End */
+@media (max-width: 1199px) {
+  .edating_dating_photos{
+    width: 33.3%;
+  } 
+  .edating_dating_photos img{
+    height: 200px;
+  }
+}
+
+@media (max-width: 991px) { 
+  .edating_dating_photos{
+    width: 50%;
+  } 
+}
+/* Mobile Screen View */
+@media (max-width: 575px) {
+  .edating_users_section .profile_fields > ul > li > span{
+    width: 105px;
+    margin-right: 0px;
+  }
+  .edating_dating_photos{
+    width: 100%;
+  }
+ }

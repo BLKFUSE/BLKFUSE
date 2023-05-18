@@ -1,0 +1,88 @@
+
+/*Stories Images Listing Start*/
+.sesstories_packs_list{
+  clear:both;
+  overflow:hidden;
+}
+.sesstories_packs_list > li{
+  box-sizing:border-box;
+  width:25%;
+  float:left;
+  padding:0 5px 10px;
+}
+.sesstories_packs_list .sesstories_packs_item{
+  box-sizing:border-box;
+  background-color:#f8f8f8;
+  border-radius:5px;
+  padding:10px;
+  position:relative;
+  overflow:hidden;
+}
+.sesstories_packs_list_input{
+  float:left;
+} 
+.sesstories_packs_list_options{
+  float:right;
+}
+.sesstories_packs_list_options a{
+  text-decoration:none !important;
+  display:inline-block;
+  vertical-align:middle;
+  margin-left:5px;
+  font-size:17px;
+}
+.sesstories_packs_list_img{
+  margin-top:10px;
+  float:left;
+  width:100%;
+}
+.sesstories_packs_list_img img{
+  height:150px;
+  width:100%;
+  object-fit:cover;
+}
+.sesstories_icon_delete:before{
+  content:"\\f1f8";
+  color:#f00;
+}
+.sesstories_icon_featured:before{
+  content:"\\f005";
+  color:#f36a33;
+}
+.sesstories_icon_unfeatured:before{
+  content:"\\f005";
+  color:#999;
+}
+.sesstories_icon_enabled:before{
+  content:"\\f058";
+  color:#2ecc71;
+}
+.sesstories_icon_disabled:before{
+  content:"\\f058";
+  color:#999;
+}
+#global_page_sesstories-admin-manage-create label.required:after {
+content:"*";
+color:#f00;
+}
+.sesstories_select_all {
+  margin:5px 0 15px;
+  display:inline-block;
+  font-weight:600;
+}
+.sesstories_select_all input {
+  margin-top:-4px !important;
+}
+.event_calendar_container button.event_calendar {
+  margin-top:0 !important;
+  border-radius:0;
+}
+#endtime-wrapper .description {
+max-width:400px !important;
+}
+.sesact_global_setting button[disabled] {
+  background:#bdbdbd;
+  border-color:#bdbdbd;
+  cursor:not-allowed;
+}
+/*Stories Images Listing End*/

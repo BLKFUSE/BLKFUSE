@@ -1,0 +1,147 @@
+.siteshare_admin_search .search {
+  width: 100%;
+  box-sizing: border-box;
+}
+.siteshare_social_services_wapper {
+  border: 1px solid #F5F5F5;
+}
+.siteshare_social_services_wapper .siteshare_social_services_statistics {
+  position: relative;
+  display: block;
+}
+.siteshare_social_services_statistics_graph_c {
+  border-bottom: 1px solid #F5F5F5;
+  padding: 20px 100px;
+}
+.siteshare_social_services_statistics > div {
+  padding: 10px;
+}
+.siteshare_social_services_statistics_graph {
+  width: 100%;
+  height: 400px;
+}
+.siteshare_social_services_statistics .total_heading {
+  font-size: 16px;
+  border-bottom: 1px solid #F5F5F5;
+  background-color: #FDFDFD;
+}
+.siteshare_social_services_statistics ul {
+}
+.siteshare_social_services_statistics ul li{
+  display: inline-block;
+  width: 24%;
+  padding: 5px;
+  margin: 3px;
+  border-left: 15px solid;
+  box-sizing: border-box;
+  border-bottom: 2px solid;
+}
+
+.siteshare_social_services_statistics ul li span:last-child {
+  float: right;
+  font-weight: 700;
+}
+
+/*ADMIN FAQ PAGES START HERE*/
+.siteshare_faq_tabs ul li a {
+  font-size:11px !important;
+}
+.admin_siteshare_files_wrapper {
+ +rounded;
+  background: #e9f4fa;
+  padding: 10px;
+}
+.admin_siteshare_files {
+ +rounded;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #ccc;
+  overflow-y: auto;
+  list-style:decimal !important;
+  padding-left:10px;
+}
+.admin_siteshare_files > li {
+  margin-left: 20px;
+  padding: 7px 12px 7px 1px;
+}
+.admin_siteshare_files > li + li {
+  border-top: 1px solid #eee;
+}
+.siteshare_faq li > div {
+  clear:both;
+  border-left:3px solid #ccc;
+  padding:5px 5px 5px 10px;
+  margin:5px;
+  font-family:arial;
+  line-height:18px;
+}
+.siteshare_faq li > div b {
+  font-weight:bold;
+}
+.siteshare_faq li div ul li ul {
+  list-style: circle;
+  padding-left: 10px;
+  margin-left:5px;
+}
+.siteshare_faq li div ul {
+  list-style: disc;
+  padding-left: 10px;
+}
+
+/*ADMIN FAQ PAGES END HERE*/
+
+/*ADMIN ORDERING PAGES START HERE*/
+.siteshare_admin_order_list {
+  clear:both;
+}
+.siteshare_admin_order_list .list_head {
+  background-color: #E9F4FA;
+  border-bottom: 1px solid #AAAAAA;
+  overflow:hidden;
+}
+.siteshare_admin_order_list .list_head > div {
+  font-weight:bold;
+  float:left;
+  padding:7px;
+}
+.siteshare_admin_order_list ul {
+  padding:0px;
+  margin:0px;
+}
+.siteshare_admin_order_list ul > li {
+  overflow:hidden;
+  cursor:move;
+  border-bottom:1px solid #EEEEEE;
+}
+.siteshare_admin_order_list ul > li:hover {
+  background-color:#f5f5f5;
+}
+.siteshare_admin_order_list ul > li > div {
+  padding:7px;
+  float:left;
+}
+/*ADMIN ORDERING PAGES END HERE*/
+
+.siteshare_icon_add {
+  background-image:url(~/application/modules/Siteshare/externals/images/admin/add.png);
+}
+.siteshare_form .form-element .description {
+  max-width: 680px !important;
+}
+
+/*SOCIAL SITES SHARE PAGE CSS*/
+.siteshare_admin_search .siteshare_share_stats_form div select {
+  width: 150px;
+  padding: 6px;
+}
+.siteshare_previous_page_link {
+  vertical-align: middle;
+  display: table;
+}
+.siteshare_previous_page_link img {
+  display: table-cell;
+}
+.siteshare_previous_page_link a {
+  vertical-align: top;
+  padding-left: 5px;
+}

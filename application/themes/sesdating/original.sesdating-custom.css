@@ -1,0 +1,37 @@
+/* ADD YOUR CUSTOM CSS HERE */
+
+.sesdating_lp .sesdating_lp_inner{
+  max-width:1200px;
+}
+
+/*Verify Badge Work*/
+html .sesbasic_verify_icon{
+	filter:none;
+	-webkit-filter:none;
+	position:relative;
+	border-radius:50%;
+	background-color:#fff;
+	height:16px;
+	width:16px;
+	margin-left:5px;
+}
+html .sesbasic_verify_icon svg{
+	fill:#019eeb !important;
+	position:absolute;
+	height:20px;
+	width:20px;
+	top:50%;
+	left:50%;
+	transform:translate(-50%, -50%);
+}
+html .feed .sesbasic_verify_icon{
+	height:14px;
+	width:14px;
+	margin-right:5px;
+	vertical-align:middle;
+	top:-1px;
+}
+html .feed .sesbasic_verify_icon svg{
+	height:18px;
+	width:18px;
+}

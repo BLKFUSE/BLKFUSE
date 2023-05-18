@@ -1,0 +1,294 @@
+
+
+.everification_icon_verify:before{
+	content:"\f00c";
+	font-family:"Font Awesome 5 Free";
+	font-weight:900;
+}
+.everification_icon_reject:before{
+	content:"\f00d";
+	font-family:"Font Awesome 5 Free";
+	font-weight:900;
+}
+.everification_icon_approve:before{
+	content:"\f058";
+	font-family:"Font Awesome 5 Free";
+	font-weight:900;
+}
+.everification_icon_view:before{
+	content:"\f06e";
+	font-family:"Font Awesome 5 Free";
+	font-weight:900;
+}
+.everification_icon_delete:before{
+	content:"\f1f8";
+	font-family:"Font Awesome 5 Free";
+	font-weight:900;
+}
+.everification_icon_note:before{
+	content:"\f15c";
+	font-family:"Font Awesome 5 Free";
+	font-weight:400 !important;
+}
+.everification_icon_help:before{
+	content:"\f059";
+	font-family:"Font Awesome 5 Free";
+	font-weight:900;
+}
+.everification_nav_btns{
+	float:right;
+	margin-top:-40px;
+}
+.everification_nav_btns a{
+	background-color:#f36a33;
+	border-radius:3px;
+	background-position:10px center;
+	background-repeat:no-repeat;
+	color:#fff;
+	float:left;
+	font-weight:bold;
+	padding:7px 15px;
+	margin-left:10px;
+	position:relative;
+}
+.everification_nav_btns a:hover{
+	text-decoration:none;
+	opacity:.8;
+}
+.everification_nav_btns a i{
+	margin-right:5px;
+}
+
+.everification_label_pending,
+.everification_label_verified,
+.everification_label_rejected{
+	display: inline-block;
+	color: #fff;
+	border-radius: 3px;
+	padding: 5px 10px;
+	font-size: 12px;
+	font-weight: bold;
+	min-width: 100px;
+}
+.everification_label_pending{
+	background-color:#f5ca00;
+}
+.everification_label_verified{
+	background-color:#599e14;
+}
+.everification_label_rejected{
+	background-color:#c8514a;
+}
+.everification_manage_options a{
+	border-width: 1px;
+	border-radius: 3px;
+	display: inline-block;
+	position: relative;
+	height: 30px;
+	width: 30px;
+	background-color: #fff;
+	color: #000;
+}
+.everification_manage_options a:hover{
+	background-color:#f2f2f2;
+}
+.everification_manage_options a:before{
+	font-size:15px;
+	position:absolute;
+	left:50%;
+	top:50%;
+	transform:translate(-50%,-50%);
+}
+/*Loading Message*/
+.everification_waiting_msg_box{
+	background-color:rgba(255, 255, 255, 0.8);
+	height:100%;
+	left:0;
+	position:fixed;
+	top:0;
+	width:100%;
+}
+.everification_waiting_msg_box_cont{
+	background-color:rgba(255, 255, 255, 0.8);
+	border:5px solid #43bbef;
+	box-shadow:0 0 5px rgba(0, 0, 0, 0.5);
+	font-size:20px;
+	font-weight:bold;
+	height:100px;
+	left:50%;
+	margin:-50px 0 0 -300px;
+	padding:20px;
+	position:fixed;
+	text-align:center;
+	top:50%;
+	width:600px;
+	z-index:24;
+}
+.everification_waiting_msg_box_cont i{
+	background-image:url(../../images/loading.gif);
+	background-position:center center;
+	background-repeat:no-repeat;
+	display:block;
+	height:30px;
+	margin-top:20px;
+	width:100%;
+}
+
+/*Help setting tab in admin panel*/
+.everification_support_links{
+	display:flex;
+	flex-wrap:wrap;
+}
+.everification_support_links a{
+	padding:20px 10px 15px;
+	width:30%;
+	margin:5px;
+	text-decoration:none !important;
+	transition:all .5s ease;
+}
+.everification_support_links a h4{
+	font-size:17px;
+	font-weight:bold;
+	color:#706e6e;
+	margin-top:5px;
+}
+.everification_support_links a p{
+	clear:both;
+	font-size:13px;
+	margin-top:10px;
+	color:#818181;
+	text-align:justify;
+}
+.everification_support_links a p span._btn{
+	background-color:#0DC7F1;
+	color:#fff;
+	float:right;
+	padding:3px 10px;
+	margin-top:10px;
+	text-transform:uppercase;
+	font-size:90%;
+}
+.everification_support_links a:nth-child(1){
+	background:#e1f9ed;
+}
+.everification_support_links a:nth-child(2){
+	background:#daf5ce;
+}
+.everification_support_links a:nth-child(3){
+	background:#fbf9d6;
+}
+.everification_support_links a:nth-child(4){
+	background:#ffe4ed;
+}
+.everification_support_links a:nth-child(5){
+	background:#ebe0ff;
+}
+.everification_support_links a:nth-child(6){
+	background:#eeffd8;
+}
+.everification_support_links a:nth-child(7){
+	background:#e3fffa;
+}
+.everification_support_links a:nth-child(8){
+	background:#e3e7ff;
+}
+.everification_support_links a:nth-child(9){
+	background:#ffecee;
+}
+.everification_support_links a img{
+	float:left;
+	margin:0 10px 10px 0;
+	width:30px;
+}
+.everification_support_links b{
+	font-weight:bold;
+}
+.everification_support_social_buttons{
+	margin-top:30px;
+}
+.everification_support_social_buttons ul{
+	display:flex;
+	justify-content:center;
+}
+.everification_support_social_buttons ul li{
+	padding:0 5px;
+	width:25%;
+}
+.everification_support_social_buttons ul li._facebook a{
+	background-color:#3a589b;
+}
+.everification_support_social_buttons ul li._twitter a{
+	background-color:#1da1f2;
+}
+.everification_support_social_buttons ul li._youtube a{
+	background-color:#cf3427;
+}
+.everification_support_social_buttons ul li._se a{
+	background-color:#000000;
+}
+.everification_support_social_buttons ul a{
+	justify-content:center;
+	align-items:center;
+	display:flex;
+	text-align:center;
+	color:#fff;
+	height:50px;
+	box-shadow:0 5px 5px rgba(0, 0, 0, .2);
+	position:relative;
+	-webkit-transition:all 200ms ease 0s;
+	-moz-transition:all 200ms ease 0s;
+	-o-transition:all 200ms ease 0s;
+	transition:all 200ms ease 0s;
+	top:0;
+}
+.everification_support_social_buttons ul a:hover{
+	text-decoration:none;
+	top:-5px;
+}
+.everification_support_social_buttons ul a i{
+	margin-right:8px;
+	font-size:17px;
+	vertical-align:middle;
+}
+.everification_support_social_buttons ul li._se img{
+	width:17px;
+	vertical-align:middle;
+}
+.everification_support_social_buttons ul a span{
+	font-weight:bold;
+}
+.everification_support_contact_links{
+	margin-top:30px;
+}
+.everification_support_contact_links ul{
+	display:flex;
+	align-items: center;
+	justify-content:center;
+	background-color:#f8f8f8;
+	padding:20px;
+}
+.everification_support_contact_links ul li{
+	margin:0 10px;
+	font-size:15px;
+}
+.everification_support_contact_links ul li i{
+	font-size:20px;
+	margin-right:5px;
+	vertical-align:middle;
+}
+.everification_support_contact_links ul li i img{
+	max-height:30px;
+}
+.everification_support_contact_links ul li span,
+.everification_support_contact_links ul li span a{
+	font-weight:bold;
+}
+.everification_support_contact_links ul li i.fa-skype{
+	color:#00aaf2;
+}
+.everification_support_contact_links ul li i.fa-whatsapp{
+	color:#4caf50;
+}
+.everification_support_contact_links ul li i.fa-phone{
+	color:#fc7a51;
+}

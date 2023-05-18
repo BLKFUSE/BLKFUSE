@@ -1,0 +1,619 @@
+body{
+	position:relative;
+	background-attachment:fixed;
+	background-size:100%;
+  background-repeat:no-repeat;
+}
+body:before{
+	content:"";
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background:rgba(0, 0, 0, .4);
+}
+#signup_account_form{
+	display:none;
+}
+#global_header{
+	display:none;
+}
+.sesdating_lp{
+	padding:0 !important;
+	background:transparent !important;
+	margin-bottom:0 !important;
+	border:0 !important;
+}
+.sesdating_lp .sesdating_lp_inner{
+	width:100%;
+	max-width:1050px;
+	margin:0 auto;
+	z-index:9;
+	position:relative;
+	display:flex;
+}
+.sesdating_lp .sesdating_lp_form {
+  width:350px;
+}
+.sesdating_lp_form .global_form > div > div {
+  background:transparent !important;
+	padding-top:0;
+}
+.sesdating_lp .sesdating_lp_form .sesdating_lp_form_inner {
+	position:absolute;
+	top:0;
+	left:0;
+	width:350px;
+	bottom:0;
+	min-height:700px;
+	height:100%;
+	padding:0 20px;
+  box-sizing:border-box;
+}
+.sesdating_lp .sesdating_lp_form .sesdating_lp_form_inner:before{
+	content:"";
+	position:absolute;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+}
+.sesdating_lp .sesdating_lp_form .sesdating_lp_form_inner:after{
+	content:"";
+	position:absolute;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	opacity:.7;
+	z-index:-1;
+}
+.sesdating_lp .sesdating_lp_form .lp_form_register {
+	text-align:center;
+	display:block;
+	border-bottom:1px solid rgba(255,255,255,0.2);
+	padding:20px;
+	position:relative;
+}
+.sesdatinglp_login_signup{
+	text-align:center;
+}
+.sesdatinglp_login_signup > a {
+	display:inline-block;
+	padding:8px 18px;
+	margin:0 2px;
+	border-radius:2px;
+	transition:all .5s ease;
+}
+.sesdatinglp_login_signup > a:hover {
+	transform:translateX(-5px);
+	transition:all .5s ease;
+}
+.sesdating_lp .sesdating_lp_right {
+	flex-grow:1;
+	text-align:center;
+	padding-top:20px;
+}
+.sesdating_lp .sesdating_lp_righttop{
+	height:400px;
+	position:relative;
+	text-align:center;
+}
+.sesdating_lp .sesdating_lp_right h1 {
+	color:#fff;
+	font-size:45px;
+	font-family:'Pacifico', cursive;
+}
+.sesdating_lp .sesdating_lp_right p {
+	font-size:17px;
+	color:white;
+}
+.sesdating_lp .sesdating_lp_righttop ul {
+	display:flex;
+	flex-wrap:wrap;
+	width:50%;
+	margin:50px auto;
+}
+.sesdating_lp .sesdating_lp_righttop ul li {
+	width:100px;
+	height:100px;
+	line-height:0px;
+	border-width:1px;
+	border-radius:100%;
+	color:#fff;
+	font-size:18px;
+	margin-left:20px;
+	border:1px solid;
+}
+.sesdating_lp .sesdating_lp_righttop ul li:first-child {
+  margin-left:0;
+}
+.sesdating_lp .sesdating_lp_right ul li i {
+	display:block;
+	line-height:50px;
+	font-size:22px;
+	margin-top:10px;
+}
+.sesdating_lp .sesdating_lp_main_menu ul li a i{
+	display:none;
+}
+.sesdating_lp .sesdating_lp_form .lp_form_register i {
+	font-size:16px;
+	margin-right:6px;
+}
+.sesdating_lp .sesdating_lp_logo a {
+  display:block;
+	font-size:20px;
+}
+.sesdating_lp .sesdating_lp_logo {
+  margin:30px auto;
+	position:relative;
+}
+.sesdating_lp_logo a img {
+  max-height:45px;
+}
+.sesdating_lp .sesdating_lp_form h3 {
+	font-size:20px;
+	height:60px;
+	line-height:60px;
+	width:70%;
+	margin:0 auto;
+}
+.sesdating_lp_form .global_form > div > div label,.sesdating_lp_form .global_form div.form-label{
+  display:none;
+}
+.sesdating_lp .sesdating_lp_form h4{
+	border-bottom:0 !important;
+	margin-bottom:5px;
+}
+.sesdating_lp .sesdating_lp_form input[type=text],.sesdating_lp .sesdating_lp_form input[type=email],.sesdating_lp .sesdating_lp_form input[type=password]{
+	width:100% !important;
+	padding:7px 15px;
+}
+.sesdating_lp .sesdating_lp_form .global_form{
+	position:relative;
+}
+.sesdating_lp .sesdating_lp_form .global_form div.form-element{
+	min-width:100% !important;
+	overflow:visible;
+}
+.sesdating_lp .sesdating_lp_form .global_form div#remember-element{
+	min-width:50% !important;
+}
+.sesdating_lp .sesdating_lp_form #remember-wrapper label {
+	display:inline-block;
+	color:white;
+}
+.sesdating_lp .sesdating_lp_form div#forgot-element {
+	float:right;
+	min-width:50% !important;
+	text-align:right;
+	margin-top:-30px;
+}
+.sesdating_lp .sesdating_lp_form .global_form div.form-wrapper{
+	overflow:visible;
+}
+.sesdating_lp .sesdating_lp_form .global_form button[type=submit]{
+	width:150px;
+	height:32px;
+	line-height:14px;
+	background-image:none;
+	border:1px solid rgba(255, 255, 255, .2);
+	color:#fff;
+	font-size:14px;
+	text-align:center;
+	margin-top:20px;
+	text-transform:none !important;
+	box-shadow:none !important;
+	font-weight:normal;
+	z-index:99;
+	position:relative;
+	display:inline-block;
+}
+.sesdating_lp .sesdating_lp_form .global_form #submit-element{
+	text-align:center;
+}
+.sesdating_lp .sesdating_lp_form .sesdating_login {
+	margin:0 10px;
+	position:relative;
+	padding:20px 0;
+}
+.sesdating_lp .sesdating_lp_form .sesdating_login:before {
+	content:"";
+	position:absolute;
+	border:1px solid rgba(255,255,255,0.25);
+	width:100%;
+	height:70%;
+  top:0;
+}
+.sesdating_lp .lp_help_links ul {
+  text-align:center;
+	padding:20px 0;
+	margin:20px 0;
+  border-top:1px solid rgba(255,255,255,0.2);
+}
+.sesdating_lp .lp_help_links ul li {
+  display:inline-block;
+}
+.sesdating_lp .lp_help_links ul li a {
+	font-size:12px;
+	border-right-width:1px;
+	padding-right:5px;
+}
+.sesdating_lp .lp_help_links ul li:last-child a{
+	border:0;
+}
+.sesdating_lp .lp_users_count{
+	position:absolute;
+	font-size:18px;
+	line-height:28px;
+	bottom:50px;
+	padding:0 30px;
+	text-align:center;
+	color:white;
+}
+.sesdating_lp .lp_users_count .users_count{
+  font-weight:bold;
+  font-size:24px;
+	text-align:center;
+	color:#fff;
+}
+.sesdating_lp_members ul {
+	padding:15px 20px;
+}
+.sesdating_lp_members ul li {
+	float:left;
+	width:60px;
+	height:60px;
+	border-radius:100px;
+	position:relative;
+	overflow:hidden;
+	margin:0 5px;
+  border:1px solid #e0e0e0;
+}
+.sesdating_lp_members ul li a img {
+	width:100%;
+	height:100%;
+	object-fit:cover;
+}
+.sesdating_lp_social_links {
+  text-align:center;
+	position:relative;
+}
+.sesdating_lp_social_links ul li {
+  display:inline-block;
+}
+.sesdating_lp_social_links ul li a {
+	width:35px;
+	height:35px;
+	display:block;
+	line-height:35px;
+	border-radius:100px;
+	border:1px solid rgba(255,255,255,.2);
+	font-size:18px;
+	margin:0 3px;
+}
+.sesdating_lp .sesdating_lp_form .lp_help_links{
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+}
+.footer_social a{
+	border:1px solid;
+}
+.layout_page_footer{
+	background:transparent !important;
+}
+.footer_links li a, .footer_social a{
+	color:#fff;
+}
+.footer_help_links {
+	padding:20px 0 !important;
+	width:100% !important;
+}
+.footer_help_links ul{
+	max-width:100%;
+	width:1050px;
+	margin:auto;
+}
+.footer_links{
+	padding:0;
+}
+.sesdating_home_search .form-group {
+	display:flex;
+	flex-wrap:nowrap;
+	align-items:center;
+	margin-bottom:10px;
+}
+.sesdating_login .sesdating_home_search {
+  position:relative;
+	padding:0 20px;
+}
+.sesdating_home_search .form-group label {
+	width:80px;
+	min-width:80px;
+	margin-right:5px;
+}
+.sesdating_home_search .form-group select{
+	width:100%;
+	font-size:12px;
+	background:rgba(255, 255, 255, 0.15);
+	border:0;
+	padding:8px;
+	color:white;
+}
+.sesdating_home_search .form-group select option{
+	color:#000;
+}
+.sesdating_lp_form .sesdating_login h4{
+	font-size:25px;
+	font-family:'Pacifico', cursive;
+}
+.sesdating_home_search .form-group button {
+	width:50%;
+	display:block;
+	margin:auto;
+	margin-top:15px;
+	padding:10px 15px;
+	background:#3a3a3a;
+	color:#fff !important;
+}
+.sesdating_home_search .form-group button:hover{
+	opacity:.7;
+} 
+.sesdating_home_search .form-group input{
+	background:rgba(255, 255, 255, 0.15);
+	border:0;
+	padding:8px;
+	color:white;
+}
+/* Header */
+.sesdating_lp_header{
+ padding:0 !important;
+ clear:both;
+ margin-bottom:0 !important;
+ border-radius:0 !important;
+}
+.sesdating_lp_header .sesdating_lp_header_inner{
+  clear:both;
+	overflow:hidden;
+	padding:0;
+	max-width:1200px;
+	width:100%;
+	margin:0 auto;
+	padding:15px 0 25px;
+}
+.sesdating_lp_header .sesdating_lp_logo{
+	float:left;
+	margin-right:10px;
+}
+.sesdating_lp_header .sesdating_lp_logo a{
+	float:left;
+	font-size:20px;
+	padding:8px 0 0;
+	font-weight:700;
+}
+.sesdating_lp_header .sesdating_lp_logo a img {
+	float:left;
+	max-height:50px;
+}
+.sesdating_lp_header .sesdating_login{
+  float:right;
+	position:relative;
+}
+.sesdating_lp_header .sesdating_login .form-wrapper {
+	float:left;
+	clear:none;
+	margin-right:15px;
+}
+.sesdating_lp_header .sesdating_login div#buttons-wrapper {
+	position:absolute;
+	bottom:-25px;
+}
+.sesdating_lp_header .sesdating_login #submit-wrapper {
+  margin-right:0;
+}
+.sesdating_lp_header .sesdating_login #submit-wrapper .form-label, .sesdating_lp_header .sesdating_login #submit-wrapper .form-element {
+	width:auto;
+	max-width:none;
+	min-width:auto;
+}
+.sesdating_lp_header .sesdating_login div.form-label {
+	display:none;
+	float:none;
+	text-align:left;
+	padding:0;
+	margin-bottom:5px;
+}
+.sesdating_lp_header .sesdating_login #submit-wrapper .form-element button {
+	padding:0 10px;
+	border-radius:0;
+	outline:none;
+	margin:0;
+	font-size:13px;
+	height:30px;
+	line-height:30px;
+}
+.sesdating_lp_header .sesdating_login input[type=text], .sesdating_lp_header .sesdating_login input[type=email], .sesdating_lp_header .sesdating_login input[type=password] {
+	padding:3px 5px;
+	border-radius:0;
+	width:160px;
+}
+.sesdating_lp_header .sesdating_login div#showhide_password,.sesdating_lp_header .sesdating_login #buttons-wrapper div.form-label{
+	display:none;
+}
+.sesdating_lp_header .sesdating_login #buttons-wrapper div.form-element {
+  font-size:12px;
+}
+.sesdating_login .global_form > div > div{
+	padding:0;
+}
+.sesdating_lp_header .sesdating_login .form-element{
+	min-width:160px;
+}
+.sesdating_lp_header .sesdating_login .lp_form_login {
+  display:none;
+}
+.sesdating_footer_main > div{
+	height:100px;
+}
+.sesdating_home_search .form-group span {
+	padding:5px;
+	color:white;
+}
+/* Lp main menu */
+.sesdating_lp_main_menu > .navigation {
+	display:flex;
+	flex-wrap:nowrap;
+	justify-content:center;
+	align-items:center;
+	padding:20px 0;
+}
+.sesdating_lp_main_menu > .navigation > li {
+	text-align:center;
+	position:relative;
+}
+.sesdating_lp_main_menu > .navigation > li > a {
+	color:#fff;
+	letter-spacing:.5px;
+	font-size:15px;
+	padding:15px 10px;
+}
+.sesdating_lp_main_menu > .navigation > li .main_menu_submenu {
+	background:white;
+	width:160px;
+	display:none;
+	position:absolute;
+	z-index:1;
+	left:10px;
+	height:300px;
+  overflow:auto;
+	margin-top:15px;
+}
+.sesdating_lp_main_menu > .navigation > li:hover .main_menu_submenu {
+	display:block;
+}
+.sesdating_lp_main_menu > .navigation > li .main_menu_submenu li{
+	text-align:left;
+}
+.sesdating_lp_main_menu > .navigation > li .main_menu_submenu a {
+	padding:5px 10px;
+	display:block;
+	border-bottom-width:1px;
+	border-style:dashed;
+	color:#000;
+}
+.sesdating_lp_main_menu > .navigation > li .main_menu_submenu li:last-child a {
+  border-bottom:0;
+}
+.sesdating_lp .sesdating_lp_form a,.sesdating_lp .sesdating_lp_form h3,.sesdating_lp .sesdating_lp_form h4{
+	text-align:center;
+	color:#fff;
+}
+.sesdating_home_search .form-group label{
+	color:#fff;
+}
+@media(max-width:767px){
+body{
+	margin-bottom:0 !important;
+}
+.sesdating_landing_page{
+	background-size:cover;
+}
+.sesdating_lp_header .sesdating_login form,body:before,.sesdating_lp .sesdating_lp_right,.sesdating_footer_main > .footer_links > .footer_main_links,.sesdating_lp:before{
+	display:none;
+}
+.sesdating_lp_header .sesdating_login .lp_form_login {
+	display:inline-block;
+	padding:5px 10px;
+	border-width:1px;
+	border-style:dashed;
+}
+.sesdating_lp_header .sesdating_login .lp_form_login i{
+  margin-right:5px;
+}
+.sesdating_lp .sesdating_lp_form {
+	width:100%;
+}
+.sesdating_lp .sesdating_lp_form .sesdating_lp_form_inner {
+	position:relative;
+	margin:20px auto;
+	width:90%;
+	min-height:auto;
+	border-radius:5px;
+	padding:10px;
+}
+.sesdating_lp .sesdating_lp_logo {
+	margin:15px auto;
+}
+.sesdating_lp .sesdating_lp_form .lp_form_register{
+padding:15px;
+}
+.sesdating_lp_header .sesdating_lp_header_inner{
+	padding:10px 20px;
+}
+.sesdating_lp_header .sesdating_lp_logo a{
+	padding:0;
+}
+.sesdating_footer_main > div{
+	height:auto !important;
+}
+.sesdating_landing_page .sesdating_footer_main {
+	padding:20px 0 !important;
+	background:none !important;
+}
+}
+@media(min-width:768px) and (max-width:900px){
+.sesdating_lp .sesdating_lp_inner{
+	display:block;
+}
+.sesdating_lp .sesdating_lp_form {
+  margin:auto;
+}
+.sesdating_lp .sesdating_lp_form .sesdating_lp_form_inner {
+	position:relative;
+	top:10px;
+	min-height:auto;
+	display:block;
+}
+.sesdating_lp .sesdating_lp_logo{
+	top:20px;
+}
+.sesdating_lp_rightmenu{
+	position:absolute;
+	top:-50px;
+	left:0;
+	right:0;
+}
+.sesdating_lp .sesdating_lp_righttop ul{
+	margin:20px auto;
+}
+.sesdating_lp_members ul {
+  text-align:center;
+}
+.sesdating_lp_members ul li {
+  float:none;
+	display:inline-block;
+}
+.sesdating_landing_page .sesdating_footer_main{
+	padding:10px 30px 10px;
+  padding-left:100px;
+}
+.sesdating_footer_main > .footer_links > .footer_main_links,.footer_social{
+	top:0;
+}
+.footer_help_links {
+  padding:20px !important;
+}
+.sesdating_lp .sesdating_lp_righttop {
+  height:auto;
+}
+.sesdating_landing_page{
+	background-size:cover;
+}
+.sesdating_footer_main:before, .sesdating_footer_main:after{
+	display:none;
+}
+}

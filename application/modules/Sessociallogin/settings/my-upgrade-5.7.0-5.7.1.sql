@@ -1,0 +1,1 @@
+DELETE from `engine4_core_menuitems` where `name` = "sessociallogin_admin_main_yahoo";

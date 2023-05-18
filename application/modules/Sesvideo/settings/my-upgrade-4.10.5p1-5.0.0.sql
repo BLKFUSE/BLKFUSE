@@ -1,0 +1,1 @@
+ALTER TABLE `engine4_video_fields_meta` ADD `icon` TEXT NULL DEFAULT NULL;

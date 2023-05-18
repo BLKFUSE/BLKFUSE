@@ -1,0 +1,16 @@
+.edating_users .edating_user_panel .edating_profile_action_wrapper{
+	background-color: $theme_list_background_color_alt;
+}
+.edating_profile_action > a{
+	background-color: $theme_list_background_color;
+}
+.edating_dating_photos .edating_option_btn{
+	color: $theme_link_color;
+}
+.edating_dating_photos .user_main_photo img{
+	border-color: $theme_button_background_color;
+}
+.edating_users_cover_bg{
+	background-color: $theme_button_background_color;
+}
+

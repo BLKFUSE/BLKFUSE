@@ -1,0 +1,242 @@
+
+
+.core_admin_main_plugins_sesdating {
+	border-radius: 3px 3px 0 0;
+	background-color: #e8288d;
+	color: #fff !important;
+}
+.dating_manangemenu_table{
+	width:40%;
+}
+.dating_manangemenu_icon{
+	background-color:#bbb;
+	max-width:30px;
+	padding:10px;
+}
+/*Manage Slideshow*/
+.dating_manage_slides{
+	width:60%;
+}
+.dating_manage_slides_head > div{
+	background-color:#f5f5f5;
+	padding:10px;
+	border-bottom:1px solid #aaa;
+	float:left;
+	font-weight:bold;
+	padding-top:7px;
+	padding-bottom:7px;
+	white-space:nowrap;
+}
+.dating_manage_slides_list{
+	margin-bottom:10px;
+}
+.dating_manage_slides_list li{
+	border-bottom:1px solid #eee;
+	cursor:move;
+	clear:both;
+	overflow:hidden;
+}
+.dating_manage_slides_list li:nth-child(odd){
+	background-color:#fff;
+}
+.dating_manage_slides_list li:nth-child(even) {
+	background-color:#f8f8f8;
+}
+.dating_manage_slides_list li > div{
+	padding:10px;
+	font-size:.9em;
+	float:left;
+	padding-top:7px;
+	padding-bottom:7px;
+	vertical-align:top;
+	white-space:normal;
+}
+.dating_manangeslides_slide{
+	width:100px;
+}
+#global_page_sesdating-admin-settings-index #popup_settings-wrapper{
+	border-top-width:1px;
+	margin-top:10px;
+}
+#global_page_sesdating-admin-settings-index #popup_settings-wrapper .form-label{
+	font-size: 15px;
+	width: auto;
+}
+#global_page_sesdating-admin-manage-mini-menu-icons #minimenu_icons-wrapper .form-label,
+#global_page_sesdating-admin-manage-mini-menu-icons #minimenu_message_icons-wrapper .form-label,
+#global_page_sesdating-admin-manage-mini-menu-icons #minimenu_frrequest_icons-wrapper .form-label{
+	text-decoration:underline;
+}
+/*Color Scheme Form*/
+.sesdating_themes_form .form-label{
+	margin-bottom:5px;
+}
+.sesdating_themes_form #theme_color-label{
+	border-bottom-width:1px;
+	font-size:15px;
+	padding-bottom:15px;
+	text-align:center;
+	width:100%;
+	max-width:100%;
+}
+.sesdating_themes_form #theme_color-wrapper .form-element{
+	clear:both;
+	text-align:center;
+}
+.sesdating_themes_form #theme_color-wrapper .form-element li{
+	box-sizing:border-box;
+	display:inline-block;
+	margin:10px 10px 0 0;
+	padding-bottom:30px;
+	position:relative;
+	width:275px;
+}
+.sesdating_themes_form #theme_color-wrapper .form-element li input{
+	bottom:0;
+	float:none;
+	left:50%;
+	margin-bottom:10px;
+	position:absolute;
+}
+.sesdating_themes_form #theme_color-wrapper .form-element li label{
+	cursor:pointer;
+}
+.sesdating_themes_form #theme_color-wrapper .form-element li img{
+	width:100%;
+}
+.sesdating_themes_form #theme_color-wrapper .form-element li:last-child{
+	clear:both;
+	display:block;
+	float:none;
+	margin:0 auto;
+	padding-top:20px;
+	width:400px;
+}
+.sesdating_themes_form #theme_color-wrapper .form-element li:last-child:before{
+  content:"Make You Own Theme (make sure the site is in Development Mode, before you make any changes)";
+	font-size:15px;
+	font-weight:bold;
+	margin-bottom:10px;
+}
+.sesdating_themes_form #theme_color-wrapper .form-element li:last-child img{
+	margin-top:10px;
+}
+.sesdating_themes_form #header_settings-wrapper,
+.sesdating_themes_form #footer_settings-wrapper,
+.sesdating_themes_form #body_settings-wrapper{
+	border-bottom-width:1px;
+}
+.sesdating_themes_form #header_settings-wrapper .form-label,
+.sesdating_themes_form #footer_settings-wrapper .form-label,
+.sesdating_themes_form #body_settings-wrapper .form-label{
+	font-size:15px;
+	width:auto;
+}
+.sesdating_themes_form #header_settings_group > fieldset > div,
+.sesdating_themes_form #footer_settings_group > fieldset > div,
+.sesdating_themes_form #body_settings_group > fieldset > div{
+  margin-right:3%;
+	display:inline-block;
+	width:30%;
+}
+.sesdating_themes_form #header_settings_group > fieldset > div > div,
+.sesdating_themes_form #footer_settings_group > fieldset > div > div,
+.sesdating_themes_form #body_settings_group > fieldset > div > div{
+	width:100%;
+}
+.sesdating_themes_form #sesdating_footer_heading_color-wrapper{
+	display:none !important;
+}
+.sesdating_themes_form #custom_theme_color-label{
+	width:140px;
+}
+.sesdating_styling_buttons{
+	float:right;
+	margin-top:-35px;
+}
+.sesdating_button{
+	float:left;
+	margin-right:15px;
+	text-decoration:none !important;
+}
+.sesdating_button:before{margin-right:5px;}
+.sesdating_button.disabled{color:#999;}
+/*Landing Page Settings*/
+.sesdating_lp_settings_wrapper {
+	background-color:#ececec !important;
+	display:table;
+	padding:15px;
+	width:100% !important;
+}
+.sesdating_lp_settings_wrapper,
+.sesdating_lp_settings_wrapper *{
+	box-sizing:border-box;
+}
+.sesdating_lp_settings_tabs {
+	background-color:#e4e4e4;
+	display:table-cell;
+	vertical-align:top;
+	width:200px;
+}
+.sesdating_lp_settings_tabs li {
+	display:block;
+}
+.sesdating_lp_settings_tabs li + li {
+	border-top: 1px solid #ececec;
+}
+.sesdating_lp_settings_tabs li a {
+	color:#666 !important;
+	display:block;
+	font-size:17px;
+	padding:15px;
+	transition:all 500ms ease 0s;
+}
+.sesdating_lp_settings_tabs a:hover,
+.sesdating_lp_settings_tabs li.active a{
+	background-color:#fff;
+	text-decoration:none;
+}
+.sesdating_lp_settings_content{
+	background-color: #fff;
+	display: table-cell;
+	vertical-align: top;
+	padding: 20px;
+}
+.sesdating_lp_settings_content .form-element .item_label + .item_label{
+	margin-top:10px;
+}
+.sesdating_lp_settings_content .form-element .fa-trash{
+	font-size:15px;
+	text-decoration:none !important;
+}
+.sesdating_lp_settings_content .form-sub-heading{
+	border-top-width:1px;
+	font-size:17px;
+	font-weight:bold;
+	padding:15px 0;
+}
+.sesdating_lp_settings_content .item_label_feature + .item_label_feature{
+	border-top-width:1px;
+}
+
+/*Header Setting Form*/
+.dating_header_settings_form #minimenu_icons-wrapper .form-label,
+.dating_header_settings_form #minimenu_message_icons-wrapper .form-label,
+.dating_header_settings_form #minimenu_frrequest_icons-wrapper .form-label{
+	width:auto;	
+}
+.dating_header_settings_form #minimenu_notification_normal_preview-element input,
+.dating_header_settings_form #minimenu_notification_mouseover_preview-element input,
+.dating_header_settings_form #minimenu_message_normal_preview-element input,
+.dating_header_settings_form #minimenu_message_mouseover_preview-element input,
+.dating_header_settings_form #minimenu_frrequest_normal_preview-element input,
+.dating_header_settings_form #minimenu_frrequest_mouseover_preview-element input{
+	background-color: #ddd;
+	padding: 10px;
+}
+.sesdating_themes_form #theme_color-wrapper{
+	display:block !important;
+}
+[id^='global_page_sesdating-admin-'] form div.form-element input[type=text], [id^='global_page_sesdating-admin-']  form div.form-element input[type=password], [id^='global_page_sesdating-admin-'] form div.form-element input[type=email],[id^='global_page_sesdating-admin-'] form div.form-element select{
+	min-width:280px  !important;
+}

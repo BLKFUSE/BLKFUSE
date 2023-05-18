@@ -1,0 +1,1 @@
+ALTER TABLE `engine4_sesadvancedactivity_buysells` CHANGE `price` `price` DECIMAL(8,2) NOT NULL;

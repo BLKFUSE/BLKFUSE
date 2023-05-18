@@ -1,0 +1,1 @@
+ALTER TABLE `engine4_sesmusic_albumsong_fields_meta` ADD `icon` TEXT NULL DEFAULT NULL;

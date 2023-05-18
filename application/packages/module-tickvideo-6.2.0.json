@@ -1,0 +1,691 @@
+{
+  "type": "module",
+  "name": "tickvideo",
+  "version": "6.2.0",
+  "revision": null,
+  "path": "application\/modules\/Tickvideo",
+  "repository": null,
+  "sku": null,
+  "date": "Wed, 29 Jun 2022 13:01:28 +0000",
+  "title": "SNS - Short TikTak Videos Plugin for Mobile Apps",
+  "description": "SNS - Short TikTak Videos Plugin for Mobile Apps",
+  "thumb": null,
+  "developer": null,
+  "authors": [
+    "<a href=\"https:\/\/socialnetworking.solutions\" style=\"text-decoration:underline;\" target=\"_blank\">SocialNetworking.Solutions<\/a>"
+  ],
+  "meta": {
+    "date": "Wed, 29 Jun 2022 13:01:28 +0000",
+    "title": "SNS - Short TikTak Videos Plugin for Mobile Apps",
+    "description": "SNS - Short TikTak Videos Plugin for Mobile Apps",
+    "developer": null,
+    "authors": [
+      "<a href=\"https:\/\/socialnetworking.solutions\" style=\"text-decoration:underline;\" target=\"_blank\">SocialNetworking.Solutions<\/a>"
+    ],
+    "changeLog": null
+  },
+  "actions": [
+    "install",
+    "upgrade",
+    "refresh",
+    "enable",
+    "disable"
+  ],
+  "callback": {
+    "path": "application\/modules\/Tickvideo\/settings\/install.php",
+    "class": "Tickvideo_Installer",
+    "priority": 100
+  },
+  "dependencies": {
+    "module-core": {
+      "type": "module",
+      "name": "core",
+      "guid": "module-core",
+      "minVersion": "6.2.0",
+      "maxVersion": null,
+      "excludeExcept": null
+    }
+  },
+  "tests": [
+    
+  ],
+  "permissions": [
+    
+  ],
+  "structure": {
+    "application\/modules\/Tickvideo": {
+      "type": "directory",
+      "path": "application\/modules\/Tickvideo",
+      "structure": [
+        {
+          "path": "externals",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "externals\/images",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "externals\/images\/progress.gif",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1113,
+          "sha1": "bdcfcacf43527493946496d7887bfefe13eb4dcc"
+        },
+        {
+          "path": "externals\/images\/bar.gif",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 163,
+          "sha1": "ae1931c8c1ef50618b987bda63d73eb28fa33f39"
+        },
+        {
+          "path": "externals\/images\/support",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "externals\/images\/support\/custom.png",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 3033,
+          "sha1": "c64385107bc2e391eafb4b72db2e69eb448668f7"
+        },
+        {
+          "path": "externals\/images\/support\/contact.png",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 2713,
+          "sha1": "ea570d98de610742542bbd7cfb6e6c2c45e3631f"
+        },
+        {
+          "path": "externals\/images\/support\/screenshots.png",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1438,
+          "sha1": "559bd477cb51c659be94d956b725e511aefe9088"
+        },
+        {
+          "path": "externals\/images\/support\/support.png",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 3070,
+          "sha1": "832821255726aa838adfee19d73448a66c79349e"
+        },
+        {
+          "path": "externals\/images\/support\/sns-icon.png",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 7893,
+          "sha1": "485677c05b519f023fd44f34e5021a2123c05232"
+        },
+        {
+          "path": "externals\/images\/support\/help.png",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 2579,
+          "sha1": "f2ea7f7585da4ab77b8afb977c4d3aabeb94deda"
+        },
+        {
+          "path": "externals\/images\/support\/faq.png",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1870,
+          "sha1": "e8f5f2aa4d6f5826d0d6502634e49e525f7d5e56"
+        },
+        {
+          "path": "externals\/images\/support\/se-icon.png",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 2285,
+          "sha1": "7761a920b50fe62f8d304f1a9508de31ce48e7ba"
+        },
+        {
+          "path": "externals\/images\/support\/info.png",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 2344,
+          "sha1": "8852ff8fce830805d90f12363127c7458238a208"
+        },
+        {
+          "path": "externals\/images\/support\/details.png",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1787,
+          "sha1": "3e862b2a23ae616b19a002bd1e6339b2fe824e2c"
+        },
+        {
+          "path": "externals\/images\/support\/review.png",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 4810,
+          "sha1": "3ab020100f1217a4abc0a8ebd4a04aacf68a82c2"
+        },
+        {
+          "path": "externals\/images\/support\/update.png",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 2435,
+          "sha1": "5656e423948623824fd843b43be72609c4500604"
+        },
+        {
+          "path": "externals\/images\/download.png",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 338,
+          "sha1": "c1e8f2fd26443e7e93b117046df0917d8f287d2f"
+        },
+        {
+          "path": "externals\/images\/import.png",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 721,
+          "sha1": "b9e36094af0e533aedd91be803701cb047b9fb28"
+        },
+        {
+          "path": "externals\/images\/.htempty",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 0,
+          "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        },
+        {
+          "path": "externals\/scripts",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "externals\/scripts\/.htempty",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 0,
+          "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        },
+        {
+          "path": "externals\/styles",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "externals\/styles\/admin",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "externals\/styles\/admin\/main.css",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 804,
+          "sha1": "8800f76cd3d20f9b655ac86426e456ec070f3ae6"
+        },
+        {
+          "path": "externals\/styles\/main.css",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 0,
+          "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        },
+        {
+          "path": "externals\/music.zip",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 13084349,
+          "sha1": "949b9dbcd3ae5e27953dd91c5a829c12ab13e13b"
+        },
+        {
+          "path": "externals\/.htaccess",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 147,
+          "sha1": "9f1638a8edbe1c5d28789e017fb35b2f2465f01e"
+        },
+        {
+          "path": "Form",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Form\/.htempty",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 0,
+          "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        },
+        {
+          "path": "Form\/Admin",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Form\/Admin\/Global.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 2121,
+          "sha1": "5bb20cac61a1fbf55c360c9f1299e95897a299ab"
+        },
+        {
+          "path": "Form\/Admin\/Category.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1443,
+          "sha1": "8c193b57fd87891c63bc10717348d1be0fc9495e"
+        },
+        {
+          "path": "Form\/Admin\/Createmusic.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 3591,
+          "sha1": "f33403893444c819f0038d395981b8a19bcd3558"
+        },
+        {
+          "path": "Model",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Model\/Favourite.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 437,
+          "sha1": "0b15ef3c95323bba9cfa84963483d945cf7a6409"
+        },
+        {
+          "path": "Model\/Category.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 435,
+          "sha1": "62326daea687291f17f0ad40b40905e61cdfb001"
+        },
+        {
+          "path": "Model\/Music.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 429,
+          "sha1": "d7599fb7dc58f146072f98dfcf9bea959e5af732"
+        },
+        {
+          "path": "Model\/DbTable",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Model\/DbTable\/Favourites.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1368,
+          "sha1": "aa323197d6ad12a401a0a789972791cb61778bc5"
+        },
+        {
+          "path": "Model\/DbTable\/Categories.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1163,
+          "sha1": "8ca2ee4b67b25860f0e249dd188982b2a53929b9"
+        },
+        {
+          "path": "Model\/DbTable\/.htempty",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 0,
+          "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        },
+        {
+          "path": "Model\/DbTable\/Musics.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1269,
+          "sha1": "ec6d322f99426b0f5d4af99f2fa08db0c5ac0b7f"
+        },
+        {
+          "path": "Bootstrap.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 459,
+          "sha1": "0321258163077034d78f2f800be1b700ccb595a2"
+        },
+        {
+          "path": "views",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts\/admin-music",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts\/admin-music\/categories.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 5146,
+          "sha1": "3f34e65272dae7575c2a32e8d58ea8f4199bab3c"
+        },
+        {
+          "path": "views\/scripts\/admin-music\/create-music.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 3761,
+          "sha1": "fcda3d7f39dca7b3270c483bd4bacf77d743767f"
+        },
+        {
+          "path": "views\/scripts\/admin-music\/faq.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 6656,
+          "sha1": "a17272053d3115bf6651e23ce3b0d322b1966d80"
+        },
+        {
+          "path": "views\/scripts\/admin-music\/create-category.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 539,
+          "sha1": "45a0a152d6a44069a73bf05c552a5c577cd09b02"
+        },
+        {
+          "path": "views\/scripts\/admin-music\/manage.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 6825,
+          "sha1": "24c7bb7d0a0f8bc07a9e7c871697b2a8d1b4d5a6"
+        },
+        {
+          "path": "views\/scripts\/admin-music\/delete-music.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1102,
+          "sha1": "df13ab4286499c89c756833b24f5e6bc502fb6ba"
+        },
+        {
+          "path": "views\/scripts\/admin-music\/form.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 462,
+          "sha1": "d6bcbc6c794666bea832884309bce20fdca507ce"
+        },
+        {
+          "path": "views\/scripts\/admin-music\/delete-category.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 518,
+          "sha1": "2b238d5f00c13e967e1b9de19c8a0753f857338a"
+        },
+        {
+          "path": "views\/scripts\/admin-settings",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts\/admin-settings\/support.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 4797,
+          "sha1": "38003c0bfbf66f65033c83fea83d0e79ecc932da"
+        },
+        {
+          "path": "views\/scripts\/admin-settings\/index.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1115,
+          "sha1": "21d10b6058921a1a1d15ad2036baf1ac30b9eb63"
+        },
+        {
+          "path": "views\/scripts\/index",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts\/index\/index.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 460,
+          "sha1": "6cbf775b977b80b3b1b4c5d4d29d8eddca2952bc"
+        },
+        {
+          "path": "views\/scripts\/dismiss_message.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 813,
+          "sha1": "9184ed7e4e4e6a78097496a11718a5ed131fc068"
+        },
+        {
+          "path": "settings",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "settings\/manifest.php",
+          "dir": false,
+          "file": true,
+          "perms": "0755",
+          "size": 2716,
+          "sha1": "f66473b96058f59b178ec29c6decdd681e81cd2d"
+        },
+        {
+          "path": "settings\/install.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 498,
+          "sha1": "e231704fdcd8fc21889de7b3c6dfa656e4ff8157"
+        },
+        {
+          "path": "settings\/my.sql",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1088,
+          "sha1": "ee934ce44ec2df6aa33fe5f4512da2a2c9b7bb5c"
+        },
+        {
+          "path": "controllers",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "controllers\/AdminMusicController.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 24532,
+          "sha1": "ab3a6cc9681dfc2bb7cb4f1094dbd8551714fc3f"
+        },
+        {
+          "path": "controllers\/License.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 6295,
+          "sha1": "c3bcac4473a974833f2ad062566d8c9f264d85e1"
+        },
+        {
+          "path": "controllers\/IndexController.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 547,
+          "sha1": "cb9b0af954a170886be3cd0f354937a61a5e62a9"
+        },
+        {
+          "path": "controllers\/defaultsettings.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 424,
+          "sha1": "140c0ee4e3991b700d70cfb60823d4086fccfe0c"
+        },
+        {
+          "path": "controllers\/Checklicense.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1104,
+          "sha1": "d9b590efcd107965a1708ee5b2e998a55ea15b38"
+        },
+        {
+          "path": "controllers\/AdminSettingsController.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1523,
+          "sha1": "1bfa55be3bd33aa1fd5440bf56cc8ba07c98c6c6"
+        },
+        {
+          "path": "Api",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Api\/Core.php",
+          "dir": false,
+          "file": true,
+          "perms": "0755",
+          "size": 2055,
+          "sha1": "7e02c699e30770c9aa821071df85ecd74e16c03b"
+        },
+        {
+          "path": "Plugin",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Plugin\/Job",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Plugin\/Job\/Encode.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 15853,
+          "sha1": "ebca20eb8b39c3bf177f3db313ba60760b5ecdd8"
+        }
+      ]
+    },
+    "application\/languages\/en\/tickvideo.csv": {
+      "type": "file",
+      "path": "application\/languages\/en\/tickvideo.csv",
+      "structure": {
+        "path": "tickvideo.csv",
+        "dir": false,
+        "file": true,
+        "perms": "0777",
+        "size": 1424,
+        "sha1": "4c6c5aa5e7f5531d30227e07e18605705deb841c"
+      }
+    }
+  }
+}

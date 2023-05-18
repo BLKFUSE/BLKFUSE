@@ -1,0 +1,1074 @@
+/* $Id:styles.css 2015-3-1 00:00:00 SocialEngineSolutions $*/
+
+/*Create Playlist Popup*/
+.sesmusic_playlist_popup{
+  margin:15px 0 0 15px;
+  width:550px;
+}
+[dir="rtl"] .sesmusic_playlist_popup{
+  margin:15px 15px 0 0;
+}
+.sesmusic_playlist_popup .global_form,
+.sesmusic_playlist_popup .global_form > div,
+.sesmusic_playlist_popup .global_form > div > div{
+  float:none !important;
+}
+.sesmusic_playlist_popup .global_form div.form-label{
+  width:120px;
+}
+.sesmusic_playlist_popup .global_form div.form-element{
+  max-width:350px;
+}
+.sesmusic_playlist_popup .global_form textarea{
+  width:300px;
+}
+/*Search Widget*/
+.sesmusic_global_search *{
+  -moz-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box;
+}
+.sesmusic_global_search #filter_form,
+.sesmusic_global_search #filter_form > div{
+  padding:0;
+}
+.sesmusic_global_search #filter_form > div > div{
+  padding:10px;
+}
+.sesmusic_global_search #filter_form > div > div:after,
+.sesmusic_global_search .form-elements:after{
+  display:block;
+  content:'';
+  clear:both;
+}
+.sesmusic_global_search .form-elements{
+  border-radius:3px;
+  border-width:1px;
+  padding:5px;
+  width:100%;
+}
+.sesmusic_global_search .form-wrapper{
+  margin:0 !important;
+}
+.sesmusic_global_search .form-label{
+  display:none;
+}
+.sesmusic_global_search #type-wrapper{
+  float:left;
+  width:150px;
+}
+[dir="rtl"] .sesmusic_global_search #type-wrapper{
+  float:right;
+} 
+.sesmusic_global_search #title-wrapper{
+  overflow:hidden;
+}
+.sesmusic_global_search .form-wrapper select,
+.sesmusic_global_search .form-wrapper input{
+  background:none;
+  border-width:0;
+  border-radius:0;
+	height:25px;
+  padding:0;
+  outline:none;
+  width:100%;
+}
+.sesmusic_global_search .form-wrapper input{
+  padding-left:10px;
+}
+[dir="rtl"] .sesmusic_global_search .form-wrapper input{
+  padding-left:0;
+  padding-right:10px;
+}
+/*CREATE ALBUM PAGE*/
+.sesmusic_upload_form #soundContanier{
+  clear:both;
+}
+.sesmusic_upload_form .form-label label > i {
+  margin-right: 5px;
+}
+.sesmusic_upload_form #soundContanier input{
+  clear:both;
+  float:left;
+  margin-bottom:5px;
+}
+.sesmusic_upload_form .sesmusic_upload_loading{
+  float:left;
+  margin:3px 0 0 5px;
+}
+[dir="rtl"] .sesmusic_upload_form .sesmusic_upload_loading{
+  margin:3px 5px 0 0;
+}
+[dir="rtl"] .sesmusic_upload_form #soundContanier input,
+[dir="rtl"] .sesmusic_upload_form .sesmusic_upload_loading{
+  float:right;
+}
+.sesmusic_upload_form .checkurlstatus,
+.sesmusic_upload_form .removesong{
+  float:left;
+  margin-left:5px;
+}
+[dir="rtl"] .sesmusic_upload_form .checkurlstatus,
+[dir="rtl"] .sesmusic_upload_form .removesong{
+  float:right;
+  margin-left:0;
+  margin-right:5px;
+}
+.sesmusic_upload_form .removesong i:before,
+.sesmusic_upload_form .checkurlstatus i:before{
+  font-size:20px;
+}
+.sesmusic_upload_form .checkurlstatus i.fa-check:before{
+  color:#61ba9e;
+}
+.sesmusic_upload_form .removesong i.fa-trash:before,
+.sesmusic_upload_form .checkurlstatus i.fa-times:before{
+  color:#d9534f;
+}
+.sesmusic_upload_form .addanothersong{
+  clear:both;
+  float:left;
+  margin-top:5px;
+}
+[dir="rtl"] .sesmusic_upload_form .addanothersong{
+  float:right;
+}
+/*PRINT LYRICS CSS START HERE*/
+#global_page_sesmusic-song-print{
+  padding:0;
+  margin:0;
+}
+#global_page_sesmusic-song-print #global_content_simple{
+  width:100%;
+}
+.sesmusic_print_wrapper{
+  margin:10px;
+}
+.sesmusic_print_wrapper *{
+  font-family:"Courier New", Courier, monospace;
+	font-size:14px;
+  text-align:center;
+}
+.sesmusic_print_button{
+  bottom:20px;
+  position:fixed;
+  right:20px;
+}
+.sesmusic_print_button a{
+  font-size:15px;
+  font-weight:bold;
+}
+.sesmusic_print_button a:before{
+  font-size:15px;
+}
+.sesmusic_print_lyrics_content span{
+  display:block;
+  margin-bottom:10px;
+}
+/*sesmusic artist css*/
+.sesmusic_artist_grid{
+	float:left;
+	text-align:center;
+	width:228px;
+}
+[dir="rtl"] .sesmusic_artist_grid{
+	float: right;
+}
+.sesmusic_artist_grid .sesmusic_artist_grid_inner{
+	font-size:12px;
+	margin:0 5px 10px;
+	position:relative;
+}
+.sesmusic_artist_grid .sesmusic_artist_grid_bg_image{
+	height:180px;
+	overflow:hidden;
+	position:relative;
+	border-radius:3px;
+}
+.sesmusic_artist_grid .sesmusic_artist_grid_bg_image img{
+	min-height:100%;
+	max-height:inherit;
+	max-width:inherit;
+	width:100%;
+	position:relative;
+	transform:scale(1);
+	transition:all 800ms ease 0s;
+	filter:url(blur.svg#blur);
+	-webkit-filter:blur(3px);
+	filter:blur(3px);
+	opacity:0.6;
+}
+.sesmusic_artist_grid .sesmusic_item_artwork{
+	height:180px;
+	overflow:hidden;
+	position:absolute;
+	top:0px;
+	width:100%;
+}
+.sesmusic_artist_grid .sesmusic_item_artwork img{
+	border:0;
+	height:180px;
+	width:180px;
+	position:relative;
+	transition:all 800ms ease 0s;
+	transform:translate(-50%, -50%);
+	left:50%;
+	top:50%;
+	border-radius:100%;
+	object-fit:cover;
+}
+[dir="rtl"] .sesmusic_artist_grid .sesmusic_item_artwork img{
+	left: 0;
+	right: 0;
+	display: block;
+	margin: auto;
+	text-align: center;
+	transform:translate(0%, -50%);
+}
+.sesmusic_artist_grid .hover_box{
+	opacity:0;
+}
+.sesmusic_artist_grid .sesmusic_item_artwork:hover .hover_box{
+	opacity:1;
+	-webkit-transition:all 800ms ease-in-out 0s;
+	-moz-transition:all 800ms ease-in-out 0s;
+	transition:all 800ms ease-in-out 0s;
+}
+.sesmusic_artist_grid .hover_box{
+	height:100%;
+	left:0;
+	position:absolute;
+	top:0;
+	right:0;
+	width:100%;
+	z-index:2;
+}
+.sesmusic_artist_grid .hover_box_options {
+	top:50%;
+	position:absolute;
+	z-index:3;
+	left:50%;
+	transform:translate(-50%,-50%);
+}
+.sesmusic_artist_grid .hover_box_options a i{
+	color:#fff;
+	font-size:30px;
+	text-shadow:0 0 5px #000;
+}
+.sesmusic_artist_grid .hover_box_options a i.sesmusic_favourite,
+.sesmusic_playlist_listing_options_buttons a.sesmusic_favourite:before{
+	color:#ff4500 !important;
+}
+.sesmusic_artist_grid .transparentbg {
+	background-color:#616161;
+	height:100%;
+	left:0;
+	opacity:0.5;
+	position:absolute;
+	top:0;
+	right:0;
+	width:100%;
+	z-index:1;
+}
+.sesmusic_artist_grid .sesmusic_artist_info{
+	clear:both;
+	overflow:hidden;
+}
+.sesmusic_artist_grid .sesmusic_artist_title{
+	font-weight:bold;
+	margin:5px 0;
+}
+.sesmusic_artist_stats {
+	font-size:.8em;
+}
+.layout_left .sesmusic_artist_grid,
+.layout_right .sesmusic_artist_grid{
+	width:100%;
+}
+.layout_left .sesmusic_artist_grid img,
+.layout_right .sesmusic_artist_grid .sesmusic_item_artwork img{
+	height:150px;
+	width:150px;
+}
+/*artist view page css*/
+.sesmusic_artist_view_wrapper .sesmusic_artist_view_top{
+	margin-bottom:15px;
+	display:inline-block;
+	width:100%;
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_view_artwork{
+	height:180px;
+	float:left;
+	position:relative;
+	width:180px;
+	box-shadow:0px 4px 12px 2px #c3c3c3;
+	overflow:hidden;
+}
+[dir="rtl"] .sesmusic_artist_view_wrapper .sesmusic_artist_view_artwork{
+	float: right;
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_view_artwork img{
+	border:0 none;
+	max-height:inherit;
+	max-width:inherit;
+	min-height:100%;
+	width:100%;
+	object-fit:cover;
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_view_info{
+	overflow:hidden;
+	padding-left:15px;
+	border-bottom-width:1px;
+	padding-bottom:10px;
+}
+[dir="rtl"] .sesmusic_artist_view_wrapper .sesmusic_artist_view_info{
+	padding-left: 0;
+	padding-right: 15px;
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_view_title {
+	font-size:20px;
+	margin-bottom:6px;
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_view_stats {
+	font-size:13px;
+	margin-bottom:6px;
+}
+.sesmusic_artist_view_info .sesmusic_rating_star {
+	margin-bottom:10px;
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_view_options {
+	clear:both;
+	margin-bottom:10px;
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_view_options > a{
+	background-color:#000;
+	color:#fff;
+	padding:6px 10px;
+	border:none;
+	border-radius:3px;
+	font-size:11px;
+	text-decoration:none;
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_view_options > a:before{
+	margin-right:5px;
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_view_options > a.sesmusic_favourite:before {
+	color:#ff4500;
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_view_des {
+	margin-bottom:6px;
+	width:180px;
+	margin-right:15px;
+	float:left;
+	font-size:13px;
+	line-height:21px;
+}
+[dir="rtl"] .sesmusic_artist_view_wrapper .sesmusic_artist_view_des{
+	float: right;
+	margin-right: 0;
+	margin-left: 10px;
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_songslist_container{
+	overflow:hidden;
+	clear:none;
+	margin-top:-30px;
+}
+.sesmusic_artist_view_wrapper li{
+	padding:10px;
+	box-sizing:border-box;
+	width:100%;
+	border-bottom-width:1px;
+	display:table;
+	width:100%;
+}
+.sesmusic_artist_view_wrapper li:last-child{
+	border-bottom:none;
+}
+.sesmusic_artist_songslist_photo{
+	width:80px;
+	vertical-align:top;
+	display:table-cell;
+}
+.sesmusic_artist_songslist_photo_inner{
+	border-width:1px;
+	height:80px;
+	width:80px;
+	margin-right:10px;
+	overflow:hidden;
+	position:relative;
+}
+[dir="rtl"] .sesmusic_artist_songslist_photo_inner{
+	margin-right: 0;
+}
+.sesmusic_artist_songslist_photo img{
+	border-width:0;
+	max-height:inherit;
+	max-width:inherit;
+	min-height:100%;
+	width:100%;
+	object-fit:cover;
+	float:left;
+}
+.sesmusic_artist_songslist_info{
+	vertical-align:top;
+	padding-left:10px;
+	display:table-cell;
+}
+[dir="rtl"]  .sesmusic_artist_songslist_info{
+	padding-left: 0;
+	padding-right: 10px;
+}
+
+.sesmusic_artist_songslist_info_top{
+	vertical-align:top;
+	float:left;
+	width:80%;
+}
+[dir="rtl"] .sesmusic_artist_songslist_info_top{
+	float: right;
+}
+.sesmusic_artist_songslist_playbutton{
+	text-align:center;
+	margin-right:10px;
+	position:absolute;
+	top:0px;
+	bottom:0px;
+	width:100%;
+  background-color:rgba(0, 0, 0, 0.7);
+	opacity:0;
+	-webkit-transition:all 800ms ease-in-out 0s;
+	-moz-transition:all 800ms ease-in-out 0s;
+	transition:all 800ms ease-in-out 0s;
+}
+[dir="rtl"]  .sesmusic_artist_songslist_playbutton{
+	margin-right:0px;
+}
+
+.sesmusic_artist_view_wrapper li:hover .sesmusic_artist_songslist_playbutton{
+	opacity:1;
+}
+.sesmusic_artist_songslist_playbutton i{
+	overflow:hidden;
+	top:50%;
+	left:50%;
+	position:absolute;
+	transform:translate(-50% ,-50%);
+	font-size:32px;
+	color:#ff4601;
+}
+.sesmusic_artist_view_wrapper li:hover .sesmusic_item_info_label{
+	opacity:0;
+}
+.sesmusic-artist_songslist_songdetail {
+	overflow:hidden;
+}
+.sesmusic_artist_songslist_songname{
+	font-size:17px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	margin-bottom:5px;
+}
+.sesmusic_artist_songslist_author{
+	margin-bottom:5px;
+	float:left;
+	clear:both;
+}
+[dir="rtl"] .sesmusic_artist_songslist_author{
+	float: right;
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_songslist_rating{
+  float:right;
+}
+.sesmusic_artist_songslist_info_bottom .sesmusic_list_category{
+	text-align:right;
+}
+.sesmusic_artist_songslist_info_bottom .sesmusic_list_category a {
+	background-color:#999;
+	border:1px solid #999;
+	border-radius:3px;
+	position:relative;
+	display:inline-block;
+	line-height:17px;
+	color:#fff;
+	font-size:12px;
+	line-height:20px;
+	padding:0 5px;
+	text-shadow:0 1px 1px rgba(0, 0, 0, .4);
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_songslist_artist{
+	font-size:13px;
+	margin-bottom:5px;
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_songslist_info_bottom{
+	float:right;
+	vertical-align:top;
+	margin-top:10px;
+	text-align:right;
+}
+[dir="rtl"] .sesmusic_artist_view_wrapper .sesmusic_artist_songslist_info_bottom{
+	float: left;
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_songslist_info_dropdown{
+	margin-top:10px;
+	display:none;
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_songslist_info_dropdown a.links_dropdown{
+	font-size:18px;
+	display:block;
+	border-radius:3px;
+	height:30px;
+	width:30px;
+	text-align:center;
+	line-height:30px;
+	color:#f3f3f3;
+}
+.sesmusic_artist_songslist_options{
+	border-width:1px;
+	margin:0;
+	display:none;
+	box-shadow:0 0 5px rgba(0, 0, 0, .2);
+	border-width:1px;
+	border-radius:3px;
+	z-index:9;
+	position:absolute;
+	/*right:0;*/
+}
+[dir="rtl"] .sesmusic_artist_songslist_options{
+	right: auto !important;
+	z-index: 99;
+	left: 50px;
+}
+/*.sesmusic_artist_view_wrapper li:last-child .sesmusic_artist_songslist_options{
+	bottom:30px;
+}*/
+.sesmusic_artist_songslist_info_dropdown:hover .sesmusic_artist_songslist_options{
+	display:block;
+}
+.sesmusic_artist_songslist_options .sesmusic_artist_songslis_social{
+	clear:both;
+	overflow:hidden;
+	border-bottom-width:1px;
+	padding:3px 3px;
+	white-space:nowrap;
+}
+.sesmusic_artist_songslist_options .sesmusic_artist_songslis_social a{
+	background:none !important;
+	font-size:11px;
+	padding:5px 8px !important;
+	text-decoration:none !important;
+	height:inherit;
+	width:inherit;
+	float:none !important;
+	display:inline;
+}
+.layout_page_sesmusic_artist_view{
+	position:relative;
+}
+.layout_page_sesmusic_artist_view .sesmusic_artist_songslist_options {
+  right: 20px;
+}
+.sesmusic_artist_songslist_options .sesmusic_artist_songslis_social a i:before{
+	font-size:11px;
+}
+.sesmusic_artist_songslist_options .sesmusic_artist_songslis_social a.sesmusic_like_icon.active{
+	color:#02ADEA !important;
+}
+.sesmusic_artist_songslist_options .sesmusic_artist_songslis_social a.sesmusic_favorite_icon.active{
+	color:#FF4500 !important;
+}
+.sesmusic_artist_songslist_options .sesmusic_artist_songslis_social a img{
+	filter:contrast(0);
+	max-height:12px;
+	width:auto;
+	margin-top:-3px;
+}
+.sesmusic_artist_songslist_options > a{
+	font-size:11px;
+	padding:5px 10px;
+	display:block;
+	text-decoration:none;
+	white-space:nowrap;
+}
+.sesmusic_artist_songslist_options > a:hover,
+.sesmusic_songs_playlist_options a:hover{
+	background-color:rgba(0, 0, 0, .1);
+}
+.sesmusic_artist_songslist_options a:before {
+	font-size:11px;
+	margin-right:5px;
+}
+.sesmusic_artist_songslist_songstats {
+	margin-top:6px;
+}
+.sesmusic_artist_songslist_songstats > span {
+	float:left;
+	font-size:.8em;
+}
+[dir="rtl"] .sesmusic_artist_songslist_songstats > span{
+	float: right;
+}
+.sesmusic_artist_songslist_songstats > span > i{
+	margin-right:5px;
+}
+[dir="rtl"] .sesmusic_artist_songslist_songstats > span > i{
+	margin-left: 5px;
+	margin-right: 0;
+}
+.sesmusic_artist_songslist_songstats > span + span{
+	border-left-width:1px;
+	margin:0 0 0 5px;
+	padding:0 0 0 5px;
+}
+[dir="rtl"] .sesmusic_artist_songslist_songstats > span + span{
+	border-right-width:1px;
+	margin:0 5px 0 0px;
+	padding:0 5px 0 0px;
+}
+
+/*songs playlist view css*/
+.sesmusic_playlist_view .sesmusic_artist_view_options{
+	float:left;
+	margin-top:7px;
+}
+[dir="rtl"] .sesmusic_playlist_view .sesmusic_artist_view_options{
+	float: right;
+}
+.sesmusic_playlist_view .sesmusic_playlist_options_dropdown{
+	float:right;
+	margin-top:7px;
+	width:30px;
+}
+[dir="rtl"] .sesmusic_playlist_view .sesmusic_playlist_options_dropdown{
+	float: left;
+}
+.sesmusic_playlist_view .sesmusic_songs_playlist_options a{
+	display:block;
+}
+.sesmusic_playlist_view .sesmusic_songs_playlist_options{
+	margin:0;
+	box-shadow:0 0 5px rgba(0, 0, 0, .2);
+	border-width:1px;
+	border-radius:3px;
+	z-index:9999;
+	position:absolute;
+	min-width:117px;
+	margin-left:-90px;
+	display:none;
+}
+.sesmusic_playlist_view .sesmusic_playlist_options_dropdown:hover .sesmusic_songs_playlist_options{
+	display:block;
+}
+.sesmusic_playlist_view .sesmusic_playlist_options_dropdown a.links_dropdown {
+    font-size:18px;
+    display:block;
+    border-radius:3px;
+    height:30px;
+    width:30px;
+    text-align:center;
+    line-height:30px;
+    color:#f3f3f3;
+}
+.sesmusic_playlist_view .sesmusic_songs_playlist_options a{
+	font-size:11px;
+	padding:5px 10px;
+	display:block;
+	text-decoration:none;
+}
+.sesmusic_playlist_view .sesmusic_songs_playlist_options a:before {
+	font-size:11px;
+	margin-right:5px;
+}
+.sesmusic_playlist_view .sesmusic_artist_songslist_container{
+	margin-top:-30px;
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_songslist_rating{
+	margin-top:15px;
+}
+.sesmusic_artist_view_wrapper li:hover .sesmusic_artist_songslist_info_dropdown{
+	display:block;
+}
+.sesmusic_artist_view_wrapper li:hover .sesmusic_list_category,
+.sesmusic_artist_view_wrapper li:hover .sesmusic_artist_songslist_rating{
+	display:none;
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_view_artwork .image_playall_button{
+	position:absolute;
+	top:0px;
+	right:0px;
+	text-align:center;
+	width:100%;
+	bottom:0px;
+	background:rgba(0, 0, 0, 0.4);
+}
+.sesmusic_artist_view_wrapper .sesmusic_artist_view_artwork .image_playall_button a{
+	font-size:36px;
+	color:#ff4601;
+	text-decoration:none;
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+}
+/*browse playlist list view page css*/
+.sesmusic_playlist_browse_listing + .sesmusic_playlist_browse_listing{
+	margin-top: 15px;
+	border-top-width: 1px;
+	padding-top: 15px;
+}
+.sesmusic_playlist_listing_img_box{
+	width:180px;
+	position:relative;
+	float:left;
+}
+[dir="rtl"] .sesmusic_playlist_listing_img_box{
+	float: right;
+}
+.sesmusic_playlist_browse_listing .sesmusic_playlist_listing_artwork_bg_image{
+	height:180px;
+	overflow:hidden;
+	position:relative;
+	border-radius:3px;
+}
+.sesmusic_playlist_browse_listing .sesmusic_playlist_listing_artwork_bg_image img{
+	min-height:100%;
+	max-height:inherit;
+	max-width:inherit;
+	width:100%;
+	position:relative;
+	transform:scale(1);
+	transition:all 800ms ease 0s;
+	filter:url(blur.svg#blur);
+	-webkit-filter:blur(3px);
+	filter:blur(3px);
+	opacity:0.6;
+	object-fit:cover;
+}
+.sesmusic_playlist_browse_listing .sesmusic_playlist_listing_artwork{
+	height:180px;
+	overflow:hidden;
+	position:absolute;
+	top:0px;
+	width:100%;
+	background-size:cover;
+}
+.sesmusic_playlist_browse_listing .sesmusic_playlist_listing_artwork a{
+	display:block;    
+	float:left;    
+	width:100%;    
+	height:100%;
+}
+.sesmusic_playlist_browse_listing .sesmusic_playlist_listing_artwork img{
+	border:0;
+	height:150px;
+	width:150px;
+	position:relative;
+	transition:all 800ms ease 0s;
+	transform:translate(-50%,-50%);
+	left:50%;
+	top:50%;
+	border-radius:100%;
+	object-fit:cover;
+}
+[dir="rtl"] .sesmusic_playlist_browse_listing .sesmusic_playlist_listing_artwork img{
+	transform: translate(0%,-50%);
+  left: 0;
+	right: 0;
+	margin: auto;
+	text-align: center;
+	display: block;
+}
+
+.sesmusic_playlist_browse_listing .sesmusic_playlist_listing_info {
+	overflow:hidden;
+	padding-left:15px;
+}
+[dir="rtl"] .sesmusic_playlist_browse_listing .sesmusic_playlist_listing_info{
+	padding-left: 0;
+	padding-right: 15px;
+}
+.sesmusic_playlist_browse_listing .sesmusic_playlist_info_title{
+	font-size:17px;
+	margin-bottom:10px;
+}
+.sesmusic_playlist_browse_listing .sesmusic_playlist_listing_info_stats{
+	margin-bottom:5px;
+}
+.sesmusic_playlist_browse_listing .sesmusic_playlist_listinfo_desc{
+	font-size:13px;
+	line-height:20px;
+	margin-bottom:5px;
+}
+.sesmusic_playlist_browse_listing .sesbasic_rating_star{
+	margin-bottom:10px;
+}
+.sesmusic_playlist_browse_listing .sesbasic_rating_star > span.fa:before{
+	font-size:18px;
+}
+.sesmusic_playlist_browse_listing .sesmusic_playlist_listing_options_buttons > a {
+	display: inline-block;
+	padding: 8px 10px;
+	border: none;
+	border-radius: 3px;
+	font-size: 12px;
+	text-decoration: none;
+	font-family: inherit;
+	font-weight: normal;
+}
+.sesmusic_playlist_browse_listing .sesmusic_playlist_listing_options_buttons > a:before {
+	margin-right:5px;
+	font-family:'Font Awesome 5 Free';
+	font-weight:900;
+}
+.sesmusic_playlist_browse_listing .sesmusic_tracks_container li{
+	padding:5px;
+}
+.sesmusic_playlist_browse_listing li .sesmusic_tracks_list_photo{
+	margin-top:5px;
+	margin-right:5px;
+}
+.sesmusic_playlist_browse_listing li .sesmusic_tracks_list_photo img{
+	border-width:0;
+	float:left;
+	height:28px !important;
+	margin:0px;
+	width:28px !important;
+}
+.sesmusic_playlist_browse_listing li .sesmusic_songslist_playbutton {
+	height:100%;
+	left:0;
+	text-align:center;
+	position:absolute;
+	width:100%;
+	background:rgba(0, 0, 0, 0.56);
+	margin:0px;
+	color:#FF4500;
+}
+.sesmusic_playlist_browse_listing .sesmusic_songslist_playbutton i{
+	height:auto;
+	width:auto;
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+}
+.sesmusic_playlist_browse_listing .sesmusic_songslist_playbutton i:before{
+	font-size:18px;
+	line-height:inherit !important;
+	margin:0px;
+}
+/*browse playlist grid view page css*/
+.sesmusic_playlist_grid_main{
+	float:left;
+	text-align:center;
+}
+.sesmusic_playlist_grid_main .sesmusic_playlist_grid_inner{
+	font-size:12px;
+	margin:0 5px 10px;
+	position:relative;
+}
+.sesmusic_playlist_browse_grid_listign .sesmusic_playlist_grid_img_box{
+	width:100%;
+	position:relative;
+}
+.sesmusic_playlist_browse_grid_listign .sesmusic_playlist_grid_artwork_bg_image{
+	overflow:hidden;
+	position:relative;
+	border-radius:3px;
+}
+.sesmusic_playlist_browse_grid_listign .sesmusic_playlist_grid_artwork_bg_image img{
+	min-height:100%;
+	max-height:inherit;
+	max-width:inherit;
+	width:100%;
+	position:relative;
+	transform:scale(1);
+	transition:all 800ms ease 0s;
+	filter:url(blur.svg#blur);
+	-webkit-filter:blur(3px);
+	filter:blur(3px);
+	opacity:0.6;
+	object-fit:cover;
+}
+.sesmusic_playlist_browse_grid_listign .sesmusic_playlist_grid_artwork{
+	height:180px;
+	overflow:hidden;
+	position:absolute;
+	top:0px;
+	width:100%;
+	background-size:cover;
+}
+.sesmusic_playlist_browse_grid_listign .sesmusic_playlist_grid_artwork img{
+	border:0;
+	height:150px;
+	width:150px;
+	position:relative;
+	transition:all 800ms ease 0s;
+	transform:translate(-50%,-50%);
+	left:50%;
+	top:50%;
+	border-radius:100%;
+	object-fit:cover;
+}
+.sesmusic_playlist_browse_grid_listign .sesmusic_playlist_grid_hover_box{
+	position:absolute;
+	top:0px;
+	right:0px;
+	width:100%;
+	text-align:center;
+	bottom:0px;
+	line-height:180px;
+	background-color:rgba(0, 0, 0, 0.3);
+	opacity:0;
+	  -webkit-transition:all 800ms ease 0s;
+  -moz-transition:all 800ms ease 0s;
+  -o-transition:all 800ms ease 0s;
+  transition:all 800ms ease 0s;
+}
+.sesmusic_playlist_grid_inner:hover .sesmusic_playlist_grid_hover_box{
+	opacity:1;
+}
+.sesmusic_playlist_browse_grid_listign .sesmusic_playlist_grid_hover_box a{
+	color:#fff;
+	font-size:36px;
+}
+.sesmusic_playlist_browse_grid_listign .sesmusic_playlist_grid_info {
+	margin:6px 0px;
+}
+.sesmusic_playlist_browse_grid_listign .sesmusic_playlist_grid_info_title{
+	font-size:17px;
+	margin-bottom:5px;
+	text-transform:capitalize;
+}
+.sesmusic_playlist_browse_grid_listign .sesmusic_playlist_grid_music_count{
+	font-size:13px;
+}
+/*music albume browse page*/
+/*RESPONSIVE CSS*/
+@media only screen and (max-width:767px){
+	.sesmusic_playlist_popup{width:550px;}
+	.sesmusic_artist_view_wrapper .sesmusic_artist_view_des{
+		width:100%;
+	}
+	.sesmusic_artist_view_wrapper .sesmusic_artist_view_des{
+		width:100%;
+	}
+	.sesmusic_artist_view_wrapper .sesmusic_artist_songslist_container{
+		width:100%;
+	}
+	.sesmusic_artist_listing .sesmusic_artist_grid{
+		width:33% !important;
+	}
+	.sesmusic_playlist_browse_listing .sesmusic_playlist_listing_options_buttons > a{
+		padding:6px;
+		margin-bottom:5px;
+	}
+}
+@media (max-width:599px){
+		.sesmusic_playlist_browse_listing .sesmusic_playlist_listing_options_buttons > a{
+			padding:6px;
+			font-size:10px;
+		}
+		.sesmusic_artist_view_wrapper .sesmusic_artist_view_artwork{
+			width:110px;
+			height:130px;
+		}
+		.sesmusic_artist_view_wrapper .sesmusic_artist_view_options > a{
+			padding:6px;
+			font-size:10px;
+		}
+		.sesmusic_artist_view_wrapper li{
+			display:inherit;
+		}
+		.sesmusic_artist_view_wrapper .sesmusic_artist_songslist_photo{
+			float:right;
+		}
+		.sesmusic_artist_view_wrapper .sesmusic_artist_songslist_info{
+			display:inherit;
+			width:79%;
+			padding-left:10px;
+			float:left;
+		}
+		.sesmusic_artist_view_wrapper .sesmusic_artist_songslist_info_top{
+			float:left;
+			width:100% !important;
+		}
+	.sesmusic_artist_listing .sesmusic_artist_grid{
+		width:50% !important;
+	}
+}
+@media (max-width:479px){
+	.sesmusic_playlist_popup .global_form,
+	.sesmusic_playlist_popup .global_form > div,
+	.sesmusic_playlist_popup .global_form > div > div{
+		float:none !important;
+	}
+	.sesmusic_playlist_popup .global_form div.form-label{
+		width:auto;
+	}
+	.sesmusic_playlist_popup .global_form div.form-element{
+		max-width:ingerit;
+		width:auto;
+	}
+	.sesmusic_playlist_popup .global_form textarea{
+		width:300px;
+	}
+	.sesmusic_global_search #type-wrapper{width:110px;}
+	.sesmusic_playlist_listing_img_box{
+		float:none;
+		width:100%;
+	}
+	.sesmusic_playlist_browse_listing .sesmusic_playlist_listing_info{
+		padding-left:0px;
+	}
+	.sesmusic_artist_view_info{
+		float:left;
+		padding-left:0px !important;
+		padding-top:10px;
+		width:100%;
+	}
+	.sesmusic_artist_view_wrapper .sesmusic_artist_songslist_info{
+		padding-left:0px !important;
+	}
+	.sesmusic_artist_view_wrapper .sesmusic_artist_view_artwork{
+		height:200px;
+		width:200px;
+	}
+	.sesmusic_artist_listing .sesmusic_artist_grid{
+		width:100% !important;
+	}
+}
+.sesmusic_profile_info_row .sesbasic_list_customfield_lable > b{
+	font-weight:600;
+}
+.sesmusic_profile_info_row .sesbasic_list_customfield_lable > b > i{
+	margin-right:5px;
+}
+#global_page_sesmusic-index-create .sesmusic_create_btn{display:none;}
+/* BROWSE MENU */
+.sesmusic_browse_menu {
+	display:grid;
+	grid-template-columns:1fr auto;
+	align-items:center;
+}
+.sesmusic_browse_menu .tabs {
+	margin-top:0;
+	margin-left:0;
+}
+.sesmusic_browse_menu .sesmusic_create_right_btn > a {
+	padding:0 15px;
+	line-height:35px;
+	border-radius:50px;
+	display:inline-block;
+}
+@media(max-width:767px){
+	.sesmusic_browse_menu .sesmusic_create_right_btn{
+		display:none;
+	}
+}
+.sesmusic_create_button{
+	display:block;
+	padding:10px 0;
+	text-transform:capitalize;
+	text-align:center;
+}

@@ -1,0 +1,451 @@
+{
+  "type": "module",
+  "name": "avatarstyler",
+  "version": "4.10.3p2",
+  "revision": null,
+  "path": "application\/modules\/Avatarstyler",
+  "repository": null,
+  "sku": "HEASMV3",
+  "date": "Thu, 18 Oct 2018 04:15:58 +0000",
+  "title": "HE - Avatar Styler",
+  "description": "Hire-Experts Avatar Styler",
+  "thumb": null,
+  "developer": null,
+  "authors": [
+    "<a href=\"http:\/\/www.hire-experts.com\" title=\"Hire-Experts LLC\" target=\"_blank\">Hire-Experts LLC<\/a>"
+  ],
+  "meta": {
+    "date": "Thu, 18 Oct 2018 04:15:58 +0000",
+    "title": "HE - Avatar Styler",
+    "description": "Hire-Experts Avatar Styler",
+    "developer": null,
+    "authors": [
+      "<a href=\"http:\/\/www.hire-experts.com\" title=\"Hire-Experts LLC\" target=\"_blank\">Hire-Experts LLC<\/a>"
+    ],
+    "changeLog": null
+  },
+  "actions": [
+    "install",
+    "upgrade",
+    "refresh",
+    "enable",
+    "disable"
+  ],
+  "callback": {
+    "path": "application\/modules\/Avatarstyler\/settings\/install.php",
+    "class": "Avatarstyler_Installer",
+    "priority": 100
+  },
+  "dependencies": {
+    "module-core": {
+      "type": "module",
+      "name": "core",
+      "guid": "module-core",
+      "minVersion": "4.1.8",
+      "maxVersion": null,
+      "excludeExcept": null
+    }
+  },
+  "tests": [
+    
+  ],
+  "permissions": [
+    
+  ],
+  "structure": {
+    "application\/modules\/Avatarstyler": {
+      "type": "directory",
+      "path": "application\/modules\/Avatarstyler",
+      "structure": [
+        {
+          "path": "Model",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Model\/DbTable",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Model\/DbTable\/Datas.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1567,
+          "sha1": "8a8618bffbb9fe3145f69b648a450d2fd1526bbf"
+        },
+        {
+          "path": "Model\/Data.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 508,
+          "sha1": "b0b6459a449606c073a392043e1e033dacf8f6dc"
+        },
+        {
+          "path": "views",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts\/admin-index",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts\/admin-index\/rewards.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1548,
+          "sha1": "08cc94e3257a4e36987c810005cb7e92608b7019"
+        },
+        {
+          "path": "views\/scripts\/admin-index\/choose-offer.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 3759,
+          "sha1": "f8ab736cf4b2aa2d891bf30f60be6d525e85150b"
+        },
+        {
+          "path": "views\/scripts\/admin-index\/clear-offer.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 0,
+          "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        },
+        {
+          "path": "views\/scripts\/admin-index\/remove-photo.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 0,
+          "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        },
+        {
+          "path": "views\/scripts\/admin-index\/index.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 3165,
+          "sha1": "acf6bf12bd0db71b3ce41356f5f320b6b79a1523"
+        },
+        {
+          "path": "views\/scripts\/pagination",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts\/pagination\/pagination.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1047,
+          "sha1": "b1fb255948d37d7534f4756ab236bbaa35539dd2"
+        },
+        {
+          "path": "views\/scripts\/index",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts\/index\/index.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 3463,
+          "sha1": "aca0b59dccaad5aad4cdcb2523760fded4f53607"
+        },
+        {
+          "path": "Plugin",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Plugin\/Menus.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 907,
+          "sha1": "8797ec8c72fc849ad770e47a4d984519cbcb8fe2"
+        },
+        {
+          "path": "Plugin\/Core.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 3570,
+          "sha1": "b0b8e534ec31f0410cae05039cec9d017c740a64"
+        },
+        {
+          "path": "settings",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "settings\/my.sql",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 198,
+          "sha1": "1c18d450721d7751d52d38e609a8e40a65f7d423"
+        },
+        {
+          "path": "settings\/my-upgrade-4.8.9p4-4.10.3p2.sql",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 89,
+          "sha1": "823062108c774ae551fec17d768d50db7dcbae11"
+        },
+        {
+          "path": "settings\/install.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1887,
+          "sha1": "201bb9d04a4ca98f8ca1e4e2a524b8cb69c7b0b2"
+        },
+        {
+          "path": "settings\/my-upgrade-4.8.9-4.8.9p2.sql",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 87,
+          "sha1": "7d709d32e463304930d4770530639aa914c1f1a9"
+        },
+        {
+          "path": "settings\/manifest.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 2216,
+          "sha1": "b043559cac2089c4a77247ea1b7c9b1a8cc2365e"
+        },
+        {
+          "path": "settings\/my-upgrade-4.8.9p3-4.8.9p4.sql",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 88,
+          "sha1": "a720c605891b0354e75a6b7fa0fcacaad13f94e7"
+        },
+        {
+          "path": "settings\/my-upgrade-4.8.9-4.8.9p1.sql",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 87,
+          "sha1": "69847671c6ee184cdbee9079b2d1a3ae1265ca51"
+        },
+        {
+          "path": "Api",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Api\/Core.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 737,
+          "sha1": "9c14e4c550a70165799146308c1d8ccc790245a7"
+        },
+        {
+          "path": "externals",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "externals\/.htaccess",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 147,
+          "sha1": "9f1638a8edbe1c5d28789e017fb35b2f2465f01e"
+        },
+        {
+          "path": "externals\/styles",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "externals\/styles\/admin",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "externals\/styles\/admin\/main.css",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 783,
+          "sha1": "425fe3f625db5186586f60121f322466c222e282"
+        },
+        {
+          "path": "externals\/styles\/main.css",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 809,
+          "sha1": "a1f5ad764cc87eb951f88ae313a433007f37da11"
+        },
+        {
+          "path": "externals\/styles\/spinner.gif",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1063583,
+          "sha1": "e432f586e77a1a745331b981f8a822d43efb091b"
+        },
+        {
+          "path": "externals\/images",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "externals\/images\/spinner.gif",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1063583,
+          "sha1": "e432f586e77a1a745331b981f8a822d43efb091b"
+        },
+        {
+          "path": "externals\/images\/layer_default.png",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 8444,
+          "sha1": "71bcf31a05d20ba70c51610e0f80d7c1fcc0edd3"
+        },
+        {
+          "path": "controllers",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "controllers\/AdminIndexController.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 7802,
+          "sha1": "d609977da8bf7932030a70247732ff82814af32a"
+        },
+        {
+          "path": "controllers\/IndexController.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 11203,
+          "sha1": "bef73bbc1b76cd8d6e75c7b945eb5819baeee322"
+        },
+        {
+          "path": "Form",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Form\/Photo.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1452,
+          "sha1": "9aa3d3da1d6a3080851221e788d6a9e7fcac0bd7"
+        },
+        {
+          "path": "Form\/Admin",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Form\/Admin\/Settings.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 3027,
+          "sha1": "827b71952a51e1bb82824315be9bf185009fb405"
+        },
+        {
+          "path": "Bootstrap.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 91,
+          "sha1": "d82a84b482b3baef7f14554f7109d64ddf7ac1c1"
+        }
+      ]
+    },
+    "application\/languages\/en\/avatarstyler.csv": {
+      "type": "file",
+      "path": "application\/languages\/en\/avatarstyler.csv",
+      "structure": {
+        "path": "avatarstyler.csv",
+        "dir": false,
+        "file": true,
+        "perms": "0644",
+        "size": 536,
+        "sha1": "12ab2f61c758133ef4112289201ce6a4423288c6"
+      }
+    }
+  }
+}

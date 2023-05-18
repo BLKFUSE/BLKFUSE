@@ -1,0 +1,192 @@
+
+#smoothbox_window{
+	background-color:transparent !important;
+}
+body{
+	background-image:url(../images/login_bg.jpg) !important;;
+	background-size:cover;
+	width:100%;
+	height:100%;
+	background-color:transparent !important;
+}
+#global_content_simple{
+	display:block;
+}
+.layout_sesdating_login{
+	background-color:transparent !important;
+}
+.sesdating_login_main{
+	width:450px;
+	margin:20px auto;
+}
+.sesdating_login_main .sesdating_site_logo a{
+	display:inline-block;
+	width:100%;
+	text-align:center;
+	margin-bottom:40px;
+}
+.sesdating_login_main .sesdating_site_logo a img{
+	width:35%;
+}
+.sesdating_login_main .global_form{
+	margin:0px !important;
+}
+.sesdating_login_main .sesdating_login_form{
+	background-color:rgba(255, 255, 255, 0.42);
+	display:inline-block;
+	width:100%;
+	box-shadow:1px 10px 22px -11px #4a4a4a;
+	padding:20px 0px;
+}
+.sesdating_login_main .global_form > div > div{
+	background-color:transparent;
+	padding:0px 40px;
+}
+.sesdating_login_main .global_form h3,
+.sesdating_login_main .global_form p.form-description{
+	display:none;
+}
+.sesdating_login_main .global_form .form-elements{
+	position:relative;
+}
+.sesdating_login_main .sesdating_login_tittle{
+	margin:16px 0px;
+	display:inline-block;
+	width:100%;
+}
+.sesdating_login_main .sesdating_login_tittle h3{
+	text-align:center;
+	font-size:24px;
+	color:#2c2538;
+}
+.sesdating_ligin_with_social{
+	clear:both;
+	overflow:hidden;
+	color:#fff;
+	padding:0px 30px 10px;
+	margin-top:10px;
+	border-bottom:1px solid #c29590;
+}
+.sesdating_ligin_with_social .facebook_btn{
+	margin-bottom:15px;
+}
+.sesdating_ligin_with_social a .facebook_icon {
+	width:35px;
+	display:inline-block;
+	text-align:center;
+	background:#334e89;
+	padding:10px 7px;
+	float:left;
+	color:#fff;
+}
+.sesdating_ligin_with_social a .facebook{
+	overflow:hidden;
+	padding:10px 7px;
+	text-align:center;
+	background:#3a5795;
+	color:#fff;
+}
+.sesdating_ligin_with_social a .twitter_icon {
+	width:35px;
+	display:inline-block;
+	text-align:center;
+	background:#2CA0EC;
+	padding:10px 7px;
+	float:left;
+	color:#fff;
+}
+.sesdating_ligin_with_social a .twitter{
+	overflow:hidden;
+	padding:10px 7px;
+	text-align:center;
+	background:#60B5F0;
+	color:#fff;
+}
+.sesdating_login_main .sesdating_info_text{
+	font-weight:bold;
+	text-align:center;
+	margin:40px 0px 10px 0px;
+	color:#2c2538;
+}
+.sesdating_login_main .global_form div.form-label{
+	text-align:left !important;
+	margin-bottom:0px !important;
+	color:#2c2538 !important;
+	display:none;
+}
+.sesdating_login_main .global_form input[type=email], 
+.sesdating_login_main .global_form input[type=password]{
+	background-color:transparent !important;
+	border-bottom:1px solid rgba(44, 37, 56, 0.37);
+	border-top:0px;
+	border-left:0px;
+	border-right:0px;
+	border-radius:0px;
+	color:#2c2538 !important;
+	padding:10px 0px;
+	width:100%;
+}
+.sesdating_login_main .global_form input[type=text]::-webkit-input-placeholder , 
+.sesdating_login_main .global_form input[type=email]::-webkit-input-placeholder , 
+.sesdating_login_main .global_form input[type=password]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color:#2c2538;
+}
+
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active, 
+input:-webkit-autofill, 
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+	transition:background-color:10000s ease-in-out 1000s !important;
+}
+.sesdating_login_main .global_form div.form-element,
+.sesdating_login_main #user_form_login #submit-wrapper{
+	max-width:100%;
+	min-width:100%;
+	width:100%;
+}
+.sesdating_login_main .global_form button[type=submit]{
+	width:100%;
+	margin:20px 0px;
+}
+.sesdating_login_main #user_form_login #remember-wrapper{
+	padding-left:0px;
+}
+.sesdating_login_main #user_form_login #remember-element input[type=checkbox]{
+	margin-top:4px;
+	border:none;
+	background-color:#65525d;
+}
+.sesdating_login_main #user_form_login #remember-element label{
+	color:#2c2538;
+	opacity:0.7;
+	float:left;
+}
+.sesdating_login_main #user_form_login #forgot-element span{
+	float:right;
+	position:absolute;
+	right:0px;
+	bottom:27px;
+}
+.sesdating_login_main #user_form_login #forgot-element span a{
+	color:#513750;
+}
+.global_form #facebook-wrapper,
+.global_form #twitter-wrapper{display:none;}
+@media (max-width:499px){
+	.sesdating_login_main{	
+		width:100%;
+	}
+}
+@media (max-width:390px){
+	.sesdating_ligin_with_social a .facebook{
+	font-size:12px;
+	height:39px;
+	}
+	.sesdating_login_main #user_form_login #forgot-element span{
+		position:inherit;
+		float:left;
+	}
+}

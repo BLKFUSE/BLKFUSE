@@ -1,0 +1,1 @@
+UPDATE `engine4_core_menus` SET `title` = 'SNS - Advertisements Main Navigation Menu' WHERE `engine4_core_menus`.`name` = 'sescommunityads_main';

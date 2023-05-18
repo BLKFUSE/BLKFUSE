@@ -1,0 +1,1 @@
+INSERT INTO `engine4_sesapi_menus` (`label`, `module`, `type`, `status`, `order`, `file_id`, `url`, `class`, `device`, `is_delete`, `visibility`, `module_name`, `version`) VALUES ('Stores', 'estore', '1', '1', '', '', '', 'core_main_estore', '1', '0', '0', 'estore', '2.0');

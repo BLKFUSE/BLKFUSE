@@ -1,0 +1,1 @@
+INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES ("egifts_main_mypurchasedorders", "egifts", "My Orders", "", '{"route":"egifts_general","action":"my-orders"}', "egifts_main", "", 3);

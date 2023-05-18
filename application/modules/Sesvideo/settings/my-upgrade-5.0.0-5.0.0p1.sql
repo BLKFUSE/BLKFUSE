@@ -1,0 +1,1 @@
+UPDATE `engine4_core_menuitems` SET `label` = 'Channel Photo ML Settings' WHERE `engine4_core_menuitems`.`name` = 'sesvideo_admin_main_level_chanelphoto';

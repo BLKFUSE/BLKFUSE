@@ -1,0 +1,49 @@
+/* $Id:main.css 2016-05-25 00:00:00 SocialEngineSolutions $*/
+
+.sesmember_view_details_rating .sesbasic_rating_star > span.fa:before {
+	color: #FFC107;
+	font-size: 18px;
+}
+.event_calendar_container button.event_calendar{
+	margin-top:0 !important;
+	border-radius:0 !important;
+}
+/*Review Add Parameter Popup*/
+.sesmember_parameter_popup{
+  width:450px;
+}
+.sesmember_parameter_popup .sesbasic_icon_delete {
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+.sesmember_parameter_popup .settings .form-wrapper{
+  padding: 0;
+}
+.sesmember_parameter_popup .form-label{
+  display:none;
+}
+.sesmember_parameter_popup .reviewparameter{
+  margin:0 10px 10px 0;
+	min-width:inherit !important;
+}
+.sesmember_parameter_popup .sesmember_added_parameter{
+  margin-right: 10px;
+}
+.sesmember_parameter_popup .fa:before{
+  margin-right:5px;
+}
+.sesmember_parameter_popup a.fa:hover{
+  text-decoration:none;
+}
+.sesmember_profile_popup{
+	padding:15px;
+}
+.sesmember_profile_popup .form-description {
+  margin: 5px 0;
+}
+#sesmember_allow_review-element .description,
+#sesmember_licensekey-element .hint{
+	max-width:100%;
+	margin-bottom:5px;
+}
+

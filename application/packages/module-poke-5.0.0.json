@@ -1,0 +1,899 @@
+{
+  "type": "module",
+  "name": "poke",
+  "version": "5.0.0",
+  "revision": null,
+  "path": "application\/modules\/Poke",
+  "repository": null,
+  "sku": "seao-poke",
+  "date": "Fri, 06 Mar 2020 13:00:45 +0000",
+  "title": "Poke",
+  "description": "The Pokes Plugin enables a user to grab the attention of another user. Different users might use and interpret pokes in different ways. While some might use it as just another way to say hello, others might use it to grab atention and initiate conversation with someone that they feel shy to talk to. Yet others might use it to flirt with someone they like!",
+  "thumb": null,
+  "developer": null,
+  "authors": [
+    "<a href=\"http:\/\/www.socialengineaddons.com\" style=\"text-decoration:underline;\" target=\"_blank\">SocialEngineAddOns<\/a>"
+  ],
+  "meta": {
+    "date": "Fri, 06 Mar 2020 13:00:45 +0000",
+    "title": "Poke",
+    "description": "The Pokes Plugin enables a user to grab the attention of another user. Different users might use and interpret pokes in different ways. While some might use it as just another way to say hello, others might use it to grab atention and initiate conversation with someone that they feel shy to talk to. Yet others might use it to flirt with someone they like!",
+    "developer": null,
+    "authors": [
+      "<a href=\"http:\/\/www.socialengineaddons.com\" style=\"text-decoration:underline;\" target=\"_blank\">SocialEngineAddOns<\/a>"
+    ],
+    "changeLog": null
+  },
+  "actions": [
+    "install",
+    "upgrade",
+    "refresh",
+    "enable",
+    "disable"
+  ],
+  "callback": {
+    "path": "application\/modules\/Poke\/settings\/install.php",
+    "class": "Poke_Installer",
+    "priority": 100
+  },
+  "dependencies": {
+    "module-core": {
+      "type": "module",
+      "name": "core",
+      "guid": "module-core",
+      "minVersion": "4.10.3",
+      "maxVersion": null,
+      "excludeExcept": null
+    }
+  },
+  "tests": [
+    
+  ],
+  "permissions": [
+    
+  ],
+  "structure": {
+    "application\/modules\/Poke": {
+      "type": "directory",
+      "path": "application\/modules\/Poke",
+      "structure": [
+        {
+          "path": "Form",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Form\/Admin",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Form\/Admin\/Manage",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Form\/Admin\/Manage\/Filter.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 809,
+          "sha1": "7b963966abf9e39af647dc340d0ac862e0f6277a"
+        },
+        {
+          "path": "Form\/Admin\/Level.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 2431,
+          "sha1": "a4b141391e0ffee67d92c6c63bf8c293537505f8"
+        },
+        {
+          "path": "Form\/Admin\/Pokesettings.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 2848,
+          "sha1": "17d42c6661db46655f1480ed43d3fd2a18df5950"
+        },
+        {
+          "path": "Form\/pokesettingform.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1214,
+          "sha1": "043765c50d1c100e9fe2af25d5da7abdf0f33cb2"
+        },
+        {
+          "path": "Form\/.htempty",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 0,
+          "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        },
+        {
+          "path": "Form\/Sitemobile",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Form\/Sitemobile\/Search.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 940,
+          "sha1": "a9b0c29ccfe5608ce2c5a9700199306ba2413132"
+        },
+        {
+          "path": "Form\/Sitemobile\/Pokeusers",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Form\/Sitemobile\/Pokeusers\/Pokeuser.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 2609,
+          "sha1": "28ed3b4fa5dc58008c29a41288fd342b084b628c"
+        },
+        {
+          "path": "Form\/Pokeusers",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Form\/Pokeusers\/Pokeuser.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 2571,
+          "sha1": "7bdfeab672afe5b2d49780e172708276692f943a"
+        },
+        {
+          "path": "Api",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Api\/Core.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 5508,
+          "sha1": "10dab93605193bff28cac7665f56a75ac36752e8"
+        },
+        {
+          "path": "Bootstrap.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 397,
+          "sha1": "3c29f53d2334223b05dda54c0b3510173cfc5b66"
+        },
+        {
+          "path": "Model",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Model\/Pokeuser.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 393,
+          "sha1": "5262afd0abe4114fe25ed63fcedab13257e42931"
+        },
+        {
+          "path": "Model\/DbTable",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Model\/DbTable\/.htempty",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 0,
+          "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        },
+        {
+          "path": "Model\/DbTable\/Pokeusers.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 440,
+          "sha1": "96a5125730cc669815cd04b8b411260572d3851d"
+        },
+        {
+          "path": "Model\/DbTable\/Settings.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 476,
+          "sha1": "6f2a176b09404dd43af32fa038e27506a2ebb54a"
+        },
+        {
+          "path": "Model\/Setting.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 392,
+          "sha1": "56f7cb979a1d2e765fceab06885aa8ed94be0c6c"
+        },
+        {
+          "path": "controllers",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "controllers\/FriendsController.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 2450,
+          "sha1": "b3b521bb7fc619b214747a98256a43f641177634"
+        },
+        {
+          "path": "controllers\/WidgetController.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1338,
+          "sha1": "53f5f4b4bdb412d83ea6f97eebacfcfaeafbd8be"
+        },
+        {
+          "path": "controllers\/AdminPokesettingsController.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1397,
+          "sha1": "79cbd69deb2efcd41c736f6e169777438bcb64bb"
+        },
+        {
+          "path": "controllers\/AdminPokehistoryController.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 5152,
+          "sha1": "c5d72fbc969f6814cc43c4bcef17282dc310d0f6"
+        },
+        {
+          "path": "controllers\/PokeusersController.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 11022,
+          "sha1": "c2256c9256f63774ff4f529359fa01541313670b"
+        },
+        {
+          "path": "controllers\/IndexController.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 3606,
+          "sha1": "126bc26469935c093f4442e81c2f91e38a37581d"
+        },
+        {
+          "path": "controllers\/AdminLevelController.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 2268,
+          "sha1": "3fa6d607bd353f8e17fa5aa19b603bb64fee1214"
+        },
+        {
+          "path": "widgets",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "widgets\/list-pokeusers",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "widgets\/list-pokeusers\/index.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 3759,
+          "sha1": "9a9baac1101ee09275aa6d17cceeb3cc42a1509d"
+        },
+        {
+          "path": "widgets\/list-pokeusers\/Controller.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1918,
+          "sha1": "89004cf4823b10ebc23fab9051f0978ffafd4d5c"
+        },
+        {
+          "path": "widgets\/list-recentpoked",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "widgets\/list-recentpoked\/index.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1332,
+          "sha1": "0c7b7523c2171c54e8a01731185bf795c1e7df06"
+        },
+        {
+          "path": "widgets\/list-recentpoked\/Controller.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1624,
+          "sha1": "73ae0c327dfa25280b135478415c6d5716830b9b"
+        },
+        {
+          "path": "widgets\/pokeusers",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "widgets\/pokeusers\/index.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 2704,
+          "sha1": "8b7d64a318df2a7c0e334b86e1199331e5b87c68"
+        },
+        {
+          "path": "widgets\/pokeusers\/Controller.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1155,
+          "sha1": "b7e4aa739578fd6fd5601d473c0ca5c13575a417"
+        },
+        {
+          "path": "widgets\/list-toppokers",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "widgets\/list-toppokers\/index.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1139,
+          "sha1": "5e6386d819068b9cbd657acb00968b48c9c9d473"
+        },
+        {
+          "path": "widgets\/list-toppokers\/Controller.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1686,
+          "sha1": "eb18cbf20acc499fdca39353153a8abe778e2c8f"
+        },
+        {
+          "path": "widgets\/list-pokedrecently",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "widgets\/list-pokedrecently\/index.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1345,
+          "sha1": "40237df93c2ab4a6720717b7492bb07f2c8cabf9"
+        },
+        {
+          "path": "widgets\/list-pokedrecently\/Controller.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1628,
+          "sha1": "0dd6230c28bef61d6da81b209d33bc0172941c9c"
+        },
+        {
+          "path": "widgets\/list-mostpokers",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "widgets\/list-mostpokers\/index.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1138,
+          "sha1": "fb763019c1f3fe3012687cbd0dc11eaafb711d64"
+        },
+        {
+          "path": "widgets\/list-mostpokers\/Controller.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1688,
+          "sha1": "802e174c3103345fe0158e633e075b82a3407986"
+        },
+        {
+          "path": "Plugin",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "Plugin\/Core.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 819,
+          "sha1": "55ae540272a7002d129cd9f28b31ee8a83451269"
+        },
+        {
+          "path": "Plugin\/Sitemobile.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 2147,
+          "sha1": "9223185ec496cc5122e4c73231a266cea9262afd"
+        },
+        {
+          "path": "Plugin\/Menus.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 2495,
+          "sha1": "fff776ebe469617a01bfd039a5fd224ffd68900d"
+        },
+        {
+          "path": "views",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts\/admin-pokesettings",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts\/admin-pokesettings\/readme.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1848,
+          "sha1": "0ef7b7d5f4e0a9b038fb4d143b10b5a389203bad"
+        },
+        {
+          "path": "views\/scripts\/admin-pokesettings\/faq.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1366,
+          "sha1": "f22d31d355e076164a587c39bc2edf6e0e438828"
+        },
+        {
+          "path": "views\/scripts\/admin-pokesettings\/index.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1023,
+          "sha1": "630574077c617097b5f21820c7ba8ed363879229"
+        },
+        {
+          "path": "views\/scripts\/admin-pokehistory",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts\/admin-pokehistory\/index.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 8446,
+          "sha1": "3e062c48c38ac13e5fe3bd32bc74567afbbdab65"
+        },
+        {
+          "path": "views\/scripts\/admin-pokehistory\/deleteselected.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1606,
+          "sha1": "75d5e30dd79a8042834fd9ae8f32c05001f4962a"
+        },
+        {
+          "path": "views\/scripts\/admin-pokehistory\/delete.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1083,
+          "sha1": "154b9546c05fb6c3af7941ea85cf2ce32bfd0250"
+        },
+        {
+          "path": "views\/scripts\/admin-level",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts\/admin-level\/index.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1461,
+          "sha1": "0b16788b1198bc2dd783611cc38a1b931d33c7b8"
+        },
+        {
+          "path": "views\/scripts\/pokeusers",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts\/pokeusers\/pokeuser.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 714,
+          "sha1": "258f008297f4ce0e47090ba83b2349222074bc38"
+        },
+        {
+          "path": "views\/scripts\/pokeusers\/deletepoke.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 315,
+          "sha1": "7043e5d99c64966f1b62d40979e3d1549427de0b"
+        },
+        {
+          "path": "views\/scripts\/widget",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts\/widget\/userpoke.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1884,
+          "sha1": "50dd0ffc00e18054d20189187ec44757ab5b3132"
+        },
+        {
+          "path": "views\/scripts\/pagination",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts\/pagination\/pokepagination.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1290,
+          "sha1": "9eb27208a5a8c3b4260a649dc7f240c4556e64ac"
+        },
+        {
+          "path": "views\/scripts\/index",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "views\/scripts\/index\/pokesettings.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 468,
+          "sha1": "8117df0ba0acabf9642c0f3fafdfc427211b40bb"
+        },
+        {
+          "path": "settings",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "settings\/my-upgrade-4.0.2p2-4.1.8.sql",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 144,
+          "sha1": "9007954aaf48658def73f9f22f12e3c4ecd0361c"
+        },
+        {
+          "path": "settings\/install.php",
+          "dir": false,
+          "file": true,
+          "perms": "0755",
+          "size": 13081,
+          "sha1": "f805138fe2ebdf828033b38e0957a06796c8f57e"
+        },
+        {
+          "path": "settings\/my-upgrade-4.0.2p1-4.0.2p2.sql",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1368,
+          "sha1": "e287ca1c4eab598f505e706eb1fdc74297bde7bd"
+        },
+        {
+          "path": "settings\/sitemobile",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "settings\/sitemobile\/my.sql",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1078,
+          "sha1": "4178fea2b6242d994a82fe4dffd791ce4c43d052"
+        },
+        {
+          "path": "settings\/sitemobile\/content.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 721,
+          "sha1": "0845da17d3b7159c6b938b4feb758af455a6f495"
+        },
+        {
+          "path": "settings\/my.sql",
+          "dir": false,
+          "file": true,
+          "perms": "0755",
+          "size": 4844,
+          "sha1": "1c61c3a42a711c078b15beb6c5dad46b14206daa"
+        },
+        {
+          "path": "settings\/manifest.php",
+          "dir": false,
+          "file": true,
+          "perms": "0755",
+          "size": 2372,
+          "sha1": "a6a05b8059c4caccdae90d3d7b44526a6ce6bcc9"
+        },
+        {
+          "path": "settings\/content.php",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 3067,
+          "sha1": "fb5500517f743d9e1c9238b2c268b756de1eb44c"
+        },
+        {
+          "path": "externals",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "externals\/.htaccess",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 147,
+          "sha1": "9f1638a8edbe1c5d28789e017fb35b2f2465f01e"
+        },
+        {
+          "path": "externals\/styles",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "externals\/styles\/mobile_tablet.css",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 2023,
+          "sha1": "bda5b3da9f2d0fa34cf467063980b569b1d9344a"
+        },
+        {
+          "path": "externals\/styles\/main.css",
+          "dir": false,
+          "file": true,
+          "perms": "0755",
+          "size": 2759,
+          "sha1": "8d100c6f47745b969de030b3bc858381338a22d6"
+        },
+        {
+          "path": "externals\/styles\/admin",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "externals\/styles\/admin\/main.css",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 707,
+          "sha1": "8312a4241e9889e085dbadf0454f90106dfc1cef"
+        },
+        {
+          "path": "externals\/styles\/mobile.css",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1276,
+          "sha1": "30024972ce96daccf09ce36611dfce65b49fa6fa"
+        },
+        {
+          "path": "externals\/scripts",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "externals\/scripts\/core.js",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 949,
+          "sha1": "e92d3a62ec509050d40f6d7698091621e17af8c3"
+        },
+        {
+          "path": "externals\/scripts\/.htempty",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 0,
+          "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        },
+        {
+          "path": "externals\/images",
+          "dir": true,
+          "file": false,
+          "perms": "0777",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "externals\/images\/cancel_icon.png",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 216,
+          "sha1": "98ff1acf7bbba3f87f9c1e9ac1a0301951e10d87"
+        },
+        {
+          "path": "externals\/images\/send.png",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 3305,
+          "sha1": "d66e7354fcfe133d9d00f86757170a1cccc733d2"
+        },
+        {
+          "path": "externals\/images\/.htempty",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 0,
+          "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        },
+        {
+          "path": "externals\/images\/poke_icon.png",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 970,
+          "sha1": "88719fd8958f926c66a7191e6ade228b0e4ac37b"
+        },
+        {
+          "path": "externals\/images\/pokeconnection16.gif",
+          "dir": false,
+          "file": true,
+          "perms": "0777",
+          "size": 1015,
+          "sha1": "59783e1997798b08e981cfeb6b75b06c4d1fb0bf"
+        }
+      ]
+    },
+    "application\/languages\/en\/poke.csv": {
+      "type": "file",
+      "path": "application\/languages\/en\/poke.csv",
+      "structure": {
+        "path": "poke.csv",
+        "dir": false,
+        "file": true,
+        "perms": "0777",
+        "size": 9204,
+        "sha1": "cadfd935c4ee209164dcb819c902de3ef4a111ed"
+      }
+    }
+  }
+}

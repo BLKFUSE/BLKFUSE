@@ -1,0 +1,69 @@
+
+
+# NOTIFY_EVERI_SUPERADMIN
+"_EMAIL_NOTIFY_EVERI_SUPERADMIN_TITLE";"Verified Badge - New Verified Badge Notification"
+"_EMAIL_NOTIFY_EVERI_SUPERADMIN_DESCRIPTION";"This is the email that gets sent to the admin when a member submit new document for verified badge."
+"_EMAIL_NOTIFY_EVERI_SUPERADMIN_SUBJECT";"[sender_title] has submitted a document for verified badge."
+"_EMAIL_NOTIFY_EVERI_SUPERADMIN_BODY";"[header]
+
+[sender_title] has submitted a document for verified badge. Go to admin panel to verify the document.
+
+[footer]"
+
+
+# NOTIFY_EVERI_VERIFIED
+"_EMAIL_NOTIFY_EVERI_VERIFIED_TITLE";"Verified Badge - Document Verified"
+"_EMAIL_NOTIFY_EVERI_VERIFIED_DESCRIPTION";"This is the email that gets sent to users when their documents are verified."
+"_EMAIL_NOTIFY_EVERI_VERIFIED_SUBJECT";"Your Document is Verified"
+"_EMAIL_NOTIFY_EVERI_VERIFIED_BODY";"[header]
+
+Congratulations, your document has been verified. Go to your setting to manage your document.
+
+[footer]"
+
+
+# NOTIFY_EVERI_REJECT
+"_EMAIL_NOTIFY_EVERI_REJECT_TITLE";"Verified Badge - Document Rejected"
+"_EMAIL_NOTIFY_EVERI_REJECT_DESCRIPTION";"This is the email that gets sent to users when their documents are rejected."
+"_EMAIL_NOTIFY_EVERI_REJECT_SUBJECT";"Your Document is Rejected"
+"_EMAIL_NOTIFY_EVERI_REJECT_BODY";"[header]
+
+We are sorry to reject your document this time. Go to your setting to manage your document.
+
+[footer]"
+
+
+"ACTIVITY_TYPE_EVERI_REJECT";"When my document is rejected."
+"ACTIVITY_TYPE_EVERI_SUPERADMIN";"When I receive notification for new document uploaded for verified badge."
+"ACTIVITY_TYPE_EVERI_VERIFIED";"When my document is verified."
+"SES - Document Uploader for Member Verification Plugin";"Verified Badge"
+
+"Document Type";"Document Type"
+"Select the type of document which you want to upload for verified badge.";"Select the type of document which you want to upload for verified badge."
+"Upload Document";"Upload Document"
+
+"skip";"skip"
+"Delete Document?";"Delete Document?"
+"Are you sure you want to delete this document entry?";"Are you sure you want to delete this document entry?"
+"Delete Document";"Delete Document"
+"cancel";"cancel"
+"Submit For Verification?";"Submit For Verification?"
+"Are you sure you want to submit this document for verified badge? Once you submit this document for verified badge, you would not be able to delete it.";"Are you sure you want to submit this document for verified badge? Once you submit this document for verified badge, you would not be able to delete it."
+"Submit";"Submit"
+"Upload document for verified badge";"Upload document for verified badge"
+"Select the type of document which you want to upload for verified badge. You will have to submit the document for verified badge after uploading.";"Select the type of document which you want to upload for verified badge. You will have to submit the document for verified badge after uploading."
+"Upload";"Upload"
+"Manage Documents";"Manage Documents"
+"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.";"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+"Upload New Document";"Upload New Document"
+"Status";"Status"
+"Preview";"Preview"
+"Options";"Options"
+"Verification Pending";"Verification Pending"
+"Verified";"Verified"
+"Rejected";"Rejected"
+"Preview";"Preview"
+"Delete";"Delete"
+"Submit For Verification";"Submit For Verification"
+"There are no document uploaded by you yet.";"There are no document uploaded by you yet."
+"Members Verification by Uploading Document Plugin";"Members Verification by Uploading Document Plugin"

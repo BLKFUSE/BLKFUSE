@@ -1,0 +1,36 @@
+
+
+.egifts_search_form .search{
+	float:none;
+}
+.egifts_search_form .search form > div{
+	display:inline-block;
+}
+.egifts_search_form .search form > div > label{
+	margin-bottom:5px;
+}
+.egifts_search_form #integer-wrapper > *{
+	float:left;
+}
+.egifts_search_form #integer-wrapper > label{
+	float:none;
+}
+.egifts_search_form #integer-wrapper > div + div{
+	margin-left:5px;
+	margin-right:0px;
+}
+.egifts_search_form #integer-wrapper .form-wrapper .form-label{
+	display:none;
+}
+.egifts_search_form #integer-wrapper .form-wrapper input{
+	width:100px;
+}
+.egifts_search_form #integer-wrapper .form-wrapper{
+	margin-right: 5px;
+	width: 46%;
+}
+@media(max-width: 767px){
+	.egifts_search_form #integer-wrapper .form-wrapper input {
+    width: 100%;
+}
+}

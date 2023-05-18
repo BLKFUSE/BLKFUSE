@@ -1,0 +1,340 @@
+.layout_sesbday_calendar{
+	 position:relative;
+}
+/*Birthday Tip*/
+.sesbday_bday_tip a{
+	display:flex;
+	flex-wrap:nowrap;
+	font-size:90%;
+}
+.sesbday_bday_tip a i{
+	background-image:url(../images/birthday-icon-small.png);
+	height:16px;
+	width:16px;
+	min-width: 16px;
+  float:left;
+  margin:0 6px 0 0;
+}
+[dir="rtl"] .sesbday_bday_tip a i {
+  float: right;
+  margin: 0 0 10px 2px;
+}
+.sesbday_bday_tip a > div{
+	overflow:hidden;
+}
+.sesbday_bday_tip a > div > span{
+	font-weight:bold;
+}
+.sesbday_bday_tip a > div span span{
+	font-weight:bold;
+}
+/*Sidebar Listing*/
+.sesbday_sidebar_listing{
+	padding:0;
+}
+.sesbday_sidebar_listing li + li{
+	border-top-width:1px;
+	border-top-style:dashed;
+	margin-top:10px;
+	padding-top:10px;
+}
+.sesbday_sidebar_list_item ._thumb{
+	float:left;
+	margin-right:10px;
+}
+.sesbday_sidebar_list_item ._info{
+	overflow:hidden;
+}
+.sesbday_sidebar_list_item ._title{
+	font-weight:bold;
+}
+.sesbday_sidebar_list_item ._btns{
+	margin-top:5px;
+}
+.sesbday_sidebar_list_item ._btns a + a{
+	margin-left:3px;
+}
+.sesbday_sidebar_list_item ._more{
+	text-align:center;
+	font-size:90%;
+}
+/*Recent Birthdays*/
+.sesbday_recent_list li + li{
+	border-top-width:1px;
+	border-top-style:dashed;
+	margin-top:10px;
+	padding-top:10px;
+}
+.sesbday_recent_row{
+	display:-ms-flexbox;
+	display:flex;
+}
+.sesbday_recent_row ._left{
+	float:left;
+	width:80px;
+}
+.sesbday_recent_row ._left span{
+	display:block;
+	font-size:13px;
+}
+.sesbday_recent_row ._left span._date{
+	margin-top:2px;
+	font-size:12px;
+}
+.sesbday_recent_row ._users{
+	overflow:hidden;
+}
+.sesbday_recent_row ._users span{
+	display:inline-block;
+	border-radius:50%;
+	height:32px;
+	width:32px;
+	overflow:hidden;
+}
+.sesbday_recent_row ._users span img{
+	border-width:0;
+	height:100%;
+	width:100%;
+}
+/*Birthday Listing*/
+.sesbday_listing section{
+	border-radius:5px;
+	border-width:1px;
+	margin-bottom:20px;
+}
+.sesbday_month_section{
+	position:relative;
+}
+.sesbday_listing section + section{
+	margin-top:20px;
+}
+.sesbday_listing_head{
+	background-image:url(../images/transprant-bg.png);
+	font-size:17px;
+	border-bottom-width:1px;
+	padding:10px;
+}
+.sesbday_listing_content{
+	padding:10px;
+}
+.sesbday_listing_row > ul > li + li{
+	border-top-width:1px;
+	border-top-style:dashed;
+	margin-top:15px;
+	padding-top:15px;
+}
+.sesbday_listing_item ._thumb{
+	float:left;
+	height:80px;
+	width:80px;
+	margin-right:15px;
+}
+.sesbday_listing_item ._thumb span{
+	border-width:0;
+	border-radius:50%;
+}
+.sesbday_listing_item ._cont{
+	overflow:hidden;
+	position:relative;
+}
+.sesbday_upcbday_section .sesbday_listing_item ._cont{
+	padding-top:15px;
+}
+.sesbday_listing_item ._name{
+	font-weight:bold;
+}
+.sesbday_listing_item ._textbox{
+	margin-top:12px;
+}
+.sesbday_listing_item ._textbox textarea{
+	width:100%;
+}
+.sesbday_listing_item ._textbox ._pbtn{
+	margin-top:10px;
+	text-align:right;
+}
+.sesbday_listing_item ._date{
+	font-size:12px;
+	margin-top:5px;
+}
+.sesbday_todaybday_section .sesbday_listing_item ._date {
+	position:absolute;
+	right:0;
+	top:0;
+}
+[dir="rtl"] .sesbday_todaybday_section .sesbday_listing_item ._date{
+	left:0;
+	right:auto;
+}
+.sesbday_listing_thumbs ul{
+	display:flex;
+	flex-wrap:wrap;
+}
+.sesbday_listing_thumbs .sesbday_members_list {
+	position:absolute;
+	top:0;
+	right:0;
+	padding:14px;
+  font-size:90%;
+}
+[dir="rtl"] .sesbday_listing_thumbs .sesbday_members_list{
+	left:0;
+	right:auto;
+}
+.sesbday_listing_thumbs ._item{
+	width:60px;
+	height:60px;
+	margin:1px;
+	position:relative;
+}
+.sesbday_listing_thumbs ._item span{
+	border-radius:50%;
+}
+.sesbday_listing_thumbs ._item p{
+	position:absolute;
+	background-color:rgba(0, 0, 0, .5);
+	top:-35px;
+	white-space:nowrap;
+	color:#fff;
+	left:5%;
+	padding:4px 10px;
+	font-size:12px;
+	border-radius:3px;
+	display:none;
+}
+.sesbday_listing_thumbs ._item:hover p{
+	display:block;
+}
+.sesbday_listing_thumbs ._item p:after{
+	content:"";
+	position:absolute;
+	left:10%;
+	margin-left:-3px;
+	width:0;
+	bottom:-6px;
+	height:0;
+	border-left:6px solid transparent;
+	border-right:6px solid transparent;
+	border-top:6px solid rgba(0, 0, 0, .5);
+}
+/*Wish Popup*/
+.sesbday_wish_popup{
+	width:600px;
+}
+.sesbday_wish_popup section ._head{
+	background-image:url(../images/transprant-bg.png);
+	border-bottom-width:1px;
+}
+.sesbday_wish_popup ._head_inner{
+	background-image:url(../images/popup-head-bg.png);
+	background-repeat:no-repeat;
+	background-position:center left;
+	padding:10px 0;
+}
+.sesbday_wish_popup ._head span{
+	display:block;
+	text-align:center;
+}
+.sesbday_wish_popup ._head ._heading{
+	font-size:20px;
+	font-weight:bold;
+}
+.sesbday_wish_popup ._head ._caption{
+	font-size:90%;
+	margin-top:5px;
+}
+.sesbday_wish_popup_content{
+	padding:20px;
+	max-height:400px;
+	overflow:auto;
+}
+.sesbday_wish_popup_content li + li{
+	margin-top:15px;
+}
+.sesbday_wish_popup_item ._itemthumb{
+	float:left;
+	margin-right:15px;
+	height:80px;
+	width:80px;
+}
+.sesbday_wish_popup_item ._itemthumb span{
+	border-width:0;
+}
+.sesbday_wish_popup_item ._itemcont{
+	overflow:hidden;
+}
+.sesbday_wish_popup_item ._itemcont ._name{
+	font-weight:bold;
+}
+.sesbday_wish_popup_item ._itemcont ._postbox{
+	margin-top:10px;
+}
+.sesbday_wish_popup_item ._itemcont ._postbox ._inputtext{
+	font-size:12px;
+	cursor:text;
+	border-width:1px;
+	padding:10px;
+}
+.sesbday_wish_popup_item ._itemcont ._postbox._isopen ._inputtext{
+	display:none;
+}
+.sesbday_wish_popup_item ._itemcont ._postbox ._postfields{
+	display:none;
+}
+.sesbday_wish_popup_item ._itemcont ._postbox._isopen ._postfields{
+	display:block;
+}
+.sesbday_wish_popup_item ._itemcont ._postfields textarea{
+	width:100%;
+}
+.sesbday_wish_popup_item ._itemcont ._postfields ._btn{
+	text-align:right;
+	margin-top:10px;
+}
+.sesbday_wish_popup_footer{
+	background-image:url(../images/transprant-bg.png);
+	border-top-width:1px;
+}
+.sesbday_wish_popup_footer a{
+	display:block;
+	padding:10px;
+	text-align:center;
+}
+.sesbday_bday_listing_popup_item{
+	display:flex;
+	align-items:center;
+}
+.sesbday_bday_listing_popup_item ._itemthumb{
+	float:left;
+	height:70px;
+	width:70px;
+}
+.sesbday_bday_listing_popup_item ._itemthumb span{
+	border-width:0;
+}
+.sesbday_bday_listing_popup_item ._itemcont{
+	padding:0 15px;
+	flex-grow:1;
+}
+.sesbday_bday_listing_popup_item ._itemcont ._name{
+	font-weight:bold;
+}
+.sesbday_bday_listing_popup_item ._itemcont ._date{
+	font-size:12px;
+	margin-top:5px;
+}
+.sesbday_wish_popup_item ._postfields .bday_wish_msg{
+	display:none;
+}
+@media(max-width:767px){
+	.sesbday_todaybday_section .sesbday_listing_item ._date {
+    position: relative;
+  }
+	.sesbday_listing_item ._thumb {
+    height: 50px;
+    width: 50px;
+    margin-right: 10px;
+  }
+}
+
+

@@ -1,0 +1,43 @@
+/*Import FAQs*/
+.sesuserimport_import_buttons{
+	text-align:center;
+}
+.sesuserimport_import_buttons a{
+	border:2px solid #0DC7F1;
+	padding:10px;
+	display:inline-block;
+	width:230px;
+	text-decoration:none !important;
+	font-size:15px;
+	line-height:16px;
+	margin:0 3px;
+}
+.sesuserimport_import_buttons a:before{
+	display:inline-block;
+	height:16px;
+	width:16px;
+	content:"";
+	margin-right:5px;
+	vertical-align:middle;
+}
+.sesuserimport_import_buttons a:hover{
+	opacity:.8;
+}
+.sesuserimport_download:before{
+	background-image:url(~/application/modules/Sesfaq/externals/images/download.png);
+}
+.sesuserimport_import:before{
+	background-image:url(~/application/modules/Sesfaq/externals/images/import.png);
+}
+.sesuserimport_admin_manage_table tbody tr{
+	cursor:move;
+}
+#global_page_sesuserimport-admin-manage-index .settings .form-wrapper:nth-child(11) select{
+	min-width:95px;
+	max-width:95px;
+	margin-left:0;
+	margin-right:2px;
+}
+#global_page_sesuserimport-admin-manage-index i{
+  display:none;	
+}

@@ -1,0 +1,1 @@
+DELETE FROM `engine4_core_menuitems` WHERE `name` = 'sessociallogin_admin_main_pinterest';

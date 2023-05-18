@@ -1,0 +1,454 @@
+.layout_sespymk_friend_requests,
+.layout_sespymk_suggestion_page,
+.layout_sespymk_invite,
+.layout_sespymk_suggestion_friends,
+.layout_sespymk_suggestion_carousel{
+	margin-bottom:15px;
+}
+/*PEOPLE YOU MAY KNOW WIDGET CSS START HERE*/
+.sespymk_remove{
+	height:16px;
+	line-height:14px;
+	width:16px;
+	position:absolute;
+	text-align:center !important;
+	display:none !important;
+}
+.sespymk_sidebar_list_remove:before{
+	line-height:0;
+}
+/*Buttons*/
+.sespymk_buttons{
+	display:flex;
+	flex-wrap:wrap;
+	margin-top:auto;
+}
+.sespymk_buttons > div > a,
+.sespymk_buttons > div > button{
+	border-radius:3px;
+	display:block;
+	line-height:22px;
+	padding:5px;
+	font-size:12px;
+	text-align:center !important;
+	height:100%;
+	width:100%;
+}
+.sespymk_buttons > div + div{
+	margin-left:5px;
+}
+[dir="rtl"] .sespymk_buttons > div + div{
+	margin-left:0;
+	margin-right:5px;
+}
+.sespymk_buttons > div > a i,
+.sespymk_buttons > div > button i{
+	margin-right:5px;
+}
+[dir="rtl"] .sespymk_buttons > div > a i,
+[dir="rtl"] .sespymk_buttons > div > button i{
+	margin-right:0;
+	margin-left:5px;
+}
+.sespymk_add_button{
+	flex:1;
+}
+.sespymk_buttons > div.sespymk_follow_button:nth-child(1){
+	flex:1;
+}
+.sespymk_buttons > .sespymk_add_button + div.sespymk_follow_button{
+	width:26px;
+}
+.sespymk_buttons > .sespymk_add_button + div.sespymk_follow_button a{
+	position:relative;
+	padding:0;
+}
+.sespymk_buttons > .sespymk_add_button + div.sespymk_follow_button a i{
+	position:absolute;
+	left:50%;
+	top:50%;
+	transform:translate(-50%, -50%);
+}
+.sespymk_buttons > .sespymk_add_button + div.sespymk_follow_button > a span{
+	position:absolute;
+	white-space:nowrap;
+	background-color:#000;
+	padding:5px 10px;
+	font-size:11px;
+	right:40px;
+	top:50%;
+	transform:translateY(-50%);
+	border-radius:3px;
+	line-height:normal;
+	display:none;
+}
+[dir="rtl"] .sespymk_buttons > .sespymk_add_button + div.sespymk_follow_button > a span{
+	left:40px;
+	right:auto;
+}
+.sespymk_buttons > .sespymk_add_button + div.sespymk_follow_button > a:hover span{
+	display:block;
+}
+.sespymk_buttons > .sespymk_add_button + div.sespymk_follow_button > a span:before{
+	content:"";
+	position:absolute;
+	width:0;
+	height:0;
+	border-top:7px solid transparent;
+	border-bottom:7px solid transparent;
+	border-left:7px solid #000;
+	right:-7px;
+	top:50%;
+	transform:translateY(-50%);
+}
+[dir="rtl"] .sespymk_buttons > .sespymk_add_button + div.sespymk_follow_button > a span:before{
+	border-left-width:0;
+	border-right:7px solid #000;
+	left:-7px;
+	right:auto;
+}
+/*All Members List*/
+.sespymk_list li + li{
+	border-top-width:1px;
+}
+.sespymk_list_item{
+	padding:10px 0;
+}
+.sespymk_list_item_inner{
+	display:flex;
+	flex-wrap:wrap;
+	align-items:center;
+	position:relative;
+	width:100%;
+}
+.sespymk_list_item_photo{
+	width:80px;
+}
+.sespymk_list_item_photo img{
+	border-width:0;
+	float:left;
+	height:70px;
+	object-fit:cover;
+	width:70px;
+}
+.sespymk_list_item:hover .sespymk_remove{
+	right:5px;
+	display:block !important;
+}
+[dir="rtl"] .sespymk_list_item:hover .sespymk_remove{
+	left:5px;
+	right:inherit;
+}
+.sespymk_list_item_cont{
+	flex:1;
+}
+.sespymk_list_item_title{
+	font-weight:bold;
+	margin-right:16px;
+}
+.sespymk_list_item_stat{
+	margin-top:2px;
+}
+.sespymk_list_item_stat a{
+	font-size:12px;
+}
+.sespymk_list_item .sespymk_list_item_btn button{
+	padding:0 15px !important;
+}
+.sespymk_list_item_btn button i{
+	margin-right:5px;
+}
+[dir="rtl"] .sespymk_list_item_btn button i{
+	margin-left:5px;
+	margin-right:0;
+}
+.sespymk_list_more{
+	border-bottom-width:1px;
+	padding:10px 0;
+}
+/*Sidebar Widget*/
+.sespymk_sidebar_list{
+	padding:5px;
+}
+.sespymk_sidebar_list li + li{
+	margin-top:5px;
+}
+.sespymk_sidebar_list_item_photo{
+	float:left;
+	margin-right:10px;
+}
+[dir="rtl"] .sespymk_sidebar_list_item_photo{
+	float:right;
+	margin-left:10px;
+	margin-right:0;
+}
+.sespymk_sidebar_list_item_cont{
+	display:block;
+	overflow:hidden;
+	position:relative;
+}
+.sespymk_sidebar_list_item .sespymk_remove{
+	right:0;
+	top:2px;
+}
+[dir="rtl"] .sespymk_sidebar_list_item .sespymk_remove{
+	left:0;
+	right:inherit;
+}
+.sespymk_sidebar_list_item:hover .sespymk_remove{
+	display:block !important;
+}
+.sespymk_sidebar_list_item_title{
+	font-weight:bold;
+	margin-right:16px;
+}
+[dir="rtl"] .sespymk_sidebar_list_item_title{
+	margin-left:16px;
+	margin-right:0;
+}
+.sespymk_sidebar_list_item_stat a{
+	font-size:12px;
+}
+.sespymk_sidebar_list_item_btns{
+	margin-top:5px;
+	display:inline-block;
+}
+.sespymk_sidebar_list_more{
+	text-align:right;
+	font-size:12px;
+}
+[dir="rtl"] .sespymk_sidebar_list_more{
+	text-align:left;
+}
+/*Horrizontal List*/
+.sespymk_horrizontal_list_item{
+	border-width:1px;
+	position:relative;
+}
+.sespymk_horrizontal_list_item_photo{
+	height:150px;
+	width:100%;
+}
+.sespymk_horrizontal_list_item_photo img{
+	border-width:0;
+	height:100%;
+	object-fit:cover;
+	width:100%;
+	max-width:inherit;
+	max-height:inherit;
+}
+.sespymk_horrizontal_list_remove{
+	background-color:rgba(0, 0, 0, .5);
+	color:#fff !important;
+	position:absolute;
+	font-size:12px;
+	right:5px;
+	top:5px;
+	height:16px;
+	width:16px;
+	justify-content:center;
+	align-items:center;
+	display:none !important;
+}
+[dir="rtl"] .sespymk_horrizontal_list_remove{
+	left:5px;
+	right:auto;
+}
+.sespymk_horrizontal_list_remove:hover{
+	background-color:rgba(0, 0, 0, .9);
+	text-decoration:none;
+}
+.sespymk_horrizontal_list_item:hover .sespymk_horrizontal_list_remove{
+	display:flex !important;
+}
+.sespymk_horrizontal_list_item_cont{
+	border-top-width:1px;
+	padding:8px 10px;
+	display:flex;
+	flex-direction:column;
+	flex:1;
+}
+.sespymk_horrizontal_list_item_title{
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	text-align:center;
+	margin-bottom:5px;
+}
+.sespymk_horrizontal_list_item_stats > div {
+  margin-bottom:5px;
+}
+.sespymk_horrizontal_list_item_stat a{
+	font-size:12px;
+}
+.sespymk_horrizontal_list_more{
+	font-size:12px;
+	float:right;
+	margin-top:-25px;
+	margin-left:5px;
+}
+[dir="rtl"] .sespymk_horrizontal_list_more{
+	float:left;
+	margin-left:5px;
+	margin-right:0;
+}
+.sespymk_request_success_message{
+	color:#060;
+	padding:10px;
+}
+/*PEOPLE YOU MAY KNOW WIDGET CSS END HERE*/
+/*CAROUSEL WIDGET CSS START HERE*/
+.sespymk_carousel_wrapper{
+  clear:both;
+  position:relative;
+  width:100%;
+}
+.sespymk_carousel{
+  position:relative;
+  width:100%;
+}
+.sespymk_carousel .owl-stage-outer{
+	overflow:hidden;
+}
+.sespymk_carousel .owl-stage{
+	display:flex;
+}
+.sespymk_carousel .owl-stage .owl-item .sespymk_horrizontal_list_item {
+	height:100%;
+	width:150px;
+	display:flex;
+  flex-direction:column;
+}
+.sespymk_carousel .owl-nav > div{
+	box-shadow:0 0 8px rgba(0, 0, 0, .6);
+	border-radius:50%;
+	position:absolute;
+	top:50%;
+	height:40px;
+	width:40px;
+	margin-top:-20px;
+	cursor:pointer;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+.sespymk_carousel .owl-nav > div.disabled{
+	display:none;
+}
+.sespymk_carousel .owl-nav > div i{
+	font-size:17px;
+}
+[dir="rtl"] .sespymk_carousel .owl-nav > div i{
+  filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);
+  -webkit-transform:scale(-1, 1);
+  -ms-transform:scale(-1, 1);
+  transform:scale(-1, 1);
+}
+.sespymk_carousel .owl-nav > div.owl-prev{
+	left:5px;
+}
+[dir="rtl"] .sespymk_carousel .owl-nav > div.owl-prev{
+	left:inherit;
+	right:5px;
+}
+.sespymk_carousel .owl-nav > div.owl-next{
+	right:5px;
+}
+[dir="rtl"] .sespymk_carousel .owl-nav > div.owl-next{
+	right:inherit;
+	left:5px;
+}
+.sespymk_carousel_v_wrapper .sespymk_horrizontal_list_item{
+	margin:0;
+	width:100% !important;
+}
+/*CAROUSEL WIDGET CSS END HERE*/
+/*Button CSS Start Here*/
+.sespymk_button a{
+	display:block;
+}
+.sespymk_button a i{
+	margin-right:5px;
+}
+/*Button CSS End Here*/
+/*Invite Form CSS Start Here*/
+.sespymk_invite_form .global_form_box .form-wrapper{
+	margin-bottom:10px;
+}
+.sespymk_invite_form .global_form_box .form-wrapper:nth-last-child(1){
+	margin-bottom:0;
+}
+.sespymk_invite_form .global_form_box label{
+	font-weight:bold;
+	margin-bottom:5px;
+}
+.sespymk_invite_form textarea{
+	width:100%;
+	height:60px;
+	padding:5px;
+}
+.sespymk_invite_form textarea + p{
+	font-size:12px;
+}
+.sespymk_invite_form .global_form_box input + label{
+	display:block;
+	overflow:hidden;
+	margin:0;
+}
+.sespymk_invite_form .global_form_box button{
+	width:100%;
+}
+.sespymk_invite_success_message{
+	background-color:#c8e5bc;
+	border:1px solid #b2dba1;
+	font-size:12px;
+	padding:10px;
+	text-align:center;
+}
+/*Invite Form CSS Start Here*/
+
+/* Friend Requests Sidebar */
+.sespymk_list_sidebar_item_inner {
+  display:flex;
+}
+.sespymk_list_sidebar > li {
+  padding:6px 0;
+}
+.sespymk_list_sidebar_item_inner .sespymk_list_item_title {
+	margin:5px 0;
+	text-transform:capitalize;
+}
+.sespymk_requests_sidebar > .sespymk_list_more > .floatL {
+  font-weight:bold;
+}
+.sespymk_list_sidebar .sespymk_list_item_photo {
+	width:56px;
+	height:56px;
+	border-radius:100px;
+	overflow:hidden;
+	margin-right:10px;
+}
+.sespymk_list_sidebar_item_inner > .sespymk_list_item_cont {
+  flex:1;
+	position:relative;
+}
+.sespymk_list_sidebar .sespymk_list_item_photo img{
+	width:100%;
+	height:100%;
+}
+.sespymk_list_sidebar_item_inner .sespymk_list_item_btn{
+	display:inline-block;
+}
+.sespymk_list_sidebar_item_inner .sespymk_list_item_btn > a {
+	opacity:0;
+	position:absolute;
+	top:0;
+	right:0;
+}
+.sespymk_list_sidebar_item:hover .sespymk_list_item_btn > a{
+	opacity:.8;
+}
+.layout_left .sespymk_horrizontal_list_more,
+.layout_right .sespymk_horrizontal_list_more{
+	display:none;
+}

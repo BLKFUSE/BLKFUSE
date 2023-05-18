@@ -1,0 +1,741 @@
+
+
+/*GLOBAL CSS*/
+.egifts_btn{
+	border-width:1px;
+	border-radius:50px;
+	display:flex;
+	height:40px;
+	position:relative;
+	width:40px;	
+}
+.egifts_btn span{
+  position:absolute;
+  top:0;
+  left:0;
+  display:flex;
+  width:100%;
+  height:100%;
+  text-align:center;
+  line-height:30px;
+	justify-content:center;
+	align-items:center;
+  background:center center no-repeat;
+  -webkit-transition:all 0.15s ease-in-out;
+  -moz-transition:all 0.15s ease-in-out;
+  transition:all 0.15s ease-in-out;
+}
+.egifts_btn i:before,
+.egifts_btn span{
+  position:absolute;
+  top:0;
+  left:0;
+  display:flex;
+  width:100%;
+  height:100%;
+  text-align:center;
+  line-height:30px;
+	justify-content:center;
+	align-items:center;
+  background:center center no-repeat;
+  -webkit-transition:all 0.15s ease-in-out;
+  -moz-transition:all 0.15s ease-in-out;
+  transition:all 0.15s ease-in-out;
+}
+.egifts_btn i:before {
+	top:0;
+	opacity:1;
+}
+.egifts_btn span{
+	top:15px;
+	opacity:0;
+	font-size:14px;
+}
+.egifts_btn:hover i:before {
+	top:-15px;
+	opacity:0;
+}
+.egifts_btn:hover span {
+	top:0;
+	opacity:1;
+}
+.egifts_btn.btnactive *{
+	color:#fff !important;
+}
+.egifts_like_btn.btnactive{
+	border-color:#02adea;
+	background-color:#02adea;
+}
+.egifts_fav_btn.btnactive{
+	border-color:#ff4c4c;
+	background-color:#ff4c4c;
+}
+/*GIFTS LISTING START HERE*/
+.egifts_browse_listing_count{
+	border-bottom-width:1px;
+	padding-bottom:10px;
+	margin-bottom:10px;
+}
+.egifts_listing{
+	position:relative;
+}
+.egifts_listing_item{
+	margin-bottom:25px;
+  height:calc(100% - 25px);
+	transition:all .5s ease;
+}
+.egifts_listing_item article{
+	box-shadow:0 6px 16px 0 rgba(0, 0, 0, 0.10);
+	border-radius:5px;
+	overflow:hidden;
+	display:flex;
+	flex-direction:column;
+	position:relative;
+	height:100%;
+}
+.egifts_listing_item:hover{
+	transform:translateY(-10px);
+	transition:all .5s ease;
+}
+.egifts_listing_item_thumb{
+	background-image:url(../images/transprant-bg.png);
+	height:200px;
+	border-radius:5px 5px 0 0;
+	overflow:hidden;
+}
+.egifts_listing_item_thumb img{
+	object-fit:contain;
+	vertical-align:middle;
+	height:100%;
+	width:100%;
+}
+.egifts_listing_item_info{
+	padding:10px 15px;
+}
+.egifts_listing_item_title{
+	font-weight:bold;
+	font-size:1.3em;
+}
+.egifts_listing_item_price{
+	margin-top:5px;
+	display:flex;
+}
+.egifts_listing_item_price ._price{
+	font-size:1.3em;
+}
+.egifts_listing_item_des{
+	margin-top:5px;
+	line-height:150%;
+}
+.egifts_listing_item_user_info{
+	border-top-width:1px;
+	border-top-style:dashed;
+	margin-top:5px;
+	padding-top:5px;
+}
+.egifts_listing_item_user_info > div + div{
+	margin-top:5px;
+}
+.egifts_listing_item_msg{
+	font-style:italic;
+}
+.egifts_listing_item_footer{
+	border-top-width:1px;
+	margin-top:auto;
+	padding:10px 15px;
+	display:flex;
+}
+.egifts_listing_item_footer ._sendbtn{
+	flex:1;
+}
+.egifts_listing_item_footer ._sendbtn button{
+	width:100%;
+	height:40px;
+	line-height:40px;
+	padding:0 15px;
+	text-align:center;
+	border-radius:50px;
+}
+.egifts_listing_item_footer div + div{
+	margin-left:10px;
+}
+[dir="rtl"] .egifts_listing_item_footer div + div{
+	margin-right:10px;
+	margin-left:0;
+}
+.egifts_listing_container .sesbasic_load_btn{
+	margin-top:15px;
+}
+@media (max-width:768px){
+	.egifts_listing_item_thumb{
+		height:200px;
+	}
+}
+@media (max-width:480px){
+	.egifts_listing_item_thumb{
+		height:200px;
+	}
+}
+/*GIFTS LISTING END HERE*/
+/*GIFT SIDEBAR LISTING START*/
+.egifts_sidebar_listing li{
+	padding:10px 0;
+}
+.egifts_sidebar_listing li + li{
+	border-top-width:1px;
+}
+.egifts_sidebar_listing_item article{
+	display:flex;
+	flex-wrap:wrap;	
+}
+.egifts_sidebar_listing_item_thumb{
+	border-width:1px;
+	border-radius:3px;
+	margin-right:10px;
+}
+[dir="rtl"] .egifts_sidebar_listing_item_thumb{
+	margin-left:10px;
+	margin-right:0;
+}
+.egifts_sidebar_listing_item_thumb img{
+	object-fit:contain;
+	vertical-align:middle;
+	height:100%;
+	width:100%;
+}
+.egifts_sidebar_listing_item_info{
+	flex:1;
+}
+.egifts_sidebar_listing_item_info > div + div{
+	margin-top:5px;
+}
+.egifts_sidebar_listing_item_title{
+	font-weight:bold;
+}
+.egifts_sidebar_listing_item_des{
+	font-size:.9em;
+	line-height:150%;
+}
+.egifts_sidebar_listing_item_buttons{
+	margin:10px -5px 0;
+	display:flex;
+}
+.egifts_sidebar_listing_item_buttons > div{
+	padding:0 5px;
+}
+.egifts_sidebar_listing_item_buttons ._sendbtn{
+	flex:1;
+}
+.egifts_sidebar_listing_item_buttons ._sendbtn button{
+	width:100%;
+	height:40px;
+	line-height:40px;
+	padding:0 15px;
+	text-align:center;
+	border-radius:50px;
+}
+
+/*GIFT SIDEBAR LISTING END*/
+/*GIFT VIEW PAGE START*/
+.egifts_view_top{
+	display:flex;
+	flex-wrap:wrap;
+}
+.egifts_view_top_img{
+	border-width:1px;
+	border-radius:5px;
+	position:relative;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	flex-wrap:wrap;
+	padding:5px;
+	width:200px;
+	height:200px;
+}
+.egifts_view_top_img img{
+	max-width:100%;
+	max-height:100%;
+}
+.egifts_view_top_info{
+	flex:1;
+	padding-left:20px;
+	display:flex;
+	flex-direction:column;
+}
+[dir="rtl"] .egifts_view_top_info{
+	padding-right:20px;
+	padding-left:0;
+}
+.egifts_view_top_info h1{
+	font-size:1.5em;
+	margin-bottom:15px;
+}
+.egifts_view_top_stats{
+	margin-bottom:10px;
+	font-size:.9em;
+}
+.egifts_view_top_stats > span + span:before{
+	content:"-";
+	margin-left:10px;
+	margin-right:10px;
+}
+.egifts_view_top_price{
+	margin-bottom:10px;
+}
+.egifts_view_top_price ._price{
+	font-weight:bold;
+	font-size:17px;
+}
+.egifts_view_top_buttons{
+	margin-top:auto;
+	display:flex;
+}
+.egifts_view_top_buttons > div{
+	margin-right:10px;
+}
+[dir="rtl"] .egifts_view_top_buttons > div{
+	margin-left:10px;
+	margin-right:0;
+}
+.egifts_view_top_buttons > ._sendbtn button{
+	min-width:150px;
+	height:40px;
+	line-height:40px;
+	padding:0 15px;
+	text-align:center;
+	border-radius:50px;
+}
+.egifts_view_bottom{
+	border-top-width:1px;
+	padding-top:15px;
+	margin-top:15px;
+}
+.egifts_view_des_head{
+	margin-bottom:10px;
+}
+/*GIFT VIEW PAGE END*/
+
+/*USER PROFILE SEND GIFT POPUP START*/
+.egifts_list_popup{
+	width:600px;
+}
+.egifts_list_popup_title{
+	background-image:url(../images/transprant-bg.png);
+	padding:12px 15px;
+	font-weight:bold;
+	border-bottom-width:1px;
+	font-size:17px;
+}
+.egifts_list_popup_content > p{
+	padding:15px 15px 0;
+}
+.egifts_list_popup_content_list{
+	display:flex;
+	flex-wrap:wrap;
+	padding:15px 8px;
+	max-height:400px;
+	overflow:auto;
+}
+.egifts_list_popup_content_list_item{
+	width:25%;
+	padding:0 7px 14px;
+	position:relative;
+}
+.egifts_list_popup_content_list_item article{
+	border-radius:5px;
+	border-width:1px;
+	padding:10px;
+	position:relative;
+	height:100%;
+}
+.egifts_list_popup_content_list_item article > input{
+	visibility:hidden;
+	opacity:0;
+	position:absolute;
+}
+.egifts_list_popup_content_list_item .gift_img{
+	position:relative;
+	padding-bottom:100%;
+}
+.egifts_list_popup_content_list_item .gift_img img{
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+	max-width:60%;
+}
+.egifts_list_popup_content_list_item .gift_title{
+	margin-top:10px;
+	text-align:center;
+	font-size:.8em;
+}
+[dir="rtl"] .egifts_list_popup_content_list_item .gift_title{
+	text-align:center;
+}
+.egifts_list_popup_content_list_item .gift_title span{
+	font-weight:bold;
+	display:block;
+}
+.egifts_list_popup_content_list_item article label ._checkmark{
+	border-width:1px;
+	border-radius:50%;
+	position:absolute;
+	top:5px;
+	left:5px;
+	height:25px;
+	width:25px;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+[dir="rtl"] .egifts_list_popup_content_list_item article label ._checkmark{
+	left:auto;
+	right:5px;
+}
+.egifts_list_popup_content_list_item article input:checked + label ._checkmark:before{
+	font-family:"Font Awesome 5 Free";
+	content:"\f00c";
+	font-weight:bold;
+	font-size:13px;
+}
+.egifts_list_popup_content_option{
+	border-top-width:1px;
+	padding:15px;
+}
+.egifts_send_gift_popup .egifts_list_popup_content_option{
+	border-top-width:0;
+}
+.egifts_list_popup_content_option > div + div{
+	margin-top:10px;
+}
+.egifts_list_popup_content_option ._field p._label{
+	margin-bottom:5px;
+}
+.egifts_list_popup_content_option ._field input[type="text"],
+.egifts_list_popup_content_option ._field textarea{
+	max-width:100%;
+	width:100%;
+}
+.egifts_list_popup_content_option ._field .field_options li{
+	display:flex;
+	flex-wrap:wrap;
+	align-items:center;
+}
+.egifts_list_popup_content_option ._field .field_options li + li{
+	margin-top:10px;
+}
+.egifts_list_popup_content_option ._field .field_options li input[type="radio"]{
+	margin:0 5px 0 0;
+}
+[dir="rtl"] .egifts_list_popup_content_option ._field .field_options li input[type="radio"]{
+	margin:0 0 0 5px;
+}
+.egifts_list_popup_content_option ._field .field_options li label{
+	flex:1;
+}
+.egifts_list_popup_content_option ._field .selected_member{
+	margin-top:10px;
+	display:inline-flex;
+	align-items:center;
+	border-width:1px;
+	padding:10px;
+	border-radius:5px;
+}
+.egifts_list_popup_content_option ._field .selected_member ._thumb img{
+	height:25px;
+	width:25px;
+	margin-right:10px;
+	vertical-align:middle;
+}
+[dir="rtl"] .egifts_list_popup_content_option ._field .selected_member ._thumb img{
+	margin-left:10px;
+	margin-right:0;
+}
+.egifts_list_popup_footer{
+	border-top-width:1px;
+	padding:12px 15px;
+}
+.egifts_list_popup_footer button{
+	min-width:150px;
+	text-align:center;
+}
+@media (max-width:768px){
+	.egifts_list_popup{
+		max-width:100%;
+	}
+	.egifts_list_popup_content_list_item{
+		width:33.33%;
+	}
+}
+@media (max-width:480px){
+	.egifts_list_popup_content_list_item{
+		width:50%;
+	}
+}
+/*USER PROFILE SEND GIFT POPUP END*/
+
+/*PAYMENT PROCESS START*/
+.egifts_payment_process{
+	border-width:1px;
+	border-radius:5px;
+	max-width:500px;
+	margin:20px auto;
+}
+.egifts_payment_process_heading{
+	font-size:1.5em;
+	border-bottom-width:1px;
+	padding:10px 15px;
+}
+.egifts_payment_process_content .total_price{
+	padding:15px;
+	display:flex;
+}
+.egifts_payment_process_content .total_price span{
+	flex:1;
+	font-weight:bold;
+}
+.egifts_payment_process_credit,
+.egifts_payment_process_buttons{
+	border-top-width:1px;
+	border-top-style:dashed;
+	padding:15px;
+}
+.egifts_payment_process_credit .sescredit_coupon_total{
+	margin-top:15px;
+}
+.egifts_payment_process_credit .sescredit_coupon_total h5{
+	font-size:1em;
+}
+.egifts_payment_process_credit .sescredit_coupon_total table{
+	width:100%;
+}
+.egifts_payment_process_credit .sescredit_coupon_total table tr{
+	display:block;
+	overflow:hidden;
+	padding:5px 0;
+	width:100%;
+}
+.egifts_payment_process_credit .sescredit_coupon_total table tr td:nth-child(1){
+	float:left;
+}
+.egifts_payment_process_credit .sescredit_coupon_total table tr td:nth-last-child(1){
+	font-weight:bold;
+	float:right;
+}
+.egifts_payment_process_credit .credit_redeem_error{
+	margin-top:10px;
+	color:#f00;
+}
+.egifts_payment_process_complete_page{
+	padding:40px 20px;
+}
+.egifts_payment_process_complete{
+	text-align:center;
+}
+.egifts_payment_process_complete i{
+	margin:0 auto;
+}
+.egifts_payment_process_complete ._text{
+	font-size:25px;
+	display:block;
+	color:#44a72d;
+	margin:10px 0;
+}
+.egifts_payment_process_complete ._error{
+	color:#f00;
+}
+.egifts_payment_process_complete ._wait{
+	color:#F90;
+}
+.egifts_payment_process_complete ._des{
+	line-height:25px;
+}
+.egifts_payment_process_complete_btn{
+	text-align:center;
+	padding-top:20px;
+}
+.egifts_payment_process_complete_btn a{
+	display:inline-block;
+	float:none;
+	padding:10px 20px;
+}
+.egifts_payment_process_complete_btn a i{
+	margin-right:5px;
+}
+[dir="rtl"] .egifts_payment_process_complete,
+[dir="rtl"] .egifts_payment_process_complete_btn{
+	text-align:center;
+}
+@media (max-width:480px){
+	.egifts_payment_process{
+		margin:0;
+	}
+	.egifts_payment_process_credit button{
+		width:100%;
+		margin-top:10px;
+	}
+	.egifts_payment_process_buttons button{
+		width:100%;
+	}
+	.egifts_payment_process_buttons button + button{
+		margin-top:10px;
+	}
+}
+/*PAYMENT PROCESS END*/
+
+/*My Orders*/
+.egifts_dashboard_search{
+  border-width:1px;
+  padding:10px;
+	margin-bottom:15px;
+}
+.egifts_dashboard_search .form-elements{
+  display:flex;
+  flex-wrap:wrap;
+  margin:-10px;
+}
+.egifts_dashboard_search .form-wrapper{
+  width:33.33%;
+  padding:10px;
+  display:flex;
+  flex-wrap:wrap;
+}
+.egifts_dashboard_search .form-wrapper .form-label{
+  display:block;
+	margin-bottom:5px;
+  width:100%;
+}
+.egifts_dashboard_search .form-wrapper .form-element{
+	width:100%;
+}
+.egifts_dashboard_search .form-elements .form-wrapper .form-wrapper{
+  width:50%;
+  padding:0;
+}
+.egifts_dashboard_search .form-elements .form-wrapper .form-wrapper:nth-last-child(1){
+  padding-left:10px;
+}
+.egifts_dashboard_search .form-elements > div .form-wrapper .form-label{
+  display:none;
+}
+.egifts_dashboard_search  .form-elements .form-wrapper + .form-wrapper{
+  margin-top:0;
+}
+.egifts_dashboard_search .form-elements input[type="text"], 
+.egifts_dashboard_search .form-elements select{
+  width:100%;
+  max-width:100%;
+  height:40px; 
+  padding:0px 10px;
+}
+.egifts_dashboard_search .form-elements #search-wrapper,
+.egifts_dashboard_search .form-elements #loadingimgegifts-wrapper{
+	width:inherit;
+}
+.egifts_dashboard_search .form-elements #loadingimgegifts-wrapper .form-label{
+	display:none;
+}
+.egifts_dashboard_search .form-elements #loadingimgegifts-wrapper .form-element{
+	padding-top:8px;
+}
+.egifts_dashboard_search #search-label{
+	display:none;
+}
+.egifts_dashboard_search_result{
+	font-weight:bold;
+	margin-bottom:10px;
+}
+@media (max-width:768px){
+	.egifts_dashboard_search .form-elements .form-wrapper{
+		width:100%;
+	}
+}
+@media (max-width:480px){
+	.egifts_dashboard_search .form-elements button{
+		width:100%;
+	}
+	.egifts_dashboard_search .form-elements #search-wrapper,
+	.egifts_dashboard_search .form-elements #loadingimgegifts-wrapper{
+		width:100%;
+	}
+	.egifts_dashboard_search .form-elements #loadingimgegifts-wrapper .form-element {
+    padding-top:0;
+    text-align:center;
+	}
+}
+/*Manage Orders*/
+@media(min-width:768px){
+	.egifts_manage_table{
+		border-width:1px;
+		border-radius:5px;
+		width:100%;
+	}
+	.egifts_manage_table table{
+		width:100%;
+	}
+	.egifts_manage_table tr{
+		border-bottom-width:1px;
+	}
+	.egifts_manage_table tbody tr:nth-last-child(1){
+		border-bottom-width:0;
+	}
+	.egifts_manage_table tr th{
+		background-image:url(../images/transprant-bg.png);
+		padding:18px 10px;
+		text-transform:capitalize;
+	}
+	.egifts_manage_table tbody tr td{
+		border-bottom:none ;
+		padding:12px 10px;
+		vertical-align:middle;
+		width:20%;
+	}
+	.egifts_manage_table_price{
+		font-weight:bold;
+	}
+}
+@media(max-width:767px){
+	.egifts_manage_table{
+		border-width:0;
+		overflow:visible;
+	}
+	.egifts_manage_table table{
+		width:100%;
+	}
+	.egifts_manage_table table thead{
+		border:none;
+		clip:rect(0 0 0 0);
+		height:1px;
+		margin:-1px;
+		overflow:hidden;
+		padding:0;
+		position:absolute;
+		width:1px;
+	}
+	.egifts_manage_table tr{
+		border-radius:10px;
+		border-width:2px;
+		display:block;
+		margin-bottom:10px;
+	}
+	.egifts_manage_table table tbody tr td{
+		display:block;
+		text-align:right;
+		border-bottom-width:2px !important;
+		font-size:13px !important;
+		white-space:inherit !important;
+		width:100% !important;
+		min-height:40px;
+		padding:10px;
+	}
+	.egifts_manage_table table tbody tr .table_options{
+		text-align:center;
+	}
+	.egifts_manage_table table td::before{
+		content:attr(data-label);
+		float:left;
+		font-weight:700;
+		text-transform:uppercase;
+  }
+}

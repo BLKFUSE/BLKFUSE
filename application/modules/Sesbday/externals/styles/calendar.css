@@ -1,0 +1,281 @@
+/* $Id:calendar.css 2016-07-26 00:00:00 SocialEngineSolutions $*/
+.layout_sesbday_calender{
+	position:relative;
+}
+.sesbday_calendar_container {
+	border-style:solid;
+	border-width:1px;
+	padding:5px;
+	margin-bottom:20px;
+	position:relative;
+}
+.sesbday_calendar_header {
+	border-radius:3px;
+	margin-bottom:10px;
+	padding:10px;
+	display:flex;
+  justify-content:center;
+  text-align:center;
+}
+.sesbday_calendar_header_left_btns {
+	margin-right:10px;
+}
+.sesbday_calendar_header_left_btns a i {
+	margin-top:2px;
+	text-align:center;
+	width:30px;
+}
+.sesbday_calendar_header_left_btns a + a {
+	border-left-width:1px;
+}
+.sesbday_calendar_header_left_btns a i::before {
+	font-size:17px;
+}
+.sesbday_calendar_header_name {
+	font-size:20px;
+	font-weight:bold;
+	line-height:22px;
+}
+.sesbday_calendar_header_right_btns .sesbasic_button:first-child{
+	border-radius:3px 0 0 3px;
+}
+[dir="rtl"] .sesbday_calendar_header_right_btns .sesbasic_button:first-child{
+	border-radius:0 3px 3px 0;
+}
+.sesbday_calendar_header_right_btns .sesbasic_button:last-child{
+	border-radius:0 3px 3px 0;
+	border-width:1px 1px 1px 0;
+}
+[dir="rtl"] .sesbday_calendar_header_right_btns .sesbasic_button:last-child{
+	border-radius:3px 0 0 3px;
+	border-width:1px 0 1px 1px;
+}
+[dir="rtl"] .sesbday_calendar_header_right_btns .sesbasic_button i{
+	margin-top:20px;
+	height:0;
+  -webkit-transform:rotate(180deg);/* Chrome and other webkit browsers */
+  -moz-transform:rotate(180deg);/* FF */
+  -o-transform:rotate(180deg);/* Opera */
+  -ms-transform:rotate(180deg);/* IE9 */
+  transform:rotate(180deg);/* W3C compliant browsers */
+}
+.sesbday_calendar_main .calendar-row td > div {
+  border-top:0;
+}
+.sesbday_calendar_main {
+	width:100%;
+}
+.sesbday_calendar_main table {
+	width:100%;
+}
+.sesbday_calendar_container table td {
+	position:relative;
+	height:36px;
+}
+.sesbday_calendar_container table th{
+	border-bottom-width:1px;
+	padding:0 0 5px;
+}
+.sesbday_calendar_main table th, 
+.sesbday_calendar_main table td{
+	width:14.286%;
+	text-align:center;
+  font-size:12px;
+  font-weight:bold;
+}
+.sesbday_calendar_main th div, 
+.sesbday_calendar_main td div {
+	font-size:12px;
+	font-weight:bold;
+}
+.sesbday_calendar_main thead th div {
+	padding:5px 0;
+	text-align:center;
+}
+.sesbday_calendar_container table td a,
+.sesbday_calendar_container table td span{
+	display:block;
+}
+.sesbday_calendar_main tbody td > div {
+	border-top-width:1px;
+	display:block;
+	height:100px;
+	line-height:100px;
+	margin:0 5px;
+	position:relative;
+	text-align:center;
+}
+.sesbday_calendar_container table td._current a,
+.sesbday_calendar_container table td._current span{
+	background-image:url(../images/transprant-bg.png);
+}
+.sesbday_calendar_container table td a{
+	text-decoration:none !important;
+}
+.sesbday_calendar_header .sesbday_calendar_header_right_btns a {
+  position:absolute;
+}
+.sesbday_calendar_header .sesbday_calendar_header_right_btns a:first-child{
+	left:15px;
+}
+.sesbday_calendar_header .sesbday_calendar_header_right_btns a:last-child{
+	right:15px;
+}
+.sesbday_calendar_main tbody td > div.day:hover, 
+.sesbday_calendar_main tbody td > div.active{
+	background-image:url(../images/transprant-bg.png);
+}
+.sesbday_calendar_main tbody td > div .date{
+	position:relative;
+}
+.sesbday_calendar_date_link{
+	cursor:default;
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+	top:0;	
+}
+.sesbday_calendar_main tbody td > div .sesbday_calendar_create_link {
+	display:none;
+	position:absolute;
+	right:10px;
+	top:10px;
+}
+.sesbday_calendar_main tbody td > div:hover .sesbday_calendar_create_link {
+	display:block;
+}
+.sesbday_calendar_main tbody td > div .sesbday_calendar_create_link::before {
+	font-size:12px;
+}
+.sesbday_calendar_main tbody td > div .sesbday_calendar_create_link:hover {
+	text-decoration:none;
+}
+.sesbday_calendar_event_list {
+	bottom:5px;
+	left:5px;
+	position:absolute;
+	right:5px;
+}
+.sesbday_calendar_event_list li {
+	float:left;
+	margin:1px;
+}
+[dir="rtl"] .sesbday_calendar_event_list li {
+	float:right;
+}
+.sesbday_calendar_event_list li img {
+	border-width:0;
+	float:left;
+	height:30px;
+	width:30px;
+}
+.sesbday_calendar_event_list li.more a {
+	background-image:url(../images/transprant-bg.png);
+	display:block;
+	font-size:12px;
+	font-weight:bold;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	width:30px;
+}
+.sesbday_calendar_main tbody td > .date_inactive{
+	opacity:.3;
+}
+/* CALENDAR POPUP */
+.sesbday_list_popup {
+  width:600px;
+}
+.sesbday_list_popup_header {
+	background-image:url(../images/transprant-bg.png);
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	font-size:15px;
+	font-weight:bold;
+	height:40px;
+	left:0;
+	line-height:40px;
+	padding:0 10px;
+}
+.sesbday_list_popup_top_btns {
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	padding:5px 10px;
+}
+.sesbday_list_popup_content {
+	max-height:495px;
+	overflow:auto;
+	padding:0 10px 0 15px;
+	display:flex;
+  flex-wrap:wrap;
+}
+.sesbday_list_popup_content > div {
+	width:calc(20% - 10px);
+	margin:10px 5px;
+}
+.sesbday_list_popup_content > div > .item_list_thumb {
+	width:100px;
+	height:100px;
+	display:block;
+	position:relative;
+	overflow:hidden;
+}
+.sesbday_list_popup_content > div > .item_list_thumb a img {
+	width:100%;
+	height:100%;
+	border-radius:100px;
+	object-fit:cover;
+}
+.sesbday_list_popup_content .item_list_title{
+	text-align:center;
+	font-weight:bold;
+  margin-top:5px;
+}
+.sesbday_list_popup_content .tip {
+  margin:10px 0;
+	width:100%;
+}
+.sesbday_list_popup_top_btns .sesbasic_button:first-child {
+  border-radius:3px 0 0 3px;
+}
+.sesbday_list_popup_top_btns .sesbasic_button:last-child {
+	border-radius:0 3px 3px 0;
+	border-width:1px 1px 1px 0;
+}
+@media (max-width:767px){
+	.sesbday_calendar_main th div span{display:none;}
+	.sesbday_calendar_main tbody td > div{padding:10px 8px;}
+	.sesbday_calendar_main tbody td > div{
+		height:50px;
+	}
+	.sesbday_calendar_main tbody td > div .sesbday_calendar_event_list{display:none;}	
+}
+ 
+/* SIDEBAR WIDGET */
+.layout_left .sesbday_calendar_header_name,.layout_right  .sesbday_calendar_header_name {
+	font-size:100%;
+	font-weight:normal;
+	line-height:normal;
+}
+.layout_left .sesbday_calendar_main tbody td > div,.layout_right .sesbday_calendar_main tbody td > div{
+	height:auto;
+	padding:0;
+}
+.layout_left .sesbday_calendar_event_list,.layout_right .sesbday_calendar_event_list{
+	display:none;
+}
+.layout_left .sesbday_calendar_main tbody td > div, .layout_right .sesbday_calendar_main tbody td > div{
+	border-top:0;
+}
+.layout_left .sesbday_calendar_main tbody td > .day_active, .layout_right .sesbday_calendar_main tbody td > .day_active{
+	margin:1px;
+}
+.layout_left .sesbday_calendar_container,.layout_right .sesbday_calendar_container {
+  border:none;
+  padding:0;
+}
+.layout_left .sesbday_calendar_container table td a,.layout_left .sesbday_calendar_container table td span,.layout_right .sesbday_calendar_container table td a,.layout_right .sesbday_calendar_container table td span{
+  height:30px;
+	line-height:30px;
+}

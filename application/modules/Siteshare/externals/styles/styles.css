@@ -1,0 +1,55 @@
+/*Share Poopup*/
+.siteshare_share_popup{
+  width: 470px;
+}
+.siteshare_share_popup.sharelinksblock {
+    width: 100%;
+    position: relative;
+}
+.siteshare_share_popup .form-elements textarea{
+  width: 377px !important;
+  padding: 5px;
+}
+.siteshare_share_popup .global_form_popup #buttons-wrapper{
+  padding-right: 37px;
+}
+html[dir="rtl"] .siteshare_share_popup .global_form_popup #buttons-wrapper{
+  padding-left:37px;
+  padding-right:0;
+}
+.siteshare_share_popup .composer_facebook_tooltip, 
+.siteshare_share_popup .composer_twitter_tooltip{
+  width: 150px;
+  margin-top: -52px;
+}
+.siteshare_share_popup .sharebox{
+  padding: 10px;
+  width: 370px;
+}
+
+@media only screen and (max-width: 600px) {
+/*Share Popup start*/
+   #global_page_siteshare-index-share #global_content_simple {
+  min-width: 100%;
+  width: 100%;
+  }
+   #global_content_simple{ width:100%;}
+   .siteshare_share_popup{ width: 100%; }
+   html .siteshare_share_popup .form-elements textarea{ width:100% !important; }
+   .siteshare_share_popup .sharebox{ width: 85%; }
+/*Share Poopup end*/
+
+.siteshare_share_popup #body-element {
+  position: relative;
+}
+.siteshare_share_popup #body{
+  min-height: 80px;
+}
+.siteshare_share_popup .compose-container #body{
+  background: transparent;
+  -webkit-appearance: none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+}

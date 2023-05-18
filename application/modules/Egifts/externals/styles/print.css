@@ -1,0 +1,68 @@
+
+html, body{
+	background-color:#fff;
+}
+body{
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+}
+body *{
+	font-family:Arial, Helvetica, sans-serif;
+}
+a{
+	text-decoration:none;
+	color:#000;
+}
+.sesbasic_bxs{
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+#global_content_simple{
+	display:block;
+	padding:10px;
+}
+.text-center{
+	text-align:center !important;
+}
+.text-right{
+	text-align:right !important;
+}
+[dir="rtl"] .text-right{
+	text-align:left !important;
+}
+.development_mode_warning{
+	display:none !important;
+}
+/* ORDER VIEW CSS STARTS HERE */
+.egifts_order_view{
+	max-width: 600px;
+	margin: 0 auto;
+	width:100%;
+}
+.egifts_order_view_table{
+	border:1px solid #ddd;
+	border-radius:5px;
+	padding:10px;
+}
+.egifts_order_view_table table{
+	width:100%;
+}
+.egifts_order_view_table table th,
+.egifts_order_view_table table strong{
+	font-weight:bold;
+}
+.egifts_order_view_table table th,
+.egifts_order_view_table table td{
+	text-align:left;
+	padding:10px;
+}
+.egifts_order_view_table table td{
+	border-top:1px solid #eee;
+}
+.egifts_order_view_footer{
+	margin-top:10px;
+	text-align:center;
+	color:#999;
+}
+/* ORDER VIEW CSS ENDS HERE */

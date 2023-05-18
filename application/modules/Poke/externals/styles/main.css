@@ -1,0 +1,117 @@
+/* $Id: main.css 2011-08-026 9:40:21Z SocialEngineAddOns Copyright 2010-2011 BigStep Technologies Pvt. Ltd. $ */
+
+/* icons */
+.poke_type_icon::before,
+.notification_type_Poke::before,
+.activity_icon_Poke::before {
+	content: "\\f0a4";
+}
+.poke_home_connection::before {content: "\\f0a4";}
+/* poke popup css start */
+#global_page_poke-pokeusers-pokeuser .global_form {
+	margin:10px 10px 0 10px;
+}
+#global_page_poke-pokeusers-pokeuser .global_form .form-wrapper img {
+	float:left;
+	margin-right:10px;
+	max-width:100px;
+	max-height:200px;
+}
+#global_page_poke-pokeusers-pokeuser .global_form .form-wrapper #buttons-element {
+	margin-top: 10px;
+}
+#global_page_poke-pokeusers-pokeuser .tip {
+	margin:10px 10px 0;
+}
+#global_page_poke-pokeusers-pokeuser .tip span {
+	margin-bottom:0px !important;
+}
+/* poke popup css end */
+.layout_poke_list_pokeusers, .layout_poke_list_toppokers, .layout_poke_list_recentpoked, .layout_poke_list_pokedrecently, .layout_poke_list_mostpokers{
+	margin-bottom:15px;
+}
+.users_poked .users_poked_list {
+	clear:both;
+	padding:3px 0;
+}
+.users_poked .users_poked_list div {
+	float:left;
+	font-size:11px;
+	margin-left:3px;
+}
+a.poke_remove{
+	position:absolute;
+	display:none;
+	right:0px;
+	height:11px;
+	width:11px;
+	background:url(~/application/modules/Poke/externals/images/cancel_icon.png) no-repeat right;
+}
+a.poke_remove:hover {
+	background:#3b5998 url(~/application/modules/Poke/externals/images/cancel_icon.png) no-repeat left;
+}
+.users_poked_list{
+	position:relative;
+	overflow:hidden;
+}
+.users_poked_list:hover .poke_remove{
+	display:block;
+}
+.poke_type_icon{
+	float: left !important;
+	line-height: 16px;
+}
+.poke_type_icon::before {
+	font-family: fontawesome;
+	margin-right: 6px;
+}
+.usersetting .global_form div.form-label {
+	display:none;
+}
+/* icons */
+.user_profile_poke::before {
+	content: "\\f0a4";
+}
+
+/*CSS FOR ALL POKE SIDEBAR WIDGETS START HERE*/
+ul.poke_sidebar_list {
+    +foreground;
+    +rounded;
+    padding: 5px;
+}
+ul.poke_sidebar_list li {
+    clear: both;
+    overflow: hidden;
+    padding: 3px 5px;
+}
+ul.poke_sidebar_list li > a {
+    float: left;
+    margin-right: 6px;
+}
+[dir="rtl"] ul.poke_sidebar_list li > a {
+    float: right;
+    margin-left: 6px;
+    margin-right: 0;
+}
+ul.poke_sidebar_list li div a {
+    float: none;
+}
+.poke_sidebar_list_info{
+    overflow: hidden;
+}
+.poke_sidebar_list_title {
+    font-weight: bold;
+}
+.poke_sidebar_list_details {
+    font-size: .8em;
+    color: $theme_font_color_light;
+    margin-top: 3px;
+}
+/*CSS FOR ALL POKE SIDEBAR WIDGETS END HERE*/
+
+/* For certification issues*/
+/* Front End */
+
+#smoothbox_window,#global_page_poke-index-pokesettings {
+	height:100%;
+}

@@ -1,0 +1,1 @@
+UPDATE `engine4_authorization_permissions` SET `params` = '["youtube","youtubePlaylist","vimeo","dailymotion","iframely","myComputer"]' WHERE  `engine4_authorization_permissions`.`type` = 'video' AND `engine4_authorization_permissions`.`name` = 'video_uploadoptn';

@@ -1,0 +1,33 @@
+"ACTIVITY_TYPE_TICKVIDEO_PROCESSED";"When a video has been processed."
+"ACTIVITY_TYPE_TICKVIDEO_PROCESSED_FAILED";"When a video has failed to be processed."
+
+# mail templates
+
+# notify_tickvideo_processed
+"_EMAIL_NOTIFY_TICKVIDEO_PROCESSED_TITLE";"Video Processed"
+"_EMAIL_NOTIFY_TICKVIDEO_PROCESSED_DESCRIPTION";"This email is sent to the owner of the video when the uploaded video has been processed and is ready for viewing."
+"_EMAIL_NOTIFY_TICKVIDEO_PROCESSED_SUBJECT";"Your video ""[object_title]"" has finished processing"
+"_EMAIL_NOTIFY_TICKVIDEO_PROCESSED_BODY";"[header]
+
+Your video has been processed and is ready to be viewed. Please click the following link to view it:
+
+http://[host][object_link]
+
+[footer]"
+
+# notify_tickvideo_processed_failed
+"_EMAIL_NOTIFY_TICKVIDEO_PROCESSED_FAILED_TITLE";"Video Processing Failed"
+"_EMAIL_NOTIFY_TICKVIDEO_PROCESSED_FAILED_DESCRIPTION";"This email is sent to the owner of the video when the uploaded video has failed to be processed."
+"_EMAIL_NOTIFY_TICKVIDEO_PROCESSED_FAILED_SUBJECT";"Your video ""[object_title]"" has failed to process"
+"_EMAIL_NOTIFY_TICKVIDEO_PROCESSED_FAILED_BODY";"[header]
+
+We apologize, but there was a problem processing your video. The message was:
+""[message]""
+
+Please click the following link to view it:
+
+http://[host][message_link]
+
+[footer]"
+
+"SNS - Short TikTak Videos Plugin for Mobile Apps";"Short TikTak Videos Plugin for Mobile Apps"

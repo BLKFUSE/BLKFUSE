@@ -1,0 +1,7 @@
+UPDATE `engine4_core_menuitems` SET `menu` = 'sesmusic_admin_main_settings' WHERE `engine4_core_menuitems`.`menu` = 'sesmusic_admin_main_globalsettings';
+UPDATE `engine4_authorization_permissions` SET `name` = 'playlist_album' WHERE `engine4_authorization_permissions`.`type` = 'sesmusic_album' AND `engine4_authorization_permissions`.`name` = 'addplaylist_album';
+UPDATE `engine4_authorization_permissions` SET `name` = 'playlist_song' WHERE `engine4_authorization_permissions`.`type` = 'sesmusic_album' AND `engine4_authorization_permissions`.`name` = 'addplaylist_albumsong';
+UPDATE `engine4_authorization_permissions` SET `name` = 'favourite_album' WHERE `engine4_authorization_permissions`.`type` = 'sesmusic_album' AND `engine4_authorization_permissions`.`name` = 'addfavourite_album';
+UPDATE `engine4_authorization_permissions` SET `name` = 'favourite_song' WHERE `engine4_authorization_permissions`.`type` = 'sesmusic_album' AND `engine4_authorization_permissions`.`name` = 'addfavourite_albumsong';
+UPDATE `engine4_authorization_permissions` SET `name` = 'download_song' WHERE `engine4_authorization_permissions`.`type` = 'sesmusic_album' AND `engine4_authorization_permissions`.`name` = 'download_albumsong';
+UPDATE `engine4_core_menuitems` SET `label` = 'SNS - Professional Music' WHERE `engine4_core_menuitems`.`name` = 'core_admin_main_plugins_sesmusic';

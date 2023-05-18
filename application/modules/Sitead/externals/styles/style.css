@@ -1,0 +1,142 @@
+.cmd-weapper .add-title {
+  width: calc(100% - 75px);
+}
+.cmd-weapper .discription .add-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: initial;
+}
+/*Side column*/
+.layout_page_sitead_display_adboard .layout_main .layout_left .cmd-weapper .discription .dis_bottom_wrp, 
+.layout_page_sitead_display_adboard .layout_main .layout_right .cmd-weapper .discription .dis_bottom_wrp, 
+.layout_page_user_index_home .layout_right .layout_sitead_ads .cmad_ad_clm .cmd-weapper .discription .dis_bottom_wrp {
+  display: block;
+  height: auto;
+}
+
+.layout_page_sitead_display_adboard .layout_main .layout_left .cmd-weapper .discription .dis_bottom_wrp .cmd-info, 
+.layout_page_sitead_display_adboard .layout_main .layout_right .cmd-weapper .discription .dis_bottom_wrp .cmd-info, 
+.layout_page_user_index_home .layout_right .layout_sitead_ads .cmad_ad_clm .cmd-weapper .discription .cmd-info {
+  display: block;
+  height: 74px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.discription .dis_bottom_wrp p {
+    line-height: 24px;
+    opacity: 0.8;
+}
+
+.layout_page_sitead_display_adboard div.layout_middle #advertisment_content .cmd-weapper .discription .dis_bottom_wrp p, 
+.ad_preview_wpr .discription .dis_bottom_wrp p {
+    letter-spacing: 0.2px;
+    line-height: 20px;
+    opacity: 0.8;
+}
+.layout_page_sitead_display_adboard div.layout_middle #advertisment_content .cmd-weapper .discription .dis_bottom_wrp p {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.discription .dis_bottom_wrp .add-heading {
+    line-height: 24px;
+}
+.layout_page_sitead_display_adboard .layout_main .layout_left .cmd-weapper .discription .dis_bottom_wrp .call-to-action,
+.layout_page_sitead_display_adboard .layout_main .layout_right .cmd-weapper .discription .dis_bottom_wrp .call-to-action, 
+.layout_page_user_index_home .layout_right .layout_sitead_ads .cmad_ad_clm .cmd-weapper .discription .call-to-action {
+  padding-left: 0;
+}
+.layout_page_sitead_display_adboard .layout_main .layout_left .cmd-weapper .discription .add-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: calc(100% - 15px);
+}
+.cmd-weapper .report-top h3 {
+  width: calc(100% - 20px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cadcomp_page .cadmc_list_wrapper #table_content table tr th {
+ background-color:$theme_foreground_background_color;
+}
+.caab_ad .cmd-weapper, .layout_left + .layout_middle #advertisment_content .cmd-weapper {
+  width: calc(33% - 10px);
+  box-sizing: border-box;
+}
+.slct-formate {
+  width: calc(29% - 3px);
+}
+.ad-preview .saad-preview h3 {
+  width: calc(100% - 70px);
+}
+.plan-features > div {
+  width: calc(33% - 11px);
+}
+
+@media only screen and (max-width: 1199px) {
+.slct-formate {
+  width: calc(34% - 20px);
+}
+}
+
+@media only screen and (max-width: 920px) {
+.caab_ad .cmd-weapper, .layout_left + .layout_middle #advertisment_content .cmd-weapper {
+  box-sizing: border-box;
+  width: calc(49% - 10px);
+}
+.layout_left + .layout_middle #advertisment_content .cmd-weapper:nth-child(3n+1) {
+  margin-right: 18px;
+}
+.layout_left + .layout_middle #advertisment_content .cmd-weapper:nth-of-type(2n+2), .caab_ad .cmd-weapper:nth-of-type(2n+2) {
+  margin-right: 0;
+}
+.plan-features > div {
+  width: 47%;
+}
+.plan-features .plan-content:nth-child(3n) {
+  padding-right: 20px;
+}
+.plan-mid-sec {
+  display: inline-block;
+}
+.plan-features {
+  display: block;
+}
+}
+
+@media only screen and (max-width: 768px) {
+.plan-features > div {
+  width: 100%;
+  box-sizing: border-box;
+}
+.slct-formate {
+  width: calc(50% - 30px);
+  margin-right: 25px !important;
+}
+.ad-preview .saad-preview h3 {
+    width: calc(100% - 70px);
+}
+}
+
+@media only screen and (max-width: 600px) {
+#advertisment_content {
+  padding: 0;
+}
+.caab_ad .cmd-weapper, .layout_left + .layout_middle #advertisment_content .cmd-weapper {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+.slct-formate {
+  margin-right: 0;
+  width: 100%;
+}
+}
+@media only screen and (max-width: 360px) {
+.ad-preview .saad-preview h3 {
+    width: calc(100% - 30%);
+}
+}

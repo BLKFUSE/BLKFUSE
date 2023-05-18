@@ -1,0 +1,1 @@
+UPDATE `engine4_core_menus` SET `title` = 'SNS - Advanced Videos & Channels Plugin Main Navigation Menu' WHERE `engine4_core_menus`.`name` = 'sesvideo_main';

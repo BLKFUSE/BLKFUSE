@@ -1,0 +1,683 @@
+
+/*Mangage Packages*/
+.epaidcontent_manage_packages .epaidcontent_icon_button{
+  margin:18px 0;
+}
+.epaidcontent_manage_packages .epaidcontent_icon_plan_add{
+  border-width:1px;
+  border-radius:5px;
+  padding:10px 18px;
+  font-size:15px;
+  font-weight:600;
+  transition:.5s;
+  display:inline-block;
+}
+.epaidcontent_manage_packages .epaidcontent_icon_plan_add:before{
+  margin-right:4px;
+}
+[dir="rtl"] .epaidcontent_manage_packages .epaidcontent_icon_plan_add:before{
+  margin-right:0px;
+  margin-left:4px;
+  display:inline-block;
+}
+.epaidcontent_manage_table{
+  border-width:1px;
+  border-radius:5px;
+  width:100%;
+}
+.epaidcontent_manage_table tr th{
+  padding:18px 10px;
+  text-transform:capitalize;
+}
+.epaidcontent_manage_table tbody tr td{
+  border-bottom:none ;
+  padding:12px 10px;
+  vertical-align:middle;
+}
+.epaidcontent_manage_table_bold,
+.epaidcontent_manage_table_price{
+  font-weight:bold;
+}
+.epaidcontent_manage_table_options a{
+  border-width:1px;
+  border-radius:5px;
+  position:relative;
+  width:35px;
+  height:35px;
+  display:inline-block;
+  line-height:35px;
+  font-size:15px;
+  transition:0.5s;
+  margin:auto;
+  text-align:center;
+  margin:2px;
+}
+
+.epaidcontent_manage_plan > li {
+  border-width: 1px;
+  padding:20px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-start;
+}
+.epaidcontent_manage_plan_item ._id {
+  width: 45px;
+ font-weight: bold;
+}
+.epaidcontent_manage_plan_item .epaidcontent_manage_plan_item_cont {
+  flex: 1;
+}
+.epaidcontent_manage_plan_top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.epaidcontent_manage_plan_item_cont ._header {
+  display: flex;
+  justify-content: space-between;
+}
+.epaidcontent_manage_plan_item_cont ._header span {
+  font-weight: bold;
+  text-transform: capitalize;
+  font-size: 20px;
+}
+.epaidcontent_manage_plan_item_cont .epaidcontent_manage_plan_edit{
+  border-width: 1px;
+  border-radius: 5px;
+  position: relative;
+  width: 35px;
+  height: 35px;
+  display: inline-block;
+  line-height: 35px;
+  font-size: 15px;
+  transition: 0.5s;
+  text-align: center;
+  margin: 0 2px;
+}
+.epaidcontent_manage_plan_item ._stats {
+  display: flex;
+  align-items: center;
+  padding: 0px 0 8px;
+}
+.epaidcontent_manage_plan .price {
+  font-weight: bold;
+}
+.epaidcontent_manage_plan_item .billing_section ._label {
+  font-weight: bold;
+  padding-right:6px;
+}
+.epaidcontent_manage_plan_item ._stats > div + div:before{
+  content:"|";
+  margin: 0 15px;
+}
+
+/*Create Packages*/
+.epaidcontent_create_packages .global_form{
+  margin:0 !important;
+}
+.epaidcontent_create_packages .global_form > div > div{
+  padding:10px 5px!important;
+}
+.epaidcontent_create_packages .epaidcontent_create_packages{
+  padding:12px 5px ;
+  margin:0px 0px 15px ;
+}
+.epaidcontent_create_packages #recurrence-wrapper #recurrence-element{
+  display:flex;
+  flex-wrap:wrap;
+}
+.epaidcontent_create_packages #recurrence-wrapper #recurrence-element p{
+  display:block;
+  width:100%;
+  max-width:100%;
+}
+.epaidcontent_create_packages #recurrence-wrapper #recurrence-element input,
+.epaidcontent_create_packages #duration-wrapper #duration-element input{
+  width:90px;
+  margin-right:10px;
+}
+[dir="rtl"] .epaidcontent_create_packages #recurrence-wrapper #recurrence-element input,
+[dir="rtl"] .epaidcontent_create_packages #duration-wrapper #duration-element input{
+  margin-right:0px;
+  margin-left:10px;
+}
+.epaidcontent_create_packages #recurrence-wrapper #recurrence-element select,
+.epaidcontent_create_packages #duration-wrapper #duration-element select{
+  width:auto;
+}
+.epaidcontent_create_packages #buttons-wrapper #buttons-label{
+  display:none;
+}
+.epaidcontent_create_packages button[type=submit]{
+  margin-top:10px;
+}
+
+/*Account Details*/
+.epaidcontent_account_details_tabs{
+  display:flex;
+  align-items:center;
+}
+.epaidcontent_account_details_tabs li a{
+  border-width:1px;
+  padding:10px 15px;
+  border-radius:5px;
+  margin:0px 8px 8px 0px;
+  display:block;
+  transition:0.5s;
+}
+[dir="rtl"] .epaidcontent_account_details_tabs li a{
+  margin:0px 0px 8px 8px;
+}
+.epaidcontent_account_details_tabs li a i{
+  margin-right:5px;
+}
+[dir="rtl"] .epaidcontent_account_details_tabs li a i{
+  margin-right:0px;
+  margin-left:4px;
+}
+.epaidcontent_account_details_tabs li a .fa-cc-paytm{
+  background-image:url(../images/paytm.png);
+  width:24px;
+  background-size:30px;
+  background-repeat:no-repeat;
+  background-position:center center;
+  height:22px;
+  padding:0 15px;
+  display:inline-block;
+  border-radius:4px;
+  vertical-align:middle;
+}
+.epaidcontent_account_details_form .global_form > div > div{
+  padding:10px 5px!important;
+  background-color:transparent;
+}
+.epaidcontent_account_details_form .global_form h3{
+  padding:12px 0px;
+  margin:0;
+  border:0;
+}
+.epaidcontent_account_details_form button[type=submit]{
+  margin-top:8px;
+}
+
+/*Sale Stats*/
+.epaidcontent_dashboard_content_header{
+  margin-bottom:20px;
+}
+.epaidcontent_dashboard_content_header > h3{
+  margin:5px 0 10px;
+  font-weight:bold;
+}
+.epaidcontent_db_sale_stats_container{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-start;
+  margin:0 -10px;
+}
+.epaidcontent_db_sale_stats{
+  text-align:center;
+  width:33.33%;
+  padding:0 10px;
+  margin-bottom:20px;
+}
+.epaidcontent_db_sale_stats > section{
+  border-width:1px;
+  background-image:url(../images/t-img-light.png);
+  padding:30px 15px;
+}
+.epaidcontent_db_sale_stats span:nth-child(1){
+  display:block;
+  font-weight:bold;
+}
+.epaidcontent_db_sale_stats span:nth-child(2){
+  display:block;
+  font-size:17px;
+  margin-top:10px;
+}
+/*Sales Report*/
+.epaidcontent_dashboard_search.epaidcontent_sale_report_form  .form-elements .form-wrapper{
+  width:20%;
+}
+.epaidcontent_sale_report_form .global_form_box .form-element input[type="text"], 
+.epaidcontent_sale_report_form .global_form_box .form-element select{
+ width: 100% !important;
+}
+
+/*My Orders*/
+.epaidcontent_dashboard_search{
+  border-width:1px;
+  padding:10px;
+}
+.epaidcontent_dashboard_search .form-elements{
+  display:flex;
+  flex-wrap:wrap;
+  margin:-10px;
+}
+.epaidcontent_dashboard_search .form-elements .form-wrapper{
+  width:33.33%;
+  padding:10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.epaidcontent_dashboard_search .form-elements .form-wrapper .form-wrapper{
+  width:50%;
+  padding:0;
+}
+.epaidcontent_dashboard_search .form-elements .form-wrapper .form-wrapper:nth-last-child(1){
+  padding-left:10px;
+}
+.epaidcontent_dashboard_search .form-element {
+	width:100%;
+}
+.epaidcontent_dashboard_search .form-elements > div .form-wrapper .form-label{
+  display:none;
+}
+.epaidcontent_dashboard_search  .form-elements .form-wrapper + .form-wrapper{
+  margin-top:0;
+}
+.epaidcontent_dashboard_search .form-elements .form-label{
+  display:block;
+  width:100%;
+}
+.epaidcontent_dashboard_search .form-elements input[type="text"], 
+.epaidcontent_dashboard_search .form-elements select{
+  width:100%;
+  max-width:100%;
+  height:40px; 
+  padding: 0px 10px;
+}
+
+/*Packages*/
+.epaidcontent_packages_main_header{
+  margin-bottom:20px;
+}
+.epaidcontent_packages_main_header h2{
+  font-weight:bold;
+}
+.epaidcontent_packages_table{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin:0 -10px;
+}
+#global_page_user-profile-index .epaidcontent_packages_table{
+  justify-content: flex-start;
+}
+.epaidcontent_packages_table > li{
+  width:31.33%;
+  border-width:1px;
+  padding:20px;
+  border-radius:5px;
+  margin:10px;
+  background-image:url(../images/t-img-light.png);
+}
+.epaidcontent_packages_table > li section {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+.epaidcontent_packages_table > li ._cont {
+	flex: 1;
+}
+.epaidcontent_packages_table > li .title_price{
+  margin-bottom:8px;
+}
+.epaidcontent_packages_table > li .title_price h5{
+  text-transform:capitalize;
+  font-weight:500;
+  margin-bottom:8px;
+}
+.epaidcontent_packages_table > li .title_price span{
+  font-weight:600;
+  font-size:15px
+}
+.package_capabilities li{
+  display:flex;
+  margin-bottom:10px;
+  align-items:center;
+}
+.package_capabilities li span._label{
+  width:120px;
+}
+.package_capabilities li ._value{
+  font-weight:bold;
+}
+.epaidcontent_packages_table .select_packeges_button a{
+  border:1px solid;
+  font-size:15px;
+  padding:12px 18px;
+  border-radius:5px;
+  margin-top:5px;
+  display:block;
+  width:100%;
+  text-align:center;
+}
+/*Payment Process*/
+.epaidcontent_fees_process_step{
+  text-align:center;
+  padding:80px 20px;
+}
+.epaidcontent_fees_process_step h2{
+  font-size:25px;
+  font-weight:bold;
+  margin-bottom:20px;
+  text-transform:capitalize;
+}
+.epaidcontent_fees_process_step h3{
+  font-size:16px;
+}
+.epaidcontent_fees_process_step p{
+  margin:5px;
+}
+.epaidcontent_fees_process_step b{
+  font-weight:bold;
+  font-size:18px;
+}
+.epaidcontent_fees_process_step_button{
+  text-align:center !important;
+  margin:10px 0 6px;
+}
+.epaidcontent_fees_process_step_button button{
+  margin:10px;
+  border-radius:5px;
+  padding:12px 20px;
+}
+.epaidcontent_fees_process_step_cancel{
+  font-size:16px;
+  font-weight:bold;
+  text-decoration:none;
+  text-align:center;
+  display:block;
+}
+/*Payment Request*/
+.epaidcontent_db_request_payment_link .sesbasic_button{
+  border-width:1px;
+  border-radius:5px;
+  padding:10px 18px;
+  font-size:15px !important;
+  font-weight:600;
+  transition:.5s;
+  display:inline-block;
+}
+.epaidcontent_db_request_payment_link .sesbasic_button i{
+  font-family:"Font Awesome 5 Free" !important;
+  font-style:normal;
+  font-weight:900;
+  margin-right:5px;
+}
+[dir="rtl"] .epaidcontent_db_request_payment_link .sesbasic_button i{
+  margin-left:5px;
+  margin-right:0;
+}
+.epaidcontent_db_request_payment_link .sesbasic_button i:before{
+  content:"\f0d6";
+}
+/*Payment Complete*/
+.epaidcontent_fees_process_complete_page{
+	padding:40px 0;
+}
+.epaidcontent_fees_process_complete{
+	text-align:center;
+}
+.epaidcontent_fees_process_complete i{
+	margin:0 auto;
+  display:block;
+  text-align:center;
+}
+.epaidcontent_fees_process_complete ._text{
+	font-size:25px;
+	display:block;
+	color:#44a72d;
+	margin-top:10px;
+  text-align:center;
+}
+.epaidcontent_fees_process_complete ._error{
+	color:#f00;
+}
+.epaidcontent_fees_process_complete_btn{
+	text-align:center !important;
+	padding-top:20px;
+}
+.epaidcontent_fees_process_complete_btn > .sesbasic_link_btn.floatL{
+  float:none;
+}
+.epaidcontent_fees_process_complete_btn > a{
+	display:inline-block;
+	float:none;
+	padding:10px;
+	min-width:160px;
+	margin:0 5px;
+}
+/*Order View Start*/
+.epaidcontent_manage_order_poup{
+  width:450px;
+}
+.epaidcontent_ticket_order_view_page{
+  margin:10px;
+}
+.epaidcontent_invoice_header{
+	margin-bottom:5px;
+}
+.epaidcontent_invoice_header div{
+	font-size:20px;
+}
+.epaidcontent_invoice_content_wrap{
+	border-style:solid;
+	border-width:1px;
+	display:table;
+	margin-bottom:15px;
+	width:100%;
+}
+.epaidcontent_invoice_content_left,
+.epaidcontent_invoice_content_right{
+	display:table-cell;
+	width:50%;
+}
+.epaidcontent_invoice_content_left{
+	border-right-style:solid;
+	border-right-width:1px;
+}
+.epaidcontent_invoice_content_box{
+	padding:10px;
+}
+.epaidcontent_invoice_content_box + .epaidcontent_invoice_content_box{
+	border-top-style:solid;
+	border-top-width:1px;
+}
+.epaidcontent_invoice_content_box b.bold{
+	display:block;
+	margin-bottom:5px;
+}
+.epaidcontent_invoice_content_detail > span{
+	display:block;
+}
+.epaidcontent_invoice_content_detail .fa-caret-right{
+  margin:0 5px;
+}
+.epaidcontent_invoice_content_qr{
+	margin:5px;
+	text-align:center;
+}
+.epaidcontent_manage_order_poup_table{
+  border-width:1px;
+  border-radius:5px;
+  width:100%;
+}
+.epaidcontent_manage_order_poup_table tr th{
+  padding:10px;
+  text-transform:capitalize;
+}
+.epaidcontent_manage_order_poup_table tbody tr td{
+  border-bottom:none ;
+  padding:10px;
+  vertical-align:middle;
+}
+.epaidcontent_invoice_total_price_box{
+  padding:10px 6px 0;
+}
+.epaidcontent_invoice_total_price_box > div{
+  padding-bottom:6px;
+}
+.epaidcontent_invoice_total_price_box > div span b,
+.epaidcontent_invoice_total_price_box_total span b{
+  float:right;
+  clear:both;
+}
+[dir="rtl"] .epaidcontent_invoice_total_price_box > div span b, 
+[dir="rtl"] .epaidcontent_invoice_total_price_box_total span b{
+  float:left;
+}
+/*Order View End*/
+
+/*Payment Requests*/
+.layout_page_epaidcontent_index_payment-requests .epaidcontent_db_sale_stats{
+  width:25%;
+}
+.epaidcontent_payment_popup .global_form > div > div h3{
+  padding:10px 10px 15px;
+  font-weight:bold;
+  background-color:transparent;
+}
+.epaidcontent_payment_popup .global_form div.form-wrapper div#buttons-label{
+  display:none;
+}
+.epaidcontent_view_detail_popup h3{
+  padding:10px 10px 15px;
+  border-bottom-width:1px;
+  margin-bottom:16px;
+  font-weight:bold;
+  background-color:transparent;
+}
+.payment_requests_view_table td{
+  padding:10px;
+  border-width:1px;
+}
+/*Global Poup*/
+#smoothbox_window .global_form_popup > form h3{
+  display:block;
+  border-bottom-width:1px;
+}
+@media (max-width:1199px){ 
+  /*Packages*/
+  .epaidcontent_packages_table > li{
+    width:30%;
+  }
+
+}
+@media (max-width:991px){ 
+  /*Packages*/
+  .epaidcontent_packages_table > li{
+    width:46%;
+  }
+  .layout_page_epaidcontent_index_payment-requests .epaidcontent_db_sale_stats{
+    width:50%;
+  }
+
+}
+@media (max-width:767px){  
+  /*Mangage Packages*/
+  .epaidcontent_manage_table{
+    border:0;
+    margin:0;
+    width:100%;
+  }
+  .epaidcontent_manage_table thead{
+    border:none;
+    clip:rect(0 0 0 0);
+    height:1px;
+    margin:-1px;
+    overflow:hidden;
+    padding:0;
+    position:absolute;
+    width:1px;
+  }
+  .epaidcontent_manage_table tr{
+    border-bottom-width:1px;
+    display:block;
+    margin-bottom:15px;
+  }
+  .epaidcontent_manage_table td{
+    border-width:1px;
+    display:block;
+    text-align:right;
+  }
+  [dir="rtl"] .epaidcontent_manage_table td{
+    text-align:left;
+  }
+  .epaidcontent_manage_table td::before{
+    content:attr(data-label);
+    float:left;
+    font-weight:bold;
+  }
+  [dir="rtl"] .epaidcontent_manage_table td::before{
+    float:right;
+  }
+  /*Order View Start*/
+  .epaidcontent_manage_order_poup{
+    width:100%;
+  } 
+  .epaidcontent_invoice_content_left, 
+  .epaidcontent_invoice_content_right {
+    display: block;
+    width: 100%;
+  }
+  /*My Orders*/
+  .epaidcontent_dashboard_search .form-elements .form-wrapper{
+    width: 100%;
+  }
+  .epaidcontent_dashboard_search .form-elements .form-wrapper #search-label,
+  .epaidcontent_dashboard_search .form-elements .form-wrapper #submit_form_sales_report-label{
+    display: none;
+  }
+  /*Sales Report*/
+  .epaidcontent_dashboard_search.epaidcontent_sale_report_form  .form-elements .form-wrapper{
+    width:100%;
+  }
+}
+
+@media (max-width:600px){  
+  /*Mangage Packages*/
+  .epaidcontent_manage_plan_item ._stats {
+    flex-direction: column;
+    padding: 0;
+    }
+  .epaidcontent_manage_plan .price {
+    width: 100%;
+  }
+  .billing_section {
+    width: 100%;
+  }  
+  .epaidcontent_manage_plan_item ._stats > div {
+    padding-bottom: 5px;
+  }
+  .epaidcontent_manage_plan_item_cont ._header span {
+    font-size: 18px;
+    padding-right: 10px;
+  }
+  .epaidcontent_manage_plan_item_cont .epaidcontent_manage_plan_edit {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 13px;
+  } 
+  .epaidcontent_manage_plan_item ._stats > div + div:before{
+    display: none;
+  }
+   /*Sale Stas*/
+   .epaidcontent_db_sale_stats_container{
+    justify-content:center;
+  }
+  .epaidcontent_db_sale_stats{
+    width:100%;
+  }
+   /*Packages*/
+  .epaidcontent_packages_table > li{
+    width:100%;
+  }
+  .layout_page_epaidcontent_index_payment-requests .epaidcontent_db_sale_stats{
+    width:100%;
+  }
+
+}

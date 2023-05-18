@@ -1,0 +1,78 @@
+{
+  "type": "external",
+  "name": "moolasso",
+  "version": "5.9.0",
+  "revision": "9747",
+  "path": "externals\/moolasso",
+  "repository": null,
+  "sku": null,
+  "date": "Wed, 09 Feb 2022 10:12:27 +0000",
+  "title": "Moolasso",
+  "description": null,
+  "thumb": null,
+  "developer": null,
+  "authors": [
+    "Webligo Developments"
+  ],
+  "meta": {
+    "date": "Wed, 09 Feb 2022 10:12:27 +0000",
+    "title": "Moolasso",
+    "description": null,
+    "developer": null,
+    "authors": [
+      "Webligo Developments"
+    ],
+    "changeLog": null
+  },
+  "actions": [
+    
+  ],
+  "callback": null,
+  "dependencies": null,
+  "tests": [
+    
+  ],
+  "permissions": [
+    
+  ],
+  "structure": {
+    "externals\/moolasso": {
+      "type": "directory",
+      "path": "externals\/moolasso",
+      "structure": [
+        {
+          "path": "Lasso.Crop.js",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 10191,
+          "sha1": "a747ad7dfb6db5781d9ae58b696386639025d73b"
+        },
+        {
+          "path": "manifest.php",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 373,
+          "sha1": "a08fe9bcb81d927ee13a3b8d4947ddd6965053ea"
+        },
+        {
+          "path": "Lasso.js",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 7878,
+          "sha1": "5a6aec05bee3de4faad51a201c394eff81ce39ad"
+        },
+        {
+          "path": "crop.gif",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 329,
+          "sha1": "85a5c30dfd9be9f09412b7d4c24b050f8c6fa756"
+        }
+      ]
+    }
+  }
+}

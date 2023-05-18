@@ -1,0 +1,48 @@
+
+
+#compose-elivestreaming-activator:before{
+	content:"";
+	background-image:url(~/application/modules/Elivestreaming/externals/images/live-icon.svg);
+	background-size:20px;
+	background-size:contain;
+}
+.item_icon_elivehost:before,
+.activity_icon_elivestreaming_was_live:before{
+	content:"" !important;
+	background-image:url(~/application/modules/Elivestreaming/externals/images/live-icon.svg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	height: 16px;
+	width: 16px;
+	display: block;
+}
+.notification_type_elivestreaming_golive:before,
+.notification_type_elivestreaming_was_live:before{
+  content:"\\f03d";
+}
+.feed_attachment_elivehost{
+	display:block;
+}
+.feed_attachment_elivehost > div > a img{
+	max-width:100% !important;
+	max-height:inherit !important;
+}
+.elive_loading{
+  background-color: rgba(0, 0, 0, .8);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 9999;
+  top: 0;
+}
+.elive_loading span{
+  background-image: url(~/application/modules/Sesbasic/externals/images/loading.gif);
+  height: 50px;
+  width: 50px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin: -25px 0 0 -25px;
+  background-repeat: no-repeat;
+  background-position: center;
+}

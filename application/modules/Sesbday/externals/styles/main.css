@@ -1,0 +1,42 @@
+
+.notification_type_sesbday_birthday:before{
+	content:"\\f1fd";
+  font-family:'Font Awesome 5 Free';
+	font-weight:900;
+}
+/*Buttons*/
+.sesbaday_btn{
+	border-radius:3px;
+	display:inline-block;
+	padding:0 15px;
+	font-size:12px;
+	height:30px;
+	line-height:30px;
+}
+.sesbaday_btn:hover{
+	opacity:.8;
+}
+.sesbaday_wish_btn{
+	background-color:$theme_button_background_color;
+	color:$theme_button_font_color !important;
+}
+.sesbaday_msg_btn{
+	border:1px solid $theme_button_background_color;
+	color:$theme_button_background_color !important;
+}
+/*Calendar*/
+.sesbday_calendar_header,.layout_left .sesbday_calendar_main tbody td > .day_active .date,
+.layout_right .sesbday_calendar_main tbody td > .day_active .date{
+	background-color:$theme_button_background_color;
+}
+.sesbday_calendar_header *,.layout_left .sesbday_calendar_main tbody td > .day_active .date,
+.layout_right .sesbday_calendar_main tbody td > .day_active .date{
+	color:$theme_button_font_color;
+}
+.sesbday_calendar_container table td.disabled{
+	opacity:.3;
+}
+.sesbday_calendar_container table td._active a{
+	background-color:$theme_button_background_color;
+	color:$theme_button_font_color !important;
+}

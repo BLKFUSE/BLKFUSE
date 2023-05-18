@@ -1,0 +1,265 @@
+"SNS - Ultimate Members Plugin - Enhanced Searching, Reviews, Com";"Members"
+"SNS - Ultimate Members Plugin - Enhanced Searching, Reviews, Compliments, Members Verification & Location";"Members"
+#Controllers/IndexController.php
+"Get Friends";"Get Friends"
+"Get Mutual Friend";"Get Mutual Friend"
+"You are now following this member.";"You are now following this member."
+"Location has been added successfully.";"Location has been added successfully."
+
+#Controllers/ReviewController.php
+"The selected review has been deleted.";"The selected review has been deleted."
+"Edit a Review for ""<b>%s</b>"".";"Edit a Review for ""<b>%s</b>""."
+"The selected review has been edited.";"The selected review has been edited."
+
+#Plugin/Menus.php
+"Edit Location";"Edit Location"
+"Add Location";"Add Location"
+"Edit Review";"Edit Review"
+"Delete Review";"Delete Review"
+
+#scripts/core.js
+"Member unliked successfully";"Member unliked successfully"
+"Member liked successfully";"Member liked successfully"
+"Review unliked successfully";"Review unliked successfully"
+"Review liked successfully";"Review liked successfully"
+"Member unfollow successfully";"Member unfollow successfully"
+"Member follow successfully";"Member follow successfully"
+
+#views/scripts/_memberBrowseWidgetData.tpl
+" Friends";" Friends"
+" Mutual Friends";" Mutual Friends"
+"Email Address";"Email Address"
+"Online";"Online"
+"Location";"Location"
+"%s view";"%s view";"%s views"
+"%s comment";"%s comment";"%s comments"
+"%s like";"%s like";"%s likes"
+"%s rating";"%s rating";"%s ratings"
+"FEATURED";"FEATURED"
+"SPONSORED";"SPONSORED"
+"Unapproved";"Unapproved"
+"View Details";"View Details"
+"Facebook";"Facebook"
+"Twitter";"Twitter"
+"Pinterest";"Pinterest"
+"members found.";"members found."
+"member found.";"member found."
+"'Did not found member with that criteria.";"'Did not found member with that criteria."
+"Does not exist member.";"Does not exist member."
+"Like";"Like"
+"Unlike";"Unlike"
+"View More";"View More"
+
+#_reviewOptions.tpl
+"Was this Review...?";"Was this Review...?"
+"Share Review";"Share Review"
+
+#_reviewsidebarWidgetdata.tpl
+"Featured";"Featured"
+"Verified";"Verified"
+"VERIFIED";"VERIFIED"
+
+#_sidebarWidgetData.tpl
+"Total Reviews: ";"Total Reviews: "
+
+#_userAge.tpl
+"%s year old";"%s year old";"%s years old"
+
+#views/scripts/member-friendship.tpl
+"Cancel Follow Request";"Cancel Follow Request"
+
+#views/scripts/review-parameters.tpl
+"click to rate";"click to rate"
+"terrible";"terrible"
+"poor";"poor"
+"average";"average"
+"very good";"very good"
+"excellent";"excellent"
+"Overall Rating";"Overall Rating"
+"Members";"Members"
+
+#widgets/browse-reviews/index.tpl
+"For ";"For "
+"about";"about"
+"Pros";"Pros"
+"Cons";"Cons"
+"Recommended";"Recommended"
+"Continue Reading »";"Continue Reading »"
+"No review have been posted yet.";"No review have been posted yet."
+
+#widgets/browse-search-toprated/index.tpl
+"Show Advanced Settings";"Show Advanced Settings"
+"Hide Advanced Settings";"Hide Advanced Settings"
+
+#widgets/member-featured-photos/index.tpl
+"Add Featured Photos";"Add Featured Photos"
+"Edit Photos";"Edit Photos"
+
+#widgets/member-reviews/index.tpl
+"Write a Review";"Write a Review"
+"Update Review";"Update Review"
+"Continue Reading";"Continue Reading"
+"No review have been posted on this member yet.";"No review have been posted on this member yet."
+
+
+#widgets/profile-info/inde.tpl
+"Followers";"Followers"
+"Mutual Friends";"Mutual Friends"
+"Summary";"Summary"
+"5 stars";"5 stars"
+"4 stars";"4 stars"
+"3 stars";"3 stars"
+"2 stars";"2 stars"
+"1 stars";"1 stars"
+"View Profile";"View Profile"
+
+#widgets/top-rated-members/index.tpl
+"Reviews";"Reviews"
+" Recommendation";" Recommendation"
+
+
+
+#views/scripts/index/edit-location.tpl
+"Edit My Profile";"Edit My Profile"
+
+#views/scripts/index/existing-photos.tpl
+"See More";"See More"
+"There are currently no albums yet.";"There are currently no albums yet."
+
+#views/scripts/index/featured-block.tpl
+"Edit Featured Photos";"Edit Featured Photos"
+"Choose up to 5 photos you\'d like to feature.";"Choose up to 5 photos you\'d like to feature."
+"Select a photo";"Select a photo"
+
+#views/scripts/index/review-stats.tpl
+"Rating Detail";"Rating Detail"
+
+#views/scripts/review/create.tpl
+"Pros: ";"Pros: "
+"Cons: ";"Cons: "
+"Description: ";"Description: "
+
+#Form/Filter/Browse.php
+
+"Member Type:";"Member Type:"
+"Search Members/Keyword:";"Search Members/Keyword:"
+"Browse By:";"Browse By:"
+"Alphabet:";"Alphabet:"
+"Members I Liked";"Members I Liked"
+"Members I Followed";"Members I Followed"
+"A to Z";"A to Z"
+"Z to A";"Z to A"
+"View:";"View:"
+"Location:";"Location:"
+"Miles:";"Miles:"
+"Kilometer:";"Kilometer:"
+"Country:";"Country:"
+"State:";"State:"
+"City:";"City:"
+"Zip:";"Zip:"
+"Network:";"Network:"
+"Only Members With Photos";"Only Members With Photos"
+"Only Online Members";"Only Online Members"
+"Only Vip Members";"Only Vip Members"
+"Search";"Search"
+"Show Advanced Settings";"Show Advanced Settings"
+
+#Form/Review/Browse.php
+"Search Reviews:";"Search Reviews:"
+"Browse By:";"Browse By:"
+"Review Stars:";"Review Stars:"
+"Recommended Reviews Only:";"Recommended Reviews Only:"
+"Review";"Review"
+"Review Title";"Review Title"
+"Do you recommend this review to user?";"Do you recommend this review to user?"
+
+#Form/Location.php
+"Choose the location.";"Choose the location."
+"Latitude";"Latitude"
+"Longitude";"Longitude"
+"Zipcode";"Zipcode"
+
+# widgets title
+"Beautiful Members";"Beautiful Members"
+"Most Hottest Members";"Most Hottest Members"
+"Most Cool Membes";"Most Cool Membes"
+"Good Writer";"Good Writer"
+"Most Liked Profile Members";"Most Liked Profile Members"
+"Funniest Members";"Funniest Members"
+"Well Done Persons";"Well Done Persons"
+"Most Clever Persons";"Most Clever Persons"
+"Happiest Members";"Happiest Members"
+"Thankful Persons";"Thankful Persons"
+"Most Learner Members";"Most Learner Members"
+"Noted Members";"Noted Members"
+"Great Stuff";"Great Stuff"
+
+#Others
+"{item:$subject} has written a review {item:$object}."; "{item:$subject} has written a review {item:$object}."
+"by";"by"
+"Useful";"Useful"
+"Funny";"Funny"
+"Cool";"Cool"
+"POST REVIEW";"POST REVIEW"
+"Description";"Description"
+"All Reviews";"All Reviews"
+"Recommended Only";"Recommended Only"
+"Most Liked";"Most Liked"
+"Most Viewed";"Most Viewed"
+"Most Commented";"Most Commented"
+"Most Rated";"Most Rated"
+"Least Rated";"Least Rated"
+"Most Funny";"Most Funny"
+"Most Cool";"Most Cool"
+"Most Useful";"Most Useful"
+"Verified Only";"Verified Only"
+"Featured Only";"Featured Only"
+"SNS - Ultimate Members Plugin - Enhanced Searching, Reviews, Com";"Ultimate Members"
+"LIKE";"Like"
+"{item:$subject} follow {item:$object}.";"{item:$subject} follow {item:$object}."
+
+
+# sesmember_follow
+"_EMAIL_SESMEMBER_FOLLOW_TITLE";"Advanced Member - Follow"
+"_EMAIL_SESMEMBER_FOLLOW_DESCRIPTION";"This is the email that gets sent to a member when another member starts following them."
+"_EMAIL_SESMEMBER_FOLLOW_SUBJECT";"[sender_title] has started following you."
+"_EMAIL_SESMEMBER_FOLLOW_BODY";"[header]
+
+[sender_title] has started following you. Please click the following link to view the member:
+
+http://[host][object_link]
+
+[footer]"
+
+# sesmember_birthday_email
+"_EMAIL_SESMEMBER_BIRTHDAY_EMAIL_TITLE";"Advanced Member - Birthday Wish"
+"_EMAIL_SESMEMBER_BIRTHDAY_EMAIL_DESCRIPTION";"This email is sent to the site user on there birthday."
+"_EMAIL_SESMEMBER_BIRTHDAY_EMAIL_SUBJECT";"[birthday_subject]"
+"_EMAIL_SESMEMBER_BIRTHDAY_EMAIL_BODY";"[header]
+
+[birthday_content]
+
+[footer]"
+
+
+"_ACTIVITY_ACTIONTYPE_SESMEMBER_FOLLOW";"Follow to members"
+"_ACTIVITY_ACTIONTYPE_SESMEMBER_REVIEWPOST";"Write review"
+"ACTIVITY_TYPE_SESMEMBER_FEATUREDMEMBER";"When admin mark as featured to you."
+"ACTIVITY_TYPE_SESMEMBER_FOLLOW";"When someone follow you."
+"ACTIVITY_TYPE_SESMEMBER_FOLLOW_CREATE";"When someone create a content."
+"ACTIVITY_TYPE_SESMEMBER_REVIEWPOST";"When someone has written review on your profile."
+"ACTIVITY_TYPE_SESMEMBER_SPONSOREDMEMBER";"When admin mark as sponsored to you."
+"ACTIVITY_TYPE_SESMEMBER_VIPMEMBER";"When admin mark as vip to you."
+"ACTIVITY_TYPE_SESMEMBER_MEMBER_LIKES";"When someone like you."
+"ADMIN_ACTIVITY_TYPE_SESMEMBER_FOLLOW";"When a user (subject) follow another user (object)."
+"ADMIN_ACTIVITY_TYPE_SESMEMBER_REVIEWPOST";"When a user (subject) write a review for another user (object)."
+"ACTIVITY_TYPE_SESMEMBER_FOLLOW_ACCEPTED";"When someone accept follow request"
+
+"{item:$subject} follow you.";"{item:$subject} follow you."
+
+"ACTIVITY_TYPE_SESMEMBER_FOLLOW_REQUEST";"When someone send you follow request."
+"ACTIVITY_TYPE_SESMEMBER_FOLLOW_REQUESTACCEPT";"When follow request accept."
+
+"ACTIVITY_TYPE_SESUSER_CLAIMADMIN_BUSINESS";"When someone claims your business on your website."
+
+"SNS - Ultimate Members Plugin";"Ultimate Members Plugin"

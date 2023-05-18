@@ -1,0 +1,29 @@
+
+
+/*All Stories List*/
+.sesstories_allstories .owl-nav > div,
+.sesstories_allstories_item_thumb{
+	background-color:$theme_list_background_color;
+}
+.layout_sesstories_all_stories > h3 a{
+	font-size:$theme_font_size;
+}
+.sesstories_archive_popup_header ul a._active{
+	background-color:$theme_list_background_color;
+}
+.sesstories_story_uploader article:hover{
+	border-color:$theme_button_background_color;
+}
+.sesstories_story_uploader article:hover *{
+	color:$theme_button_background_color;
+}
+.sesstories_reply_success_msg{
+	background-color:$theme_list_background_color;
+}
+.sesstories_reply_success_msg i{
+	color:$theme_button_background_color;
+}
+
+.sesstories_add_bg_images a._selected img{
+	border: 2px solid $theme_button_background_color;
+}

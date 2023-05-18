@@ -1,0 +1,60 @@
+
+
+.notification_type_everi_verified:before,
+.notification_type_everi_superadmin:before{
+	content:"\\f00c";
+	font-family:"Font Awesome 5 Free";
+	font-weight:900;
+}
+.notification_type_everi_reject:before{
+	content:"\\f00d";
+	font-family:"Font Awesome 5 Free";
+	font-weight:900;
+}
+#SignupFormDocumentVerification .form-label{display:none;}
+#SignupFormDocumentVerification .form-element{margin-bottom:15px;}
+
+.everification_manage_documents div._type i{
+	background-color:$theme_button_background_color;
+	color:$theme_button_font_color;
+}
+._bxs, ._bxs *{
+	box-sizing:border-box;
+}
+
+/*Profile Verified Label*/
+.layout_everification_verify_label{
+	background:none !important;
+	padding:0 !important;
+	border-width:0 !important;
+	box-shadow:none !important;
+}
+.everification_verify_label{
+	background-color:$theme_button_background_color;
+	color:$theme_button_font_color;
+	line-height:36px;
+	border-radius:20px;
+	text-align:center;
+	position:relative;
+	font-size:15px;
+	text-transform:uppercase;
+	letter-spacing:2px;
+	padding:0 0 0 15px;
+	margin:10px 0;
+}
+.everification_verify_label i{
+	background-color:$theme_button_background_color;
+	border:2px solid $theme_button_font_color;
+	border-radius:50%;
+	height:50px;
+	width:50px;
+	position:absolute;
+	left:10px;
+	padding:7px;
+	top:-7px;
+	box-shadow:0 0 10px rgba(0,0,0,.2);
+}
+.everification_verify_label i svg{
+	height:100%;
+	width:100%;
+}

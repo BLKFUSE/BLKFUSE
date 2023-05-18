@@ -1,0 +1,90 @@
+
+.epaidcontent_manage_order_poup{
+  width:450px;
+}
+.epaidcontent_ticket_order_view_page {
+  margin:10px;
+}
+.epaidcontent_invoice_header{
+	margin-bottom:5px;
+}
+.epaidcontent_invoice_header div{
+	font-size:20px;
+}
+.epaidcontent_invoice_content_wrap{
+	border-style:solid;
+	border-width:1px;
+	border-color: #EBECEE;
+	display:table;
+	margin-bottom:15px;
+	width:100%;
+}
+.epaidcontent_invoice_content_left,
+.epaidcontent_invoice_content_right{
+	display:table-cell;
+	width:50%;
+}
+.epaidcontent_invoice_content_left{
+	border-right-style:solid;
+	border-right-width:1px;
+	border-color: #EBECEE;
+}
+.epaidcontent_invoice_content_box{
+	padding:10px;
+}
+.epaidcontent_invoice_content_box + .epaidcontent_invoice_content_box{
+	border-top-style:solid;
+	border-top-width:1px;
+	border-color: #EBECEE;
+}
+.epaidcontent_invoice_content_box b.bold{
+	display:block;
+	margin-bottom:5px;
+}
+.epaidcontent_invoice_content_detail > span{
+	display:block;
+}
+.epaidcontent_invoice_content_detail .fa-caret-right{
+  margin:0 5px;
+}
+.epaidcontent_invoice_content_qr{
+	margin:5px;
+	text-align:center;
+}
+.epaidcontent_manage_order_poup_table {
+  border:1px solid #EBECEE;
+  border-radius: 5px;
+  width: 100%;
+}
+.epaidcontent_manage_order_poup_table tr th {
+  padding:10px;
+  text-transform: capitalize;
+	background-color: #ECEFF1 !important;
+}
+.epaidcontent_manage_order_poup_table tbody tr td {
+  border-bottom: none ;
+  padding:10px;
+  vertical-align: middle;
+	border-color: #EBECEE;
+}
+.epaidcontent_invoice_total_price_box {
+  padding: 10px 6px 0;	
+}
+.epaidcontent_invoice_total_price_box > div {
+  padding-bottom: 6px;
+}
+.floatL{
+  float:left;
+}
+.floatR{
+  float:right;
+}
+.epaidcontent_invoice_total_price_box > div span b,
+.epaidcontent_invoice_total_price_box_total span b {
+  float: right;
+  clear: both;
+}
+[dir="rtl"] .epaidcontent_invoice_total_price_box > div span b, 
+[dir="rtl"] .epaidcontent_invoice_total_price_box_total span b{
+  float: left;
+}

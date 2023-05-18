@@ -1,0 +1,49 @@
+"_EMAIL_SITESHARE_ITEM_EMAIL_TITLE";"Share a Friend Email"
+"_EMAIL_SITESHARE_ITEM_EMAIL_DESCRIPTION";"This is the email that gets sent to friends when a user share them about a item."
+"_EMAIL_SITESHARE_ITEM_EMAIL_SUBJECT";"[sender_name] share this [item_media_type] with you"
+"_EMAIL_SITESHARE_ITEM_EMAIL_BODY";"[header]
+
+Your friend [sender_name] shared this [item_media_type]: [object_title] with you.
+
+To view and explore this page, click on the link below, or copy-paste it in your browser:
+[object_link]
+[object_description]
+Your friend has also sent a message:
+
+[message]
+
+[footer]"
+"Share on %s";"Share on %s"
+"_SITESHARE_SOCIALSITES";"Social Bookmarks"
+"You cannot share this item on this: %s.";"You cannot share this item on this: %s."
+"Enter email address here";"Enter email address here"
+"ACTIVITY_TYPE_SHARED_CONTENT";"When content / activity feed item is shared to the other places"
+"_ACTIVITY_ACTIONTYPE_SHARE_CONTENT";"Shared to the other places"
+"_ACTIVITY_ACTIONTYPE_SHARE_ON_GROUP";"Shared to the group"
+"_ACTIVITY_ACTIONTYPE_SHARE_ON_EVENT";"Shared to the event"
+"_ACTIVITY_ACTIONTYPE_SHARE_ON_SITEPAGE_PAGE";"Shared to the page"
+"_ACTIVITY_ACTIONTYPE_SHARE_ON_SITEGROUP_GROUP";"Shared to the group"
+"_ACTIVITY_ACTIONTYPE_SHARE_ON_SITESTORE_STORE";"Shared to the store"
+"_ACTIVITY_ACTIONTYPE_SHARE_ON_SITEBUSINESS_BUSINESS";"Shared to the business"
+"_ACTIVITY_ACTIONTYPE_SHARE_ON_PAGE";"Shared to the page"
+"_ACTIVITY_ACTIONTYPE_SITEGROUP_SHARE_SELF";"Shared on group itself"
+"_ACTIVITY_ACTIONTYPE_SITEPAGE_SHARE_SELF";"Shared on page itself"
+
+"ACTIVITY_TYPE_SHARED_CONTENT_SELF";"When content / activity feed item is shared to itself"
+"ACTIVITY_TYPE_SHARED_USER";"When content / activity feed item is shared to your friends"
+
+"ADMIN_ACTIVITY_TYPE_SHARE_CONTENT";"When a user (subject) shares content and activity feeds to someone (object)."
+"ADMIN_ACTIVITY_TYPE_SHARE_ON_EVENT";"When a user (subject) shares content and activity feeds to event (object)."
+"ADMIN_ACTIVITY_TYPE_SHARE_ON_GROUP";"When a user (subject) shares content and activity feeds to group (object)."
+"ADMIN_ACTIVITY_TYPE_SHARE_ON_SITEBUSINESS_BUSINESS";"When a user (subject) shares content and activity feeds to business (object)."
+"ADMIN_ACTIVITY_TYPE_SHARE_ON_SITEGROUP_GROUP";"When a user (subject) shares content and activity feeds to group (object)."
+"ADMIN_ACTIVITY_TYPE_SHARE_ON_SITEPAGE_PAGE";"When a user (subject) shares content and activity feeds to page (object)."
+"ADMIN_ACTIVITY_TYPE_SHARE_ON_SITESTORE_STORE";"When a user (subject) shares content and activity feeds to store (object)."
+"ADMIN_ACTIVITY_TYPE_SITEGROUP_SHARE_SELF";"When a user (subject) shares group and activity feeds to group itself (object)."
+"ADMIN_ACTIVITY_TYPE_SITEPAGE_SHARE_SELF";"When a user (subject) shares page and activity feeds to page itself (object)."
+"ACTIVITY_CATEGORY_TYPE_SITESHARE";"Share"
+
+"SITESHARE_TWITTER_SERVICE_ACTION_LABEL";"Tweets"
+"SITESHARE_PINTEREST_SERVICE_ACTION_LABEL";"Pins"
+"SITESHARE_MAIL_SERVICE_ACTION_LABEL";"Emails"
+"SITESHARE_MAILGOOGLE_SERVICE_ACTION_LABEL";"Emails"

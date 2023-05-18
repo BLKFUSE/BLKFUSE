@@ -1,0 +1,250 @@
+/* $Id:main.css 2016-05-25 00:00:00 SocialEngineSolutions $*/
+
+/*Icons*/
+.sesmember_compliments:before{
+	font-family:'Font Awesome 5 Free';
+	content:"\\f118";
+}
+[class*='notification_type_sesmember_']:before{
+	content:"\\f007";
+	font-weight:600;
+  font-family:'Font Awesome 5 Free';
+}
+.notification_type_sesmember_follow_create:before,
+.notification_type_sesmember_follow:before,
+.activity_icon_sesmember_follow:before,
+.notification_type_sesmember_follow_requestaccept:before,
+.notification_type_sesmember_follow_request:before{
+	font-family:'Font Awesome 5 Free';
+	content:"\\f00c";
+	font-weight:900;
+	font-style:normal;
+}
+.item_icon_sesmember_review:before,
+.notification_type_sesmember_reviewpost:before{
+	font-family:'Font Awesome 5 Free';
+	content:"\\f044";
+	font-weight:900;
+	font-style:normal;
+}
+.sesmember_location_edit:before{
+	font-family:'Font Awesome 5 Free';
+	content:"\\f041";
+	font-weight:900;
+	font-style:normal;
+}
+.notification_type_sesmember_member_likes:before{
+  font-family:'Font Awesome 5 Free';
+	content:"\\f164";
+	font-weight:900;
+	font-style:normal;
+}
+
+/*Featured Photos Popup*/
+.sesmember_photo_update_popup_container{
+	background-color:$theme_list_background_color;
+	border:5px solid #ccc;
+	border-radius:5px;
+}
+.sesmember_photo_update_popup_header,
+.sesmember_photo_update_popup_footer{
+  background-image:url(~/application/modules/Sesbasic/externals/images/t-img-light.png);
+  border-bottom:1px solid $theme_border_color;
+  font-size:15px;
+  font-weight:bold;
+  line-height:40px;
+  padding:0 10px;
+}
+.sesmember_photo_update_popup_header .fa{
+  float:right;
+	text-decoration:none !important;
+}
+[dir="rtl"] .sesmember_photo_update_popup_header .fa{
+	float:left;
+}
+.sesmember_photo_update_popup_btns{margin-top:10px;}
+.sesmember_thumb .sesmember_thumb_img > span{
+  background-position:center center;
+  background-repeat:no-repeat;
+  background-size:cover;
+  display:block;
+  height:100%;
+  width:100%;
+}
+.sesmember_featured_photos_popup_blank_img a.fromExistingAlbumPhoto:hover{
+	border-color:$theme_link_color_hover;
+}
+/*Search Form*/
+.sesmember_browse_search > form,
+.sesmember_browse_toprated_search > form{
+	background:$theme_form_background_color;
+	padding:0 !important;
+  border:1px solid $theme_form_border_color;
+	border-radius:3px;
+	overflow:hidden;
+}
+/*Review Stats*/
+.sesmemeber_review_stat_label,
+.sesmemeber_review_stat_gr a span,
+.sesmemeber_review_stat_gr_line span,
+.sesmember_rating_list_block .rating_list_right_inner,
+.sesmember_rating_list_block .rating_list_left{
+	background-color:$theme_button_background_color;
+	color:$theme_button_font_color;
+}
+[dir="rtl"] .sesmember_browse_search .global_form input[type=checkbox]{
+	margin-left:0px !important;
+	margin-right:167px;
+}
+.sesmember_sidebar_information_block .sesmember_list_stats > span > i{color:$theme_font_color_light;}
+[dir="rtl"] .sesbasic_btn span i{
+	right:10px;
+	left:inherit;
+}
+.sesmembers_list_view .sesmembers_list_info .sesbasic_link_btn > a,
+.sesmember_browse_listing .sesbasic_pinboard_list_item_cont > .sesbasic_link_btn > a{
+	color:$theme_button_background_color;
+}
+.sesmembers_list_view .sesmembers_list_info .sesbasic_link_btn:hover a,
+.sesmembers_list_view .sesmembers_list_info .sesbasic_link_btn > a:hover,
+.sesmember_browse_listing .sesbasic_pinboard_list_item_cont > .sesbasic_link_btn > a:hover,
+.sesmember_browse_listing .sesbasic_pinboard_list_item_cont > .sesbasic_link_btn:hover > a,
+.sesmember_member_grid_info > .sesbasic_link_btn:hover a,
+.sesmember_member_grid_info > .sesbasic_link_btn a:hover, 
+.sesmember_member_grid_info > div > div > .sesbasic_link_btn > a:hover,
+.sesmember_member_grid_info > div > div > .sesbasic_link_btn:hover a,
+.sesmember_mutual_friends a{
+	background:$theme_button_background_color;
+	color:$theme_button_font_color !important;
+}
+.sesmember_list_info .sesmember_list_add_btn span:last-child > a,
+.sesmember_list_info .sesmember_list_add_btn span:last-child > a span,
+.sesmember_list_block .sesmember_list_add_btn span:last-child > a,
+.sesmember_list_block .sesmember_list_add_btn span:last-child > a span,
+.sesmembers_list_view .sesmember_list_add_btn span:last-child > a,
+.sesmembers_list_view .sesmember_list_add_btn span:last-child > a span,
+.sesmember_member_grid .sesmember_list_add_btn span:last-child > a,
+.sesmember_member_grid .sesmember_list_add_btn span:last-child > a span,
+.sesmember_pinboard_list_item .sesmember_list_add_btn span:last-child > a,
+.sesmember_pinboard_list_item .sesmember_list_add_btn span:last-child > a span,
+.sesmember_member_rating_block .sesmember_profile_bottom_left_btns span:last-child > a,
+.sesmember_member_rating_block .sesmember_profile_bottom_left_btns span:last-child > a span,
+.layout_middle .sesmember_grid_view_three_info_btns span:last-child > a,
+.layout_middle .sesmember_grid_view_three_info_btns span:last-child > a span,
+.layout_middle .sesmember_sidebar_list_btns span:last-child > a,
+.layout_middle .sesmember_sidebar_list_btns span:last-child > a span,
+.sesmember_browse_map .sesmember_list_add_btn span:last-child > a,
+.sesmember_browse_map .sesmember_list_add_btn span:last-child > a span,
+.sesmember_slideshow_btns span:last-child > a,
+.sesmember_slideshow_btns span:last-child > a span{
+	color:$theme_button_background_color !important;
+}
+.sesmember_list_info .sesmember_list_add_btn span > a,
+.sesmember_list_block .sesmember_list_add_btn span > a,
+.sesmembers_list_view .sesmember_list_add_btn span > a,
+.sesmember_member_grid .sesmember_list_add_btn span > a,
+.sesmember_pinboard_list_item .sesmember_list_add_btn span > a,
+.sesmember_browse_map .sesmember_list_add_btn span > a,
+.sesmember_member_rating_block .sesmember_profile_bottom_left_btns span > a,
+.layout_middle .sesmember_grid_view_three_info_btns span > a,
+.layout_middle .sesmember_sidebar_list_btns span > a,
+.layout_middle .sesmember_sidebar_list_btns span > a,
+.sesmember_slideshow_btns span > a{
+	border:1px solid $theme_button_background_color;
+}
+.sesmember_list_block .sesmember_list_stats > span > span a,
+.sesmember_grid1 .sesmember_list_stats > span > span a,
+.sesmember_list_block_stats > span,
+.sesmembers_list_view .sesmember_list_stats > span > span a,
+.sesmember_member_grid .sesmember_list_stats > span > span a,
+.sesmember_pinboard_list_item .sesmember_list_stats > span > span a{
+	color:$theme_font_color_light !important;
+}
+.sesmember_list_block .sesmember_list_stats:after,
+.sesmembers_list_view .sesmember_list_stats:after{
+	background:$theme_border_color;
+}
+.sesmember_member_grid_info .sesmember_member_info_profile_img a img{
+	border-color:$theme_list_background_color;
+}
+.sesmember_pinboard_list_item{
+	background:$theme_list_background_color;
+}
+.sesmember_member_grid .sesmember_user_online,
+.sesmember_pinboard_list_item .sesmember_user_online{
+	border:4px solid $theme_list_background_color;
+}
+.sesmember_member_grid .semember_member_grid_thumb a span{
+	background-image:linear-gradient(to left, $theme_button_background_color, #eef2f3);
+}
+.sesmember_profile_friends .profile_friends_lists_add_add .pulldown_contents_wrapper{
+	background:$theme_pulldown_background_color_active;
+}
+.profile_friends_lists_add .pulldown label
+{
+  font-size:1.2em;
+}
+.profile_friends_lists_add li
+{
+  overflow:hidden;
+  padding:0px;
+}
+.profile_friends_lists_add li:before {
+    float:left;
+    margin:0 5px 0 0;
+}
+.profile_friends_lists_add li > span
+{
+  display:block;
+  float:right;
+  overflow:hidden;
+  font-weight:bold;
+  text-transform:uppercase;
+}
+html[dir="rtl"] .profile_friends_lists_add li > span
+{
+  float:left;
+}
+.profile_friends_lists_add li > span > a
+{
+  display:block;
+  padding:0px 5px 0px 5px;
+}
+.profile_friends_lists_add li > div
+{
+  overflow:hidden;
+}
+.profile_friends_lists_add li.friend_list_joined,
+.profile_friends_lists_add li.friend_list_unjoined
+{
+  background-color:$theme_list_background_color;
+  font-family:'Font Awesome\ 5 Free';
+  margin-right:8px;
+}
+html[dir="rtl"] .profile_friends_lists_add li.friend_list_joined,
+html[dir="rtl"] .profile_friends_lists_add li.friend_list_unjoined
+{
+  margin-left:8px;
+  margin-right:0px;
+}
+.profile_friends_lists_add li.friend_list_joined:hover,
+.profile_friends_lists_add li.friend_list_unjoined:hover
+{
+  background-color:$theme_list_background_color_hover;
+  cursor:pointer;
+}
+.profile_friends_lists_add li.friend_list_joined:before
+{
+  content:"\\f111";
+  color:#4CAF50;
+}
+.profile_friends_lists_add li.friend_list_unjoined:before
+{
+   content:"\\f111";
+   color:#607D8B;
+}
+.layout_left .sesmember_list_stats > span,
+.layout_right .sesmember_list_stats > span{
+   font-size:$theme_font_size_small;	
+}
+

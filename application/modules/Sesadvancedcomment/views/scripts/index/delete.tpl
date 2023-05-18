@@ -1,0 +1,85 @@
+<?php
+
+ /**
+ * socialnetworking.solutions
+ *
+ * @category   Application_Modules
+ * @package    Sesadvancedcomment
+ * @copyright  Copyright 2014-2020 Ahead WebSoft Technologies Pvt. Ltd.
+ * @license    https://socialnetworking.solutions/license/
+ * @version    $Id: delete.tpl 2017-01-12 00:00:00 socialnetworking.solutions $
+ * @author     socialnetworking.solutions
+ */
+ 
+?>
+<div class='sesact_delete_popup'>
+  <?php if (empty($this->comment_id)): ?>
+    <?php $id = 'sesact_adv_delete'; ?>
+  <?php else: ?>
+    <?php $id = 'sesact_adv_comment_delete'; ?>
+  <?php endif; ?>
+  <form method="POST" action="<?php echo $_SERVER['REQUEST_URI'] ?>" id="<?php echo $id; ?>">
+  <input class="hidden_actn" type="hidden" name="action_id" value="<?php echo (int) $this->action_id ?>"/>
+      <div class="sesact_delete_popup_head">
+        <?php if (!empty($this->comment_id)): ?>
+        <?php echo $this->translate("Delete Comment?") ?>
+        <?php else: ?>
+        <?php echo $this->translate("Delete Feed?") ?>
+        <?php endif; ?>
+      </div>
+      <div class="sesact_delete_popup_cont">
+        <?php if (!empty($this->comment_id)): ?>
+        <?php echo $this->translate("Are you sure that you want to delete this comment? This action cannot be undone.") ?>
+        <?php else: ?>
+        <?php echo $this->translate("This feed will be deleted and you won't be able to find it anymore. You can also edit this feed, if you just want to change something.") ?>
+        <?php endif; ?>
+      </div>
+      <div class="sesact_delete_popup_btm sesbasic_clearfix">
+        
+        <?php if (!empty($this->comment_id)): ?>
+        <input type="hidden" name="comment_id" value="<?php echo (int) $this->comment_id ?>" class="hidden_cmnt"/>
+        <?php endif; ?>
+       <?php if (!empty($this->comment_id)): ?> 
+        <button type='submit'><?php echo $this->translate("Delete") ?></button>
+        <?php echo $this->translate(" or ") ?>
+        <a href="javascript:void(0);" onclick="parent.Smoothbox.close();"><?php echo $this->translate("Cancel") ?></a>
+      <?php else: ?>
+      	<div class="floatL">
+        	<button type='submit' onClick="sessmoothboxclose();return false;"><?php echo $this->translate("Cancel") ?></button>
+        </div>
+        <div class="floatR">
+          <button type='submit' class="edit_feed_edit"><?php echo $this->translate("Edit Feed") ?></button>
+          <button type='submit'><?php echo $this->translate("Delete Feed") ?></button>
+				</div>        
+      <?php endif; ?>
+      </div>
+  </form>
+</div>
+
+
+<?php if( @$this->closeSmoothbox ): ?>
+<script type="text/javascript">
+  TB_close();
+</script>
+<?php else: ?>
+<script type="text/javascript">
+  scriptJquery(document).on('submit','#sesact_adv_comment_delete',function(e){
+    e.preventDefault();
+    var id = scriptJquery('#sesact_adv_comment_delete').find('.hidden_cmnt').val();
+    var savefeed = scriptJquery.ajax({
+      type:'POST',
+      url: scriptJquery( this ).attr( 'action' ),
+      cache:false,
+      contentType: false,
+      processData: false,
+      success:function(responseHTML){
+        scriptJquery("#comment-"+id).remove();
+        sessmoothboxclose();
+      },
+     error: function(data){
+
+      },
+    });
+  });
+</script>
+<?php endif; ?>

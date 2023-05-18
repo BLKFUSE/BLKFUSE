@@ -1,0 +1,628 @@
+# Global Language Defined.
+
+"sitead";"sitead"
+
+# main menu
+"Advertising";"Advertising"
+"Ad Board";"Ad Board"
+"My Campaigns";"My Campaigns"
+"Create an Ad";"Create an Ad"
+"Reports";"Reports"
+"Help & Learn More";"Help & Learn More"
+
+# ad board
+
+"You have removed this ad. Why didn't you like it?";"You have removed this ad. Why didn't you like it?"
+"Misleading";"Misleading"
+"Offensive";"Offensive"
+"Inappropriate";"Inappropriate"
+"Licensed Material";"Licensed Material"
+"Other";"Other"
+"Specify your reason here..";"Specify your reason here.."
+"Report";"Report"
+"Report this ad";"Report this ad"
+"Do you want to report this? Why didn't you like it?";"Do you want to report this? Why didn't you like it?"
+"Cancel reporting this ad";"Cancel reporting this ad"
+"You like this.";"You like this."
+"%s person likes this.";"%s person likes this.";"%s people like this."
+"%s other likes this.";"%s other likes this.";"%s others like this."
+"You and %s";"You and %s"
+"Unlike";"Unlike"
+"Like";"Like"
+"No advertisements have been created yet.";"No advertisements have been created yet."
+" Be the first to %1$screate an ad%2$s.";" Be the first to %1$screate an ad%2$s."
+"Thanks for your feedback. Your report has been submitted.";"Thanks for your feedback. Your report has been submitted."
+"Join Group";"Join Group"
+"Join Event";"Join Event"
+"Listen to Music";"Listen to Music"
+"Vote on Poll";"Vote on Poll"
+"View Forum Topic";"View Forum Topic"
+"View Group";"View Group"
+"View Event";"View Event"
+"View ";"View "
+
+# create ad page
+
+"Advertise on ";"Advertise on "
+"Design Your Ad FAQ";"Design Your Ad FAQ"
+"Design Your Ad";"Design Your Ad"
+"Choose a different package";"Choose a different package"
+"Preview Your Ad";"Preview Your Ad"
+"Ad title linked to the ad destination URL.";"Ad title linked to the ad destination URL."
+"Ad image linked to the ad destination URL.";"Ad image linked to the ad destination URL."
+"Ad body text linked to the ad destination URL.";"Ad body text linked to the ad destination URL."
+"Viewers will be able to Like this content inline on-the-spot. When viewers Like this, it will be similar to a viral promotion of your content as this Sponsored Story of your content will then also be viewable to the viewer’s friends.";"Viewers will be able to Like this content inline on-the-spot. When viewers Like this, it will be similar to a viral promotion of your content as this Sponsored Story of your content will then also be viewable to the viewer’s friends."
+"Ad Package";"Ad Package"
+"Select Campaign";"Select Campaign"
+"This is only for your indicative purpose and not visible to viewers.";"This is only for your indicative purpose and not visible to viewers."
+"Create a New Campaign";"Create a New Campaign"
+"Your URL";"Your URL"
+"Copy an existing ad";"Copy an existing ad"
+"Example Ad Title";"Example Ad Title"
+"Example ad body text.";"Example ad body text."
+"Example: http://www.yourwebsite.com/";"Example: http://www.yourwebsite.com/"
+"I want to advertise something I have on ";"I want to advertise something I have on "
+"Select the type of content you want to advertise.";"Select the type of content you want to advertise."
+"Please enter a valid email address.";"Please enter a valid email address."
+"I want to create my custom ad.";"I want to create my custom ad."
+"Select the type of content you want to advertise.";"Select the type of content you want to advertise."
+"Content Type";"Content Type"
+"Select Content";"Select Content"
+
+
+"Ad Title";"Ad Title"
+"Ad Body Text";"Ad Body Text"
+"Ad Image";"Ad Image"
+"Remove uploaded image.";"Remove uploaded image."
+"Browse and choose an image for your ad. Max file size allowed : ";"Browse and choose an image for your ad. Max file size allowed : "
+"Continue";"Continue"
+" MB. File types applowed: jpg, jpeg, png, gif.";" MB. File types applowed: jpg, jpeg, png, gif."
+" characters left.";" characters left."
+"-- Select --";"-- Select --"
+"Run my ad continuously from starting date till it expires.";"Run my ad continuously from starting date till it expires."
+"Targeting";"Targeting"
+"Scheduling";"Scheduling"
+"and Scheduling";"and Scheduling"
+"Ad Targeting FAQ";"Ad Targeting FAQ"
+"Please checkup your ad for accuracy before placing your order.";"Please checkup your ad for accuracy before placing your order."
+"Ad Preview:";"Ad Preview:"
+"Please enter a valid web page URL for users to visit when clicking on your ad.";"Please enter a valid web page URL for users to visit when clicking on your ad."
+"Please enter a campaign name.";"Please enter a campaign name."
+"Destination URL must be a valid web page.";"Destination URL must be a valid web page."
+"Please enter a title for your ad.";"Please enter a title for your ad."
+"Please enter a body for your ad.";"Please enter a body for your ad."
+"Please choose an image for your ad.";"Please choose an image for your ad."
+"People with their birthday on current date will be targeted.";"People with their birthday on current date will be targeted."
+"Review Your Ad";"Review Your Ad"
+"Create Ad";"Create Ad"
+"Edit Your Ad";"Edit Your Ad"
+"Help Center";"Help Center"
+"End Date not selected.";"End Date not selected."
+"Target people having their birthday on current date.";"Target people having their birthday on current date."
+"Select a date";"Select a date"
+"Separate multiple entries with commas.";"Separate multiple entries with commas."
+"Uploading image...";"Uploading image..."
+"This ad will run continuously from starting date till it expires.";"This ad will run continuously from starting date till it expires."
+"Please check your ad for accuracy before placing your order.";"Please check your ad for accuracy before placing your order."
+"Price:";"Price:"
+"Quantity:";"Quantity:"
+"Cancel";"Cancel"
+"Note: Below Profile Types will show in the Advanced Targeting Options. If you want to allow the targeting according to profile types and their generic profile fields then you need to select below targeting fields according as mentioned with profile types. Ad creator will only able to select only 1 profile type at a time in the ad creation step. If Ad creator is not selecting any profile types then ad will show all the site members using other targeting options.<br />Please note that Integer, Float, Date, Heading generic profile fields do not use for targeting.";"Note: Below Profile Types will show in the Advanced Targeting Options. If you want to allow the targeting according to profile types and their generic profile fields then you need to select below targeting fields according as mentioned with profile types. Ad creator will only able to select only 1 profile type at a time in the ad creation step. If Ad creator is not selecting any profile types then ad will show all the site members using other targeting options.<br />Please note that Integer, Float, Date, Heading generic profile fields do not use for targeting."
+"If you want to do targeting according to profile type please select below a profile type, if you do not want to do targeting for a profile type then you need to select ""All"".";"If you want to do targeting according to profile type please select below a profile type, if you do not want to do targeting for a profile type then you need to select ""All""."
+"Advanced Targeting Options";"Advanced Targeting Options"
+
+
+# package list page
+
+"Advertising Packages";"Advertising Packages"
+"Package Details";"Package Details"
+"Name";"Name"
+"Price";"Price"
+"Quantity";"Quantity"
+"Sponsored";"Sponsored"
+"Featured";"Featured"
+"You can advertise";"You can advertise"
+"There are no packages yet.";"There are no packages yet."
+"1. Choose an Ad Package";"1. Choose an Ad Package"
+"Select a package for creating your advertisement.";"Select a package for creating your advertisement."
+
+# manage campaigns page
+"My Campaigns";"My Campaigns"
+"Campaign Name";"Campaign Name"
+"Ads";"Ads"
+"Views";"Views"
+"Clicks";"Clicks"
+"CTR (%)";"CTR (%)"
+"Options";"Options"
+"Manage";"Manage"
+"Edit";"Edit"
+"Delete";"Delete"
+"Previous";"Previous"
+"Next";"Next"
+"Number of Ads which belong to this Campaign";"Number of Ads which belong to this Campaign"
+"Total Views";"Total Views"
+"Total Clicks";"Total Clicks"
+"Click Through Rate";"Click Through Rate"
+"Delete Selected";"Delete Selected"
+"You have not yet created any campaigns. %1$sCreate an Ad campaign%2$s now!";"You have not yet created any campaigns. %1$sCreate an Ad campaign%2$s now!"
+"Use the below filter to observe various metrics of your ad campaigns over different time periods.";"Use the below filter to observe various metrics of your ad campaigns over different time periods."
+"Delete the selected Campaigns?";"Delete the selected Campaigns?"
+"Are you sure that you want to delete the %d campaigns? It will not be recoverable after being deleted.";"Are you sure that you want to delete the %d campaigns? It will not be recoverable after being deleted."
+"Please select a campaign to delete.";"Please select a campaign to delete."
+"Delete Campaign?";"Delete Campaign?"
+"Are you sure you want to delete this campaign?";"Are you sure you want to delete this campaign?"
+"Edit Campaign Title";"Edit Campaign Title"
+"Save Title";"Save Title"
+" or ";" or "
+"Delete Advertisement?";"Delete Advertisement?"
+"Are yo sure you want to delete this ad?";"Are yo sure you want to delete this ad?"
+
+# manage ads page
+"Ad Name";"Ad Name"
+"Approved Date";"Approved Date"
+"Start Date";"Start Date"
+"End Date";"End Date"
+"Activate";"Activate"
+"Make Payment";"Make Payment"
+"Never ends";"Never ends"
+"There are no ads in this campaign yet.";"There are no ads in this campaign yet."
+"Use the below filter to observe various metrics of your ad campaign over different time periods.";"Use the below filter to observe various metrics of your ad campaign over different time periods."
+
+# view ad detail page
+
+"Campaign:";"Campaign:"
+"Ad:";"Ad:"
+"Package Name";"Package Name"
+"Total Spend";"Total Spend"
+"FREE";"FREE"
+"Date";"Date"
+"You have not completed the payment for this ad. %1$sMake your payment%2$s for this ad.";"You have not completed the payment for this ad. %1$sMake your payment%2$s for this ad."
+"Make your payment";"Make your payment"
+"Your ad is about to expire. %1$sRenew your ad%2$s now.";"Your ad is about to expire. %1$sRenew your ad%2$s now."
+"Renew your ad";"Renew your ad"
+"Your ad has expired. %1$sRenew your ad%2$s now.";"Your ad has expired. %1$sRenew your ad%2$s now."
+"Lifetime";"Lifetime"
+"Edit Ad";"Edit Ad"
+"Create a Similar Ad";"Create a Similar Ad"
+"Preview";"Preview"
+"Daily Stats";"Daily Stats"
+"Choose a start date and end date below to view the daily statistics of your Ad.";"Choose a start date and end date below to view the daily statistics of your Ad."
+"From";"From"
+"To";"To"
+"Show Stats";"Show Stats"
+"Use the below filter to observe various metrics of your ad over different time periods.";"Use the below filter to observe various metrics of your ad over different time periods."
+
+# Graph filter form
+
+"All";"All"
+"Metric";"Metric"
+"Cumulative";"Cumulative"
+"Change in";"Change in"
+"Views";"Views"
+"Clicks";"Clicks"
+"CTR";"CTR"
+"This Week";"This Week"
+"This Month";"This Month"
+"This Year";"This Year"
+"By Week";"By Week"
+"By Day";"By Day"
+"By Month";"By Month"
+"Filter";"Filter"
+"Next";"Next"
+"Previous";"Previous"
+
+# Report form
+
+"Advertising Performance Reports";"Advertising Performance Reports"
+"You can view performance reports of your campaigns and ads over multiple durations and time intervals. The generated reports include statistics like views, clicks and click through rate (CTR). You can also export and save the reports.";"You can view performance reports of your campaigns and ads over multiple durations and time intervals. The generated reports include statistics like views, clicks and click through rate (CTR). You can also export and save the reports."
+"Filter By";"Filter By"
+"No Filter";"No Filter"
+"Month";"Month"
+"You have not created any Ad yet. %1$sCreate an ad%2$s to advertise on %3$s.";"You have not created any Ad yet. %1$sCreate an ad%2$s to advertise on %3$s."
+
+# Widgets
+
+"More Ads";"More Ads"
+"Advertise on ";"Advertise on "
+"Ads enable you to easily advertise your offering in a highly effective way. It is easy to use, so get started now!";"Ads enable you to easily advertise your offering in a highly effective way. It is easy to use, so get started now!"
+
+# sitead.admin-PAYMENT
+"SITEAD_VIEWS_ADMIN_INDEX_INDEX_DESCRIPTION";"Browse transactions. The search
+box will look through the member name, ad title, username, email, transaction ID, and
+order ID."
+
+"SITEAD_VIEWS_SCRIPTS_STATISTICS_INDEX_DESCRIPTION";" Stay connected to the pulse of your Ad by observing your Ad statistics. The filters below allow you to observe various metrics and their change over different time periods."
+
+
+"_SITEAD_STATISTICS_VIEW";"Views"
+"_SITEAD_STATISTICS_CLICK";"Clicks"
+"_SITEAD_STATISTICS_CTR";"CTR"
+"_SITEAD_STATISTICS_ALL";"Views, Clicks & CTR"
+
+
+# sitead_create_success
+"SITEAD_CREATE_SUSSEC_HEADING";"Congratulations! Your ad has been created successfully."
+"SITEAD_CREATE_SUSSEC_MESSAGE";""
+# sitead_edit_sussec
+"SITEAD_EDIT_SUSSEC_HEADING";"You have successfully edited your Ad."
+
+# mail templates
+
+# sitead_userad_active
+
+"_EMAIL_SITEAD_USERAD_ACTIVE_TITLE";"Advertisement Activated"
+"_EMAIL_SITEAD_USERAD_ACTIVE_DESCRIPTION";"This is the email that gets sent to a member when their advertisement is activated."
+"_EMAIL_SITEAD_USERAD_ACTIVE_SUBJECT";"Your advertisement is now active."
+"_EMAIL_SITEAD_USERAD_ACTIVE_BODY";"[header]
+
+Thank you for advertising on our social network! Your advertisement is now active.
+
+[userad_title]
+[userad_description]
+
+
+You may follow the link below to view the advertisement.
+
+[object_link]
+
+[footer]"
+
+# sitead_userad_cancelled
+
+"_EMAIL_SITEAD_USERAD_CANCELLED_TITLE";"Advertisement Cancelled"
+"_EMAIL_SITEAD_USERAD_CANCELLED_DESCRIPTION";"This is the email that gets sent to a member when their advertisement is cancelled."
+"_EMAIL_SITEAD_USERAD_CANCELLED_SUBJECT";"Your advertisement has been cancelled."
+"_EMAIL_SITEAD_USERAD_CANCELLED_BODY";"[header]
+
+Your advertisement has been cancelled.
+
+[userad_title]
+[userad_description]
+
+Please follow the link below to renew your advertisement.
+
+[object_link]
+
+[footer]"
+
+# sitead_userad_expired
+
+"_EMAIL_SITEAD_USERAD_EXPIRED_TITLE";"Advertisement Expired"
+"_EMAIL_SITEAD_USERAD_EXPIRED_DESCRIPTION";"This is the email that gets sent to a member when their advertisement expires."
+"_EMAIL_SITEAD_USERAD_EXPIRED_SUBJECT";"Your advertisement has expired."
+"_EMAIL_SITEAD_USERAD_EXPIRED_BODY";"[header]
+
+Your advertisement has expired.
+
+[userad_title]
+[userad_description]
+
+Please follow the link below to renew your advertisement.
+
+[object_link]
+
+[footer]"
+
+# sitead_userad_overdue
+
+"_EMAIL_SITEAD_USERAD_OVERDUE_TITLE";"Advertisement Overdue"
+"_EMAIL_SITEAD_USERAD_OVERDUE_DESCRIPTION";"This is the email that gets sent to a member when their advertisement is overdue."
+"_EMAIL_SITEAD_USERAD_OVERDUE_SUBJECT";"Your advertisement is overdue."
+"_EMAIL_SITEAD_USERAD_OVERDUE_BODY";"[header]
+
+
+Your advertisement is overdue because of a failed or missed payment.
+
+[userad_title]
+[userad_description]
+
+Please follow the link below to renew your advertisement.
+
+[object_link]
+
+[footer]"
+
+# sitead_userad_pending
+
+"_EMAIL_SITEAD_USERAD_PENDING_TITLE";"Advertisement Pending"
+"_EMAIL_SITEAD_USERAD_PENDING_DESCRIPTION";"This is the email that gets sent to a member when their advertisement is pending."
+"_EMAIL_SITEAD_USERAD_PENDING_SUBJECT";"Your advertisement is pending."
+"_EMAIL_SITEAD_USERAD_PENDING_BODY";"[header]
+
+
+Thank you for advertising on our social network! Your advertisement is pending, awaiting completion of the transaction. Your advertisement will be activated soon; we will notify you by email when it is ready.
+Thank you for your patience.
+
+[userad_title]
+[userad_description]
+
+
+
+[footer]"
+
+
+
+# sitead_userad_refunded
+
+"_EMAIL_SITEAD_USERAD_REFUNDED_TITLE";"Advertisement Refunded"
+"_EMAIL_SITEAD_USERAD_REFUNDED_DESCRIPTION";"This is the email that gets sent to a member when their advertisement is refunded."
+"_EMAIL_SITEAD_USERAD_REFUNDED_SUBJECT";"Your advertisement has been refunded."
+"_EMAIL_SITEAD_USERAD_REFUNDED_BODY";"[header]
+
+
+Your advertisement has been refunded.
+
+[userad_title]
+[userad_description]
+
+You may follow the link below to view the advertisement.
+
+[object_link]
+
+[footer]"
+
+
+# sitead_userad_approved
+
+
+"_EMAIL_SITEAD_USERAD_APPROVED_TITLE";"Advertisement Approved"
+"_EMAIL_SITEAD_USERAD_APPROVED_DESCRIPTION";"This is the email that gets sent to a member when their advertisement is approved."
+"_EMAIL_SITEAD_USERAD_APPROVED_SUBJECT";"Your advertisement is now approved."
+"_EMAIL_SITEAD_USERAD_APPROVED_BODY";"[header]
+
+
+Thank you for advertising on our social network! Your advertisement is now approved.
+
+[userad_title]
+[userad_description]
+
+
+You may follow the link below to view the advertisement.
+
+[object_link]
+
+[footer]"
+
+# sitead_userad_disapproved
+
+
+"_EMAIL_SITEAD_USERAD_DISAPPROVED_TITLE";"Advertisement Disapproved"
+"_EMAIL_SITEAD_USERAD_DISAPPROVED_DESCRIPTION";"This is the email that gets sent to a member when their advertisement is disapproved."
+"_EMAIL_SITEAD_USERAD_DISAPPROVED_SUBJECT";"Your advertisement has been disapproved."
+"_EMAIL_SITEAD_USERAD_DISAPPROVED_BODY";"[header]
+
+
+Your advertisement has been disapproved.
+
+[userad_title]
+[userad_description]
+
+
+
+You may follow the link below to view the advertisement.
+
+[object_link]
+
+[footer]"
+
+# sitead_userad_approval_pending
+
+
+"_EMAIL_SITEAD_USERAD_APPROVAL_PENDING_TITLE";"Advertisement Approval Pending"
+"_EMAIL_SITEAD_USERAD_APPROVAL_PENDING_DESCRIPTION";"This is the email that gets sent to a member when their advertisement is pending for approval."
+"_EMAIL_SITEAD_USERAD_APPROVAL_PENDING_SUBJECT";"Your advertisement is pending for approval."
+"_EMAIL_SITEAD_USERAD_APPROVAL_PENDING_BODY";"[header]
+
+
+Your advertisement is pending for approval.
+
+[userad_title]
+[userad_description]
+
+
+
+You may follow the link below to view the advertisement.
+
+[object_link]
+
+[footer]"
+
+# sitead_userad_declined
+"_EMAIL_SITEAD_USERAD_DECLINED_TITLE";"Advertisement Declined"
+"_EMAIL_SITEAD_USERAD_DECLINED_DESCRIPTION";"This is the email that gets sent to a member when their advertisement is declined."
+"_EMAIL_SITEAD_USERAD_DECLINED_SUBJECT";"Your advertisement has been declined."
+"_EMAIL_SITEAD_USERAD_DECLINED_BODY";"[header]
+
+
+Your advertisement has been declined.
+
+
+
+[userad_title]
+[userad_description]
+
+You may follow the link below to view the advertisement.
+
+[object_link]
+
+[footer]"
+
+# Contact us form information
+"_EMAIL_COMMUNITY_TEAM_CONTACT_TITLE";"Community Team Title"
+"_EMAIL_COMMUNITY_TEAM_CONTACT_DESCRIPTION";"Community Team Title"
+"_EMAIL_COMMUNITY_TEAM_CONTACT_SUBJECT";"Community Team Title"
+"_EMAIL_COMMUNITY_TEAM_CONTACT_BODY";"[header]
+
+
+[sitead_name] sent a message using the advertising contact form:
+Email address is: [sitead_email]
+
+
+Message:
+[sitead_messages].
+
+[footer]"
+
+
+# sitead_notify_admindisapproved
+
+"_EMAIL_SITEAD_NOTIFY_ADMINDISAPPROVED_TITLE";"Advertisement Notification For Approval"
+"_EMAIL_SITEAD_NOTIFY_ADMINDISAPPROVED_DESCRIPTION";"This is the email which gets sent to the site-admin to notify when advertisement is not approved."
+"_EMAIL_SITEAD_NOTIFY_ADMINDISAPPROVED_SUBJECT";"[userad_title] is waiting for your approval"
+"_EMAIL_SITEAD_NOTIFY_ADMINDISAPPROVED_BODY";"[header]
+
+
+The advertisement with title ""[userad_title]"" created by [userad_owner] is waiting for your approval.
+
+[userad_title]
+[userad_description]
+
+
+You may follow the link below to view the advertisement.
+
+[object_link]
+
+[footer]"
+
+"SITEAD_PACKAGE_CREATE_BUTTON_DEFAULT";"Create an Ad"
+"ACTIVITY_CATEGORY_TYPE_SITEAD";"Advertisements"
+"SITEAD_VIEW_SCRIPTS_ADMINSETTINGS_CATEGORIES_DESCRIPTION"; "Here you can add CTA buttons. The buttons would redirect users to the content advertised."
+
+"Contact our Sales Team";"Contact our Sales Team"
+# Help-And-Learn-More [ Overview Tab ]
+"_sitead_help_overview_1";"Promote to Your Target Customers"
+"_sitead_help_overview_2";"Connect with your potential customers"
+"_sitead_help_overview_3";"Target your ads and choose your audience"
+"_sitead_help_overview_4";"Expressive text and media based ads ensure more clicks and attention to your ads"
+"_sitead_help_overview_5";"Engage Customers and Deepen Relationships"
+"_sitead_help_overview_6";"Promote your business, interest, or anything you like"
+"_sitead_help_overview_7";"Create your ad for promotion of content or any external link on your site"
+"_sitead_help_overview_8";"With 3 different Ad formats, you can create attractive and appealing ads"
+"_sitead_help_overview_9";"Manage Your Budget"
+"_sitead_help_overview_10";"Choose the best ad package that suits your needs"
+"_sitead_help_overview_11";"Pay for ad clicks, views or days"
+"_sitead_help_overview_12";"Pay exactly for what you get"
+"_sitead_help_overview_13";"Need Assistance?"
+
+
+# Help-And-Learn-More [ Get Started Tab ]
+"_sitead_help_getstarted_1";"There are 5 quick steps to create your ad:"
+"_sitead_help_getstarted_2";"Choose the Ad Type, then select the Ad Format and the best Ad Package for your requirements. See which one gives you the best options according to your needs. Choose based on the type, format, and package, whether you want to create your own ad, or want to advertise a content of yours on the site."
+"_sitead_help_getstarted_3";"Identify your goals and design your ad. Put in your accurate and catchy ad description, title and choose the suitable ad type and format for your ad."
+"_sitead_help_getstarted_4";"Target your ads by defining who you want to reach with your ad, and set a schedule for your ad if you want."
+"_sitead_help_getstarted_5";"Review your ad to see if everything is fine and looks good."
+"_sitead_help_getstarted_6";"Make payment for your advertisement if required."
+"_sitead_help_getstarted_7";"Tips:"
+"_sitead_help_getstarted_8";"Design your Ads optimally"
+"_sitead_help_getstarted_9";"Your ads comprises of image, title, ad icon, and description. Ensure that these are relevant to your business / requirement and are catchy"
+"_sitead_help_getstarted_10";"Make your ads stand out with their content"
+"_sitead_help_getstarted_11";"Focus on one goal at a time in your ad for an effective campaign"
+"_sitead_help_getstarted_12";"Need Assistance?"
+
+
+# Help-And-Learn-More [ Improve-Your-Ad Tab ]
+"_sitead_help_improve_ad_1";"Ads on this website allow you to easily advertise any destination such as your Business, website, or even the content created by you on this site."
+"_sitead_help_improve_ad_2";"Depending on your marketing objective, you can choose which ad type, ad format and ad package is right for you. You may choose to promote your page, post, content/external site on site by creating an ad. Some ad packages will entitle you to receive a maximum number of clicks on your ad, others may entitle you to views, or days."
+"_sitead_help_improve_ad_3";"Choosing the URL of your Ad:"
+"_sitead_help_improve_ad_4";"When designing your ad for your business or website, enter the web address or destination URL (e.g. : www.example.com) of the web page of the entity you would like to promote. People who click on your Ad will be redirected to this page."
+"_sitead_help_improve_ad_5";"If you choose to advertise your content on this site, then your Ad URL will automatically be the URL of your content web page. After clicking on it, users will be redirected to the content web page."
+"_sitead_help_improve_ad_6";"Keep in mind that when a user is viewing your ad, they will not see the URL of your site. They will only be able to see the title, ad text, and image."
+"_sitead_help_improve_ad_7";"Choosing the Media for your Ad:"
+"_sitead_help_improve_ad_8";"Choose the right icon / image / video for your Ad to increase its visual appeal as it will create the first impression of your Ad, and will play the biggest role in tempting the user to click on your ad. At the same time, ensure that it is in good taste. Your ad icon may be the logo of your business or something that conveys the message of your ad campaign."
+"_sitead_help_improve_ad_9";"If you choose to advertise your content in the ad, then while designing the ad, the image for that content will automatically become the ad icon for the ad."
+"_sitead_help_improve_ad_10";"Choosing the Title of your Ad:"
+"_sitead_help_improve_ad_11";"You may choose the Title of your Ad as your business name or a tag line for your campaign. Your title should very crisply convey your message and induce the user to read the description of the Ad and ultimately to click on the Ad URL to be redirected to your web page."
+"_sitead_help_improve_ad_12";"If you are advertising your content on site in your ad, then the title of the ad to be the title of that content."
+"_sitead_help_improve_ad_13";"Choosing the Body / Description of your Ad:"
+"_sitead_help_improve_ad_14";"The description of the ad could be a small promotional description of your business, the latest offer that you might be having, your biggest attraction, etc. It should be something related to the Image / Video and Title that you have for your Ad."
+"_sitead_help_improve_ad_15";""
+"_sitead_help_improve_ad_16";"Need Assistance?"
+
+
+
+
+
+# Help-And-Learn-More [ 'General FAQ' Tab ]
+"_sitead_help_generalfaq_1";"What are Ads on this Community?"
+"_sitead_help_generalfaq_2";"Ads on this website show advertisements to you. Ads appear on many types of pages, including home page, profiles, content pages, etc. Ads on this community have been designed to be aesthetic yet noticeable. Ads can either be advertisements of businesses, websites, etc, or of content within this community. Ads of content within this community can contain social actions such as ""Like"". Liking an ad of a content implies liking the content itself. This community does not sell your information to advertisers."
+
+"_sitead_help_generalfaq_16";"What are the types of advertisements that I can create on this community?"
+"_sitead_help_generalfaq_17";"You can create 4 effective types of advertisements on this community depending on your requirements:<br />
+1) Promote Your Content: Promoting Content is the process of creating ads with the intention of promoting any type of content(text, video, image etc.) It helps in targeting traffic to your content. 
+You can promote your Content in three Ad Formats: Carousel, Single Image, Video.
+<br />
+2) Get More Website Visitor: Using this ad type, you can advertise your website to large audience and redirect users to it. It helps in increasing traffic and popularity of website. Advertisers can advertise using any of the three ad formats. This type of ad is helpful for business etc. to get more visitors and increase the sale of their product.
+<br />
+3) Promote Your Page: Promoting Pages helps you to grow the awareness and visibility towards it and connecting more people to it. You can easily promote your Page in three Ad formats: Carousel, Single Image, Video. Also, you can add CTA buttons for your Ads to make it more appealing and attractive. You can also choose target audience by enabling it in the admin panel.
+This option is available when Directory / Pages Plugin is installed and enabled.
+
+<br />
+4) Boost A Post: Boost a post is an easy way to reach more people and increase traffic to your website. It could be a status update, a photo, group or a video. The post will be clickable and more effective to get people from their Activity feed to your website. "
+
+This option is available when Advanced Activity Feeds / Wall Plugin is installed and enabled.
+
+"_sitead_help_generalfaq_3";"I want to advertise on this community."
+"_sitead_help_generalfaq_4";"If you are a member of this community, you will be able to create your own Ads. Creating your ads is a quick and easy multi-step process and enables you to create effective ads to get the best value. You can choose the required Ad Type, Ad Format and suitable Ad Packages for your ad. Different packages offer different features and are priced differently. Also, different packages have different expiry limits. Depending on the package, you can target your Ads to reach only your desired audience on the site based on their profile fields. If you have any queries about advertising here or need assistance, then please contact our Sales Team."
+
+
+"_sitead_help_generalfaq_5";"I want to create an Ad for my Listing or other content."
+"_sitead_help_generalfaq_6";"Promote Your Content enables you to advertise different types of content using different packages. Choose the right Ad Type and Ad Format to advertise your content."
+
+"_sitead_help_generalfaq_51";"What would be the status of the ad if the selected package is sponsored as well as featured?"
+"_sitead_help_generalfaq_52";"The ad would be sponsored as well as featured, but in ad preview, it would be marked as sponsored."
+
+
+"_sitead_help_generalfaq_7";"Can I choose where my ad appears on the site?"
+"_sitead_help_generalfaq_8";"No, our administrator has created the various advertising blocks on this site in an intelligent manner, considering relevancy according to the Ad package chosen. Your ads will appear on the most relevant places according to their package and their content."
+
+"_sitead_help_generalfaq_9";"Can I choose the desired audience for my Ads?"
+"_sitead_help_generalfaq_10";"Yes, if your advertising package allows targeting, then you can target your Ads to reach only your desired audience on the site based on their profile fields. You can choose your targeting criteria while creating your ad."
+
+"_sitead_help_generalfaq_11";"I want to know how my ads are performing."
+"_sitead_help_generalfaq_12";"You can see tabular as well as graphical statistics reports for the performance of your ads from the advertising area. Your ad performance is measure in the number of clicks, views and the CTR%."
+
+"_sitead_help_generalfaq_13";"My question wasn't answered above."
+"_sitead_help_generalfaq_14";"If you have any queries about advertising here, or need assistance, then please contact our Sales Team."
+
+
+
+# Help-And-Learn-More [ 'Design FAQ' Tab ]
+"_sitead_help_designfaq_1";"What are some suggested best practices for writing and designing my ad?"
+"_sitead_help_designfaq_2";"For best practices for designing your ads, please visit the ""Improve Your Ads"" section."
+
+"_sitead_help_designfaq_3";"What are the character limits for the title and body of my ad?"
+"_sitead_help_designfaq_4";"Your Community Ad, which must include a title and body, is limited to 25 characters for the title and 135 characters for the body."
+
+"_sitead_help_designfaq_5";"About Media in ads."
+"_sitead_help_designfaq_6";" All Community Ads require an media according to the selected ad format. Adding a video / image can be one of the most powerful factors in determining the success of your ads. A strong media should be eye-catching, relevant to your product or service, or inform users about what your ad is for. If you choose to advertise your content in the ad, then while designing the ad, the image for that content will automatically become the ad icon for the ad."
+
+"_sitead_help_designfaq_7";"What are the permissible file types for images and videos in ads?"
+"_sitead_help_designfaq_8";"The file types allowed for ad images are: jpg, jpeg, png, gif, ad icon are png, jpg, jpeg, and videos is mp4."
+
+"_sitead_help_designfaq_9";"My question wasn't answered above."
+"_sitead_help_designfaq_10";"If you have any queries about advertising here, or need assistance, then please contact our Sales Team."
+
+
+# Help-And-Learn-More [ 'Targeting FAQ' Tab ]
+"_sitead_help_targetingfaq_1";"What is ad targeting and how does it work?"
+"_sitead_help_targetingfaq_2";"Ad targeting enables you to reach the target audience which is more likely to be interested in your ads. If your ad package allows targeting, then you will be able to configure targeting for your ad based on user profile fields. Only users having profiles matching with your targeting criteria will be shown your targetted ad."
+
+"_sitead_help_targetingfaq_3";"Do I have to configure targeting on all profile fields?"
+"_sitead_help_targetingfaq_4";"No. The more profile fields that you configure your ad targeting on, the more specific the targeting becomes."
+
+"_sitead_help_targetingfaq_5";"My question wasn't answered above."
+"_sitead_help_targetingfaq_6";"If you have any queries about advertising here, or need assistance, then please contact our Sales Team."
+
+"Overview";"Overview"
+"Get Started";"Get Started"
+"Improve Your Ads";"Improve Your Ads"
+"Contact Sales Team";"Contact Sales Team"
+"Ad Packages";"Ad Packages"
+"Contact us for any assistance that you may require with advertising on this community.";"Contact us for any assistance that you may require with advertising on this community."
+"Sales Team Contact Number:";"Sales Team Contact Number:"
+"Sales Team Contact Email:";"Sales Team Contact Email:"
+"Contact us";"Contact us"
+
+"General FAQ";"General FAQ"
+"Design Your FAQ";"Design Your FAQ"
+"Targeting FAQ";"Targeting FAQ"

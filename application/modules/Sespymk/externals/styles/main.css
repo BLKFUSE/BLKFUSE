@@ -1,0 +1,38 @@
+
+/*Icons*/
+.sespymk_home_findfriends:before{
+	content:"\\f0c0";font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+}
+/*PEOPLE YOU MAY KNOW WIDGET CSS START HERE*/
+.sespymk_remove{
+	color:$theme_font_color_light !important;
+}
+.sespymk_remove:hover{
+	background-color:$theme_button_background_color;
+	color:$theme_button_font_color !important;
+}
+.sespymk_list_item_stat a,
+.sespymk_sidebar_list_item_stat a,
+.sespymk_horrizontal_list_item_stat a,
+.sespymk_carousel_nav a i:before{
+	color:$theme_font_color_light !important;
+}
+.sespymk_carousel .owl-nav > div{
+	background-color:$theme_list_background_color;
+}
+.sespymk_requests_sidebar > .sespymk_list_more > .floatL{
+	color:$theme_font_color !important;
+}
+/*BUTTON CSS START HERE*/
+.sespymk_buttons > div.sespymk_follow_button > a,
+.sespymk_buttons > div > button{
+	border:1px solid $theme_button_border_color;
+	background-color: $theme_button_background_color;
+	color:$theme_button_font_color !important;
+}
+.sespymk_buttons > div.sespymk_follow_button > a:hover,
+.sespymk_buttons > div > button:hover{
+	background-color: $theme_button_background_color_hover;
+}
+/*BUTTON CSS END HERE*/

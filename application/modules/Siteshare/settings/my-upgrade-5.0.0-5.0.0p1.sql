@@ -1,0 +1,1 @@
+UPDATE `engine4_core_menuitems` SET `params` = '{"class":"fa-twitter","uri":"http://twitter.com/share?text=CONTENT_TITLE &url=CONTENT_URI","target":"_blank"}' WHERE `engine4_core_menuitems`.`name` like 'siteshare_social_link_twitter';

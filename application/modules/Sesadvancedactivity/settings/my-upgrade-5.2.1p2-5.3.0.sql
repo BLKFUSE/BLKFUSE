@@ -1,0 +1,1 @@
+UPDATE `engine4_core_menuitems` SET `menu` = 'sesadvancedactivity_admin_main' WHERE `engine4_core_menuitems`.`name` = 'sesadvancedcomment_admin_emotio';

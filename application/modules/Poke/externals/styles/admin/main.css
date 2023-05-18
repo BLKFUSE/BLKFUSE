@@ -1,0 +1,32 @@
+.admin_seaocore_files.seaocore_faq {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #ccc;
+    overflow-y: auto;
+    list-style: decimal !important;
+    padding-left: 10px;
+}
+.admin_seaocore_files_wrapper {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: #e9f4fa;
+    padding: 10px;
+}
+
+.admin_seaocore_files > li {
+    margin-left: 20px;
+    padding: 7px 12px 7px 1px;
+}
+
+.admin_seaocore_files li > div {
+    clear: both;
+    border-left: 3px solid #ccc;
+    padding: 5px 5px 5px 10px;
+    margin: 5px;
+    font-family: arial;
+    line-height: 18px;
+}

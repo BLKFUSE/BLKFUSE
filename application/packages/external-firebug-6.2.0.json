@@ -1,0 +1,86 @@
+{
+  "type": "external",
+  "name": "firebug",
+  "version": "6.2.0",
+  "revision": "9747",
+  "path": "externals\/bootstrap",
+  "repository": null,
+  "sku": null,
+  "date": "Wed, 29 Jun 2022 11:24:04 +0000",
+  "title": "Bootstrap JS",
+  "description": null,
+  "thumb": null,
+  "developer": null,
+  "authors": [
+    "Webligo Developments"
+  ],
+  "meta": {
+    "date": "Wed, 29 Jun 2022 11:24:04 +0000",
+    "title": "Bootstrap JS",
+    "description": null,
+    "developer": null,
+    "authors": [
+      "Webligo Developments"
+    ],
+    "changeLog": null
+  },
+  "actions": [
+    
+  ],
+  "callback": null,
+  "dependencies": null,
+  "tests": [
+    
+  ],
+  "permissions": [
+    
+  ],
+  "structure": {
+    "externals\/bootstrap": {
+      "type": "directory",
+      "path": "externals\/bootstrap",
+      "structure": [
+        {
+          "path": "css",
+          "dir": true,
+          "file": false,
+          "perms": "0755",
+          "size": 96,
+          "sha1": null
+        },
+        {
+          "path": "css\/bootstrap.css",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 204129,
+          "sha1": "8eee5c3d8b39e8cf1ba761a5ef67f0d036fc2717"
+        },
+        {
+          "path": "js",
+          "dir": true,
+          "file": false,
+          "perms": "0755",
+          "size": 96,
+          "sha1": null
+        },
+        {
+          "path": "js\/bootstrap.js",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 126735,
+          "sha1": "4588047576eb1c2ebe64cb84a0e602b8103068a7"
+        },
+        {
+          "path": "manifest.php",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 435,
+          "sha1": "2e221e68b00fc985b5c9631aeacb1857194afec2"
+        }
+      ]
+    }
+  }
+}

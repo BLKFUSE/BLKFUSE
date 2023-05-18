@@ -1,0 +1,28 @@
+"SNS - Community Advertisements Banner Extension";"Community Advertisements Banner Extension"
+# SESCOMADBANR_PAYMENTEMAIL
+"_EMAIL_SESCOMADBANR_PAYMENTEMAIL_TITLE";"Ads Banner Payment"
+"_EMAIL_SESCOMADBANR_PAYMENTEMAIL_DESCRIPTION";"This email will be sent to member."
+"_EMAIL_SESCOMADBANR_PAYMENTEMAIL_SUBJECT";"'Ads Banner Payment Email"
+"_EMAIL_SESCOMADBANR_PAYMENTEMAIL_BODY";"[header]
+
+You can pay us for ads by using below link:
+
+[paymentlink]
+
+[footer]"
+
+
+
+# SESCOMADBANR_PAYMENTREMINDER
+"_EMAIL_SESCOMADBANR_PAYMENTREMINDER_TITLE";"Ads Banner Payment Reminder"
+"_EMAIL_SESCOMADBANR_PAYMENTREMINDER_DESCRIPTION";"This email will be sent to member for payment reminder."
+"_EMAIL_SESCOMADBANR_PAYMENTREMINDER_SUBJECT";"'Ads Banner Payment Reminder Email"
+"_EMAIL_SESCOMADBANR_PAYMENTREMINDER_BODY";"[header]
+
+You can pay us for ads by using below link:
+
+[paymentlink]
+
+[footer]"
+
+"SES - Community Advertisements Banner Extension";"Community Advertisements Banner Extension"

@@ -1,0 +1,206 @@
+
+.everification_settings .everification_upload_btn{
+	margin-bottom:15px;
+}
+.everification_settings .everification_upload_btn a{
+	display:inline-block;
+}
+/*Upload Form Popup*/
+.everification_add_popup{
+	margin:15px 0 0 15px;
+}
+.everification_add_popup .form-label{
+	display:none;
+}
+.everification_add_popup #buttons-wrapper{
+	margin-top:15px;
+}
+/*Manage Documents*/
+[class*="everification_icon_"]:before,
+[class*="everification_icon_"]:after,{
+	font-family:"Font Awesome 5 Free";
+	font-style:normal;
+	font-weight:900;
+}
+.everification_icon_add:before{
+	content:"\f067";
+}
+.everification_icon_delete:before{
+	content:"\f2ed";
+}
+.everification_icon_view:before{
+	content:"\f06e";
+}
+.everification_icon_submit:before{
+	content:"\f00c";
+}
+.everification_manage_documents{
+	border-radius:5px;
+	border-width:1px;
+	border-style:solid;
+	padding:10px;
+}
+.everification_manage_documents table{
+	width:100%;
+}
+.everification_settings_header{
+	margin-bottom:20px;
+}
+.everification_settings_header ._title{
+	font-weight:bold;
+	font-size:20px;
+	margin-bottom:10px;
+}
+.everification_manage_documents ._header{
+	background-image:url(../images/transprant-bg.png);
+}
+.everification_manage_documents  tr + tr{
+	border-top-width:1px;
+}
+.everification_manage_documents th,
+.everification_manage_documents td{
+	padding:10px;
+}
+.everification_manage_documents ._type{
+	font-weight:bold;
+	position:relative;
+	width:20%;
+}
+.everification_manage_documents ._type i{
+	height:35px;
+	width:35px;
+	line-height:35px;
+	display:inline-block;
+	border-radius:50%;
+	text-align:center;
+	margin-right:15px;
+	font-style:normal;
+	font-size:17px;
+}
+.everification_manage_documents ._status{
+	width:20%;
+	text-align:center;
+}
+.everification_manage_documents ._status span{
+	display: inline-block;
+	color: #fff;
+	border-radius: 3px;
+	padding: 5px 10px;
+	font-size: 12px;
+	font-weight: bold;
+	min-width: 150px;
+	text-align:center;
+}
+.everification_manage_documents .status_pending{
+	background-color:#f5ca00;
+}
+.everification_manage_documents .status_verified{
+	background-color:#599e14;
+}
+.everification_manage_documents .status_rejected{
+	background-color:#c8514a;
+}
+.everification_manage_documents ._preview{
+	width:20%;
+}
+.everification_manage_documents ._msg{
+	width:20%;
+}
+.everification_manage_documents ._option{
+	width:20%;
+}
+.everification_manage_documents ._header > div{
+	font-weight:bold;
+}
+.everification_manage_documents ._option span + span:before{
+	content:"|";
+	margin:0 10px;
+}
+.everification_manage_documents ._option .sesbasic_icon_delete:before{
+	color:#f00;
+}
+.everification_manage_documents ._option .everification_icon_submit:before{
+	color:#39F;
+}
+@media screen and (max-width: 600px){
+	.everification_manage_documents{
+		border-width: 0;
+		padding: 0;
+	}
+	.everification_manage_documents tr{
+    border-radius:5px;
+    border-width:1px;
+    border-style:solid;
+    padding:10px;
+    display:block;
+		margin-bottom:10px;
+	}
+	.everification_manage_documents tr:nth-last-child(1){
+		margin-bottom:0;
+	}
+	.everification_manage_documents table thead{
+		display:none;
+	}
+	.everification_manage_documents table td{
+		border-bottom-width:1px;
+		border-bottom-style:solid;
+		display:block;
+		text-align: right;
+		overflow:hidden;
+		width:100% !important;
+	}
+	.everification_manage_documents table td:nth-last-child(1){
+		border-width:0;
+	}
+	.everification_manage_documents td:before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+	.everification_manage_documents td._type:before{
+		display:none;
+	}
+	.everification_manage_documents td._type i{
+		float:left;
+	}
+	.everification_manage_documents td._status span{
+		float:right;
+		min-width:inherit;
+		padding:5px 15px;
+	}
+	.everification_manage_documents ._option{
+		text-align:center !important;
+	}
+	.everification_manage_documents ._option:before{
+		display:none;
+	}
+}
+/*MEMBER VERIFICATION INFO TIP START HERE*/
+.everification_member_verification_tip{
+	padding:15px;
+	min-width:250px;
+}
+.everification_member_verification_tip_section{
+	border-top-width:1px;
+	border-top-style:dashed;
+	margin-top:15px;
+	padding-top:15px;
+}
+.everification_member_verification_tip_section:nth-child(1){
+	border-top-width:0;
+	margin-top:0;
+	padding-top:0;
+}
+.everification_member_verification_tip_section ._title{
+	font-weight:bold;
+}
+.everification_member_verification_tip_section ._title span + span{
+	font-weight:normal;
+	font-style:italic;
+}
+.everification_member_verification_tip_section ._des{
+	font-size:90%;
+	margin-top:5px;
+}
+/*MEMBER VERIFICATION INFO TIP END HERE*/

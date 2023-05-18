@@ -1,0 +1,94 @@
+{
+  "type": "widget",
+  "name": "bzrandvids",
+  "version": "5.0.0",
+  "revision": null,
+  "path": "application\/widgets\/bzrandvids",
+  "repository": null,
+  "sku": "bzrandomvideos",
+  "date": "Thu, 26 Dec 2019 21:03:38 +0000",
+  "title": "BryZar Random Videos",
+  "description": "Random videos by Bryzar hosting and web services.",
+  "thumb": null,
+  "developer": null,
+  "authors": [
+    "<a href=\"https:\/\/www.bryzar.com\" target=\"_blank\">BryZar Web Services<\/a>"
+  ],
+  "meta": {
+    "date": "Thu, 26 Dec 2019 21:03:38 +0000",
+    "title": "BryZar Random Videos",
+    "description": "Random videos by Bryzar hosting and web services.",
+    "developer": null,
+    "authors": [
+      "<a href=\"https:\/\/www.bryzar.com\" target=\"_blank\">BryZar Web Services<\/a>"
+    ],
+    "changeLog": null
+  },
+  "actions": [
+    "install",
+    "upgrade",
+    "refresh",
+    "remove"
+  ],
+  "callback": null,
+  "dependencies": {
+    "module-core": {
+      "type": "module",
+      "name": "core",
+      "guid": "module-core",
+      "minVersion": "4.10.5",
+      "maxVersion": null,
+      "excludeExcept": null
+    }
+  },
+  "tests": [
+    
+  ],
+  "permissions": [
+    
+  ],
+  "structure": {
+    "application\/widgets\/bzrandvids": {
+      "type": "directory",
+      "path": "application\/widgets\/bzrandvids",
+      "structure": [
+        {
+          "path": "index.tpl",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 6075,
+          "sha1": "f342d52ecde767a0c1cb6a74a673e2a25dd4c4d5"
+        },
+        {
+          "path": "Controller.php",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 1934,
+          "sha1": "37f37d9adc8b1c41b9f495ac17cbd9baff6894d9"
+        },
+        {
+          "path": "manifest.php",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 2705,
+          "sha1": "65576dab031f9b9b4c15dcb2dcc7fb788614a900"
+        }
+      ]
+    },
+    "application\/languages\/en\/bzrandvids.csv": {
+      "type": "file",
+      "path": "application\/languages\/en\/bzrandvids.csv",
+      "structure": {
+        "path": "bzrandvids.csv",
+        "dir": false,
+        "file": true,
+        "perms": "0644",
+        "size": 54,
+        "sha1": "c2882aba8a359807596c3a84c24e5f480bb34c53"
+      }
+    }
+  }
+}
