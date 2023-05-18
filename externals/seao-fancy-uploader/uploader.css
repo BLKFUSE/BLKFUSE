@@ -1,0 +1,349 @@
+/* SeaoFancyUploader CSS File */
+
+.seao-fancy-uploader-wrapper {
+
+}
+
+.seao-fancy-uploader-wrapper.uploader-list-view-wrapper {
+	
+}
+
+.seao-fancy-uploader-wrapper.uploader-grid-view-wrapper {
+
+}
+
+.seao-fancy-uploader-wrapper .description {
+
+}
+
+.uploader-links a {
+	margin: 10px 5px;
+	display: inline-block;
+}
+
+.uploader-links a.upload-link {
+
+}
+
+.uploader-links a.clear-list {
+
+}
+
+.uploader-links a.start-upload-link {
+
+}
+
+.seao-fancy-uploader-wrapper .drop-area {
+	height: 200px;
+	width: 200px;
+	border: 1px dashed #ccc;
+	border-radius: 4px;
+	margin: 15px 6px;
+	text-align: center;
+	line-height: 200px;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+	box-sizing: border-box;
+}
+
+.seao-fancy-uploader-wrapper .seao-fancy-uploader-drop-over {
+
+}
+
+.uploaded-files-list {
+
+}
+
+.uploaded-files-list.uploader-grid-view {
+	width: 100%;
+}
+
+.uploaded-files-list.uploader-list-view {
+	width: 100%;
+}
+
+.uploader-file {
+	
+}
+
+.uploader-file.file-uploading {
+
+}
+
+.uploader-file.file-failed {
+
+}
+
+.uploader-file.image {
+
+}
+
+.uploader-file.audio {
+
+}
+
+.uploader-file.video {
+
+}
+
+.uploader-file .file-info {
+
+}
+
+.uploader-file .file-info .file-name {
+
+}
+
+.uploader-file .file-info .file-type {
+
+}
+
+.uploader-file .file-preview {
+	height: 120px;
+	width: 100%;
+}
+
+.uploader-file .file-preview img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.uploader-file .file-progress {
+
+}
+
+.uploader-file .file-remove {
+	position: absolute;
+	top: 2px;
+	right: 5px;
+	cursor: pointer;
+}
+
+.file-error, .file-error span, .remote-wrapper  span.error-message {
+	color: red;
+}
+
+.progress-bar {
+
+}
+.file-info{
+	display: none;
+}
+
+.seao-fancy-uploader-hidden-wrap {
+	display: none;
+}
+
+.uploader-file .file-remove:before {
+	content: '\f057';
+	font-family: fontawesome;
+	font-size: 14px;
+	color: #fff;
+}
+
+.uploader-file.audio {
+	background: #A8004C;
+}
+
+.uploaded-files-list {
+	display: inline-block;
+}
+.progress-bar {
+	width: 0px;
+	background: #29B3E3;
+	color: #fff;
+	height: 20px;
+	margin: 20px 0;
+	border-radius: 10px;
+	text-align: center;
+	display: block;
+	clear: both;
+	float: left;
+}
+.seao-fancy-uploader-wrapper .seao-fancy-uploader-drop-over {
+	border: 2px solid #000;
+	color: #000;
+	line-height: 195px;
+	transition: all 0.2s ease-in-out;
+}
+.uploader-grid-view .uploader-file.image{
+	width: 23%;
+	display: inline-block;
+	margin-right: 14px;
+	position: relative;
+	border: 1px solid #ccc;
+}
+
+.uploader-list-view li.uploader-file .file-info {
+	background: #e2e2e2 none repeat scroll 0 0;
+	box-sizing: border-box;
+	font-size: 10px;
+	line-height: normal;
+	outline: 1px solid #ccc;
+	outline-offset: 1px;
+	padding: 6px 10px;
+	display: block;
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.uploader-list-view li.uploader-file .file-info::before, 
+.uploader-links a.clear-list::before, .uploader-links a.clear-list::after, 
+.uploader-links a.remote-link::before, .uploader-links a.drop-link::before,
+.uploader-links a.upload-file::before, .uploader-links a.upload-photo::before, 
+.uploader-links a.upload-video::before, .uploader-links a.upload-music::before {
+	font-family: fontawesome;
+	font-size: 13px;
+	margin-right: 5px;
+}
+.uploader-list-view li.uploader-file .file-preview, 
+.uploader-list-view ~ .progress-bar{
+	display: none;
+}
+
+.file-info-wrapper {
+	position: relative;
+}
+
+.file-progress-list {
+	width: 0px;
+	background: #29B3E3;
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	opacity: 0.5;
+}
+.uploader-links a.upload-link.upload-file:before {
+	content: '\f067';
+}
+.uploader-links a.upload-link.upload-photo:before {
+	content: '\f03e';
+}
+.uploader-links a.upload-link.upload-video:before {
+	content: '\f03d';
+}
+.uploader-links a.upload-link.upload-music:before {
+	content: '\f001';
+}
+.uploader-links a.remote-link:before {
+	content: '\f0ac';
+}
+.uploader-links a.drop-link:before {
+	content: '\f047';
+}
+.uploader-links a.clear-list{
+	position: relative;
+	line-height: 200%;
+}
+.uploader-links a.clear-list:before {
+	content: '\f07b';
+	margin-right: 6px;
+	display: inline-block;
+	font-weight: 400;
+}
+.uploader-links a.clear-list:after {
+	content: '\f056';
+	font-size: 80%;
+	left: 8px;
+	position: absolute;
+	line-height: normal;
+	bottom: 4px;
+	background-color: #fff;
+	border-radius: 50%;
+	font-weight: 400;
+}
+
+.file-info-wrapper .file-info span {
+	margin-right: 10px;
+	color: #222;
+}
+
+.file-info-wrapper .file-info .file-type {
+	display: none;
+}
+
+.uploader-list-view li.uploader-file {
+	position: relative;
+}
+
+.uploader-file .file-info:before {
+	content: '\f15b';
+}
+
+.uploader-file.image .file-info:before {
+	content: '\f1c5';
+}
+
+.uploader-file.video .file-info:before {
+	content: '\f03d';
+}
+
+.uploader-file.audio .file-info:before {
+	content: '\f001';
+}
+
+.uploader-list-view .uploader-file .file-progress {
+	display: none;
+}
+
+.uploader-file.file-success .file-progress-list {
+	display: none;
+}
+
+.uploader-list-view .uploader-file .file-remove:before {
+	color: #777;
+}
+
+.seao-fancy-uploader-item .file-size  {
+	display: none;
+}
+
+.seao-fancy-uploader-item .compose-photo-preview-image > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.seao-fancy-uploader-item .compose-photo-preview .compose-photo-preview-image {
+	overflow: hidden;
+}
+.seao-fancy-uploader-item .compose-photo-preview .compose-photo-preview-loading {
+	background: none;
+}
+.seao-fancy-uploader-item .compose-photo-preview-overlay .file-remove::before {
+	font-family: fontawesome;
+	content: '\f057';
+}
+
+.uploader-file .file-info::before {
+	color: #777;
+} 
+.uploader-file.file-failed .file-info::before {
+	color: #ea153c;
+}
+.uploader-file.file-success .file-info::before {
+	color: #3cb809;
+}
+
+.seao-fancy-uploader-wrapper .scrollbar-content-wrapper {
+	width: 100%;
+}
+
+.uploader-file .file-error, .seao-fancy-uploader-wrapper .file .file-error {
+	display: none;
+}
+
+.uploader-file .file-progress,.seao-fancy-uploader-wrapper .file .file-progress {
+	position: absolute;
+	top: 0px;
+	left: 100%;
+	right: 0px;
+	bottom: 0px;
+	background: rgba(0, 0, 0, 0.4);
+	transition: all 0.5s ease-in-out;
+}
+
+.seao-fancy-uploader-wrapper .uploader-file, .seao-fancy-uploader-wrapper .file {
+	transition: all 0.5s ease-in-out;
+}
