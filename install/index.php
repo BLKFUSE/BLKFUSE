@@ -11,8 +11,8 @@
  */
 
 // Sanity check
-if( version_compare(PHP_VERSION, '7.3', '<') ) {
-  echo 'SocialEngine requires at least PHP 7.3';
+if( version_compare(PHP_VERSION, '8.0', '<') ) {
+  echo 'SocialEngine requires at least PHP 8.0';
   exit();
 }
 

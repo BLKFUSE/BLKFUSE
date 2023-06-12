@@ -180,7 +180,7 @@ class Install_Import_Phpfox_VideoVideos extends Install_Import_Phpfox_Abstract
     $newData['view_count'] = $data['total_view'];
     $newData['comment_count'] = $data['total_comment'];
     //$newData['rating'] = $rating ? (int) ($rating / 2) : 0;
-    $newData['category_id'] = $category_id;
+    $newData['category_id'] = $category_id ? $category_id : 0;
     $newData['status'] = 1;
 
     //CHECKING SOURCE OF VIDEO
@@ -191,7 +191,7 @@ class Install_Import_Phpfox_VideoVideos extends Install_Import_Phpfox_Abstract
         $pathInfo = @pathinfo($video_url);
         $video_code = $pathInfo['basename'];
         $newData['code'] = $video_code;
-        $newData['type'] = 2;
+        $newData['type'] = 'iframely';
         $vimeodata = simplexml_load_file("http://vimeo.com/api/v2/video/" . $video_code . ".xml");
         $title = $vimeodata->video->title;
         $newData['title'] = is_null($title) ? '' : $title;
@@ -234,7 +234,7 @@ class Install_Import_Phpfox_VideoVideos extends Install_Import_Phpfox_Abstract
 //         }
       }
     } else if( $data['is_stream'] == 0 ) {
-      $newData['type'] = 3;
+      $newData['type'] = 'upload';
       $newData['code'] = '';
       $newData['title'] = is_null($data['title']) ? '' : $data['title'];
       $newData['description'] = $description ? $description : '';
@@ -304,7 +304,7 @@ class Install_Import_Phpfox_VideoVideos extends Install_Import_Phpfox_Abstract
     try {
       //set privacy
       $videoPrivacy = $this->_translateVideoPrivacy($data['privacy']);
-      $newData['view_privacy'] = $videoPrivacy[0];
+      $newData['view_privacy'] = $videoPrivacy[0] ? $videoPrivacy[0] : 'everyone';
 
       $this->_insertPrivacy('video', $data['video_id'], 'view', $this->_translateVideoPrivacy($data['privacy']));
       $this->_insertPrivacy('video', $data['video_id'], 'comment', $this->_translateVideoPrivacy($data['privacy_comment']));

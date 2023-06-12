@@ -74,13 +74,13 @@ class Install_Form_Sdk_Create extends Engine_Form
     $this->version->getDecorator('Description')->setOption('escape', false)
       ->setOption('placement', 'APPEND');
 
-    $this->addElement('Text', 'sku', array(
-      'label' => 'SKU',
-      'description' => 'SKU is required if you want to submit this package for certification at SocialEngine Marketplace. Please read <a target="_blank" href="https://www.socialengine.com/experts-guideline/technical-guidelines#expert-app-sku">expert guidelines</a> for the submission of certified products.',
-      'value' => '',
-    ));
-    $this->sku->getDecorator('Description')->setOption('escape', false)
-      ->setOption('placement', 'APPEND');
+//     $this->addElement('Text', 'sku', array(
+//       'label' => 'SKU',
+//       'description' => 'SKU is required if you want to submit this package for certification at SocialEngine Marketplace. Please read <a target="_blank" href="https://www.socialengine.com/experts-guideline/technical-guidelines#expert-app-sku">expert guidelines</a> for the submission of certified products.',
+//       'value' => '',
+//     ));
+//     $this->sku->getDecorator('Description')->setOption('escape', false)
+//       ->setOption('placement', 'APPEND');
     
     $this->addElement('Text', 'date', array(
       'label' => 'Build Date',

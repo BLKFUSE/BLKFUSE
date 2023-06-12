@@ -69,8 +69,8 @@ class InstallController extends Zend_Controller_Action
       // PHP VERSION
       array(
         'type' => 'PhpVersion',
-        'name' => 'PHP 7',
-        'minVersion' => '7.3',
+        'name' => 'PHP 8',
+        'minVersion' => '8.0',
       ),
       // MYSQL ADAPTER
       array(

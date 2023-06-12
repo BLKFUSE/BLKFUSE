@@ -365,7 +365,8 @@ abstract class Install_Import_Phpfox_AbstractFeeds extends Install_Import_Phpfox
       'object_id' => $data['item_id'],
       'body' => $body,
       'date' => $this->_translateTime($data['time_stamp']),
-      'attachment_count' => 1
+      'attachment_count' => 1,
+      'modified_date' => date('Y-m-d H:i:s'),
     ));
 
     $privacy_field = $this->getToDb()->query("SHOW COLUMNS FROM engine4_activity_actions LIKE 'privacy'")->fetch();

@@ -76,11 +76,8 @@ class Install_Form_Import_Phpfox extends Engine_Form
         array('StringLength', false, array(6, 32)),
       ),
     ));
-
-    $sitepageExists = $this->_checkModuleExist('sitepage');
-      
-
-      $this->addElement('hidden', 'import_group_sepage', array(
+    
+		$this->addElement('hidden', 'import_group_sepage', array(
       'value' => 1,
       'order' => '458'
     ));
@@ -351,29 +348,29 @@ Site Administration
 
 <script type="text/javascript">
   var form = document.getElementById("form_upload");
-  window.addEvent('domready', function () {
+  scriptJquery(document).ready(function() {
     displayOptions();
   });
 
   function closeSmoothbox()
   {
-    $$('.form-errors')[0].style.display = 'none';
+    scriptJquery('.form-errors').hide();
     parent.Smoothbox.close();
   }
   function displayOptions() {
-    value = $$('input[name=checkmode]:checked')[0].get('value');
+    value = scriptJquery('input[name=checkmode]:checked').val();
     if (form && value == 1) {
-      $('modedummy-wrapper').style.display = 'none';
-      $('password-wrapper').style.display = 'block';
-      $('passwordRegeneration-wrapper').style.display = 'none';
+      document.getElementById('modedummy-wrapper').style.display = 'none';
+      document.getElementById('password-wrapper').style.display = 'block';
+      document.getElementById('passwordRegeneration-wrapper').style.display = 'none';
     } else if (form && value == 2) {
-      $('modedummy-wrapper').style.display = 'block';
-      $('passwordRegeneration-wrapper').style.display = 'block';
-      $('password-wrapper').style.display = 'none';
+      document.getElementById('modedummy-wrapper').style.display = 'block';
+      document.getElementById('passwordRegeneration-wrapper').style.display = 'block';
+      document.getElementById('password-wrapper').style.display = 'none';
       if (form.elements["passwordRegeneration"].value == 'random') {
-        $("fieldset-mail").setStyle("display", "");
+        scriptJquery("#fieldset-mail").css("display", "");
       } else if (form.elements["passwordRegeneration"].value == 'none') {
-        $("fieldset-mail").setStyle("display", "none");
+        scriptJquery("#fieldset-mail").css("display", "none");
       }
     }
   }

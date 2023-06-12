@@ -63,7 +63,11 @@ class Install_Import_Phpfox_VideoVideosV4 extends Install_Import_Phpfox_Abstract
     $newData['rating'] = 0;
     $newData['category_id'] = 0;
     $newData['status'] = 1;
-    $newData['type'] = $typeId;
+    if($typeId == 3) {
+			$newData['type'] = 'upload';
+    } else {
+			$newData['type'] = 'iframely';
+    }
 
     if( isset($content['embed_image']) ) {
       try {

@@ -83,7 +83,7 @@
     </li>
   </ul>
   <div class="warning">
-    Note: In Order to proceed with the import process from phpfox, you need to enter the Youtube API Key in the Global Settings of the Video Plugin in your SocialEngine 5 installation.
+    Note: In Order to proceed with the import process from phpfox, you need to enter the Youtube API Key in the Global Settings of the Video Plugin in your SocialEngine installation.
   </div>
   <br />
 

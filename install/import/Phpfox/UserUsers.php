@@ -65,6 +65,7 @@ class Install_Import_Phpfox_UserUsers extends Install_Import_Phpfox_Abstract
     $newData['lastlogin_date'] = $this->_translateTime($data['last_login']);
     $newData['lastlogin_ip'] = $data['last_ip_address'];
     $newData['show_profileviewers'] = $data['view_id'];
+    $newData['modified_date'] = date('Y-m-d H:i:s');
 
     // search
     if( @$newData['search'] ) {

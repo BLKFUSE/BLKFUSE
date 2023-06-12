@@ -222,11 +222,7 @@ class Install_Import_Phpfox_CoreSettings extends Install_Import_Phpfox_Abstract
   public function updateCorePagesDesc($pageName, $desc)
   {
 
-    $this->toDb->query
-      (
-      "update engine4_core_pages set description='$desc'
-                            where  name in (" . implode($pageName, ',') . ")"
-    );
+    $this->toDb->query("update engine4_core_pages set description='$desc' where  name in (" . implode($pageName, ',') . ")");
   }
   /*
    * update the keyword meta tag of page
@@ -234,11 +230,7 @@ class Install_Import_Phpfox_CoreSettings extends Install_Import_Phpfox_Abstract
 
   public function updateCorePagesKeyword($pageName, $key)
   {
-    $this->toDb->query
-      (
-      "update engine4_core_pages set keywords='$key'
-                            where  name in (" . implode($pageName, ',') . ")"
-    );
+    $this->toDb->query("update engine4_core_pages set keywords='$key' where  name in (" . implode($pageName, ',') . ")");
   }
   /*
    * UPDATE THE CORE SETTING

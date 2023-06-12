@@ -2,7 +2,7 @@
   'package' => array(
     'type' => 'external',
     'name' => 'html5media',
-    'version' => '6.2.0',
+    'version' => '6.4.0',
     'revision' => '$Revision: 10270 $',
     'path' => 'externals/html5media',
     'repository' => 'socialengine.com',

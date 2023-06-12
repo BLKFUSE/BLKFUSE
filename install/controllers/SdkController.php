@@ -79,10 +79,10 @@ class SdkController extends Zend_Controller_Action
         $manifestData['type'] = $structureData['singular'];
         $manifestData['name'] = $values['name'];
         $manifestData['version'] = $values['version'];
-        $manifestData['sku'] = $values['sku'];
-        if (empty($manifestData['sku'])) {
-          unset($manifestData['sku']);
-        }
+//         $manifestData['sku'] = $values['sku'];
+//         if (empty($manifestData['sku'])) {
+//           unset($manifestData['sku']);
+//         }
 
         // Path
         if ($structureData['inflect']) {

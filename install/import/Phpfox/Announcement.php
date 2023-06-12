@@ -71,7 +71,7 @@ class Install_Import_Phpfox_Announcement extends Install_Import_Phpfox_Abstract
     $newData['modified_date'] = $this->_translateTime($data['time_stamp']);
     $newData['member_levels'] = json_encode($levels);
     $newData['profile_types'] = "1";
-    $newData['user_id'] = $this->getSuperAdminUserId();
+    $newData['user_id'] = $data['user_id'] ? $data['user_id'] : $this->getSuperAdminUserId();
     return $newData;
   }
 }

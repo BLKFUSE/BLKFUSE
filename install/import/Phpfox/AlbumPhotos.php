@@ -73,6 +73,7 @@ class Install_Import_Phpfox_AlbumPhotos extends Install_Import_Phpfox_Abstract
     $newData['photo_id'] = $data['photo_id'];
     $newData['album_id'] = $data['album_id'];
     $newData['title'] = '';
+    $newData['description'] = '';
     $newData['creation_date'] = $this->_translateTime($data['time_stamp']);
     $newData['modified_date'] = $this->_translateTime($data['time_stamp']);
     $newData['owner_type'] = 'user';
@@ -80,6 +81,7 @@ class Install_Import_Phpfox_AlbumPhotos extends Install_Import_Phpfox_Abstract
     $newData['comment_count'] = $data['total_comment'];
     $newData['view_count'] = $data['total_view'];
     $newData['order'] = $data['ordering'];
+    $newData['rating'] = 0;
 
 
     if( $this->_columnExist($this->getToTable(), 'like_count') )
@@ -149,7 +151,7 @@ class Install_Import_Phpfox_AlbumPhotos extends Install_Import_Phpfox_Abstract
                   'creation_date' => $this->_translateTime($data['time_stamp']),
                   'modified_date' => $this->_translateTime($data['time_stamp']),
                   'type' => 'wall',
-                  'view_privacy' => $albumPrivacy[0],
+                  'view_privacy' => $albumPrivacy[0] ? $albumPrivacy[0] : 'everyone',
                 ));
                 $album_id = $this->getToDb()->lastInsertId();
                 //PRIVACY

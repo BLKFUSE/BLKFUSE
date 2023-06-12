@@ -45,6 +45,10 @@
         ->prependFile($appBaseUrl . '/externals/jQuery/core.js')
         ->prependFile($appBaseUrl . '/externals/jQuery/jquery-ui.js')
         ->prependFile($appBaseUrl . '/externals/jQuery/jquery.min.js');
+        
+			$this->headScript()->prependFile($appBaseUrl . '/application/modules/Core/externals/scripts/admin/layoutchoo.js')
+          ->prependFile($appBaseUrl . '/application/modules/Core/externals/scripts/admin/layout.js')
+          ->prependFile($appBaseUrl . '/application/modules/Core/externals/scripts/admin/adminlayout.js');
     ?>
     <?php echo $this->headScript()->toString()."\n" ?>
   </head>

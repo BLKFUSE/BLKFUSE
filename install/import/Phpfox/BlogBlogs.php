@@ -68,6 +68,9 @@ class Install_Import_Phpfox_BlogBlogs extends Install_Import_Phpfox_Abstract
     $newData['owner_type'] = 'user';
     $newData['owner_id'] = $data['user_id'];
     $newData['creation_date'] = $this->_translateTime($data['time_stamp']);
+    $newData['parent_type'] = '';
+    $newData['parent_id'] = 0;
+    $newData['rating'] = 0;
 
     if( $data['time_update'] ) {
       $newData['modified_date'] = $this->_translateTime($data['time_update']);

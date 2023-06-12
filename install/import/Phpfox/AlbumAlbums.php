@@ -37,13 +37,22 @@ class Install_Import_Phpfox_AlbumAlbums extends Install_Import_Phpfox_Abstract
 
     //MAKING ALBUM ARRAY FOR INSERTION
     $newData = array();
+    if($data['name'] == "{_p var='profile_pictures'}") {
+			$albumTitle = "Profile Photo";
+    } else if($data['name'] == "{_p var='cover_photo'}") {
+			$albumTitle = "Cover Photo";
+		} else if($data['name'] == "{_p var='timeline_photos'}") {
+			$albumTitle = "Wall Photo";
+		}
+		
     $newData['album_id'] = $data['album_id'];
-    $newData['title'] = $data['name'];
-    $newData['description'] = !$description ? $data['name'] : $description;
+    $newData['title'] = $albumTitle;
+    $newData['description'] = !$description ? $albumTitle : $description;
     $newData['owner_type'] = 'user';
     $newData['owner_id'] = $data['user_id'];
     $newData['creation_date'] = $this->_translateTime($data['time_stamp']);
     $newData['search'] = 1;
+    $newData['rating'] = 0;
     $newData['modified_date'] = $this->_translateTime($data['time_stamp']);
     if( is_null($data['time_stamp_update']) || $data['time_stamp_update'] == 0 )
       $newData['modified_date'] = $this->_translateTime($data['time_stamp_update']);

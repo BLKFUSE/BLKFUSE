@@ -13,7 +13,7 @@
 
 <h3>Import Tools</h3>
 <p>Below is a list of supported import tools that can be utilized for importing your data into SocialEngine.</p>
-<p>More info: <a href="https://socialengine.atlassian.net/wiki/spaces/SU/pages/5308681/se-php-list-of-import-tools-for-socialengine" target="_blank">See KB article</a>.</p>
+<p>More info: <a href="https://community.socialengine.com/blogs/597/125/phpfox-importer" target="_blank">See KB article</a>.</p>
 <br />
 
 <ul class="import_tools_list">

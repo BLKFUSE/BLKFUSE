@@ -2,7 +2,7 @@
   'package' => array(
     'type' => 'external',
     'name' => 'moocrop',
-    'version' => '6.2.0',
+    'version' => '6.4.0',
     'revision' => '$Revision: 9747 $',
     'path' => 'externals/cropper',
     'repository' => 'socialengine.com',

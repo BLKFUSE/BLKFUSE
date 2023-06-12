@@ -101,6 +101,11 @@ abstract class Install_Import_Phpfox_Abstract extends Install_Import_PhpfoxDbAbs
       return;
     }
 
+    if($description) {
+      $description = strip_tags($description);
+      $description = ( Engine_String::strlen($description) > 255 ? Engine_String::substr($description, 0, 252) . '...' : $description );
+    }
+
     try {
       $this->getToDb()->insert('engine4_core_search', array(
         'type' => (string) $type,

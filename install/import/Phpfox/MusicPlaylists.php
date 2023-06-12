@@ -48,7 +48,7 @@ class Install_Import_Phpfox_MusicPlaylists extends Install_Import_Phpfox_Abstrac
     $newData['modified_date'] = $this->_translateTime($data['time_stamp']);
     $newData['comment_count'] = $data['total_comment'];
     $newData['play_count'] = $data['total_play'];
-
+		$newData['rating'] = 0;
     //SET IMAGE AND INSERT THE MAIN PHOTO OF PLAYLIST
     if( $data['image_path'] ) {
       $des = explode('%s', $this->getFromPath() . DIRECTORY_SEPARATOR . 'file/pic/music' . DIRECTORY_SEPARATOR . $data['image_path']);
@@ -161,6 +161,7 @@ class Install_Import_Phpfox_MusicPlaylists extends Install_Import_Phpfox_Abstrac
         'profile' => 1,
         'creation_date' => $this->_translateTime(time()),
         'modified_date' => $this->_translateTime(time()),
+        'rating' => 0,
       ));
       $playlistIdentity = $this->getToDb()->lastInsertId();
       //SEARCH
