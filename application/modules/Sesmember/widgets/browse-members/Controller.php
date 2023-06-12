@@ -221,7 +221,7 @@ class Sesmember_Widget_BrowseMembersController extends Engine_Content_Widget_Abs
     // Get paginator
 
     $this->view->paginator = $paginator = Engine_Api::_()->getDbTable('members', 'sesmember')
-            ->getMemberPaginator(array_merge($value, array('search' => 1)), $form->getValues());
+            ->getMemberPaginator(array_merge($value, array('search' => 1,'fromBrowse'=>1)), $form->getValues());
     $paginator->setItemCountPerPage($limit_data);
     $paginator->setCurrentPageNumber($page);
 

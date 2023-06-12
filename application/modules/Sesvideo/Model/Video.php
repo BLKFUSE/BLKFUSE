@@ -302,7 +302,9 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
       $title = "<a href='" . $this->getHref($params) . "'>$this->title</a>";
       $tmpBody = strip_tags($this->description);
       $description = "<div class='sesvideo_attachment_desc'>" . (Engine_String::strlen($tmpBody) > 255 ? Engine_String::substr($tmpBody, 0, 255) . '...' : $tmpBody) . "</div>";
-      $videoEmbedded = $paidContent . $thumb . '<div id="video_object_' . $this->video_id . '" data-rel="'.$this->type.'" class="sesvideo_object"></div><div class="sesvideo_attachment_info">' . $title . $description . '</div>';
+    //   $videoEmbedded = $paidContent . $thumb . '<div id="video_object_' . $this->video_id . '" data-rel="'.$this->type.'" class="sesvideo_object"></div><div class="sesvideo_attachment_info">' . $title . $description . '</div>';
+
+      $videoEmbedded = $paidContent.$thumb . '<div id="video_object_' . $this->video_id . '" data-rel="'.$this->type.'" class="sesvideo_object">'.$videoEmbedded.'</div><div class="sesvideo_attachment_info">' . $title . $description . '</div>';
       if(Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.sesvideo',1) && Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('epaidcontent')) && Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.allow',1) && isset($this->package_id) && !empty($this->package_id) && $this->owner_id != $viewer->getIdentity()) {
         $package = Engine_Api::_()->getItem('epaidcontent_package', $this->package_id);
         $getViewerOrder = Engine_Api::_()->getDbTable('orders','epaidcontent')->getViewerOrder(array('owner_id' => $viewer->getIdentity(),'package_owner_id' => $package->user_id, 'noCondition' => 1));
