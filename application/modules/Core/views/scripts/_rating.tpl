@@ -11,6 +11,7 @@
 */
 
 ?>
+<?php $this->headTranslate(array('you already rated', 'please login to rate', 'click to rate','Thanks for rating!')); ?>
 <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting($this->module.'.enable.rating', 1)) { ?>
   <?php $ratingIcon = Engine_Api::_()->getApi('settings', 'core')->getSetting($this->module.'.ratingicon', 'fas fa-star'); ?>
   <?php $param = $this->param; ?>

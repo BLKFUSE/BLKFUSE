@@ -17,20 +17,6 @@
  * @license    http://www.socialengine.com/license/
  * @author     John
  */
-class Fields_Form_Element_LastName extends Engine_Form_Element_Text
-{
-	public function init()
-  	{
-	   	$validator = new Engine_Validate_Callback(array($this, 'validateAge'));
-      	$validator->setMessage('Special Characters are not allowed in the last name.');
-      	$this->addValidator($validator);
+class Fields_Form_Element_LastName extends Engine_Form_Element_Text {
 
-  	}
-	public function validateAge($value)
-	{
-	    if ( preg_match("/[^a-zA-Z0-9]+/",$value) ){
-	   		return false;
-	    }
-	    return true;
-	}
 }

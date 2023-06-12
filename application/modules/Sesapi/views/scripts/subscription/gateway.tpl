@@ -52,7 +52,7 @@
                 <?php if( !$first ): ?>
                   <?php echo $this->translate('or') ?>
                 <?php endif; ?>
-                <button type="submit" name="execute" onclick="$('gateway_id').set('value', '<?php echo $gateway->gateway_id ?>')">
+                <button type="submit" name="execute" onclick="scriptJquery('#gateway_id').val(<?php echo $gateway->gateway_id ?>);">
                   <?php echo $this->translate('Pay with %1$s', $this->translate($gateway->title)) ?>
                 </button>
               <?php endforeach; ?>

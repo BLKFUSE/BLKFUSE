@@ -61,7 +61,8 @@
           'Unable to upload photo. Please click cancel and try again': '<?php echo $this->string()->escapeJavascript($this->translate('Unable to upload photo. Please click cancel and try again')) ?>'
         },
         requestOptions : {
-          'url'  : en4.core.baseUrl + 'album/album/compose-upload/type/'+type
+          'url'  : en4.core.baseUrl + 'album/album/compose-upload/type/'+type,
+          'removePhotoURL' : "<?php echo $this->url(array('controller' => 'photo','action' => 'remove-photo'), 'album_extended', true); ?>",
         },
         fancyUploadOptions : {
           'url'  : en4.core.baseUrl + 'album/album/compose-upload/format/json/type/'+type,

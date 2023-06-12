@@ -44,6 +44,14 @@ defined('_ENGINE_ADMIN_NEUTER_MODE') || define('_ENGINE_ADMIN_NEUTER_MODE', fals
 defined('_ENGINE_NO_AUTH') || define('_ENGINE_NO_AUTH', false);
 defined('_ENGINE_SSL') || define('_ENGINE_SSL', ((isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') || (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == 'on')));
 
+$siteurl = (_ENGINE_SSL ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'];
+$PHP_SELF = explode('/', $_SERVER['PHP_SELF']);
+if($PHP_SELF[1] != 'index.php') {
+	$PHP_SELF = $PHP_SELF[1];
+	$siteurl = $siteurl . '/' . $PHP_SELF;
+}
+defined('_ENGINE_SITE_URL') || define('_ENGINE_SITE_URL', $siteurl);
+
   // maintenance mode
 if (!defined('_ENGINE_R_MAINTENANCE') || _ENGINE_R_MAINTENANCE) {
     if (!empty($generalConfig['maintenance']['enabled']) && !empty($generalConfig['maintenance']['code'])) {

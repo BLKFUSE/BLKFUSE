@@ -1465,7 +1465,7 @@ date_default_timezone_set($oldTz);
 	
 	if ($this->_getParam('getForm')) {
 		$values =  $form->getValues();
-		if($_POST[wishlist_id]){
+		if($_POST["wishlist_id"]){
 			$form->populate(array('wishlist_id' => $_POST[wishlist_id]));
 			$form->removeElement('title');
 			$form->removeElement('description');
@@ -2326,8 +2326,8 @@ date_default_timezone_set($oldTz);
         $value['status'] = 1;
         $value['search'] = 1;
         $value['draft'] = "0";
-        if (isset($params['search']))
-            $params['text'] = addslashes($params['search']);
+        if (isset($_POST['search']))
+            $params['text'] = addslashes($_POST['search']);
         $params['tag'] = isset($_GET['tag_id']) ? $_GET['tag_id'] : '';
         $params = array_merge($params, $value);
         if ($store == 0 && isset($params['search'])) {
@@ -2741,7 +2741,7 @@ date_default_timezone_set($oldTz);
                 $result[$storeCounter] = $storeArray;
                 $statsCounter = 0;
                 $image = Engine_Api::_()->sesapi()->getPhotoUrls($stores, '', "");
-                if (image) {
+                if ($image) {
                     $result[$storeCounter]['images'] = $image;
                 } else {
                     $result[$storeCounter]['images'] = $image;
@@ -4545,7 +4545,7 @@ date_default_timezone_set($oldTz);
         $albumCounter = 0;
         foreach ($paginator as $album) {
             $owner = $album->getOwner();
-            $ownertitle = $owner->displayname;
+            $ownertitle = $owner->getTitle();
             $result['albums'][$albumCounter] = $album->toArray();
             $photo = $image = Engine_Api::_()->sesproduct()->getAlbumPhoto($album->getIdentity(),$album->photo_id);
 			$result['albums'][$albumCounter]['images'] = $this->getBaseUrl(true,$album->getPhotoUrl('thumb.normalmain')); 
@@ -6401,7 +6401,7 @@ date_default_timezone_set($oldTz);
 		}
 
 		$viewer = Engine_Api::_()->user()->getViewer();
-		 if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('seslock'))) {
+		 if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesprofilelock'))) {
 			 $viewer = Engine_Api::_()->user()->getViewer();
 			  if ($viewer->getIdentity() == 0)
 				$result['level'] = $level = Engine_Api::_()->getDbtable('levels', 'authorization')->getPublicLevel()->level_id;
@@ -6728,7 +6728,7 @@ date_default_timezone_set($oldTz);
           unset($values['photo_id']);
 				}
       }
-		if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('seslock'))) {
+		if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesprofilelock'))) {
 			//disable lock if password not set.
 			if (!$values['is_locked']) {
 				$values['is_locked'] = '0';
@@ -6989,8 +6989,12 @@ date_default_timezone_set($oldTz);
             $params = $_POST;
         }
         $searchArray = array();
-        if (isset($_POST['searchParams']) && $_POST['searchParams'])
-            parse_str($_POST['searchParams'], $searchArray);
+				if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+					if(engine_in_array($_POST['searchParams']))
+						$searchArray = $_POST['searchParams'];
+					elseif(is_string($_POST['searchParams']))
+						parse_str($_POST['searchParams'], $searchArray);
+				}
         $value['store'] = isset($_POST['store']) ? $_POST['store'] : 1;
         $value['sort'] = isset($searchArray['sort']) ? $searchArray['sort'] : (isset($_GET[' ']) ? $_GET['sort'] : (isset($params['sort']) ? $params['sort'] : $this->_getParam('sort', 'mostSPliked')));
         $value['show'] = isset($searchArray['show']) ? $searchArray['show'] : (isset($_GET['show']) ? $_GET['show'] : (isset($params['show']) ? $params['show'] : ''));
@@ -7036,7 +7040,7 @@ date_default_timezone_set($oldTz);
         $albumCounter = 0;
         foreach ($paginator as $item) {
             $owner = $item->getOwner();
-            $ownertitle = $owner->displayname;
+            $ownertitle = $owner->getTitle();
             $result['albums'][$albumCounter] = $item->toArray();
             $result['albums'][$albumCounter]['images'] = Engine_Api::_()->sesapi()->getPhotoUrls($item, '', "") ? Engine_Api::_()->sesapi()->getPhotoUrls($item, '', "") : $result['members'][$counterLoop]['owner_photo'] = $this->getBaseUrl(true, '/application/modules/User/externals/images/nophoto_user_thumb_icon.png');
             $result['albums'][$albumCounter]['user_title'] = $ownertitle;

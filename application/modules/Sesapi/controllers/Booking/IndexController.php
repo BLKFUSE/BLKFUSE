@@ -241,7 +241,7 @@ class Booking_IndexController extends Sesapi_Controller_Action_Standard
               'service_name' => $service->name,
               'professional_name' => $service->getServiceProfessionalName(),
               'queue' => false,
-              'recipient_title' => $viewer->displayname,
+              'recipient_title' => $viewer->getTitle(),
               'object_link' => $service->getHref(),
             )
           );
@@ -260,7 +260,7 @@ class Booking_IndexController extends Sesapi_Controller_Action_Standard
               'service_name' => $service->name,
               'professional_name' => $service->getServiceProfessionalName(),
               'queue' => false,
-              'recipient_title' => $viewer->displayname,
+              'recipient_title' => $viewer->getTitle(),
               'object_link' => $service->getHref(),
             )
           );
@@ -1564,7 +1564,7 @@ if (Engine_Api::_()->authorization()->getPermission($viewer, 'booking', 'bookser
               'host' => $_SERVER['HTTP_HOST'],
               'professional_name' => $professionals->name,
               'queue' => false,
-              'recipient_title' => $viewer->displayname,
+              'recipient_title' => $viewer->getTitle(),
               'object_link' => $professionals->getHref(),
             )
           );
@@ -1585,7 +1585,7 @@ if (Engine_Api::_()->authorization()->getPermission($viewer, 'booking', 'bookser
               'host' => $_SERVER['HTTP_HOST'],
               'professional_name' => $professionals->name,
               'queue' => false,
-              'recipient_title' => $viewer->displayname,
+              'recipient_title' => $viewer->getTitle(),
               'object_link' => $professionals->getHref(),
             )
           );
@@ -1674,7 +1674,7 @@ if (Engine_Api::_()->authorization()->getPermission($viewer, 'booking', 'bookser
               'service_name' => $service->name,
               'professional_name' => $service->getServiceProfessionalName(),
               'queue' => false,
-              'recipient_title' => $viewer->displayname,
+              'recipient_title' => $viewer->getTitle(),
               'object_link' => $service->getHref(),
             )
           );
@@ -1694,7 +1694,7 @@ if (Engine_Api::_()->authorization()->getPermission($viewer, 'booking', 'bookser
               'service_name' => $service->name,
               'professional_name' => $service->getServiceProfessionalName(),
               'queue' => false,
-              'recipient_title' => $viewer->displayname,
+              'recipient_title' => $viewer->getTitle(),
               'object_link' => $service->getHref(),
             )
           );
@@ -1788,7 +1788,7 @@ if (Engine_Api::_()->authorization()->getPermission($viewer, 'booking', 'bookser
               'host' => $_SERVER['HTTP_HOST'],
               'professional_name' => $professionals->name,
               'queue' => false,
-              'recipient_title' => $viewer->displayname,
+              'recipient_title' => $viewer->getTitle(),
               'object_link' => $professionals->getHref(),
             )
           );
@@ -1806,7 +1806,7 @@ if (Engine_Api::_()->authorization()->getPermission($viewer, 'booking', 'bookser
               'host' => $_SERVER['HTTP_HOST'],
               'professional_name' => $professionals->name,
               'queue' => false,
-              'recipient_title' => $viewer->displayname,
+              'recipient_title' => $viewer->getTitle(),
               'object_link' => $professionals->getHref(),
             )
           );
@@ -1935,16 +1935,16 @@ public function professionalEnableAction()
       if ($appointment->professional_id == $appointment->given) {
         $viewer = Engine_Api::_()->user()->getViewer();
         $object_id = Engine_Api::_()->getItem('user', $appointment->professional_id);
-        $appointmentUrl = '<a href='."{$this->view->url(array('action'=>'appointments'),'booking_general',true)}#given".'>'.$viewer->displayname.'</a>';
+        $appointmentUrl = '<a href='."{$this->view->url(array('action'=>'appointments'),'booking_general',true)}#given".'>'.$viewer->getTitle().'</a>';
         Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($object_id, $viewer, $viewer, 'booking_profacceptuserreq',array('appointmentUrl'=>$appointmentUrl));
         Engine_Api::_()->getApi('mail', 'core')->sendSystem(
           $object_id,
           'booking_profacceptuserreq',
           array(
             'host' => $_SERVER['HTTP_HOST'],
-            'professional_name' => $object_id->displayname,
+            'professional_name' => $object_id->getTitle(),
             'queue' => false,
-            'recipient_title' => $viewer->displayname,
+            'recipient_title' => $viewer->getTitle(),
           )
         );
       } else {
@@ -1961,9 +1961,9 @@ public function professionalEnableAction()
           'booking_useracceptprofreq',
           array(
             'host' => $_SERVER['HTTP_HOST'],
-            'member_name' => $object_id->displayname,
+            'member_name' => $object_id->getTitle(),
             'queue' => false,
-            'recipient_title' => $viewer->displayname,
+            'recipient_title' => $viewer->getTitle(),
             'object_link' => $servicename->getHref(),
           )
         );
@@ -1981,16 +1981,16 @@ public function professionalEnableAction()
             //send to professional
         $viewer = Engine_Api::_()->user()->getViewer();
         $object_id = Engine_Api::_()->getItem('user', $appointment->professional_id);
-        $appointmentUrl = '<a href='."{$this->view->url(array('action'=>'appointments'),'booking_general',true)}#reject".'>'.$viewer->displayname.'</a>';
+        $appointmentUrl = '<a href='."{$this->view->url(array('action'=>'appointments'),'booking_general',true)}#reject".'>'.$viewer->getTitle().'</a>';
         Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($object_id, $viewer, $viewer, 'booking_profrejectuserreq',array('appointmentUrl'=>$appointmentUrl));
         Engine_Api::_()->getApi('mail', 'core')->sendSystem(
           $object_id,
           'booking_profrejectuserreq',
           array(
             'host' => $_SERVER['HTTP_HOST'],
-            'professional_name' => $object_id->displayname,
+            'professional_name' => $object_id->getTitle(),
             'queue' => false,
-            'recipient_title' => $viewer->displayname,
+            'recipient_title' => $viewer->getTitle(),
           )
         );
       } else {
@@ -2004,9 +2004,9 @@ public function professionalEnableAction()
           'booking_userrejectprofreq',
           array(
             'host' => $_SERVER['HTTP_HOST'],
-            'member_name' => $object_id->displayname,
+            'member_name' => $object_id->getTitle(),
             'queue' => false,
-            'recipient_title' => $viewer->displayname,
+            'recipient_title' => $viewer->getTitle(),
           )
         );
       }
@@ -2017,16 +2017,16 @@ public function professionalEnableAction()
       if ($appointment->professional_id == $appointment->given) {
         $viewer = Engine_Api::_()->user()->getViewer();
         $object_id = Engine_Api::_()->getItem('user', $appointment->user_id);
-        $appointmentUrl = '<a href='."{$this->view->url(array('action'=>'appointments'),'booking_general',true)}#cancelled".'>'.$viewer->displayname.'</a>';
+        $appointmentUrl = '<a href='."{$this->view->url(array('action'=>'appointments'),'booking_general',true)}#cancelled".'>'.$viewer->getTitle().'</a>';
         Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($object_id, $viewer, $viewer, 'booking_profcanceluserreq',array('appointmentUrl'=>$appointmentUrl));
         Engine_Api::_()->getApi('mail', 'core')->sendSystem(
           $object_id,
           'booking_profcanceluserreq',
           array(
             'host' => $_SERVER['HTTP_HOST'],
-            'professional_name' => $object_id->displayname,
+            'professional_name' => $object_id->getTitle(),
             'queue' => false,
-            'recipient_title' => $viewer->displayname,
+            'recipient_title' => $viewer->getTitle(),
           )
         );
       } else {
@@ -2041,9 +2041,9 @@ public function professionalEnableAction()
           'booking_usercancelprofreq',
           array(
             'host' => $_SERVER['HTTP_HOST'],
-            'member_name' => $object_id->displayname,
+            'member_name' => $object_id->getTitle(),
             'queue' => false,
-            'recipient_title' => $viewer->displayname,
+            'recipient_title' => $viewer->getTitle(),
           )
         );
       }

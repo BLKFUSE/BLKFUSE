@@ -68,7 +68,7 @@
       'PREPEND');
     if( APPLICATION_ENV != 'development' ) {
       $this->headLink()
-        ->prependStylesheet($staticBaseUrl . 'application/css.php?request=application/modules/Core/externals/styles/admin/main.css');
+        ->prependStylesheet('application/css.php?request=application/modules/Core/externals/styles/admin/main.css');
     } else {
       $this->headLink()
         ->prependStylesheet(rtrim($this->baseUrl(), '/') . '/application/css.php?request=application/modules/Core/externals/styles/admin/main.css');
@@ -127,6 +127,7 @@
     var photo_upload_text = "<?php echo $this->translate('Max upload of %s allowed.', Engine_Api::_()->authorization()->getPermission($this->viewer(), 'user', 'maxphotolimit')); ?>";
     var dateFormatCalendar = "<?php echo Engine_Api::_()->core()->dateFormatCalendar(); ?>";
   </script>
+  <link rel="stylesheet" href="<?php echo $staticBaseUrl . 'externals/font-awesome/css/all.min.css'; ?>">
   <link rel="stylesheet" href="<?php echo $staticBaseUrl . 'externals/jQuery/jquery-ui.css'; ?>">
   <?php
     $this->headScript()

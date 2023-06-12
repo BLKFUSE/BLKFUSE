@@ -17,12 +17,12 @@
   .displayFN, .dNone{display:none !important;}
   .dBlock{display:block !important;}
   </style>
-
+	<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesmember/externals/scripts/core.js'); ?>
   <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesmember/externals/styles/styles.css'); ?> 
   <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/styles/styles.css'); ?> 
   <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/member/membership.js'); ?>
   <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/styles/customscrollbar.css'); ?>
-  <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/jquery.min.js'); ?>
+  
   <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/customscrollbar.concat.min.js'); ?>
 <?php  }  ?>
 <?php if(isset($this->optionsEnable) && engine_in_array('pinboard',$this->optionsEnable) && !$this->is_ajax){ 
@@ -348,7 +348,7 @@
     }
 
     $href = $member->getHref(); 
-    $imageURL = $member->getPhotoUrl('thumb.main'); 
+    $imageURL = $member->getPhotoUrl('thumb.profile'); 
     $height = is_numeric($this->height) ? $this->height.'px' : $this->height;
     $width = is_numeric($this->width) ? $this->width.'px' : $this->width;
     $listContainerHeight = is_numeric($this->list_container_height) ? $this->list_container_height.'px' : $this->list_container_height;
@@ -424,7 +424,7 @@
     
     <?php $pinboardWidth =  is_numeric($this->pinboard_width) ? $this->pinboard_width.'px' : $this->pinboard_width ; ?>
     <?php $featuredPhotos = array(); ?>
-    <?php $memberPhoto = $member->getPhotoUrl('thumb.main');  ?>
+    <?php $memberPhoto = $member->getPhotoUrl('thumb.profile');  ?>
     
     <?php if(engine_count($featuredPhotos) > 0){ 
     		$featuredSlideshow = 'sesmember_slideshow_pinboard';
@@ -486,7 +486,7 @@
     <?php "</li>"; ?>
      
     <?php $pinViewData .= $pinboard;?>
-    <?php $href = $member->getHref();$imageURL = $member->getPhotoUrl('thumb.main');?>
+    <?php $href = $member->getHref();$imageURL = $member->getPhotoUrl('thumb.profile');?>
     <?php $photoWidth =  is_numeric($this->photo_width) ? $this->photo_width.'px' : $this->photo_width ?>
     <?php $photoHeight =  is_numeric($this->photo_height) ? $this->photo_height.'px' : $this->photo_height ?>
     <?php $infoHeight =  is_numeric($this->info_height) ? $this->info_height.'px' : $this->info_height ?>
@@ -530,7 +530,7 @@
   $mainImage = 'block';
   }
   else {
-    $imageURL = $member->getPhotoUrl('thumb.main');
+    $imageURL = $member->getPhotoUrl('thumb.profile');
     $mainImage = 'none';
    } 
     $advGrid = "<div class='col-lg-$this->gridblock col-md-6 col-sm-6 col-12'>
@@ -545,7 +545,7 @@
     	$advGrid .=  $advLabels.'
     </div>
     <div class="sesmember_member_grid_info sesbasic_clearfix">';?>  
-      <?php $advGrid .= "<div class='sesmember_member_info_profile_img' style='display:".$mainImage.";'><a href='".$member->getHref()."' class=''>".$this->itemPhoto($member, 'thumb.main')." </a></div>"; ?>   
+      <?php $advGrid .= "<div class='sesmember_member_info_profile_img' style='display:".$mainImage.";'><a href='".$member->getHref()."' class=''>".$this->itemPhoto($member, 'thumb.profile')." </a></div>"; ?>   
       <?php $advGrid .= $userOnline . $memberAdvGridTitle. $memberratingstar .$location .$mutualFriendCount;$advGrid .=  $customFileds?>
       <?php $advGrid .= "<div class='sesmember_member_info_middle'>$memberAge $memberType $friendCount</div>"; ?>   
        <?php $advGrid .= "<div class='sesmember_list_block_stats'>$advlistStatstics</div>"; ?>
@@ -554,7 +554,7 @@
       $advGrid .= "</div> ".$shareoptionsAdv."</div></div>";
        
     $advgridViewData .= $advGrid;
-    $imageURL = $member->getPhotoUrl('thumb.main');
+    $imageURL = $member->getPhotoUrl('thumb.profile');
     
 	?><?php $Overlay_color_grid = ($this->Overlay_color_grid == 'black') ? 'sesmember_black_overlay ' : ''; ?>
     <?php $grid = "<div class='col-lg-$this->gridblock col-md-6 col-sm-6 col-12'>

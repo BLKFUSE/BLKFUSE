@@ -36,7 +36,7 @@ class Sessociallogin_Form_Admin_Settings_General extends Engine_Form {
 
     if ($settings->getSetting('sessociallogin.pluginactivated')) {
 
-      $sesSite = '<a href="https://www.socialenginesolutions.com/socialengine-category/themes/" target="_blank">https://www.socialenginesolutions.com/socialengine-category/themes/</a>';
+      $sesSite = '<a href="https://socialnetworking.solutions/socialengine-category/themes/" target="_blank">https://socialnetworking.solutions/socialengine-category/themes/</a>';
       $descriptionLicense = sprintf('Choose the button designs to be shown in login / signup pop-ups which displays in themes from SocialEngineSolutions. (You can explore the themes which we have from here: %s.', $sesSite);
       $this->addElement('Radio', "sessociallogin_button_designs", array(
         'label' => 'Button Design in Login / Signup Popups',

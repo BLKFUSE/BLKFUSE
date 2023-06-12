@@ -226,14 +226,14 @@ $this->loadDefaultDecorators();
       ));
 
       //Element: max
-      $this->addElement('Text', 'addplaylist_max', array(
-          'label' => 'Maximum Allowed Playlists',
-          'description' => 'Enter the maximum number of playlists a member can create. The field must contain an integer, use zero for unlimited.',
-          'validators' => array(
-              array('Int', true),
-              new Engine_Validate_AtLeast(0),
-          ),
-      ));
+    //   $this->addElement('Text', 'addplaylist_max', array(
+    //       'label' => 'Maximum Allowed Playlists',
+    //       'description' => 'Enter the maximum number of playlists a member can create. The field must contain an integer, use zero for unlimited.',
+    //       'validators' => array(
+    //           array('Int', true),
+    //           new Engine_Validate_AtLeast(0),
+    //       ),
+    //   ));
 			$this->addElement('Select', 'video_approve', array(
           'description' => 'Do you want to auto-approve videos uploaded from all sources on your website? [If you choose No, then you would be able to choose from below setting, from which all sources the uploaded videos are Not to be auto-approves. Choosing Yes, will auto-approve all videos.]',
           'label' => 'Auto-Approve Videos from All Sources',

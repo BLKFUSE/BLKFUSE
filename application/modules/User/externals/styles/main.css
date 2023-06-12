@@ -4,29 +4,47 @@ SIGN IN OR JOIN WIDGET
 Used to style the mini login form, usually
 diplayed on the main portal page.
 */
-.layout_user_login_or_signup {
+.layout_user_login_or_signup{
 	margin-bottom:15px;
+}
+.layout_user_login_or_signup .form-elements{
+	overflow:hidden;
 }
 .layout_user_login_or_signup div.form-element input[type=text],
 .layout_user_login_or_signup div.form-element input[type=email],
 .layout_user_login_or_signup div.form-element input[type=password] {
-	width:95%;
+	width:100%;
 }
-.layout_user_login_or_signup .user_signup_link {
+.layout_user_login_or_signup #user_form_login #submit-wrapper{
+	margin-top:10px;
+	float:none;
+}
+.layout_user_login_or_signup #user_form_login #submit-wrapper button,
+.layout_user_login_or_signup .user_signup_link{
+	padding:0 15px;
+	height:40px;
+	line-height:40px;
+	width:48% !important;
+	text-align:center !important;
+	text-transform:uppercase;
+}
+.layout_user_login_or_signup .user_signup_link{
 	font-size:100%;
   color:$theme_topbar_menu_link_hover_color !important;
   background:$theme_topbar_menu_link_background_color_hover;
-	display:inline-block;
-	padding:.45em 1em;
 	border-radius:4px;
 	border:1px solid;
-	text-transform:uppercase;
-	margin-left:10px;
-	margin-top:-6px;
+	display:inline-block;
+	float:right;
+	margin-top:-40px;
+}
+[dir="rtl"] .layout_user_login_or_signup .user_signup_link{
+	float:left;
 }
 .layout_user_login_or_signup .user_signup_link:hover {
   background:$theme_button_background_color;
   color:$theme_button_font_color;
+	opacity:.8;
 }
 .layout_user_login_or_signup #fieldset-buttons {
 	margin-top:8px;
@@ -60,7 +78,9 @@ diplayed on the main portal page.
 [dir="rtl"] .layout_user_login_or_signup #remember-wrapper label {
 	float:right;
 }
-.layout_user_login_or_signup #submit-label, .layout_user_login_or_signup #remember, .layout_user_login_or_signup #facebook-label {
+.layout_user_login_or_signup #submit-label,
+.layout_user_login_or_signup #remember,
+.layout_user_login_or_signup #facebook-label {
 	display:none;
 }
 .layout_user_login_or_signup .form-description {
@@ -84,7 +104,7 @@ diplayed on the main portal page.
 .no_form #facebook-label, .no_form #twitter-label {
 	display:none;
 }
-.layout_user_login_or_signup_popup {
+.layout_user_login_or_signup_popup{
 	display:none;
 }
 /*
@@ -140,9 +160,9 @@ a short welcome message and a sign out link.
 }
 .layout_user_home_photo > div > a > span{
   width:100%;
-  height: 100%;
+  height:100%;
   display:block;
-  padding-top: 100%;
+  padding-top:100%;
 }
 .layout_user_home_photo > div > p{
 	font-weight:normal;
@@ -226,7 +246,7 @@ on the main home page.
 }
 .layout_user_list_popular .popularmembers_name {
 	font-weight:bold;
-	word-break: break-word;
+	word-break:break-word;
 }
 .layout_user_list_popular .popularmembers_friends {
   font-size:$theme_font_size_small;
@@ -273,7 +293,7 @@ on the main home page.
 }
 .layout_user_list_signups .newestmembers_name {
 	font-weight:bold;
-  word-break: break-word;
+  word-break:break-word;
 }
 .layout_user_list_signups .newestmembers_date {
   font-size:$theme_font_size_small;
@@ -405,10 +425,10 @@ html[dir="rtl"] .profile_fields > ul > li > span {
 #profile_photo img,
 #profile_photo span{
   width:100%;
-	height: 100%;
+	height:100%;
 }
 #profile_photo span{
-  padding-top: 100%;
+  padding-top:100%;
 }
 /* PROFILE STATS WIDGET */
 .layout_user_profile_info {
@@ -853,7 +873,7 @@ html[dir="rtl"] .profile_friends_lists li > span {
 }
 .profile_friends_lists li.friend_list_joined:before,
 .profile_friends_lists li.friend_list_unjoined:before{
-	position: absolute;
+	position:absolute;
 	left:10px;
 }
 [dir="rtl"] .profile_friends_lists li.friend_list_joined:before,
@@ -933,7 +953,7 @@ html[dir="rtl"] .browsemembers_criteria > ul > li > label {
 .browsemembers_results div.browsemembers_results_info > a {
 	font-weight:bold;
 	display:block;
-	word-break: break-word;
+	word-break:break-word;
 }
 .browsemembers_results div.browsemembers_results_info > a + span {
 	display:none;
@@ -1418,11 +1438,11 @@ html .layout_user_login_page{
 }
 /*user home photo*/
 .layout_user_home_photo h3 {
-	word-break: break-word;
+	word-break:break-word;
 }
 /* home links user*/
 html .home-links-user .user{
-	word-break: break-word;	
+	word-break:break-word;	
 }
 @media(min-width:768px) and (max-width:1024px){
 	.user_login_page .user_login_bg {
@@ -1554,7 +1574,9 @@ div#code-element input {
 }
 }
 /* EMAIL SETTINGS */
-.layout_page_user_settings_emails #disable_email-label, .layout_page_user_settings_emails #disable_adminemail-label, #global_page_user-auth-reset .global_form #buttons-label {
+.layout_page_user_settings_emails #disable_email-label,
+.layout_page_user_settings_emails #disable_adminemail-label,
+#global_page_user-auth-reset .global_form #buttons-label {
 	display:none;
 }
 .layout_page_user_settings_emails .form-elements {
@@ -1562,7 +1584,8 @@ div#code-element input {
 	padding-top:0;
 }
 /* Social buttons */
-.user_login_page .user_login_form #facebook-element, .user_login_page .user_login_form #twitter-element {
+.user_login_page .user_login_form #facebook-element,
+.user_login_page .user_login_form #twitter-element {
 	background:#3b5998;
 	padding:10px;
 	border-radius:4px;
@@ -1574,18 +1597,23 @@ div#code-element input {
 .user_login_page .user_login_form #twitter-element {
 	background:#1aa0ef !important;
 }
-.user_login_page .user_login_form #facebook-element > a, .user_login_page .user_login_form #twitter-element > a {
+.user_login_page .user_login_form #facebook-element > a,
+.user_login_page .user_login_form #twitter-element > a {
 	color:#fff !important;
 }
-.user_login_page .user_login_form #facebook-element > a > i, .user_login_page .user_login_form #twitter-element > a > i {
+.user_login_page .user_login_form #facebook-element > a > i,
+.user_login_page .user_login_form #twitter-element > a > i {
 	font-size:18px;
 	vertical-align:text-bottom;
 	margin-right:5px;
 }
-.user_login_page .user_login_form #facebook-wrapper .form-label, .user_login_page .user_login_form #twitter-wrapper .form-label {
+.user_login_page .user_login_form #facebook-wrapper .form-label,
+.user_login_page .user_login_form #twitter-wrapper .form-label {
 	display:none;
 }
-#global_page_user-auth-reset #resetalldevice-label, .layout_page_user_settings_password #resetalldevice-label, .layout_page_user_settings_password #submit-label {
+#global_page_user-auth-reset #resetalldevice-label,
+.layout_page_user_settings_password #resetalldevice-label,
+.layout_page_user_settings_password #submit-label {
 	display:none;
 }
 /* EDIT EMAIL */
@@ -1634,10 +1662,16 @@ html .coverphoto_navigation ul > li > a > span:before {
 	display:flex;
 }
 /* SHOW HIDE PASSWORD */
-.user_login_page .user_login_form input[type="password"], #global_page_core-error-requireuser input[type="password"], #global_page_user-signup-index input[type="password"], #global_page_user-settings-password input[type="password"] {
+.user_login_page .user_login_form input[type="password"],
+#global_page_core-error-requireuser input[type="password"],
+#global_page_user-signup-index input[type="password"],
+#global_page_user-settings-password input[type="password"] {
 	padding-right:40px;
 }
-[dir="rtl"] .user_login_page .user_login_form input[type="password"], [dir="rtl"] #global_page_core-error-requireuser input[type="password"], [dir="rtl"] #global_page_user-signup-index input[type="password"], [dir="rtl"] #global_page_user-settings-password input[type="password"] {
+[dir="rtl"] .user_login_page .user_login_form input[type="password"],
+[dir="rtl"] #global_page_core-error-requireuser input[type="password"],
+[dir="rtl"] #global_page_user-signup-index input[type="password"],
+[dir="rtl"] #global_page_user-settings-password input[type="password"]{
 	padding-right:0;
 	padding-left:40px;
 }
@@ -1655,19 +1689,26 @@ html .coverphoto_navigation ul > li > a > span:before {
 	margin-right:0;
 	margin-left:10px;
 }
-#signup_account_form #password_confirm_settings_group-wrapper, #signup_account_form #password_settings_group-wrapper, #global_page_user-settings-password #oldpassword_settings_group-wrapper, #global_page_user-settings-password #password_confirm_settings_group-wrapper, #global_page_user-settings-password #password_settings_group-wrapper {
+#signup_account_form #password_confirm_settings_group-wrapper,
+#signup_account_form #password_settings_group-wrapper,
+#global_page_user-settings-password #oldpassword_settings_group-wrapper,
+#global_page_user-settings-password #password_confirm_settings_group-wrapper,
+#global_page_user-settings-password #password_settings_group-wrapper {
 	position:relative;
 }
-#signup_account_form .user_showhidepassword, #global_page_user-settings-password .user_showhidepassword {
+#signup_account_form .user_showhidepassword,
+#global_page_user-settings-password .user_showhidepassword {
 	position:absolute;
 	right:0;
 	top:32%;
 }
-[dir="rtl"] #signup_account_form .user_showhidepassword, [dir="rtl"] #global_page_user-settings-password .user_showhidepassword {
+[dir="rtl"] #signup_account_form .user_showhidepassword,
+[dir="rtl"] #global_page_user-settings-password .user_showhidepassword {
 	left:0;
 	right:auto;
 }
-#signup_account_form #password_confirm_settings_group-wrapper .user_showhidepassword, #global_page_user-settings-password #password_confirm_settings_group-wrapper .user_showhidepassword {
+#signup_account_form #password_confirm_settings_group-wrapper .user_showhidepassword,
+#global_page_user-settings-password #password_confirm_settings_group-wrapper .user_showhidepassword {
 	top:38%;
 }
 #global_page_user-settings-password #oldpassword_settings_group-wrapper .user_showhidepassword {
@@ -1687,12 +1728,13 @@ input::-ms-reveal, input::-ms-clear {
  display:none;
 }
 @media(max-width:767px) {
-#signup_account_form #password_settings_group-wrapper .user_showhidepassword,  #global_page_user-settings-password #password_settings_group-wrapper .user_showhidepassword {
-	top:28%;
-}
+	#signup_account_form #password_settings_group-wrapper .user_showhidepassword,
+	#global_page_user-settings-password #password_settings_group-wrapper .user_showhidepassword {
+		top:28%;
+	}
 }
 /* TWO STEP AUTH PAGE */
-.twostep_auth_form #description-label {
+.twostep_auth_form #description-label{
 	display:none;
 }
 .twostep_verify_message {
@@ -1735,4 +1777,86 @@ input::-ms-reveal, input::-ms-clear {
 .user_profile_edit .form-element select{
 	max-width:33% !important;
 	min-width:33% !important;
+}
+/*Sign-in Required Page & Popup*/
+#global_page_core-error-requireuser #global_content .layout_core_content{
+	background-color:$theme_list_background_color;
+	border-width:1px;
+	border-radius:10px;
+	margin:20px auto;
+	max-width:500px;
+	padding:20px;
+}
+.required_login_form .global_form{
+	width:100%;
+}
+.required_login_form .global_form > div > div > h3{
+	text-align:center !important;
+	font-weight:bold;
+	font-size:20px;
+}
+.required_login_form .global_form > div > div > h3 + p{
+	text-align:center !important;
+	margin:0;
+	padding:0;
+}
+.required_login_form .global_form ul.form-errors{
+	margin:20px 0;
+	padding:0;
+}
+.required_login_form .global_form ul.form-errors > li{
+	margin:0;
+}
+.required_login_form .global_form div.form-wrapper{
+	margin:0;
+	padding:0;
+}
+.required_login_form .global_form div.form-label,
+.required_login_form .global_form div.form-element{
+	padding:0;
+	margin:0 0 15px;
+	min-width:inherit;
+	max-width:100%;
+	width:100%;
+}
+.required_login_form .global_form div.form-label{
+	margin-bottom:5px;
+}
+.required_login_form .global_form div.form-element input[type=text],
+.required_login_form .global_form div.form-element input[type=email],
+.required_login_form .global_form div.form-element input[type=password]{
+	border-radius:5px;
+	line-height:40px;
+	margin:0;
+	padding:0 15px;
+	height:inherit;
+}
+.required_login_form .global_form .user_showhidepassword > i{
+	margin-top:-42px;
+}
+.layout_core_content .required_login_form  #user_form_login #forgot-wrapper{
+	display:block;
+	width:100%;
+}
+.layout_core_content .required_login_form  #user_form_login #forgot-element{
+	margin:0;
+	width:100%;
+	text-align:center !important;
+}
+.required_login_form .global_form #forgot-label{
+	display:none;
+}
+.required_login_form #user_form_login #forgot-element{
+	margin-bottom:10px !important;
+}
+.required_login_form .global_form #submit-wrapper{
+	width:100%;
+}
+.required_login_form .global_form #submit-wrapper button{
+	border-radius:20px;
+	padding:0 15px;
+	line-height:40px;
+	font-weight:bold;
+	text-align:center !important;
+	width:100%;
 }

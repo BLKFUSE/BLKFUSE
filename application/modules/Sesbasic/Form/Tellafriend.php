@@ -16,7 +16,7 @@ class Sesbasic_Form_Tellafriend extends Engine_Form {
         $viewer = Engine_Api::_()->user()->getViewer();
         $viewer_id = Engine_Api::_()->user()->getViewer()->getIdentity();
         if(!empty($viewer_id)) {
-	  $this->addElement('Hidden', 'sender_name', array('value' => $viewer->displayname,'order'=>98));
+	  $this->addElement('Hidden', 'sender_name', array('value' => $viewer->getTitle(),'order'=>98));
 	  $this->addElement('Hidden', 'sender_email', array('value' => $viewer->email));
         }
         else {

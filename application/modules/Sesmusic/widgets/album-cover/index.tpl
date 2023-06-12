@@ -292,7 +292,7 @@ if(isset($this->docActive)) {
           <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'sesmusic', 'controller' => 'song', 'action' => 'append-songs', 'album_id' => $album->album_id), $this->translate(''), array('class' => 'smoothbox fa fa-plus', 'title' => $this->translate('Add to Playlist'))); ?>
           <?php endif; ?>
           <?php if(!empty($this->viewer_id) && !empty($this->albumlink) && engine_in_array('share', $this->albumlink) && $this->information && engine_in_array('share', $this->information)): ?>
-          <?php echo $this->htmlLink(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_album', 'id' => $this->album->getIdentity(), 'format' => 'smoothbox'), $this->translate(""), array('class' => 'smoothbox fa fa-share', 'title' => $this->translate("Share"))); ?>
+          <?php echo $this->htmlLink(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_album', 'id' => $this->album->getIdentity(), 'format' => 'smoothbox'), $this->translate(""), array('class' => 'smoothbox fas fa-share-alt', 'title' => $this->translate("Share"))); ?>
           <?php endif; ?>
           <?php if (!empty($this->viewer_id) && $this->information && engine_in_array('downloadButton', $this->information)): ?>
           <?php //echo $this->htmlLink($album->getHref(array('route' => 'sesmusic_album_specific', 'action' => 'download-zip')), $this->translate(''), array('class'=>'fa fa-download', 'title' => $this->translate('Download All Songs'))); ?>
@@ -500,7 +500,7 @@ if(isset($this->docActive)) {
         <?php endif; ?>
 
         <?php if(!empty($this->albumlink) && engine_in_array('share', $this->albumlink) && $this->information && engine_in_array('share', $this->information)): ?>
-        <?php echo $this->htmlLink(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_album', 'id' => $this->album->getIdentity(), 'format' => 'smoothbox'), $this->translate("Share"), array('class' => 'smoothbox fa fa-share')); ?>
+        <?php echo $this->htmlLink(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_album', 'id' => $this->album->getIdentity(), 'format' => 'smoothbox'), $this->translate("Share"), array('class' => 'smoothbox fas fa-share-alt')); ?>
         <?php endif; ?>
 
         <?php if(!empty($this->albumlink) && engine_in_array('report', $this->albumlink) && $this->information && engine_in_array('report', $this->information)): ?>

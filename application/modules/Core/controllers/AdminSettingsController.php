@@ -88,6 +88,12 @@ class Core_AdminSettingsController extends Core_Controller_Action_Admin
         // Save public level view permission
         $publicLevel = Engine_Api::_()->getDbtable('levels', 'authorization')->getPublicLevel();
         Engine_Api::_()->authorization()->levels->setAllowed('user', $publicLevel, 'view', (bool) $values['profile']);
+        
+        if(!empty($values['logincrondays'])) {
+					$dbObj = Engine_Db_Table::getDefaultAdapter();
+					$timeout = ($values['logincrondays'] * 60 *60* 24);
+					$dbObj->query("UPDATE `engine4_core_tasks` SET `timeout` = '".$timeout."' WHERE `engine4_core_tasks`.`plugin` = 'Core_Plugin_Task_ClarLoginLog';");
+        }
 
         // Save maintenance mode
         $generalConfig['maintenance']['enabled'] = (bool) $maintenance;

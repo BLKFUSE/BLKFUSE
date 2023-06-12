@@ -126,7 +126,7 @@ class Sesbasic_Plugin_Gateway_User_PayPal extends Engine_Payment_Plugin_Abstract
                 'ITEMAMT' => @round($order->remaining_payment, 2),
                 'ITEMS' => array(
                 array(
-                'NAME' => $event->displayname,
+                'NAME' => $event->getTitle(),
                 'DESC' => 'Owner Payment Made',
                 'AMT' => @round($order->remaining_payment, 2),
                 ),

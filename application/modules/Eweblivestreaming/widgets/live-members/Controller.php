@@ -16,7 +16,7 @@ class Eweblivestreaming_Widget_LiveMembersController extends Engine_Content_Widg
     $select = $userTable->select()->from($userTableName,'*')->setIntegrityCheck(false);
     $select->joinInner($tableName,$tableName.'.user_id = '.$userTableName.'.user_id',array('max_elivehost_id'=>new Zend_Db_Expr("MAX(elivehost_id)"),'max_story_id'=>new Zend_Db_Expr("MAX(story_id)"),'max_action_id'=>new Zend_Db_Expr("MAX(action_id)")));
     $select->where($tableName.'.status =?','started');
-  //$select->where('DATE_ADD('.$tableName.'.datetime, INTERVAL 4 HOUR) >= NOW()');
+  $select->where('DATE_ADD('.$tableName.'.datetime, INTERVAL 4 HOUR) >= NOW()');
     
     $select->limit($this->_getParam("limit",15));
     $select->group($tableName.'.user_id');

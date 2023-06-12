@@ -796,7 +796,7 @@ class Sessociallogin_AuthController extends Core_Controller_Action_Standard {
 
       // get user info
       $q = 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' . $accessToken;
-      $json = file_get_contents($q);
+      $json = $this->url_get_contents($q);
       $userInfoArray = json_decode($json, true);
       if (!empty($userInfoArray['id'])) {
         $googleid = $userInfoArray['id'];
@@ -1208,15 +1208,15 @@ class Sessociallogin_AuthController extends Core_Controller_Action_Standard {
           exit();
       } else if (!empty($_GET['code'])) {
 
-        $result = json_decode(file_get_contents("https://www.linkedin.com//oauth/v2/accessToken?grant_type=authorization_code&code=".$_GET['code']."&redirect_uri=".urlencode((_ENGINE_SSL ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $this->view->url())."&client_id=".$access."&client_secret=".$secret),true);
+        $result = json_decode($this->url_get_contents("https://www.linkedin.com//oauth/v2/accessToken?grant_type=authorization_code&code=".$_GET['code']."&redirect_uri=".urlencode((_ENGINE_SSL ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $this->view->url())."&client_id=".$access."&client_secret=".$secret),true);
         if (!empty($result['access_token'])) {
             $_SESSION['linkedin_token'] = $token = $result['access_token'];
             $_SESSION['linkedin_secret'] = $secret = $result['access_token'];
             $_SESSION['linkedin_access'] = $result;
 
             // Get account info
-            $basicProfile = json_decode(file_get_contents("https://api.linkedin.com/v2/me?projection=(id,firstName,lastName,profilePicture(displayImage~:playableStreams))&oauth2_access_token=" . $result['access_token']), true);
-            $emailAddress = json_decode(file_get_contents("https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))&oauth2_access_token=" . $result['access_token']), true);
+            $basicProfile = json_decode($this->url_get_contents("https://api.linkedin.com/v2/me?projection=(id,firstName,lastName,profilePicture(displayImage~:playableStreams))&oauth2_access_token=" . $result['access_token']), true);
+            $emailAddress = json_decode($this->url_get_contents("https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))&oauth2_access_token=" . $result['access_token']), true);
             if ($basicProfile && $emailAddress) {
 
 
@@ -1284,5 +1284,13 @@ class Sessociallogin_AuthController extends Core_Controller_Action_Standard {
       $this->view->error = true;
     }
   }
-
+  function url_get_contents ($Url) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $Url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    $output = curl_exec($ch);
+    curl_close($ch);
+    return $output;
+}
 }

@@ -178,8 +178,9 @@ endif; ?>
                 });
                 scriptJquery('#privacy_list_' + value).addClass('activity_tab_active').removeClass('activity_tab_unactive');
                 scriptJquery('#auth_view').val(value);
-                scriptJquery('#privacy_pulldown_button').html('<i class="privacy_pulldown_icon ' + classicon + ' "></i><span>' + label + ' </span><i class="fa fa-caret-down"></i>');
+                scriptJquery('#privacy_pulldown_button').html('<i class="privacy_pulldown_icon ' + classicon + ' "></i><span>' + label + ' </span>');
                 scriptJquery("#privacy_lable_tip").html(en4.core.language.translate("<?php echo $this->string()->escapeJavascript($this->translate('Share with %s')) ?>", label));
+                scriptJquery('#privacy_pulldown').removeClass('privacy_pulldown_active').addClass('privacy_pulldown');
               }
 
               var showMultiNetworks = function () {
@@ -196,49 +197,50 @@ endif; ?>
               }
             </script>
             <div class='privacy_list' id='privacy_list'>
-              <span class="privacy_pulldown" id="privacy_pulldown" onmousedown="togglePrivacyPulldown(this);">
+              <div class="privacy_pulldown dropdown" id="privacy_pulldown" onmousedown="togglePrivacyPulldown(this);">
                 <p class="privacy_list_tip">
                   <span id="privacy_lable_tip">
                     <?php echo $this->translate("Share with %s", $this->defaultPrivacyLabel) ?>
                   </span>
                   <img src="<?php echo $this->layout()->staticBaseUrl ?>application/modules/Activity/externals/images/tooltip-arrow-down.png" alt="" />
                 </p>
-                <a href="javascript:void(0);" id="privacy_pulldown_button" class="privacy_pulldown_button">
+                <a href="javascript:void(0);" id="privacy_pulldown_button" class="privacy_pulldown_button dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="privacy_pulldown_icon <?php echo $this->defaultPrivacyClass ?>"></i>
                   <span>
                     <?php echo !empty($this->defaultPrivacyLabel) ? $this->translate($this->defaultPrivacyLabel) : '' ?>
                   </span>
-                  <i class="fa fa-caret-down"></i>
                 </a>
-                <div class="privacy_pulldown_contents_wrapper">
-                  <div class="privacy_pulldown_contents">
-                    <ul id="privacylist">
-                      <?php foreach( $this->privacyList as $key => $value ): ?>
-                        <li class="<?php echo ( $key == $this->defaultPrivacy ? 'activity_tab_active' : 'activity_tab_unactive' ) ?>" id="privacy_list_<?php echo $key ?>" onclick="setPrivacyValue('<?php echo $key ?>', '<?php echo $this->string()->escapeJavascript($this->translate($value)); ?>', 'activity_icon_feed_<?php echo $key ?>')" title="<?php echo $this->translate("Share with %s", $value); ?>" >
-                          <i class="privacy_pulldown_icon activity_icon_feed_<?php echo $key ?>"></i>
-                          <div><?php echo $this->translate($value); ?></div>
-                          </li>
-                      <?php endforeach; ?>
-                      <?php if(!empty($this->privacyList) && !empty($this->networkList)): ?>
-                        <li class="sep"></li>
-                      <?php endif;?>
-                      <?php foreach( $this->networkList as $key => $value ): ?>
-                        <li class="<?php echo ( $key == $this->defaultPrivacy ? 'activity_tab_active' : 'activity_tab_unactive' ) ?>" id="privacy_list_<?php echo $key ?>" onclick="setPrivacyValue('<?php echo $key ?>', '<?php echo $this->string()->escapeJavascript($this->translate($value)); ?>', 'activity_icon_feed_network')" title="<?php echo $this->translate("Share with %s", $value); ?>" >
-                          <i class="privacy_pulldown_icon activity_icon_feed_network"></i>
-                          <div><?php echo $this->translate($value); ?></div>
-                        </li>
-                      <?php endforeach; ?>
-                      <?php if(is_array($this->networkList) && engine_count($this->networkList) > 1): ?>
-                        <li class="sep"></li>
-                        <li onclick="showMultiNetworks();">
-                          <i class="privacy_pulldown_icon activity_icon_feed_network"></i>
-                          <div><?php echo $this->translate("Multiple Networks"); ?></div>
-                        </li>
-                      <?php endif;?>
-                    </ul>
-                  </div>
-                </div>
-              </span>
+                <ul class="privacy_dropdown dropdown-menu dropdown-menu-end" id="privacylist">
+                  <?php foreach( $this->privacyList as $key => $value ): ?>
+                    <li class="<?php echo ( $key == $this->defaultPrivacy ? 'activity_tab_active' : 'activity_tab_unactive' ) ?>" id="privacy_list_<?php echo $key ?>" onclick="setPrivacyValue('<?php echo $key ?>', '<?php echo $this->string()->escapeJavascript($this->translate($value)); ?>', 'activity_icon_feed_<?php echo $key ?>')" title="<?php echo $this->translate("Share with %s", $value); ?>" >
+                      <a class="dropdown-item" href="javascript:void(0);">
+                        <i class="privacy_pulldown_icon activity_icon_feed_<?php echo $key ?>"></i>
+                        <div><?php echo $this->translate($value); ?></div>
+                      </a>
+                    </li>
+                  <?php endforeach; ?>
+                  <?php if(!empty($this->privacyList) && !empty($this->networkList)): ?>
+                    <li class="sep"></li>
+                  <?php endif;?>
+                  <?php foreach( $this->networkList as $key => $value ): ?>
+                    <li class="<?php echo ( $key == $this->defaultPrivacy ? 'activity_tab_active' : 'activity_tab_unactive' ) ?>" id="privacy_list_<?php echo $key ?>" onclick="setPrivacyValue('<?php echo $key ?>', '<?php echo $this->string()->escapeJavascript($this->translate($value)); ?>', 'activity_icon_feed_network')" title="<?php echo $this->translate("Share with %s", $value); ?>" >
+                      <a class="dropdown-item" href="javascript:void(0);">
+                        <i class="privacy_pulldown_icon activity_icon_feed_network"></i>
+                        <div><?php echo $this->translate($value); ?></div>
+                      </a>
+                    </li>
+                  <?php endforeach; ?>
+                  <?php if(is_array($this->networkList) && engine_count($this->networkList) > 1): ?>
+                    <li class="sep"></li>
+                    <li onclick="showMultiNetworks();">
+                      <a class="dropdown-item" href="javascript:void(0);">
+                        <i class="privacy_pulldown_icon activity_icon_feed_network"></i>
+                        <div><?php echo $this->translate("Multiple Networks"); ?></div>
+                      </a>
+                    </li>
+                  <?php endif;?>
+                </ul>
+              </div>
             </div>
           <?php endif;?>
           <input type="hidden" id="auth_view" name="auth_view" value="<?php echo $this->defaultPrivacy; ?>" />

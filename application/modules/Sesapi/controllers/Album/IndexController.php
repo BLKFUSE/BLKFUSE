@@ -12,6 +12,58 @@
  */
 class Album_IndexController extends Sesapi_Controller_Action_Standard {
 
+	public function menuAction() {
+		$menus = Engine_Api::_()->getApi('menus', 'core')->getNavigation('album_main', array());
+		$menu_counter = 0;
+		foreach ($menus as $menu) {
+			$class = end(explode(' ', $menu->class));
+			$result_menu[$menu_counter]['label'] = $this->view->translate($menu->label);
+			$result_menu[$menu_counter]['action'] = $class;
+			$result_menu[$menu_counter]['isActive'] = $menu->active;
+			$menu_counter++;
+		}
+		$result['menus'] = $result_menu;
+		Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array_merge(array('error' => '0', 'error_message' => '', 'result' => $result)));
+	}
+	
+	public function rateAction() {
+	
+		$viewer = Engine_Api::_()->user()->getViewer();
+		$user_id = $viewer->getIdentity();
+
+		$rating = $this->_getParam('rating');
+		$album_id =  $this->_getParam('resource_id');
+		$type =  $this->_getParam('resource_type');
+
+		$table = Engine_Api::_()->getDbtable('ratings', 'album');
+		$db = $table->getAdapter();
+		$db->beginTransaction();
+
+		try {
+			Engine_Api::_()->getDbtable('ratings', 'album')->setRating($album_id, $user_id, $rating, $type);
+			$album = Engine_Api::_()->getItem($type, $album_id);
+			$album->rating = Engine_Api::_()->getDbtable('ratings', 'album')->getRating($album->getIdentity(), $type);
+			$album->save();
+			
+			$owner = Engine_Api::_()->getItem('user', $album->owner_id);
+			if($type == 'album')
+				$notificationType = 'album_rating';
+			else
+				$notificationType = 'album_photo_rating';
+			if($owner->user_id != $user_id)
+			Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($owner, $viewer, $album, $notificationType);
+
+			$db->commit();
+		} catch (Exception $e) {
+			$db->rollBack();
+			Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$e->getMessage(), 'result' => array()));
+		}
+		if($type == 'album')
+			Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>"", 'result' => $this->view->translate("You have successfully rated album.")));
+		else 
+				Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>"", 'result' => $this->view->translate("You have successfully rated photo.")));
+	}
+	
   public function browseAction() {
 
     if( !$this->_helper->requireAuth()->setAuthParams('album', null, 'view')->isValid() ) {
@@ -31,7 +83,7 @@ class Album_IndexController extends Sesapi_Controller_Action_Standard {
         break;
     }
 
-    $userId = $this->_getParam('user');
+    $userId = $this->_getParam('user_id');
     $this->view->excludedLevels = $excludedLevels = array(1, 2, 3);   // level_id of Superadmin,Admin & Moderator
     $registeredPrivacy = array('everyone', 'registered');
     $this->view->viewer = $viewer = Engine_Api::_()->user()->getViewer();
@@ -382,7 +434,7 @@ class Album_IndexController extends Sesapi_Controller_Action_Standard {
     // Check if post and populate
     if($this->_getParam('getForm')) {
       $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
-      $this->generateFormFields($formFields,array('resources_type'=>'album'));
+      $this->generateFormFields($formFields,array('resources_type'=>'album', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
     }
 
     // Check if valid
@@ -454,13 +506,15 @@ class Album_IndexController extends Sesapi_Controller_Action_Standard {
   public function deleteAction() {
 
     $viewer = Engine_Api::_()->user()->getViewer();
-
-    $photo = Engine_Api::_()->getItem('album_photo',$this->_getParam('photo_id',''));
+		$resource_type = $this->_getParam('resource_type', 'album_photo');
+    $photo = Engine_Api::_()->getItem($resource_type,$this->_getParam('photo_id',''));
     $photo_id = $photo->getIdentity();
-    $album = Engine_Api::_()->getItem('album', $photo->album_id);
-
-    if (!$this->_helper->requireAuth()->setAuthParams($album, null, 'delete')->isValid())
-      Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array()));
+		
+		if($resource_type == 'album_photo') {
+			$album = Engine_Api::_()->getItem('album', $photo->album_id);
+			if (!$this->_helper->requireAuth()->setAuthParams($album, null, 'delete')->isValid())
+				Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array()));
+		}
 
     $db = $photo->getTable()->getAdapter();
     $db->beginTransaction();
@@ -698,8 +752,8 @@ class Album_IndexController extends Sesapi_Controller_Action_Standard {
       ));
     }
     $form->populate($_POST);
-    $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form,true);
-    $this->generateFormFields($formFields);
+    $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
+		$this->generateFormFields($formFields,array('resources_type'=>'album'));
   }
   function profilePhotosAction(){
     $page = (int)  $this->_getParam('page', 1);

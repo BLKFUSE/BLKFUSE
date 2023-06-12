@@ -217,7 +217,7 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
                 <img src="application/modules/Core/externals/images/admin/file-icons/video.png">
               <?php elseif(engine_in_array($item->extension, array('zip', 'tar'))): ?>
                 <img src="application/modules/Core/externals/images/admin/file-icons/zip.png">
-              <?php elseif(engine_in_array($item->extension, array('jpeg', 'jpg', 'gif', 'png', 'tiff'))): ?>
+              <?php elseif(engine_in_array($item->extension, array('jpeg', 'jpg', 'gif', 'png', 'tiff','webp'))): ?>
                 <img src="<?php echo $path; ?>" />
               <?php else: ?>
                 <img src="application/modules/Core/externals/images/admin/file-icons/default.png">

@@ -11,10 +11,12 @@
  * @author     socialnetworking.solutions
  */
 
-class Sesadvancedactivity_Widget_FeedController extends Engine_Content_Widget_Abstract
-{
-  public function indexAction()
-  { 
+class Sesadvancedactivity_Widget_FeedController extends Engine_Content_Widget_Abstract {
+	
+	private $_blockedUserIds = array();
+	
+  public function indexAction() {
+  
     $widgetIds = $this->_getParam('widgetIds',0);
     if($widgetIds){
       $params = Engine_Api::_()->sescommunityads()->getWidgetParams($widgetIds);
@@ -32,8 +34,18 @@ class Sesadvancedactivity_Widget_FeedController extends Engine_Content_Widget_Ab
     if( Engine_Api::_()->core()->hasSubject() ) {
       // Get subject
       $subject = Engine_Api::_()->core()->getSubject();
-      if( !$subject->authorization()->isAllowed($viewer, 'view') )
-        return $this->setNoRender();
+      if($subject->getType() == 'sespage_page') {
+				if(!Engine_Api::_()->getDbTable('pages', 'sespage')->isPageViewPermission(array('page_id' => $subject->page_id))) {
+					return $this->setNoRender();
+				}
+      } /*elseif($subject->getType() == 'sesgroup_group') {
+				if(!Engine_Api::_()->getDbTable('groups', 'sesgroup')->isGroupViewPermission(array('group_id' => $subject->group_id))) {
+					return $this->setNoRender();
+				}
+      }*/ else {
+				if( !$subject->authorization()->isAllowed($viewer, 'view') )
+					return $this->setNoRender();
+			}
     }
     $request = Zend_Controller_Front::getInstance()->getRequest();
     $requestParams = $request->getParams();
@@ -223,6 +235,12 @@ class Sesadvancedactivity_Widget_FeedController extends Engine_Content_Widget_Ab
       if( $length > 50 ) {
         $this->view->length = $length = 50;
       }
+      
+      
+			if( $viewer && !$viewer->isAdmin() ) {
+				$this->_blockedUserIds = $viewer->getAllBlockedUserIds();
+			}
+
      // Get all activity feed types for custom view?
      $actionTypesTable = Engine_Api::_()->getDbtable('actionTypes', 'sesadvancedactivity');
      $this->view->groupedActionTypes = $groupedActionTypes = $actionTypesTable->getEnabledGroupedActionTypes();
@@ -320,8 +338,13 @@ class Sesadvancedactivity_Widget_FeedController extends Engine_Content_Widget_Ab
           }else{
             $action_id = $action->action_id;
           }
+          
+          $isPinned = false;
+          $pinSubject = !$this->view->subject() ? false : $this->view->subject() ;
+          if($pinSubject)
+            $isPinned = $action->isPinPost(array('resource_type'=>$pinSubject->getType(),'resource_id'=>$pinSubject->getIdentity(),'action_id'=>$action->getIdentity()));
           // get next id
-          if( null === $nextid || $action_id <= $nextid ) {
+          if( (null === $nextid || $action_id <= $nextid) && !$isPinned) {
             $nextid = $action->action_id - 1;
           }
           // get first id
@@ -344,6 +367,29 @@ class Sesadvancedactivity_Widget_FeedController extends Engine_Content_Widget_Ab
               $itemActionCounts[$actionSubject->getGuid()]++;
             }
           }
+          
+					if( $this->isBlocked($action) ) {
+            continue;
+          }
+          
+//           //privacy for fourm
+//           if(in_array($action->type, array('sesforum_topic_create','sesforum_topic_reply'))) {
+// 						if($viewer->getIdentity())
+// 							$levelId = $viewer->level_id;
+// 						else
+// 							$levelId = 5;
+// 							
+// 						if($action->getObject()->getType() == 'sesforum_topic') {
+// 							$forumItem = Engine_Api::_()->getItem('sesforum_forum', $action->getObject()->forum_id);
+// 							$levels = explode(',', $forumItem->levels);
+// 							if(!engine_in_array($levelId, $levels)) continue;
+// 						} else if($action->getObject()->getType() == 'sesforum_post') {
+// 							$forumItem = Engine_Api::_()->getItem('sesforum_forum', $action->getObject()->forum_id);
+// 							$levels = explode(',', $forumItem->levels);
+// 							if(!engine_in_array($levelId, $levels)) continue;
+// 						}
+//           }
+          
           // remove duplicate friend requests
           if( $action->type == 'friends' ) {
             $id = $action->subject_id . '_' . $action->object_id;
@@ -397,16 +443,25 @@ class Sesadvancedactivity_Widget_FeedController extends Engine_Content_Widget_Ab
         }
       } else if( $subject ) {
         if($subject->getType() == 'businesses') {
+					$row = $subject->membership()->getRow($viewer);
           $isAdmin = Engine_Api::_()->getDbTable('businessroles', 'sesbusiness')->isAdmin(array('business_id' => $subject->getIdentity(), 'user_id' => $viewer->getIdentity()));
           if($isAdmin)
             $this->view->enableComposer = true;
+					if($row->active)
+            $this->view->enableComposer = true;
         } else if($subject->getType() == 'sespage_page') {
+					$row = $subject->membership()->getRow($viewer);
           $isAdmin = Engine_Api::_()->getDbTable('pageroles', 'sespage')->isAdmin(array('page_id' => $subject->getIdentity(), 'user_id' => $viewer->getIdentity()));
           if($isAdmin)
             $this->view->enableComposer = true;
+					if($row->active)
+            $this->view->enableComposer = true;
         } else if($subject->getType() == 'sesgroup_group') {
+          $row = $subject->membership()->getRow($viewer);
           $isAdmin = Engine_Api::_()->getDbTable('grouproles', 'sesgroup')->isAdmin(array('group_id' => $subject->getIdentity(), 'user_id' => $viewer->getIdentity()));
           if($isAdmin)
+            $this->view->enableComposer = true;
+          if($row->active)
             $this->view->enableComposer = true;
         } else if($subject->getType() == 'stores') {
           $isAdmin = Engine_Api::_()->getDbTable('storeroles', 'estore')->isAdmin(array('store_id' => $subject->getIdentity(), 'user_id' => $viewer->getIdentity()));
@@ -517,5 +572,21 @@ class Sesadvancedactivity_Widget_FeedController extends Engine_Content_Widget_Ab
     } else {
       $this->view->formToken = $session->token;
     }
+  }
+  
+  
+  private function isBlocked($action) {
+    if( empty($this->_blockedUserIds) ) {
+      return false;
+    }
+    $actionObjectOwner = $action->getObject()->getOwner();
+    $actionSubjectOwner = $action->getSubject()->getOwner();
+    if( $actionSubjectOwner instanceof User_Model_User && engine_in_array($actionSubjectOwner->getIdentity(), $this->_blockedUserIds) ) {
+      return true;
+    }
+    if( $actionObjectOwner instanceof User_Model_User && engine_in_array($actionObjectOwner->getIdentity(), $this->_blockedUserIds) ) {
+      return true;
+    }
+    return false;
   }
 }

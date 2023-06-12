@@ -1028,7 +1028,7 @@ class Sesmember_IndexController extends Core_Controller_Action_Standard {
       $sesdata[] = array(
           'id' => $user->user_id,
           'user_id' => $user->user_id,
-          'label' => $user->displayname,
+          'label' => $user->getTitle(),
           'photo' => $user_icon
       );
     }

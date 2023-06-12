@@ -160,22 +160,22 @@ class User_Plugin_Signup_Photo extends Core_Plugin_FormSequence_Abstract
       $iMain = $storage->getFile($this->getSession()->tmp_file_id);
       $iMain->setFromArray($params);
       $iMain->save();
-      $iMain->updatePath();
+      //$iMain->updatePath();
 
       $iProfile = $storage->getFile($this->getSession()->tmp_file_id, 'thumb.profile');
       $iProfile->setFromArray($params);
       $iProfile->save();
-      $iProfile->updatePath();
+      //$iProfile->updatePath();
 
       $iNormal = $storage->getFile($this->getSession()->tmp_file_id, 'thumb.normal');
       $iNormal->setFromArray($params);
       $iNormal->save();
-      $iNormal->updatePath();
+      //$iNormal->updatePath();
 
       $iSquare = $storage->getFile($this->getSession()->tmp_file_id, 'thumb.icon');
       $iSquare->setFromArray($params);
       $iSquare->save();
-      $iSquare->updatePath();
+      //$iSquare->updatePath();
       
       // Update row
       $user->photo_id = $iMain->file_id;

@@ -7,10 +7,11 @@ html,body{
   padding:0;
 }
 body{
-  font-size:14px;
+  font-size:16px;
   overflow-x:hidden;
   padding-left:10px;
   padding-right:10px;
+  display:inline-block;
 }
 body p, body ul, body ol{
 	margin-bottom:10px;

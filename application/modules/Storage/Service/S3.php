@@ -18,7 +18,7 @@
  */
 
 // Include the AWS SDK
-require 'application/libraries/Aws/aws-autoloader.php';
+require_once 'application/libraries/Aws/aws-autoloader.php';
 
 use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
@@ -129,12 +129,24 @@ class Storage_Service_S3 extends Storage_Service_Abstract
   {
     $path = $this->getScheme()->generate($model->toArray());
     try {
-      $this->_internalService->putObject([
-        'Bucket'       => $this->_bucket,
-        'Key'          => $path,
-        'ACL'          => 'public-read',
-        'SourceFile'   => $file,
-      ]);
+			if($model->extension == 'mp4') {
+				$this->_internalService->putObject([
+					'Bucket'       => $this->_bucket,
+					'Key'          => $path,
+					'ACL'          => 'public-read',
+					'SourceFile'   => $file,
+					'Cache-Control' => 'max-age=864000, public',
+					'Content-Type' => 'video/mp4',
+				]);
+			} else {
+				$this->_internalService->putObject([
+					'Bucket'       => $this->_bucket,
+					'Key'          => $path,
+					'ACL'          => 'public-read',
+					'SourceFile'   => $file,
+					'Cache-Control' => 'max-age=864000, public',
+				]);
+      }
     } catch (S3Exception $e) {
       throw new Storage_Service_Exception($e->getAwsErrorMessage());
     } catch (AwsException $e) {
@@ -176,12 +188,24 @@ class Storage_Service_S3 extends Storage_Service_Abstract
   {
     $path = $this->getScheme()->generate($model->toArray());
     try {
-      $this->_internalService->putObject([
-        'Bucket'       => $this->_bucket,
-        'Key'          => $path,
-        'ACL'          => 'public-read',
-        'SourceFile'   => $data,
-      ]);
+			if($model->extension == 'mp4') {
+				$this->_internalService->putObject([
+					'Bucket'       => $this->_bucket,
+					'Key'          => $path,
+					'ACL'          => 'public-read',
+					'SourceFile'   => $data,
+					'Cache-Control' => 'max-age=864000, public',
+					'Content-Type' => 'video/mp4',
+				]);
+			} else {
+				$this->_internalService->putObject([
+					'Bucket'       => $this->_bucket,
+					'Key'          => $path,
+					'ACL'          => 'public-read',
+					'SourceFile'   => $data,
+					'Cache-Control' => 'max-age=864000, public',
+				]);
+      }
     } catch (S3Exception $e) {
       throw new Storage_Service_Exception($e->getAwsErrorMessage());
     } catch (AwsException $e) {
@@ -222,7 +246,7 @@ class Storage_Service_S3 extends Storage_Service_Abstract
   public function temporary(Storage_Model_File $model)
   {
     try {
-      $rfh = fopen($this->_streamWrapperName . '://' . $model->storage_path, 'r');
+      $rfh = fopen('s3://' . $this->_bucket . '/' . $model->storage_path, 'r');
     } catch( Exception $e ) {
       throw $e;
     }

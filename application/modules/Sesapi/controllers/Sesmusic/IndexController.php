@@ -118,6 +118,7 @@ class Sesmusic_IndexController extends Sesapi_Controller_Action_Standard
         $album['enable_add_shortcut'] = $sesshortcut;
         if($sesshortcut){
             $isShortcut = Engine_Api::_()->getDbTable('shortcuts', 'sesshortcut')->isShortcut(array('resource_type' => $albums->getType(), 'resource_id' => $albums->getIdentity()));
+            $shortMessage = array();
             if (empty($isShortcut)) {
                 $shortMessage['title'] = $this->view->translate('Add to Shortcuts');
                 $shortMessage['resource_type'] = $albums->getType();
@@ -569,10 +570,10 @@ class Sesmusic_IndexController extends Sesapi_Controller_Action_Standard
       }
       $album = $this->view->form->saveValues();
 
-      $activity = Engine_Api::_()->getDbtable('actions', 'activity');
-      $action = $activity->addActivity(Engine_Api::_()->user()->getViewer(), $album, 'sesmusic_album_addnew', null, array());
-      if (null !== $action)
-        $activity->attachActivity($action, $album);
+      // $activity = Engine_Api::_()->getDbtable('actions', 'activity');
+      // $action = $activity->addActivity(Engine_Api::_()->user()->getViewer(), $album, 'sesmusic_album_addnew', null, array());
+      // if (null !== $action)
+      //   $activity->attachActivity($action, $album);
 
       $db->commit();
 

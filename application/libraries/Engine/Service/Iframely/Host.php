@@ -83,13 +83,15 @@ class Engine_Service_Iframely_Host extends Zend_Service_Abstract
   public function __construct($options = array())
   {
     $this->_setApiUrl();
-    foreach( $options as $key => $value ) {
-      $methodName = '_set' . ucfirst($key);
-      if( method_exists($this, $methodName) ) {
-        $this->$methodName($value);
-        continue;
-      }
-      $this->_options[$key] = $value;
+    if(is_array($options)) {
+			foreach( $options as $key => $value ) {
+				$methodName = '_set' . ucfirst($key);
+				if( method_exists($this, $methodName) ) {
+					$this->$methodName($value);
+					continue;
+				}
+				$this->_options[$key] = $value;
+			}
     }
     // Force the curl adapter if it's available
     if( extension_loaded('curl') ) {

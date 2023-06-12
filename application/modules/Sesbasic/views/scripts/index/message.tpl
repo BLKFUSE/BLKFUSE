@@ -3,10 +3,10 @@
  * SocialEngine
  *
  * @category   Application_Core
- * @package    Messages
+ * @package    Sesbasic
  * @copyright  Copyright 2006-2020 Webligo Developments
  * @license    http://www.socialengine.com/license/
- * @version    $Id: compose.tpl 10224 2014-05-15 18:45:45Z lucas $
+ * @version    $Id: message.tpl 10224 2014-05-15 18:45:45Z lucas $
  * @author     John
  */
 ?>
@@ -45,9 +45,8 @@
 </script>
 
 <?php
-    $this->headScript()
-      ->appendFile($this->layout()->staticBaseUrl . 'externals/mdetect/mdetect' . ( APPLICATION_ENV != 'development' ? '.min' : '' ) . '.js')
-      ->appendFile($this->layout()->staticBaseUrl . 'application/modules/Core/externals/scripts/composer.js');
+$this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/mdetect/mdetect' . ( APPLICATION_ENV != 'development' ? '.min' : '' ) . '.js')
+    ->appendFile($this->layout()->staticBaseUrl . 'application/modules/Core/externals/scripts/composer.js');
 ?>
 
 <script type="text/javascript">
@@ -91,6 +90,9 @@
     }
   });
 </script>
+<?php foreach( $this->composePartials as $partial ): ?>
+  <?php echo $this->partial($partial[0], $partial[1]); ?>
+<?php endforeach; ?>
 <div class="messages_compose_popup">
   <?php echo $this->form->render($this) ?>
 </div>

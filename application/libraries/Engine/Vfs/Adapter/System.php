@@ -74,7 +74,7 @@ class Engine_Vfs_Adapter_System extends Engine_Vfs_Adapter_LocalAbstract
   public function stat($path)
   {
     $path = $this->path($path);
-    $stat = stat($path);
+    $stat = @stat($path);
 
     // Missing
     if( !$stat ) {

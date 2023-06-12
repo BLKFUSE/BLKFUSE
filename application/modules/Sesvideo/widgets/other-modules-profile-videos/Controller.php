@@ -151,7 +151,7 @@ class Sesvideo_Widget_otherModulesProfileVideosController extends Engine_Content
       if ($profile == 'own') {
         $this->view->profile = 'own';
       } else {
-        $name = explode(' ', $userObject->displayname);
+        $name = explode(' ', $userObject->getTitle());
         if (isset($name[0]))
           $name = ucfirst($name[0]);
         else

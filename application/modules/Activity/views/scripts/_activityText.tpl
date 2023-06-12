@@ -131,7 +131,7 @@ $this->headScript()
                       }
                     ?>
                     <?php if( $attachment->item->getPhotoUrl() ): ?>
-                    <?php echo $this->htmlLink($attachment->item->getHref(), $this->itemPhoto($attachment->item, $attachment->item->getTitle()), $attribs) ?>
+                    <?php echo $this->htmlLink($attachment->item->getHref(), $this->itemPhoto($attachment->item, 'thumb.profile', $attachment->item->getTitle()), $attribs) ?>
                     <?php endif; ?>
                     <div>
                       <div class='feed_item_link_title'>
@@ -167,6 +167,9 @@ $this->headScript()
                   </div>
           <?php elseif( $attachment->meta->mode == 3 ): // Description only type actions ?>
             <?php if(engine_in_array($action->type, array('forum_topic_create', 'forum_topic_reply', 'group_topic_create', 'event_topic_create', 'group_topic_reply', 'event_topic_reply'))) { ?>
+							<div class='feed_item_link_title'>
+								<?php echo $this->htmlLink($attachment->item->getHref(), $attachment->item->getTitle() ? Engine_Api::_()->core()->DecodeEmoji($attachment->item->getTitle()) : '', $attribs); ?>
+							</div>
               <?php echo $this->viewMore(strip_tags($attachment->item->getDescription()), 255, 1027, 511, false); ?>
             <?php } else { ?>
               <?php echo $this->viewMore($attachment->item->getDescription()); ?>

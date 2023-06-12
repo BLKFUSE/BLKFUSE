@@ -420,7 +420,7 @@ classes throughout the stylesheet.
 			.sesdating_main_menu > ul > li > a:link,
 			.sesdating_main_menu > ul > li > a:visited{color:$theme_topbar_menu_link_color;text-decoration:$sesdating_mainmenu_links_color;overflow:hidden;}
 			.sesdating_main_menu > ul > li > a:hover,
-			.sesdating_main_menu > ul > li.active > a{color:$theme_topbar_menu_link_hover_color;}
+			.sesdating_main_menu > ul > li.active > a,.sesdating_main_menu > ul > li > a:focus-visible    {color:$theme_topbar_menu_link_hover_color;}
 			.sesdating_main_menu > ul > li > a span{float:left;font-family:$sesdating_mainmenu_fontfamily;font-size:$sesdating_mainmenu_fontsize;}
 			[dir="rtl"] .sesdating_main_menu > ul > li > a span{float:right;}
 			.sesdating_main_menu .menuicon{background-position:center center;background-repeat:no-repeat;float:left;height:24px;margin:11px 6px 0 0;width:24px;}
@@ -612,6 +612,7 @@ classes throughout the stylesheet.
 		.menu_left_panel_nav > li > a{color:$theme_topbar_menu_link_color;letter-spacing:1px;padding:7px 10px;display:block;}
 		.menu_left_panel_nav > li > a:hover,
 		.menu_left_panel_nav > li.active > a{color:$theme_topbar_menu_link_hover_color;background-color:rgba(31,54,79,.1);}
+		.menu_left_panel_nav > li > a:focus-visible{color:$theme_topbar_menu_link_hover_color;background-color:rgba(31,54,79,.1);outline:0;}
 		.menu_left_panel_nav > li > a .menuicon{background-position:center center;background-repeat:no-repeat;float:left;height:20px;margin:0 6px 0 0;width:20px;background-size:16px;}
 		[dir="rtl"] .menu_left_panel_nav > li > a .menuicon{float:right;margin:0 0 0 6px;}
 		.expcoll-icon{float:right;font-size:20px;line-height:25px;text-align:center;width:25px;font-style:normal;}

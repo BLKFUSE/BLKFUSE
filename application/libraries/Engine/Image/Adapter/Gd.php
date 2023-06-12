@@ -837,6 +837,7 @@ class Engine_Image_Adapter_Gd extends Engine_Image
       $support->jpeg = $support->jpg;
       $support->png = !empty($info["PNG Support"]);
       $support->wbmp = !empty($info["WBMP Support"]);
+      $support->webp = !empty($info["WebP Support"]);
       $support->xbm = !empty($info["XBM Support"]);
       $support->bmp = true; // through b/c at bottom
 

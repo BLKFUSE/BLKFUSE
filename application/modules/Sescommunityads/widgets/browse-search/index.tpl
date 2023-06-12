@@ -12,7 +12,7 @@
  */
  
  ?>
-
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sescommunityads/externals/scripts/core.js'); ?>
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sescommunityads/externals/styles/styles.css'); ?>
 
 <div class="sescmads_search sesbasic_bxs <?php echo $this->view_type=='horizontal' ? 'sescmads_search_horizontal' : 'sescmads_search_vertical'; ?>">
@@ -63,6 +63,7 @@
   function showSubCategory(cat_id,selected) {
     var url = en4.core.baseUrl + 'sescommunityads/index/subcategory/category_id/' + cat_id + '/type/'+ 'search';
     scriptJquery.ajax({
+			method: 'post',
       dataType: 'html',
       url: url,
       data: {
@@ -100,6 +101,7 @@
 
     var url = en4.core.baseUrl + 'sescommunityads/index/subsubcategory/subcategory_id/' + cat_id + '/type/'+ 'search';;
     (scriptJquery.ajax({
+			method: 'post',
       dataType: 'html',
       url: url,
       data: {

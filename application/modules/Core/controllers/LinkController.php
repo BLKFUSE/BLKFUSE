@@ -159,7 +159,7 @@ class Core_LinkController extends Core_Controller_Action_Standard
     $this->view->images = array();
     try {
       $config = Engine_Api::_()->getApi('settings', 'core')->core_iframely;
-      if( !empty($config['host']) && $config['host'] != 'none' ) {
+      if( !empty($config['host']) && $config['host'] != 'socialengine' ) {
         $this->_getFromIframely($config, $uri);
       } else {
         $this->_getFromClientRequest($uri);
@@ -173,6 +173,7 @@ class Core_LinkController extends Core_Controller_Action_Standard
 
   protected function _getFromIframely($config, $uri)
   {
+		
     $iframely = Engine_Iframely::factory($config)->get($uri);
     $images = array();
     if( !empty($iframely['links']['thumbnail']) ) {
@@ -212,6 +213,10 @@ class Core_LinkController extends Core_Controller_Action_Standard
       'survey',
       'file'
     );
+    
+    if(!is_array($iframely['links']))
+			$iframely['links'] = array();
+			
     $typeOfContent = array_intersect(array_keys($iframely['links']), $allowRichHtmlTyes);
     if( $typeOfContent ) {
       $this->view->richHtml = $iframely['html'];

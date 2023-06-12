@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesstories/externals/scripts/core.js'); ?>
 <li class="sesstories_archive_stories_item">
     <article>
         <?php

@@ -401,7 +401,7 @@ class Core_AdminContentController extends Core_Controller_Action_Admin
       unset($values['page_id']);
 
       if( empty($values['url']) ) {
-        $values['url'] = new Zend_Db_Expr('NULL');
+        unset($values['url']);
       }
       if( !empty($values['levels']) ) {
         $values['levels'] = Zend_Json_Encoder::encode($values['levels']);
@@ -457,6 +457,9 @@ class Core_AdminContentController extends Core_Controller_Action_Admin
     // Render by widget name
     $mod = $this->_getParam('mod');
     $name = $this->_getParam('name');
+    if(strpos($name, 'SETWIDGETNAME') !== false) {
+			$name = str_replace("SETWIDGETNAME","profile",$name);
+    }
     if( null === $name ) {
       throw new Exception('no widget found with name: ' . $name);
     }

@@ -145,7 +145,7 @@
                         <a title="<?php echo $this->translate('Add to Playlist');?>" href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('action'=>'append','albumsong_id' => $photo->albumsong_id, 'format' => 'smoothbox'), 'sesmusic_albumsong_specific' , true)); ?>'); return false;" class="sesbasic_icon_btn add-white"><i class="fa fa-plus"></i></a>
                       <?php endif; ?>                   
                     <?php if($this->songlink && engine_in_array('share', $this->songlink)  && !empty($this->information) && engine_in_array('share', $this->information)): ?>
-                    <a class="sesbasic_icon_btn share-white" title='<?php echo $this->translate("Share") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_albumsong', 'id' => $photo->albumsong_id, 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><i class="fa fa-share"></i></a>
+                    <a class="sesbasic_icon_btn share-white" title='<?php echo $this->translate("Share") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_albumsong', 'id' => $photo->albumsong_id, 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><i class="fas fa-share-alt"></i></a>
                     <?php endif; ?>
                     <?php endif; ?>
                   </div>
@@ -155,19 +155,19 @@
                     <?php if(!empty($this->information) && engine_in_array('commentCount', $this->information)): ?>
                     <span>
                       <?php echo $photo->comment_count; ?>
-                      <i class="fa fa-comment"></i>
+                      <i class="sesbasic_icon_comment_o"></i>
                     </span>
                     <?php endif; ?>
                     <?php if(!empty($this->information) && engine_in_array('likeCount', $this->information)): ?>
                     <span>
                       <?php echo $photo->like_count; ?>
-                      <i class="fa fa-thumbs-up"></i>
+                      <i class="sesbasic_icon_like_o"></i>
                     </span>
                     <?php endif; ?>
                     <?php if(!empty($this->information) && engine_in_array('viewCount', $this->information)): ?>
                     <span>
                       <?php echo $photo->view_count; ?>
-                      <i class="fa fa-eye"></i>
+                      <i class="sesbasic_icon_view_o"></i>
                     </span>
                     <?php endif; ?>
                     <?php if(!empty($this->information) && engine_in_array('downloadCount', $this->information)): ?>
@@ -290,7 +290,7 @@
                       <a class="sesbasic_icon_btn add-white" title='<?php echo $this->translate("Add to Playlist") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module' =>'sesmusic', 'controller' => 'song', 'action'=>'append - songs','album_id' => $photo->album_id, 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><i class="fa fa-plus"></i></a>
                       <?php endif; ?>
                     <?php if(engine_in_array('share', $this->albumlink) && !empty($this->informationAlbum) && engine_in_array('share', $this->informationAlbum)): ?>
-                    <a class="sesbasic_icon_btn share-white" title='<?php echo $this->translate("Share") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_album', 'id' => $photo->album_id, 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><i class="fa fa-share"></i></a>
+                    <a class="sesbasic_icon_btn share-white" title='<?php echo $this->translate("Share") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_album', 'id' => $photo->album_id, 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><i class="fas fa-share-alt"></i></a>
                     <?php endif; ?>
                     <?php  ?>
                   </div>
@@ -303,19 +303,19 @@
                     <?php if(!empty($this->informationAlbum) && engine_in_array('commentCount', $this->informationAlbum)): ?>
                       <span>
                         <?php echo $this->translate(array($photo->comment_count), $this->locale()->toNumber($photo->comment_count)) ?>
-                        <i class="fa fa-comment"></i>
+                        <i class="sesbasic_icon_comment_o"></i>
                       </span>
                     <?php endif; ?>
                     <?php if(!empty($this->informationAlbum) && engine_in_array('likeCount', $this->informationAlbum)): ?>
                       <span>
                         <?php echo $this->translate(array($photo->like_count), $this->locale()->toNumber($photo->like_count)) ?>
-                        <i class="fa fa-thumbs-up"></i>
+                        <i class="sesbasic_icon_like_o"></i>
                       </span>
                     <?php endif; ?>
                     <?php if(!empty($this->informationAlbum) && engine_in_array('viewCount', $this->informationAlbum)): ?>
                       <span>
                         <?php echo $this->translate(array($photo->view_count), $this->locale()->toNumber($photo->view_count)) ?>
-                        <i class="fa fa-eye"></i>
+                        <i class="sesbasic_icon_view_o"></i>
                       </span>
                     <?php endif; ?>
                     <?php if(!empty($this->informationAlbum) && engine_in_array('songCount', $this->informationAlbum)): ?>
@@ -398,7 +398,7 @@
                     <input type="hidden" id="sesmusic_playlist_favouritehidden_<?php echo $photo->getIdentity(); ?>" value='<?php echo $isFavourite ? $isFavourite : 0; ?>' /> 
                     <?php endif; ?>
                     <?php if($viewer_id && !empty($this->informationPlaylist) && engine_in_array('sharePl', $this->informationPlaylist)): ?>
-                    <a  class="fa fa-share" title='<?php echo $this->translate("Share") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_playlist', 'id' => $photo->playlist_id, 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><?php echo $this->translate("Share"); ?></a>
+                    <a  class="fas fa-share-alt" title='<?php echo $this->translate("Share") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_playlist', 'id' => $photo->playlist_id, 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><?php echo $this->translate("Share"); ?></a>
                    <?php endif; ?>
                 </div>
                 <?php endif; ?>

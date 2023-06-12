@@ -17,7 +17,7 @@
   <?php echo $this->translate("Native Android Mobile App") ?>
 </h2>
 <?php if(is_countable($this->navigation) && engine_count($this->navigation) ): ?>
-  <div class='sesandroidapp-admin-navgation'>
+  <div class='tabs'>
     <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render() ?>
   </div>
 <?php endif; ?>

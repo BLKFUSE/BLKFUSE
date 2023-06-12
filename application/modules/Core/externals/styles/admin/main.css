@@ -213,7 +213,7 @@ div#global_header_mini_left span img{
 }
 #global_header_right_menu a{
   border-radius:5px;
-  background:#6d7274;
+  background:#313045;
   display:inline-block;
   padding:14px 20px;
   font-weight:500;
@@ -288,7 +288,7 @@ div#global_header_mini_left span img{
   border-bottom:none;
 }
 .layout_core_admin_menu_main > ul > li > a{
-  padding:15px;
+  padding:15px 10px;
   color:#565757;
   text-decoration:none;
   outline:none;
@@ -319,6 +319,9 @@ div#global_header_mini_left span img{
 }
 .layout_core_admin_menu_main > ul > li > a.toggled_menu.active:after{
   transform:rotate(180deg);
+}
+.layout_core_admin_menu_main > ul > li > a.core_admin_main_home:after{
+  display:none;
 }
 .layout_core_admin_menu_main > ul > li > a:before{
   content:"\\f005";
@@ -430,12 +433,12 @@ div.subitems div:hover{
 }
 .layout_core_admin_menu_main ul ul li a{
   display:block;
-  padding:15px 20px;
+  padding:10px 15px;
   color:#343434;
-  border-bottom:1px solid #b5b5b5;
+  font-size:13px;
 }
 .layout_core_admin_menu_main ul ul > li > a.active{
-  background:#3B3E40;
+  background:$theme_heading_background_color;
   color:#fff;
 }
 .layout_core_admin_menu_main ul ul li:last-child a{
@@ -471,6 +474,267 @@ div.subitems div a:hover{
 .core_admin_main_serenity:after{
   display:none;
 }
+.menu_vertical div#global_header_mini_left .layout_core_admin_menu_logo,
+.menu_vertical .main_menu_horizontal,
+.menu_vertical div#global_header_mini_right > span{
+  display: none;
+}
+/*Horizontal Header*/
+body.menu_horizontal #global_header_mini_menu_wrapper{
+  margin-bottom:0;
+}
+body.menu_horizontal .global_header_menu_mini{
+  margin-bottom: 30px;
+}
+body.menu_horizontal #global_header_wrapper,
+body.menu_horizontal .global_header_left{
+  display: none;
+}
+body.menu_horizontal #global_content_wrapper{
+  padding:0px;
+  margin: auto;
+  min-height:80vh;
+}
+body.menu_horizontal div#global_header_mini_left > span {
+  display: none;
+}
+body.menu_horizontal #global_header_mini_menu_wrapper{
+  background: #fff;
+}
+body.menu_horizontal #global_header_mini_menu_wrapper #global_header_right_menu{ 
+  width: 1200px;
+  margin: auto;
+}
+body.menu_horizontal  .main_menu_horizontal {
+  background:$theme_heading_background_color;
+}
+body.menu_horizontal  div#global_header_mini_left  #global_header_logo{
+  padding: 0;
+  height: auto;
+  background: transparent;
+}
+body.menu_horizontal div#global_header_mini_left #global_header_logo > a{
+  padding: 0;
+  background: transparent;
+}
+body.menu_horizontal #global_header_mini_menu_wrapper div#global_header_mini_right > span{
+  margin-right: 8px;
+  font-size: 15px;
+}
+[dir="rtl"] body.menu_horizontal #global_header_mini_menu_wrapper div#global_header_mini_right > span{
+  margin-right: 0;
+  margin-left: 8px;
+}
+body.menu_horizontal #global_content{
+  max-width: 1200px;
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main {
+  max-width: 1200px;
+  margin: auto;
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  background: transparent;
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li{
+  border: none;
+  position: relative;
+  text-align: center;
+  display: block;
+  margin: 0 4px;
+  padding: 8px 0;
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li > a {
+  padding: 14px 20px;
+  color: #fff;
+  border-radius: 10px;
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li > a:after {
+  position: relative;
+  margin-left: auto;
+  right: auto !important;
+  left: auto !important;
+  padding-left: 6px;
+  font-size: 13px;
+}
+[dir="rtl"] body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li > a:after  {
+  padding-right: 6px;
+  padding-left: 0px;
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li > .core_admin_main_home::after{
+  display: none;
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li > .core_admin_main_home:before{
+  background-image:url(~/application/modules/Core/externals/images/admin/home1.png);
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li > .core_admin_main_manage:before{
+  background-image:url(~/application/modules/Core/externals/images/admin/manage1.png);
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li > .core_admin_main_settings:before{
+  background-image:url(~/application/modules/Core/externals/images/admin/setting1.png);
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li > .core_admin_main_plugins:before{
+  background-image:url(~/application/modules/Core/externals/images/admin/plugin1.png);
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li > .core_admin_main_layout:before{
+  background-image:url(~/application/modules/Core/externals/images/admin/appriance1.png);
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li > .core_admin_main_ads:before{
+  background-image:url(~/application/modules/Core/externals/images/admin/ads1.png);
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li > .core_admin_main_payment:before{
+  background-image:url(~/application/modules/Core/externals/images/admin/manage1.png);
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li > .core_admin_main_stats:before{
+  background-image:url(~/application/modules/Core/externals/images/admin/stats1.png);
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li > .core_admin_main_monetization:before{
+  background-image:url(~/application/modules/Core/externals/images/admin/monetization1.png);
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main ul ul{
+  position: absolute;
+  margin-top:8px;
+  max-width: 300px;
+  background: #fff;
+  box-shadow: 0px 1px 6px rgba(0 , 0 , 0 , .2);
+  white-space:nowrap;
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main ul ul li a{
+  text-align: left;
+  border-bottom: 1px solid #dddddd;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+[dir="rtl"] body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main ul ul li a{
+  text-align: right;
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li:hover ul{
+  display: block !important;
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li:hover > a {
+  background: #313045;
+} 
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li:last-child:hover a{
+  background: #208ED3;
+}
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main .navigation li .core_admin_main_elpis,
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main .navigation li .core_admin_main_inspira,
+body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main .navigation li .core_admin_main_serenity{
+  margin: 0;
+  border-radius: 50px;
+}
+
+/*Menu Setting*/
+.admin_menu_setting{
+  margin-bottom: 20px;
+}
+.admin_menu_setting_inner h3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 18px;
+  background: $theme_heading_background_color;
+  color: #fff;
+  padding: 15px;
+  font-weight: 500;
+  border-radius: 10px 10px 0 0;
+  margin: 0;
+}
+[dir="rtl"] .admin_menu_setting_inner h3 .fa-angle-double-right:before{
+  content: "\\f100";
+}
+.admin_menu_setting_inner_right ul {
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  padding: 20px;
+}
+.admin_menu_setting_inner ul li{
+  color: $theme_heading_background_color;
+  position: relative;
+  margin: 0 15px 0px 0;
+}
+[dir="rtl"] .admin_menu_setting_inner ul li{
+  margin: 0 0px 0px 15px; 
+}
+.admin_menu_setting_inner ul li input[type=radio]{
+  position: absolute;
+  visibility: hidden;
+  left:4px;
+  top:4px;
+}
+[dir="rtl"] .admin_menu_setting_inner ul li input[type=radio]{
+  left: auto;
+  right: 4px;
+}
+.admin_menu_setting_inner ul li label{
+  display: block;
+  position: relative;
+  font-weight:600;
+  font-size:14px;
+  padding-left: 30px;
+  z-index: 9;
+  cursor: pointer;
+  -webkit-transition: all 0.25s linear;
+  text-align: left;
+}
+[dir="rtl"] .admin_menu_setting_inner ul li label{
+  padding-left: 0px;
+  padding-right: 30px;
+}
+.admin_menu_setting_inner ul li:hover label{
+	color: $theme_heading_background_color;
+}
+.admin_menu_setting_inner ul li .check{
+  display: block;
+  position: absolute;
+  border: 2px solid $theme_heading_background_color;
+  border-radius: 100%;
+  height: 22px;
+  width: 22px;
+  top: 1px;
+  left: 0px;
+	z-index: 5;
+	transition:border .25s linear;
+	-webkit-transition: border .25s linear;
+}
+[dir="rtl"] .admin_menu_setting_inner ul li .check{
+  left: auto;
+  right: 0;
+}
+.admin_menu_setting_inner ul li:hover .check {
+  border: 2px solid $theme_base_color;
+}
+.admin_menu_setting_inner ul li .check::before {
+  display:block;
+  position:absolute;
+	content:'';
+  border-radius:100%;
+  height:10px;
+  width:10px;
+  top: 4px;
+	left:4px;
+  margin:auto;
+	transition: background 0.25s linear;
+	-webkit-transition: background 0.25s linear;
+}
+.admin_menu_setting_inner input[type=radio]:checked ~ .check {
+  border: 2px solid $theme_base_color;
+}
+.admin_menu_setting_inner input[type=radio]:checked ~ .check::before{
+  background: $theme_base_color;
+}
+.admin_menu_setting_inner input[type=radio]:checked ~ label{
+  color: $theme_base_color;
+}
+.admin_menu_setting_inner ul li:hover label{
+  color: $theme_base_color;
+}
+
 /*Development Mode Tip*/
 .development_mode_warning{
   text-align:center !important;
@@ -480,6 +744,9 @@ div.subitems div a:hover{
   color:#fff;
   transition:.5s;
   margin-bottom:20px;
+}
+body.menu_horizontal .development_mode_warning{
+  margin-bottom: 0;
 }
 .development_mode_warning a:hover{
   color:#fff;
@@ -505,9 +772,9 @@ div.subitems div a:hover{
   background:#fff;
   border-radius:10px;
 }
-#global_content h2{
+#global_content > h2{
   font-size:18px;
-  background:#3B3E40;
+  background:$theme_heading_background_color;
   color:#fff;
   padding:15px;
   font-weight:500;
@@ -523,8 +790,7 @@ div.subitems div a:hover{
   padding:10px 0;
 }
 #global_content_simple{
-  display:block;
-  width:100%;
+  display:inline-block;
 }
 #global_content_simple  .form-elements{
   width:100%;
@@ -557,7 +823,7 @@ select{
   border:1px solid #A6A6A6;
   font-family:tahoma, verdana, arial, sans-serif;
   padding:13px 20px;
-  color:#7A7A7A;
+  color:#111;
   font-size:14px !important;
   border-radius:5px;
   box-sizing:border-box;
@@ -622,9 +888,9 @@ select optgroup{
   padding:8px 0 10px;
   font-weight:600;
 }
-.settings div h3{
+.settings > form > div > div > h3{
   font-size:18px;
-  background:#3B3E40;
+  background:$theme_heading_background_color;
   color:#fff;
   padding:15px;
   font-weight:500;
@@ -728,9 +994,11 @@ select optgroup{
 .settings form div.form-element input[type=password],
 .settings form div.form-element input[type=email],
 .settings form div.form-element textarea,
-.settings form div.form-element select{
+.settings form div.form-element select,
+.settings form div.form-element .mce-tinymce{
   width:60%;
   box-sizing:border-box;
+  min-width: auto !important;
 }
 .settings form div.form-element input:focus{
   border-color:$theme_base_color;
@@ -1187,12 +1455,10 @@ td.admin_table_options > a + span.sep{
   display:inline;
 }
 .admin_table_email{
-  white-space:normal !important;
-  max-width:140px;
+  max-width:inherit;
   word-wrap:break-word;
 }
 .admin_table_user{
-  white-space:normal !important;
   max-width:140px;
   word-wrap:break-word;
 }
@@ -1263,7 +1529,6 @@ ADMIN HOME
   overflow:hidden;
   margin-left:20px !important;
   width:330px;
-  background-color:#fff;
   border-radius:10px;
   padding-bottom:40px;
   margin-bottom:20px;
@@ -1272,6 +1537,10 @@ ADMIN HOME
   float:left;
   margin-left:0px;
   margin-right:20px !important;
+}
+.admin_home_right > div {
+  background-color: #fff;
+  border-radius: 0 0 5px 5px
 }
 .admin_home_environment_description{
   line-height:24px;
@@ -1318,8 +1587,7 @@ table.admin_home_stats td{
 ADMIN HOME MODE
 */
 .admin_home_environment{
-  margin-top:25px;
-  padding:0 15px;
+  padding:25px 15px 0;
 }
 .admin_home_environment h3{
   font-size:16px;
@@ -1364,12 +1632,15 @@ ADMIN HOME DASHBOARD
   margin-bottom:30px;
 }
 ul.admin_home_dashboard_messages{
-  overflow:hidden;
-  margin-bottom:20px;
+  overflow: hidden;
+  padding: 10px 8px 0;
+  margin: 0;
 }
 ul.admin_home_dashboard_messages > li{
   background-repeat:no-repeat;
   padding-left:22px;
+  margin-top: 10px;
+  background-position: center left;
 }
 ul.admin_home_dashboard_messages > li.notification-notice{
   background-image:url(~/application/modules/Core/externals/images/admin/bulb.png);
@@ -1381,12 +1652,9 @@ ul.admin_home_dashboard_messages > li.notification-error{
   background-image:url(~/application/modules/Core/externals/images/admin/error.png);
 }
 [dir="rtl"] ul.admin_home_dashboard_messages > li{
-  background-position:top right;
+  background-position: center right;
   padding-left:0px;
   padding-right:22px;
-}
-ul.admin_home_dashboard_messages > li + li{
-  margin-top:5px;
 }
 .admin_home_dashboard_item{
   background:#fff;
@@ -1598,6 +1866,10 @@ MEMBER STATS POPUP
   float:right;
   text-align:left;
   font-weight:bold;
+}
+.admin_member_stats > ul > li > img{
+  width: 48px;
+  height: 48px;
 }
 /* ADMIN NETWORK MEMBER LIST */
 .admin_member_list li{
@@ -1826,6 +2098,7 @@ body#global_page_chat-admin-settings-level .settings div h3,
   float:left;
   overflow:hidden;
   margin-right:10px;
+  font-size: 18px;
 }
 [dir="rtl"] .admin_fields_type h3,
 [dir="rtl"] .admin_fields_type select{
@@ -3422,11 +3695,6 @@ Also used to style popup response messages, etc.
   overflow:hidden;
   font-size:.9em;
 }
-[dir="rtl"] .global_form_popup{
-  padding:10px 13px 0px 10px;
-  float:right;
-}
-
 .global_form_popup .form-elements{
   width:100%;
 }
@@ -3620,6 +3888,7 @@ Used for the modal popup smoothbox.
   background:#fff;
   color:#000;
   border:6px solid #03a9f4;
+  box-sizing: initial;
 }
 [dir="rtl"] #TB_window{
   text-align:right;
@@ -3678,7 +3947,6 @@ Used for the modal popup smoothbox.
 }
 #TB_ajaxContent{
   clear:both;
-  padding:12px 15px 38px 10px;
   overflow:auto;
   text-align:left;
   line-height:1.4em;
@@ -3690,6 +3958,7 @@ Used for the modal popup smoothbox.
 #TB_ajaxContent > div{
   display:block;
   overflow:hidden;
+  margin:10px;
 }
 #TB_ajaxContent > div > a{
   display:block;
@@ -3729,7 +3998,6 @@ Used for the modal popup smoothbox.
   border:none;
   margin-bottom:-1px;
   margin-top:1px;
-  width:100% !important;
 }
 #TB_iframeContent html,
 #TB_iframeContent body{
@@ -4059,17 +4327,18 @@ html .mce-btn button{
   padding-right:20px;
 }
 .admin_loading_icon{
-  background:rgba(255, 255, 255, 0.3);
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  width:100%;
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+	background: rgba(255, 255, 255, 0.3);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1;
 }
 .admin_manage_listings{
   float:left;
@@ -4112,12 +4381,11 @@ html .mce-btn button{
   position:absolute;
   margin-top:-50px;
   cursor:pointer;
-  right:20px;
+  left:57%;
 }
 [dir="rtl"] #password_settings_group-wrapper .user_showhidepassword,
 [dir="rtl"] #password_confirm_settings_group-wrapper .user_showhidepassword{
-	left:20px;
-	right:0px;
+  left:42%;
 }
 #password_settings_group-wrapper input,
 #password_confirm_settings_group-wrapper input{
@@ -4287,7 +4555,32 @@ body#global_page_core-admin-ads-edit #end_time-wrapper div#end_time-label{
   margin:0;
 }
 
+@media (max-width:1366px){
+  .admin_home_dashboard .col-md-6{
+    width:100%;
+    margin-bottom:15px;
+  }
+}
 @media (max-width:1200px){
+  .admin_home_news_wrapper .col-md-6{
+    width:100%;
+  }
+  /*Horizontal Menu*/
+  body.menu_horizontal #global_header_mini_menu_wrapper #global_header_right_menu,
+  body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main,
+  body.menu_horizontal #global_content{
+    width: 100%;
+    padding: 0 15px !important;
+  }
+  body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li{
+    margin: 0 2px
+  }
+  body.menu_horizontal .main_menu_horizontal .layout_core_admin_menu_main > ul > li > a{
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+}
+@media (max-width:1024px){
   #global_content_wrapper{
     padding:0 10px;
   }
@@ -4335,12 +4628,34 @@ body#global_page_core-admin-ads-edit #end_time-wrapper div#end_time-label{
   .toggle_cross_button{
     display:block;
   }
+  /*Menu Horizontal*/
+
+  body.menu_horizontal #global_header_wrapper, 
+  body.menu_horizontal .global_header_left{
+    display: block;
+  }
+  body.menu_horizontal .main_menu_horizontal{
+    display: none;
+  }
+  body.menu_horizontal .global_header_left .layout_core_admin_menu_logo{
+    display: none;
+  }
+  body.menu_horizontal .global_header_left .layout_core_admin_menu_main > ul{
+    top: 0;
+  }
+  body.menu_horizontal div#global_header_mini_left .toggle_button {
+    background: #208ed3;
+    padding: 0;
+    font-size: 25px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 @media (max-width:991px){
-  .admin_home_dashboard .col-md-6{
-    width:100%;
-    margin-bottom:15px;
-  }
+
   .admin_home_news_wrapper .admin_home_news_main{
     width:100%;
   }
@@ -4501,9 +4816,11 @@ body#global_page_core-admin-ads-edit #end_time-wrapper div#end_time-label{
   .settings form div.form-element input[type=password],
   .settings form div.form-element input[type=email],
   .settings form div.form-element textarea,
-  .settings form div.form-element select{
+  .settings form div.form-element select,
+  .settings form div.form-element .mce-tinymce{
     width:100%;
   }
+
   div#messages_flood-wrapper div#messages_flood-element input,
   div#messages_flood-wrapper div#messages_flood-element select,
   div#activity_flood-wrapper div#activity_flood-element input,
@@ -4518,6 +4835,16 @@ body#global_page_core-admin-ads-edit #end_time-wrapper div#end_time-label{
     max-width: 48%;
     min-width: 48% !important;
     display: inline-block;
+  }
+  #password_settings_group-wrapper .user_showhidepassword, 
+  #password_confirm_settings_group-wrapper .user_showhidepassword{
+    left: auto;
+    right: 10px;
+  }
+  [dir="rtl"] #password_settings_group-wrapper .user_showhidepassword, 
+  [dir="rtl"] #password_confirm_settings_group-wrapper .user_showhidepassword{
+    right: auto;
+    left: 10px;
   }
   #TB_window{
     width:100% !important;
@@ -4576,7 +4903,21 @@ body#global_page_core-admin-ads-edit #end_time-wrapper div#end_time-label{
     width:48% !important;
     margin:0 3px 6px !important;
   }
-
+  /*Menu Horizontal*/
+  .menu_horizontal div#global_header_mini_left{
+    width: 100%;
+    justify-content: space-between;
+  }
+  body.menu_horizontal #global_header_mini_menu_wrapper #global_header_right_menu{
+    height: 100%;
+    flex-direction: column;
+    padding: 15px !important;
+  }
+  body.menu_horizontal #global_header_mini_menu_wrapper div#global_header_mini_right > span {
+    margin: 15px 0;
+    display: block;
+    width: 100%;
+  }
 }
 @media (max-width:600px){
 

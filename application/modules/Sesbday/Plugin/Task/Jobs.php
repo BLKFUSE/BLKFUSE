@@ -73,7 +73,7 @@ class Sesbday_Plugin_Task_Jobs extends Core_Plugin_Task_Abstract {
     $description = $this->getBackgroundImages($description);
     $description = preg_replace($search, $replace, $description);
     foreach ($result as $users) {
-      Engine_Api::_()->getApi('mail', 'core')->sendSystem($users->email, 'sesbday_birthday_email', array('host' => $_SERVER['HTTP_HOST'], 'birthday_content' => $description, 'birthday_subject' => $subject, 'queue' => false, 'recipient_title' => $users->displayname));
+      Engine_Api::_()->getApi('mail', 'core')->sendSystem($users->email, 'sesbday_birthday_email', array('host' => $_SERVER['HTTP_HOST'], 'birthday_content' => $description, 'birthday_subject' => $subject, 'queue' => false, 'recipient_title' => $users->getTitle()));
       $db->query("INSERT INTO `engine4_sesbday_birthdayemailsends` (`user_id`, `creation_date`) VALUES(" . $users->getIdentity() . ",'" . date('Y-m-d') . "')");
     }
 	

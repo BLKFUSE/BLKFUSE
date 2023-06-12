@@ -42,7 +42,7 @@ function handleFileUploadsesstories(files)
 			scriptJquery(".multi_upload_sesstories").append('<span class="filename">'+url+'</span>');
 			scriptJquery("#multi_upload_sesstories").css("border",'');
 		}else{
-			scriptJquery(".sesstories_btn_submit").attr('disabled',true);
+			// scriptJquery(".sesstories_btn_submit").attr('disabled',true);
 			files.value = "";
 		}
 	}
@@ -60,19 +60,20 @@ scriptJquery(document).on('submit','.submit_stories',function (e) {
 // 		return false;
 // 	}
 	var formData = new FormData(this);
-  
-	var name = "attachmentVideo[0]";
-	var url = scriptJquery("#file_multi_sesstories").val();
-	var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-	if((ext == "png" || ext == "jpeg" || ext == "jpg" ||  ext == 'gif')){
-		name = "attachmentImage[0]";
+	if(scriptJquery('#file_multi_sesstories')[0].files[0]){
+		var name = "attachmentVideo[0]";
+		var url = scriptJquery("#file_multi_sesstories").val();
+		var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+		if((ext == "png" || ext == "jpeg" || ext == "jpg" ||  ext == 'gif')){
+			name = "attachmentImage[0]";
+		}
+		formData.append(name, scriptJquery('#file_multi_sesstories')[0].files[0]);
 	}
-	formData.append(name, scriptJquery('#file_multi_sesstories')[0].files[0]);
 	scriptJquery(".submit_stories").append('<div class="sesstories_loading_image"></div>');
 	formData.append('description', scriptJquery('#sesstories_description').val());
 
   formData.append('background_id', scriptJquery('#background_id').val());
-  formData.append('story_type', scriptJquery('#story_type').val());
+  formData.append('story_type', scriptJquery('#story_type').val() ? scriptJquery('#story_type').val() : "text");
 
 	var uploadURL = 'sesstories/index/create';
 	scriptJquery(".sesstories_btn_submit").attr('disabled',true);
@@ -123,13 +124,28 @@ scriptJquery(document).on('click','.multi_upload_sesstories, .text_sesstories',f
   if(scriptJquery(this).attr('data-type') == 'text') {
     scriptJquery('#sesstories_add_bg_images').show();
     scriptJquery('#story_type').val('text');
+	if(scriptJquery("#sesstories_description").val())
+		scriptJquery(".sesstories_btn_submit").removeAttr('disabled');
   } else if(scriptJquery(this).attr('data-type') == 'imagevideo') {
     scriptJquery('#story_type').val('imagevideo');
     scriptJquery('#sesstories_add_bg_images').hide();
     document.getElementById('file_multi_sesstories').click();
   }
 });
-
+scriptJquery(document).on("keyup","#sesstories_description",function(e){
+	if(scriptJquery("#story_type").val() == "imagevideo"){
+		return;
+	}
+	scriptJquery('#sesstories_add_bg_images').show();
+	if(!scriptJquery("#background_id").val()){
+		scriptJquery("#sesstories_add_bg_images").find("a").eq(0).trigger("click");
+	}
+	if(scriptJquery(this).val()){
+		scriptJquery(".sesstories_btn_submit").removeAttr('disabled');
+	}else{
+		scriptJquery(".sesstories_btn_submit").attr('disabled',true);
+	}
+})
 function timeSince(timeStamp) {
 	var now = new Date(currentDateTime),
 		secondsPast = (now.getTime() - timeStamp) / 1000;

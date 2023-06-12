@@ -189,7 +189,7 @@ class Sessociallogin_QuickController extends Core_Controller_Action_Standard {
         // Create user
         // Note: you must assign this to the registry before calling save or it
         // will not be available to the plugin in the hook
-        $this->_registry->user  = $user = Engine_Api::_()->getDbtable('users', 'user')->createRow();
+        $user = Engine_Api::_()->getDbtable('users', 'user')->createRow();
         $data['enabled'] = 1;
         $data['verified'] = 1;
         $user->setFromArray($data);
@@ -238,8 +238,8 @@ class Sessociallogin_QuickController extends Core_Controller_Action_Standard {
                         'host' => $_SERVER['HTTP_HOST'],
                         'email' => $user->email,
                         'date' => $date->format('F j, Y, g:i a'),
-                        'recipient_title' => $super_admin->displayname,
-                        'object_title' => $user->displayname,
+                        'recipient_title' => $super_admin->getTitle(),
+                        'object_title' => $user->getTitle(),
                         'object_link' => $user->getHref(),
                     );
                 }
@@ -256,7 +256,7 @@ class Sessociallogin_QuickController extends Core_Controller_Action_Standard {
                         'host' => $_SERVER['HTTP_HOST'],
                         'email' => $user->email,
                         'date' => $date->format('F j, Y, g:i a'),
-                        'recipient_title' => $super_admin->displayname,
+                        'recipient_title' => $super_admin->getTitle(),
                         'object_title' => $user->getTitle(),
                         'object_link' => $user->getHref(),
                     );
@@ -291,7 +291,7 @@ class Sessociallogin_QuickController extends Core_Controller_Action_Standard {
                         'host' => $_SERVER['HTTP_HOST'],
                         'email' => $user->email,
                         'date' => date("F j, Y, g:i a"),
-                        'recipient_title' => $super_admin->displayname,
+                        'recipient_title' => $super_admin->getTitle(),
                         'object_title' => $user->getTitle(),
                         'object_link' => $user->getHref(),
                     );

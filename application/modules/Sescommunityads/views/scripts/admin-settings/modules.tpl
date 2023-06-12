@@ -38,7 +38,7 @@
         <th align="left">
           <?php echo $this->translate("Item Type"); ?>
         </th>
-        <th align="center">
+        <th class="admin_table_centered">
           <?php echo $this->translate("Enabled"); ?>
         </th>
         <th align="left">

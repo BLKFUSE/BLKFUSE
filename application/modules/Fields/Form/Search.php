@@ -132,6 +132,7 @@ class Fields_Form_Search extends Engine_Form
                   $baseURL = Zend_Registry::get('StaticBaseUrl');
                   $view->headLink()->appendStylesheet($baseURL."externals/selectize/css/normalize.css");
                   $headScript = new Zend_View_Helper_HeadScript();
+                  //$headScript->prependFile($baseURL.'externals/jQuery/jquery.min.js');
                   $headScript->appendFile($baseURL.'externals/selectize/js/selectize.js');
               }
           }
@@ -246,9 +247,9 @@ class Fields_Form_Search extends Engine_Form
         case 'multi_checkbox':
           // Ignore if there is only one/zero option?
           if( engine_count(@$params['options']['multiOptions']) <= 1 && isset($params['options']['multiOptions']['']) ) {
-            break;
+            continue 2;
           } else if( engine_count(@$params['options']['multiOptions']) <= 0 ) {
-            break;
+            continue 2;
           }
           if($showMulti){
               $params['type'] = "multiselect";

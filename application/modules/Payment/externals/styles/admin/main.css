@@ -3,6 +3,8 @@
 
 .payment_transaction_detail_headline{
   padding: 10px 0px 0px 10px;
+  clear:both;
+  font-size:20px;
 }
 dl.payment_transaction_details{
   min-width: 500px;

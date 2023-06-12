@@ -118,7 +118,7 @@
     $locationArray[$counter]['lng'] = $member->lng;
     $locationArray[$counter]['iframe_url'] = '';
     $locationArray[$counter]['image_url'] = $member->getPhotoUrl();
-    $locationArray[$counter]['title'] = '<a href="'.$member->getHref().'">'.$member->displayname.'</a>';   
+    $locationArray[$counter]['title'] = '<a href="'.$member->getHref().'">'.$member->getTitle().'</a>';   
     $counter++;?>
 <?php endif;?>
 <?php endforeach; ?>

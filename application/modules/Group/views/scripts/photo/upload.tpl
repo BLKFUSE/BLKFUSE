@@ -24,6 +24,7 @@
 en4.core.runonce.add(function () {
   new Uploader('#upload_file', {
     uploadLinkClass : 'buttonlink icon_photos_new',
+    removePhotoURL : "<?php echo $this->url(array('controller' => 'photo','action' => 'remove-photo'), 'group_extended', true); ?>",
     uploadLinkTitle : '<?php echo $this->translate("Add Photos");?>',
     uploadLinkDesc : '<?php echo $this->translate("Click \"Add Photos\" to select one or more photos from your computer."
       . " After you have selected the photos, they will begin to upload right away. "

@@ -42,7 +42,7 @@
 	color:$theme_button_font_color !important;
 }
 .sescmads_packages_create_btn:hover{
-	background-color:$theme_button_background_hover_color;
+	background-color:$theme_button_background_color_hover;
 }
 .sescmads_packages_table_item.active > section,
 .sescontest_packages_list_item.active > section{

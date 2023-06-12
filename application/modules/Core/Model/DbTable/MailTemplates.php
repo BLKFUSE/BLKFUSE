@@ -30,7 +30,7 @@ class Core_Model_DbTable_MailTemplates extends Engine_Db_Table {
         $name = $this->info('name');
 
         $select = $this->select()
-            ->from($name, array('type', 'module'))
+            ->from($name, array('type', 'module', 'default'))
             ->where('module IN(?)', $enabledModuleNames)
             ->where('type NOT IN(?)', $excludeMailTypes);
 
@@ -84,4 +84,12 @@ class Core_Model_DbTable_MailTemplates extends Engine_Db_Table {
             $this->update(array('default' => '0'), array('`default`' => '1'));
         }
     }
+    
+		public function isEnableNotificationType($type) {
+			return $this->select()
+										->from($this->info('name'), 'default')
+										->where('type = ?', $type)
+										->query()
+										->fetchColumn();
+		}
 }

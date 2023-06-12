@@ -125,7 +125,8 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 			$value['subcat_id'] = $this->_getParam('subcat_id');
 		if($this->_getParam('subsubcat_id'))
 			$value['subsubcat_id'] = $this->_getParam('subsubcat_id');
-		
+		$user_id = $this->_getParam('user_id');
+		$value["user_id"] = $user_id;
 		$paginator = Engine_Api::_()->getDbtable('crowdfundings', 'sescrowdfunding')->getSescrowdfundingsPaginator($value);
 		
 		$paginator->setItemCountPerPage($this->_getParam('limit','10'));
@@ -394,9 +395,9 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 		$result = array();
 		$currency = Engine_Api::_()->sescrowdfunding()->getCurrentCurrency();
 		foreach($paginator as $donation){
-			$result[$counter] = $donation->toArray();
-		
 			$crowdfunding = Engine_Api::_()->getItem('crowdfunding', $donation->crowdfunding_id);
+			if(!$crowdfunding)	continue;
+			$result[$counter] = $donation->toArray();
 			$result[$counter]['title'] = $crowdfunding->getTitle();
 			$donationAmount = Engine_Api::_()->sescrowdfunding()->getCurrencyPrice($donation->total_useramount);
 			$result[$counter]['images']['main'] = $this->getBaseUrl(false, $crowdfunding->getPhotoUrl());
@@ -644,11 +645,11 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 			$data['menus'][$tabcounter]['label'] = $this->view->translate('Donors');
 			$tabcounter++;
 		}
-		if (Engine_Api::_()->getApi('settings', 'core')->getSetting('sescrowdfunding.enable.location', 1)) {
-      $data['menus'][$tabcounter]['name'] = 'map';
-			$data['menus'][$tabcounter]['label'] = $this->view->translate('Map');
-			$tabcounter++;
-    }
+		// if (Engine_Api::_()->getApi('settings', 'core')->getSetting('sescrowdfunding.enable.location', 1)) {
+      	// 	$data['menus'][$tabcounter]['name'] = 'map';
+		// 	$data['menus'][$tabcounter]['label'] = $this->view->translate('Map');
+		// 	$tabcounter++;
+    	// }
 		$announcements = Engine_Api::_()->getDbTable('announcements', 'sescrowdfunding')->getCrowdfundingAnnouncementPaginator(array('crowdfunding_id' => $sescrowdfunding->crowdfunding_id));
 		
 		if ($announcements->getTotalItemCount() >0){

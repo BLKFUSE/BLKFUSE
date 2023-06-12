@@ -12,6 +12,7 @@
  */
 
 ?>
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesthought/externals/scripts/core.js'); ?>
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesthought/externals/styles/styles.css'); ?>
 <?php $viewer = Engine_Api::_()->user()->getViewer();?>
 <div class="sesthought_item_view_popup sesbasic_bxs">

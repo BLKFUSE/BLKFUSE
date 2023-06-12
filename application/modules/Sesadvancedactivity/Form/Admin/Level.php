@@ -109,7 +109,7 @@
         'description' => 'Enter the number of background images to be shown in the status box to the users of this member level. (Maximum 12 background images are recommended.)',
         'validators' => array(
           array('Int', true),
-          array('Between', false, array('min' => 2, 'max' => 12))
+          array('Between', false, array('min' => 2, 'max' => 50))
         ),
         'value' => 12,
       ));

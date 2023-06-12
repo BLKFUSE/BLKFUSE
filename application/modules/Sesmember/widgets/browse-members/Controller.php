@@ -19,8 +19,12 @@ class Sesmember_Widget_BrowseMembersController extends Engine_Content_Widget_Abs
     if (isset($_POST['params']))
       $params = json_decode($_POST['params'], true);
 
-    if (isset($_POST['searchParams']) && $_POST['searchParams'])
-      parse_str($_POST['searchParams'], $searchArray);
+		if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+			if(engine_in_array($_POST['searchParams']))
+				$searchArray = $_POST['searchParams'];
+			elseif(is_string($_POST['searchParams']))
+				parse_str($_POST['searchParams'], $searchArray);
+		}
     $viewer = Engine_Api::_()->user()->getViewer();
     $this->view->is_ajax = $is_ajax = isset($_POST['is_ajax']) ? true : false;
 		$this->view->gridblock = $gridblock = isset($params['gridblock']) ? $params['gridblock'] : $this->_getParam('gridblock', '4');
@@ -204,7 +208,7 @@ class Sesmember_Widget_BrowseMembersController extends Engine_Content_Widget_Abs
     $this->view->memberlevels = $value['memberlevels'] = $memberlevels = isset($params['memberlevels']) ? $params['memberlevels'] : $this->_getParam('memberlevels', array());
     //member level exclude
 
-    $params = array('gridblock' => $gridblock, 'pagging' => $loadOptionData, 'limit_data' => $limit_data, 'profileFieldCount' => $profileFieldCount, 'list_title_truncation' => $list_title_truncation, 'grid_title_truncation' => $grid_title_truncation, 'pinboard_title_truncation' => $pinboard_title_truncation, 'show_criterias' => $show_criterias, 'view_type' => $view_type, 'height' => $defaultHeight, 'list_container_height' => $listContainerHeight, 'list_container_width' => $listContainerWidth, 'photo_height' => $defaultPhotoHeight, 'photo_width' => $defaultPhotoWidth, 'info_height' => $defaultInfoHeight, 'pinboard_width' => $defaultPinboardWidth, 'order' => $value['order'], 'location' => $value['location'], 'lat' => $value['lat'], 'lng' => $value['lng'], 'miles' => $value['miles'], 'width' => $defaultWidth, 'country' => $value['country'], 'state' => $value['state'], 'city' => $value['city'], 'zip' => $value['zip'], 'advgrid_title_truncation' => $advgrid_title_truncation, 'advgrid_height' => $advgrid_height, 'advgrid_width' => $advgrid_width, 'show_item_count' => $show_item_count, 'alphabet' => $value['alphabet'], 'network' => $value['network'], 'blog_contributors' => $blog_contributors, 'socialshare_enable_plusiconlistview' => $socialshare_enable_plusiconlistview, 'socialshare_icon_limitlistview' => $socialshare_icon_limitlistview, 'socialshare_enable_plusiconadvlistview' => $socialshare_enable_plusiconadvlistview, 'socialshare_icon_limitadvlistview' => $socialshare_icon_limitadvlistview, 'socialshare_enable_plusicongridview' => $socialshare_enable_plusicongridview, 'socialshare_icon_limitgridview' => $socialshare_icon_limitgridview, 'socialshare_enable_plusiconadvgridview' => $socialshare_enable_plusiconadvgridview, 'socialshare_icon_limitadvgridview' => $socialshare_icon_limitadvgridview, 'socialshare_enable_plusiconpinview' => $socialshare_enable_plusiconpinview, 'socialshare_icon_limitpinview' => $socialshare_icon_limitpinview, 'socialshare_enable_plusiconmapview' => $socialshare_enable_plusiconmapview, 'socialshare_icon_limitmapview' => $socialshare_icon_limitmapview, 'profile_type' => $profile_type, 'homepage_id' => $homepage_id, 'memberlevels' => $memberlevels, 'gridblock' => $gridblock);
+    $params = array('gridblock' => $gridblock, 'pagging' => $loadOptionData, 'limit_data' => $limit_data, 'profileFieldCount' => $profileFieldCount, 'list_title_truncation' => $list_title_truncation, 'grid_title_truncation' => $grid_title_truncation, 'pinboard_title_truncation' => $pinboard_title_truncation, 'show_criterias' => $show_criterias, 'view_type' => $view_type, 'height' => $defaultHeight, 'list_container_height' => $listContainerHeight, 'list_container_width' => $listContainerWidth, 'photo_height' => $defaultPhotoHeight, 'photo_width' => $defaultPhotoWidth, 'info_height' => $defaultInfoHeight, 'pinboard_width' => $defaultPinboardWidth, 'order' => $value['order'], 'location' => $value['location'], 'lat' => $value['lat'], 'lng' => $value['lng'], 'miles' => $value['miles'], 'width' => $defaultWidth, 'country' => $value['country'], 'state' => $value['state'], 'city' => $value['city'], 'zip' => $value['zip'], 'advgrid_title_truncation' => $advgrid_title_truncation, 'advgrid_height' => $advgrid_height, 'advgrid_width' => $advgrid_width, 'show_item_count' => $show_item_count, 'alphabet' => $value['alphabet'], 'network' => $value['network'], 'blog_contributors' => $blog_contributors, 'socialshare_enable_plusiconlistview' => $socialshare_enable_plusiconlistview, 'socialshare_icon_limitlistview' => $socialshare_icon_limitlistview, 'socialshare_enable_plusiconadvlistview' => $socialshare_enable_plusiconadvlistview, 'socialshare_icon_limitadvlistview' => $socialshare_icon_limitadvlistview, 'socialshare_enable_plusicongridview' => $socialshare_enable_plusicongridview, 'socialshare_icon_limitgridview' => $socialshare_icon_limitgridview, 'socialshare_enable_plusiconadvgridview' => $socialshare_enable_plusiconadvgridview, 'socialshare_icon_limitadvgridview' => $socialshare_icon_limitadvgridview, 'socialshare_enable_plusiconpinview' => $socialshare_enable_plusiconpinview, 'socialshare_icon_limitpinview' => $socialshare_icon_limitpinview, 'socialshare_enable_plusiconmapview' => $socialshare_enable_plusiconmapview, 'socialshare_icon_limitmapview' => $socialshare_icon_limitmapview, 'profile_type' => $profile_type, 'homepage_id' => $homepage_id, 'memberlevels' => $memberlevels, 'gridblock' => $gridblock, 'enable_cover_photo_adv_grid' => $enable_cover_photo_adv_grid);
 
     $value['alphabet'] = isset($searchArray['alphabet']) ? $searchArray['alphabet'] : (isset($_GET['alphabet']) ? $_GET['alphabet'] : (isset($params['alphabet']) ? $params['alphabet'] : ''));
     $this->view->text = $value['text'] = $text;
@@ -217,7 +221,7 @@ class Sesmember_Widget_BrowseMembersController extends Engine_Content_Widget_Abs
     // Get paginator
 
     $this->view->paginator = $paginator = Engine_Api::_()->getDbTable('members', 'sesmember')
-            ->getMemberPaginator(array_merge($value, array('search' => 1,'fromBrowse'=>1)), $form->getValues());
+            ->getMemberPaginator(array_merge($value, array('search' => 1)), $form->getValues());
     $paginator->setItemCountPerPage($limit_data);
     $paginator->setCurrentPageNumber($page);
 

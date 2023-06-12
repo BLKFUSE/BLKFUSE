@@ -156,6 +156,12 @@ if (defined('_SESAPI_R_TARG')) {
 			if (engine_in_array("sesbusiness", $enabledModuleNames)) {
 				Zend_Controller_Action_HelperBroker::addHelper(new Sesbusiness_Controller_Action_Helper_ShowDetailsSesbusiness());
 			}
+			
+			//Emailtemplates Plugin work for emails
+			if (engine_in_array("emailtemplates", $enabledModuleNames)) {
+				include APPLICATION_PATH . '/application/modules/Emailtemplates/Plugin/Loader.php';
+				$frontController->registerPlugin( new Emailtemplates_Plugin_Loader() );
+			}
 			return $frontController;
 		}
 

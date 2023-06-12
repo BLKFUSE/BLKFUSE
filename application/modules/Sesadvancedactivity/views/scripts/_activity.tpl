@@ -141,7 +141,7 @@ return;
                   <li class="_sep"></li>
                   
                   <li><a href="<?php echo $action->getHref(); ?>" class="sesadv_feed_link"><span><?php echo $this->translate("Feed Link");?></span></a></li>
-                <?php if(!$this->isOnThisDayPage && !empty($_SESSION['sesadvcomment']['sesadvcommentActive'])){ ?>
+                <?php if(!$this->isOnThisDayPage){ ?>
                  <?php if($this->viewer()->getIdentity() == $action->getSubject()->getIdentity()) {
                     $detailTable = Engine_Api::_()->getDbTable('details', 'sesadvancedactivity');
                     if($detailAction->commentable)
@@ -482,10 +482,10 @@ return;
                   $baseURL =(!empty($_SERVER["HTTPS"]) && strtolower($_SERVER["HTTPS"] == 'on')) ? "https://" : 'http://';
                   $photoURL = $baseURL. $_SERVER['HTTP_HOST'].$photoURL;
                 }
-                  if($photoURL){
-                    $imageHeightWidthData = getimagesize($photoURL); 
-                    $width = isset($imageHeightWidthData[0]) ? $imageHeightWidthData[0] : '250';
-                  }
+                  // if($photoURL){
+                  //   $imageHeightWidthData = getimagesize($photoURL); 
+                  //   $width = isset($imageHeightWidthData[0]) ? $imageHeightWidthData[0] : '250';
+                  // }
                  }
               }
           ?>
@@ -498,8 +498,7 @@ return;
            } ?>
            <div class='<?php if($width > 250): ?> link_attachment_big <?php endif; ?> feed_item_attachments <?php  if($action->type == "post_self_buysell" || strpos($imageType, '_photo') == true ||  strpos($action->type, '_photo') == true): ?> feed_images feed_images_<?php echo $classnumber; ?><?php endif; ?>'>
             <?php if( $action->attachment_count > 0 && engine_count($actionAttachment) > 0 ): ?>
-              <?php if( engine_count($actionAttachment) == 1 &&
-                      null != ( $richContent = current($actionAttachment)->item->getRichContent()) ): ?>                    
+              <?php if(null != ( $richContent = current($actionAttachment)->item->getRichContent()) ): ?>                    
                 <?php echo $richContent; ?>
               <?php else: ?>
                 <?php foreach( $actionAttachment as $attachment ):
@@ -730,7 +729,7 @@ return;
               foreach($getAllHashtags as $value) {
                 if($value->title == '') continue;
                 if(strpos($action->body,$value->title) === false){}else{
-                  $hashTagsString .= '<a target="_blank" href="hashtag?hashtag='.$value->title.'">#'.ltrim(strip_tags($value->title)).'</a>&nbsp;&nbsp;';
+                  $hashTagsString .= '<a target="_blank" href="hashtag?hashtag='.$value->title.'">#'.ltrim(strip_tags($value->title)).'</a> ';
                 }
               }
               echo $hashTagsString;

@@ -119,7 +119,7 @@ class Classified_Form_Create extends Engine_Form
                 'label' => 'Main Photo',
                 'accept' => 'image/*',
             ));
-            $this->photo->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+            $this->photo->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
         }
 
         // Add subforms

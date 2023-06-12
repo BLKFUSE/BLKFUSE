@@ -243,7 +243,7 @@ class Sesmusic_Widget_OtherModulesProfileMusicalbumsController extends Engine_Co
       if ($profile == 'own') {
         $this->view->profile = 'own';
       } else {
-        $name = explode(' ', $userObject->displayname);
+        $name = explode(' ', $userObject->getTitle());
         if (isset($name[0]))
           $name = ucfirst($name[0]);
         else

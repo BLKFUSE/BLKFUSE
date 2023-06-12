@@ -22,12 +22,12 @@ class Event_ProfileController extends Sesapi_Controller_Action_Standard
     $subject = null;
    
     //$id = $this->_getParam('id', null);
-    if (!Engine_Api::_()->core()->hasSubject() && ($id = $this->_getParam('id'))) {
+    if (!Engine_Api::_()->core()->hasSubject('event') && ($id = $this->_getParam('id'))) {
       $subject = Engine_Api::_()->getItem('event', $id);
       if( $subject && $subject->getIdentity() ) {
         Engine_Api::_()->core()->setSubject($subject);
       }
-    } else if (!Engine_Api::_()->core()->hasSubject() && ($id = $this->_getParam('event_id'))) {
+    } else if (!Engine_Api::_()->core()->hasSubject('event') && ($id = $this->_getParam('event_id'))) {
       $subject = Engine_Api::_()->getItem('event', $id);
       if( $subject && $subject->getIdentity() ) {
         Engine_Api::_()->core()->setSubject($subject);
@@ -46,7 +46,12 @@ class Event_ProfileController extends Sesapi_Controller_Action_Standard
 
     $subject = Engine_Api::_()->core()->getSubject();
     $viewer = Engine_Api::_()->user()->getViewer();
-
+    
+    // Network check
+		$networkPrivacy = Engine_Api::_()->network()->getViewerNetworkPrivacy($subject, 'user_id');
+		if(empty($networkPrivacy))
+			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'permission_error', 'result' => array()));
+			
     if( !$this->_helper->requireAuth()->setAuthParams($subject, $viewer, 'view')->isValid() ) {
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array()));
     }
@@ -67,8 +72,25 @@ class Event_ProfileController extends Sesapi_Controller_Action_Standard
 
     $result = array();
     $result["event_content"] = $subject->toarray();
-
+    
+    $result['is_rated'] = Engine_Api::_()->getDbTable('ratings', 'event')->checkRated($subject->getIdentity(), $viewer->getIdentity());
+		$result['enable_rating'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('event.enable.rating', 1);
+		$result['ratingicon'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('event.ratingicon', 'fas fa-star');
+		
     $result["event_content"]['member_count'] = $this->view->translate(array('%s member', '%s members', $subject->member_count), $this->view->locale()->toNumber($subject->member_count));
+    
+    if( !empty($subject->category_id) ) {
+      $category = Engine_Api::_()->getItem('event_category', $subject->category_id);
+      $result["event_content"]['category_title'] = $category->title;
+			if( !empty($subject->subcat_id) ) {
+				$category = Engine_Api::_()->getItem('event_category', $subject->subcat_id);
+				$result["event_content"]['subcategory_title'] = $category->title;
+			}
+			if( !empty($subject->subsubcat_id) ) {
+				$category = Engine_Api::_()->getItem('event_category', $subject->subsubcat_id);
+				$result["event_content"]['subsubcategory_title'] = $category->title;
+			}
+    }
 
     //Cover Photo
     if($subject->photo_id) {
@@ -77,7 +99,7 @@ class Event_ProfileController extends Sesapi_Controller_Action_Standard
         $pageCover = $this->getBaseUrl(false,$pageCover->map());
       $result["event_content"]['cover_photo'] = $pageCover;
     } else {
-      $result["event_content"]['cover_photo'] = $this->getBaseUrl().'application/modules/Group/externals/images/nophoto_group_thumb_profile.png';
+      $result["event_content"]['cover_photo'] = $this->getBaseUrl().'application/modules/Event/externals/images/nophoto_event_thumb_profile.png';
     }
 
 
@@ -216,23 +238,36 @@ class Event_ProfileController extends Sesapi_Controller_Action_Standard
 
     $result = array();
     $result['event_content'] = $subject->toArray();
-
+    
+    // Convert the dates for the viewer
+    $startDateObject = new Zend_Date(strtotime($subject->starttime));
+    $endDateObject = new Zend_Date(strtotime($subject->endtime));
+    
+    $viewer = Engine_Api::_()->user()->getViewer();
+    if($viewer && $viewer->getIdentity() ) {
+      $tz = $viewer->timezone;
+      $startDateObject->setTimezone($tz);
+      $endDateObject->setTimezone($tz);
+    }
+    
+    $result['event_content']['starttime'] = $this->view->locale()->toDate($startDateObject) . ' ' . $this->view->locale()->toTime($startDateObject);
+    $result['event_content']['endtime'] = $this->view->locale()->toDate($endDateObject) . ' ' . $this->view->locale()->toTime($endDateObject);
     $result['event_content']['created_by'] = $subject->getOwner()->getTitle();
     $result['event_content']['creation_date'] = $this->view->translate( gmdate('M d, Y', strtotime($subject->creation_date))) ;
 
     $result['event_content']['modified_date'] = $this->view->translate( gmdate('M d, Y', strtotime($subject->modified_date))) ;
     $result['event_content']['view_count'] = $this->view->translate(array('%s total view', '%s total views', $subject->view_count), $this->view->locale()->toNumber($subject->view_count));
     $result['event_content']['member_count'] = $this->view->translate(array('%s total member', '%s total members', $subject->member_count), $this->view->locale()->toNumber($subject->member_count));
-    $result['event_content']['location'] = $this->view->translate("Where: ") . $subject->location;
+    $result['event_content']['location'] = $subject->location;
     if( !empty($subject->host) ) {
       if( $subject->host != $subject->getParent()->getTitle()) {
-        $result['event_content']['host'] = $this->view->translate("Host: ") . $subject->host;
+        $result['event_content']['host'] = $subject->host;
       }
-      $result['event_content']['host'] = $this->view->translate("Led by: ") . $subject->getParent()->__toString();
+      $result['event_content']['ledby'] = $subject->getParent()->__toString();
     }
     if($subject->category_id) {
       $category = Engine_Api::_()->getItem('event_category', $subject->category_id);
-      $result['event_content']['category_name'] = $this->view->translate("Category: ") . $category->getTitle();
+      $result['event_content']['category_name'] = $category->getTitle();
     }
     Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'', 'result' => $result));
   }
@@ -667,17 +702,16 @@ class Event_ProfileController extends Sesapi_Controller_Action_Standard
           $form->getElement('body')->setLabel('Body');
         if ($this->_getParam('getForm')) {
             $formFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->generateFormFields($form);
-            $this->generateFormFields($formFields, array('resources_type' => 'event'));
+            $this->generateFormFields($formFields, array('resources_type' => 'event', 'formTitle' => 
+            "Post Reply"));
         }
-        if ($form->isValid($_POST)) {
-            $validateFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->validateFormFields($form);
-            if (is_countable($validateFields) && engine_count($validateFields))
-                $this->validateFormFields($validateFields);
-        }
-        // Check method/data
-        if ($this->getRequest()->isPost()) {
-            Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'invalid_request', 'result' => array()));
-        }
+        
+        if( !$form->isValid($this->getRequest()->getPost()) ) {
+					$validateFields = Engine_Api::_()->getApi('FormFields','sesapi')->validateFormFields($form);
+					if(is_countable($validateFields) && engine_count($validateFields))
+					$this->validateFormFields($validateFields);
+				}
+				
         // Process
         $viewer = Engine_Api::_()->user()->getViewer();
         $topicOwner = $topic->getOwner();
@@ -870,8 +904,8 @@ class Event_ProfileController extends Sesapi_Controller_Action_Standard
         $form->body->setValue(html_entity_decode($post->body));
         $form->populate($post->toArray());
         if ($this->_getParam('getForm')) {
-            $formFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->generateFormFields($form);
-            $this->generateFormFields($formFields, array());
+						$formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
+						$this->generateFormFields($formFields,array('formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
         }
         if (!$form->isValid($_POST)) {
             $validateFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->validateFormFields($form);
@@ -1126,7 +1160,7 @@ class Event_ProfileController extends Sesapi_Controller_Action_Standard
                         ->where('poster_type = ?', 'user')
                         ->where('resource_id = ?', $photos->getIdentity());
                     $resultData = $tableLike->fetchRow($select);
-                    if ($resultData) {
+                    if ($resultData && Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesadvancedactivity')) {
                         $item_activity_like = Engine_Api::_()->getDbTable('corelikes', 'sesadvancedactivity')->rowExists($resultData->like_id);
                         $photo['reaction_type'] = $item_activity_like->type;
                     }
@@ -1145,7 +1179,7 @@ class Event_ProfileController extends Sesapi_Controller_Action_Standard
                 $photo['is_like'] = Engine_Api::_()->sesapi()->contentLike($photos);
                 $reactionData = array();
                 $reactionCounter = 0;
-                if(is_countable($resultData) && engine_count($resultData)) {
+                if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesadvancedactivity') && is_countable($resultData) && engine_count($resultData)) {
                     foreach ($resultData as $type) {
                         $reactionData[$reactionCounter]['title'] = $this->view->translate('%s (%s)', $type['total'], Engine_Api::_()->sesadvancedcomment()->likeWord($type['type']));
                         $reactionData[$reactionCounter]['imageUrl'] = Engine_Api::_()->sesapi()->getBaseUrl(false, Engine_Api::_()->sesadvancedcomment()->likeImage($type['type']));
@@ -1157,8 +1191,10 @@ class Event_ProfileController extends Sesapi_Controller_Action_Standard
                     $photo['is_like'] = true;
                     $like = true;
                     $type = $photo['reaction_type'];
-                    $imageLike = Engine_Api::_()->sesapi()->getBaseUrl(false, Engine_Api::_()->sesadvancedcomment()->likeImage($type));
-                    $text = Engine_Api::_()->sesadvancedcomment()->likeWord($type);
+                    if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesadvancedactivity')) {
+											$imageLike = Engine_Api::_()->sesapi()->getBaseUrl(false, Engine_Api::_()->sesadvancedcomment()->likeImage($type));
+											$text = Engine_Api::_()->sesadvancedcomment()->likeWord($type);
+                    }
                 } else {
                     $photo['is_like'] = false;
                     $like = false;
@@ -1386,22 +1422,19 @@ class Event_ProfileController extends Sesapi_Controller_Action_Standard
       try
       {
         $membership_status = $subject->membership()->getRow($viewer)->active;
-/*
+
         $subject->membership()
           ->addMember($viewer)
-          ->setUserApproved($viewer)
-          ;
-
+          ->setUserApproved($viewer);
 
         $row = $subject->membership()
           ->getRow($viewer);
-          print_r($row);die;*/
 
-        /*$row->rsvp = $_POST['rsvp'];
-        $row->save();*/
+        $row->rsvp = $_POST['rsvp'];
+        $row->save();
 
         // Add activity if membership status was not valid from before
-        if ($membership_status){
+        if (!$membership_status){
           $activityApi = Engine_Api::_()->getDbtable('actions', 'activity');
           $action = $activityApi->addActivity($viewer, $subject, 'event_join');
         }

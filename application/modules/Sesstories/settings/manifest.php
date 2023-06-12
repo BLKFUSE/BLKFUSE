@@ -16,15 +16,14 @@
   array (
     'type' => 'module',
     'name' => 'sesstories',
-    //'sku' => 'sesstories',
-    'version' => '5.0.0',
-	'dependencies' => array(
-            array(
-                'type' => 'module',
-                'name' => 'core',
-                'minVersion' => '5.0.0',
-            ),
-        ),
+    'version' => '6.4.0',
+		'dependencies' => array(
+			array(
+				'type' => 'module',
+				'name' => 'core',
+				'minVersion' => '5.0.0',
+			),
+		),
     'path' => 'application/modules/Sesstories',
     'title' => 'SNS - Stories Feature in Website',
     'description' => 'SNS - Stories Feature in Android Mobile Apps',

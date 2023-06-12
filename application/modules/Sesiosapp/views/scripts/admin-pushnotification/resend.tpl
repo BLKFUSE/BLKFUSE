@@ -12,6 +12,11 @@
  */
  
 ?>
+<?php
+  $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl."externals/selectize/css/normalize.css");
+  $headScript = new Zend_View_Helper_HeadScript();
+  $headScript->appendFile($this->layout()->staticBaseUrl.'externals/selectize/js/selectize.js');
+?>
 <div class="settings sesiosapp_admin_form sesiosapp_notification">
   <div class='settings'>
     <?php echo $this->form->render($this); ?>
@@ -172,7 +177,7 @@ function testuser(){
   }
 
   en4.core.runonce.add(function() {
-    if( !isPopulated ) { // NOT POPULATED
+    if( !isPopulated) { // NOT POPULATED
       scriptJquery('#to').selectize({
         maxItems: 10,
         valueField: 'id',
@@ -193,17 +198,31 @@ function testuser(){
             });
         }
       });
+      
+      // new Composer.OverText($('to'), {
+      //   'textOverride' : '<?php echo $this->translate('Start typing...') ?>',
+      //   'element' : 'label',
+      //   'isPlainText' : true,
+      //   'positionOptions' : {
+      //     position: ( en4.orientation == 'rtl' ? 'upperRight' : 'upperLeft' ),
+      //     edge: ( en4.orientation == 'rtl' ? 'upperRight' : 'upperLeft' ),
+      //     offset: {
+      //       x: ( en4.orientation == 'rtl' ? -4 : 4 ),
+      //       y: 2
+      //     }
+      //   }
+      // });
 
     } else { // POPULATED
 
       var myElement = scriptJquery.crtEle("span", {
         'id' : 'tospan' + to.id,
-        'class' : 'tag tag_' + to.type,
+        'class' : 'tag tag_' + to.type
       }).html(to.title);
       scriptJquery('#to-element').appendChild(myElement);
       scriptJquery('#to-wrapper').css('height', 'auto');
 
-      // Hide to input?
+      // Hide to inputs?
       scriptJquery('#to').css('display', 'none');
       scriptJquery('#toValues-wrapper').css('display', 'none');
     }

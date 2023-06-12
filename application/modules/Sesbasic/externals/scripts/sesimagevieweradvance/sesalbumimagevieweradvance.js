@@ -45,6 +45,7 @@
   if(firstStartPoint == 0){
     offsetY = window.pageYOffset;
 		scriptJquery('html').css('position','fixed').css('width','100%').css('overflow-y','hidden');
+		scriptJquery('html').css('top', -offsetY + 'px');
   }
 	if(imageURL.search('direct') != -1){
 		var album_id ;
@@ -86,6 +87,11 @@
 	scriptJquery('.pswp__top-bar-action').css('display','none');
 	scriptJquery('#nav-btn-next').css('display','none');
 	scriptJquery('#nav-btn-prev').css('display','none');
+	
+	if(scriptJquery('#ses_media_lightbox_container').hasClass('pswp--zoomed-in')) {
+		scriptJquery('#ses_media_lightbox_container').removeClass('pswp--zoomed-in')
+	}
+	
 	var urlChangeState = requestedURL.replace('image-viewer-detail','view');
 	urlChangeState = urlChangeState.replace('third-party-imageview-integration','view');
 	history.pushState(null, null, urlChangeState);

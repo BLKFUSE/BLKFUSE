@@ -1,6 +1,300 @@
 <?php
 
 class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
+    public function getAllBlockedMembersAction(){
+        $loggedin_user_id = $this->view->viewer()->getIdentity();
+        if(!$loggedin_user_id){
+           Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array()));
+         }
+         
+         $table = Engine_Api::_()->getDbTable("blocks",'eticktokclone');
+         $select = $table->select()->where("user_id =?",$loggedin_user_id);
+         $paginator = Zend_Paginator::factory($select);
+         
+         $page = (int)  $this->_getParam('page', 1);
+           // Build paginator
+           $paginator->setItemCountPerPage($this->_getParam('limit',10));
+           $paginator->setCurrentPageNumber($page);
+   
+           $result = $this->memberResult($paginator);
+           $extraParams['pagging']['total_page'] = $paginator->getPages()->pageCount;
+           $extraParams['pagging']['total'] = $paginator->getTotalItemCount();
+           $extraParams['pagging']['current_page'] = $paginator->getCurrentPageNumber();
+           $extraParams['pagging']['next_page'] = $extraParams['pagging']['current_page']+1;
+           if($result <= 0)
+               Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'You have not blocked any user yet.', 'result' => array()));
+           else
+               Engine_Api::_()->getApi('response','sesapi')->sendResponse(array_merge(array('error'=>'0','error_message'=>'', 'result' => $result),$extraParams));
+    }
+    public function memberResult($paginator){
+     $result = array();
+     $counterLoop = 0;
+     $viewer = Engine_Api::_()->user()->getViewer();
+     
+     foreach($paginator as $blocked_user){
+         $member = Engine_Api::_()->getItem("user",$blocked_user->blocked_user_id);
+         if(!$member){
+             continue;
+         }
+       $result['notification'][$counterLoop]['user_id'] = $member->getIdentity();
+       $result['notification'][$counterLoop]['title'] = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
+       $result['notification'][$counterLoop]['user_image'] = $this->userImage($member->getIdentity(),"thumb.profile");
+       $block = Engine_Api::_()->getDbTable("blocks",'eticktokclone')->isBlocked(array("user_id"=>$member->getIdentity()));
+       if($block){
+           // unblock
+           $result['notification'][$counterLoop]['block'] = array(
+               'label' => $this->view->translate('Unblock Member'),
+               'name' => 'remove_block_member',
+               'params' => array(
+                 'user_id' => $member->getIdentity()
+               ),
+             );
+       }else{
+           // block
+       
+           $result['notification'][$counterLoop]['block'] = array(
+               'label' => $this->view->translate('Block Member'),
+               'name' => 'block_member',
+               'params' => array(
+                 'user_id' => $member->getIdentity()
+               ),
+             );
+       }
+       $counterLoop++;
+     }
+     return $result;
+ }
+ function followersAction(){
+
+        $viewerId = $this->_getParam('viewer_id','');
+        $paginator = Engine_Api::_()->getDbTable('users', 'eticktokclone')->followers(array('user_id' => $viewerId, 'paginator' => true));
+        $page = (int)  $this->_getParam('page', 1);
+        // Build paginator
+        $paginator->setItemCountPerPage($this->_getParam('limit',10));
+        $paginator->setCurrentPageNumber($page);
+
+        $result = $this->memberDataResult($paginator);
+        $extraParams['pagging']['total_page'] = $paginator->getPages()->pageCount;
+        $extraParams['pagging']['total'] = $paginator->getTotalItemCount();
+        $extraParams['pagging']['current_page'] = $paginator->getCurrentPageNumber();
+        $extraParams['pagging']['next_page'] = $extraParams['pagging']['current_page']+1;
+        if($result <= 0)
+            Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'Does not exist member.', 'result' => array()));
+        else
+            Engine_Api::_()->getApi('response','sesapi')->sendResponse(array_merge(array('error'=>'0','error_message'=>'', 'result' => $result),$extraParams));
+
+    }
+    function followingsAction(){
+        $viewerId = $this->_getParam('viewer_id','');
+        $paginator = Engine_Api::_()->getDbTable('users', 'eticktokclone')->following(array('user_id' => $viewerId, 'paginator' => true));
+        $page = (int)  $this->_getParam('page', 1);
+        // Build paginator
+        $paginator->setItemCountPerPage($this->_getParam('limit',10));
+        $paginator->setCurrentPageNumber($page);
+
+        $result = $this->memberDataResult($paginator);
+        $extraParams['pagging']['total_page'] = $paginator->getPages()->pageCount;
+        $extraParams['pagging']['total'] = $paginator->getTotalItemCount();
+        $extraParams['pagging']['current_page'] = $paginator->getCurrentPageNumber();
+        $extraParams['pagging']['next_page'] = $extraParams['pagging']['current_page']+1;
+        if($result <= 0)
+            Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'Does not exist member.', 'result' => array()));
+        else
+            Engine_Api::_()->getApi('response','sesapi')->sendResponse(array_merge(array('error'=>'0','error_message'=>'', 'result' => $result),$extraParams));
+
+    }
+    public function memberDataResult($paginator){
+      $result = array();
+      $counterLoop = 0;
+      $viewer = Engine_Api::_()->user()->getViewer();
+      // if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesmember')){
+      //   $memberEnable = true; 
+      // }
+      // $followActive = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.follow.active',1);
+      // if($followActive){
+      //   $unfollowText = $this->view->translate(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.follow.unfollowtext','Unfollow'));
+      //   $followText = $this->view->translate(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.follow.followtext','Follow'));  
+      // }
+      foreach($paginator as $member){
+        if(engine_in_array($member->getIdentity(), $this->_blockedUser)):
+          continue;
+        endif;
+        $result['notification'][$counterLoop]['user_id'] = $member->getIdentity();
+        $result['notification'][$counterLoop]['title'] = $member->getTitle();//preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
+        
+        //$age = $this->userAge($member);
+        //if($age){
+          //$result['notification'][$counterLoop]['age'] =  $age ;
+        //}
+        //user location
+        // if(!empty($member->location))
+        //    $result['notification'][$counterLoop]['location'] =   $member->location;
+        // if($memberEnable){
+        //   $userLocation = Engine_Api::_()->getDbtable('locations', 'sesbasic')->getLocationData($member->getType(),$member->getIdentity());
+        //   if($userLocation && !empty($member->location)){
+        //     $result['notification'][$counterLoop]['location_data'] = $userLocation->toArray();
+        //     $result['notification'][$counterLoop]['location_data']['location'] = $member->location;
+        //   }
+        // }
+
+        
+       
+       //follow
+        // if($followActive && $viewer->getIdentity() && $viewer->getIdentity() != $member->getIdentity()){
+        //     if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesmember')) {
+        //         $FollowUser = Engine_Api::_()->sesmember()->getFollowStatus($member->user_id);
+        //         if (!$FollowUser) {
+        //             $result['notification'][$counterLoop]['follow']['action'] = 'follow';
+        //             $result['notification'][$counterLoop]['follow']['text'] = $followText;
+        //         } else {
+        //             $result['notification'][$counterLoop]['follow']['action'] = 'unfollow';
+        //             $result['notification'][$counterLoop]['follow']['text'] = $unfollowText;
+        //         }
+        //     }
+        // }
+        // //Block
+        // if($viewer->getIdentity() != $member->getIdentity()){
+        //         if ($member->isBlockedBy($viewer)) {
+        //             $result['notification'][$counterLoop]['block']['action'] = 'unblock';
+        //             $result['notification'][$counterLoop]['block']['text'] = $this->view->translate("Unblock");
+        //         } else {
+        //             $result['notification'][$counterLoop]['block']['action'] = 'block';
+        //             $result['notification'][$counterLoop]['block']['text'] = $this->view->translate("Block");
+        //         }
+        
+        // }
+       // if(!empty($memberEnable)){
+       //  //mutual friends
+       //  $mfriend = Engine_Api::_()->sesmember()->getMutualFriendCount($member, $viewer);
+       //  if(!$member->isSelf($viewer)){
+       //     $result['notification'][$counterLoop]['mutualFriends'] = $mfriend == 1 ? $mfriend.$this->view->translate(" mutual friend") : $mfriend.$this->view->translate(" mutual friends");
+       //  }
+       // }
+        $result['notification'][$counterLoop]['user_image'] = $this->userImage($member->getIdentity(),"thumb.profile");
+        // $result['notification'][$counterLoop]['membership'] = $this->friendRequest($member);
+        $counterLoop++;
+      }
+      return $result;
+  }
+    public function blockAction(){
+     $user_id = $this->_getParam("user_id",0);
+     if(!$user_id){
+       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array()));
+     }
+     
+       $block = Engine_Api::_()->getDbTable("blocks",'eticktokclone')->isBlocked(array("user_id"=>$user_id));
+       if(!$block){
+           $table = Engine_Api::_()->getDbTable("blocks",'eticktokclone');
+           $row = $table->createRow();
+           $row->user_id = $this->view->viewer()->getIdentity();
+           $row->blocked_user_id = $user_id;
+           $row->save();
+           // unblock
+           $result['user_info']['block'] = array(
+               'label' => $this->view->translate('Unblock Member'),
+               'name' => 'remove_block_member',
+               'params' => array(
+                 'user_id' => $user_id
+               ),
+             );
+       }else{
+           Engine_Api::_()->getDbTable("blocks",'eticktokclone')->isBlocked(array("user_id"=>$user_id,'remove'=>true));
+           // block
+           $result['user_info']['block'] = array(
+               'label' => $this->view->translate('Block Member'),
+               'name' => 'block_member',
+               'params' => array(
+                 'user_id' => $user_id
+               ),
+             );
+       }
+       
+       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>"", 'result' => $result));
+
+     
+     
+   }
+
+   function followAction() {
+
+    if (Engine_Api::_()->user()->getViewer()->getIdentity() == 0) {
+        Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'user_not_autheticate'));
+    }
+    $item_id = $this->_getParam('user_id');
+    if (intval($item_id) == 0) {
+        Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'user_not_autheticate'));
+    }
+    $viewer = Engine_Api::_()->user()->getViewer();
+    $viewer_id = $viewer->getIdentity();
+    $itemTable = Engine_Api::_()->getItemTable('user');
+    $tableFollow = Engine_Api::_()->getDbtable('follows', 'eticktokclone');
+    $tableMainFollow = $tableFollow->info('name');
+
+    $select = $tableFollow->select()
+            ->from($tableMainFollow)
+            ->where('resource_id = ?', $viewer_id)
+            ->where('user_id = ?', $item_id);
+    $result = $tableFollow->fetchRow($select);
+    $member = Engine_Api::_()->getItem('user', $item_id);
+    $followCount = 0;
+    if (!empty($result)) {
+      //delete
+      $db = $result->getTable()->getAdapter();
+      $db->beginTransaction();
+      try {
+        $result->delete();
+
+            $user = Engine_Api::_()->getItem('user', $item_id);
+            //Unfollow notification Work: Delete follow notification and feed
+            Engine_Api::_()->getDbtable('notifications', 'activity')->delete(array('type =?' => "eticktokclone_follow", "subject_id =?" => $viewer->getIdentity(), "object_type =? " => $user->getType(), "object_id = ?" => $user->getIdentity()));
+            // Engine_Api::_()->getDbtable('actions', 'activity')->delete(array('type =?' => "tickvideo_follow", "subject_id =?" => $viewer->getIdentity(), "object_type =? " => $user->getType(), "object_id = ?" => $user->getIdentity()));
+
+        $db->commit();
+      } catch (Exception $e) {
+        $db->rollBack();
+        Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $e->getMessage(), 'result' => array()));
+      }
+
+      $selectUser = $itemTable->select()->where('user_id =?', $item_id);
+        $user = $itemTable->fetchRow($selectUser);
+        Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => array("is_content_follow"=>false)));
+    } else {
+      //update
+      $db = Engine_Api::_()->getDbTable('follows', 'eticktokclone')->getAdapter();
+      $db->beginTransaction();
+      try {
+        $follow = $tableFollow->createRow();
+        $follow->resource_id = $viewer_id;
+        $follow->user_id = $item_id;
+        $follow->resource_approved = 1;
+        $follow->user_approved = 1;
+        $follow->save();
+        //Commit
+        $db->commit();
+      } catch (Exception $e) {
+        $db->rollBack();
+        Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $e->getMessage(), 'result' => array()));
+      }
+       //Send notification and activity feed work.
+       $selectUser = $itemTable->select()->where('user_id =?', $item_id);
+       $item = $itemTable->fetchRow($selectUser);
+       $subject = $item;
+       $owner = $subject->getOwner();
+       if ($owner->getType() == 'user' && $owner->getIdentity() != $viewer_id) {
+           $activityTable = Engine_Api::_()->getDbtable('actions', 'activity');
+           Engine_Api::_()->getDbtable('notifications', 'activity')->delete(array('type =?' => 'eticktokclone_follow', "subject_id =?" => $viewer_id, "object_type =? " => $subject->getType(), "object_id = ?" => $subject->getIdentity()));
+           Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($owner, $viewer, $subject, 'eticktokclone_follow');
+          //  $result = $activityTable->fetchRow(array('type =?' => 'tickvideo_follow', "subject_id =?" => $viewer_id, "object_type =? " => $subject->getType(), "object_id = ?" => $subject->getIdentity()));
+          //  if (!$result) {
+          //  $action = $activityTable->addActivity($viewer, $subject, 'tickvideo_follow');
+          //  }
+           //follow mail to another user
+           Engine_Api::_()->getApi('mail', 'core')->sendSystem($subject->email, 'eticktokclone_follow', array('sender_title' => $viewer->getTitle(), 'object_link' => $viewer->getHref(), 'host' => $_SERVER['HTTP_HOST']));
+       }
+       Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => array("is_content_follow"=>true)));
+    }
+  }
+
     function createAction(){
         // Upload video
         if (!$this->_helper->requireUser->isValid())
@@ -74,6 +368,18 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
 
         // Process
         $values = $form->getValues();
+        // if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesemoji')) {
+        //     $bodyEmojis = explode(' ', $values['title']);
+        //     foreach($bodyEmojis as $bodyEmoji) {
+        //       $emojisCode = Engine_Api::_()->sesemoji()->EncodeEmoji($bodyEmoji);
+        //       $values['title'] = str_replace($bodyEmoji,$emojisCode,$body);
+        //     }
+        //     $bodyEmojis = explode(' ', $values['description']);
+        //     foreach($bodyEmojis as $bodyEmoji) {
+        //       $emojisCode = Engine_Api::_()->sesemoji()->EncodeEmoji($bodyEmoji);
+        //       $values['description'] = str_replace($bodyEmoji,$emojisCode,$body);
+        //     }
+        // }
         $values["is_tickvideo"] = 1;
         $video_type = $_POST['type'] =3;
 
@@ -388,7 +694,7 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
 		$thumbImage = $tmpDir . DIRECTORY_SEPARATOR . $video -> getIdentity() . '_thumb_image.jpg';
 		$ffmpeg_path = Engine_Api::_() -> getApi('settings', 'core') -> video_ffmpeg_path;
 		if (!@file_exists($ffmpeg_path) || !@is_executable($ffmpeg_path))
-		{
+		{ 
 			$output = null;
 			$return = null;
 			exec($ffmpeg_path . ' -version', $output, $return);
@@ -413,6 +719,7 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
 		{
 			$thumbSuccess = false;
 		}
+       
 		// Resize thumbnail
 		if ($thumbSuccess && is_file($thumbImage))
 		{
@@ -437,6 +744,7 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
 				@unlink($thumbImage);
 			}
 		}
+        
 		 @unlink(@$thumbImage);
 		 return false;
 	}
@@ -468,10 +776,12 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
                   $fileOutput = shell_exec($fileCommand);
                   // Check output message for success
                   $infoSuccess = true;
+                 
                   if (preg_match('/video:0kB/i', $fileOutput))
                   {
                       $infoSuccess = false;
                   }
+                  
                   // Resize thumbnail
                   if ($infoSuccess)
                   {
@@ -967,7 +1277,7 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
         if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesmember')){
             $memberEnable = true; 
         }
-        $followActive = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.follow.active',1);
+        $followActive = true;
     
 
         foreach($paginator as $videos){
@@ -980,6 +1290,10 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
                 continue;
             }
             $video = $videos->toArray();
+            if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesemoji')) {
+                $video["title"] =  Engine_Api::_()->sesemoji()->DecodeEmoji($video["title"]);
+                $video["description"] =  Engine_Api::_()->sesemoji()->DecodeEmoji($video["description"]);
+             }
             if(!$showRating)
                 unset($video["rating"]);
             $videoI = Engine_Api::_()->getItem('video',$videos->video_id);
@@ -988,15 +1302,13 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
 
 
             $owner = Engine_Api::_()->getItem("user",$videoI->owner_id);
-            $video["follow_enable"] = ($followActive ? true : false) && $memberEnable;
+            $video["follow_enable"] = true;
             $video["is_user_follow"] = false;
-            if($followActive && $owner->getIdentity() && $owner->getIdentity() != $this->view->viewer()->getIdentity()){
-                if($memberEnable) {
-                    $FollowUser = Engine_Api::_()->sesmember()->getFollowStatus($owner->user_id);
-                    if ($FollowUser) {
-                        $video["is_user_follow"] = true;
-                    } 
-                }
+            if( $owner->getIdentity() && $owner->getIdentity() != $this->view->viewer()->getIdentity()){
+                $FollowUser = Engine_Api::_()->eticktokclone()->getFollowStatus($owner->user_id);
+                if ($FollowUser) {
+                    $video["is_user_follow"] = true;
+                } 
             }
 
             $videoTags = $videoI->tags()->getTagMaps();
@@ -1122,20 +1434,25 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
     function getFollowUsers(){
         $viewer = Engine_Api::_()->user()->getViewer();
 	
-    $followActive = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.follow.active',1);
 	$userTable = Engine_Api::_()->getDbtable('users', 'user');
 	$userTableName = $userTable->info('name');
 	$select = $userTable->select()
 	  ->where('user_id <> ?', $viewer->getIdentity());
 	$select->where('photo_id <> ?', 0);
 	
-    $select->where(" SELECT count(*) from engine4_sesvideo_videos where engine4_sesvideo_videos.owner_id = engine4_users.user_id AND engine4_sesvideo_videos.is_tickvideo = 1  > 0 ");
+    $select->where(" SELECT count(*) from engine4_sesvideo_videos where engine4_sesvideo_videos.owner_id NOT IN (SELECT CASE blocked_user_id
+    WHEN ".Engine_Api::_()->user()->getViewer()->getIdentity()." THEN user_id ELSE blocked_user_id END as 'owner_id' FROM engine4_eticktokclone_blocks WHERE user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity()." || blocked_user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity().") AND engine4_sesvideo_videos.owner_id = engine4_users.user_id AND engine4_sesvideo_videos.is_tickvideo = 1  > 0 ");
 	$select->order('rand()');
 
 	$peopleyoumayknow = Zend_Paginator::factory($select);
 	$peopleyoumayknow->setItemCountPerPage(20);
 	$peopleyoumayknow->setCurrentPageNumber(1);
+        
+
+    $videoTable = Engine_Api::_()->getDbtable('videos', 'sesvideo');
+	$videoTableName = $userTable->info('name');
 	
+
 	$counterLoop = 0;
 	$users = array();
 	if (Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesmember'))
@@ -1150,19 +1467,35 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
       }
       
       $owner = $member;
-        $users[$counterLoop]["follow_enable"] = ($followActive ? true : false) && $memberEnable;
+        $users[$counterLoop]["follow_enable"] = true;
         $users[$counterLoop]["is_user_follow"] = false;
-        if($followActive && $owner->getIdentity() && $owner->getIdentity() != $this->view->viewer()->getIdentity()){
-            if($memberEnable) {
-                $FollowUser = Engine_Api::_()->sesmember()->getFollowStatus($owner->user_id);
-                if ($FollowUser) {
-                    $users[$counterLoop]["is_user_follow"] = true;
-                } 
-            }
+        if($owner->getIdentity() && $owner->getIdentity() != $this->view->viewer()->getIdentity()){
+            $FollowUser = Engine_Api::_()->eticktokclone()->getFollowStatus($owner->user_id);
+            if ($FollowUser) {
+                $users[$counterLoop]["is_user_follow"] = true;
+            } 
         }
 
 
 	  $users[$counterLoop]['user_id'] = $member->getIdentity();
+
+      $select = $videoTable->select()
+	  ->where('owner_id =?', $member->getIdentity())
+      ->where("is_tickvideo = 1")
+      ->order("video_id DESC")
+      ->limit(1);
+
+      $data = $videoTable->fetchRow($select);
+        if($data){
+            $storage_file = Engine_Api::_()->getItem('storage_file', $data->file_id);
+            if($storage_file){
+                $users[$counterLoop]['video']['iframeURL'] = $this->getBaseUrl(false,$storage_file->map());
+                $users[$counterLoop]['video']['video_extension'] = $storage_file->extension;
+            }
+        }
+
+
+	  
 	  $users[$counterLoop]['title'] = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
 	  $users[$counterLoop]['user_image'] = $this->userImage($member->getIdentity(), "thumb.profile");
         if($this->friendRequest($member)) {
@@ -1406,7 +1739,9 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
         $select->where($videoTable.'.type = 3 OR '.$videoTable.'.type = "upload"');
         $select->where($videoTable.'.is_tickvideo = 1');
         $select = $select->order('video_id DESC');
-        $select->where($videoTable.'.owner_id IN (SELECT user_id FROM engine4_sesmember_follows WHERE resource_id = '.$id.')');
+        $select->where("engine4_sesvideo_videos.owner_id NOT IN (SELECT CASE blocked_user_id
+        WHEN ".Engine_Api::_()->user()->getViewer()->getIdentity()." THEN user_id ELSE blocked_user_id END as 'owner_id' FROM engine4_eticktokclone_blocks WHERE user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity()." || blocked_user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity().")");
+        $select->where($videoTable.'.owner_id IN (SELECT user_id FROM engine4_eticktokclone_follows WHERE resource_id = '.$id.')');
         $select->joinLeft("engine4_tickvideo_musics",'engine4_tickvideo_musics.music_id = '.$videoTable.'.song_id',array('songtitle'=>'title','songphoto_id'=>'photo_id','songfile_id'=>'file_id','songduration'=>'duration'));
         $paginator = Zend_Paginator::factory($select);
         $paginator->setItemCountPerPage($this->_getParam('limit',5));
@@ -1480,6 +1815,8 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
         $videoNotIn = array(0);
 
         $select = $video->select()->from($videoTable, '*')->setIntegrityCheck(false);
+        $select->where("engine4_sesvideo_videos.owner_id NOT IN (SELECT CASE blocked_user_id
+        WHEN ".Engine_Api::_()->user()->getViewer()->getIdentity()." THEN user_id ELSE blocked_user_id END as 'owner_id' FROM engine4_eticktokclone_blocks WHERE user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity()." || blocked_user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity().")");
         $select->joinLeft("engine4_tickvideo_musics",'engine4_tickvideo_musics.music_id = '.$videoTable.'.song_id',array('songtitle'=>'title','songphoto_id'=>'photo_id','songfile_id'=>'file_id','songduration'=>'duration'));
         $select->where($videoTable . '.status = ?', 1);
         $select->where($videoTable . '.approve = ?', 1);
@@ -1499,6 +1836,8 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
         
 
         $select = $video->select()->from($videoTable, '*')->setIntegrityCheck(false);
+        $select->where("engine4_sesvideo_videos.owner_id NOT IN (SELECT CASE blocked_user_id
+        WHEN ".Engine_Api::_()->user()->getViewer()->getIdentity()." THEN user_id ELSE blocked_user_id END as 'owner_id' FROM engine4_eticktokclone_blocks WHERE user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity()." || blocked_user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity().")");
         $select->joinLeft("engine4_tickvideo_musics",'engine4_tickvideo_musics.music_id = '.$videoTable.'.song_id',array('songtitle'=>'title','songphoto_id'=>'photo_id','songfile_id'=>'file_id','songduration'=>'duration'));
         $select->where($videoTable . '.status = ?', 1);
         $select->where($videoTable . '.approve = ?', 1);
@@ -1517,6 +1856,8 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
 
 
         $select = $video->select()->from($videoTable, '*')->setIntegrityCheck(false);
+        $select->where("engine4_sesvideo_videos.owner_id NOT IN (SELECT CASE blocked_user_id
+        WHEN ".Engine_Api::_()->user()->getViewer()->getIdentity()." THEN user_id ELSE blocked_user_id END as 'owner_id' FROM engine4_eticktokclone_blocks WHERE user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity()." || blocked_user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity().")");
         $select->joinLeft("engine4_tickvideo_musics",'engine4_tickvideo_musics.music_id = '.$videoTable.'.song_id',array('songtitle'=>'title','songphoto_id'=>'photo_id','songfile_id'=>'file_id','songduration'=>'duration'));
         $select->where($videoTable . '.status = ?', 1);
         $select->where($videoTable . '.approve = ?', 1);
@@ -1532,6 +1873,8 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
             $result['videos'] = array_merge($result['videos'],$this->getVideos($likeVideos, ""));
 
         $select = $video->select()->from($videoTable, '*')->setIntegrityCheck(false);
+        $select->where("engine4_sesvideo_videos.owner_id NOT IN (SELECT CASE blocked_user_id
+        WHEN ".Engine_Api::_()->user()->getViewer()->getIdentity()." THEN user_id ELSE blocked_user_id END as 'owner_id' FROM engine4_eticktokclone_blocks WHERE user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity()." || blocked_user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity().")");
         $select->joinLeft("engine4_tickvideo_musics",'engine4_tickvideo_musics.music_id = '.$videoTable.'.song_id',array('songtitle'=>'title','songphoto_id'=>'photo_id','songfile_id'=>'file_id','songduration'=>'duration'));
         $select->where($videoTable . '.status = ?', 1);
         $select->where($videoTable.'.type = 3 OR '.$videoTable.'.type = "upload"');
@@ -1567,6 +1910,8 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
         $result['videos'] = array();
 
         $select = $video->select()->from($videoTable, '*')->setIntegrityCheck(false);
+        $select->where("engine4_sesvideo_videos.owner_id NOT IN (SELECT CASE blocked_user_id
+        WHEN ".Engine_Api::_()->user()->getViewer()->getIdentity()." THEN user_id ELSE blocked_user_id END as 'owner_id' FROM engine4_eticktokclone_blocks WHERE user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity()." || blocked_user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity().")");
         $select->joinLeft("engine4_tickvideo_musics",'engine4_tickvideo_musics.music_id = '.$videoTable.'.song_id',array('songtitle'=>'title','songphoto_id'=>'photo_id','songfile_id'=>'file_id','songduration'=>'duration'));
         $select->where($videoTable . '.status = ?', 1);
         $select->where($videoTable . '.approve = ?', 1);
@@ -1608,6 +1953,8 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
         $video = Engine_Api::_()->getDbTable("videos",'sesvideo');
         $videoTable = $video->info('name');
         $select = $video->select()->from($videoTable, '*')->setIntegrityCheck(false);
+        $select->where("engine4_sesvideo_videos.owner_id NOT IN (SELECT CASE blocked_user_id
+        WHEN ".Engine_Api::_()->user()->getViewer()->getIdentity()." THEN user_id ELSE blocked_user_id END as 'owner_id' FROM engine4_eticktokclone_blocks WHERE user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity()." || blocked_user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity().")");
         $select->joinLeft("engine4_tickvideo_musics",'engine4_tickvideo_musics.music_id = '.$videoTable.'.song_id',array('songtitle'=>'title','songphoto_id'=>'photo_id','songfile_id'=>'file_id','songduration'=>'duration'));
         $select->where($videoTable . '.status = ?', 1);
         $select->where($videoTable . '.approve = ?', 1);
@@ -1669,6 +2016,9 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
 
         $select = $videoTable->select()->from($videoTableName,array('*'))->setIntegrityCheck(false);
         $select->where($videoTableName.'.is_tickvideo = 1');
+        $select->where("engine4_sesvideo_videos.owner_id NOT IN (SELECT CASE blocked_user_id
+        WHEN ".Engine_Api::_()->user()->getViewer()->getIdentity()." THEN user_id ELSE blocked_user_id END as 'owner_id' FROM engine4_eticktokclone_blocks WHERE user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity()." || blocked_user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity().")");
+
         $select->joinLeft("engine4_tickvideo_musics",'engine4_tickvideo_musics.music_id = '.$videoTableName.'.song_id',array('songtitle'=>'title','songphoto_id'=>'photo_id','songfile_id'=>'file_id','songduration'=>'duration'));
 
         $select->group($videoTableName.'.video_id')->where($videoTableName.'.video_id IN (SELECT resource_id FROM engine4_core_tagmaps WHERE resource_type = "video" AND tag_id = '.$tag_id.')');
@@ -1698,6 +2048,9 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
 
         $select = $tagTable->select()->from($tagMapTableName,array('total_tags'=>new Zend_Db_Expr('COUNT(*)'),'tag_id'))->setIntegrityCheck(false);
         $select->joinInner('engine4_sesvideo_videos','engine4_sesvideo_videos.video_id = '.$tagMapTableName.'.resource_id',"video_id");
+        $select->where("engine4_sesvideo_videos.owner_id NOT IN (SELECT CASE blocked_user_id
+        WHEN ".Engine_Api::_()->user()->getViewer()->getIdentity()." THEN user_id ELSE blocked_user_id END as 'owner_id' FROM engine4_eticktokclone_blocks WHERE user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity()." || blocked_user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity().")");
+
         $select->joinLeft('engine4_core_tags','engine4_core_tags.tag_id = '.$tagMapTableName.'.tag_id','text');
         $select->group($tagMapTableName.'.tag_id')->where($tagMapTableName.".resource_type = ?",'video');
         $select->where("is_tickvideo = ?",1);

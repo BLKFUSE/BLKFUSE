@@ -2,7 +2,7 @@
   'package' => array(
     'type' => 'library',
     'name' => 'pear',
-    'version' => '6.2.0',
+    'version' => '6.4.0',
     'revision' => '$Revision: 10150 $',
     'path' => 'application/libraries/PEAR',
     'repository' => 'socialengine.com',

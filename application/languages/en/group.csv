@@ -631,3 +631,14 @@ Please click the following link to view it:
 http://[host][object_link]
 
 [footer]"
+
+
+"ADMIN_ACTIVITY_TYPE_GROUP_BLOG_NEW";"When a user (subject) posts a new blog entry (object)."
+"ADMIN_ACTIVITY_TYPE_GROUP_EVENT_CREATE";"When a user (subject) creates a new event (object)."
+"ADMIN_ACTIVITY_TYPE_GROUP_POLL_NEW";"When a user (subject) creates a new poll (object)."
+"ADMIN_ACTIVITY_TYPE_GROUP_VIDEO_NEW";"When a user (subject) posts a new video (object)."
+
+"_ACTIVITY_ACTIONTYPE_GROUP_POLL_NEW";"New polls in group"
+"_ACTIVITY_ACTIONTYPE_GROUP_VIDEO_NEW";"New videos in group"
+"_ACTIVITY_ACTIONTYPE_GROUP_EVENT_CREATE";"New events in group"
+"_ACTIVITY_ACTIONTYPE_GROUP_BLOG_NEW";"New blog entries in group"

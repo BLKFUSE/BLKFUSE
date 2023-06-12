@@ -34,6 +34,7 @@
 }
 .sesbasic_icon_add:before{content:"\\f067";}
 .sesbasic_icon_edit:before{content:"\\f303";}
+.sesbasic_icon_edit_alt:before{content:"\\f044";}
 .sesbasic_icon_delete:before{content:"\\f1f8";}
 .sesbasic_icon_cancel:before{content:"\\f00d";}
 .sesbasic_icon_share:before{content:"\\f1e0";}
@@ -51,13 +52,23 @@
 .sesbasic_icon_follow:before{content:"\\f00c";}
 .sesbasic_icon_rating:before{content:"\\f005";font-weight:400;}
 .sesbasic_icon_view:before{content:"\\f06e";}
-
+.sesbasic_icon_map::before{content: "\\f3c5";}
+.sesbasic_icon_setting::before{content: "\\f013";}
+.sesbasic_icon_user:before{content: "\\f007";}
+.sesbasic_icon_camera:before{content: "\\f030";}
 .sesbasic_icon_like_o:before{content:"\\f164";font-weight:400;}
 .sesbasic_icon_favourite_o:before{content:"\\f004";font-weight:400;}
 .sesbasic_icon_comment_o:before{content:"\\f075";font-weight:400;}
-
-
-
+.sesbasic_icon_view_o:before{content:"\\f06e";font-weight:400;}
+.sesbasic_icon_user_o:before{content: "\\f007";font-weight: 400;}
+.sesbasic_icon_date_o:before{content: "\\f073";font-weight: 400;}
+.sesbasic_icon_rating_o:before{content: "\\f005";font-weight: 400;}
+.sesbasic_icon_location_o:before{content: "\\f3c5";font-weight: 900;}
+.sesbasic_icon_folder_o::before{content: "\\f07c";font-weight: 400;}
+.sesbasic_icon_chart_o::before{content: "\\f080";font-weight: 400;}
+.sesbasic_icon_image_o::before{content: "\\f03e";font-weight: 400;}
+.sesbasic_icon_user_o-circle::before{content: "\\f2bd";font-weight: 400;}
+.sesbasic_icon_settings::before{content: "\\f013";font-weight: 400;}
 /*Global Classes*/
 :root{
 	scroll-behavior:inherit !important;
@@ -109,6 +120,7 @@ html a.sesbasic_linkinherit{color:$theme_font_color;text-decoration:none;}
 .tooltipster-default{background-color:$theme_list_background_color !important;}
 .prelative{position:relative;}
 .sesbasic_font_small{font-size:$theme_font_size_small;}
+html .global_form .selectize-control{position:inherit;}
 /*Back to top button*/
 .layout_sesbasic_body_class{display:none !important;}
 html a.sesbasic_scrollup_button{
@@ -520,6 +532,9 @@ ul.sesbasic-autosuggest .autocompleter-choice:hover{
 .sesbasic_rating_star{
   overflow:hidden;
 }
+.global_form .sesbasic_rating_star {
+	clear: both;
+}
 .sesbasic_rating_star > span{
   cursor:pointer;
   display:inline-block;
@@ -534,6 +549,13 @@ ul.sesbasic-autosuggest .autocompleter-choice:hover{
 .sesbasic_rating_star>span.far:before{
 	color:#FFC107;
 	font-size:20px;
+}
+.sesbasic_rating_star>span.star-disable:before{
+	color:$theme_font_color_light;
+}
+.sesbasic_rating_star > span.fa-star-half-alt:before,
+.sesbasic_rating_star > span.fa-star-half:before{
+	color:#FFC107;
 }
 .sesbasic_rating_star > span.rating_star_big_generic:before{
   font-size:17px;
@@ -780,6 +802,10 @@ ul.sesbasic-autosuggest .autocompleter-choice:hover{
 }
 .sesbasic_tabs > ul > li.active > a,
 .sesbasic_tabs > ul > li > a:hover{
+	background-color:$theme_list_background_color_hover;
+  border:1px solid $theme_border_dark_color;
+}
+.sesbasic_tabs > ul > li > a:focus-visible{
 	background-color:$theme_list_background_color_hover;
   border:1px solid $theme_border_dark_color;
 }
@@ -1148,6 +1174,7 @@ ul.sesbasic-autosuggest .autocompleter-choice:hover{
 .sesbasic_rated_notification,
 .sesbasic_watchlater_notification,
 .sesbasic_friend_request_notification{background-color:#ff4c4c;}
+[dir="rtl"] .sesbasic_notification i + span{margin-left:0;margin-right: 10px;}
 
 /*TAGS PAGE START HERE*/
 .sesbasic_tags_head{
@@ -1374,6 +1401,12 @@ ul.sesbasic-autosuggest .autocompleter-choice:hover{
 }
 .sesbasic_btn:hover span{
 	display:block;
+}
+.sesbasic_icon_btn .sesbasic_icon_btn_img {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
 }
 /*Icon Button */
 .sesbasic_icon_btn_o{
@@ -1831,6 +1864,10 @@ html .sessmoothbox_close_btn{
 	text-decoration:none;
 	z-index:10;
 }
+[dir="rtl"] .sesbasic_create_button{
+	left: 40px;
+	right: auto;
+}
 .sesbasic_create_button:hover {
 	background-color:$theme_button_background_color_hover;
 	box-shadow:0px 0px 5px rgba(0, 0, 0, .5);
@@ -1842,13 +1879,14 @@ html .sessmoothbox_close_btn{
 	overflow:hidden;
 	text-align:center;
 	width:40px;
+	line-height: 40px;
 }
 .sesbasic_create_button i:before{
 	color:#fff;
 	display:block;
 	font-size:21px;
-	margin:10px;
 }
+
 #smoothbox_window .sesbasic_create_button{display:none;}
 /*QUICK CREATE BUTTON CSS END HERE*/
 /*QUICK LINKS CSS START HERE*/
@@ -2116,7 +2154,7 @@ input.onoffswitch-checkbox-round:checked + label:after {
 .ses_emoji_container_arrow,
 .ses_emoji_container_inner,
 .ses_emoji_container_header ._headbtn,
-.ses_emoji_container_header .owl-buttons > div,
+.ses_emoji_container_header .owl-nav > div,
 .ses_feeling_emoji_container_inner,
 .ses_gif_container_inner{
 	background-color:$theme_list_background_color;
@@ -2134,7 +2172,7 @@ input.onoffswitch-checkbox-round:checked + label:after {
 	border-left:1px solid $theme_border_medium_color;
 }
 .ses_emoji_container_header ._headbtn i:before,
-.ses_emoji_container_header .owl-buttons > div:before{
+.ses_emoji_container_header .owl-nav > div:before{
 	color:$theme_font_color_light;
 }
 .ses_emoji_search_input button{
@@ -2253,19 +2291,33 @@ input.onoffswitch-checkbox-round:checked + label:after {
 .sesbasic_verify_icon{
 	cursor:pointer;
 	display:inline-block;
-	height:20px;
-	width:20px;
 	position:relative;
-	filter:drop-shadow(0 0 5px rgba(0, 0, 0, .3));
-	-webkit-filter:drop-shadow(0 0 5px rgba(0, 0, 0, .3));
+	border-radius:50%;
+	background-color:#fff;
+	height:14px;
+	width:14px;
+	margin-left:5px;
 }
-.sesbasic_verify_icon svg{
-	fill:#69E781;
+[dir="rtl"] .sesbasic_verify_icon{
+	margin-left: 0;
+	margin-right: 5px;
+}
+html .sesbasic_verify_icon svg{
+	fill:#019eeb !important;
 	position:absolute;
-	left:0;
-	top:0;
-	height:100%;
-	width:100%;
+	height:18px;
+	width:18px;
+	top:50%;
+	left:50%;
+	transform:translate(-50%, -50%);
+}
+html .feed .sesbasic_verify_icon{
+	margin-right:5px;
+	vertical-align:middle;
+	top:-1px;
+}
+html[dir="rtl"] .feed .sesbasic_verify_icon{
+	margin-left:5px;
 }
 .sesbasic_member_verification_tip{
 	padding:15px;

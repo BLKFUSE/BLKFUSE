@@ -49,7 +49,7 @@ class Storage_Form_Upload extends Zend_Form
         //->setMultiFile(2)
         //->addValidator('Count', false, 1)
         //->addValidator('Size', false, 102400)
-        //->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+        //->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
       $this->addElement($element, $this->_fileElementName);
     }
     return $element;

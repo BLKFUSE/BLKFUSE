@@ -46,11 +46,11 @@
 }
 .sesbasic_dashboard_top_section_btns a{
 	padding:0 20px;
-	font-size:12px;
+	font-size:13px;
 	margin-left:5px;
 	display:inline-block;
-	height:35px;
-	line-height:35px;
+	height:38px;
+	line-height:36px;
 }
 [dir="rtl"] .sesbasic_dashboard_top_section_btns a{
 	margin-left:0;
@@ -151,6 +151,12 @@
 	border-radius:0;
 	float:none;
 	padding:0;	
+}
+.sesbasic_dashboard_form .global_form > div > div > h3 + p{
+	padding: 0 10px;
+}
+.sesbasic_dashboard_form .global_form div.form-elements{
+  padding: 0 10px;
 }
 .sesbasic_dashboard_form .global_form > div > div > h3 + div{
 	margin:0;

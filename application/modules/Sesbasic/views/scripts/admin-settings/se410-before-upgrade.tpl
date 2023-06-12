@@ -13,10 +13,3 @@
 ?>
 
 <h2><?php echo $this->translate('SocialNetworking.Solutions (SNS) Basic Required Plugin'); ?></h2>
-
-<div id="dismiss_developer" class="tip">
-  <span>
-    <?php echo "Script has been successfully executed after upgrading SE to its latest version 4.10. Please do not open this URL again.";
-  ?>
-  </span>
-</div>

@@ -12,9 +12,17 @@
  */
  
 ?>
-<?php $this->headScript()
-    ->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesadvancedactivity/externals/scripts/composer_link.js');
-    $this->headTranslate(array('PLAY','CANCEL')); ?>
+<?php 
+	$request = Zend_Controller_Front::getInstance()->getRequest();
+	$requestParams = $request->getParams();
+	
+	if(($requestParams['action'] == 'compose' || $requestParams['action'] == 'view') && $requestParams['module'] == 'messages' && $requestParams['controller'] == 'messages') { 
+		return;
+	}
+	
+	$this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesadvancedactivity/externals/scripts/composer_link.js');
+	$this->headTranslate(array('PLAY','CANCEL')); 
+?>
 <script type="text/javascript">
   en4.core.runonce.add(function() {
     composeInstance.addPlugin(new Composer.Plugin.Link({

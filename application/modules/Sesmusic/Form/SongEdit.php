@@ -173,7 +173,7 @@ class Sesmusic_Form_SongEdit extends Engine_Form {
         'onchange' => 'showReadImage(this,"song_cover_preview")',
     ));
 
-    $this->song_cover->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+    $this->song_cover->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
     if ($albumsong_id && $albumsong && $albumsong->song_cover) {
       $img_path = Engine_Api::_()->storage()->get($albumsong->song_cover, '');
       if($img_path) {
@@ -207,7 +207,7 @@ class Sesmusic_Form_SongEdit extends Engine_Form {
         'onchange' => 'showReadImage(this,"song_mainphoto_preview")',
     ));
 
-    $this->file->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+    $this->file->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
     if ($albumsong_id && $albumsong && $albumsong->photo_id) {
       $img_path = Engine_Api::_()->storage()->get($albumsong->photo_id, '');
       if($img_path) {

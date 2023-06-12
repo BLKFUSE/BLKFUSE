@@ -31,18 +31,20 @@
         //$detailAction = $item;
       }
 ?>
-<li class="advcomnt_feed_votebtn">
-  <span class="upvote">
-    <a href="javascript:;" data-itemguid="<?php echo $item->getGuid(); ?>" data-userguid="<?php echo $isPageSubject->getGuid(); ?>" title="<?php echo $this->translate('Up Vote'); ?>" class="<?php echo !empty($isVote) && $isVote->type == "upvote" ? '_disabled ' : ""; ?> sesadv_upvote_btn">
-      <i class="fa fa-angle-up"></i>
-      <span><?php echo $detailAction->vote_up_count; ?></span>
-    </a>
-  </span>  
-  <span>|</span>
-  <span class="downvote">
-    <a href="javascript:;" data-itemguid="<?php echo $item->getGuid(); ?>" data-userguid="<?php echo $isPageSubject->getGuid(); ?>" title="<?php echo $this->translate('Down Vote'); ?>" class="<?php echo !empty($isVote) && $isVote->type == "downvote" ? '_disabled ' : ""; ?> sesadv_downvote_btn">
-      <i class="fa fa-angle-down"></i>
-      <span><?php echo $detailAction->vote_down_count; ?></span>
-    </a>
-  </span>
-</li>
+<?php if($this->viewer()->getIdentity()) { ?>
+	<li class="advcomnt_feed_votebtn">
+		<span class="upvote">
+			<a href="javascript:;" data-itemguid="<?php echo $item->getGuid(); ?>" data-userguid="<?php echo $isPageSubject->getGuid(); ?>" title="<?php echo $this->translate('Up Vote'); ?>" class="<?php echo !empty($isVote) && $isVote->type == "upvote" ? '_disabled ' : ""; ?> sesadv_upvote_btn">
+				<i class="fa fa-angle-up"></i>
+				<span><?php echo $detailAction->vote_up_count; ?></span>
+			</a>
+		</span>  
+		<span>|</span>
+		<span class="downvote">
+			<a href="javascript:;" data-itemguid="<?php echo $item->getGuid(); ?>" data-userguid="<?php echo $isPageSubject->getGuid(); ?>" title="<?php echo $this->translate('Down Vote'); ?>" class="<?php echo !empty($isVote) && $isVote->type == "downvote" ? '_disabled ' : ""; ?> sesadv_downvote_btn">
+				<i class="fa fa-angle-down"></i>
+				<span><?php echo $detailAction->vote_down_count; ?></span>
+			</a>
+		</span>
+	</li>
+<?php } ?>

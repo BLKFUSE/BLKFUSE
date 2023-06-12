@@ -55,7 +55,7 @@ class Sesvideo_Form_Append extends Engine_Form {
       $this->addElement('File', 'mainphoto', array(
           'label' => 'Playlist Photo',
       ));
-      $this->mainphoto->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+      $this->mainphoto->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
 			  //Privacy Playlist View
     $this->addElement('Checkbox', 'is_private', array(
         'label' => Zend_Registry::get('Zend_Translate')->_("Do you want to make this playlist private?"),

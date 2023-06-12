@@ -139,9 +139,9 @@
   </ul>
 </div>
 <?php } ?>
-<h2>
+<h3>
   <?php echo $this->translate('Mini Menu Editor') ?>
-</h2>
+</h3>
 <p>Here, you can edit the mini menu for this theme. The new menu item you are creating here, will also be created under the SocialEngine's core Mini Menu.<br />
 If there is any menu item which is in SE's core Mini Menu, but not in this theme, then please click on the "Sink Menu" link below to sink and update the mini menu of this theme with the SE menu.<br />
 You can also drag and drop menu items below to reorder them.</p><br />

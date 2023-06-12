@@ -15,7 +15,7 @@
   array (
     'type' => 'module',
     'name' => 'eandroidstories',
-    'version' => '6.2.0',
+    'version' => '6.4.0p1',
     'dependencies' => array(
       array(
         'type' => 'module',

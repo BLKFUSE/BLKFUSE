@@ -2,7 +2,7 @@
   'package' => array(
     'type' => 'library',
     'name' => 'facebook',
-    'version' => '6.2.0',
+    'version' => '6.4.0',
     'revision' => '$Revision: 9747 $',
     'path' => 'application/libraries/Facebook',
     'repository' => 'socialengine.com',

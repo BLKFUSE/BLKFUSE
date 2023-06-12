@@ -54,7 +54,7 @@ class Sesadvancedactivity_Plugin_Task_Jobs extends Core_Plugin_Task_Abstract {
       //Notification Work
       if($item) {
         $postLink = '<a href="' . $action->getHref() . '"> post</a>';
-       // Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($item, $viewer, $action, 'sesadvancedactivity_scheduled_live', array("postLink" => $postLink));
+				Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($item, $item, $action, 'sesadvancedactivity_scheduled_live', array("postLink" => $postLink));
       }      
       $db->query("UPDATE engine4_sesbasic_locations SET resource_id = ".$action_id ." WHERE resource_type = 'activity_action' AND resource_id =".$result->getIdentity());
       $db->query("UPDATE engine4_activity_stream SET action_id = ".$action_id ." WHERE action_id =".$result->getIdentity());

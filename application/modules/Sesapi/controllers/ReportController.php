@@ -38,7 +38,7 @@ class Sesapi_ReportController extends Sesapi_Controller_Action_Standard
     // Process
     $table = Engine_Api::_()->getItemTable('core_report');
     $db = $table->getAdapter();
-    $db->beginTransaction();
+    $db->beginTransaction(); 
     try
     {
       $viewer = Engine_Api::_()->user()->getViewer();
@@ -53,6 +53,33 @@ class Sesapi_ReportController extends Sesapi_Controller_Action_Standard
       // Increment report count
       Engine_Api::_()->getDbtable('statistics', 'core')->increment('core.reports');
       $db->commit();
+
+      // Increment report count
+      Engine_Api::_()->getDbtable('statistics', 'core')->increment('core.reports');
+      $adminLink = 'http://' . $_SERVER['HTTP_HOST'] .
+            Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'report'), 'admin_default', true);
+
+      $notifyApi = Engine_Api::_()->getDbtable('notifications', 'activity');
+      $allAdmins = Engine_Api::_()->getItemTable('user')->getAllAdmin();
+      $authTable = Engine_Api::_()->authorization()->getAdapter('levels');
+      $adminSideLink = '<a href="'.$adminLink.'" >'.$this->view->translate("site").'</a>';
+
+      foreach ($allAdmins as $admin) {
+        if($viewer->isSelf($admin)){
+          continue;
+        }
+        if($authTable->getAllowed('user', $admin, 'abuseNotifi')){
+          $useProfileLink = '<a href="'.$viewer->getHref().'" >'.$this->view->translate("User").'</a>';
+          $senderName = '<a href="'.$viewer->getHref().'" >'.$viewer->getTitle().'</a>';
+
+          $notifyApi->addNotification($admin, $viewer, $admin, 'abuse_report',array('userprofilelink'=>$useProfileLink,'adminsidelink'=>$adminSideLink));
+        }
+        if($authTable->getAllowed('user', $admin, 'abuseEmail')){
+          Engine_Api::_()->getApi('mail', 'core')->sendSystem($admin,
+                    "abuse_report",array("admin_link"=>$adminLink,'sender_name'=>$senderName));
+        }
+      }
+
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'','result'=>"Your report has been submitted."));
     }
     catch( Exception $e )

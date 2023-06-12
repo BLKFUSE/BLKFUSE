@@ -34,6 +34,19 @@ class Announcement_AdminManageController extends Core_Controller_Action_Admin
     }
     
     $this->view->paginator = $paginator->setCurrentPageNumber( $page );
+    
+    //Make Column according to language
+		$languageList = Zend_Registry::get('Zend_Translate')->getList();
+		$db = Engine_Db_Table::getDefaultAdapter();
+		foreach ($languageList as $key => $language) {
+			if(in_array($key, array('auto', 'en')))
+				continue;
+			$coulmnName = $key . '_body';
+			$column = $db->query("SHOW COLUMNS FROM engine4_announcement_announcements LIKE '$coulmnName'")->fetch();
+			if (empty($column)) {
+				$db->query("ALTER TABLE `engine4_announcement_announcements` ADD $coulmnName LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL;");
+			}
+		}
   }
   
   
@@ -59,7 +72,7 @@ class Announcement_AdminManageController extends Core_Controller_Action_Admin
       }else{
           $params['profile_types'] = json_encode(array());
       }
-      
+
       $announcement = Engine_Api::_()->getDbtable('announcements', 'announcement')->createRow();
       $announcement->setFromArray($params);
       $announcement->save();

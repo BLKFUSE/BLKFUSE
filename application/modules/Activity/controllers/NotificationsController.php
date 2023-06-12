@@ -119,14 +119,15 @@ class Activity_NotificationsController extends Core_Controller_Action_Standard
     }
   }
 
-  public function indexAction()
-  {
+  public function indexAction() {
+  
+		$this->view->isAjax = $isAjax = $this->_getParam('isAjax', 0);
     $viewer = Engine_Api::_()->user()->getViewer();
-
+		$page = $this->_getParam('page');
     $this->view->notifications = $notifications = Engine_Api::_()->getDbtable('notifications', 'activity')->getNotificationsPaginator($viewer);
     $this->view->requests = Engine_Api::_()->getDbtable('notifications', 'activity')->getRequestsPaginator($viewer);
-    $notifications->setCurrentPageNumber($this->_getParam('page'));
-
+    $notifications->setCurrentPageNumber($page);
+    
     // Force rendering now
     $this->_helper->viewRenderer->postDispatch();
     $this->_helper->viewRenderer->setNoRender(true);
@@ -134,10 +135,10 @@ class Activity_NotificationsController extends Core_Controller_Action_Standard
     $this->view->hasunread = false;
 
     // Now mark them all as read
-    $ids = array();
-    foreach( $notifications as $notification ) {
-      $ids[] = $notification->notification_id;
-    }
+//     $ids = array();
+//     foreach( $notifications as $notification ) {
+//       $ids[] = $notification->notification_id;
+//     }
     //Engine_Api::_()->getDbtable('notifications', 'activity')->markNotificationsAsRead($viewer, $ids);
   }
 

@@ -210,6 +210,7 @@ class Core_AdminMailController extends Core_Controller_Action_Admin
       'template' => $template,
       'subject' => $subject,
       'bodyhtml' => $bodyHTML,
+      'default' => $templateObject->default,
     ));
    
     $enabledMemberLevel = false;
@@ -232,12 +233,14 @@ class Core_AdminMailController extends Core_Controller_Action_Admin
 
     // Process
     $values = $form->getValues();
-
+    
     /*Feature Improvement - Add Member Level Settings for Emailed Notifications #971 */
     if($enabledMemberLevel){
       $templateObject->member_level = implode(",",(array)$values['member_level']);
       $templateObject->save();
     }
+    $templateObject->default = $values['default'];
+		$templateObject->save();
 
     $writer = new Engine_Translate_Writer_Csv();
     // Try to write to a file

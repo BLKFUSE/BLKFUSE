@@ -30,10 +30,9 @@ class Sesadvancedactivity_Model_Helper_Item extends Sesadvancedactivity_Model_He
     {
       return false;
     }
-
+    
     $translate = Zend_Registry::get('Zend_Translate');
-    if( !isset($text) )
-    {
+    if( !isset($text) ) {
       if($item->getType() == 'user') {
         $text = $item->getTitle();
         if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('everification')) {

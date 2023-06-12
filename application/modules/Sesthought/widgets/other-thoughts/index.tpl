@@ -12,6 +12,7 @@
  */
 
 ?>
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesthought/externals/scripts/core.js'); ?>
 <?php $viewer = Engine_Api::_()->user()->getViewer();?>
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesthought/externals/styles/styles.css'); ?>
 <?php $viewer = Engine_Api::_()->user()->getViewer();?>
@@ -34,7 +35,7 @@
           </div>
         <?php } ?>
         <div class='_des'>
-          <?php echo $this->string()->truncate($this->string()->stripTags($item->getTitle()), $this->allParams['description_truncation']) ?>
+          <?php echo $this->string()->truncate($this->string()->stripTags($item->getDescription()), $this->allParams['description_truncation']) ?>
         </div>
         <?php if(is_array($this->allParams['information']) &&  (engine_in_array('likeCount', $this->allParams['information']) || engine_in_array('commentCount', $this->allParams['information']) || engine_in_array('viewCount', $this->allParams['information']) || engine_in_array('permalink', $this->allParams['information']))) { ?>
           <div class="_stats sesbasic_text_light">
@@ -138,7 +139,7 @@
               </div>
             <?php } ?>
 						<div class="sesthought_thought">
-            	<?php echo $this->string()->truncate($this->string()->stripTags($item->getTitle()), $this->allParams['description_truncation']) ?>
+            	<?php echo $this->string()->truncate($this->string()->stripTags($item->getDescription()), $this->allParams['description_truncation']) ?>
             </div>
             <div class="_stats sesbasic_text_light">
               <?php if(is_array($this->allParams['information']) && engine_in_array('likeCount', $this->allParams['information'])) { ?>

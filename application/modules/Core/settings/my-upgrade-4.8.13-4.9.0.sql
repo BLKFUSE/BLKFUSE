@@ -93,10 +93,3 @@ INSERT IGNORE INTO `engine4_core_content` (`content_id`, `page_id`, `type`, `nam
 UPDATE `engine4_core_menuitems`
 SET `params` = '{"icon":"fa-home"}'
 WHERE `name` = 'core_main_home';
-
---
--- Dumping data for table `engine4_core_settings`
---
-INSERT IGNORE INTO `engine4_core_settings` (`name`, `value`) VALUES
-('core.iframely.host', 'socialengine')
-;

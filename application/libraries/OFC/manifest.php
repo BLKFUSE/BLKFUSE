@@ -2,7 +2,7 @@
   'package' => array(
     'type' => 'library',
     'name' => 'ofc',
-    'version' => '6.2.0',
+    'version' => '6.4.0',
     'revision' => '$Revision: 9747 $',
     'path' => 'application/libraries/OFC',
     'repository' => 'socialengine.com',

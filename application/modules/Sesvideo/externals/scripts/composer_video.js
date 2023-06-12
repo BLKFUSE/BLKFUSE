@@ -350,42 +350,43 @@ Composer.Plugin.Video = function(options){
     }
   }
   this.handleEditTitle = function(element) {
-    element.css('display', 'none');
+    scriptJquery(element).css('display', 'none');
+		console.log(scriptJquery(element));
     var input = scriptJquery.crtEle('input', {
       'type' : 'text',
-      'value' : htmlspecialchars_decode(element.get('html').trim()),
+      'value' : htmlspecialchars_decode(scriptJquery(element).html()),
     })
     .blur(function() {
-          if(input.value.trim() != '' ) {
-            this.params.title = input.value;
-            element.html(this.params.title);
+          if(scriptJquery(input).val().trim() != '' ) {
+            this.params.title = scriptJquery(input).val();
+            scriptJquery(element).html(this.params.title);
             this.setFormInputValue('title', this.params.title);
           }
-          element.css('display', '');
+          scriptJquery(element).css('display', '');
           input.remove();
     }.bind(this))
-    .insertAfter(element, 'after');
+    .insertAfter(scriptJquery(element), 'after');
     input.focus();
   }
   this.handleEditDescription = function(element) {
-    element.css('display', 'none');
+    scriptJquery(element).css('display', 'none');
     var input = scriptJquery.crtEle('textarea', {})
-    .html(htmlspecialchars_decode(element.html().trim()))
+    .html(htmlspecialchars_decode(scriptJquery(element).html()))
     .blur(function() {
-          if( input.val().trim() != '' ) {
-            this.params.description = input.val();
-            element.html(this.params.description);
+          if( scriptJquery(input).val().trim() != '' ) {
+            this.params.description = scriptJquery(input).val();
+            scriptJquery(element).html(this.params.description);
             this.setFormInputValue('description', this.params.description);
           }
           else{
             this.params.description = '';
-            element.html('');
+            scriptJquery(element).html('');
             this.setFormInputValue('description', '');
           }
-          element.css('display', '');
+          scriptJquery(element).css('display', '');
           input.remove();
     }.bind(this))
-    .insertAfter(element, 'after');
+    .insertAfter(scriptJquery(element), 'after');
     input.focus();
   }
   this.initialize(options);

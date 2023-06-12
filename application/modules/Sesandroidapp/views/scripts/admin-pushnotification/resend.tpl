@@ -12,6 +12,11 @@
  */
  
 ?>
+<?php
+  $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl."externals/selectize/css/normalize.css");
+  $headScript = new Zend_View_Helper_HeadScript();
+  $headScript->appendFile($this->layout()->staticBaseUrl.'externals/selectize/js/selectize.js');
+?>
 <div class="settings sesandroidapp_admin_form sesandroidapp_notification">
   <div class='settings'>
     <?php echo $this->form->render($this); ?>
@@ -153,10 +158,12 @@ function testuser(){
     else{
       removeToValue(id, toValueArray);
     }
+
     // hide the wrapper for usernames if it is empty
     if (scriptJquery('#toValues').val() ==""){
       scriptJquery('#toValues-wrapper').css('height', '0');
     }
+
     scriptJquery('#to').prop("disabled",false);
   }
 
@@ -192,17 +199,32 @@ function testuser(){
         }
       });
 
+      // new Composer.OverText($('to'), {
+      //   'textOverride' : '<?php //echo $this->translate('Start typing...') ?>',
+      //   'element' : 'label',
+      //   'isPlainText' : true,
+      //   'positionOptions' : {
+      //     position: ( en4.orientation == 'rtl' ? 'upperRight' : 'upperLeft' ),
+      //     edge: ( en4.orientation == 'rtl' ? 'upperRight' : 'upperLeft' ),
+      //     offset: {
+      //       x: ( en4.orientation == 'rtl' ? -4 : 4 ),
+      //       y: 2
+      //     }
+      //   }
+      // });
+
     } else { // POPULATED
+
       var myElement = scriptJquery.crtEle("span", {
         'id' : 'tospan' + to.id,
-        'class' : 'tag tag_' + to.type,
+        'class' : 'tag tag_' + to.type
       }).html(to.title);
       scriptJquery('#to-element').appendChild(myElement);
-      scriptJquery('#to-wrapper').css('height', 'auto');
+      scriptJquery('to-wrapper').css('height', 'auto');
 
       // Hide to input?
-      scriptJquery('to').css('display', 'none');
-      scriptJquery('toValues-wrapper').css('display', 'none');
+      scriptJquery('#to').css('display', 'none');
+      scriptJquery('#toValues-wrapper').css('display', 'none');
     }
   });
 </script>

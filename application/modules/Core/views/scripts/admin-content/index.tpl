@@ -986,7 +986,8 @@ $allowedAdminTitle = array('core.html-block', 'core.rich-text-block'); ?>
     if( $type(fullParams) && $type(fullParams.params) ) {
       //urlObject.setData(fullParams.params);
     }
-
+		if(name.includes('profile'))
+			name = name.replace("profile", "SETWIDGETNAME");
     urlObject.setData({'name' : name}, true);
 
     Smoothbox.open(urlObject.toString());
@@ -1460,11 +1461,11 @@ $allowedAdminTitle = array('core.html-block', 'core.rich-text-block'); ?>
                             });
                           </script>
                           <?php if( empty($structThreeInfo) ): // Missing widget ?>
-                            <li id="admin_content_<?php echo $structThree['identity'] ?>" class="disabled admin_content_cell admin_content_buildable admin_content_draggable admin_content_<?php echo $structThree['type'] . '_' . $structThree['name'] ?><?php if( !empty($structThreeInfo['special']) ) echo ' htmlblock' ?>">
-                              <?php echo $this->translate('Missing widget: %s', $structThree['name']) ?>
+                            <!--<li id="admin_content_<?php //echo $structThree['identity'] ?>" class="disabled admin_content_cell admin_content_buildable admin_content_draggable admin_content_<?php //echo $structThree['type'] . '_' . $structThree['name'] ?><?php //if( !empty($structThreeInfo['special']) ) echo ' htmlblock' ?>">
+                              <?php //echo $this->translate('Missing widget: %s', $structThree['name']) ?>
                               <span class="open"></span>
                               <span class="remove"><a href='javascript:void(0)' onclick="removeWidget(layoutAdmin(this));">x</a></span>
-                            </li>
+                            </li>-->
                           <?php elseif( empty($structThreeInfo['canHaveChildren']) ): ?>
                             <li id="admin_content_<?php echo $structThree['identity'] ?>" class="admin_content_cell admin_content_buildable admin_content_draggable admin_content_<?php echo $structThree['type'] . '_' . $structThree['name'] ?><?php if( !empty($structThreeInfo['special']) ) echo ' htmlblock' ?>">
                               <?php
@@ -1513,10 +1514,10 @@ $allowedAdminTitle = array('core.html-block', 'core.rich-text-block'); ?>
                                       });
                                     </script>
                                     <?php if( empty($structFourInfo) ): ?>
-                                      <li id="admin_content_<?php echo $structFour['identity'] ?>" class="disabled admin_content_cell admin_content_buildable admin_content_draggable admin_content_<?php echo $structFour['type'] . '_' . $structFour['name'] ?>">
-                                        <?php echo $this->translate('Missing widget: %s', $structFour['name']) ?>
+                                      <!--<li id="admin_content_<?php //echo $structFour['identity'] ?>" class="disabled admin_content_cell admin_content_buildable admin_content_draggable admin_content_<?php //echo $structFour['type'] . '_' . $structFour['name'] ?>">
+                                        <?php //echo $this->translate('Missing widget: %s', $structFour['name']) ?>
                                         <span></span>
-                                      </li>
+                                      </li>-->
                                     <?php else: ?>
                                       <li id="admin_content_<?php echo $structFour['identity'] ?>" class="admin_content_cell admin_content_buildable admin_content_draggable admin_content_<?php echo $structFour['type'] . '_' . $structFour['name'] ?>">
                                         <?php
@@ -1623,10 +1624,10 @@ $allowedAdminTitle = array('core.html-block', 'core.rich-text-block'); ?>
                           });
                         </script>
                         <?php if( empty($structThreeInfo) ): ?>
-                          <li id="admin_content_<?php echo $structThree['identity'] ?>" class="disabled admin_content_cell admin_content_buildable admin_content_draggable admin_content_<?php echo $structFour['type'] . '_' . $structFour['name'] ?>">
-                            <?php echo $this->translate('Missing widget: %s', $structThree['name']) ?>
+                          <!--<li id="admin_content_<?php //echo $structThree['identity'] ?>" class="disabled admin_content_cell admin_content_buildable admin_content_draggable admin_content_<?php //echo $structFour['type'] . '_' . $structFour['name'] ?>">
+                            <?php //echo $this->translate('Missing widget: %s', $structThree['name']) ?>
                             <span></span>
-                          </li>
+                          </li>-->
                         <?php else:?>
                         <li id="admin_content_<?php echo $structThree['identity'] ?>" class="admin_content_cell admin_content_buildable admin_content_draggable admin_content_<?php echo $structThree['type'] . '_' . $structThree['name'] ?><?php if( !empty($structThreeInfo['special']) ) echo ' htmlblock' ?>">
                           <?php echo $this->translate($this->contentByName[$structThree['name']]['title']) ?>
@@ -1687,10 +1688,10 @@ $allowedAdminTitle = array('core.html-block', 'core.rich-text-block'); ?>
                           });
                         </script>
                         <?php if( empty($structThreeInfo) ): ?>
-                          <li id="admin_content_<?php echo $structThree['identity'] ?>" class="disabled admin_content_cell admin_content_buildable admin_content_draggable admin_content_<?php echo $structFour['type'] . '_' . $structFour['name'] ?>">
-                            <?php echo $this->translate('Missing widget: %s', $structThree['name']) ?>
+                          <!--<li id="admin_content_<?php //echo $structThree['identity'] ?>" class="disabled admin_content_cell admin_content_buildable admin_content_draggable admin_content_<?php //echo $structFour['type'] . '_' . $structFour['name'] ?>">
+                            <?php //echo $this->translate('Missing widget: %s', $structThree['name']) ?>
                             <span></span>
-                          </li>
+                          </li>-->
                         <?php else:?>                        
                           <li id="admin_content_<?php echo $structThree['identity'] ?>" class="admin_content_cell admin_content_buildable admin_content_draggable admin_content_<?php echo $structThree['type'] . '_' . $structThree['name'] ?><?php if( !empty($structThreeInfo['special']) ) echo ' htmlblock' ?>">
                             <?php echo $this->translate((string) $this->contentByName[$structThree['name']]['title']) ?>
@@ -1763,11 +1764,11 @@ $allowedAdminTitle = array('core.html-block', 'core.rich-text-block'); ?>
                             });
                           </script>
                           <?php if( empty($structThreeInfo) ): // Missing widget ?>
-                            <li id="admin_content_<?php echo $structThree['identity'] ?>" class="disabled admin_content_cell admin_content_buildable admin_content_draggable admin_content_<?php echo $structThree['type'] . '_' . $structThree['name'] ?><?php if( !empty($structThreeInfo['special']) ) echo ' htmlblock' ?>">
-                              <?php echo $this->translate('Missing widget: %s', $structThree['name']) ?>
+                            <!--<li id="admin_content_<?php //echo $structThree['identity'] ?>" class="disabled admin_content_cell admin_content_buildable admin_content_draggable admin_content_<?php //echo $structThree['type'] . '_' . $structThree['name'] ?><?php //if( !empty($structThreeInfo['special']) ) echo ' htmlblock' ?>">
+                              <?php //echo $this->translate('Missing widget: %s', $structThree['name']) ?>
                               <span class="open"></span>
                               <span class="remove"><a href='javascript:void(0)' onclick="removeWidget(layoutAdmin(this));">x</a></span>
-                            </li>
+                            </li>-->
                           <?php elseif( empty($structThreeInfo['canHaveChildren']) ): ?>
                             <li id="admin_content_<?php echo $structThree['identity'] ?>" class="admin_content_cell admin_content_buildable admin_content_draggable admin_content_<?php echo $structThree['type'] . '_' . $structThree['name'] ?><?php if( !empty($structThreeInfo['special']) ) echo ' htmlblock' ?>">
                               <?php
@@ -1816,10 +1817,10 @@ $allowedAdminTitle = array('core.html-block', 'core.rich-text-block'); ?>
                                       });
                                     </script>
                                     <?php if( empty($structFourInfo) ): ?>
-                                      <li id="admin_content_<?php echo $structFour['identity'] ?>" class="disabled admin_content_cell admin_content_buildable admin_content_draggable admin_content_<?php echo $structFour['type'] . '_' . $structFour['name'] ?>">
-                                        <?php echo $this->translate('Missing widget: %s', $structFour['name']) ?>
+                                      <!--<li id="admin_content_<?php //echo $structFour['identity'] ?>" class="disabled admin_content_cell admin_content_buildable admin_content_draggable admin_content_<?php //echo $structFour['type'] . '_' . $structFour['name'] ?>">
+                                        <?php //echo $this->translate('Missing widget: %s', $structFour['name']) ?>
                                         <span></span>
-                                      </li>
+                                      </li>-->
                                     <?php else: ?>
                                       <li id="admin_content_<?php echo $structFour['identity'] ?>" class="admin_content_cell admin_content_buildable admin_content_draggable admin_content_<?php echo $structFour['type'] . '_' . $structFour['name'] ?>">
                                         <?php

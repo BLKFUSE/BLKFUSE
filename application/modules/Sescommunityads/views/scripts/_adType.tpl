@@ -33,7 +33,7 @@
    <?php if($boostPost && Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesadvancedactivity')){ ?>
     <li class="sesbasic_bg"> 
      <a href="javascript:;" rel="boost_post_cnt" class="sescommunityads_promote_a">
-       <div class="_thumb"> <img src="application/modules/Sescommunityads/externals/images/boost.png" alt="" align="center" /> </div>
+       <div class="_thumb"> <img src="application/modules/Sescommunityads/externals/images/boost.png" alt="" class="admin_table_centered" /> </div>
        <div class="_cont">
         <div class="_title"><?php echo $this->translate('Boost A Post'); ?></div>
         <div class="_des"><?php echo $this->translate('Get more people to see and engage with your Page posts.'); ?></div>
@@ -44,7 +44,7 @@
    <?php } ?>
    <?php if($promotePage && Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sespage')){ ?>
     <li class="sesbasic_bg"> <a href="javascript:;"  rel="promote_page_cnt" class="sescommunityads_promote_a">
-     <div class="_thumb"> <img src="application/modules/Sescommunityads/externals/images/promote_page.png" alt="" align="center" /> </div>
+     <div class="_thumb"> <img src="application/modules/Sescommunityads/externals/images/promote_page.png" alt="" class="admin_table_centered" /> </div>
      <div class="_cont">
       <div class="_title"><?php echo $this->translate('Promote Your Page'); ?></div>
       <div class="_des"><?php echo $this->translate('Connect more people with your Page.'); ?></div>
@@ -55,7 +55,7 @@
    <?php } ?>
     <?php if($promoteContent){ ?>
     <li class="sesbasic_bg"> <a href="javascript:;" rel="promote_content_cnt" class="sescommunityads_promote_a">
-     <div class="_thumb"> <img src="application/modules/Sescommunityads/externals/images/promote_content.png" alt="" align="center" /> </div>
+     <div class="_thumb"> <img src="application/modules/Sescommunityads/externals/images/promote_content.png" alt="" class="admin_table_centered" /> </div>
      <div class="_cont">
       <div class="_title"><?php echo $this->translate('Promote Your Content'); ?></div>
       <div class="_des"><?php echo $this->translate('Let more people see the content you post.'); ?></div>
@@ -66,7 +66,7 @@
     <?php } ?>
     <?php if($moreVisitor){ ?>
     <li class="sesbasic_bg"> <a href="javascript:;"  rel="promote_website_cnt" class="sescommunityads_promote_a">
-     <div class="_thumb"> <img src="application/modules/Sescommunityads/externals/images/visitors.png" alt="" align="center" /> </div>
+     <div class="_thumb"> <img src="application/modules/Sescommunityads/externals/images/visitors.png" alt="" class="admin_table_centered" /> </div>
      <div class="_cont">
       <div class="_title"><?php echo $this->translate('Get More Website Visitors'); ?></div>
       <div class="_des"><?php echo $this->translate('Advertise your website to a large audience'); ?></div>

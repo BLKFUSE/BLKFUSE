@@ -71,12 +71,9 @@
           <th style="width: 1%;">
             <?php echo $this->translate('Name') ?>
           </th>
-          <?php /*
           <th>
-            <?php echo $this->translate('Options') ?>
+            <?php echo $this->translate('Option') ?>
           </th>
-           *
-           */ ?>
         </tr>
       </thead>
       <tbody>
@@ -102,6 +99,9 @@
             </td>
             <td>
               <?php echo $process->name ?>
+            </td>
+            <td class="admin_table_options">
+							<?php echo $this->htmlLink(array('reset' => false, 'action' => 'cancel', 'pid' => $process->pid), $this->translate('Cancel Task')) ?>
             </td>
             <?php /*
             <td class="admin_table_options">

@@ -31,10 +31,10 @@ class Sesstories_IndexController extends Sesapi_Controller_Action_Standard
         ));
 
         // Hides options from the form if there are less then one option.
-        if (count($form->story_privacy->options) <= 1) {
+        if (engine_count($form->story_privacy->options) <= 1) {
             $form->removeElement('story_privacy');
         }
-        if (count($form->story_comment->options) <= 1) {
+        if (engine_count($form->story_comment->options) <= 1) {
             $form->removeElement('story_comment');
         }
 
@@ -102,7 +102,7 @@ class Sesstories_IndexController extends Sesapi_Controller_Action_Standard
         }
         $result['viewers'] = $mutedusers;
 
-        if(is_countable($results) && count($results) > 0 ) {
+        if(is_countable($results) && engine_count($results) > 0 ) {
             $extraParams['pagging']['total_page'] = $paginator->getPages()->pageCount;
             $extraParams['pagging']['total'] = $paginator->getTotalItemCount();
             $extraParams['pagging']['current_page'] = $paginator->getCurrentPageNumber();
@@ -179,7 +179,7 @@ class Sesstories_IndexController extends Sesapi_Controller_Action_Standard
 
             $getAllUserHaveStories = Engine_Api::_()->getDbTable('userinfos', 'sesstories')->getAllUserHaveStories(array('user_id' => $user_id));
             $friendArra = array();
-            if (count($getAllUserHaveStories) > 0) {
+            if (engine_count($getAllUserHaveStories) > 0) {
                 foreach ($getAllUserHaveStories as $getAllUserHaveStorie) {
                     $friendArra[] = $getAllUserHaveStorie->owner_id;
                 }
@@ -199,7 +199,7 @@ class Sesstories_IndexController extends Sesapi_Controller_Action_Standard
 
         if (empty($userarchivedstories) && empty($highlight)) {
             $viewerresults = Engine_Api::_()->getDbTable('stories', 'sesstories')->getAllStories($user_id);
-            if (count($viewerresults) > 0) {
+            if (engine_count($viewerresults) > 0) {
                 foreach ($viewerresults as $item) {
                     if (Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('elivestreaming')) {
                         $elivehost = Engine_Api::_()->getDbtable('elivehosts', 'elivestreaming')->getHostId(array('story_id' => $item->story_id));
@@ -274,7 +274,7 @@ class Sesstories_IndexController extends Sesapi_Controller_Action_Standard
                         $is_like = Engine_Api::_()->sesapi()->contentLike($item);
                         $reactionData = array();
                         $reactionCounter = 0;
-                        if(is_countable($resultData) && count($resultData)) {
+                        if(is_countable($resultData) && engine_count($resultData)) {
                             foreach ($resultData as $type) {
                                 $reactionData[$reactionCounter]['title'] = $this->view->translate('%s (%s)', $type['total'], Engine_Api::_()->sesadvancedcomment()->likeWord($type['type']));
                                 $reactionData[$reactionCounter]['imageUrl'] = Engine_Api::_()->sesapi()->getBaseUrl(false, Engine_Api::_()->sesadvancedcomment()->likeImage($type['type']));
@@ -285,7 +285,7 @@ class Sesstories_IndexController extends Sesapi_Controller_Action_Standard
                         if ($is_like) {
                             $images['story_content'][$counter]['is_like'] = true;
                             $like = true;
-                            $type = $is_like['reaction_type'];
+                            $type = @$is_like['reaction_type'];
                             $imageLike = Engine_Api::_()->sesapi()->getBaseUrl(false, Engine_Api::_()->sesadvancedcomment()->likeImage($type));
                             if ($type)
                                 $text = Engine_Api::_()->sesadvancedcomment()->likeWord($type);
@@ -308,7 +308,7 @@ class Sesstories_IndexController extends Sesapi_Controller_Action_Standard
                     }
                     $counter++;
                 }
-                if (count($viewerresults) > 0) {
+                if (engine_count($viewerresults) > 0) {
                     $result['my_story'] = $images;
                     $result['my_story']['user_id'] = $user->getIdentity();
                     $result['my_story']['username'] = $user->getTitle();
@@ -322,7 +322,7 @@ class Sesstories_IndexController extends Sesapi_Controller_Action_Standard
             }
         }
 
-        if (count($friendArra) > 0) {
+        if (engine_count($friendArra) > 0) {
             foreach ($friendArra as $key => $friend_id) {
 
                 if (empty($userarchivedstories) && empty($highlight)) {
@@ -330,7 +330,7 @@ class Sesstories_IndexController extends Sesapi_Controller_Action_Standard
                 }
 
                 $getAllMutesMembers = Engine_Api::_()->getDbTable('mutes', 'sesstories')->getAllMutesMembers(array('user_id' => $viewer_id));
-                if (count($getAllMutesMembers) > 0) {
+                if (engine_count($getAllMutesMembers) > 0) {
                     if (in_array($friend_id, $getAllMutesMembers)) continue;
                 }
 
@@ -375,6 +375,7 @@ class Sesstories_IndexController extends Sesapi_Controller_Action_Standard
                       $storageObject = Engine_Api::_()->getItemTable('storage_file')->getFile($item->file_id, '');
                     } else if(!empty($item->background_id)) {
                       $backgroundItem = Engine_Api::_()->getItem('sesstories_background', $item->background_id);
+                      if($backgroundItem && !empty($backgroundItem->file_id))
                       $storageObject = Engine_Api::_()->getItemTable('storage_file')->getFile($backgroundItem->file_id, '');
                     }
                     
@@ -424,7 +425,7 @@ class Sesstories_IndexController extends Sesapi_Controller_Action_Standard
                             $resultData = $tableLike->fetchRow($select);
                             if ($resultData) {
                                 $item_activity_like = Engine_Api::_()->getDbTable('corelikes', 'sesadvancedactivity')->rowExists($resultData->like_id);
-                                $reaction_type = $item_activity_like->type;
+                                $reaction_type = @$item_activity_like->type;
                             }
                         }
 
@@ -444,7 +445,7 @@ class Sesstories_IndexController extends Sesapi_Controller_Action_Standard
                         $is_like = Engine_Api::_()->sesapi()->contentLike($item);
                         $reactionData = array();
                         $reactionCounter = 0;
-                        if(is_countable($resultData) && count($resultData)) {
+                        if(is_countable($resultData) && engine_count($resultData)) {
                             foreach ($resultData as $type) {
                                 $reactionData[$reactionCounter]['title'] = $this->view->translate('%s (%s)', $type['total'], Engine_Api::_()->sesadvancedcomment()->likeWord($type['type']));
                                 $reactionData[$reactionCounter]['imageUrl'] = Engine_Api::_()->sesapi()->getBaseUrl(false, Engine_Api::_()->sesadvancedcomment()->likeImage($type['type']));
@@ -480,7 +481,7 @@ class Sesstories_IndexController extends Sesapi_Controller_Action_Standard
 
                     $counter++;
                 }
-                if (count($results) > 0 && $existsItem) {
+                if (engine_count($results) > 0 && $existsItem) {
                     $result['stories'][$counterLoop] = $images;
                     $result['stories'][$counterLoop]['user_id'] = $user->getIdentity();
                     $result['stories'][$counterLoop]['username'] = $user->getTitle();
@@ -512,9 +513,9 @@ class Sesstories_IndexController extends Sesapi_Controller_Action_Standard
         }
 
         if (!empty($userarchivedstories)) {
-            Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array_merge(array('error' => '0', 'error_message' => '', 'result' => $result), $extraParams));
+            Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array_merge(array('error' => '0', 'error_message' => '', 'result' => $result), !empty($extraParams) ? $extraParams : array()));
         } else {
-            Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => $result));
+            Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => @$result));
         }
     }
 
@@ -835,7 +836,7 @@ class Sesstories_IndexController extends Sesapi_Controller_Action_Standard
         $resource_id = $user_id;
         $isStoryAlreadyMuted = Engine_Api::_()->getDbTable('mutes', 'sesstories')->getMuteStory($resource_id);
         $mute_id = null;
-        if (!count($isStoryAlreadyMuted)) {
+        if (!engine_count($isStoryAlreadyMuted)) {
             $values = array('user_id' => $viewer_id, 'resource_id' => $user_id, 'mute' => '1');
             $item = $table->createRow();
             $item->setFromArray($values);

@@ -106,7 +106,12 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
                 $params['sort'] = 'open';
                 break;
         }
-        $params['widgetManage'] = true;
+        if(!$this->_getParam("viewer_id")){
+            $params['widgetManage'] = true;
+            $params['widget'] = 'manage';
+        }else{
+            $params["myBusinesses"] = true;
+        }
         $paginator = Engine_Api::_()->getDbTable('businesses', 'sesbusiness')->getBusinessPaginator($params);
         $paginator->setItemCountPerPage($this->_getParam('limit', 10));
         $paginator->setCurrentPageNumber($this->_getParam('page', 1));
@@ -169,7 +174,7 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
                 $result[$businessCounter] = $businessArray;
                 $statsCounter = 0;
                 $image = Engine_Api::_()->sesapi()->getPhotoUrls($businesses, '', "");
-                if (image) {
+                if ($image) {
                     $result[$businessCounter]['images'] = $image;
                 } else {
                     $result[$businessCounter]['images'] = $image;
@@ -245,7 +250,8 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
         $menus = Engine_Api::_()->getApi('menus', 'core')->getNavigation('sesbusiness_main', array());
         $menu_counter = 0;
         foreach ($menus as $menu) {
-            $class = end(explode(' ', $menu->class));
+						$classMenu = explode(' ', $menu->class);
+            $class = end($classMenu);
             if ($class != "sesbusiness_main_categories" && $class != "sesbusiness_main_manage_package" && $class != 'sesbusiness_main_browse' && $class != 'sesbusiness_main_featured' && $class != 'sesbusiness_main_featured' && $class != 'sesbusiness_main_verified' && $class != 'sesbusiness_main_sponsored' && $class != 'sesbusiness_main_hot' && $class != 'sesbusiness_main_create' && $class != 'sesbusiness_main_manage' && $class != 'sesbusiness_main_businessalbumbrowse' && 'sesbusinessvideo_main_browsehome' != $class && 'sesbusiness_main_businesspollbrowse' != $class)
                 continue;
             if($class == "sesbusiness_main_manage_package" && !($this->checkVersion(2.6,1.7)))
@@ -1195,7 +1201,7 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
 
 	if (!$this->_helper->requireAuth()->setAuthParams($business, $viewer, 'view')->isValid())
             Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'permission_error', 'result' => array()));
-        $sesprofilelock_enable_module = unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}'));
+        $sesprofilelock_enable_module = is_string(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}')) ? unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}')) : Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}');
         if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesprofilelock')) && engine_in_array('sesbusiness', $sesprofilelock_enable_module) && $viewerId != $business->owner_id) {
             $cookieData = '';
             if ($business->enable_lock && !engine_in_array($business->business_id, explode(',', $cookieData))) {
@@ -2319,7 +2325,7 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
         $hideIdentity = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesbusiness_show_userdetail', 0);
         if($hideIdentity){
           $result['basicInformation'][$basicInformationCounter]['name'] = 'createdby';
-          $result['basicInformation'][$basicInformationCounter]['value'] = $owner->displayname;
+          $result['basicInformation'][$basicInformationCounter]['value'] = $owner->getTitle();
           $result['basicInformation'][$basicInformationCounter]['label'] = 'Created By';
           $basicInformationCounter++;
         }
@@ -2857,60 +2863,66 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
 		if(!$orderval)
 			$orderval = 'album_id';
 		
-        $paginator = Engine_Api::_()->getDbTable('albums', 'sesbusiness')->getAlbumSelect(array('business_id' => $business->business_id, 'order' => $orderval,'search'=>$search));
-		$albumCount = Engine_Api::_()->getDbTable('albums', 'sesbusiness')->getUserBusinessAlbumCount(array('business_id' => $business->business_id, 'user_id' => $viewer->getIdentity()));
-        $paginator->setItemCountPerPage(5);
-        $paginator->setCurrentPageNumber($this->_getParam('page', 1));
-        $getBusinessRolePermission = Engine_Api::_()->sesbusiness()->getBusinessRolePermission($business->getIdentity(), 'post_content', 'album', false);
-        $canUpload = $getBusinessRolePermission ? $getBusinessRolePermission : $this->_helper->requireAuth()->setAuthParams('businesses', null, 'album')->isValid();
-        $optioncounter = 0;
-		$quota = Engine_Api::_()->authorization()->getPermission($levelId, 'businesses', 'business_album_count');
-		if($albumCount >= $quota && $quota != 0){
-			$allowMore = false;
-		}else{
-			$allowMore = true;
-		}
-        if ($canUpload && $allowMore) {
-            $result['can_create'] = true;
-        } else {
-            $result['can_create'] = false;
-        }
-        $result['menus'][$optioncounter]['name'] = 'creation_date';
-        $result['menus'][$optioncounter]['label'] = $this->view->translate('Recently Created');
-        $optioncounter++;
-        $result['menus'][$optioncounter]['name'] = 'most_liked';
-        $result['menus'][$optioncounter]['label'] = $this->view->translate('Most Liked');
-        $optioncounter++;
-        $result['menus'][$optioncounter]['name'] = 'most_viewed';
-        $result['menus'][$optioncounter]['label'] = $this->view->translate('Most Viewed');
-        $optioncounter++;
-        $result['menus'][$optioncounter]['name'] = 'most_commented';
-        $result['menus'][$optioncounter]['label'] = $this->view->translate('Most Commented');
-        $optioncounter++;
+			$paginator = Engine_Api::_()->getDbTable('albums', 'sesbusiness')->getAlbumSelect(array('business_id' => $business->business_id, 'order' => $orderval,'search'=>$search));
+			$albumCount = Engine_Api::_()->getDbTable('albums', 'sesbusiness')->getUserBusinessAlbumCount(array('business_id' => $business->business_id, 'user_id' => $viewer->getIdentity()));
+			$paginator->setItemCountPerPage(5);
+			$paginator->setCurrentPageNumber($this->_getParam('page', 1));
+			
+			$optioncounter = 0;
+			$quota = Engine_Api::_()->authorization()->getPermission($levelId, 'businesses', 'business_album_count');
+			if($albumCount >= $quota && $quota != 0){
+				$allowMore = false;
+			}else{
+				$allowMore = true;
+			}
+	
+			$levelId = $viewer->getIdentity() ? $viewer->level_id : Engine_Api::_()->getDbTable('levels', 'authorization')->getPublicLevel()->level_id;
+			$toCheckUserRole  = Engine_Api::_()->getDbTable('businessroles', 'sesbusiness')->toCheckUserBusinessRole($viewer->getIdentity(), $business->getIdentity(), 'manage_dashboard', 'edit');
+			$allowAlbum = $toCheckUserRole ? $toCheckUserRole : $business->authorization()->isAllowed($viewer, 'album');
+			$canUpload = Engine_Api::_()->authorization()->getPermission($levelId, 'businesses', 'album');
+			$business_album_count = Engine_Api::_()->authorization()->getPermission($levelId, 'businesses', 'business_album_count');
+			
+			if($allowAlbum && $canUpload && ($paginator->count() > 1 || $canUpload )  && (!$business_album_count || $paginator->getTotalItemCount() <= $business_album_count)) {
+				$result['can_create'] = true;
+			} else {
+				$result['can_create'] = false;
+			}
+			
+			$result['menus'][$optioncounter]['name'] = 'creation_date';
+			$result['menus'][$optioncounter]['label'] = $this->view->translate('Recently Created');
+			$optioncounter++;
+			$result['menus'][$optioncounter]['name'] = 'most_liked';
+			$result['menus'][$optioncounter]['label'] = $this->view->translate('Most Liked');
+			$optioncounter++;
+			$result['menus'][$optioncounter]['name'] = 'most_viewed';
+			$result['menus'][$optioncounter]['label'] = $this->view->translate('Most Viewed');
+			$optioncounter++;
+			$result['menus'][$optioncounter]['name'] = 'most_commented';
+			$result['menus'][$optioncounter]['label'] = $this->view->translate('Most Commented');
+			$optioncounter++;
 
-        $albumCounter = 0;
-        foreach ($paginator as $item) {
-            $owner = $item->getOwner();
-            $ownertitle = $owner->displayname;
-            $result['albums'][$albumCounter] = $item->toArray();
-            $photo = Engine_Api::_()->getItem('sesbusiness_photo',$item->photo_id);
-            if($photo)
-                $result['albums'][$albumCounter]['images'] = Engine_Api::_()->sesapi()->getPhotoUrls($photo->file_id, '', "") ? Engine_Api::_()->sesapi()->getPhotoUrls($photo->file_id, '', "") : $item->getPhotoUrl();
-            else
-                $result['albums'][$albumCounter]['images'] =  $this->getBaseUrl(true, $item->getPhotoUrl());
-            $result['albums'][$albumCounter]['user_title'] = $ownertitle;
-            $result['albums'][$albumCounter]['photo_count'] = $item->count();
-            $albumCounter++;
-        }
-        $extraParams['pagging']['total_page'] = $paginator->getPages()->pageCount;
-        $extraParams['pagging']['total'] = $paginator->getTotalItemCount();
-        $extraParams['pagging']['current_page'] = $paginator->getCurrentPageNumber();
-        $extraParams['pagging']['next_page'] = $extraParams['pagging']['current_page'] + 1;
-
-
-        Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array_merge(array('error' => '0', 'error_message' => '', 'result' => $result), $extraParams));
-
+			$albumCounter = 0;
+			foreach ($paginator as $item) {
+				$owner = $item->getOwner();
+				$ownertitle = $owner->getTitle();
+				$result['albums'][$albumCounter] = $item->toArray();
+				$photo = Engine_Api::_()->getItem('sesbusiness_photo',$item->photo_id);
+				if($photo)
+					$result['albums'][$albumCounter]['images'] = Engine_Api::_()->sesapi()->getPhotoUrls($photo->file_id, '', "") ? Engine_Api::_()->sesapi()->getPhotoUrls($photo->file_id, '', "") : $item->getPhotoUrl();
+				else
+					$result['albums'][$albumCounter]['images'] =  $this->getBaseUrl(true, $item->getPhotoUrl());
+				$result['albums'][$albumCounter]['user_title'] = $ownertitle;
+				$result['albums'][$albumCounter]['photo_count'] = $item->count();
+				$albumCounter++;
+			}
+			$extraParams['pagging']['total_page'] = $paginator->getPages()->pageCount;
+			$extraParams['pagging']['total'] = $paginator->getTotalItemCount();
+			$extraParams['pagging']['current_page'] = $paginator->getCurrentPageNumber();
+			$extraParams['pagging']['next_page'] = $extraParams['pagging']['current_page'] + 1;
+			
+			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array_merge(array('error' => '0', 'error_message' => '', 'result' => $result), $extraParams));
     }
+    
     public function associatedAction()
     {
         if (!Engine_Api::_()->core()->hasSubject()) {
@@ -4353,27 +4365,22 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
 		$form->removeElement('map-canvas');
 		$form->removeElement('ses_location');
 		$form->removeElement('lng');
-        if($form->removeElement('is_locked'))
-            $form->removeElement('password');
-        if($form->removeElement('password'))
-            $form->removeElement('password');
+		if($form->removeElement('is_locked'))
+				$form->removeElement('password');
+		if($form->removeElement('password'))
+				$form->removeElement('password');
   
-	 if ($this->_getParam('getForm')) {
-            $formFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->generateFormFields($form);
-            $this->generateFormFields($formFields);
-        }
-        if (!$form->isValid($_POST)) {
-            $validateFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->validateFormFields($form);
-            if (is_countable($validateFields) && engine_count($validateFields))
-                $this->validateFormFields($validateFields);
-        }
-    if (!$this->getRequest()->isPost()) {
-      Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('invalid_request'), 'result' => array()));
-    }
-    if (!$form->isValid($this->getRequest()->getPost())) {
-      $values = $form->getValues('url');
-       Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('validation_error'), 'result' => array()));
-    }
+		if ($this->_getParam('getForm')) {
+			$formFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->generateFormFields($form);
+			$this->generateFormFields($formFields);
+		}
+
+		// Check if valid
+		if( !$form->isValid($this->getRequest()->getPost()) ) {
+			$validateFields = Engine_Api::_()->getApi('FormFields','sesapi')->validateFormFields($form);
+			if(is_countable($validateFields) && engine_count($validateFields))
+				$this->validateFormFields($validateFields);
+		}
 	
     // Process
     $values = $form->getValues();
@@ -4414,7 +4421,9 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
 			$video = $table->createRow();
 		}
 	  else if ($values['type'] == 3) {
-		$video = Engine_Api::_()->getItem('businessvideo', $this->_getParam('id'));
+			$values['owner_id'] = $viewer->getIdentity();
+			$params = array('owner_type' => 'user', 'owner_id' => $viewer->getIdentity());
+			$video = Engine_Api::_()->sesbusinessvideo()->createVideo($params, $_FILES['video'], $values);
 	  } else
         $video = $table->createRow();
 		  if ($values['type'] == 3 && isset($_FILES['photo_id']['name']) && $_FILES['photo_id']['name'] != '') {
@@ -4677,7 +4686,7 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
 		}
 
 		$viewer = Engine_Api::_()->user()->getViewer();
-		 if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('seslock'))) {
+		 if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesprofilelock'))) {
 			 $viewer = Engine_Api::_()->user()->getViewer();
 			  if ($viewer->getIdentity() == 0)
 				$result['level'] = $level = Engine_Api::_()->getDbtable('levels', 'authorization')->getPublicLevel()->level_id;
@@ -4717,12 +4726,12 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
 				
 				$embe = $video->code;
 				//$embe = $video->getRichContent(true,array(),'',true);
-			  //preg_match('/src="([^"]+)"/', $embe, $match);
-			  //if(strpos($match[1],'https://') === false && strpos($match[1],'http://') === false){
-				//$result['iframeURL']  = str_replace('//','https://',$match[1]);
-			 // }else{
-				$result['iframeURL']  = $embe;
-			  //}
+                preg_match('/src="([^"]+)"/', $embe, $match);
+                if(strpos($match[1],'https://') === false && strpos($match[1],'http://') === false){
+                    $result['iframeURL']  = str_replace('//','https://',$match[1]);
+                }else{
+                    $result['iframeURL']  = $embe;
+                }
 			}else{
 				
 				$storage_file = Engine_Api::_()->getItem('storage_file', $video->file_id);
@@ -4731,6 +4740,16 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
 				  $result['video_extension'] = $storage_file->extension;
 				}
 			}
+            if(!empty($result['iframeURL'])){
+                $dataIframeURL = $result['iframeURL'];
+                if(strpos($dataIframeURL,'youtube') !== false ){
+                    if(strpos($dataIframeURL,'?') !== false ){
+                        $result['iframeURL'] = $result['iframeURL']."&feature=oembed";
+                    }else{
+                        $result['iframeURL'] = $result['iframeURL']."?feature=oembed";
+                    }
+                }
+            }
 			$photo = $this->getBaseUrl(false,$video->getPhotoUrl());
 			if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesbusinessvideo.enable.socialshare', 1)){
 				if($photo)
@@ -5007,7 +5026,7 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
           unset($values['photo_id']);
 				}
       }
-		if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('seslock'))) {
+		if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesprofilelock'))) {
 			//disable lock if password not set.
 			if (!$values['is_locked']) {
 				$values['is_locked'] = '0';
@@ -5265,8 +5284,12 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
             $params = $_POST;
         }
         $searchArray = array();
-        if (isset($_POST['searchParams']) && $_POST['searchParams'])
-            parse_str($_POST['searchParams'], $searchArray);
+				if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+					if(engine_in_array($_POST['searchParams']))
+						$searchArray = $_POST['searchParams'];
+					elseif(is_string($_POST['searchParams']))
+						parse_str($_POST['searchParams'], $searchArray);
+				}
         $value['business'] = isset($_POST['business']) ? $_POST['business'] : 1;
         $value['sort'] = isset($searchArray['sort']) ? $searchArray['sort'] : (isset($_GET[' ']) ? $_GET['sort'] : (isset($params['sort']) ? $params['sort'] : $this->_getParam('sort', 'mostSPliked')));
         $value['show'] = isset($searchArray['show']) ? $searchArray['show'] : (isset($_GET['show']) ? $_GET['show'] : (isset($params['show']) ? $params['show'] : ''));
@@ -5312,7 +5335,7 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
         $albumCounter = 0;
         foreach ($paginator as $item) {
             $owner = $item->getOwner();
-            $ownertitle = $owner->displayname;
+            $ownertitle = $owner->getTitle();
             $result['albums'][$albumCounter] = $item->toArray();
             $result['albums'][$albumCounter]['images'] = Engine_Api::_()->sesapi()->getPhotoUrls($item, '', "") ? Engine_Api::_()->sesapi()->getPhotoUrls($item, '', "") : $result['members'][$counterLoop]['owner_photo'] = $this->getBaseUrl(true, '/application/modules/User/externals/images/nophoto_user_thumb_icon.png');
             $result['albums'][$albumCounter]['user_title'] = $ownertitle;
@@ -5444,6 +5467,22 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
     }
       return $result;
 }
+function deletePhotoAction(){
+    $photo = Engine_Api::_()->getItem('sesbusiness_photo',$this->_getParam('photo_id',''));
+    $photo_id = $photo->getIdentity();
+    $viewer = Engine_Api::_()->user()->getViewer();
+   
+    $db = $photo->getTable()->getAdapter();
+    $db->beginTransaction();
+    try {
+      $photo->delete();
+      $db->commit();
+    } catch (Exception $e) {
+      $db->rollBack();
+      Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$e->getMessage(), 'result' => array()));
+    }
+    Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'', 'result' => $this->view->translate('Photo Deleted Successfully.')));
+  }
     public function createalbumAction(){
 		
         $business_id = $this->_getParam('business_id', false);

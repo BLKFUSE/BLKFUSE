@@ -746,12 +746,12 @@ class Sesmember_AdminManageController extends Core_Controller_Action_Admin {
 
     //Process
     $values = $form->getValues();
-
+		$nonBooleanSettings = $form->nonBooleanFields();
     $db = $permissionsTable->getAdapter();
     $db->beginTransaction();
     try {
       //Set permissions
-      $permissionsTable->setAllowed($content_type, $id, $values);
+      $permissionsTable->setAllowed($content_type, $id, $values,'', $nonBooleanSettings);
       $db->commit();
     } catch (Exception $e) {
       $db->rollBack();

@@ -61,6 +61,7 @@
     <?php endforeach; ?>
     <?php if (engine_count($this->tabs) > $this->max):?>
     <li class="tab_closed more_tab" onclick="moreTabSwitch(this);">
+      <a href="javascript:void(0);"><?php echo $this->translate('More +') ?><span></span></a>
       <div class="tab_pulldown_contents_wrapper">
         <div class="tab_pulldown_contents">
           <ul>
@@ -73,13 +74,12 @@
               $class = join(' ', array_filter($class));
             ?>
             <?php if( $key >= $this->max ): ?>
-              <li class="<?php echo $class ?>" onclick="tabContainerSwitch(this, '<?php echo $tab['containerClass'] ?>')"><?php echo $this->translate($tab['title']) ?><?php if( !empty($tab['childCount']) ): ?><span> (<?php echo $tab['childCount'] ?>)</span><?php endif; ?></li>
+              <li class="<?php echo $class ?>"><a href="javascript:void(0);" onclick="tabContainerSwitch(this, '<?php echo $tab['containerClass'] ?>')"><?php echo $this->translate($tab['title']) ?><?php if( !empty($tab['childCount']) ): ?><span> (<?php echo $tab['childCount'] ?>)</span><?php endif; ?></a></li>
             <?php endif;?>
           <?php endforeach; ?>
           </ul>
         </div>
       </div>
-      <a href="javascript:void(0);"><?php echo $this->translate('More +') ?><span></span></a>
     </li>
     <?php endif;?>
   </ul>

@@ -14,7 +14,7 @@
   array (
     'type' => 'theme',
     'name' => 'elpis',
-    'version' => '6.2.0',
+    'version' => '6.4.0',
     'revision' => '$Revision: 10113 $',
     'path' => 'application/themes/elpis',
     'repository' => 'socialengine.com',

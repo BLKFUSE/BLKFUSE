@@ -400,7 +400,6 @@ class Core_AdminLanguageController extends Core_Controller_Action_Admin
                     $writer = new Engine_Translate_Writer_Csv($targetFile);
                     $writer->setTranslations(array(
                         $phrase => $phrase,
-                        ''=>'',
                     ));
                     $writer->write();
                     @Zend_Registry::get('Zend_Cache')->clean();

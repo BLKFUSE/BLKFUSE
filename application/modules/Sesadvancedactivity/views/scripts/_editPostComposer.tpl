@@ -75,7 +75,7 @@
                           <?php 
                             if(1)
                               $class="edit";
-                            else
+                            else 
                               $class = '';
                             $getEmojis = Engine_Api::_()->getDbTable('emojis', 'sesemoji')->getEmojis(array('fetchAll' => 1)); ?>
                             <div class="sesbasic_custom_scroll">
@@ -86,8 +86,7 @@
                                   <li id="main_emiji_<?php echo $getEmoji->getIdentity(); ?>"><?php echo $this->translate($getEmoji->title); ?>
                                   <ul>
                                   <?php foreach($getEmojiicons as $key => $getEmojiicon) {
-                                    $emoIcon = "\u{$getEmojiicon->emoji_icon}";
-                                    $emoIcon = preg_replace("/\\\\u([0-9A-F]{2,5})/i", "&#x$1;", $emoIcon);
+                                    $emoIcon = Engine_Api::_()->sesemoji()->convertEmojiIcon($getEmojiicon->emoji_icon);
                                   ?>
                                   <li rel="<?php echo $getEmojiicon->emoji_icon; ?>" data-icon="<?php echo $emoIcon ?>">
                                   <a href="javascript:;" class="select_feeling_emoji_adv<?php echo $class; ?>"><img src="<?php echo Engine_Api::_()->storage()->get($getEmojiicon->file_id, '')->getPhotoUrl(); ?>"></a>
@@ -373,43 +372,45 @@
       <div id="compose-menu" class="sesact_compose_menu">
         <input type="hidden" name="privacy" id="privacy_edit" value="<?php echo $this->action->privacy; ?>">
       	<div class="sesact_compose_menu_btns">
-        	<div class="sesact_privacy_chooser sesact_pulldown_wrapper">
-            <a href="javascript:void(0);" class="sesact_privacy_btn  sesact_privacy_btn_edit sesadv_tooltip"><i id="sesadv_privacy_icon_edit"></i><span id="adv_pri_option_edit"></span><i class="fa fa-caret-down"></i></a>
-            <div class="sesact_pulldown">
-              <div class="sesact_pulldown_cont isicon">
-                <ul class="adv_privacy_optn_edit">
-                   <?php if(engine_in_array('everyone',$privacyFeed)){ ?>
-                    <li data-src="everyone" class=""><a href="javascript:;"><i class="sesact_public"></i><span><?php echo $this->translate('Everyone'); ?></span></a></li>
-                    <?php } ?>
-                    <?php if(engine_in_array('networks',$privacyFeed)){ ?>
-                    <li data-src="networks"><a href="javascript:;"><i class="sesact_network"></i><span><?php echo $this->translate('Friends & Networks'); ?></span></a></li>
-                    <?php } ?>
-                    <?php if(engine_in_array('friends',$privacyFeed)){ ?>
-                    <li data-src="friends"><a href="javascript:;"><i class="sesact_friends"></i><span><?php echo $this->translate('Friends Only'); ?></span></a></li>
-                    <?php } ?>
-                    <?php if(engine_in_array('onlyme',$privacyFeed)){ ?>
-                    <li data-src="onlyme"><a href="javascript:;"><i class="sesact_me"></i><span><?php echo $this->translate('Only Me'); ?></span></a></li>
-                    <?php } ?>
-                  <?php if(engine_count($this->usernetworks)){ ?>
-                  <li class="_sep"></li>
-                  <?php foreach($this->usernetworks as $usernetworks){ ?>
-                    <li data-src="network_list" class="network sesadv_network sesadv_network_edit" data-rel="<?php echo $usernetworks->getIdentity(); ?>"><a href="javascript:;"><i class="sesact_network"></i><span><?php echo $usernetworks->getTitle(); ?></span></a></li>
-                  <?php } ?>
-                  <li class="multiple mutiselectedit" data-rel="network-multi"><a href="javascript:;"><i class="sesact_network"></i><span><?php echo $this->translate('Multiple Networks'); ?></span></a></li>
-                  <?php } ?>
-                  <?php if(engine_count($this->userlists)){ ?>
-                  <li class="_sep"></li>
-                  <?php foreach($this->userlists as $userlists){ ?>
-                    <li data-src="members_list" class="lists sesadv_list sesadv_list_edit" data-rel="<?php echo $userlists->getIdentity(); ?>"><a href="javascript:;"><i class="sesact_list"></i><span><?php echo $userlists->getTitle(); ?></span></a></li>
-                  <?php } 
-                  if(engine_count($this->userlists) > 1){ ?>
-                  <li class="multiple mutiselectedit" data-rel="lists-multi"><a href="javascript:;"><i class="sesact_list"></i><span><?php echo $this->translate('Multiptle Lists'); ?></span></a></li>
-                  <?php } 
-                } ?>
-                </ul>
-              </div>													
-            </div>
-          </div>
+					<?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.allowprivacysetting',1)){ ?>
+						<div class="sesact_privacy_chooser sesact_pulldown_wrapper">
+							<a href="javascript:void(0);" class="sesact_privacy_btn  sesact_privacy_btn_edit sesadv_tooltip"><i id="sesadv_privacy_icon_edit"></i><span id="adv_pri_option_edit"></span><i class="fa fa-caret-down"></i></a>
+							<div class="sesact_pulldown">
+								<div class="sesact_pulldown_cont isicon">
+									<ul class="adv_privacy_optn_edit">
+										<?php if(engine_in_array('everyone',$privacyFeed)){ ?>
+											<li data-src="everyone" class=""><a href="javascript:;"><i class="sesact_public"></i><span><?php echo $this->translate('Everyone'); ?></span></a></li>
+											<?php } ?>
+											<?php if(engine_in_array('networks',$privacyFeed)){ ?>
+											<li data-src="networks"><a href="javascript:;"><i class="sesact_network"></i><span><?php echo $this->translate('Friends & Networks'); ?></span></a></li>
+											<?php } ?>
+											<?php if(engine_in_array('friends',$privacyFeed)){ ?>
+											<li data-src="friends"><a href="javascript:;"><i class="sesact_friends"></i><span><?php echo $this->translate('Friends Only'); ?></span></a></li>
+											<?php } ?>
+											<?php if(engine_in_array('onlyme',$privacyFeed)){ ?>
+											<li data-src="onlyme"><a href="javascript:;"><i class="sesact_me"></i><span><?php echo $this->translate('Only Me'); ?></span></a></li>
+											<?php } ?>
+										<?php if(engine_count($this->usernetworks)){ ?>
+										<li class="_sep"></li>
+										<?php foreach($this->usernetworks as $usernetworks){ ?>
+											<li data-src="network_list" class="network sesadv_network sesadv_network_edit" data-rel="<?php echo $usernetworks->getIdentity(); ?>"><a href="javascript:;"><i class="sesact_network"></i><span><?php echo $usernetworks->getTitle(); ?></span></a></li>
+										<?php } ?>
+										<li class="multiple mutiselectedit" data-rel="network-multi"><a href="javascript:;"><i class="sesact_network"></i><span><?php echo $this->translate('Multiple Networks'); ?></span></a></li>
+										<?php } ?>
+										<?php if(engine_count($this->userlists)){ ?>
+										<li class="_sep"></li>
+										<?php foreach($this->userlists as $userlists){ ?>
+											<li data-src="members_list" class="lists sesadv_list sesadv_list_edit" data-rel="<?php echo $userlists->getIdentity(); ?>"><a href="javascript:;"><i class="sesact_list"></i><span><?php echo $userlists->getTitle(); ?></span></a></li>
+										<?php } 
+										if(engine_count($this->userlists) > 1){ ?>
+										<li class="multiple mutiselectedit" data-rel="lists-multi"><a href="javascript:;"><i class="sesact_list"></i><span><?php echo $this->translate('Multiptle Lists'); ?></span></a></li>
+										<?php } 
+									} ?>
+									</ul>
+								</div>													
+							</div>
+						</div>
+          <?php } ?>
         	<button id="compose-submit" type="submit"><?php echo $this->translate("Save") ?></button>
         </div>
         <?php if(engine_in_array('sesadvancedactivitytargetpost',$enable)){ ?>

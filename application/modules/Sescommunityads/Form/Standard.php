@@ -227,7 +227,7 @@ class Sescommunityads_Form_Standard extends Engine_Form
           unset($params['options']['order']);
           $params['options']['decorators'] = array('ViewHelper');
           $params['options']['class'] = 'sesprofile_field_'.$profileType;
-          if(array_key_exists($key,$this->_target)){
+          if(is_array($this->_target) && array_key_exists($key,$this->_target)){
             $value = $this->_target[$key];
             if(strpos($value,'||') === false){}else{
               list($first,$second) = explode('||',$value);
@@ -239,9 +239,9 @@ class Sescommunityads_Form_Standard extends Engine_Form
           $subform->addElement($params['type'], 'max', $params['options']);
           $this->addSubForm($subform, $key);
           
-          if(array_key_exists($profileType.'_birthday',$targetFields)){
+          if(is_array($this->_target) && array_key_exists($profileType.'_birthday',$targetFields)){
             $birthdayValue = 0;
-            if(array_key_exists($profileType.'_birthday',$this->_target)){
+            if(is_array($this->_target) && array_key_exists($profileType.'_birthday',$this->_target)){
               $value = $this->_target[$profileType.'_birthday'];
               if($value){
                   $birthdayValue = 1;
@@ -258,10 +258,10 @@ class Sescommunityads_Form_Standard extends Engine_Form
           }
          continue;
       }else{
-        if(array_key_exists($profileType.'_birthday',$targetFields) && empty($birthday{$profileType})){
+        if(is_array($this->_target) && array_key_exists($profileType.'_birthday',$targetFields) && empty($birthday{$profileType})){
           $birthday[$profileType] = 1;
           $birthdayValue = 0;
-          if(array_key_exists($profileType.'_birthday',$this->_target)){
+          if(is_array($this->_target) && array_key_exists($profileType.'_birthday',$this->_target)){
             $value = $this->_target[$profileType.'_birthday'];
             if($value){
                 $birthdayValue = 1;

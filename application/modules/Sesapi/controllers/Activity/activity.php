@@ -10,7 +10,7 @@
  * @version    $Id: activity.php 2018-08-14 00:00:00 socialnetworking.solutions $
  * @author     socialnetworking.solutions
  */
-if($sesAdv) {
+if(@$sesAdv) {
     $actionDetails = Engine_Api::_()->getDbTable('details', 'sesadvancedactivity')->isRowExists($action->getIdentity());
     if (!$actionDetails) {
         $return = true;
@@ -32,11 +32,11 @@ if($sesAdv) {
     $action_id = $action->action_id;
   }
   // get next id
-  if( null === $nextid || $action_id <= $nextid ) {
+  if( null === @$nextid || $action_id <= @$nextid ) {
     $nextid = $action->action_id - 1;
   }
   // get first id
-  if( null === $firstid || $action_id > $firstid ) {
+  if( null === @$firstid || $action_id > @$firstid ) {
     $firstid = $action_id;
   }
   // skip disabled actions
@@ -352,7 +352,11 @@ if($sesAdv) {
             $album_id = $attachmentData->item->chanel_id;
           }else{
             $photo_id = $attachmentData->item->photo_id;
-            $album_id = $attachmentData->item->album_id;
+            try{
+              $album_id = $attachmentData->item->album_id;
+            }catch(Exception $e){
+              $album_id = 0;
+            }
           }
           $attachment['images'][$counterImage]["attachmentData"]['photo_id'] =  $photo_id;
           $attachment['images'][$counterImage]["attachmentData"]['album_id'] =  $album_id;
@@ -518,8 +522,32 @@ if(engine_count($hashTagActivity)){
 				$reactionCounter++;
 			}
 		}
+    
 		$activity[$counter]["comment"]['reactionUserData'] = $this->view->FluentListUsers($comment->likes()->getAllLikes(),'',$comment->likes()->getLike($this->view->viewer()),$this->view->viewer());;
 		$activity[$counter]["comment"]['reactionData'] = $reactionData;
+
+    $itemsLike = array();
+    $counterLike = 0;
+    $isLike = $comment->likes()->getLike($this->view->viewer());
+    foreach($comment->likes()->getAllLikes() as $itemS){
+      $item = $itemS->getType() != "user" ?  Engine_Api::_()->getItem($itemS->poster_type,$itemS->poster_id) : $itemS;
+      if($isLike && $item->getType() == "user" && $item->getIdentity() == $this->view->viewer()->getIdentity()){
+        continue;
+      }
+      $itemsLike[$counterLike]["title"] = $item->getTitle();
+      $itemsLike[$counterLike]["id"] = $item->getIdentity();
+      $itemsLike[$counterLike]["type"] = $item->getType();
+      $counterLike++;
+    }
+    if($isLike){
+      $uArray = array();
+      $uArray["title"] = $this->view->viewer()->getTitle();
+      $uArray["id"] = $this->view->viewer()->getIdentity();
+      $uArray["type"] = $this->view->viewer()->getType();
+      array_unshift($itemS,$uArray);
+    }
+    $activity[$counter]['comment']['likeUserData'] = $itemsLike;
+
 		 if($likeRow = $comment->likes()->getLike(!empty($guid) ? $guid : Engine_Api::_()->user()->getViewer())){
         if($likeRow->getType() == 'activity_like') {
           $item_activity_like = Engine_Api::_()->getDbTable('activitylikes', 'sesadvancedactivity')->rowExists($likeRow->like_id);
@@ -626,7 +654,7 @@ if(engine_count($hashTagActivity)){
       }
       $activity[$counter]["comment"]['user_title'] = $user->getTitle();
       
-      if($commentData && $commentData->gif_url) {
+      if($commentData && isset($commentData->gif_url)) {
         $activity[$counter]["comment"]['gif_url'] = $commentData->gif_url;
         $activity[$counter]["comment"]['gif_id'] = 1;
       } else {
@@ -666,6 +694,33 @@ if(engine_count($hashTagActivity)){
       }
     }
     $activity[$counter]['reactionUserData'] = $this->view->FluentListUsers($action->likes()->getAllLikes(),'',$action->likes()->getLike($this->view->viewer()),$this->view->viewer());
+    
+    $likesUser = $action->likes()->getAllLikes();
+    $isLike = $action->likes()->getLike($this->view->viewer());
+
+    $itemsLike = array();
+    $counterLike = 0;
+    foreach($likesUser as $itemS){
+      $item = $itemS->getType() != "user" ?  Engine_Api::_()->getItem($itemS->poster_type,$itemS->poster_id) : $itemS;
+      if($isLike && $item->getType() == "user" && $item->getIdentity() == $this->view->viewer()->getIdentity()){
+        continue;
+      }
+      $itemsLike[$counterLike]["title"] = $item->getTitle();
+      $itemsLike[$counterLike]["id"] = $item->getIdentity();
+      $itemsLike[$counterLike]["type"] = $item->getType();
+      $counterLike++;
+    }
+    if($isLike){
+      $uArray = array();
+      $uArray["title"] = $this->view->viewer()->getTitle();
+      $uArray["id"] = $this->view->viewer()->getIdentity();
+      $uArray["type"] = $this->view->viewer()->getType();
+      array_unshift($itemsLike,$uArray);
+    }
+    $activity[$counter]['likeUserData'] = $itemsLike;
+    $activity[$counter]['likeUserCount'] = count($likesUser);
+    
+    
     if (is_array(@($reactionData)) && engine_count($reactionData) > 0) {
       if(engine_count($reactionData))
         $activity[$counter]['reactionData'] = $reactionData;
@@ -716,15 +771,16 @@ if(engine_count($hashTagActivity)){
 //get sharable
 $isShareable = ($action->getTypeInfo()->shareable &&  $viewer->getIdentity()) ? 1 : 0;
 $activity[$counter]['can_share'] = 0;
-if ($action->getTypeInfo()->shareable == 1 && $action->attachment_count == 1 && ($attachment = $action->getFirstAttachment())) {
+if ($action->getTypeInfo()->shareable == 1 && ($attachment = $action->getFirstAttachment())) {
     $activity[$counter]['can_share'] = $isShareable;
     $activity[$counter]["share"]["name"] = "share";
+    $activity[$counter]["share"]["action_id"] = $action->getIdentity();
     $activity[$counter]["share"]["label"] = $this->view->translate("Share");
     $attachmentItem = $attachment->item;
     if($attachmentItem->getPhotoUrl())
     $activity[$counter]["share"]["imageUrl"] = $this->getBaseurl(false,$attachmentItem->getPhotoUrl());
 		$activity[$counter]["share"]["url"] = $this->getBaseUrl(false,$attachmentItem->getHref());
-    $activity[$counter]["share"]["title"] = $attachmentItem->getTitle();
+    $activity[$counter]["share"]["title"] = is_string($attachmentItem->getTitle()) ? $attachmentItem->getTitle() : '';
     $activity[$counter]["share"]["description"] = strip_tags($attachmentItem->getDescription());
     $activity[$counter]["share"]['urlParams'] = array(
         "type" => $attachment->item->getType(),
@@ -734,13 +790,14 @@ if ($action->getTypeInfo()->shareable == 1 && $action->attachment_count == 1 && 
       unset($activity[$counter]["share"]["title"]);
 } else if ($action->getTypeInfo()->shareable == 2) {
      $activity[$counter]['can_share'] = $isShareable;
+     $activity[$counter]["share"]["action_id"] = $action->getIdentity();
     $activity[$counter]["share"]["name"] = "share";
     $activity[$counter]["share"]["label"] = $this->view->translate("Share");
     $attachmentItem = $action->getSubject();
     if($attachmentItem->getPhotoUrl())
     $activity[$counter]["share"]["imageUrl"] = $this->getBaseurl(false,$attachmentItem->getPhotoUrl());
 		$activity[$counter]["share"]["url"] = $this->getBaseUrl(false,$attachmentItem->getHref());
-    $activity[$counter]["share"]["title"] = $attachmentItem->getTitle();
+    $activity[$counter]["share"]["title"] = is_string($attachmentItem->getTitle()) ? $attachmentItem->getTitle() : '';
     $activity[$counter]["share"]["description"] = strip_tags($attachmentItem->getDescription());
 
     $activity[$counter]["share"]['urlParams'] = array(
@@ -750,6 +807,7 @@ if ($action->getTypeInfo()->shareable == 1 && $action->attachment_count == 1 && 
     if(is_null($activity[$counter]["share"]["title"]))
       unset($activity[$counter]["share"]["title"]);
 } elseif ($action->getTypeInfo()->shareable == 3) {
+  $activity[$counter]["share"]["action_id"] = $action->getIdentity();
      $activity[$counter]['can_share'] = $isShareable;
     $activity[$counter]["share"]["name"] = "share";
     $activity[$counter]["share"]["label"] = $this->view->translate("Share");
@@ -757,7 +815,7 @@ if ($action->getTypeInfo()->shareable == 1 && $action->attachment_count == 1 && 
     if($attachmentItem->getPhotoUrl())
     $activity[$counter]["share"]["imageUrl"] = $this->getBaseurl(false,$attachmentItem->getPhotoUrl());
 		$activity[$counter]["share"]["url"] = $this->getBaseUrl(false,$attachmentItem->getHref());
-    $activity[$counter]["share"]["title"] = $attachmentItem->getTitle();
+    $activity[$counter]["share"]["title"] = is_string($attachmentItem->getTitle()) ? $attachmentItem->getTitle() : '';
     $activity[$counter]["share"]["description"] = strip_tags($attachmentItem->getDescription());
     $activity[$counter]["share"]['urlParams'] = array(
         "type" => $action->getObject()->getType(),
@@ -766,6 +824,7 @@ if ($action->getTypeInfo()->shareable == 1 && $action->attachment_count == 1 && 
     if(is_null($activity[$counter]["share"]["title"]))
       unset($activity[$counter]["share"]["title"]);
 } else if ($action->getTypeInfo()->shareable == 4) {
+  $activity[$counter]["share"]["action_id"] = $action->getIdentity();
      $activity[$counter]['can_share'] = $isShareable;
     $activity[$counter]["share"]["name"] = "share";
     $activity[$counter]["share"]["label"] = $this->view->translate("Share");
@@ -773,7 +832,7 @@ if ($action->getTypeInfo()->shareable == 1 && $action->attachment_count == 1 && 
     if($attachmentItem->getPhotoUrl())
     $activity[$counter]["share"]["imageUrl"] = $this->getBaseurl(false,$attachmentItem->getPhotoUrl());
 		$activity[$counter]["share"]["url"] = $this->getBaseUrl(false,$attachmentItem->getHref());
-    $activity[$counter]["share"]["title"] = $attachmentItem->getTitle();
+    $activity[$counter]["share"]["title"] = is_string($attachmentItem->getTitle()) ? $attachmentItem->getTitle() : '';
     $activity[$counter]["share"]["description"] = strip_tags($attachmentItem->getDescription());
     $activity[$counter]["share"]['urlParams'] = array(
         "type" => $action->getType(),
@@ -784,7 +843,7 @@ if ($action->getTypeInfo()->shareable == 1 && $action->attachment_count == 1 && 
 }
 
  //get background image
- if ($backGroundEnable && $enableFeedBg && $actionDetails->feedbg_id && empty($location) && strlen(strip_tags($body)) <= $sesAdvancedactivitytextlimit){
+ if (@$backGroundEnable && $enableFeedBg && $actionDetails->feedbg_id && empty($location) && strlen(strip_tags($body)) <= $sesAdvancedactivitytextlimit){
       $background = Engine_Api::_()->getItem('sesfeedbg_background', $actionDetails->feedbg_id);
       $photo = Engine_Api::_()->storage()->get($background->file_id, '');
       if($photo) {
@@ -792,7 +851,7 @@ if ($action->getTypeInfo()->shareable == 1 && $action->attachment_count == 1 && 
       }
  }
   // text size
-  if($sesadvancedactivitybigtext &&  strlen(strip_tags(@($body))) <= $sesAdvancedactivitytextlimit && $action->type == 'status') {
+  if(@$sesadvancedactivitybigtext &&  strlen(strip_tags(@($body))) <= $sesAdvancedactivitytextlimit && $action->type == 'status') {
       $activity[$counter]['font-size'] = (int) $sesAdvancedactivityfonttextsize;
   }
   //get item photo
@@ -899,19 +958,27 @@ if ($action->getTypeInfo()->shareable == 1 && $action->attachment_count == 1 && 
           $owner = Engine_Api::_()->getItemByGuid($paramsArray['owner']);
       }
   }
+  $activityParams = $action->params;
+  if(!empty($activityParams['body'])){
+    unset($activityParams['body']);
+  }
   $params = array_merge(
     $action->toArray(),
-    (array) $action->params,
+    (array) $activityParams,
     array(
+      'body'=>$action->body,
+      'action'=>$action,
       'sesresource_type'=>$sesAdv ? $actionDetails->sesresource_type : "",
       'sesresource_id'=>$sesAdv ? $actionDetails->sesresource_id : "",
       'subject' => $action->getSubject(),
       'object' => $object,
-      'owner' =>  $owner && ($action->type == "album_like" || $action->type == "album_photo_like") ? Engine_Api::_()->getItem('user',$object->getOwner()) : $owner,
+      'owner' =>  $owner && ($action->type == "album_like" || $action->type == "album_photo_like") ? $object->getOwner() : (!$owner ? $object->getOwner() : $owner),
     )
   );
   $body = Engine_Api::_()->getApi('activity','sesapi')->translatedBody($action->getTypeInfo()->body);
-  $activity[$counter]['activityTypeContent'] = str_replace(array('{body:$body}','{item:$subject}'),'',$body);
+  $activity[$counter]['activityTypeContent'] = str_replace(array('{body:$body}','{item:$subject}','{item:$subject} is now friends with {item:$object}.'),'',$body);
+  $activity[$counter]["body"] = str_replace(array($action->getTypeInfo()->body,'{item:$object} is now friends with {item:$subject}.','{item:$subject} added a new profile photo.'),'',$activity[$counter]["body"]);
+
   if(!empty($action->group_action_id))
     $groupId = $action->group_action_id;
   else

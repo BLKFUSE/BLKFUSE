@@ -138,7 +138,7 @@ class Sesbasic_Form_Admin_PhotoLightbox extends Engine_Form {
       if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sessocialshare')) {
 
           $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
-          $link = '<a href="https://www.socialenginesolutions.com/social-engine/advanced-share-plugin/" target="_blank">Advanced Sharing Plugin – Inside and Outside Site Sharing</a>';
+          $link = '<a href="https://socialnetworking.solutions/social-engine/advanced-share-plugin/" target="_blank">Advanced Sharing Plugin – Inside and Outside Site Sharing</a>';
           $description = sprintf('Do you want to allow your users to share photos from the photo lightbox viewer on your website to other social networking websites? [Note: Only Facebook, Twitter & Pinterest options are available in Lightbox Viewer.] (If you want to enable social sharing on multiple other social networking websites (Facebook, Twitter, Whatsapp, Skype, and many more …), then you should have our "%s" plugin installed and activated on your website.)', $link);
 
 

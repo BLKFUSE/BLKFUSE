@@ -75,9 +75,9 @@ $text = "Below you can also get the short code for ads which you can place in th
             <th class='admin_table_short'><a href="javascript:void(0);" onclick="javascript:changeOrder('sescommunityad_id', 'DESC');"><?php echo $this->translate("ID") ?></a></th>
             <th><a href="javascript:void(0);" onclick="javascript:changeOrder('title', 'ASC');"><?php echo $this->translate("Title") ?></a></th>
             <th><a href="javascript:void(0);" onclick="javascript:changeOrder('user_id', 'ASC');"><?php echo $this->translate("Owner") ?></a></th>
-            <th align="center"><a href="javascript:void(0);" onclick="javascript:changeOrder('is_approved', 'ASC');" title="Approved"><?php echo $this->translate("A") ?></a></th>
-            <th align="center"><a href="javascript:void(0);" onclick="javascript:changeOrder('featured', 'ASC');" title="Featured"><?php echo $this->translate("F") ?></a></th>
-            <th align="center"><a href="javascript:void(0);" onclick="javascript:changeOrder('sponsored', 'ASC');" title="Sponsored"><?php echo $this->translate("S") ?></a></th>
+            <th class="admin_table_centered"><a href="javascript:void(0);" onclick="javascript:changeOrder('is_approved', 'ASC');" title="Approved"><?php echo $this->translate("A") ?></a></th>
+            <th class="admin_table_centered"><a href="javascript:void(0);" onclick="javascript:changeOrder('featured', 'ASC');" title="Featured"><?php echo $this->translate("F") ?></a></th>
+            <th class="admin_table_centered"><a href="javascript:void(0);" onclick="javascript:changeOrder('sponsored', 'ASC');" title="Sponsored"><?php echo $this->translate("S") ?></a></th>
             <th><?php echo $this->translate("Package"); ?></th>
             <th><?php echo $this->translate("Price"); ?></th>
             <th><?php echo $this->translate("Expiry"); ?></th>
@@ -181,6 +181,7 @@ $text = "Below you can also get the short code for ads which you can place in th
     }
     var url = en4.core.baseUrl + 'sescommunityads/index/subcategory/category_id/' + cat_id;
     en4.core.request.send(scriptJquery.ajax({
+			method: 'post',
       dataType: 'html',
       url: url,
       data: {
@@ -208,6 +209,7 @@ function showSubSubCategory(cat_id,selectedId) {
     }
     var url = en4.core.baseUrl + 'sescommunityads/index/subsubcategory/subcategory_id/' + cat_id;
     en4.core.request.send(scriptJquery.ajax({
+			method: 'post',
       dataType: 'html',
       url: url,
       data: {

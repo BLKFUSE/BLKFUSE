@@ -109,7 +109,9 @@ function makeGoogleMapSelect(){
       if (results[0]) {
         for(var i=0; i<results[0].address_components.length; i++)
         {
-            var postalCode = results[0].address_components[i].long_name;
+            if(results[0].address_components[i].types[0] == 'postal_code') {
+	var postalCode = results[0].address_components[i].long_name;
+}
         }
       }
       if (results[1]) {
@@ -160,7 +162,9 @@ function makeGoogleMapSelect(){
       if (results[0]) {
         for(var i=0; i<results[0].address_components.length; i++)
         {
-            var postalCode = results[0].address_components[i].long_name;
+            if(results[0].address_components[i].types[0] == 'postal_code') {
+	var postalCode = results[0].address_components[i].long_name;
+}
         }
       }
       if (results[1]) {

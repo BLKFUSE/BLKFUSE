@@ -44,7 +44,7 @@ class Sessociallogin_Form_Admin_Settings_Hotmail extends Engine_Form {
 
         $description = vsprintf($description.$moreinfo.$moreinfo1, array('https://apps.dev.microsoft.com/', 
 
-        'https://www.socialenginesolutions.com/guidelines-social-login-hotmail-api-key/',
+        'https://socialnetworking.solutions/guidelines-social-login-hotmail-api-key/',
 
         ));
 

@@ -22,15 +22,4 @@ class Sesmember_Widget_HomePhotoController extends Engine_Content_Widget_Abstrac
     foreach ($show_criterias as $show_criteria)
       $this->view->{$show_criteria . 'Active'} = $show_criteria;
   }
-
-  public function getCacheKey() {
-    $viewer = Engine_Api::_()->user()->getViewer();
-    $viewer_id = $viewer->getIdentity();
-    if (!$viewer_id) {
-      return parent::getCacheKey();
-    }
-    $translate = Zend_Registry::get('Zend_Translate');
-    return $viewer_id . $translate->getLocale() . sprintf('%d', $viewer->photo_id);
-  }
-
 }

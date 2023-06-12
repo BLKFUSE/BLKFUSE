@@ -131,7 +131,7 @@
                 <?php endif; ?>
 
                 <?php if(!empty($this->songlink) && engine_in_array('share', $this->songlink)): ?>
-                <?php echo $this->htmlLink(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_albumsong', 'id' => $song->getIdentity(), 'format' => 'smoothbox'), $this->translate("Share"), array('class' => 'smoothbox fa fa-share')); ?>
+                <?php echo $this->htmlLink(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_albumsong', 'id' => $song->getIdentity(), 'format' => 'smoothbox'), $this->translate("Share"), array('class' => 'smoothbox fas fa-share-alt')); ?>
                 <?php endif; ?>
 
                 <?php if(!empty($this->songlink) && engine_in_array('report', $this->songlink)): ?>

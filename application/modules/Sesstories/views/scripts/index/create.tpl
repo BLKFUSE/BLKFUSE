@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesstories/externals/scripts/core.js'); ?>
 <div class="sesstories_add_story_popup sesstories_bxs">
 	<div class="sesstories_add_story_popup_header">
   	<?php echo $this->translate('Create New Story'); ?>

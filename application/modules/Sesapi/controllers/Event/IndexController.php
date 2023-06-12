@@ -27,6 +27,55 @@ class Event_IndexController extends Sesapi_Controller_Action_Standard
     }
   }
   
+	public function menuAction() {
+		$menus = Engine_Api::_()->getApi('menus', 'core')->getNavigation('event_main', array());
+		$menu_counter = 0;
+		foreach ($menus as $menu) {
+			$class = end(explode(' ', $menu->class));
+			$result_menu[$menu_counter]['label'] = $this->view->translate($menu->label);
+			if($class == 'event_main_past') {
+					$result_menu[$menu_counter]['action'] = 'past';
+			} else if($class == 'event_main_upcoming') {
+					$result_menu[$menu_counter]['action'] = 'upcoming';
+			} else {
+				$result_menu[$menu_counter]['action'] = $class;
+			}
+			$result_menu[$menu_counter]['isActive'] = $menu->active;
+			$menu_counter++;
+		}
+		$result['menus'] = $result_menu;
+		Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array_merge(array('error' => '0', 'error_message' => '', 'result' => $result)));
+	}
+	
+  public function rateAction() {
+  
+    $viewer = Engine_Api::_()->user()->getViewer();
+    $user_id = $viewer->getIdentity();
+    $rating = $this->_getParam('rating');
+    $resource_id = $this->_getParam('resource_id');
+    $table = Engine_Api::_()->getDbtable('ratings', 'event');
+    $db = $table->getAdapter();
+    $db->beginTransaction();
+    try {
+    
+			Engine_Api::_()->getDbtable('ratings', 'event')->setRating($resource_id, $user_id, $rating);
+
+			$event = Engine_Api::_()->getItem('event', $resource_id);
+			$event->rating = Engine_Api::_()->getDbtable('ratings', 'event')->getRating($event->getIdentity());
+			$event->save();
+			
+			$owner = Engine_Api::_()->getItem('user', $event->user_id);
+			if($owner->user_id != $user_id)
+				Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($owner, $viewer, $event, 'event_rating');
+			
+      $db->commit();
+    } catch (Exception $e) {
+      $db->rollBack();
+      Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$e->getMessage(), 'result' => array()));
+    }
+		Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>"", 'result' => $this->view->translate("You have successfully rated event.")));
+  }
+  
   public function createalbumAction(){
 
       $event_id = $this->_getParam('event_id', false);
@@ -135,8 +184,8 @@ class Event_IndexController extends Sesapi_Controller_Action_Standard
       $form->category_id->setMultiOptions($categoryOptions);
     }
     $form->populate($_POST);
-    $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form,true);
-    $this->generateFormFields($formFields);
+    $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
+		$this->generateFormFields($formFields,array('resources_type'=>'event'));
   }
 
   public function browseAction() {
@@ -294,7 +343,7 @@ class Event_IndexController extends Sesapi_Controller_Action_Standard
     // Check if post and populate
     if($this->_getParam('getForm')) {
       $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
-      $this->generateFormFields($formFields,array('resources_type'=>'event'));
+      $this->generateFormFields($formFields,array('resources_type'=>'event', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
     }
     
     if( !$form->isValid($this->getRequest()->getPost()) ) {
@@ -350,7 +399,14 @@ class Event_IndexController extends Sesapi_Controller_Action_Standard
     date_default_timezone_set($oldTz);
     $values['starttime'] = date('Y-m-d H:i:s', $start);
     $values['endtime'] = date('Y-m-d H:i:s', $end);
-
+    if (isset($values['networks'])) {
+      $network_privacy = 'network_'. implode(',network_', $values['networks']);
+      $values['networks'] = implode(',', $values['networks']);
+    }
+    if (is_null($values['subcat_id']))
+      $values['subcat_id'] = 0;
+    if (is_null($values['subsubcat_id']))
+      $values['subsubcat_id'] = 0;
     $db = Engine_Api::_()->getDbtable('events', 'event')->getAdapter();
     $db->beginTransaction();
 
@@ -374,8 +430,8 @@ class Event_IndexController extends Sesapi_Controller_Action_Standard
         ->setFromArray(array('rsvp' => 2))
         ->save();
 
-      if( !empty($_FILES['image']['name']) &&  !empty($_FILES['image']['size']) ) {
-        $this->setPhoto($_FILES['image'],$event);
+      if( !empty($_FILES['photo']['name']) &&  !empty($_FILES['photo']['size']) ) {
+        $event->setPhoto($form->photo);
       }
 
       // Set auth
@@ -487,8 +543,34 @@ class Event_IndexController extends Sesapi_Controller_Action_Standard
     
     if($this->_getParam('getForm')) {
       $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
-      $formFields[6]['name'] = "file";
-      $this->generateFormFields($formFields,array('resources_type'=>'group'));
+      //set subcategory and 3rd category populated work
+      $newFormFieldsArray = array();
+      if(is_countable($formFields) && engine_count($formFields) &&  $event->category_id){
+        foreach($formFields as $fields){
+          foreach($fields as $field){
+            $subcat = array();
+            if($fields['name'] == "subcat_id"){ 
+              $subcat = Engine_Api::_()->getItemTable('event_category')->getSubcategory(array('category_id'=>$event->category_id,'column_name'=>'*'));
+            }else if($fields['name'] == "subsubcat_id"){
+              if($event->subcat_id)
+              $subcat = Engine_Api::_()->getItemTable('event_category')->getSubSubcategory(array('category_id'=>$event->subcat_id,'column_name'=>'*'));
+            }
+            if(is_countable($subcat) && engine_count($subcat)){
+              $arrayCat = array();
+              foreach($subcat as $cat){
+                $arrayCat[$cat->getIdentity()] = $cat->getTitle(); 
+              }
+              $fields["multiOptions"] = $arrayCat;  
+            }
+          }
+          $newFormFieldsArray[] = $fields;
+        }
+        if(!engine_count($newFormFieldsArray))
+          $newFormFieldsArray = $formFields;
+        $this->generateFormFields($newFormFieldsArray);
+      }
+      $formFields[8]['name'] = "file";
+      $this->generateFormFields($formFields,array('resources_type'=>'event', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
     }
 
 
@@ -531,7 +613,10 @@ class Event_IndexController extends Sesapi_Controller_Action_Standard
      $group = Engine_Api::_()->getItem('group', $event->parent_id);
      $values['host']  = $group->getTitle();
     }
-    
+    if (isset($values['networks'])) {
+        $network_privacy = 'network_'. implode(',network_', $values['networks']);
+        $values['networks'] = implode(',', $values['networks']);
+    }
     // Process
     $db = Engine_Api::_()->getItemTable('event')->getAdapter();
     $db->beginTransaction();
@@ -542,8 +627,8 @@ class Event_IndexController extends Sesapi_Controller_Action_Standard
       $event->setFromArray($values);
       $event->save();
 
-      if( !empty($_FILES['file']['name']) &&  !empty($_FILES['file']['size']) ) {
-        $this->setPhoto($_FILES['file'],$event);
+      if( !empty($_FILES['photo']['name']) &&  !empty($_FILES['photo']['size']) ) {
+        $event->setPhoto($form->photo);
       }
 
       // Process privacy
@@ -603,102 +688,6 @@ class Event_IndexController extends Sesapi_Controller_Action_Standard
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$e->getMessage(), 'result' => array()));
     }
     Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'', 'result' => array('event_id' => $event->getIdentity(),'message' => $this->view->translate('Event edited successfully.'))));
-  }
-  
-  public function setPhoto($photo, $event)
-  {
-
-    if( $photo instanceof Zend_Form_Element_File ) {
-      $file = $photo->getFileName();
-    } elseif( is_array($photo) && !empty($photo['tmp_name']) ) {
-      $file = $photo['tmp_name'];
-    } elseif( is_string($photo) && file_exists($photo) ) {
-      $file = $photo;
-    } else {
-      throw new Event_Model_Exception('Invalid argument passed to setPhoto: ' . print_r($photo, 1));
-    }
-
-    $name = basename($photo['name']);
-
-    $path = APPLICATION_PATH . DIRECTORY_SEPARATOR . 'temporary';
-    $params = array(
-      'parent_type' => 'event',
-      'parent_id' => $event->getIdentity()
-    );
-    
-    // Save
-    $storage = Engine_Api::_()->storage();
-    
-    // Resize image (main)
-    $image = Engine_Image::factory();
-    $image->open($file)
-      ->resize(720, 720)
-      ->write($path.'/m_'.$name)
-      ->destroy();
-
-    // Resize image (profile)
-    $image = Engine_Image::factory();
-    $image->open($file)
-      ->resize(330, 660)
-      ->write($path.'/p_'.$name)
-      ->destroy();
-
-    // Resize image (normal)
-    $image = Engine_Image::factory();
-    $image->open($file)
-      ->resize(140, 160)
-      ->write($path.'/in_'.$name)
-      ->destroy();
-
-    // Resize image (icon)
-    $image = Engine_Image::factory();
-    $image->open($file);
-
-    $size = min($image->height, $image->width);
-    $x = ($image->width - $size) / 2;
-    $y = ($image->height - $size) / 2;
-
-    $image->resample($x, $y, $size, $size, 48, 48)
-      ->write($path.'/is_'.$name)
-      ->destroy();
-
-    // Store
-    $iMain = $storage->create($path.'/m_'.$name, $params);
-    $iProfile = $storage->create($path.'/p_'.$name, $params);
-    $iIconNormal = $storage->create($path.'/in_'.$name, $params);
-    $iSquare = $storage->create($path.'/is_'.$name, $params);
-
-    $iMain->bridge($iProfile, 'thumb.profile');
-    $iMain->bridge($iIconNormal, 'thumb.normal');
-    $iMain->bridge($iSquare, 'thumb.icon');
-
-    // Remove temp files
-    @unlink($path.'/p_'.$name);
-    @unlink($path.'/m_'.$name);
-    @unlink($path.'/in_'.$name);
-    @unlink($path.'/is_'.$name);
-
-    // Update row
-    $event->modified_date = date('Y-m-d H:i:s');
-    $event->photo_id = $iMain->file_id;
-    $event->save();
-
-    // Add to album
-    $viewer = Engine_Api::_()->user()->getViewer();
-    $photoTable = Engine_Api::_()->getItemTable('event_photo');
-    $eventAlbum = $event->getSingletonAlbum();
-    $photoItem = $photoTable->createRow();
-    $photoItem->setFromArray(array(
-      'event_id' => $event->getIdentity(),
-      'album_id' => $eventAlbum->getIdentity(),
-      'user_id' => $viewer->getIdentity(),
-      'file_id' => $iMain->getIdentity(),
-      'collection_id' => $eventAlbum->getIdentity(),
-      'user_id' =>$viewer->getIdentity(),
-    ));
-    $photoItem->save();
-
-    return $event;
   }
 
   function eventsResult($paginator) {

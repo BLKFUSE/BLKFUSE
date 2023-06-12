@@ -32,20 +32,28 @@
       var nextEl = firstSep;
       var allHidden = true;
       do {
-	nextEl = nextEl.getNext();
-	if (nextEl.get('class') == 'browse-separator-wrapper') {
-	  lastSep = nextEl;
-	  nextEl = false;
-	} else {
-	  allHidden = allHidden && (nextEl.getStyle('display') == 'none');
-	}
+				nextEl = nextEl.getNext();
+				if (nextEl.get('class') == 'browse-separator-wrapper') {
+					lastSep = nextEl;
+					nextEl = false;
+				} else {
+					allHidden = allHidden && (nextEl.getStyle('display') == 'none');
+				}
       } while (nextEl);
       if (lastSep) {
-	lastSep.setStyle('display', (allHidden ? 'none' : ''));
+				lastSep.setStyle('display', (allHidden ? 'none' : ''));
       }
     });
   });
 </script>
+<?php if(!empty($this->defaultprofiletypes)) { ?>
+	<script>
+		scriptJquery(document).ready(function(){
+			var elementValue = scriptJquery('#profile_type').val();
+			scriptJquery('#profile_type').trigger('change');
+		});
+	</script>
+<?php } ?>
 <style>
   .hideE {
     display:none !important;
@@ -60,7 +68,7 @@
     var elem = scriptJquery('.sesmember_widget_advsearch_hide_<?php echo $this->identity; ?>');
     if(elem.length == 0){
       scriptJquery('#advanced_options_search_<?php echo $this->identity; ?>').hide();
-      hideFieldSetting();	
+      //hideFieldSetting();	
       return;
     }
     for(var i = 0 ; i < elem.length ; i++){
@@ -245,13 +253,13 @@ $viewer_id = $viewer->getIdentity();
   });
 
   en4.core.runonce.add(function () {
-var options = scriptJquery('#profile_type option');
-var optionLength = options.size();
-if(optionLength == 2) {
-scriptJquery('#filter_form').find('#profile_type').parent().hide();
-var value = scriptJquery('#filter_form').find('#profile_type option:eq(1)').attr('value');
-scriptJquery('#filter_form').find('#profile_type').val(value);
-changeFields('profile_type');
-}
-});
+		var options = scriptJquery('#profile_type option');
+		var optionLength = options.size();
+		if(optionLength == 2) {
+		scriptJquery('#filter_form').find('#profile_type').parent().hide();
+		var value = scriptJquery('#filter_form').find('#profile_type option:eq(1)').attr('value');
+		scriptJquery('#filter_form').find('#profile_type').val(value);
+		changeFields('profile_type');
+		}
+	});
  </script>

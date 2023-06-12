@@ -294,18 +294,21 @@ class Sescommunityads_Plugin_Gateway_Cashfree extends Engine_Payment_Plugin_Abst
         foreach($getSuperAdmins as $getSuperAdmin) {
             $admin = Engine_Api::_()->getItem('user', $getSuperAdmin->user_id);
             $link = '/ads/view/ad_id/'.$item->sescommunityad_id;
-            Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($admin, $admin, $item, 'sescommunityads_pmtmadeadmin', array("adsLink" => $link));
+            $notificationlink = '<a href="' . $link . '">' . $item->getTitle() . '</a>';
+            Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($admin, $admin, $item, 'sescommunityads_pmtmadeadmin', array("adsLink" => $notificationlink));
             //Send email to user
             Engine_Api::_()->getApi('mail', 'core')->sendSystem($admin->email, 'sescommunityads_pmtmadeadmin', array('host' => $_SERVER['HTTP_HOST'], 'queue' => false, 'title' => $item->title, 'description' => $item->description, 'ad_link' => $link));
         }
         //Send to user
         $adsOwner = Engine_Api::_()->getItem('user', $item->user_id);
-        Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($adsOwner, $adsOwner, $item, 'sescommunityads_paymentsuccessfull');
-        //Send email to user
         $link = '/ads/view/ad_id/'.$item->sescommunityad_id;
+        $notificationlink = '<a href="' . $link . '">' . $item->getTitle() . '</a>';
+        Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($adsOwner, $adsOwner, $item, 'sescommunityads_paymentsuccessfull', array("adsLink" => $notificationlink));
+        //Send email to user
+        
         Engine_Api::_()->getApi('mail', 'core')->sendSystem($adsOwner->email, 'sescommunityads_paymentsuccessfull', array('host' => $_SERVER['HTTP_HOST'], 'queue' => false, 'title' => $item->title, 'description' => $item->description, 'ad_link' => $link));
         //Ads activated
-        Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($adsOwner, $adsOwner, $item, 'sescommunityads_adsactivated', array("adsLink" => $link));
+        Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($adsOwner, $adsOwner, $item, 'sescommunityads_adsactivated', array("adsLink" => $notificationlink));
         Engine_Api::_()->getApi('mail', 'core')->sendSystem($adsOwner->email, 'sescommunityads_adsactivated', array('host' => $_SERVER['HTTP_HOST'], 'queue' => false, 'title' => $item->title, 'description' => $item->description, 'ad_link' => $link));
         // send notification
 
@@ -322,7 +325,8 @@ class Sescommunityads_Plugin_Gateway_Cashfree extends Engine_Payment_Plugin_Abst
         if($paymentStatus == 'pending') {
             $adsOwner = Engine_Api::_()->getItem('user', $item->user_id);
             $link = '/ads/view/ad_id/'.$item->sescommunityad_id;
-            Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($adsOwner, $adsOwner, $item, 'sescommunityads_paymentpending', array("adsLink" => $link));
+            $notificationlink = '<a href="' . $link . '">' . $item->getTitle() . '</a>';
+            Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($adsOwner, $adsOwner, $item, 'sescommunityads_paymentpending', array("adsLink" => $notificationlink));
             //Send email to user
             Engine_Api::_()->getApi('mail', 'core')->sendSystem($adsOwner->email, 'sescommunityads_paymentpending', array('host' => $_SERVER['HTTP_HOST'], 'queue' => false, 'title' => $item->title, 'description' => $item->description, 'ad_link' => $link));
         }
@@ -335,7 +339,8 @@ class Sescommunityads_Plugin_Gateway_Cashfree extends Engine_Payment_Plugin_Abst
         if($paymentStatus == 'refunded') {
             $adsOwner = Engine_Api::_()->getItem('user', $item->user_id);
             $link = '/ads/view/ad_id/'.$item->sescommunityad_id;
-            Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($adsOwner, $adsOwner, $item, 'sescommunityads_paymentrefunded', array("adsLink" => $link));
+            $notificationlink = '<a href="' . $link . '">' . $item->getTitle() . '</a>';
+            Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($adsOwner, $adsOwner, $item, 'sescommunityads_paymentrefunded', array("adsLink" => $notificationlink));
             //Send email to user
             Engine_Api::_()->getApi('mail', 'core')->sendSystem($adsOwner->email, 'sescommunityads_paymentrefunded', array('host' => $_SERVER['HTTP_HOST'], 'queue' => false, 'title' => $item->title, 'description' => $item->description, 'ad_link' => $link));
         }

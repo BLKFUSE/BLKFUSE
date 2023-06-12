@@ -491,7 +491,8 @@ class Courses_IndexController extends Sesapi_Controller_Action_Standard {
     $menus = Engine_Api::_()->getApi('menus', 'core')->getNavigation('courses_main', array());
     $menu_counter = 0;
     foreach ($menus as $menu) {
-        $class = end(explode(' ', $menu->class));
+				$classMenu = explode(' ', $menu->class);
+        $class = end($classMenu);
         $result_menu[$menu_counter]['label'] = $this->view->translate($menu->label);
         $result_menu[$menu_counter]['action'] = $class;
         $result_menu[$menu_counter]['isActive'] = $menu->active;
@@ -2989,7 +2990,7 @@ class Courses_IndexController extends Sesapi_Controller_Action_Standard {
     $hideIdentity = Engine_Api::_()->getApi('settings', 'core')->getSetting('course_show_userdetail', 0);
     if(!$hideIdentity){
       $result['basicInformation'][$basicInformationCounter]['name'] = 'createdby';
-      $result['basicInformation'][$basicInformationCounter]['value'] = $owner->displayname;
+      $result['basicInformation'][$basicInformationCounter]['value'] = $owner->getTitle();
       $result['basicInformation'][$basicInformationCounter]['label'] = 'Created By';
       $basicInformationCounter++;
     }
@@ -4458,8 +4459,11 @@ class Courses_IndexController extends Sesapi_Controller_Action_Standard {
     $viewerId = $viewer->getIdentity();
     if(!$this->_helper->requireUser()->isValid())
       Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('permission_error'), 'result' => array()));
-    if(isset($_POST['searchParams']) && $_POST['searchParams']){
-      parse_str($_POST['searchParams'], $searchArray);
+    if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+			if(engine_in_array($_POST['searchParams']))
+				$searchArray = $_POST['searchParams'];
+			elseif(is_string($_POST['searchParams']))
+				parse_str($_POST['searchParams'], $searchArray);
     }
     $value['title'] = isset($searchArray['title']) ? $searchArray['title'] : '';
     $value['is_passed'] = isset($searchArray['is_passed']) ? $searchArray['is_passed'] : '';
@@ -4508,8 +4512,11 @@ class Courses_IndexController extends Sesapi_Controller_Action_Standard {
     $viewerId = $viewer->getIdentity();
     if(!$this->_helper->requireUser()->isValid())
       Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('permission_error'), 'result' => array()));
-    if(isset($_POST['searchParams']) && $_POST['searchParams']){
-      parse_str($_POST['searchParams'], $searchArray);
+    if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+			if(engine_in_array($_POST['searchParams']))
+				$searchArray = $_POST['searchParams'];
+			elseif(is_string($_POST['searchParams']))
+				parse_str($_POST['searchParams'], $searchArray);
     }
     if(!$value['usertest_id'])
 			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('parameter_missing'), 'result' => array()));
@@ -4536,6 +4543,8 @@ class Courses_IndexController extends Sesapi_Controller_Action_Standard {
 		$counter = 0;
     foreach ($paginator as $question) {
       $testquestion = Engine_Api::_()->getItem('courses_testquestion',$question->testquestion_id);
+      if(!$testquestion)
+        continue;
       $result['usertest'][$counter] = $question->toArray(); 
       $result['usertest'][$counter]['testquestion'] = $testquestion->toArray(); 
       $test = Engine_Api::_()->getItem('courses_test', $question->test_id);
@@ -4858,8 +4867,12 @@ class Courses_IndexController extends Sesapi_Controller_Action_Standard {
     'order' => isset($_GET['order']) ? $_GET['order'] :'',
     'order_direction' => isset($_GET['order_direction']) ? $_GET['order_direction'] : '',
     ), $values);
-    if (isset($_POST['searchParams']) && $_POST['searchParams'])
-        parse_str($_POST['searchParams'], $searchArray);
+    if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+			if(engine_in_array($_POST['searchParams']))
+				$searchArray = $_POST['searchParams'];
+			elseif(is_string($_POST['searchParams']))
+				parse_str($_POST['searchParams'], $searchArray);
+    }
     $this->view->assign($values);
     $tableUserName = Engine_Api::_()->getItemTable('user')->info('name');
     $wishlistTable = Engine_Api::_()->getDbTable('wishlists', 'courses');
@@ -4939,8 +4952,11 @@ class Courses_IndexController extends Sesapi_Controller_Action_Standard {
     if(!$this->_helper->requireUser()->isValid())
       Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('permission_error'), 'result' => array()));
     $viewer = $this->view->viewer();
-    if(isset($_POST['searchParams']) && $_POST['searchParams']){
-      parse_str($_POST['searchParams'], $searchArray);
+    if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+			if(engine_in_array($_POST['searchParams']))
+				$searchArray = $_POST['searchParams'];
+			elseif(is_string($_POST['searchParams']))
+				parse_str($_POST['searchParams'], $searchArray);
     }
    // $searchForm = new Courses_Form_Searchorder();
     $value['order_id'] = isset($searchArray['order_id']) ? $searchArray['order_id'] : '';

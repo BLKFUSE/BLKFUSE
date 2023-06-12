@@ -226,9 +226,12 @@ class User_Plugin_Signup_Fields extends Core_Plugin_FormSequence_Abstract
       $settings = Engine_Api::_()->getApi('settings', 'core');
       $emailadmin = ($settings->getSetting('user.signup.adminemail', 0) == 1);
       $super_adminEmail = $settings->getSetting('user.signup.adminemailaddress', null);
-      if (!empty($emailadmin) && empty($super_adminEmail)) {
+      if (empty($emailadmin)) {
         $super_adminEmail = $mailAdminParams['email'];
+      } elseif(!empty($emailadmin) && empty($super_adminEmail)) {
+				$super_adminEmail = $mailAdminParams['email'];
       }
+      $mailAdminParams['email'] = $super_adminEmail;
       Engine_Api::_()->getApi('mail', 'core')->sendSystem($super_adminEmail, $mailAdminType, $mailAdminParams);
     }    
   }

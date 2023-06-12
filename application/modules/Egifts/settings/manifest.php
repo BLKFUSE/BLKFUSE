@@ -32,7 +32,7 @@ return array (
   'package' => array(
     'type' => 'module',
     'name' => 'egifts',
-    'version' => '6.3.0p4',
+    'version' => '6.4.0',
 		'dependencies' => array(
         array(
           'type' => 'module',

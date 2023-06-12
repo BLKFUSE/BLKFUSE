@@ -124,7 +124,7 @@ class Sesapi_Api_Attachment extends Core_Api_Abstract {
 
     public function previewHtml($uri)
     {
-
+        $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
         // clean URL for html code
         $uri = trim(strip_tags($uri));
         $displayUri = $uri;
@@ -133,12 +133,12 @@ class Sesapi_Api_Attachment extends Core_Api_Abstract {
             $displayUri = str_replace($info['path'], urldecode($info['path']), $displayUri);
         }
 
-        $this->view->url = !empty($displayUri) ? Engine_String::convertUtf8($displayUri) : '';
-        $this->view->title = '';
-        $this->view->description = '';
-        $this->view->thumb = null;
-        $this->view->imageCount = 0;
-        $this->view->images = array();
+        $view->url = !empty($displayUri) ? Engine_String::convertUtf8($displayUri) : '';
+        $view->title = '';
+        $view->description = '';
+        $view->thumb = null;
+        $view->imageCount = 0;
+        $view->images = array();
         try {
             $config = Engine_Api::_()->getApi('settings', 'core')->core_iframely;
             if( !empty($config['host']) && $config['host'] != 'none' ) {
@@ -153,16 +153,17 @@ class Sesapi_Api_Attachment extends Core_Api_Abstract {
         } catch( Exception $e ) {
             throw $e;
         }
-        $result['link']['title'] = Engine_String::convertUtf8($this->view->title);
-        $result['link']['description'] = Engine_String::convertUtf8($this->view->description);
-        $result['link']['thumb'] = ($this->view->thumb ? $this->view->thumb : "");
+        $result['link']['title'] = Engine_String::convertUtf8($view->title);
+        $result['link']['description'] = Engine_String::convertUtf8($view->description);
+        $result['link']['thumb'] = ($view->thumb ? $view->thumb : "");
         $result['link']['medium'] = "";
-        $result['link']['images'] = engine_count($this->view->images) > 0 ? $this->view->images[0] : "";
+        $result['link']['images'] = engine_count($view->images) > 0 ? $view->images[0] : "";
         return $result;
     }
 
     protected function _getFromIframely($config, $uri)
     {   
+        $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
         $uriHost = Zend_Uri::factory($uri)->getHost();
 
         $config = Engine_Api::_()->getApi('settings', 'core')->core_iframely;
@@ -174,10 +175,10 @@ class Sesapi_Api_Attachment extends Core_Api_Abstract {
                 $images[] = $iframely['thumbnail'];
             }
             if( !empty($iframely['title']) ) {
-                $this->view->title = $iframely['title'];
+                $view->title = $iframely['title'];
             }
             if( !empty($iframely['description']) ) {
-                $this->view->description = $iframely['description'];
+                $view->description = $iframely['description'];
             }
         } else {
             $images = array();
@@ -185,15 +186,15 @@ class Sesapi_Api_Attachment extends Core_Api_Abstract {
                 $images[] = $iframely['links']['thumbnail'][0]['href'];
             }
             if( !empty($iframely['meta']['title']) ) {
-                $this->view->title = $iframely['meta']['title'];
+                $view->title = $iframely['meta']['title'];
             }
             if( !empty($iframely['meta']['description']) ) {
-                $this->view->description = $iframely['meta']['description'];
+                $view->description = $iframely['meta']['description'];
             }
         }
 
-        $this->view->imageCount = engine_count($images);
-        $this->view->images = $images;
+        $view->imageCount = engine_count($images);
+        $view->images = $images;
         $allowRichHtmlTyes = array(
             'player',
             'image',
@@ -204,12 +205,13 @@ class Sesapi_Api_Attachment extends Core_Api_Abstract {
         if(!empty($iframely['links']))
         $typeOfContent = array_intersect(array_keys($iframely['links']), $allowRichHtmlTyes);
         if( $typeOfContent ) {
-            $this->view->richHtml = $iframely['html'];
+            $view->richHtml = $iframely['html'];
         }
     }
 
     protected function _getFromClientRequest($uri)
     {
+        $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
         $info = parse_url($uri);
         if( !empty($info['path']) ) {
             $path = urldecode($info['path']);
@@ -231,7 +233,7 @@ class Sesapi_Api_Attachment extends Core_Api_Abstract {
         $response = $client->request();
         // Get content-type
         list($contentType) = explode(';', $response->getHeader('content-type'));
-        $this->view->contentType = $contentType;
+        $view->contentType = $contentType;
         // Handling based on content-type
         switch( strtolower($contentType) ) {
             // Images
@@ -249,7 +251,7 @@ class Sesapi_Api_Attachment extends Core_Api_Abstract {
             case '':
             case 'text/html':
                 $this->_previewHtml($uri, $response);
-                break;
+                break; 
             // Plain text
             case 'text/plain':
                 $this->_previewText($uri, $response);
@@ -262,12 +264,14 @@ class Sesapi_Api_Attachment extends Core_Api_Abstract {
 
     protected function _previewImage($uri, Zend_Http_Response $response)
     {
-        $this->view->imageCount = 1;
-        $this->view->images = array($uri);
+        $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
+        $view->imageCount = 1;
+        $view->images = array($uri);
     }
 
     protected function _previewText($uri, Zend_Http_Response $response)
     {
+        $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
         $body = $response->getBody();
         if( preg_match('/charset=([a-zA-Z0-9-_]+)/i', $response->getHeader('content-type'), $matches) ||
             preg_match('/charset=([a-zA-Z0-9-_]+)/i', $response->getBody(), $matches) ) {
@@ -277,19 +281,20 @@ class Sesapi_Api_Attachment extends Core_Api_Abstract {
         }
         // Reduce whitespace
         $body = preg_replace('/[\n\r\t\v ]+/', ' ', $body);
-        $this->view->title = substr($body, 0, 63);
-        $this->view->description = substr($body, 0, 255);
+        $view->title = substr($body, 0, 63);
+        $view->description = substr($body, 0, 255);
     }
 
     protected function _previewHtml($uri, Zend_Http_Response $response)
     {
+        $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
         $body = $response->getBody();
         $body = trim($body);
         if( preg_match('/charset=([a-zA-Z0-9-_]+)/i', $response->getHeader('content-type'), $matches) ||
             preg_match('/charset=([a-zA-Z0-9-_]+)/i', $response->getBody(), $matches) ) {
-            $this->view->charset = $charset = trim($matches[1]);
+            $view->charset = $charset = trim($matches[1]);
         } else {
-            $this->view->charset = $charset = 'UTF-8';
+            $view->charset = $charset = 'UTF-8';
         }
         if( function_exists('mb_convert_encoding') ) {
             $body = mb_convert_encoding($body, 'HTML-ENTITIES', $charset);
@@ -307,7 +312,7 @@ class Sesapi_Api_Attachment extends Core_Api_Abstract {
                 $title = trim($titleList->current()->textContent);
             }
         }
-        $this->view->title = $title;
+        $view->title = $title;
         $description = null;
         if( $dom ) {
             $descriptionList = $dom->queryXpath("//meta[@name='description']");
@@ -323,7 +328,7 @@ class Sesapi_Api_Attachment extends Core_Api_Abstract {
                 $description = trim($descriptionList->current()->getAttribute('content'));
             }
         }
-        $this->view->description = $description;
+        $view->description = $description;
         $thumb = null;
         if( $dom ) {
             $thumbList = $dom->queryXpath("//link[@rel='image_src']");
@@ -336,7 +341,7 @@ class Sesapi_Api_Attachment extends Core_Api_Abstract {
                 $thumb = $thumbList->current()->getAttribute($attributeType);
             }
         }
-        $this->view->thumb = $thumb;
+        $view->thumb = $thumb;
         $medium = null;
         if( $dom ) {
             $mediumList = $dom->queryXpath("//meta[@name='medium']");
@@ -344,7 +349,7 @@ class Sesapi_Api_Attachment extends Core_Api_Abstract {
                 $medium = $mediumList->current()->getAttribute('content');
             }
         }
-        $this->view->medium = $medium;
+        $view->medium = $medium;
         // Get baseUrl and baseHref to parse . paths
         $baseUrlInfo = parse_url($uri);
         $baseUrl = null;
@@ -421,20 +426,21 @@ class Sesapi_Api_Attachment extends Core_Api_Abstract {
         if( engine_count($images) > 30 ) {
             array_splice($images, 30, engine_count($images));
         }
-        $this->view->imageCount = engine_count($images);
-        $this->view->images = $images;
+        $view->imageCount = engine_count($images);
+        $view->images = $images;
     }
 
 //  public function previewHtml($uri, Zend_Http_Response $response)
 //  {
+    // $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
 //    $result = array();
 //    $body = $response->getBody();
 //    $body = trim($body);
 //    if( preg_match('/charset=([a-zA-Z0-9-_]+)/i', $response->getHeader('content-type'), $matches) ||
 //        preg_match('/charset=([a-zA-Z0-9-_]+)/i', $response->getBody(), $matches) ) {
-//      $this->view->charset = $charset = trim($matches[1]);
+//      $view->charset = $charset = trim($matches[1]);
 //    } else {
-//      $this->view->charset = $charset = 'UTF-8';
+//      $view->charset = $charset = 'UTF-8';
 //    }
 //    if( function_exists('mb_convert_encoding') ) {
 //      $body = mb_convert_encoding($body, 'HTML-ENTITIES', $charset);

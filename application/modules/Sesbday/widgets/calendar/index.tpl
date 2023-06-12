@@ -97,7 +97,7 @@
 						$calendar .= '<li class="more"><a href="'.$url.'"rel="'.$year.'-'.$month.'-'.$list_day_checklist_day.'" class="sessmoothbox">+ '.(engine_count($events[$event_day]) - $counter + 1).'</a></li>';
             break;
          }
-        $calendar.= '<li><a href="'.$event->getHref().'" class="ses_tooltip" data-src="'.$event->getGuid().'" title="'.$event->getTitle().'"><img src="'.$event->getPhotoUrl().'" class="thumb_icon item_photo_user thumb_icon"></a></li>';
+        $calendar.= '<li><a href="'.$event->getHref().'" class="" data-src="'.$event->getGuid().'" title="'.$event->getTitle().'"><img src="'.$event->getPhotoUrl().'" class="thumb_icon item_photo_user thumb_icon"></a></li>';
         $counter++;
         //more setting
       }      

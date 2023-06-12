@@ -63,7 +63,7 @@ class Elivestreaming_NotificationController extends Core_Controller_Action_Stand
       $viewerId = $viewer->getIdentity();
       $elivestreamingHost = $livestreamingTable->createRow();
       $values['user_id'] = $viewerId;
-      $values['name'] = $viewer->displayname;
+      $values['name'] = $viewer->getTitle();
       $values['status'] = 'started';
       $elivestreamingHost->setFromArray($values);
       $elivestreamingHost->save();
@@ -93,12 +93,12 @@ class Elivestreaming_NotificationController extends Core_Controller_Action_Stand
     // $action = $activityApi->addActivity($viewer, $elivestreamingHost, 'elivestreaming_golive', null, );
     $activityApi = Engine_Api::_()->getDbtable('actions', 'sesadvancedactivity');
     $action = $activityApi->addActivity($viewer, $elivestreamingHost, 'elivestreaming_golive', null, $params, $postData);
-    if ($action)
+    if ($action){
       $activityApi->attachActivity($action, $elivestreamingHost);
-    $elivestreamingHost->action_id = $action->getIdentity();
+      $elivestreamingHost->action_id = $action->getIdentity();
+    }
     $elivestreamingHost->save();
     //end activity feed
-
     // if ($privacy != 'everyone') {
     if ($privacy == "friends" || $privacy == "everyone") {
       if (!empty($friendsIds)) {
@@ -159,7 +159,7 @@ class Elivestreaming_NotificationController extends Core_Controller_Action_Stand
         Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('Error while create live story'), 'result' => array('message' => $e)));
       }
     }
-    $result = array('elivehost_id' => $elivestreamingHost->getIdentity(), 'activity' => $action->toArray());
+    $result = array('elivehost_id' => $elivestreamingHost->getIdentity(), 'activity' => $action ? $action->toArray() : array());
     if (!Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesstories'))
       $result['message'] = $message = $this->view->translate("story_plugin_disable");
 

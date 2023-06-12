@@ -233,7 +233,7 @@ class Egifts_PaymentController extends Core_Controller_Action_Standard
         return $this->_helper->redirector->gotoRoute(array('action'=>'manage','id'=>$this->_session->order_id), 'egifts_general', true);
     }
     // Get gateway plugin
-	  $gateway = Engine_Api::_()->getDbtable('gateways', 'egifts')->find($this->_getParam('gateway_id',2))->current();
+	  $gateway = Engine_Api::_()->getDbtable('gateways', 'egifts')->find($this->_getParam('gateway_id',1))->current();
     $this->view->gatewayPlugin = $gatewayPlugin = $gateway->getGateway();
     if(($gateway->plugin == "Epaytm_Plugin_Gateway_Paytm") || ($gateway->plugin == "Sesadvpmnt_Plugin_Gateway_Stripe")){
         return $this->_finishPayment($order->state);

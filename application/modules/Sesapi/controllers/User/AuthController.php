@@ -1272,7 +1272,7 @@ class User_AuthController extends Sesapi_Controller_Action_Standard
             'ip' => $ipExpr,
             'timestamp' => new Zend_Db_Expr('NOW()'),
             'state' => 'success',
-            'source' => 'facebook',
+            // 'source' => 'facebook',
           ));
         }
 
@@ -1326,7 +1326,7 @@ class User_AuthController extends Sesapi_Controller_Action_Standard
       $result["user_id"] = $viewer->user_id;
       $result["email"] = $viewer->email;
       $result["username"] = $viewer->username;
-      $result["displayname"] = $viewer->displayname;
+      $result["displayname"] = $viewer->getTitle();
       $result["photo_id"] = $viewer->photo_id;
       $result["status"] = $viewer->status;
       $result["password"] = $viewer->password;
@@ -1424,7 +1424,7 @@ class User_AuthController extends Sesapi_Controller_Action_Standard
             'ip' => $ipExpr,
             'timestamp' => new Zend_Db_Expr('NOW()'),
             'state' => 'success',
-            'source' => 'twitter',
+            // 'source' => 'twitter',
           ));
         }
 
@@ -1476,7 +1476,7 @@ class User_AuthController extends Sesapi_Controller_Action_Standard
       $result["user_id"] = $viewer->user_id;
       $result["email"] = $viewer->email;
       $result["username"] = $viewer->username;
-      $result["displayname"] = $viewer->displayname;
+      $result["displayname"] = $viewer->getTitle();
       $result["photo_id"] = $viewer->photo_id;
       $result["status"] = $viewer->status;
       $result["password"] = $viewer->password;
@@ -1582,7 +1582,7 @@ class User_AuthController extends Sesapi_Controller_Action_Standard
             'ip' => $ipExpr,
             'timestamp' => new Zend_Db_Expr('NOW()'),
             'state' => 'success',
-            'source' => 'google',
+            // 'source' => 'google',
           ));
         }
 
@@ -1635,7 +1635,7 @@ class User_AuthController extends Sesapi_Controller_Action_Standard
       $result["user_id"] = $viewer->user_id;
       $result["email"] = $viewer->email;
       $result["username"] = $viewer->username;
-      $result["displayname"] = $viewer->displayname;
+      $result["displayname"] = $viewer->getTitle();
       $result["photo_id"] = $viewer->photo_id;
       $result["status"] = $viewer->status;
       $result["password"] = $viewer->password;
@@ -1732,7 +1732,7 @@ class User_AuthController extends Sesapi_Controller_Action_Standard
             'ip' => $ipExpr,
             'timestamp' => new Zend_Db_Expr('NOW()'),
             'state' => 'success',
-            'source' => 'linkedin',
+            // 'source' => 'linkedin',
           ));
         }
 
@@ -1785,7 +1785,7 @@ class User_AuthController extends Sesapi_Controller_Action_Standard
       $result["user_id"] = $viewer->user_id;
       $result["email"] = $viewer->email;
       $result["username"] = $viewer->username;
-      $result["displayname"] = $viewer->displayname;
+      $result["displayname"] = $viewer->getTitle();
       $result["photo_id"] = $viewer->photo_id;
       $result["status"] = $viewer->status;
       $result["password"] = $viewer->password;

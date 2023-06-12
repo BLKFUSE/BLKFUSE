@@ -17,7 +17,11 @@
     <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?>
   </div>
 <?php endif; ?>
-
+<h2><?php echo $this->translate('Global Settings') ?></h2>
+<p><?php echo $this->translate("These settings affect all members in your community.") ?></p>
+<?php echo 'More info: <a href="https://community.socialengine.com/blogs/597/72/elpis-theme" target="_blank">See KB article</a>'; ?>
+<br />	
+<br />
 <div class='clear'>
   <div class='settings'>
     <?php echo $this->form->render($this); ?>

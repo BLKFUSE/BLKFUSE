@@ -12,6 +12,7 @@
  */
 
 ?>
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesthought/externals/scripts/core.js'); ?>
 <?php 
 $request = Zend_Controller_Front::getInstance()->getRequest();
 $requestParams = $request->getParams();

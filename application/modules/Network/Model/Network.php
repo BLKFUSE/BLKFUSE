@@ -38,15 +38,18 @@ class Network_Model_Network extends Core_Model_Item_Abstract
         $pattern = $values['field_pattern_' . $params['field_id']];
         $types = Zend_Json::decode($values['types']);
         $type = $types[$field_id];
+       
+        if(in_array($type, array('select', 'multiselect', 'radio','range', 'date'))) {
+					$pattern = json_encode($pattern);
+        }
+        
         $params['pattern'] = array(
           'type' => $type,
           'value' => $pattern,
         );
       }
-
       $values = $params;
     }
-    
     return parent::setFromArray($values);
   }
 
@@ -55,8 +58,18 @@ class Network_Model_Network extends Core_Model_Item_Abstract
     $params = $this->toArray();
     if( $params['assignment'] == 1 && !empty($params['field_id']) ) {
       $field_id = $params['field_id'];
-      $params['field_pattern_' . $field_id] = $params['pattern']['value'];
+      
+      try {
+				if(!is_string($params['pattern']['value']))
+				throw new Exception("");
+				$params['field_pattern_' . $field_id] = json_decode($params['pattern']['value']);
+				if(json_last_error() != 0) 
+				throw new Exception("");
+      } catch(Exception $e) {
+				$params['field_pattern_' . $field_id] = $params['pattern']['value'];
+      }
     }
+    
     return $params;
   }
 
@@ -145,7 +158,15 @@ class Network_Model_Network extends Core_Model_Item_Abstract
 
     // Try to match value
     $found = false;
-    $pattern = $this->pattern['value'];
+		try {
+			if(!is_string($this->pattern['value']))
+			throw new Exception("");
+			$pattern = json_decode($this->pattern['value']);
+			if(json_last_error() != 0) 
+			throw new Exception("");
+		} catch(Exception $e) {
+			$pattern = $this->pattern['value'];
+		}
     switch( $this->pattern['type'] ) {
       case 'text':
         if( is_scalar($value) && stripos($pattern, $value) !== false ) {

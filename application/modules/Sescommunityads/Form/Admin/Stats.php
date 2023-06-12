@@ -16,7 +16,7 @@ class Sescommunityads_Form_Admin_Stats extends Engine_Form {
   public function init() {
     $headScript = new Zend_View_Helper_HeadScript();
     $headScript->appendFile(Zend_Registry::get('StaticBaseUrl') . 'externals/ses-scripts/jscolor/jscolor.js');
-    $headScript->appendFile(Zend_Registry::get('StaticBaseUrl') . 'application/modules/Sesbasic/externals/scripts/jquery.min.js');
+    
     $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
     $script = "var hashSign = '#';";
     $view->headScript()->appendScript($script);

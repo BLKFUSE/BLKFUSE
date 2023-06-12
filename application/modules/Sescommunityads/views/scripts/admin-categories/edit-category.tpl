@@ -16,7 +16,7 @@
 <?php
 $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/ses-scripts/jscolor/jscolor.js');
 ?>
-<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/jquery.min.js'); ?>
+
 <div class='clear sesbasic-form'>
   <div>
     <?php if(is_countable($this->subNavigation) && engine_count($this->subNavigation) ): ?>

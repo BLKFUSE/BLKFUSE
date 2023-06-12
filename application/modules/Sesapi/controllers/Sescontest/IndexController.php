@@ -56,7 +56,7 @@ class Sescontest_IndexController extends Sesapi_Controller_Action_Standard {
         } else {
             $contest = Engine_Api::_()->core()->getSubject();
         }
-        if (!contest)
+        if (!$contest)
             Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => '', 'result' => $this->view->translate(' There are no results that match your search. Please try again.')));
 
         $canComment = Engine_Api::_()->authorization()->isAllowed('participant', $this->view->viewer(), 'comment');
@@ -209,6 +209,7 @@ class Sescontest_IndexController extends Sesapi_Controller_Action_Standard {
             $result[$counter]['enable_add_shortcut'] = $sesshortcut;
             if($sesshortcut){
                 $isShortcut = Engine_Api::_()->getDbTable('shortcuts', 'sesshortcut')->isShortcut(array('resource_type' => $contests->getType(), 'resource_id' => $contests->getIdentity()));
+                $shortMessage = array();
                 if (empty($isShortcut)) {
                     $shortMessage['title'] = $this->view->translate('Add to Shortcuts');
                     $shortMessage['resource_type'] = $contests->getType();
@@ -901,8 +902,12 @@ class Sescontest_IndexController extends Sesapi_Controller_Action_Standard {
 
     public function browseEntriesAction() {
         $searchArray = array();
-        if (isset($_POST['searchParams']) && $_POST['searchParams'])
-            parse_str($_POST['searchParams'], $searchArray);
+				if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+					if(engine_in_array($_POST['searchParams']))
+						$searchArray = $_POST['searchParams'];
+					elseif(is_string($_POST['searchParams']))
+						parse_str($_POST['searchParams'], $searchArray);
+				}
         $coreContentTable = Engine_Api::_()->getDbTable('content', 'core');
         $coreContentTableName = $coreContentTable->info('name');
         $corePagesTable = Engine_Api::_()->getDbTable('pages', 'core');
@@ -958,6 +963,7 @@ class Sescontest_IndexController extends Sesapi_Controller_Action_Standard {
             $result[$counter]['enable_add_shortcut'] = $sesshortcut;
             if($sesshortcut){
                 $isShortcut = Engine_Api::_()->getDbTable('shortcuts', 'sesshortcut')->isShortcut(array('resource_type' => $entries->getType(), 'resource_id' => $entries->getIdentity()));
+                $shortMessage = array();
                 if (empty($isShortcut)) {
                     $shortMessage['title'] = $this->view->translate('Add to Shortcuts');
                     $shortMessage['resource_type'] = $entries->getType();
@@ -1046,8 +1052,12 @@ class Sescontest_IndexController extends Sesapi_Controller_Action_Standard {
 
     public function browseWinnerAction() {
         $searchArray = array();
-        if (isset($_POST['searchParams']) && $_POST['searchParams'])
-            parse_str($_POST['searchParams'], $searchArray);
+				if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+					if(engine_in_array($_POST['searchParams']))
+						$searchArray = $_POST['searchParams'];
+					elseif(is_string($_POST['searchParams']))
+						parse_str($_POST['searchParams'], $searchArray);
+				}
 
         $coreContentTable = Engine_Api::_()->getDbTable('content', 'core');
         $coreContentTableName = $coreContentTable->info('name');

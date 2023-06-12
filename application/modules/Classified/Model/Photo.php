@@ -75,7 +75,7 @@ class Classified_Model_Photo extends Core_Model_Item_Collectible
 
   public function getAuthorizationItem()
   {
-    return $this->getParent('classified');
+    return Engine_Api::_()->getItem('classified', $this->classified_id);
   }
   
   public function setPhoto($photo)

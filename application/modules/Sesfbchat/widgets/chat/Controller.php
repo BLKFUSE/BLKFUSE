@@ -68,19 +68,8 @@ class Sesfbchat_Widget_ChatController extends Engine_Content_Widget_Abstract
         $user = $setting->getSetting('sesfbchat_messenger_icon', '0');
         if($user == 0 && empty($viewer->getIdentity()))
           return $this->setNoRender();
-        $this->view->allowed = false;
-        if(!$user){
-         if($viewer)
-            $this->view->allowed = true;
-        }
-        if($user == 1){
-         if(!$viewer)
-            $this->view->allowed = true;
-        }
-        if($user == 2)
-         $this->view->allowed = true;
-        if(!$this->view->allowed)
-            return $this->setNoRender();
+				if($user == 1 && !empty($viewer->getIdentity()))
+          return $this->setNoRender();
 
    }
 }

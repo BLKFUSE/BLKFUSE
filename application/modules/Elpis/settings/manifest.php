@@ -14,8 +14,7 @@ return array (
   array(
     'type' => 'module',
     'name' => 'elpis',
-    'sku' => 'elpis',
-    'version' => '6.2.0',
+    'version' => '6.4.0',
     'dependencies' => array(
       array(
         'type' => 'module',
@@ -56,6 +55,10 @@ return array (
 	'hooks' => array(
 		array(
 			'event' => 'onRenderLayoutDefault',
+			'resource' => 'Elpis_Plugin_Core'
+		),
+		array(
+			'event' => 'onRenderLayoutDefaultSimple',
 			'resource' => 'Elpis_Plugin_Core'
 		),
 	),

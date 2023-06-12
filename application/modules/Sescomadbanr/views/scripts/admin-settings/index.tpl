@@ -21,7 +21,7 @@
       </div>
     <?php endif; ?>
     <div class='clear sesbasic-form-cont'>
-      <div class='settings'>
+      <div class='settings sesbasic_admin_form'>
         <?php echo $this->form->render($this); ?>
       </div>
       <div class="sesbasic_waiting_msg_box" style="display:none;">

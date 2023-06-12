@@ -86,6 +86,15 @@ defined('_ENGINE_ADMIN_NEUTER_MODE') || define('_ENGINE_ADMIN_NEUTER_MODE', fals
 defined('_ENGINE_NO_AUTH') || define('_ENGINE_NO_AUTH', false);
 defined('_ENGINE_SSL') || define('_ENGINE_SSL', ((isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') || (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == 'on')));
 
+//site address
+$siteurl = (_ENGINE_SSL ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'];
+$PHP_SELF = explode('/', $_SERVER['PHP_SELF']);
+if($PHP_SELF[1] != 'index.php') {
+	$PHP_SELF = $PHP_SELF[1];
+	$siteurl = $siteurl . '/' . $PHP_SELF;
+}
+defined('_ENGINE_SITE_URL') || define('_ENGINE_SITE_URL', $siteurl);
+
 if (version_compare(PHP_VERSION, '5.3.2', '>') && file_exists(APPLICATION_PATH . '/vendor/autoload.php')) {
     define('_ENGINE_HAS_VENDOR', true);
     require(APPLICATION_PATH . '/vendor/autoload.php');
@@ -112,7 +121,8 @@ if (!defined('_ENGINE_R_MAINTENANCE') || _ENGINE_R_MAINTENANCE) {
             header('HTTP/1.1 503 Service Temporarily Unavailable');
             header('Status: 503 Service Temporarily Unavailable');
             header('Retry-After: 300');//300 seconds
-            echo file_get_contents(dirname(__FILE__) . DS . 'maintenance.html');
+						$body = file_get_contents(dirname(__FILE__) . DS . 'maintenance.html');
+						echo str_replace('%_BASE_URL_%', _ENGINE_SITE_URL, $body);
             exit();
         }
     }

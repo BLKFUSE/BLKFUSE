@@ -90,6 +90,12 @@ class Core_IndexController extends Core_Controller_Action_Standard {
     }
   }
   
+  public function adminmenutypeAction() {
+    $value = $this->_getParam('value', 'horizontal');
+    Engine_Api::_()->getApi('settings', 'core')->setSetting('core.menutype', $value);
+    echo json_encode(array('status' => 'true', 'error' => '', 'value' => 1));die;
+  }
+  
   public function showadmincontentAction() {
   
     $showcontent = $this->_getParam('showcontent', 0);

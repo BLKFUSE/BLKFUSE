@@ -997,7 +997,7 @@ class Sesqa_IndexController extends Sesapi_Controller_Action_Standard{
 				// make sure action exists before attaching the question to the activity
 				if( $action )
 					Engine_Api::_()->getDbtable('actions', 'activity')->attachActivity($action, $question);
-				if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesadvancedactivity') && $tags) {
+				if($action && Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesadvancedactivity') && $tags) {
 					$dbGetInsert = Engine_Db_Table::getDefaultAdapter();
 					foreach($tags as $tag)
 						$dbGetInsert->query('INSERT INTO `engine4_sesadvancedactivity_hashtags` (`action_id`, `title`) VALUES ("'.$action->getIdentity().'", "'.$tag.'")');
@@ -1023,7 +1023,7 @@ class Sesqa_IndexController extends Sesapi_Controller_Action_Standard{
     $form->populate($question->toArray());
     $data['options'] = array();
     $data['maxOptions'] = $max_options = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesqa.maxoptions', 15);
-    $data['multi'] = !empty($_POST['multi']) ? $_POST['multi'] : ($question->multi) ? $question->multi : "";
+    $data['multi'] = !empty($_POST['multi']) ? $_POST['multi'] : (($question->multi) ? $question->multi : "");
     $draftOldValue = $question->draft;
     // Check options
     $options = (array) $this->_getParam('optionsArray');
@@ -1356,7 +1356,7 @@ class Sesqa_IndexController extends Sesapi_Controller_Action_Standard{
 			$result['answers'][$answerCounter]['owner_image'] = Engine_Api::_()->sesapi()->getPhotoUrls($answer->getOwner(), '', "");
 			if($answer->authorization()->isAllowed($viewer, 'comment') && Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesadvancedcomment')){
 				$hasComment = Engine_Api::_()->sesqa()->hasAnswerComment($answer->getIdentity());
-				if(!hasComment){
+				if(!$hasComment){
 					$result['answers'][$answerCounter]['comment']['name'] = 'comment';
 					$result['answers'][$answerCounter]['comment']['label'] = $this->view->translate('Add a comment');
 				}
@@ -1585,8 +1585,10 @@ class Sesqa_IndexController extends Sesapi_Controller_Action_Standard{
     $getQuesitonFollowers = Engine_Api::_()->getDbTable('follows', 'sesqa')->getQuesitonFollowers($question->getIdentity());
     foreach($getQuesitonFollowers as $getQuesitonFollower) {
         $user = Engine_Api::_()->getItem('user', $getQuesitonFollower->user_id);
-        Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($user, $user, $question, 'sesqa_qanewanswer');
-        Engine_Api::_()->getApi('mail', 'core')->sendSystem($user->email, 'sesqa_qanewanswer', array('host' => $_SERVER['HTTP_HOST'], 'queue' => false, 'title' => $question->title, 'question_link' => $question->getHref(), 'member_name' => $viewer->getTitle()));
+		if($user->getIdentity()){
+			Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($user, $user, $question, 'sesqa_qanewanswer');
+			Engine_Api::_()->getApi('mail', 'core')->sendSystem($user->email, 'sesqa_qanewanswer', array('host' => $_SERVER['HTTP_HOST'], 'queue' => false, 'title' => $question->title, 'question_link' => $question->getHref(), 'member_name' => $viewer->getTitle()));
+		}
     }
 		$dataAnswer = array();
 		$dataAnswer = $answer->toArray();
@@ -1702,9 +1704,11 @@ class Sesqa_IndexController extends Sesapi_Controller_Action_Standard{
     $getQuesitonFollowers = Engine_Api::_()->getDbTable('follows', 'sesqa')->getQuesitonFollowers($answer->question_id);
     foreach($getQuesitonFollowers as $getQuesitonFollower) {
         $user = Engine_Api::_()->getItem('user', $getQuesitonFollower->user_id);
-        Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($user, $user, $question, 'sesqa_bestmarkfollwd');
+		if($user->getIdentity()){
+			Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($user, $user, $question, 'sesqa_bestmarkfollwd');
 
-        Engine_Api::_()->getApi('mail', 'core')->sendSystem($user->email, 'sesqa_bestmarkfollwd', array('host' => $_SERVER['HTTP_HOST'], 'queue' => false, 'title' => $question->title, 'question_link' => $question->getHref(), 'member_name' => $viewer->getTitle()));
+			Engine_Api::_()->getApi('mail', 'core')->sendSystem($user->email, 'sesqa_bestmarkfollwd', array('host' => $_SERVER['HTTP_HOST'], 'queue' => false, 'title' => $question->title, 'question_link' => $question->getHref(), 'member_name' => $viewer->getTitle()));
+		}
     }
     $answer->best_answer = !$answer->best_answer;
     $answer->save();

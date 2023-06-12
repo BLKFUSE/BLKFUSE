@@ -32,6 +32,7 @@ class User_Widget_HomeLinksController extends Engine_Content_Widget_Abstract
         
         // Should we show user photo and name?
         $this->view->showPhoto = $this->_getParam('showPhoto', 1);
+        $this->view->showMenuIcon = $this->_getParam('showMenuIcon', 1);
     }
 
     public function getCacheKey()

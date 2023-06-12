@@ -206,7 +206,7 @@ class Fields_Api_Core extends Core_Api_Abstract
    * @param int $parent The field id to generate the structure from
    * @return array
    */
-  public function getFieldsStructureFull($spec, $parent_field_id = null, $parent_option_id = null,$get_only_top_level = false)
+  public function getFieldsStructureFull($spec, $parent_field_id = null, $parent_option_id = null)
   {
     $type = $this->getFieldType($spec);
 
@@ -224,7 +224,7 @@ class Fields_Api_Core extends Core_Api_Abstract
       // Add to structure
       $structure[$map->getKey()] = $map;
       // Get children
-      if( $field->canHaveDependents() && !$get_only_top_level) {
+      if( $field->canHaveDependents() ) {
         $structure += $this->getFieldsStructureFull($spec, $map->child_id);
       }
     }

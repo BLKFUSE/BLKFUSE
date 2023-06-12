@@ -13,7 +13,7 @@
  
 ?>
 <?php include APPLICATION_PATH .  '/application/modules/Sesmember/views/scripts/dismiss_message.tpl';?>
-<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/jquery.min.js'); ?>
+
 <div>
   <?php echo $this->htmlLink(array('action' => 'manage-browsepage', 'reset' => false), $this->translate("Back to Browse Pages for Profile Types"),array('class' => 'buttonlink sesbasic_icon_back')) ?>
 </div>

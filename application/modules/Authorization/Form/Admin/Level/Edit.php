@@ -575,7 +575,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       
       //New File System Code
       $covers = array('' => '');
-      $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png')));
+      $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png', 'webp')));
       foreach( $files as $file ) {
         $covers[$file->storage_path] = $file->name;
       }

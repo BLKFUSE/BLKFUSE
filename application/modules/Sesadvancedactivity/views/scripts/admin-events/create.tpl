@@ -40,15 +40,15 @@
   en4.core.runonce.add(function() {
 
   scriptJquery('#date-date').attr("type","text").attr("autocomplete","off").attr("placeholder","Select a Date").datepicker({
-    dateFormat: "mm/dd/yy",
+    
     timepicker: true,
   })
   scriptJquery('#starttime-date').attr("type","text").attr("autocomplete","off").attr("placeholder","Select a Date").datepicker({
-    dateFormat: "mm/dd/yy",
+    
     timepicker: true,
     })
   scriptJquery('#endtime-date').attr("type","text").attr("autocomplete","off").attr("placeholder","Select a Date").datepicker({
-      dateFormat: "mm/dd/yy",
+      
       timepicker: true,
   })
 

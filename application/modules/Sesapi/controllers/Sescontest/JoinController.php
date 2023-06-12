@@ -48,20 +48,42 @@ class Sescontest_JoinController extends Sesapi_Controller_Action_Standard {
 				$form->getElement('contest_rules')->setValue($contest->rules);
 		// Not post/invalid
 		if ($this->_getParam('getForm')) {
-			
+			$dummycheck = array();
 			$formFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->generateFormFields($form);
 			  if($contest->contest_type == 2){
-			$dummycheck = Engine_Api::_()->authorization()->getPermission($levelId, 'participant', 'photo_options');
+			// $dummycheck = Engine_Api::_()->authorization()->getPermission($levelId, 'participant', 'photo_options');
+				$permissionsTable = Engine_Api::_()->getDbtable('permissions', 'authorization');
+    			$valuesForm = $permissionsTable->getAllowed('participant', $levelId, array("photo_options"));
+				if(!empty($valuesForm['photo_options'])){
+					$dummycheck = $valuesForm["photo_options"];
+				}
 			}elseif($contest->contest_type ==3){
-				$dummycheck = Engine_Api::_()->authorization()->getPermission($levelId, 'participant', 'video_options');
+				// $dummycheck = Engine_Api::_()->authorization()->getPermission($levelId, 'participant', 'video_options');
+				$permissionsTable = Engine_Api::_()->getDbtable('permissions', 'authorization');
+    			$valuesForm = $permissionsTable->getAllowed('participant', $levelId, array("video_options"));
+				if(!empty($valuesForm['video_options'])){
+					$dummycheck = $valuesForm["video_options"];
+				}
 			}elseif($contest->contest_type ==4){
-				$dummycheck = Engine_Api::_()->authorization()->getPermission($levelId, 'participant', 'music_options');
+				// $dummycheck = Engine_Api::_()->authorization()->getPermission($levelId, 'participant', 'music_options');
+				$permissionsTable = Engine_Api::_()->getDbtable('permissions', 'authorization');
+    			$valuesForm = $permissionsTable->getAllowed('participant', $levelId, array("music_options"));
+				if(!empty($valuesForm['music_options'])){
+					$dummycheck = $valuesForm["music_options"];
+				}
 			}elseif($contest->contest_type ==1){
-				$dummycheck = Engine_Api::_()->authorization()->getPermission($levelId, 'participant', 'blog_options');
+				// $dummycheck = Engine_Api::_()->authorization()->getPermission($levelId, 'participant', 'blog_options');
+				$permissionsTable = Engine_Api::_()->getDbtable('permissions', 'authorization');
+    			$valuesForm = $permissionsTable->getAllowed('participant', $levelId, array("blog_options"));
+				if(!empty($valuesForm['blog_options'])){
+					$dummycheck = $valuesForm["blog_options"];
+				}
 			}
-			//$data = explode(",",str_replace('"', '', $dummycheck));
+			
+			// echo "<prE>";var_dump($valuesForm);die;
+			// $data = explode(",",str_replace('"', '', $dummycheck));
 			$formFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->generateFormFields($form);
-			$this->generateFormFields($formFields,$dummycheck);
+			$this->generateFormFields($formFields,implode(",",$dummycheck));
 		}
 		if(empty($_FILES['photo']['name'])){
       $_FILES['photo'] = array();
@@ -387,13 +409,21 @@ class Sescontest_JoinController extends Sesapi_Controller_Action_Standard {
 			}
 		}
 		if($contestType == 3){
-			if ($entry->status == 1){
-			$embedded = $entry->getRichContent(true,array(),'','');
-			  preg_match('/src="([^"]+)"/', $embedded, $match);
-			  if(strpos($match[1],'https://') === false && strpos($match[1],'http://') === false){
-				$result['entry']['video']  = str_replace('//','https://',$match[1]);
-			  }else{
-				$result['entry']['video']  = $match[1];
+			if ($entry->status == 1) {
+				if ($entry->type == 3) {
+					if (!empty($entry->file_id)) {
+						$storage_file = Engine_Api::_()->getItem('storage_file', $entry->file_id);
+						$result['entry']['video'] = $this->getBaseUrl(false,$storage_file->map());
+						$result['entry']['video_extension'] = $storage_file->extension;
+					}
+				} else {
+					$embedded = $entry->getRichContent(true,array(),'','');
+					preg_match('/src="([^"]+)"/', $embedded, $match);
+					if(strpos($match[1],'https://') === false && strpos($match[1],'http://') === false){
+					$result['entry']['video']  = str_replace('//','https://',$match[1]);
+					}else{
+					$result['entry']['video']  = $match[1];
+					}
 			  }
 			}
 			$image = $entry->getPhotoUrl('thumb.main');

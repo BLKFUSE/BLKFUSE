@@ -52,7 +52,7 @@
       <div class="_preview_counts"> 
          <span class="_count"><i class="far fa-thumbs-up"></i><?php echo $this->translate('Like'); ?></span>
          <span class="_count"><i class="far fa-comment"></i><?php echo $this->translate('Comment'); ?></span>
-         <span class="_count"><i class="fa fa-share"></i><?php echo $this->translate('Share'); ?></span>
+         <span class="_count"><i class="fas fa-share-alt"></i><?php echo $this->translate('Share'); ?></span>
       </div>
     </div>
  </div>

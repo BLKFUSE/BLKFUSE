@@ -258,10 +258,13 @@ class Core_Api_Mail extends Core_Api_Abstract
             // Insert recipients
             foreach( $recipients as $oneRecipient ) {
                 if( $oneRecipient instanceof Core_Model_Item_Abstract ) {
-                    $mailRecipientsTable->insert(array(
-                        'mail_id' => $mail_id,
-                        'user_id' => $oneRecipient->user_id,
-                    ));
+									if(!empty($oneRecipient->disable_email) && $oneRecipient->user_id && $type != "core_lostpassword") {
+										continue;
+									}
+									$mailRecipientsTable->insert(array(
+											'mail_id' => $mail_id,
+											'user_id' => $oneRecipient->user_id,
+									));
                 } else if( is_string($oneRecipient) ) {
                     $mailRecipientsTable->insert(array(
                         'mail_id' => $mail_id,
@@ -286,6 +289,11 @@ class Core_Api_Mail extends Core_Api_Abstract
         $mailTemplate = $mailTemplateTable->fetchRow($mailTemplateTable->select()->where('type = ?', $type));
         if( null === $mailTemplate ) {
             return;
+        }
+        
+        //Don't send email when admin disable from admin panel.
+        if(empty($mailTemplate->default)) {
+					return;
         }
 
         // Verify recipient(s)
@@ -316,7 +324,10 @@ class Core_Api_Mail extends Core_Api_Abstract
         $bodyTextKey = strtoupper('_EMAIL_' . $mailTemplate->type . '_BODY');
         $bodyHtmlKey = strtoupper('_EMAIL_' . $mailTemplate->type . '_BODYHTML');
 
-
+				$settings = Engine_Api::_()->getApi('settings', 'core');
+				$emailadmin = ($settings->getSetting('user.signup.adminemail', 0) == 1);
+				$super_adminEmail = $settings->getSetting('user.signup.adminemailaddress', null);
+						
         // Send to each recipient
         foreach( $recipients as $recipient ) {
 
@@ -483,7 +494,11 @@ class Core_Api_Mail extends Core_Api_Abstract
             
             if(!is_string($recipient) ) { 
               // Footer Edit Email Preferences
-              $editEmailPreferencesUrl = (_ENGINE_SSL ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . '/members/settings/emails';
+              if(isset($_SERVER['HTTP_HOST']) && !empty($_SERVER['HTTP_HOST'])) {
+								$editEmailPreferencesUrl = (_ENGINE_SSL ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . '/members/settings/emails';
+              } else {
+								$editEmailPreferencesUrl = Engine_Api::_()->getApi('settings', 'core')->getSetting('core.general.site.url') . '/members/settings/emails';
+              }
               $editEmailFooter = Zend_Registry::get('Zend_Translate')->_('You may configure your email alert preferences from <a href="%1$s" target="_blank"> here</a>.');
               $editEmailFooter = vsprintf($editEmailFooter, array($editEmailPreferencesUrl));
               $bodyHtmlTemplate = $bodyHtmlTemplate.'<br />'.$editEmailFooter;
@@ -500,7 +515,7 @@ class Core_Api_Mail extends Core_Api_Abstract
             $adminEmails = array();
 
             // Send
-            if( $subjectKey == '_EMAIL_NOTIFY_ADMIN_USER_SIGNUP_SUBJECT' ) {
+            if(empty($emailadmin) && $subjectKey == '_EMAIL_NOTIFY_ADMIN_USER_SIGNUP_SUBJECT' ) {
                 // the signup notification is emailed to the first SuperAdmin by default
                 $usersTable = Engine_Api::_()->getDbtable('users', 'user');
                 $usersSelect = $usersTable->select()

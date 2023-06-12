@@ -26,7 +26,7 @@
 	position:relative;
 }
 .ses_emoji_container_header ._headbtn,
-.ses_emoji_container_header .owl-buttons > div{
+.ses_emoji_container_header .owl-nav > div{
 	float:left;
 	cursor:pointer;
 	height:40px;
@@ -44,19 +44,19 @@
 .ses_emoji_container_header ._headbtn_add{
 	float:right;
 }
-.ses_emoji_container_header .owl-buttons{
+.ses_emoji_container_header .owl-nav{
 	position:absolute;
 	top:0;
 	width:100%;
 }
-.ses_emoji_container_header .owl-buttons > div{
+.ses_emoji_container_header .owl-nav > div{
 	font-size:0;
 	position:absolute;
 }
-.ses_emoji_container_header .owl-buttons .owl-prev{
+.ses_emoji_container_header .owl-nav .owl-prev{
 	left:0;
 }
-.ses_emoji_container_header .owl-buttons .owl-next{
+.ses_emoji_container_header .owl-nav .owl-next{
 	right:0;
 }
 .ses_emoji_container_header ._headbtn_add{
@@ -67,7 +67,7 @@
 	text-align:center;
 }
 .ses_emoji_container_header ._headbtn i:before,
-.ses_emoji_container_header .owl-buttons > div:before{
+.ses_emoji_container_header .owl-nav > div:before{
 	font-style:normal;
 	display:block;
 	font-family:'Font Awesome 5 Free';
@@ -77,8 +77,11 @@
 	-webkit-font-smoothing:antialiased;
 	-moz-osx-font-smoothing:grayscale;
 }
-.ses_emoji_container_header .owl-buttons > .owl-prev:before{content:"\f053";}
-.ses_emoji_container_header .owl-buttons > .owl-next:before{content:"\f054";}
+.ses_emoji_container_header .owl-nav > .owl-prev:before{content:"\f053";}
+.ses_emoji_container_header .owl-nav > .owl-next:before{content:"\f054";}
+.ses_emoji_container_header .owl-nav > div.disabled{
+	display:none;
+}
 .ses_emoji_container_header ._headbtn_add i:before{content:"\f067";}
 .ses_emoji_container_header ._headbtn_search i:before{content:"\f002";}
 .ses_emoji_container_header_tabs{
@@ -86,7 +89,7 @@
 	overflow:hidden;
 	position:relative;
 }
-.ses_emoji_container_header_tabs .owl-wrapper-outer{
+.ses_emoji_container_header_tabs .owl-stage-outer{
 	float:left;
 }
 .ses_emoji_container_header_tabs .owl-item{
@@ -102,7 +105,7 @@
 .ses_emoji_container_header_tabs .owl-item ._headbtn img{
 	height:24px;
 	object-fit:contain;
-	margin:8px auto 0;
+	margin:0 auto;
 	width:24px;
 }
 .ses_emoji_holder,

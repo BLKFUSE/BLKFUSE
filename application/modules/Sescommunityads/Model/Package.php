@@ -32,6 +32,8 @@ class Sescommunityads_Model_Package extends Core_Model_Item_Abstract
 
   public function isOneTime()
   {
+    if($this->package_type == "nonRecurring")
+      return true;
     return ( $this->recurrence <= 0 || $this->recurrence_type == 'forever' );
   }
 

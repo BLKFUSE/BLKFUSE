@@ -52,24 +52,25 @@
 		if (!this.length) {
 			return this;
 		}
-		if(typeof sesadvancedactivityDesign != 'undefined' && sesadvancedactivityDesign == 2){
-			scriptJquery('#activity-form .sesact_post_media_options').find("*").removeAttr('title');
-	    	scriptJquery('#activity-form .sesact_post_media_options').find(".sesadv_tooltip").removeClass("sesadv_tooltip");
-    	}
+		// if(typeof sesadvancedactivityDesign != 'undefined' && sesadvancedactivityDesign == 2){
+			// scriptJquery('#activity-form .sesact_post_media_options').find("*").removeAttr('title');
+	    	// scriptJquery(".sesadv_tooltip").removeClass("sesadv_tooltip");
+    	// }
 		// extend options
 		var options = $.extend({}, $.fn.powerTip.defaults, opts),
 			tipController = new TooltipController(options);
 
 		// hook mouse tracking
 		initMouseTracking();
-
+		
 		// setup the elements
 		this.each(function() {
+			$(this).attr('data-title',$(this).attr('title'));
 			var $this = $(this),
 				dataPowertip = $this.data('powertip'),
 				dataElem = $this.data('powertipjq'),
 				dataTarget = $this.data('powertiptarget'),
-				title = $this.attr('title');
+				title = $this.attr('title') ?? $this.attr('data-title');
 
 
 			// attempt to use title attribute text if there is no data-powertip,

@@ -120,7 +120,9 @@ function getLocationData(lat, lng){
 			if (results[0]) {
 				if(typeof results[0].address_components != 'undefined'){
 					for(var i=0; i<results[0].address_components.length; i++) {
-						var postalCode = results[0].address_components[i].long_name;
+						if(results[0].address_components[i].types[0] == 'postal_code') {
+	var postalCode = results[0].address_components[i].long_name;
+}
 					}
 				}
 			}

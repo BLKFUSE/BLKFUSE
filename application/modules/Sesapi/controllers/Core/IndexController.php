@@ -840,7 +840,6 @@ class Core_IndexController extends Sesapi_Controller_Action_Standard
           $select->joinLeft("engine4_tickvideo_musics",'engine4_tickvideo_musics.music_id = '.$videoTable.'.song_id',array('songtitle'=>'title','songphoto_id'=>'photo_id','songfile_id'=>'file_id','songduration'=>'duration'));
           $select->where("video_id = ?",$object->getIdentity());
           $NotiVideo = $video->fetchAll($select);
-          
           $result['notification'][$counterLoop]['notification_video'] = $this->getVideos($NotiVideo)[0];
         }
 
@@ -918,6 +917,7 @@ class Core_IndexController extends Sesapi_Controller_Action_Standard
   protected function getVideos($paginator,$manage = ""){
     $result = array();
     $counter = 0;
+    
     $allowShowRating = Engine_Api::_()->getApi('settings', 'core')->getSetting('video.ratevideo.show', 1);
     $allowRating = Engine_Api::_()->getApi('settings', 'core')->getSetting('video.video.rating', 1);
     if ($allowRating == 0) {
@@ -932,11 +932,15 @@ class Core_IndexController extends Sesapi_Controller_Action_Standard
     if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesmember')){
         $memberEnable = true; 
     }
+    
     $followActive = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.follow.active',1);
 
     $table = Engine_Api::_()->getDbtable('users', 'user');
-    $userinfoTableName = Engine_Api::_()->getDbtable('userinfos', 'sesmember')->info('name');
     $tableName = $table->info('name');
+
+    if($memberEnable)
+    $userinfoTableName = Engine_Api::_()->getDbtable('userinfos', 'sesmember')->info('name');
+    
     foreach($paginator as $videos){
         $videos = Engine_Api::_()->getItem('video',$videos->video_id);
         $video = $videos->toArray();
@@ -1012,19 +1016,20 @@ class Core_IndexController extends Sesapi_Controller_Action_Standard
         if(!engine_count($video['images']))
             $video['images']['main'] = $this->getBaseUrl(false,$videos->getPhotoUrl());
 
-            $select = $table->select()
-            ->from($table->info('name'))
-            ->setIntegrityCheck(false)
-            ->joinLeft($userinfoTableName, "$userinfoTableName.user_id = $tableName.user_id",array('userinfo_id', 'follow_count'))
-            ->where($table->info("name").'.user_id = ?',$owner->getIdentity());
-    
-            $userObj = $table->fetchAll($select);
-            if($userObj && engine_count($userObj)){
-                $video["user_follow_count"] = $userObj[0]["follow_count"];
-            }else{
-                $video["user_follow_count"] = 0;
+            if($memberEnable){
+              $select = $table->select()
+              ->from($table->info('name'))
+              ->setIntegrityCheck(false)
+              ->joinLeft($userinfoTableName, "$userinfoTableName.user_id = $tableName.user_id",array('userinfo_id', 'follow_count'))
+              ->where($table->info("name").'.user_id = ?',$owner->getIdentity());
+      
+              $userObj = $table->fetchAll($select);
+              if($userObj && engine_count($userObj)){
+                  $video["user_follow_count"] = $userObj[0]["follow_count"];
+              }else{
+                  $video["user_follow_count"] = 0;
+              }
             }
-
 
         if ($videos instanceof Sesvideo_Model_Chanelvideo){
             $videoV = Engine_Api::_()->getItem('video',$videos->video_id);

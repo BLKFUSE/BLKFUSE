@@ -19,7 +19,7 @@
     <h4>FAQs</h4>
     <p>Get answers to all your random queries about this plugin from our Help Center. Click to read the tutorials and FAQs.</p>
   </a>
-  <a href="https://www.socialenginesolutions.com/support/" target="_blank">
+  <a href="https://socialnetworking.solutions/support/" target="_blank">
     <img src="application/modules/Sesbasic/externals/images/support/support.png" />
     <h4>Support</h4>
     <p>If you face any issues with the plugin or you do not find answer to your query in our Help Center, then file a support ticket from here.</p>

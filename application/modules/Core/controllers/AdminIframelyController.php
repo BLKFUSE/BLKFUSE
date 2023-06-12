@@ -23,7 +23,7 @@ class Core_AdminIframelyController extends Core_Controller_Action_Admin
     $this->view->form = $form = new Core_Form_Admin_Settings_Iframely();
     $settings = Engine_Api::_()->getApi('settings', 'core');
     // Populate form
-    $form->populate($settings->getFlatSetting('core_iframely', array('host' => 'none')));
+    $form->populate($settings->getFlatSetting('core_iframely', array('host' => 'socialengine')));
 
     if (_ENGINE_ADMIN_NEUTER) {
       $form->secretIframelyKey->setValue("**********");

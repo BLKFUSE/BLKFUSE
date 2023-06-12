@@ -116,9 +116,10 @@ class Payment_AdminPackageController extends Core_Controller_Action_Admin
     $this->view->memberCounts = $memberCounts;
   }
 
-  public function createAction()
-  {
-
+  public function createAction() {
+  
+		$this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_payment', array(), 'core_admin_main_payment_packages');
+		
     // Make form
     $this->view->form = $form = new Payment_Form_Admin_Package_Create();
     $locale = $this->view->locale()->getLocaleDefault();
@@ -270,6 +271,8 @@ class Payment_AdminPackageController extends Core_Controller_Action_Admin
 
   public function editAction()
   {
+		$this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_payment', array(), 'core_admin_main_payment_packages');
+		
     // Get package
     if( null === ($packageIdentity = $this->_getParam('package_id')) ||
         !($package = Engine_Api::_()->getDbtable('packages', 'payment')->find($packageIdentity)->current()) ) {

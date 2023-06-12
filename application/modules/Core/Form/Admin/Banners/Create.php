@@ -61,7 +61,7 @@ class Core_Form_Admin_Banners_Create extends Engine_Form
       'label' => 'Banner Image',
 			'accept' => 'image/*',
     ));
-    $this->photo->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+    $this->photo->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
 
     $this->addElement('Text', 'label', array(
       'label' => 'CTA Button Label',

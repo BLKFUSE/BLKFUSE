@@ -12,7 +12,7 @@
  */
  
  ?>
-
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sescommunityads/externals/scripts/core.js'); ?>
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sescommunityads/externals/styles/styles.css'); ?>
 
 <div class="sescmads_help_center sesbasic_bxs sesbasic_clearfix">

@@ -41,7 +41,7 @@ class Core_Api_Menus extends Core_Api_Abstract
         continue;
       }
       
-      if($row->name == 'core_admin_main_plugins_seupdate') {
+      if(in_array($row->name, array('core_admin_main_plugins_seupdate', 'core_admin_main_plugins_acppro'))) {
         if(!$viewer->isSuperAdmin()) {
           continue;
         }

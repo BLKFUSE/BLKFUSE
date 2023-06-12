@@ -116,6 +116,7 @@ $settings = Engine_Api::_()->getApi('settings', 'core');?>
 		}
     var url = en4.core.baseUrl + 'egames/index/subcategory/category_id/' + cat_id;
     scriptJquery.ajax({
+			method: 'post',
       url: url,
       data: {
 				'selected':selected
@@ -146,6 +147,7 @@ $settings = Engine_Api::_()->getApi('settings', 'core');?>
 		}
     var url = en4.core.baseUrl + 'egames/index/subsubcategory/subcategory_id/' + cat_id;
     (scriptJquery.ajax({
+			method: 'post',
       url: url,
       data: {
 				'selected':selected

@@ -13,6 +13,6 @@
 
 <div class="tip">
   <span>
-    <?php echo $this->translate($this->error) ?>
+    <?php echo $this->error; ?>
   </span>
 </div>

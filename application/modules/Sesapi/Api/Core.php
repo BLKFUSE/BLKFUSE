@@ -102,7 +102,7 @@ class Sesapi_Api_Core extends Core_Api_Abstract {
   }
   
   //upload photo
-  public function setPhoto($photo, $isURL = false, $isUploadDirect = false, $modulename, $memberlevelType, $photoParams = array(), $item, $package = false, $sameThumbWatermark = false,$watermarkLabel = 'watermark') {
+  public function setPhoto($photo, $isURL = false, $isUploadDirect = false, $modulename = "", $memberlevelType = "", $photoParams = array(), $item = "", $package = false, $sameThumbWatermark = false,$watermarkLabel = 'watermark') {
     if (!$isURL) {
       if ($photo instanceof Zend_Form_Element_File) {
         $file = $photo->getFileName();
@@ -515,7 +515,7 @@ class Sesapi_Api_Core extends Core_Api_Abstract {
     if(Zend_Registry::get('StaticBaseUrl') != "/")
     $url = str_replace(Zend_Registry::get('StaticBaseUrl'),'',$url);
     //if($staticBaseUrl){
-      $baseUrl = $baseUrl.Zend_Registry::get('StaticBaseUrl') ;
+      $baseUrl = $baseUrl."/".Zend_Registry::get('StaticBaseUrl');
     //}
     return $http.str_replace('//','/',$baseUrl.$url);
   }
@@ -807,8 +807,13 @@ class Sesapi_Api_Core extends Core_Api_Abstract {
   
   }
   public function getIdentityWidget($name, $type, $corePages) {
-    $widgetTable = Engine_Api::_()->getDbTable('content', 'core');
-    $widgetPages = Engine_Api::_()->getDbTable('pages', 'core')->info('name');
+    if((isset($_SESSION['sespwa']['sespwa']) && !empty($_SESSION['sespwa']['sespwa'])) || (isset($_SESSION['sespwa']['mobile']) && !empty($_SESSION['sespwa']['mobile']))) {
+      $widgetTable = Engine_Api::_()->getDbTable('content', 'sespwa');
+      $widgetPages = Engine_Api::_()->getDbTable('pages', 'sespwa')->info('name');
+    } else {
+      $widgetTable = Engine_Api::_()->getDbTable('content', 'core');
+      $widgetPages = Engine_Api::_()->getDbTable('pages', 'core')->info('name');
+    }
     $identity = $widgetTable->select()
             ->setIntegrityCheck(false)
             ->from($widgetTable, '*')

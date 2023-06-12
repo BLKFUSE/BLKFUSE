@@ -57,7 +57,7 @@ function selectAll()
       <th><?php echo $this->translate("Title") ?></th>
       <th><?php echo $this->translate("Owner") ?></th>
       <th><?php echo $this->translate("Source") ?></th>
-      <th align="center"><?php echo $this->translate("Of the Day") ?></th>
+      <th class="admin_table_centered"><?php echo $this->translate("Of the Day") ?></th>
       <th><?php echo $this->translate("Creation Date") ?></th>
       <th><?php echo $this->translate("Options") ?></th>
     </tr>

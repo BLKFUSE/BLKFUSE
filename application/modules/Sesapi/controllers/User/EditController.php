@@ -206,16 +206,82 @@ class User_EditController extends Sesapi_Controller_Action_Standard
     }
 		$art_cover = $user->coverphoto;
 		if((!empty($_FILES['image']['name']) && $_FILES['image']['size'] > 0)) {
-      try{
+      try {
         $file = $_FILES['image'];
-        $this->setCoverPhoto($file, $user);
-      }catch(Exception $e){
-         Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$this->view->translate($e), 'result' => array()));
-      }
-       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'', 'result' => $this->view->translate("Your cover photo edit successfully.")));
-   }
+        
+        if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('album') || Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesalbum')) {
+        
+					$type = 'cover';
+					
+					$table = Engine_Api::_()->getItemTable('album');
+					$select = $table->select()
+							->where('owner_type = ?', $user->getType())
+							->where('owner_id = ?', $user->getIdentity())
+							->where('type = ?', $type)
+							->order('album_id ASC')
+							->limit(1);
+					$album = $table->fetchRow($select);
+					// Create wall photos album if it doesn't exist yet
+					if( null === $album ) {
+						$translate = Zend_Registry::get('Zend_Translate');
+						$album = $table->createRow();
+						$album->owner_type = 'user';
+						$album->owner_id = $user->getIdentity();
+						$album->title = $translate->_(ucfirst($type) . ' Photos');
+						$album->type = $type;
+						$album->search = 1;
+						$album->save();
+						// Authorizations
+						$auth = Engine_Api::_()->authorization()->context;
+						$auth->setAllowed($album, 'everyone', 'view',    true);
+						$auth->setAllowed($album, 'everyone', 'comment', true);
+					}
 
-      Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$this->view->translate("Something went wrong, please try again later."), 'result' => array()));
+					$photoTable = Engine_Api::_()->getItemTable('photo');
+					$photo = $photoTable->createRow();
+					$photo->setFromArray(array(
+							'owner_type' => 'user',
+							'owner_id' => $user->getIdentity()
+					));
+					$photo->save();
+					$user = $this->setCoverPhoto($file,$user);
+					if(isset($photo->order))
+						$photo->order = $photo->photo_id;
+					$photo->album_id = $album->album_id;
+					$photo->file_id = $user->coverphoto;
+					$photo->save();
+					if (!$album->photo_id) {
+						$album->photo_id = $photo->getIdentity();
+						$album->save();
+					}
+
+					$action = Engine_Api::_()->getDbtable('actions', 'activity')->addActivity($user, $user, 'cover_photo_update');
+					// Hooks to enable albums to work
+					if ($action) {
+						$event = Engine_Hooks_Dispatcher::_()
+							->callEvent('onUserPhotoUpload', array(
+							'user' => $user,
+							'file' => $photo,
+							'type' => 'cover',
+							));
+
+						$attachment = $event->getResponse();
+						if (empty($attachment)) {
+							$attachment = $photo;
+						}
+
+						Engine_Api::_()->getDbtable('actions', 'activity')->attachActivity($action, $attachment);
+					}
+				} else {
+					$this->setCoverPhoto($file, $user);
+				}
+
+      } catch(Exception $e){
+				Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$this->view->translate($e), 'result' => array()));
+      }
+			Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'', 'result' => $this->view->translate("Your cover photo edit successfully.")));
+		}
+		Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$this->view->translate("Something went wrong, please try again later."), 'result' => array()));
   }
   private function setCoverPhoto($photo, $user, $level_id = null)
   {

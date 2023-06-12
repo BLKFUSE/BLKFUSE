@@ -12,9 +12,8 @@
  */
  
 ?>
-<?php 
-
-$this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesmember/externals/styles/styles.css'); ?>
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesmember/externals/scripts/core.js'); ?>
+<?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesmember/externals/styles/styles.css'); ?>
 <?php foreach( $this->results as $review ): ?>
 <?php $reviewOwner = Engine_Api::_()->getItem('user', $review->owner_id);?>
 <?php if($this->view_type == 'list'){ ?>
@@ -35,8 +34,8 @@ $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'applicatio
         <?php $reviewTaker = Engine_Api::_()->getItem('user', $review->user_id);?> 
         <?php if(isset($this->byActive)):?>
         <div class="sesmember_review_sidebar_list_stat sesbasic_text_light">
-	  <?php echo 'by '.$this->htmlLink($reviewCrator, $reviewCrator->getTitle(), array('class' => 'ses_tooltip', 'data-src' => $reviewCrator->getGuid()));?>
-	  <?php echo 'For '.$this->htmlLink($reviewTaker, $reviewTaker->getTitle(), array('class' => 'ses_tooltip', 'data-src' => $reviewTaker->getGuid()));?>	
+	  <?php echo 'by '.$this->htmlLink($reviewCrator, $reviewCrator->getTitle(), array('class' => '', 'data-src' => $reviewCrator->getGuid()));?>
+	  <?php echo 'For '.$this->htmlLink($reviewTaker, $reviewTaker->getTitle(), array('class' => '', 'data-src' => $reviewTaker->getGuid()));?>	
         </div>
       <?php endif;?>  
 			<div class="sesmember_list_stats sesmember_review_sidebar_list_stat">
@@ -134,8 +133,8 @@ $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'applicatio
 			<div class="sesmember_review_grid_stat sesmember_sidebar_image_rounded floatL sesbasic_text_light">
 				<?php echo $this->htmlLink($reviewTaker, $this->itemPhoto($reviewTaker, 'thumb.icon'), array('class' => 'sesmember_reviw_prof_img floatL')); ?>
 				<div class="sesmember_review_tittle_block">
-					<p><?php echo 'by '.$this->htmlLink($reviewCrator, $reviewCrator->getTitle(), array('class' => 'ses_tooltip', 'data-src' => $reviewCrator->getGuid()));?></p>
-					<p><?php echo 'For '.$this->htmlLink($reviewTaker, $reviewTaker->getTitle(), array('class' => 'ses_tooltip', 'data-src' => $reviewTaker->getGuid()));?></p>
+					<p><?php echo 'by '.$this->htmlLink($reviewCrator, $reviewCrator->getTitle(), array('class' => '', 'data-src' => $reviewCrator->getGuid()));?></p>
+					<p><?php echo 'For '.$this->htmlLink($reviewTaker, $reviewTaker->getTitle(), array('class' => '', 'data-src' => $reviewTaker->getGuid()));?></p>
 					<div class="sesmember_list_stats sesmember_review_grid_stat clear">
 						<?php if(isset($this->likeActive) && isset($review->like_count)) { ?>
 						<span title="<?php echo $this->translate(array('%s like', '%s likes', $review->like_count), $this->locale()->toNumber($review->like_count)); ?>"><i class="sesbasic_icon_like_o sesbasic_text_light"></i><?php echo $review->like_count; ?></span>

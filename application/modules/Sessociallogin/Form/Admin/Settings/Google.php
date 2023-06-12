@@ -42,7 +42,7 @@ class Sessociallogin_Form_Admin_Settings_Google extends Engine_Form {
 
         $description = vsprintf($description.$moreinfo.$moreinfo1, array('https://developers.google.com/places/web-service/get-api-key', 
 
-        'https://www.socialenginesolutions.com/guidelines-social-login-google-api-key/',
+        'https://socialnetworking.solutions/guidelines-social-login-google-api-key/',
 
         ));
 

@@ -70,12 +70,12 @@
       $menuoptions[$counter]['label'] = $this->view->translate("Edit Settings"); 
       $counter++;
     }
-    $editphotos = $this->_helper->requireAuth()->setAuthParams($album, null, 'edit')->isValid();
-    if($editphotos){
-      $menuoptions[$counter]['name'] = "editphotos";
-      $menuoptions[$counter]['label'] = $this->view->translate('Manage Album');
-      $counter++;
-    }
+//     $editphotos = $this->_helper->requireAuth()->setAuthParams($album, null, 'edit')->isValid();
+//     if($editphotos){
+//       $menuoptions[$counter]['name'] = "editphotos";
+//       $menuoptions[$counter]['label'] = $this->view->translate('Manage Album');
+//       $counter++;
+//     }
     $canDelete = $this->_helper->requireAuth()->setAuthParams($album, null, 'delete')->isValid();
     if($canDelete) {
       $menuoptions[$counter]['name'] = "delete";
@@ -89,7 +89,22 @@
    
     $albumData['menus'] = $menuoptions;
 
-
+    if( !empty($album->category_id) ) {
+      $category = Engine_Api::_()->getItem('album_category', $album->category_id);
+      $albumData['album']['category_title'] = $category->category_name;
+			if( !empty($album->subcat_id) ) {
+				$category = Engine_Api::_()->getItem('album_category', $album->subcat_id);
+				$albumData['album']['subcategory_title'] = $category->category_name;
+			}
+			if( !empty($album->subsubcat_id) ) {
+				$category = Engine_Api::_()->getItem('album_category', $album->subsubcat_id);
+				$albumData['album']['subsubcategory_title'] = $category->category_name;
+			}
+    }
+		$albumData['album']['is_rated'] = Engine_Api::_()->getDbTable('ratings', 'album')->checkRated($album->getIdentity(), $viewer->getIdentity());
+		
+		$albumData['album']['enable_rating'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('album.enable.rating', 1);
+		$albumData['album']['ratingicon'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('album.ratingicon', 'fas fa-star');
     $albumData['album']['module_name'] = 'album';
     $albumData['album']['user_title'] = $album->getOwner()->getTitle();
     $owner = $album->getOwner();
@@ -450,7 +465,35 @@
       }
       
       $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
-      $this->generateFormFields($formFields);
+
+      //set subcategory and 3rd category populated work
+      $newFormFieldsArray = array();
+      if(is_countable($formFields) && engine_count($formFields) &&  $album->category_id){
+        foreach($formFields as $fields){
+          foreach($fields as $field){
+            $subcat = array();
+            if($fields['name'] == "subcat_id"){ 
+              $subcat = Engine_Api::_()->getItemTable('album_category')->getSubcategory(array('category_id'=>$album->category_id,'column_name'=>'*'));
+            }else if($fields['name'] == "subsubcat_id"){
+              if($album->subcat_id)
+              $subcat = Engine_Api::_()->getItemTable('album_category')->getSubSubcategory(array('category_id'=>$album->subcat_id,'column_name'=>'*'));
+            }
+            if(is_countable($subcat) && engine_count($subcat)){
+              $arrayCat = array();
+              foreach($subcat as $cat){
+                $arrayCat[$cat->getIdentity()] = $cat->getTitle(); 
+              }
+              $fields["multiOptions"] = $arrayCat;  
+            }
+          }
+          $newFormFieldsArray[] = $fields;
+        }
+        if(!engine_count($newFormFieldsArray))
+          $newFormFieldsArray = $formFields;
+        $this->generateFormFields($newFormFieldsArray);
+      }
+      //$formFields[4]['name'] = "file";
+      $this->generateFormFields($formFields,array('resources_type'=>'album', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
     }
     
     if(!$form->isValid($this->getRequest()->getPost())) {
@@ -466,6 +509,10 @@
     try {
 
       $values = $form->getValues();
+      if (isset($values['networks'])) {
+        $network_privacy = 'network_'. implode(',network_', $values['networks']);
+        $values['networks'] = implode(',', $values['networks']);
+      }
       $album->setFromArray($values);
       $album->save();
 

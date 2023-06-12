@@ -13,7 +13,7 @@
  
 ?>
 <?php include APPLICATION_PATH .  '/application/modules/Sesmember/views/scripts/dismiss_message.tpl';?>
-<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/jquery.min.js'); ?>
+
 <div>
   <?php echo $this->htmlLink(array('action' => 'manage-profile', 'reset' => false), $this->translate("Back to Manage Memebr Profile Pages"),array('class' => 'buttonlink sesbasic_icon_back')) ?>
 </div>

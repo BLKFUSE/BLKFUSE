@@ -39,7 +39,7 @@ class Sesadvancedactivity_Plugin_LinkComposer extends Core_Plugin_Abstract
       if( !empty($iframelyConfig['host']) && $iframelyConfig['host'] != 'none' ) {
         $response = Engine_Iframely::factory($iframelyConfig)
           ->get($data['uri']);
-          $data['params']['iframely'] = $response ? $response : array();
+          $data['params']['iframely'] = $response ? json_encode($response) : array();
       }
       $link = Engine_Api::_()->getApi('links', 'sesadvancedactivity')->createLink($viewer, $data);
     } catch( Exception $e ) {

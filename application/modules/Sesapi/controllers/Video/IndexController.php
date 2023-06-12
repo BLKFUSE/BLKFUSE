@@ -34,6 +34,20 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
     $this->_permission = array('canCreateVideo'=>Engine_Api::_()->authorization()->isAllowed('video', null, 'create'),'watchLater'=>Engine_Api::_()->getApi('settings', 'core')->getSetting('video.enable.watchlater', 1),'canCreatePlaylist'=>Engine_Api::_()->authorization()->isAllowed('video', null, 'addplaylist_video'),'canCreateChannel'=>Engine_Api::_()->authorization()->isAllowed('sesvideo_chanel', null, 'create'),'canChannelEnable'=>Engine_Api::_()->getApi('settings', 'core')->getSetting('video_enable_chanel', 1));
   }
   
+	public function menuAction() {
+		$menus = Engine_Api::_()->getApi('menus', 'core')->getNavigation('video_main', array());
+		$menu_counter = 0;
+		foreach ($menus as $menu) {
+			$class = end(explode(' ', $menu->class));
+			$result_menu[$menu_counter]['label'] = $this->view->translate($menu->label);
+			$result_menu[$menu_counter]['action'] = $class;
+			$result_menu[$menu_counter]['isActive'] = $menu->active;
+			$menu_counter++;
+		}
+		$result['menus'] = $result_menu;
+		Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array_merge(array('error' => '0', 'error_message' => '', 'result' => $result)));
+	}
+  
   public function browseAction() {
   
     // Permissions
@@ -56,7 +70,7 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
     }
     $values['status'] = 1;
     $values['search'] = 1;
-   // print_r($values);die;
+
     if (!empty($values['tag'])) {
         $this->view->tag = Engine_Api::_()->getItem('core_tag', $values['tag'])->text;
     }
@@ -74,30 +88,31 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
         $values['user_id'] = $user_id;
     }
     // Get videos
+    
     $this->view->paginator = $paginator = Engine_Api::_()->getApi('core', 'video')->getVideosPaginator($values);
     $items_count = (int) Engine_Api::_()->getApi('settings', 'core')->getSetting('video.page', 12);
     $paginator->setItemCountPerPage($items_count);
     $paginator->setCurrentPageNumber($this->_getParam('page', 1));
     $result['videos'] = $this->getVideos($paginator,@$manage);
-      $result["permission"]['canCreateVideo'] = Engine_Api::_()->authorization()->isAllowed('video', null, 'create') ;
-    
-    // Group Manage Page Work based on user_id
+		$result["permission"]['canCreateVideo'] = Engine_Api::_()->authorization()->isAllowed('video', null, 'create') ;
+
     if(!empty($user_id)) {
       $menuoptions= array();
       $canEdit = Engine_Api::_()->authorization()->getPermission($viewer, 'video', 'edit');
       $counter = 0;
       if($canEdit) {
         $menuoptions[$counter]['name'] = "edit";
-        $menuoptions[$counter]['label'] = $this->view->translate("Edit"); 
+        $menuoptions[$counter]['label'] = $this->view->translate("Edit Video"); 
         $counter++;
       }
       $canDelete = Engine_Api::_()->authorization()->getPermission($viewer, 'video', 'delete');
       if($canDelete) {
         $menuoptions[$counter]['name'] = "delete";
-        $menuoptions[$counter]['label'] = $this->view->translate("Delete");
+        $menuoptions[$counter]['label'] = $this->view->translate("Delete Video");
       }
       $result['menus'] = $menuoptions;  
     }
+    
     $extraParams = array();
     $extraParams['pagging']['total_page'] = $paginator->getPages()->pageCount;
     $extraParams['pagging']['total'] = $paginator->getTotalItemCount();
@@ -129,19 +144,23 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
       if($manage){
          $viewer = Engine_Api::_()->user()->getViewer();
           $menuoptions= array();
-          $canEdit = $this->_helper->requireAuth()->setAuthParams($videos, null, 'edit')->isValid();
+          $canEdit = Engine_Api::_()->authorization()->getPermission($viewer, 'video', 'edit');
           $counterMenu = 0;
           if($canEdit){
             $menuoptions[$counterMenu]['name'] = "edit";
-            $menuoptions[$counterMenu]['label'] = $this->view->translate("Edit"); 
+            $menuoptions[$counterMenu]['label'] = $this->view->translate("Edit Video"); 
             $counterMenu++;
           }
-          $canDelete = $this->_helper->requireAuth()->setAuthParams($videos, null, 'delete')->isValid();
+          $canEdit = Engine_Api::_()->authorization()->getPermission($viewer, 'video', 'delete');
           if($canDelete){
             $menuoptions[$counterMenu]['name'] = "delete";
-            $menuoptions[$counterMenu]['label'] = $this->view->translate("Delete");
+            $menuoptions[$counterMenu]['label'] = $this->view->translate("Delete Video");
           }
           $video['menus'] = $menuoptions;
+          
+				$video['is_rated'] = Engine_Api::_()->getDbTable('ratings', 'video')->checkRated($videos->getIdentity(), $viewer->getIdentity());
+				$video['enable_rating'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('video.enable.rating', 1);
+				$video['ratingicon'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('video.ratingicon', 'fas fa-star');
       }
       if( $videos->duration >= 3600 ) {
         $duration = gmdate("H:i:s", $videos->duration);
@@ -149,14 +168,7 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
         $duration = gmdate("i:s", $videos->duration);
       }
       $video['duration'] = $duration;
-      if($this->_permission["watchLater"] && $this->view->viewer()->getIdentity()){
-        if(empty($video["watchlater_id"]) && is_null($video["watchlater_id"])){
-            $video["watchlater_id"] = 0;
-        }
-        $video["canWatchlater"] = true;
-      }else{
-        $video["canWatchlater"] = false;  
-      }
+      
       $video['images'] = Engine_Api::_()->sesapi()->getPhotoUrls($videos,'',"");
       if(!engine_count($video['images']))
         $video['images']['main'] = $this->getBaseUrl(false,$videos->getPhotoUrl());
@@ -216,6 +228,12 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
     if (!$this->_helper->requireAuth()->setAuthParams($video, null, 'view')->isValid()) {
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array())); 
     }
+    
+    // Network check
+		$networkPrivacy = Engine_Api::_()->network()->getViewerNetworkPrivacy($video, 'owner_id');
+		if(empty($networkPrivacy))
+			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'permission_error', 'result' => array()));
+			
     $viewer = Engine_Api::_()->user()->getViewer();
     if($video->status != 1)
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$this->view->translate("The video you are looking for does not exist or has not been processed yet."), 'result' => array()));
@@ -287,9 +305,23 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
       }
     }
 
+    if( !empty($video->category_id) ) {
+      $category = Engine_Api::_()->getItem('video_category', $video->category_id);
+      $response['video']['category_title'] = $category->category_name;
+			if( !empty($video->subcat_id) ) {
+				$category = Engine_Api::_()->getItem('video_category', $video->subcat_id);
+				$response['video']['subcategory_title'] = $category->category_name;
+			}
+			if( !empty($video->subsubcat_id) ) {
+				$category = Engine_Api::_()->getItem('video_category', $video->subsubcat_id);
+				$response['video']['subsubcategory_title'] = $category->category_name;
+			}
+    }
+    
+		$response['video']['is_rated'] = Engine_Api::_()->getDbTable('ratings', 'video')->checkRated($video->getIdentity(), $viewer->getIdentity());
+		$response['video']['enable_rating'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('video.enable.rating', 1);
+		$response['video']['ratingicon'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('video.ratingicon', 'fas fa-star');
 
-    $response['video']['is_rated'] = Engine_Api::_()->video()->checkRated($video->getIdentity(), $viewer->getIdentity());
-    $response['video']['total_rating_average'] = Engine_Api::_()->video()->ratingCount($video->getIdentity());
     if($viewer->getIdentity()){
      $response['video']['canEdit'] = $video->authorization()->isAllowed($viewer, 'edit');
 		 $response['video']['canDelete'] = $video->authorization()->isAllowed($viewer, 'delete');
@@ -297,7 +329,7 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
     if (!$viewer->isSelf($video->getOwner())){
         $video->view_count++;
         $video->save();
-      }
+		}
     $response['video']['user_image'] = $this->userImage($video->getOwner()->getIdentity(),"thumb.profile");
     $response['video']['user_id'] = $video->getOwner()->getIdentity();
     $response['video']['user_title'] = $video->getOwner()->getTitle();
@@ -320,7 +352,7 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
   
   
 	public function createAction() {
-	
+    $viewer = Engine_Api::_()->user()->getViewer();
     // Upload video
     if (!$this->_helper->requireUser->isValid())
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'user_not_autheticate', 'result' => array()));
@@ -335,11 +367,20 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
         $_POST['id'] = $this->uploadVideoAction();
     }
     //check ses modules integration
-    $values['parent_id'] = $parent_id = $this->_getParam('parent_id', null);
-    $values['parent_type'] = $parent_type = $this->_getParam('parent_type', null);
+    $values['parent_type'] = $parent_type = $this->_getParam('parent_type');
+    $values['parent_id'] = $parent_id = $this->_getParam('parent_id', $this->_getParam('subject_id'));
+    if( $parent_type == 'group' && Engine_Api::_()->hasItemType('group') ) {
+        $this->view->group = $group = Engine_Api::_()->getItem('group', $parent_id);
+        if( !Engine_Api::_()->authorization()->isAllowed('group', $viewer, 'video') ) {
+          Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array()));
+        }
+    } else {
+        $parent_type = 'user';
+        $parent_id = $viewer->getIdentity();
+    }
     
     // set up data needed to check quota
-    $viewer = Engine_Api::_()->user()->getViewer();
+    
     $values['user_id'] = $viewer->getIdentity();
     $paginator = Engine_Api::_()->getApi('core', 'video')->getVideosPaginator($values);
     $quota = Engine_Api::_()->authorization()->getPermission($viewer->level_id, 'video', 'max');
@@ -354,18 +395,21 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
       $message = $this->view->translate('You have already uploaded the maximum number of videos allowed.');
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$message, 'result' => array()));
     }
-    
-		//Create form
-    $this->view->form = $form = new Video_Form_Video(array('parent_type'=>'user'));
-        $user = Engine_Api::_()->user()->getViewer();
+
+    // Create form
+    $this->view->form = $form = new Video_Form_Video(array(
+        'parent_type' => $parent_type,
+        'parent_id' => $parent_id
+    ));
+    $user = Engine_Api::_()->user()->getViewer();
 
     $allowedUpload = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('video', $user, 'upload');
     $ffmpegPath = Engine_Api::_()->getApi('settings', 'core')->video_ffmpeg_path;
     if( !empty($ffmpegPath) && $allowedUpload ) {
-      $lable = 'My Computer';
-      if( Engine_Api::_()->hasModuleBootstrap('mobi') && Engine_Api::_()->mobi()->isMobile() ) {
+      //$lable = 'My Computer';
+      //if( Engine_Api::_()->hasModuleBootstrap('mobi') && Engine_Api::_()->mobi()->isMobile() ) {
         $lable = 'My Device';
-      }
+      //}
       $videoOptions['upload'] = $lable;
     }
     if($videoOptions)
@@ -383,7 +427,7 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
         if ($value['type'] == 'Hidden')
           $formFields[$key]['type'] = 'File';
       }
-      $this->generateFormFields($formFields);
+      $this->generateFormFields($formFields,array('resources_type'=>'video', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
     }
     
     // Check if valid
@@ -432,9 +476,17 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
             $values['thumbnail'] = $information['thumbnail'];
             $values['duration'] = $information['duration'];
             $video = $table->createRow();
+            if (is_null($values['subcat_id']))
+              $values['subcat_id'] = 0;
+            if (is_null($values['subsubcat_id']))
+              $values['subsubcat_id'] = 0;
         }
         if (empty($values['auth_view'])) {
             $values['auth_view'] = 'everyone';
+        }
+        if (isset($values['networks'])) {
+            $network_privacy = 'network_'. implode(',network_', $values['networks']);
+            $values['networks'] = implode(',', $values['networks']);
         }
         $values['view_privacy'] = $values['auth_view'];
         $video->setFromArray($values);
@@ -442,16 +494,9 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
         // Now try to create thumbnail
         if ($values['type'] !== 'upload') {
             $thumbnail = $values['thumbnail'];
-						$thumbnailUrl = explode("?", $thumbnail)[0];
-						$ext = ltrim(strrchr($thumbnailUrl, '.'), '.');
-						if(strpos($thumbnailUrl,'vimeocdn') !== false){
-							$ext = "png";
-						} else if(strpos($thumbnailUrl,'dmcdn') !== false){
-							$ext = "jpeg";
-						}
-						$thumbnail_parsed = @parse_url($thumbnail);
-
-            if ($thumbnail && @GetImageSize($thumbnail)) {
+            $ext = ltrim(strrchr($thumbnail, '.'), '.');
+            $thumbnail_parsed = @parse_url($thumbnail);
+            if (@GetImageSize($thumbnail)) {
                 $valid_thumb = true;
             } else {
                 $valid_thumb = false;
@@ -514,10 +559,14 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
     try {
       if ($video->status == 1) {
         $owner = $video->getOwner();
-        //Create Activity Feed 
-        $action = Engine_Api::_()->getDbtable('actions', 'activity')->addActivity($owner, $video, 'video_new');
+        
+        if( $parent_type == 'group') {
+          $action = Engine_Api::_()->getDbtable('actions', 'activity')->addActivity($owner, $group, 'video_new', '', array('privacy' => isset($values['networks'])? $network_privacy : null));
+        } else {
+          $action = Engine_Api::_()->getDbtable('actions', 'activity')->addActivity($owner, $video, 'video_new', '', array('privacy' => isset($values['networks'])? $network_privacy : null));
+        }
         if ($action != null) {
-          Engine_Api::_()->getDbtable('actions', 'activity')->attachActivity($action, $video);
+            Engine_Api::_()->getDbtable('actions', 'activity')->attachActivity($action, $video);
         }
 				// Rebuild privacy
 				$actionTable = Engine_Api::_()->getDbtable('actions', 'activity');
@@ -624,7 +673,22 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error','result'=>''));
     }
     $this->view->video = $video;
-    $this->view->form = $form = new Video_Form_Edit();
+    $parent_type = $video->parent_type;
+    $parent_id = $video->parent_id;
+    if( $parent_type == 'group' && Engine_Api::_()->hasItemType('group') ) {
+        $this->view->group = $group = Engine_Api::_()->getItem('group', $parent_id);
+        if( !Engine_Api::_()->authorization()->isAllowed('group', $viewer, 'video') ) {
+            return;
+        }
+    } else {
+        $parent_type = 'user';
+        $parent_id = $viewer->getIdentity();
+    }
+        
+    $this->view->form = $form = new Video_Form_Edit(array(
+      'parent_type' => $parent_type,
+      'parent_id' => $parent_id
+    ));
     $form->populate($video->toArray());
 		
 		
@@ -636,15 +700,24 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
     
     // authorization
     $auth = Engine_Api::_()->authorization()->context;
-    $roles = array('owner', 'owner_member', 'owner_member_member', 'owner_network', 'registered', 'everyone');
+    if($parent_type == 'user') {
+      $roles = array('owner', 'member', 'owner_member', 'owner_member_member', 'owner_network', 'registered', 'everyone');
+    } else if($parent_type = 'group') {
+        if(engine_in_array($group->view_privacy, array('member', 'officer'))) {
+          $roles = array('owner', 'member', 'parent_member');
+        } else {
+          $roles = array('owner', 'member', 'parent_member', 'registered', 'everyone');
+        }
+    }
     foreach ($roles as $role) {
       if (1 === $auth->isAllowed($video, $role, 'view')) {
-        $form->auth_view->setValue($role);
+          $form->auth_view->setValue($role);
       }
       if (1 === $auth->isAllowed($video, $role, 'comment')) {
-        $form->auth_comment->setValue($role);
+          $form->auth_comment->setValue($role);
       }
     }
+    
     // prepare tags
     $videoTags = $video->tags()->getTagMaps();
     $tagString = '';
@@ -655,15 +728,42 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
     }
     $this->view->tagNamePrepared = $tagString;
     $form->tags->setValue($tagString);
+//     if (Engine_Api::_()->authorization()->isAllowed('video', Engine_Api::_()->user()->getViewer(), 'allow_network'))
+//       $form->networks->setValue(explode(',', $video->networks));
     
     $form->removeElement('code');
     $form->removeElement('id');
     $form->removeElement('ignore');
-    
+
     if($this->_getParam('getForm')) {
-      
       $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
-      $this->generateFormFields($formFields);
+      //set subcategory and 3rd category populated work
+      $newFormFieldsArray = array();
+      if(is_countable($formFields) && engine_count($formFields) &&  $video->category_id){
+        foreach($formFields as $fields){
+          foreach($fields as $field){
+            $subcat = array();
+            if($fields['name'] == "subcat_id"){ 
+              $subcat = Engine_Api::_()->getItemTable('video_category')->getSubcategory(array('category_id'=>$video->category_id,'column_name'=>'*'));
+            }else if($fields['name'] == "subsubcat_id"){
+              if($video->subcat_id)
+              $subcat = Engine_Api::_()->getItemTable('video_category')->getSubSubcategory(array('category_id'=>$video->subcat_id,'column_name'=>'*'));
+            }
+            if(is_countable($subcat) && engine_count($subcat)){
+              $arrayCat = array();
+              foreach($subcat as $cat){
+                $arrayCat[$cat->getIdentity()] = $cat->getTitle(); 
+              }
+              $fields["multiOptions"] = $arrayCat;  
+            }
+          }
+          $newFormFieldsArray[] = $fields;
+        }
+        if(!engine_count($newFormFieldsArray))
+          $newFormFieldsArray = $formFields;
+				$this->generateFormFields($newFormFieldsArray,array('resources_type'=>'video', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
+
+      }
     }
     
      // Check if valid
@@ -678,7 +778,10 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
     $db->beginTransaction();
     try {
       $values = $form->getValues();
-      
+      if (isset($values['networks'])) {
+        $network_privacy = 'network_'. implode(',network_', $values['networks']);
+        $values['networks'] = implode(',', $values['networks']);
+      }
       if (isset($_FILES['image']['name']) && $_FILES['image']['name'] != '' && $_FILES['image']['size'] > 0) {
         $values['photo_id'] = $this->setPhoto($_FILES['image'], $video->video_id, true);
       } else {
@@ -722,7 +825,9 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
       // Rebuild privacy
       $actionTable = Engine_Api::_()->getDbtable('actions', 'activity');
       foreach ($actionTable->getActionsByObject($video) as $action) {
-        $actionTable->resetActivityBindings($action);
+          $action->privacy = isset($values['networks'])? $network_privacy : null;
+          $action->save();
+          $actionTable->resetActivityBindings($action);
       }
       $db->commit();
     } catch (Exception $e) {
@@ -769,7 +874,7 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
     $mainPath = $path . DIRECTORY_SEPARATOR . $base . '_main.' . $extension;
     $image = Engine_Image::factory();
     $image->open($file)
-            ->resize(500, 500)
+            ->resize(400, 400)
             ->write($mainPath)
             ->destroy();
     // Store
@@ -798,71 +903,41 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
   public function searchFormAction(){
     $search_for = $this-> _getParam('search_for', 'video');
     $setting = Engine_Api::_()->getApi('settings', 'core');
-    $searchForm = new Video_Form_Search();
-      // $searchForm->addElement('Button', 'submit', array(
-      //     'type' => 'submit',
-      //     'label' => 'Search',
-      //     'ignore' => true,
-      //     'order' => 10000002,
-      // ));
-    $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($searchForm,true);
-    $this->generateFormFields($formFields);    
+    $form = new Video_Form_Search();
+    $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
+		$this->generateFormFields($formFields,array('resources_type'=>'video'));
   }
+  
   public function rateAction() {
+  
     $viewer = Engine_Api::_()->user()->getViewer();
     $user_id = $viewer->getIdentity();
     $rating = $this->_getParam('rating');
     $resource_id = $this->_getParam('resource_id');
-    $resource_type = $this->_getParam('resource_type');
     $table = Engine_Api::_()->getDbtable('ratings', 'video');
     $db = $table->getAdapter();
     $db->beginTransaction();
     try {
-      if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesvideo')){
-        Engine_Api::_()->getDbtable('ratings', 'video')->setRating($resource_id, $user_id, $rating, $resource_type);
-      } else {
-        Engine_Api::_()->video()->setRating($resource_id, $user_id, $rating);
-      }
-      if ($resource_type && $resource_type == 'video')
-        $item = Engine_Api::_()->getItem('video', $resource_id);
-      else if ($resource_type && $resource_type == 'video_artists')
-        $item = Engine_Api::_()->getItem('video_artists', $resource_id);
-			else if($resource_type && $resource_type == 'video_chanel')
-				$item = Engine_Api::_()->getItem('video_chanel', $resource_id);
-				
-      if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesvideo')){
-         $item->rating = Engine_Api::_()->getDbtable('ratings', 'video')->getRating($item->getIdentity(), $resource_type);
-      } else {
-         $item->rating = Engine_Api::_()->video()->getRating($item->getIdentity());
-      }
-      $item->save();
-      if ($resource_type == 'video') {
-        $type = 'video_rating';
-      } 
-      //Activity Feed / Notification
-      if ($resource_type != 'video_artists') {
-        $owner = $item->getOwner();
-        if ($viewer->getIdentity() != $item->owner_id) {
-          Engine_Api::_()->getDbtable('notifications', 'activity')->delete(array('type =?' => $type, "subject_id =?" => $viewer->getIdentity(), "object_type =? " => $item->getType(), "object_id = ?" => $item->getIdentity()));
-          Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($owner, $viewer, $item, $type);
-        }
-      }
-      $result = Engine_Api::_()->getDbtable('actions', 'activity')->fetchRow(array('type =?' => $type, "subject_id =?" => $viewer->getIdentity(), "object_type =? " => $item->getType(), "object_id = ?" => $item->getIdentity()));
-      if (!$result) {
-        $action = Engine_Api::_()->getDbtable('actions', 'activity')->addActivity($viewer, $item, $type);
-        if ($action)
-          Engine_Api::_()->getDbtable('actions', 'activity')->attachActivity($action, $item);
-      }
+    
+			Engine_Api::_()->getDbtable('ratings', 'video')->setRating($resource_id, $user_id, $rating);
+
+			$video = Engine_Api::_()->getItem('video', $resource_id);
+			$video->rating = Engine_Api::_()->getDbtable('ratings', 'video')->getRating($video->getIdentity());
+			$video->save();
+			
+			$owner = Engine_Api::_()->getItem('user', $video->owner_id);
+			if($owner->user_id != $user_id)
+				Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($owner, $viewer, $video, 'video_rating');
+			
       $db->commit();
     } catch (Exception $e) {
       $db->rollBack();
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$e->getMessage(), 'result' => array()));
-      
     }
-     Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>"", 'result' => $this->view->translate("You have successfully rated video.")));
-      
+		Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>"", 'result' => $this->view->translate("You have successfully rated video.")));
   }
-   public function composeUploadAction() {
+  
+	public function composeUploadAction() {
     $viewer = Engine_Api::_()->user()->getViewer();
     if (!$viewer->getIdentity()) {
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'user_not_autheticate')); 
@@ -924,13 +999,8 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
         
          // Now try to create thumbnail
         $thumbnail = $information['thumbnail'];
-				$thumbnailUrl = explode("?", $thumbnail)[0];
-				$ext = ltrim(strrchr($thumbnailUrl, '.'), '.');
-				if(strpos($thumbnailUrl,'vimeocdn') !== false){
-					$ext = "png";
-				} else if(strpos($thumbnailUrl,'dmcdn') !== false){
-					$ext = "jpeg";
-				}
+           
+        $ext = ltrim(strrchr($thumbnail, '.'), '.');
 				$thumbnail_parsed = @parse_url($thumbnail);
 				$imageUploadSize = @getimagesize($thumbnail);
 				$width = isset($imageUploadSize[0]) ? $imageUploadSize[0] : '';
@@ -953,7 +1023,7 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
         stream_copy_to_stream($src_fh, $tmp_fh, 1024 * 1024 * 2);
         $image = Engine_Image::factory();
         $image->open($tmp_file)
-                ->resize(500, 500)
+                ->resize(400, 400)
                 ->write($thumb_file)
                 ->destroy();
         $thumbFileRow = Engine_Api::_()->storage()->create($thumb_file, array(

@@ -68,17 +68,20 @@ class Invite_Plugin_Signup
         $invites = false;
         foreach ($inviteTable->fetchAll($select) as $invite) {
             // Check if 'inviter' wants to send a friend request
+            $send_request = $invite->send_request;
             $invitedMember = Engine_Api::_()->getItem('user',$invite->user_id);
             $invite->send_request = 1;
             $invite->save();
             if (!empty($invitedMember)) {
                 $befriendUserIds[] = $invite->user_id;
-                try {
-                    // send request
-                    $user->membership()->addMember($invitedMember)->setUserApproved($invitedMember);
-                    $this->_handleNotification($user,$invitedMember);
+                if(!empty($send_request)) {
+									try {
+											// send request
+											$user->membership()->addMember($invitedMember)->setUserApproved($invitedMember);
+											$this->_handleNotification($user,$invitedMember);
 
-                } catch( Exception $e ) {}
+									} catch( Exception $e ) {}
+                }
                 $invites = true;
             }
             // Set new user if if not already

@@ -79,7 +79,7 @@ class Activity_IndexController extends Core_Controller_Action_Standard
 
         // Check if form is valid
         $postData = $this->getRequest()->getPost();
-        $body = @$postData['body'];
+        $body = @$postData['body'] . ' ';
         $body = html_entity_decode($body, ENT_QUOTES, 'UTF-8');
         $body = html_entity_decode($body, ENT_QUOTES, 'UTF-8');
         //$body = htmlentities($body, ENT_QUOTES, 'UTF-8');
@@ -607,7 +607,7 @@ class Activity_IndexController extends Core_Controller_Action_Standard
                 return;
             }
             $actionOwner = Engine_Api::_()->getItemByGuid($action->subject_type."_".$action->subject_id);
-            $body = $form->getValue('body');
+            $body = $form->getValue('body') . ' ';
             $bodyEmojis = explode(' ', $body);
             foreach($bodyEmojis as $bodyEmoji) {
                 $emojisCode = Engine_Text_Emoji::encode($bodyEmoji);
@@ -945,7 +945,7 @@ class Activity_IndexController extends Core_Controller_Action_Standard
         $db = Engine_Db_Table::getDefaultAdapter();
         $db->beginTransaction();
         $values = $form->getValues();
-        $body = $values['body'];
+        $body = $values['body'] . ' ';
         $body = html_entity_decode($body, ENT_QUOTES, 'UTF-8');
         $values['body'] = html_entity_decode($body, ENT_QUOTES, 'UTF-8');
         $bodyEmojis = explode(' ', $body);

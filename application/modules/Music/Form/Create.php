@@ -59,11 +59,11 @@ class Music_Form_Create extends Engine_Form
         // Init name
         $this->addElement('Text', 'title', array(
             'label' => 'Playlist Name',
-            'maxlength' => '63',
+            'maxlength' => '255',
             'filters' => array(
                 //new Engine_Filter_HtmlSpecialChars(),
                 new Engine_Filter_Censor(),
-                new Engine_Filter_StringLength(array('max' => '63')),
+                new Engine_Filter_StringLength(array('max' => '255')),
             )
         ));
 
@@ -174,7 +174,7 @@ class Music_Form_Create extends Engine_Form
         $this->addElement('File', 'art', array(
             'label' => 'Playlist Artwork',
         ));
-        $this->art->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+        $this->art->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
 
         $urlOptions = empty($this->getPlaylistId()) ? ['controller' => 'song', 'action' => 'upload']
             : ['controller' => 'playlist', 'action' => 'add-song', 'playlist_id' => $this->getPlaylistId()];

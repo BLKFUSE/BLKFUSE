@@ -181,7 +181,7 @@ class Sesvideo_Form_ChanelApi extends Engine_Form {
 				'description'=>'recommended size is 1000*300'
     ));
 		$this->chanel_cover->getDecorator("Description")->setOption("placement", "append");
-    $this->chanel_cover->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+    $this->chanel_cover->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
 		$chanelCoverPreview = '';
     if ($chanel_id) {
       if (!$is_chanel)
@@ -218,7 +218,7 @@ class Sesvideo_Form_ChanelApi extends Engine_Form {
         'onchange' => 'readImageUrl(this,"thumbnail_photo_preview")',
     ));
 		$this->chanel_thumbnail->getDecorator("Description")->setOption("placement", "append");
-    $this->chanel_thumbnail->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+    $this->chanel_thumbnail->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
 
     if (isset($chanel) && $chanel->thumbnail_id) {
       $img_path = Engine_Api::_()->storage()->get($chanel->thumbnail_id, '')->getPhotoUrl();

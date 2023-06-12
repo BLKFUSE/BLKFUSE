@@ -14,16 +14,17 @@
 ?>
 
 <?php if(!$this->isAjax){ ?>
-<?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesstories/externals/styles/styles.css'); ?>
-<?php   
-  $this->headScript()->appendFile($baseURL . 'application/modules/Sesstories/externals/scripts/jquery.js');
-$this->headScript()->appendFile($baseURL . 'application/modules/Sesstories/externals/scripts/owl.carousel.js')
-?>
 <?php if($this->viewer()->getIdentity()){ ?>
-<?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/styles/customscrollbar.css'); ?>
-<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/jquery.min.js'); ?>
-<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/customscrollbar.concat.min.js'); ?>
-<a href="sesstories/index/create" class="sessmoothbox" id="create-sesstories" style="display:none;"><?php echo $this->translate('Create Story'); ?></a>
+	<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesstories/externals/scripts/core.js'); ?>
+	<?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesstories/externals/styles/styles.css'); ?>
+	<?php   
+	$this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/owl-carousel/jquery.js');
+	$this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/owl-carousel/owl.carousel.js')
+	?>
+	<?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/styles/customscrollbar.css'); ?>
+	
+	<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/customscrollbar.concat.min.js'); ?>
+	<a href="sesstories/index/create" class="sessmoothbox" id="create-sesstories" style="display:none;"><?php echo $this->translate('Create Story'); ?></a>
 <?php } ?>
 <script type="application/javascript">
   //function to fetch stories
@@ -34,18 +35,18 @@ $this->headScript()->appendFile($baseURL . 'application/modules/Sesstories/exter
       scriptJquery('.sesstories_allstories_<?php echo $this->identity;?>').trigger('destroy.owl.carousel');
       scriptJquery(".sesStories_content").html('<div class="sesstories_bxs sesstories_allstories sesstories_allstories_<?php echo $this->identity;?>"></div>');
       scriptJquery(".sesstories_allstories").html(response);
-      sesstoriesJqueryObject('.sesstories_allstories').owlCarousel({
+      sesowlJqueryObject('.sesstories_allstories').owlCarousel({
         loop:false,
         dots:false,
         nav:true,
-        margin:0,
+        margin:10,
       <?php if($orientation = ($this->layout()->orientation == 'right-to-left')){ ?>
         rtl:true,
       <?php } ?>
       autoWidth:true,
       })
-      sesstoriesJqueryObject(".owl-prev").html('<i class="fas fa-chevron-left"></i>');
-      sesstoriesJqueryObject(".owl-next").html('<i class="fas fa-chevron-right"></i>');
+      sesowlJqueryObject(".owl-prev").html('<i class="fas fa-chevron-left"></i>');
+      sesowlJqueryObject(".owl-next").html('<i class="fas fa-chevron-right"></i>');
     })
   }
 </script>
@@ -109,8 +110,8 @@ $this->headScript()->appendFile($baseURL . 'application/modules/Sesstories/exter
           </div>
         </div>
         <?php 
-          if(!$story["is_live"]){
-        ?>
+          if(!isset($story["is_live"]) || empty($story["is_live"])){
+            ?>
         <a href="javascript:;"  rel="<?php echo $story['user_id']; ?>" class="sesstories_allstories_item_link open_sesstory"></a>
         <?php }else{ ?>
            <a href="javascript:;" data-hostid="<?php echo $story['elivehost_id']; ?>" data-user="<?php echo $story['user_id']; ?>" data-action="<?php echo $story['activity_id']; ?>" data-story="" class="sesstories_allstories_item_link elivestreaming_data_a"></a>
@@ -124,19 +125,19 @@ $this->headScript()->appendFile($baseURL . 'application/modules/Sesstories/exter
 <?php } ?>
 <?php if(!$this->isAjax){ ?>
 <script type="text/javascript">
-  sesstoriesJqueryObject(document).ready(function() {
-    sesstoriesJqueryObject('.sesstories_allstories_<?php echo $this->identity;?>').owlCarousel({
+  sesowlJqueryObject(document).ready(function() {
+    sesowlJqueryObject('.sesstories_allstories_<?php echo $this->identity;?>').owlCarousel({
       loop:false,
       dots:false,
       nav:true,
-      margin:0,
+      margin:10,
     <?php if($orientation = ($this->layout()->orientation == 'right-to-left')){ ?>
       rtl:true,
     <?php } ?>
     autoWidth:true,
   })
-    sesstoriesJqueryObject(".owl-prev").html('<i class="fas fa-chevron-left"></i>');
-    sesstoriesJqueryObject(".owl-next").html('<i class="fas fa-chevron-right"></i>');
+    sesowlJqueryObject(".owl-prev").html('<i class="fas fa-chevron-left"></i>');
+    sesowlJqueryObject(".owl-next").html('<i class="fas fa-chevron-right"></i>');
   });
 </script>
 
@@ -222,7 +223,7 @@ $this->headScript()->appendFile($baseURL . 'application/modules/Sesstories/exter
 <script>
   var currentDateTime = '<?php echo date("Y-m-d H:i:s"); ?>';
   var storiesData = <?php echo json_encode($this->story); ?>;
-  var sesstories_webstoryviewtime = "<?php echo Engine_Api::_()->getApi('settings', 'core')->getSetting('sesstories_storyviewtime',5); ?>";
+  var sesstories_webstoryviewtime = "<?php echo Engine_Api::_()->getApi('settings', 'core')->getSetting('sesstories_storyviewtime',5)*2; ?>";
   var post_max_size_sesstory = <?php echo (int)( Engine_Api::_()->getApi('settings', 'core')->getSetting('sesstories_videouplimit',5)); ?>;
   <?php if($this->story_id){ ?>
      selectedStoryId = <?php echo $this->story_id; ?>;

@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php include APPLICATION_PATH .  '/application/modules/Sesadvancedcomment/views/scripts/_jsFiles.tpl'; ?>
 <style>
 .feed_item_date ul{width:100%;}
 .sespage_switcher_active{background-color:red;}

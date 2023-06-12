@@ -45,7 +45,7 @@ class Sesadvancedactivity_Model_DbTable_Linkedin extends Engine_Db_Table
     Zend_Registry::set('Linkedin_Api', $this->_api);
 
     // Try to log viewer in?
-    if (!empty($_SESSION[linkedin_uid])) {
+    if (!empty($_SESSION['linkedin_uid'])) {
       $_SESSION['linkedin_lock'] = true;
       $lin_uid = Engine_Api::_()->getDbtable('linkedin', 'sesadvancedactivity')
           ->fetchRow(array('user_id = ?' => $viewer->getIdentity()));

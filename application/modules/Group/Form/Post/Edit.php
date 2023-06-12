@@ -46,27 +46,36 @@ class Group_Form_Post_Edit extends Engine_Form
         'uploadUrl' => $uploadUrl
       );
       if( $allowHtml ) {
-        $editorOptions = array_merge($editorOptions, array('html' => 1));
+        $editorOptions = array_merge($editorOptions, array('html' => 1, 'bbcode' => 1));
       } else {
         $editorOptions = array_merge($editorOptions, array('html' => 0, 'bbcode' => 1));
       }
       $this->addElement('TinyMce', 'body', array(
+				'label' => 'Body',
         'disableLoadDefaultDecorators' => true,
         'required' => true,
-        'allowEmpty' => false,
-        'decorators' => array(
-          'ViewHelper'
-        ),
         'editorOptions' => $editorOptions,
+        'allowEmpty' => false,
+        'decorators' => array('ViewHelper'),
         'filters' => array(
+          $filter,
           new Engine_Filter_Censor(),
-        )
-      ));        
-    } else {    
+        ),
+      ));
+    } else {
       $this->addElement('textarea', 'body', array(
+				'label' => 'Body',
+        'required' => true,
+        'attribs' => array(
+          'rows' => 24,
+          'cols' => 80,
+          'style' => 'width:553px; max-width:553px; height:158px;'
+        ),
+        'allowEmpty' => false,
         'filters' => array(
+          $filter,
           new Engine_Filter_Censor(),
-        )
+        ),
       ));
     }
     

@@ -488,7 +488,7 @@ class Sesbasic_IndexController extends Core_Controller_Action_Standard {
 
         if (!empty($viewr_id)) {
             $value['sender_email'] = $viewer->email;
-            $value['sender_name'] = $viewer->displayname;
+            $value['sender_name'] = $viewer->getTitle();
             $form->populate($value);
         }
 
@@ -740,21 +740,6 @@ class Sesbasic_IndexController extends Core_Controller_Action_Standard {
             $twitter = $twitterTable->getApi();
             $twitter->statuses->update($message);
           }
-        } catch (Exception $e) {
-          // Silence
-        }
-      }
-      // Publish to janrain
-      if (//$this->_getParam('post_to_janrain', false) &&
-              'publish' == Engine_Api::_()->getApi('settings', 'core')->core_janrain_enable) {
-        try {
-          $session = new Zend_Session_Namespace('JanrainActivity');
-          $session->unsetAll();
-          $session->message = $publishMessage;
-          $session->url = $publishUrl ? $publishUrl : 'http://' . $_SERVER['HTTP_HOST'] . _ENGINE_R_BASE;
-          $session->name = $publishName;
-          $session->desc = $publishDesc;
-          $session->picture = $publishPicUrl;
         } catch (Exception $e) {
           // Silence
         }

@@ -82,9 +82,7 @@ class Core_Form_Admin_Settings_Performance extends Engine_Form
         ));
 
         $typeDescription = $this->getTranslator()->translate(strtoupper(get_class($this) . '_type_description'));
-        $typeDescription .= vsprintf(' See <a href="%1$s" target="_blank"> KB Article</a> and contact your hosting provider for assistance configuring memory-based caching.', array(
-            'https://socialengine.atlassian.net/wiki/spaces/SU/pages/5243215/se-php-performance-&-caching',
-        ));
+        $typeDescription .= vsprintf(' See <a href="%1$s" target="_blank"> KB Article</a> and contact your hosting provider for assistance configuring memory-based caching.', array('https://community.socialengine.com/blogs/597/37/performance-caching'));
 
         $cacheOptions = array(
             'File'      => 'File-based',

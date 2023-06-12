@@ -17,7 +17,7 @@
   <?php echo $this->translate("Native Android Mobile App") ?>
 </h2>
 <?php if(is_countable($this->navigation) && engine_count($this->navigation) ): ?>
-  <div class='sesandroidapp-admin-navgation'>
+  <div class='tabs'>
     <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render() ?>
   </div>
 <?php endif; ?>
@@ -32,6 +32,14 @@
     <i></i>
   </div>
 </div>
+<img src="application/modules/Sesandroidapp/externals/images/admin/loading.gif" style="display:none">
+<script type="application/javascript">
+
+scriptJquery('.loading_img').click(function(e){
+   en4.core.showError('<div class="sesact_img_preview_popup"><div class="sesact_img_preview_popup_img"><img src="application/modules/Sesandroidapp/externals/images/admin/loading_admin.gif"> </div><div class="sesact_img_preview_popup_btm"><button onclick="Smoothbox.close()">'+en4.core.language.translate("Close")+'</button></div></div>');
+		scriptJquery ('.sesact_img_preview_popup').parent().parent().addClass('sesact_img_preview_popup_wrapper');  
+});
+</script>
 <?php if(!Engine_Api::_()->getApi('settings', 'core')->getSetting('sesandroidapp.pluginactivated',0)){  ?>
 	<script type="application/javascript">
   	scriptJquery('.global_form').submit(function(e){

@@ -44,6 +44,7 @@ class User_AuthController extends Core_Controller_Action_Standard
     public function loginAction()
     {
         $settings = Engine_Api::_()->getApi('settings', 'core');
+        $enableloginlogs = $settings->getSetting('core.general.enableloginlogs', 0);
 
         // Already logged in
         if( Engine_Api::_()->user()->getViewer()->getIdentity() ) {
@@ -101,15 +102,16 @@ class User_AuthController extends Core_Controller_Action_Standard
             $this->view->status = false;
             $this->view->error = Zend_Registry::get('Zend_Translate')->_('The credentials you have supplied are invalid. Please check your email and password, and try again.');
             $form->addError(Zend_Registry::get('Zend_Translate')->_('The credentials you have supplied are invalid. Please check your email and password, and try again.'));
-
-            // Register login
-//             Engine_Api::_()->getDbtable('logins', 'user')->insert(array(
-//                 'email' => $email,
-//                 'ip' => $ipExpr,
-//                 'timestamp' => new Zend_Db_Expr('NOW()'),
-//                 'state' => 'no-member',
-//             ));
-
+            
+            if(!empty($enableloginlogs)) {
+              // Register login
+              Engine_Api::_()->getDbtable('logins', 'user')->insert(array(
+                  'email' => $email,
+                  'ip' => $ipExpr,
+                  'timestamp' => new Zend_Db_Expr('NOW()'),
+                  'state' => 'no-member',
+              )); 
+            }
             return;
         }
 
@@ -148,16 +150,17 @@ class User_AuthController extends Core_Controller_Action_Standard
             $this->view->status = false;
             $this->view->error = Zend_Registry::get('Zend_Translate')->_('The credentials you have supplied are invalid. Please check your email and password, and try again.');
             $form->addError(Zend_Registry::get('Zend_Translate')->_('The credentials you have supplied are invalid. Please check your email and password, and try again.'));
-
-            // Register bad password login
-//             Engine_Api::_()->getDbtable('logins', 'user')->insert(array(
-//                 'user_id' => $user->getIdentity(),
-//                 'email' => $email,
-//                 'ip' => $ipExpr,
-//                 'timestamp' => new Zend_Db_Expr('NOW()'),
-//                 'state' => 'bad-password',
-//             ));
-
+            
+            if(!empty($enableloginlogs)) {
+              // Register bad password login
+              Engine_Api::_()->getDbtable('logins', 'user')->insert(array(
+                  'user_id' => $user->getIdentity(),
+                  'email' => $email,
+                  'ip' => $ipExpr,
+                  'timestamp' => new Zend_Db_Expr('NOW()'),
+                  'state' => 'bad-password',
+              ));
+            }
             return;
         }
 
@@ -174,15 +177,17 @@ class User_AuthController extends Core_Controller_Action_Standard
                 $error .= sprintf($translate->translate('Click <a href="%s">here</a> to resend the email.'), $resend_url);
                 $form->getDecorator('errors')->setOption('escape', false);
                 $form->addError($error);
-
-                // Register login
-//                 Engine_Api::_()->getDbtable('logins', 'user')->insert(array(
-//                     'user_id' => $user->getIdentity(),
-//                     'email' => $email,
-//                     'ip' => $ipExpr,
-//                     'timestamp' => new Zend_Db_Expr('NOW()'),
-//                     'state' => 'disabled',
-//                 ));
+                
+                if(!empty($enableloginlogs)) {
+                  // Register login
+                  Engine_Api::_()->getDbtable('logins', 'user')->insert(array(
+                      'user_id' => $user->getIdentity(),
+                      'email' => $email,
+                      'ip' => $ipExpr,
+                      'timestamp' => new Zend_Db_Expr('NOW()'),
+                      'state' => 'disabled',
+                  ));
+                }
 
                 return;
             } else if( !$user->approved ) {
@@ -193,14 +198,16 @@ class User_AuthController extends Core_Controller_Action_Standard
                 $form->getDecorator('errors')->setOption('escape', false);
                 $form->addError($error);
 
-                // Register login
-//                 Engine_Api::_()->getDbtable('logins', 'user')->insert(array(
-//                     'user_id' => $user->getIdentity(),
-//                     'email' => $email,
-//                     'ip' => $ipExpr,
-//                     'timestamp' => new Zend_Db_Expr('NOW()'),
-//                     'state' => 'disabled',
-//                 ));
+                if(!empty($enableloginlogs)) {
+                  // Register login
+                  Engine_Api::_()->getDbtable('logins', 'user')->insert(array(
+                      'user_id' => $user->getIdentity(),
+                      'email' => $email,
+                      'ip' => $ipExpr,
+                      'timestamp' => new Zend_Db_Expr('NOW()'),
+                      'state' => 'disabled',
+                  ));
+                }
 
                 return;
             }
@@ -213,20 +220,22 @@ class User_AuthController extends Core_Controller_Action_Standard
             // Check for the user's plan
             $subscriptionsTable = Engine_Api::_()->getDbtable('subscriptions', 'payment');
             if( !$subscriptionsTable->check($user) ) {
+              if(!empty($enableloginlogs)) {
                 // Register login
-//                 Engine_Api::_()->getDbtable('logins', 'user')->insert(array(
-//                     'user_id' => $user->getIdentity(),
-//                     'email' => $email,
-//                     'ip' => $ipExpr,
-//                     'timestamp' => new Zend_Db_Expr('NOW()'),
-//                     'state' => 'unpaid',
-//                 ));
-                // Redirect to subscription page
-                $subscriptionSession = new Zend_Session_Namespace('Payment_Subscription');
-                $subscriptionSession->unsetAll();
-                $subscriptionSession->user_id = $user->getIdentity();
-                return $this->_helper->redirector->gotoRoute(array('module' => 'payment',
-                    'controller' => 'subscription', 'action' => 'index'), 'default', true);
+                Engine_Api::_()->getDbtable('logins', 'user')->insert(array(
+                    'user_id' => $user->getIdentity(),
+                    'email' => $email,
+                    'ip' => $ipExpr,
+                    'timestamp' => new Zend_Db_Expr('NOW()'),
+                    'state' => 'unpaid',
+                ));
+              }
+              // Redirect to subscription page
+              $subscriptionSession = new Zend_Session_Namespace('Payment_Subscription');
+              $subscriptionSession->unsetAll();
+              $subscriptionSession->user_id = $user->getIdentity();
+              return $this->_helper->redirector->gotoRoute(array('module' => 'payment',
+                  'controller' => 'subscription', 'action' => 'index'), 'default', true);
             }
         }
 
@@ -242,14 +251,16 @@ class User_AuthController extends Core_Controller_Action_Standard
                     continue;
                 }
 
-                // Register login
-//                 Engine_Api::_()->getDbtable('logins', 'user')->insert(array(
-//                     'user_id' => $user->getIdentity(),
-//                     'email' => $email,
-//                     'ip' => $ipExpr,
-//                     'timestamp' => new Zend_Db_Expr('NOW()'),
-//                     'state' => 'third-party',
-//                 ));
+                if(!empty($enableloginlogs)) {
+                  // Register login
+                  Engine_Api::_()->getDbtable('logins', 'user')->insert(array(
+                      'user_id' => $user->getIdentity(),
+                      'email' => $email,
+                      'ip' => $ipExpr,
+                      'timestamp' => new Zend_Db_Expr('NOW()'),
+                      'state' => 'third-party',
+                  ));
+                }
 
                 // Return
                 return;
@@ -297,14 +308,16 @@ class User_AuthController extends Core_Controller_Action_Standard
             } else {
                 $form->addError('There appears to be a problem logging in. Please reset your password with the Forgot Password link.');
 
-                // Register login
-//                 Engine_Api::_()->getDbtable('logins', 'user')->insert(array(
-//                     'user_id' => $user->getIdentity(),
-//                     'email' => $email,
-//                     'ip' => $ipExpr,
-//                     'timestamp' => new Zend_Db_Expr('NOW()'),
-//                     'state' => 'v3-migration',
-//                 ));
+                if(!empty($enableloginlogs)) {
+                  // Register login
+                  Engine_Api::_()->getDbtable('logins', 'user')->insert(array(
+                      'user_id' => $user->getIdentity(),
+                      'email' => $email,
+                      'ip' => $ipExpr,
+                      'timestamp' => new Zend_Db_Expr('NOW()'),
+                      'state' => 'v3-migration',
+                  ));
+                }
 
                 return;
             }
@@ -321,14 +334,16 @@ class User_AuthController extends Core_Controller_Action_Standard
                 $this->view->error = Zend_Registry::get('Zend_Translate')->_('The credentials you have supplied are invalid. Please check your email and password, and try again.');
                 $form->addError(Zend_Registry::get('Zend_Translate')->_('The credentials you have supplied are invalid. Please check your email and password, and try again.'));
 
-                // Register login
-//                 Engine_Api::_()->getDbtable('logins', 'user')->insert(array(
-//                     'user_id' => $user->getIdentity(),
-//                     'email' => $email,
-//                     'ip' => $ipExpr,
-//                     'timestamp' => new Zend_Db_Expr('NOW()'),
-//                     'state' => 'bad-password',
-//                 ));
+                if(!empty($enableloginlogs)) {
+                  // Register login
+                  Engine_Api::_()->getDbtable('logins', 'user')->insert(array(
+                      'user_id' => $user->getIdentity(),
+                      'email' => $email,
+                      'ip' => $ipExpr,
+                      'timestamp' => new Zend_Db_Expr('NOW()'),
+                      'state' => 'bad-password',
+                  ));
+                }
 
                 return;
             }
@@ -988,7 +1003,7 @@ class User_AuthController extends Core_Controller_Action_Standard
         $temporary_credentials = $connection->oauth('oauth/request_token', array("oauth_callback" =>$callback));
         $_SESSION['oauth_token']=$temporary_credentials['oauth_token'];   
         $_SESSION['oauth_token_secret']=$temporary_credentials['oauth_token_secret'];
-        $url = $connection->url("oauth/authorize", array("oauth_token" => $temporary_credentials['oauth_token']));
+        $url = $connection->url("oauth/authenticate", array("oauth_token" => $temporary_credentials['oauth_token']));
         // REDIRECTING TO THE URL
         header('Location: ' . $url); 
       }

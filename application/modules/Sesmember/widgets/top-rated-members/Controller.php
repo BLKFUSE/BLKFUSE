@@ -16,8 +16,12 @@ class Sesmember_Widget_TopRatedMembersController extends Engine_Content_Widget_A
     // Prepare
     if (isset($_POST['params']))
       $params = json_decode($_POST['params'], true);
-    if (isset($_POST['searchParams']) && $_POST['searchParams'])
-      parse_str($_POST['searchParams'], $searchArray);
+		if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+			if(engine_in_array($_POST['searchParams']))
+				$searchArray = $_POST['searchParams'];
+			elseif(is_string($_POST['searchParams']))
+				parse_str($_POST['searchParams'], $searchArray);
+		}
     $this->view->is_ajax = $is_ajax = isset($_POST['is_ajax']) ? true : false;
     $value['text'] = isset($searchArray['search_text']) ? $searchArray['search_text'] : (!empty($params['search_text']) ? $params['search_text'] : (isset($_GET['search_text']) && ($_GET['search_text'] != '') ? $_GET['search_text'] : ''));
     $value['location'] = isset($searchArray['location']) ? $searchArray['location'] : (isset($_GET['location']) ? $_GET['location'] : (isset($params['location']) ? $params['location'] : ''));

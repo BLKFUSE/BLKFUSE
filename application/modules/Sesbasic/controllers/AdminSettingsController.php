@@ -157,17 +157,17 @@ class Sesbasic_AdminSettingsController extends Core_Controller_Action_Admin {
   
     
   
-    'sesadvsitenotification' => array('title' => 'Advanced Site Notifications in Popups Plugin', 'version' => '4.8.13', 'pluginpage_link' => 'https://www.socialenginesolutions.com/social-engine/advanced-site-notifications-in-popups-plugin/'),
+    'sesadvsitenotification' => array('title' => 'Advanced Site Notifications in Popups Plugin', 'version' => '4.8.13', 'pluginpage_link' => 'https://socialnetworking.solutions/social-engine/advanced-site-notifications-in-popups-plugin/'),
   
-    'sesadvancedcomment' => array('title' => 'Advanced Nested Comments with Attachments Plugin', 'version' => '4.8.13p6', 'pluginpage_link' => 'https://www.socialenginesolutions.com/social-engine/advanced-nested-comments-with-attachments-plugin/'),
+    'sesadvancedcomment' => array('title' => 'Advanced Nested Comments with Attachments Plugin', 'version' => '4.8.13p6', 'pluginpage_link' => 'https://socialnetworking.solutions/social-engine/advanced-nested-comments-with-attachments-plugin/'),
     
-    'sesadvancedactivity' => array('title' => 'Advanced News & Activity Feeds Plugin', 'version' => '4.8.13p11', 'pluginpage_link' => 'https://www.socialenginesolutions.com/social-engine/advanced-news-activity-feeds-plugin/'),
+    'sesadvancedactivity' => array('title' => 'Advanced News & Activity Feeds Plugin', 'version' => '4.8.13p11', 'pluginpage_link' => 'https://socialnetworking.solutions/social-engine/advanced-news-activity-feeds-plugin/'),
 
-    'sesbrowserpush' => array('title' => 'Browser Push Notifications Plugin', 'version' => '4.8.13p1', 'pluginpage_link' => 'https://www.socialenginesolutions.com/social-engine/browser-push-notifications-plugin/'),
+    'sesbrowserpush' => array('title' => 'Browser Push Notifications Plugin', 'version' => '4.8.13p1', 'pluginpage_link' => 'https://socialnetworking.solutions/social-engine/browser-push-notifications-plugin/'),
 
     'sesariana' => array('title' => 'Responsive Vertical Theme', 'version' => '4.8.13p1', 'pluginpage_link' => 'http://www.socialenginesolutions.com/social-engine/advanced-events-plugin/'),
     
-    'seseventticket' => array('title' => 'Advanced Events – Events Tickets Selling & Booking System', 'version' => '4.8.12', 'pluginpage_link' => 'https://www.socialenginesolutions.com/social-engine/advanced-events-events-tickets-selling-booking-system/'),
+    'seseventticket' => array('title' => 'Advanced Events – Events Tickets Selling & Booking System', 'version' => '4.8.12', 'pluginpage_link' => 'https://socialnetworking.solutions/social-engine/advanced-events-events-tickets-selling-booking-system/'),
 
   
     'sesevent' => array('title' => 'Advanced Events Plugin', 'version' => '4.8.13', 'pluginpage_link' => 'http://www.socialenginesolutions.com/social-engine/advanced-events-plugin/'),

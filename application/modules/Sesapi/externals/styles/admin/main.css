@@ -130,7 +130,7 @@
 }
 .sesapi_nav_btns{
 	float:right;
-	margin-top:-40px;
+	margin-top:-63px;
 }
 .sesapi_admin_plugin_title .sesapi_nav_btns{
   margin:0 0 0 20px;
@@ -140,7 +140,7 @@
 	border-radius:3px;
 	background-position:10px center;
 	background-repeat:no-repeat;
-	color:#fff;
+	color:#fff !important;
 	float:left;
 	font-weight:bold;
 	padding:7px 15px 7px 30px;

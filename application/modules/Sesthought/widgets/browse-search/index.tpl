@@ -12,6 +12,7 @@
  */
 
 ?>
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesthought/externals/scripts/core.js'); ?>
 <script>
 
   function showSubCategory(cat_id,selected) {

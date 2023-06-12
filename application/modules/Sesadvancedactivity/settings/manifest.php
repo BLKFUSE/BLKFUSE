@@ -17,7 +17,7 @@ return array (
     'type' => 'module',
     'name' => 'sesadvancedactivity',
     //'sku' => 'sesadvancedactivity',
-    'version' => '6.2.0',
+    'version' => '6.4.0',
     'dependencies' => array(
         array(
             'type' => 'module',

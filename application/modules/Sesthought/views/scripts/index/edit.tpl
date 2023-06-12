@@ -12,12 +12,15 @@
  */
 
 ?>
-
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesthought/externals/scripts/core.js'); ?>
 <?php
   $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesthought/externals/styles/styles.css');
 
 ?>
-
+<?php 
+	$this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . "externals/selectize/css/normalize.css");
+  $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/selectize/js/selectize.js'); 
+?>
 <script type="text/javascript">
 
 
@@ -29,6 +32,7 @@
 		
     var url = en4.core.baseUrl + 'sesthought/category/subcategory/category_id/' + cat_id;
     scriptJquery.ajax({
+			method:'post',
       dataType: 'html',
       url: url,
       data: {
@@ -71,6 +75,7 @@
 		
     var url = en4.core.baseUrl + 'sesthought/category/subsubcategory/subcategory_id/' + cat_id;
     (scriptJquery.ajax({
+			method:'post',
       dataType: 'html',
       url: url,
       data: {
@@ -205,3 +210,4 @@
       <?php echo $this->form->render($this);?>
   <?php } ?>
 </div>
+<?php die; ?>

@@ -127,7 +127,7 @@
       ?>
     <div class="sescmads_display_ad_item">
       <div class="_img sescomm_img _video">
-        <video width="400" class="sescomm_img" poster="data:image/gif,AAAA" style="background-image: url(<?php echo $videosrc; ?>);" controls>
+        <video width="400" class="sescomm_img" controlslist="nodownload" poster="data:image/gif,AAAA" style="background-image: url(<?php echo $videosrc; ?>);" controls>
           <source src="<?php echo $imageSrc; ?>" type="video/mp4">
           Your browser does not support HTML5 video.</video>
       </div>

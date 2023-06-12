@@ -15,11 +15,12 @@
 <?php 
 $request = Zend_Controller_Front::getInstance()->getRequest();
 $requestParams = $request->getParams();
- 
-$request = Zend_Controller_Front::getInstance()->getRequest();
-$requestParams = $request->getParams();
 
-if((($requestParams['action'] == 'home' || $requestParams['action'] == 'index') && $requestParams['module'] == 'user' && ($requestParams['controller'] == 'index' || $requestParams['controller'] == 'profile')) || ($this->subject() && ($this->subject()->getType() == "sesgroup_group"  || $this->subject()->getType() == "sespage_page" || $this->subject()->getType() == "businesses"))) {
+if(($requestParams['action'] == 'compose' || $requestParams['action'] == 'view') && $requestParams['module'] == 'messages' && $requestParams['controller'] == 'messages') { 
+	return;
+}
+
+if((($requestParams['action'] == 'home' || $requestParams['action'] == 'index') && $requestParams['module'] == 'user' && ($requestParams['controller'] == 'index' || $requestParams['controller'] == 'profile')) || ($this->subject() && ($this->subject()->getType() == "sesgroup_group"  || $this->subject()->getType() == "sespage_page" || $this->subject()->getType() == "businesses" || $this->subject()->getType() == "stores"))) {
 
 $this->headScript()
     ->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesadvancedactivity/externals/scripts/composer_fileupload.js');

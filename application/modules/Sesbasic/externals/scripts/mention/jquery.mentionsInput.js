@@ -97,12 +97,10 @@ var mentionsCollectionValEdit = [];
 	    //Initializes the text area target
         function initTextarea() {
             elmInputBox = $(domInput); //Get the text area target
-
             //If the text area is already configured, return
             if (elmInputBox.attr('data-mentions-input') === 'true') {
                 return;
             }
-
             elmInputWrapper = elmInputBox.parent(); //Get the DOM element parent
             elmWrapperBox = $(settings.templates.wrapper());
             elmInputBox.wrapAll(elmWrapperBox); //Wrap all the text area into the div elmWrapperBox
@@ -267,8 +265,8 @@ var mentionsCollectionValEdit = [];
               var textlength = $(domInput).val().length;
               var rows = $(domInput).val().split("\n").length;
               if(textlength <= sesAdvancedactivitytextlimit && rows <= 10) {
-                classNameElem.css("fontSize", sesAdvancedactivityfonttextsize);
-                $(domInput).css("fontSize", sesAdvancedactivityfonttextsize);
+                classNameElem.css("font-size", sesAdvancedactivityfonttextsize+"px");
+                $(domInput).css("font-size", sesAdvancedactivityfonttextsize+"px");
                 
                 //Feed Background image work
                 if($('feedbgid')) {
@@ -303,8 +301,8 @@ var mentionsCollectionValEdit = [];
                 }
                 //Feed Background image work
               } else {
-                classNameElem.css("fontSize", '');
-                $(domInput).css("fontSize", '');
+                classNameElem.css("font-size", '');
+                $(domInput).css("font-size", '');
                 //Feed Background image work
                 //if($('feedbgid')) {
                   scriptJquery('#feedbgid_isphoto').val(0);
@@ -313,12 +311,16 @@ var mentionsCollectionValEdit = [];
                   scriptJquery('#feedbg_main_continer').css('display','none');
                
               }
+            }else if(composeInstancecheck){
+                classNameElem.css("font-size", '');
+                $(domInput).css("font-size", '');
             }
           }
-                  
+                  //Text size increase in status box
+          $(domInput).closest('.mentions-input-box').find('div').eq(0).find('div').eq(0).html(str); //Insert into a div of the elmMentionsOverlay the mention text
+					
           if((composeInstancecheck && !isoneditpage) || isonCommentBox) {
-            classNameElem.css("fontSize", '');
-            $(domInput).css("fontSize", '');
+            //  `mInput).css("fontSize", '');
           }
         		
 		  if(typeof feedUpdateFunction != 'undefined'){
@@ -403,7 +405,7 @@ var mentionsCollectionValEdit = [];
             //return $.trim(elmInputBox.val());
             //return $.trim(EditFieldValue);            
             //var html = $.trim($(domInput).html());
-            var value =  $.trim($(domInput).val());
+            var value = $(domInput).val(); //$.trim($(domInput).val());
 
 //             if(!value)
 //               return html;

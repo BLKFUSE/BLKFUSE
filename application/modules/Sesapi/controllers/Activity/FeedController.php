@@ -255,13 +255,18 @@ class Activity_FeedController extends Sesapi_Controller_Action_Standard {
         }
         if($body){
           // getting old params.
-          $activityParams = $action->params;
-          if(!empty($activityParams['body'])){
-            unset($activityParams['body']);
-            $action->params = $activityParams;
-            $action->save();
+          // $activityParams = $action->params;
+          // if(!empty($activityParams['body'])){
+          //   unset($activityParams['body']);
+          //   $action->params = $activityParams;
+          //   $action->save();
+          // }
+          if(engine_count($action->params)){
+            $params = $action->params;
+            if(!empty($params['body']))
+              unset($params['body']);
+            $action->params = $params;
           }
-          
         }
         $values = $this->_getAllParams();
         $privacy = 'privacy_'.$action->getIdentity();

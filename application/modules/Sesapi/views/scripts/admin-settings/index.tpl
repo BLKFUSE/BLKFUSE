@@ -20,7 +20,7 @@
   <a href="<?php echo $this->url(array('module' => 'sesapi', 'controller' => 'settings', 'action' => 'help'),'admin_default',true); ?>" target = "_blank" class="help-btn">Help Center</a>
 </div>
 <?php if(is_countable($this->navigation) && engine_count($this->navigation) ): ?>
-  <div class='sesapi-admin-navgation'>
+  <div class='tabs'>
     <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render() ?>
   </div>
 <?php endif; ?>

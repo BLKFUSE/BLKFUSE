@@ -251,7 +251,7 @@ var tagAction = window.tagAction = function(tag,name){
 
       <?php if ($this->video_extension !== 'flv'): ?>
         <?php if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('videovod')): ?>
-          <iframe src="<?php echo  $this->baseUrl();  ?>/videovod/Iframe/index?video_id=<?php echo $this->v_id; ?>" width="480" allowfullscreen></iframe>
+          <?php include APPLICATION_PATH . '/application/modules/Videovod/views/scripts/iframe/index.tpl'; ?>
         <?php else: ?>
           <video id="video" controls preload="auto" width="480" height="386">
             <source type='video/mp4' src="<?php echo $this->video_location ?>">
@@ -409,7 +409,7 @@ var tagAction = window.tagAction = function(tag,name){
     <?php } ?>
     <?php if(engine_in_array('shareAdvance',$this->allowOptions)){ ?>
       <a href="javascript:;" title="<?php echo $this->translate('Share'); ?>" class="sesbasic_icon_btn initialism sesbasic_popup_slide_open btn btn-success">
-      	<i class="fa fa-share"></i>
+      	<i class="fas fa-share-alt"></i>
       </a>
 		<?php } ?>
     <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('video.enable.watchlater', 1) && Engine_Api::_()->user()->getViewer()->getIdentity() && engine_in_array('watchLater',$this->allowOptions)){
@@ -426,7 +426,7 @@ var tagAction = window.tagAction = function(tag,name){
     <?php } ?>
     <?php if( Engine_Api::_()->user()->getViewer()->getIdentity() ): ?>
 			<?php if(engine_in_array('shareSimple',$this->allowOptions)){ ?>
-      	<a href="<?php echo $this->url(array('module'=> 'sesvideo', 'controller' => 'index','action' => 'share','route' => 'default','type' => 'video','id' => $this->video->getIdentity(),'format' => 'smoothbox'),'default',true); ?>" class="sesbasic_icon_btn initialism btn btn-success smoothbox"  title="<?php echo  $this->translate('Share'); ?>"><i class="fa fa-share"></i></a>
+      	<a href="<?php echo $this->url(array('module'=> 'sesvideo', 'controller' => 'index','action' => 'share','route' => 'default','type' => 'video','id' => $this->video->getIdentity(),'format' => 'smoothbox'),'default',true); ?>" class="sesbasic_icon_btn initialism btn btn-success smoothbox"  title="<?php echo  $this->translate('Share'); ?>"><i class="fas fa-share-alt"></i></a>
       <?php  } ?>
       <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('video.enable.report',1) && engine_in_array('reportVideo',$this->allowOptions) && (Engine_Api::_()->user()->getViewer()->getIdentity() != $this->video->owner_id)){ ?>
     		<a href="<?php echo $this->url(array('module'=> 'core','controller' => 'report','action' => 'create','route' => 'default','subject' => $this->video->getGuid(),'format' => 'smoothbox'),'default',true); ?>" class="sesbasic_icon_btn sesbasic_icon_report_btn smoothbox"  title="<?php echo  $this->translate('Report'); ?>" data-url="<?php echo $this->video->video_id ; ?>"><i class="fa fa-flag"></i></a>

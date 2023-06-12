@@ -25,7 +25,7 @@
           <thead>
             <tr>
                <th>Extension</th>
-               <th align="center">Enabled</th>
+               <th class="admin_table_centered">Enabled</th>
             </tr>
           </thead>
           <tbody>

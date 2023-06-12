@@ -20,6 +20,9 @@ class Elivestreaming_Model_Elivehost extends Core_Model_Item_Abstract
   {
     return $this->name;
   }
+  function getParent($recurseType = NULL){
+		return 	Engine_Api::_()->getItem('user', $this->user_id);
+	}
   public function getHref()
   {
       return "javascript:void(0)";

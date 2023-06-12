@@ -1132,10 +1132,10 @@ class Eresume_IndexController extends Sesapi_Controller_Action_Standard {
     }
   }
   
-  public function validate_mobile($mobile)
-  {
-      return preg_match('/^[6-9]\d{9}$/', $mobile);
-  }
+  // public function validate_mobile($mobile)
+  // {
+  //     return preg_match('/^[6-9]\d{9}$/', $mobile);
+  // }
   
   function checkemail($str) {
          return (!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $str)) ? FALSE : TRUE;
@@ -1169,10 +1169,10 @@ class Eresume_IndexController extends Sesapi_Controller_Action_Standard {
       return;
     }
     
-    if(!$this->validate_mobile($_POST['mobile_number'])) {
-      $message = $this->view->translate('You have entered an invalid phone number.');
-      Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error' => '1', 'error_message' => $message, 'result' => array()));
-    }
+    // if(!$this->validate_mobile($_POST['mobile_number'])) {
+    //   $message = $this->view->translate('You have entered an invalid phone number.');
+    //   Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error' => '1', 'error_message' => $message, 'result' => array()));
+    // }
     
     if(!$this->checkemail($_POST['email_id'])) {
       $message = $this->view->translate('You have entered an invalid email address.');
@@ -1230,10 +1230,10 @@ class Eresume_IndexController extends Sesapi_Controller_Action_Standard {
     if( !$this->getRequest()->isPost() ) {
       return;
     }
-    if(!$this->validate_mobile($_POST['mobile_number'])) {
-      $message = $this->view->translate('You have entered an invalid phone number.');
-      Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error' => '1', 'error_message' => $message, 'result' => array()));
-    }
+    // if(!$this->validate_mobile($_POST['mobile_number'])) {
+    //   $message = $this->view->translate('You have entered an invalid phone number.');
+    //   Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error' => '1', 'error_message' => $message, 'result' => array()));
+    // }
     
     if(!$this->checkemail($_POST['email_id'])) {
       $message = $this->view->translate('You have entered an invalid email address.');
@@ -2444,10 +2444,10 @@ class Eresume_IndexController extends Sesapi_Controller_Action_Standard {
       return;
     }
     
-    if(!$this->validate_mobile($_POST['mobile_number'])) {
-      $message = $this->view->translate('You have entered an invalid phone number.');
-      Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error' => '1', 'error_message' => $message, 'result' => array()));
-    }
+    // if(!$this->validate_mobile($_POST['mobile_number'])) {
+    //   $message = $this->view->translate('You have entered an invalid phone number.');
+    //   Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error' => '1', 'error_message' => $message, 'result' => array()));
+    // }
     
     if(!$this->checkemail($_POST['email'])) {
       $message = $this->view->translate('You have entered an invalid email address.');

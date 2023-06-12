@@ -12,7 +12,7 @@
  */
  
  ?>
-
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sescommunityads/externals/scripts/core.js'); ?>
 <?php 
 $randonNumber = $this->identity;
 $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sescommunityads/externals/styles/styles.css'); ?>
@@ -41,7 +41,7 @@ $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'applicatio
           <tr id="sescommunityads_tr_<?php echo $campaign->getIdentity(); ?>">
             <td class="_select"><input type="checkbox" name="camapign_delete_<?php echo $campaign->getIdentity(); ?>"></td>
             <td class="_name" id="title_sescomm_<?php echo $campaign->getIdentity(); ?>"><a href="<?php echo $this->url(array('action'=>'manageads','campaign_id'=>$campaign->getIdentity()),'sescommunityads_general',true); ?>"><?php echo $campaign->getTitle(); ?></a></td>
-            <td class="centerT"><?php echo $campaign->count();  ?></td>
+            <td class="centerT"><?php echo $campaign->ads_count;  ?></td>
             <td class="centerT"><?php echo $campaign->views_count();  ?></td>
             <td class="centerT"><?php echo $campaign->click_count();  ?></td>
             <td class="centerT"><?php echo $campaign->views_count() > 0 ? $campaign->ctr(): number_format("0", 4);  ?></td>

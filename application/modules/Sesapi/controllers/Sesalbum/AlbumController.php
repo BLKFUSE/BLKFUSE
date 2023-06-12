@@ -347,7 +347,7 @@ public function flipAction() {
     $photo = $this->getBaseUrl(false,$album->getPhotoUrl());
     if($photo)
     $albumData['album']["share"]["imageUrl"] = $photo;
-		$albumData['album']["share"]["url"] = $this->getBaseUrl(false,$album->getHref());
+		$albumData['album']["share"]["url"] = $this->getBaseUrl(false,$this->getHref($album));
     $albumData['album']["share"]["title"] = $album->getTitle();
     $albumData['album']["share"]["description"] = strip_tags($album->getDescription());
     $albumData['album']["share"]['urlParams'] = array(
@@ -390,6 +390,9 @@ public function flipAction() {
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array_merge(array('error'=>'0','error_message'=>'', 'result' => $albumData),$extraParams));
     }
 
+  }
+  protected function getHref($album){
+    return $this->view->url(array('album_id' => $album->getIdentity(),'slug'=>$album->getSlug()), 'sesalbum_specific_album');
   }
   public function getPhotos($paginator,$updateViewCount = false){
       $result = array();

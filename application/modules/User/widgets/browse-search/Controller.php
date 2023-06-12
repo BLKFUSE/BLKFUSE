@@ -23,7 +23,9 @@ class User_Widget_BrowseSearchController extends Engine_Content_Widget_Abstract
     {
         // Prepare form
         $this->view->form = $form = new User_Form_Search(array(
-            'type' => 'user'
+            'type' => 'user',
+            'ajaxUrl' => Zend_Controller_Front::getInstance()->getRouter()->assemble(array('action' => 'fields'),'user_general'),
+            'enableAjaxLoad' => false,
         ));
 
         $p = Zend_Controller_Front::getInstance()->getRequest()->getParams();

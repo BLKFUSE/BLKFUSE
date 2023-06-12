@@ -202,6 +202,17 @@ Composer.Plugin.Photo = function(options){
   this.removeFile = function(photo_id) {
     var composerInstance = this;
     scriptJquery('#file_remove-' + photo_id).parent().parent().parent().remove();
+		if(photo_id) {
+			scriptJquery.ajax({
+				dataType: 'json',
+				'url' : this.options.requestOptions.removePhotoURL,
+				'data': {
+					'photo_id' : photo_id
+				},
+				success : function(responseJSON) {
+				}
+			});
+		}
     composerInstance.removePhoto(photo_id);
     delete composerInstance.uploadedPhotos[photo_id];
     if (this.canUploadPhoto(null)) {

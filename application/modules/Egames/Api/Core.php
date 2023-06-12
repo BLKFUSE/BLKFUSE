@@ -37,8 +37,13 @@ class Egames_Api_Core extends Core_Api_Abstract {
     return $corePages->fetchRow($select);
   }
   public function getIdentityWidget($name, $type, $corePages) {
-    $widgetTable = Engine_Api::_()->getDbTable('content', 'core');
-    $widgetPages = Engine_Api::_()->getDbTable('pages', 'core')->info('name');
+    if((isset($_SESSION['sespwa']['sespwa']) && !empty($_SESSION['sespwa']['sespwa'])) || (isset($_SESSION['sespwa']['mobile']) && !empty($_SESSION['sespwa']['mobile']))) {
+      $widgetTable = Engine_Api::_()->getDbTable('content', 'sespwa');
+      $widgetPages = Engine_Api::_()->getDbTable('pages', 'sespwa')->info('name');
+    } else {
+      $widgetTable = Engine_Api::_()->getDbTable('content', 'core');
+      $widgetPages = Engine_Api::_()->getDbTable('pages', 'core')->info('name');
+    }
     $identity = $widgetTable->select()
             ->setIntegrityCheck(false)
             ->from($widgetTable, 'content_id')

@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php include APPLICATION_PATH .  '/application/modules/Sesadvancedcomment/views/scripts/_jsFiles.tpl'; ?>
 <?php 
   $canComment = $this->canComment;
   $comment = $this->comment;

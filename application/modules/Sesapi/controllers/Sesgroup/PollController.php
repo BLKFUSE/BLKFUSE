@@ -107,6 +107,7 @@ class Sesgroup_PollController extends Sesapi_Controller_Action_Standard
             $result[$counter]['enable_add_shortcut'] = $sesshortcut;
             if($sesshortcut){
                 $isShortcut = Engine_Api::_()->getDbTable('shortcuts', 'sesshortcut')->isShortcut(array('resource_type' => $poll->getType(), 'resource_id' => $poll->getIdentity()));
+                $shortMessage = array();
                 if (empty($isShortcut)) {
                     $shortMessage['title'] = $this->view->translate('Add to Shortcuts');
                     $shortMessage['resource_type'] = $poll->getType();

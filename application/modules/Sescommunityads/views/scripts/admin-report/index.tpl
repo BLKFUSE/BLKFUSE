@@ -29,9 +29,9 @@
 
 </script>
 
-<h2>
+<h3>
   <?php echo $this->translate("Abuse Reports") ?>
-</h2>
+</h3>
 <p>
   <?php echo $this->translate("This page lists all of the reports your users have sent in regarding inappropriate advertisements.") ?>
 </p>

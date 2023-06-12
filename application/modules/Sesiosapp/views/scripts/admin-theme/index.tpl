@@ -24,7 +24,7 @@ isColorFieldRequired = false;
   <?php echo $this->translate("Native iOS Mobile App") ?>
 </h2>
 <?php if(is_countable($this->navigation) && engine_count($this->navigation) ): ?>
-  <div class='sesiosapp-admin-navgation'>
+  <div class='tabs'>
     <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render() ?>
   </div>
 <?php endif; ?>

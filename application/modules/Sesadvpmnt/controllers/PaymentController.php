@@ -198,7 +198,10 @@ class Sesadvpmnt_PaymentController extends Core_Controller_Action_Standard
     unset($this->_session->errorMessage);
     try {
       if($_GET['state'] != "cancel"){
-        $status = $plugin->onSubscriptionReturn($order,$this->_getAllParams());
+        $get_string = parse_url($_SERVER["REQUEST_URI"], PHP_URL_QUERY);
+          parse_str($get_string, $get_array);
+        $status = $plugin->onSubscriptionReturn($order,array_merge($this->_getAllParams(),$get_array));
+        // $status = $plugin->onSubscriptionReturn($order,$this->_getAllParams());
         if(($status == 'active' || $status == 'free')) {
             $admins = Engine_Api::_()->user()->getSuperAdmins();
             foreach($admins as $admin){

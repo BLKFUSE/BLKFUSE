@@ -113,12 +113,24 @@ class Egifts_Plugin_Gateway_PayPal extends Engine_Payment_Plugin_Abstract {
     if(isset($sessionCredit->total_amount) && $sessionCredit->total_amount > 0 && $sessionCredit->total_amoun < $giftOrder->total_amount) { 
       $totalprice = $sessionCredit->total_amount;
     }
+    
+    $gift = Engine_Api::_()->getItem('egifts_gift', $giftOrder->gift_id);
+    
     $params['driverSpecificParams']['PayPal'] = array(
         'AMT' => @round($totalprice, 2),
         'ITEMAMT' => @round($totalprice, 2),
         'TAXAMT' => 0,
         'SHIPPINGAMT' => 0,
-        'ITEMS' =>array(),
+        'DESC' => $gift->description,
+        'ITEMS' =>array(
+					array(
+            'NAME' => $gift->title,
+            'DESC' => $gift->description,
+            'AMT' => $gift->price,
+            //'NUMBER' => $subscription->subscription_id,
+            //'QTY' => 1,
+          ),
+        ),
         'SELLERID' => '1',
     );
     // Should fix some issues with GiroPay

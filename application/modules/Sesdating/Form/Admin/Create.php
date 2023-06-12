@@ -21,7 +21,7 @@ class Sesdating_Form_Admin_Create extends Engine_Form {
     $this->addElement('File', 'photo', array(
         'label' => 'Slide Photo'
     ));
-    $this->photo->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+    $this->photo->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
 
     // Element: execute
     $this->addElement('Button', 'execute', array(

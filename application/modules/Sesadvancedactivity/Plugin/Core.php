@@ -12,41 +12,42 @@
  */
 
 
-class Sesadvancedactivity_Plugin_Core extends Zend_Controller_Plugin_Abstract
-{
-  public function routeShutdown(Zend_Controller_Request_Abstract $request)
-    {
-        if (!empty($_SESSION['sesadvancedactivity_twitter_token']) && empty($_GET['restApi'])) {
-            
-            $params = $request->getParams();
-            if ($params['module'] == 'user' && $params['controller'] == "auth" && $params['action'] == "twitter") {
-                $_SESSION['sesadvancedactivity_twitter_token'] = false;
-                $request->setModuleName('sesadvancedactivity');
-                $request->setControllerName('auth');
-                $request->setActionName("twitter");
-                //$request->setParam('moduleName', 'sesadvancedactivity');
-            }
-           
-        }
+class Sesadvancedactivity_Plugin_Core extends Zend_Controller_Plugin_Abstract {
 
-    }
+	public function routeShutdown(Zend_Controller_Request_Abstract $request) {
+	
+		if (!empty($_SESSION['sesadvancedactivity_twitter_token']) && empty($_GET['restApi'])) {
+			$params = $request->getParams();
+			if ($params['module'] == 'user' && $params['controller'] == "auth" && $params['action'] == "twitter") {
+				$_SESSION['sesadvancedactivity_twitter_token'] = false;
+				$request->setModuleName('sesadvancedactivity');
+				$request->setControllerName('auth');
+				$request->setActionName("twitter");
+				//$request->setParam('moduleName', 'sesadvancedactivity');
+			}
+		}
+	}
+	
   public function onRenderLayoutMobileDefault($event) {
     return $this->onRenderLayoutDefault($event,'simple');
   }
+  
 	public function onRenderLayoutMobileDefaultSimple($event) {
     return $this->onRenderLayoutDefault($event,'simple');
   }
+  
 	public function onRenderLayoutDefaultSimple($event) {
     return $this->onRenderLayoutDefault($event,'simple');
   }
-	public function onRenderLayoutDefault($event,$mode=null){
+  
+	public function onRenderLayoutDefault($event, $mode = null) {
+	
 		$view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
 		$viewer = Engine_Api::_()->user()->getViewer();
 		$request = Zend_Controller_Front::getInstance()->getRequest();
 		$moduleName = $request->getModuleName();
 		$actionName = $request->getActionName();
 		$controllerName = $request->getControllerName();
-
 
 		$script = '';
     $script .= "var sesEmojiEnabled = 0;";

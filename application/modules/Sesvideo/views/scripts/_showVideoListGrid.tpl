@@ -1316,7 +1316,7 @@
                 <a href="javascript:;" class="sesbasic_icon_btn sesbasic_icon_btn_count sesbasic_icon_fav_btn sesvideo_favourite_sesvideo_playlist <?php echo ($favStatus)  ? 'button_active' : '' ?>"  data-url="<?php echo $item->playlist_id ; ?>"><i class="fa fa-heart"></i><span><?php echo $item->favourite_count; ?></span></a>
               <?php } ?>
                 <a  href="javascript:void(0);" class="smoothbox sesbasic_icon_btn" title="<?php echo $this->translate("Share") ?>" onclick="openURLinSmoothBox('<?php echo $this->escape($this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesvideo_playlist', 'id' => $item->playlist_id, 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;">
-                	<i class="fa fa-share"></i>
+                	<i class="fas fa-share-alt"></i>
                 </a>
                  <?php if(isset($this->my_playlist)){ ?>
                   <a href="<?php echo $this->url(array('action'=>'edit', 'playlist_id'=>$item->getIdentity(),'slug'=>$item->getSlug()),'sesvideo_playlist_view',true) ?>" class="sesbasic_icon_btn" title="<?php echo $this->translate("Edit Playlist") ?>">
@@ -1628,13 +1628,13 @@ var defaultOpenTab ;
 					type:scriptJquery('.selectView_<?php echo $randonNumber; ?>.active').attr('rel'),
 				},
 				success: function(responseHTML) {
-          if(scriptJquery(this).attr('rel') == 'grid') {
-            scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').addClass('row');
-          } else {
-            scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').removeClass('row');
-          }
 					document.getElementById('tabbed-widget_<?php echo $randonNumber; ?>').innerHTML = '';
 					scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').append(responseHTML);
+					if(scriptJquery('.selectView_<?php echo $randonNumber; ?>.active').attr('rel') == 'grid') {
+						scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').addClass('row');
+					} else {
+						scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').removeClass('row');
+					}
 					pinboardLayout_<?php echo $randonNumber ?>();
 					if(document.getElementById('ses_pagging'))
 						document.getElementById("ses_pagging").style.display = 'block';
@@ -1691,6 +1691,11 @@ var identity<?php echo $randonNumber; ?>  = '<?php echo $randonNumber; ?>';
 				if(document.getElementById('loadingimgsesvideo-wrapper'))
           scriptJquery('#submit').html('Search');
         scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').append(responseHTML);
+				if(scriptJquery('.selectView_<?php echo $randonNumber; ?>.active').attr('rel') == 'grid') {
+					scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').addClass('row');
+				} else {
+					scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').removeClass('row');
+				}
         if(document.getElementById('loading_image_<?php echo $randonNumber; ?>'))
         document.getElementById('loading_image_<?php echo $randonNumber; ?>').style.display = 'none';
         if(document.getElementById('view_more_<?php echo $randonNumber; ?>'))
@@ -1727,6 +1732,11 @@ var identity<?php echo $randonNumber; ?>  = '<?php echo $randonNumber; ?>';
           scriptJquery('#submit').html('Search');
 						scriptJquery('.sesbasic_loading_cont_overlay').css('display','none');
 						document.getElementById('tabbed-widget_<?php echo $randonNumber; ?>').innerHTML =  responseHTML;
+						if(scriptJquery('.selectView_<?php echo $randonNumber; ?>.active').attr('rel') == 'grid') {
+							scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').addClass('row');
+						} else {
+							scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').removeClass('row');
+						}
 						pinboardLayout_<?php echo $randonNumber ?>();
 					}
 				}));

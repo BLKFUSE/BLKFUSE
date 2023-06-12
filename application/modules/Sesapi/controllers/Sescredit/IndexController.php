@@ -367,7 +367,7 @@ class Sescredit_IndexController extends Sesapi_Controller_Action_Standard {
 			$result['header'][$counter]['label'] = $this->view->translate('Validity Date');
 			$result['header'][$counter]['value'] = date('jS M', strtotime($validityFinalDate)).' '.date('Y', strtotime($validityFinalDate));
 			$counter++;
-		}
+		} 
 		$bodyCounter = 0;
 		$result['body'][$bodyCounter]['label'] = $this->view->translate('For New Activity');
 		$result['body'][$bodyCounter]['value'] = Engine_Api::_()->getDbTable('credits','sescredit')->getTotalCreditValue(array('point_type' => 'credit'));
@@ -389,6 +389,10 @@ class Sescredit_IndexController extends Sesapi_Controller_Action_Standard {
 		$result['body'][$bodyCounter]['value'] = '-';
 		$result['body'][$bodyCounter]['action'] = Engine_Api::_()->getDbTable('credits','sescredit')->getTotalCreditValue(array('point_type' => 'transfer_friend')) ?Engine_Api::_()->getDbTable('credits','sescredit')->getTotalCreditValue(array('point_type' => 'transfer_friend')) : '-';
 		$bodyCounter++;
+		$result['body'][$bodyCounter]['label'] = $this->view->translate('Product Purchased');
+		$result['body'][$bodyCounter]['value'] = '-';
+		$result['body'][$bodyCounter]['action'] = Engine_Api::_()->getDbTable('credits','sescredit')->getTotalCreditValue(array('point_type' => 'sesproduct_product')) ? Engine_Api::_()->getDbTable('credits','sescredit')->getTotalCreditValue(array('point_type' => 'sesproduct_product')) : '-';
+		$bodyCounter++;
 		
 		$result['body'][$bodyCounter]['label'] = $this->view->translate('Received from Friends');
 		$result['body'][$bodyCounter]['value'] = Engine_Api::_()->getDbTable('credits','sescredit')->getTotalCreditValue(array('point_type' => 'receive_friend')) ? Engine_Api::_()->getDbTable('credits','sescredit')->getTotalCreditValue(array('point_type' => 'receive_friend')) : '-';
@@ -399,6 +403,12 @@ class Sescredit_IndexController extends Sesapi_Controller_Action_Standard {
 		$result['body'][$bodyCounter]['value'] = Engine_Api::_()->getDbTable('credits','sescredit')->getTotalCreditValue(array('point_type' => 'purchase')) ? Engine_Api::_()->getDbTable('credits','sescredit')->getTotalCreditValue(array('point_type' => 'purchase')) : '-';
 		$result['body'][$bodyCounter]['action'] = '-';
 		$bodyCounter++;
+
+    $result['body'][$bodyCounter]['label'] = $this->view->translate('Rewards');
+		$result['body'][$bodyCounter]['value'] = Engine_Api::_()->getDbTable('credits','sescredit')->getTotalCreditValue(array('point_type' => 'reward')) ? Engine_Api::_()->getDbTable('credits','sescredit')->getTotalCreditValue(array('point_type' => 'reward')) : '-';
+		$result['body'][$bodyCounter]['action'] = '-';
+		$bodyCounter++;
+
 		$upgradePoint = Engine_Api::_()->getDbTable('credits','sescredit')->getTotalCreditValue(array('point_type' => 'upgrade_level'));
 		if(!empty($upgradePoint)){
 			$result['body'][$bodyCounter]['label'] = $this->view->translate('On Membership Upgrade');
@@ -476,7 +486,7 @@ class Sescredit_IndexController extends Sesapi_Controller_Action_Standard {
         Engine_Api::_()->getDbTable('credits', 'sescredit')->insertUpdatePoint(array('type' => 'receive_from_friend', 'owner_id' => $_POST['friend_user_id'], 'action_id' => 0, 'object_id' => 0, 'point' => $point, 'point_type' => 'receive_friend'));
         Engine_Api::_()->getDbTable('credits', 'sescredit')->insertUpdatePoint(array('type' => 'transfer_to_friend', 'owner_id' => $viewerId, 'action_id' => 0, 'object_id' => 0, 'point' => $point, 'point_type' => 'transfer_friend'));
         Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($receiver, $viewer, $viewer, 'notify_sescredit_send_point', array("point" => $point, "creditPageLink" => $creditPageLink));
-        Engine_Api::_()->getApi('mail', 'core')->sendSystem($receiver, 'sescredit_send_point', array('sender_title' => $viewer->displayname, 'point' => $point));
+        Engine_Api::_()->getApi('mail', 'core')->sendSystem($receiver, 'sescredit_send_point', array('sender_title' => $viewer->getTitle(), 'point' => $point));
       }
     } else {
 			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('You don\'t have point to transfer.'), 'result' => array()));
@@ -514,8 +524,12 @@ class Sescredit_IndexController extends Sesapi_Controller_Action_Standard {
     if (!$viewerId)
        Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('permission_error'), 'result' => array()));
     $searchArray = array();
-    if (isset($_POST['searchParams']) && $_POST['searchParams'])
-      parse_str($_POST['searchParams'], $searchArray);
+				if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+					if(engine_in_array($_POST['searchParams']))
+						$searchArray = $_POST['searchParams'];
+					elseif(is_string($_POST['searchParams']))
+						parse_str($_POST['searchParams'], $searchArray);
+				}
 
     $coreContentTable = Engine_Api::_()->getDbTable('content', 'core');
 		$coreContentTableName = $coreContentTable->info('name');

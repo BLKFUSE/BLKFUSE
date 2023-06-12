@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesmember/externals/scripts/core.js'); ?>
 <div class="sesbasic_breadcrumb">
   <a href="<?php echo $this->content_item->getHref(); ?>"><?php echo $this->content_item->getTitle(); ?></a>&nbsp;&raquo;
   <a href="<?php echo $this->url(array('action' => 'browse'), "sesmember_review"); ?>"><?php echo $this->translate("Reviews"); ?></a>

@@ -51,7 +51,7 @@ $songs = $playlist->getSongs();
         <?php $viewer = Engine_Api::_()->user()->getViewer(); ?>
         <?php if($this->viewer_id): ?>
         <?php //if(!empty($this->informationPlaylist) && engine_in_array('sharePl', $this->informationPlaylist)): ?>
-        <?php echo $this->htmlLink(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_playlist', 'id' => $this->playlist->getIdentity(), 'format' => 'smoothbox'), $this->translate("Share"), array('class' => 'smoothbox fa fa-share')); ?>
+        <?php echo $this->htmlLink(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_playlist', 'id' => $this->playlist->getIdentity(), 'format' => 'smoothbox'), $this->translate("Share"), array('class' => 'smoothbox fas fa-share-alt')); ?>
         <?php //endif; ?>
           <!--<a href="" class="fa fa-thumbs-up">Like</a>-->
          <?php //if(!empty($this->informationPlaylist) && engine_in_array('addFavouriteButtonPl', $this->informationPlaylist)): ?>
@@ -61,27 +61,25 @@ $songs = $playlist->getSongs();
           <input type="hidden" id="sesmusic_playlist_favouritehidden_<?php echo $playlist->getIdentity(); ?>" value='<?php echo $isFavourite ? $isFavourite : 0; ?>' /> 
           <?php //endif; ?>
         <?php endif; ?>
-      </div>    
-      <div class="sesmusic_playlist_options_dropdown">
-      <a href="javascript:void(0);" class="links_dropdown"><i class="fa fa-ellipsis-v"></i></a>
-      <div class="sesmusic_songs_playlist_options">
-        <?php if($this->viewer_id): ?>
-        <?php if(!empty($this->informationPlaylist) && engine_in_array('reportPl', $this->informationPlaylist)): ?>
-        <?php echo $this->htmlLink(array('module'=>'core', 'controller'=>'report', 'action'=>'create', 'route'=>'default', 'subject'=> $this->playlist->getGuid(), 'format' => 'smoothbox' ), $this->translate("Report"), array('class' => 'smoothbox sesbasic_icon_report')); ?>  
-        <?php endif; ?>
-       
-       <?php if ($playlist->getOwner()->isSelf($viewer) || $viewer->level_id == 1): ?>
-        <?php if(!empty($this->informationPlaylist) && engine_in_array('editButton', $this->informationPlaylist)): ?>
-        <?php  echo $this->htmlLink($playlist->getHref(array('route' => 'sesmusic_playlist_specific', 'action' => 'edit')), $this->translate('Edit Playlist'), array('class'=>'sesbasic_icon_edit')); ?>
-        <?php endif; ?>
-          <?php if(!empty($this->informationPlaylist) && engine_in_array('deleteButton', $this->informationPlaylist)): ?>
-          <?php echo $this->htmlLink(array('route' => 'sesmusic_playlist_specific', 'module' => 'sesmusic', 'controller' => 'playlist', 'action' => 'delete', 'playlist_id' => $playlist->getIdentity(), 'slug' => $playlist->getSlug(), 'format' => 'smoothbox'), $this->translate('Delete Playlist'), array('class' => 'smoothbox sesbasic_icon_delete')); ?>
-          <?php endif; ?>
-          <?php endif; ?>
-          <?php endif; ?>
-      </div>
-      </div>
-    <?php //endif; ?>
+      </div>   
+			<?php if($this->viewer_id): ?>
+				<div class="sesmusic_playlist_options_dropdown">
+					<a href="javascript:void(0);" class="links_dropdown"><i class="fa fa-ellipsis-v"></i></a>
+					<div class="sesmusic_songs_playlist_options">
+						<?php if(!empty($this->informationPlaylist) && engine_in_array('reportPl', $this->informationPlaylist)): ?>
+							<?php echo $this->htmlLink(array('module'=>'core', 'controller'=>'report', 'action'=>'create', 'route'=>'default', 'subject'=> $this->playlist->getGuid(), 'format' => 'smoothbox' ), $this->translate("Report"), array('class' => 'smoothbox sesbasic_icon_report')); ?>  
+						<?php endif; ?>
+						<?php if ($playlist->getOwner()->isSelf($viewer) || $viewer->level_id == 1): ?>
+							<?php if(!empty($this->informationPlaylist) && engine_in_array('editButton', $this->informationPlaylist)): ?>
+								<?php  echo $this->htmlLink($playlist->getHref(array('route' => 'sesmusic_playlist_specific', 'action' => 'edit')), $this->translate('Edit Playlist'), array('class'=>'sesbasic_icon_edit')); ?>
+							<?php endif; ?>
+							<?php if(!empty($this->informationPlaylist) && engine_in_array('deleteButton', $this->informationPlaylist)): ?>
+								<?php echo $this->htmlLink(array('route' => 'sesmusic_playlist_specific', 'module' => 'sesmusic', 'controller' => 'playlist', 'action' => 'delete', 'playlist_id' => $playlist->getIdentity(), 'slug' => $playlist->getSlug(), 'format' => 'smoothbox'), $this->translate('Delete Playlist'), array('class' => 'smoothbox sesbasic_icon_delete')); ?>
+							<?php endif; ?>
+						<?php endif; ?>
+					</div>
+				</div>
+			<?php endif; ?>
     </div>
   </div>
   <div class="sesmusic_artist_view_des">

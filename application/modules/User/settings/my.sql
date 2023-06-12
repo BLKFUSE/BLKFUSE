@@ -172,6 +172,7 @@ CREATE TABLE IF NOT EXISTS `engine4_user_logins` (
   `timestamp` datetime NOT NULL,
   `state` enum('success','no-member','bad-password','disabled','unpaid','third-party','v3-migration','unknown') CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL default 'unknown',
   `active` tinyint(1) NOT NULL default '0',
+  `source` VARCHAR(32) NULL DEFAULT NULL,
   PRIMARY KEY (`login_id`),
   KEY `user_id` (`user_id`),
   KEY `email` (`email`),
@@ -346,7 +347,7 @@ INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`
 
 ('user_settings_general', 'user', 'General', '', '{"route":"user_extended","module":"user","controller":"settings","action":"general"}', 'user_settings', '', 1),
 ('user_settings_privacy', 'user', 'Privacy', '', '{"route":"user_extended","module":"user","controller":"settings","action":"privacy"}', 'user_settings', '', 2),
-('user_settings_notifications', 'user', 'Notifications', '', '{"route":"user_extended","module":"user","controller":"settings","action":"notifications"}', 'user_settings', '', 3),
+('user_settings_notifications', 'user', 'Notifications', 'User_Plugin_Menus', '{"route":"user_extended","module":"user","controller":"settings","action":"notifications"}', 'user_settings', '', 3),
 ('user_settings_emails', 'user', 'Emails', '', '{"route":"user_extended","module":"user","controller":"settings","action":"emails"}', 'user_settings', '', 4),
 ('user_settings_password', 'user', 'Change Password', '', '{"route":"user_extended", "module":"user", "controller":"settings", "action":"password"}', 'user_settings', '', 5),
 ('user_settings_delete', 'user', 'Delete Account', 'User_Plugin_Menus::canDelete', '{"route":"user_extended", "module":"user", "controller":"settings", "action":"delete"}', 'user_settings', '', 6),
@@ -357,9 +358,7 @@ INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`
 ('core_admin_main_facebook', 'user', 'Facebook Integration', '', '{"route":"admin_default", "action":"facebook", "controller":"settings", "module":"user"}', 'core_admin_main_socialmenus', '', 4),
 ('core_admin_main_twitter', 'user', 'Twitter Integration', '', '{"route":"admin_default", "action":"twitter", "controller":"settings", "module":"user"}', 'core_admin_main_socialmenus', '', 4),
 ('core_admin_main_settings_friends', 'user', 'Friendship Settings', '', '{"route":"admin_default","module":"user","controller":"settings","action":"friends"}', 'core_admin_main_settings', '', 6),
-
--- ('user_admin_banning_logins', 'user', 'Login History', '', '{"route":"admin_default","module":"user","controller":"logins","action":"index"}', 'core_admin_banning', '', 2),
-
+('user_admin_banning_logins', 'user', 'Login History', '', '{"route":"admin_default","module":"user","controller":"logins","action":"index"}', 'core_admin_banning', '', 2),
 ('authorization_admin_level_user', 'user', 'Members', '', '{"route":"admin_default","module":"user","controller":"settings","action":"level"}', 'authorization_admin_level', '', 2)
 ;
 
@@ -407,7 +406,8 @@ INSERT IGNORE INTO `engine4_core_settings` (`name`, `value`) VALUES
 ('user.signup.terms', 1),
 ('user.signup.username', 1),
 ('user.signup.verifyemail', 0),
-('core.facebook.enable', 'none');
+('core.facebook.enable', 'none'),
+('core.general.enableloginlogs', '0');
 
 
 -- --------------------------------------------------------
@@ -745,10 +745,9 @@ INSERT IGNORE INTO `engine4_user_fields_maps` (`field_id`, `option_id`, `child_i
 DROP TABLE IF EXISTS `engine4_user_fields_meta`;
 CREATE TABLE `engine4_user_fields_meta` (
   `field_id` int(11) unsigned NOT NULL auto_increment,
-
   `type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `label` varchar(64) NOT NULL,
-  `description` varchar(255) NOT NULL default '',
+  `description` varchar(255) NULL DEFAULT NULL,
   `alias` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL default '',
   `required` tinyint(1) NOT NULL default '0',
   `display` tinyint(1) unsigned NOT NULL,
@@ -756,15 +755,12 @@ CREATE TABLE `engine4_user_fields_meta` (
   `search` tinyint(1) unsigned NOT NULL default '0',
   `show` tinyint(1) unsigned NOT NULL default '1',
   `order` smallint(3) unsigned NOT NULL default '999',
-
   `config` text NULL,
   `validators` text NULL,
   `filters` text NULL,
-
   `style` text NULL,
   `error` text NULL,
   `icon` text NULL,
-
   PRIMARY KEY  (`field_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
 

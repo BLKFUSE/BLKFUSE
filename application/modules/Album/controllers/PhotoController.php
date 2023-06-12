@@ -112,6 +112,8 @@ class Album_PhotoController extends Core_Controller_Action_Standard
         $viewer = Engine_Api::_()->user()->getViewer();
         $photo = Engine_Api::_()->core()->getSubject('album_photo');
         $album = $photo->getParent();
+        
+        $owner = Engine_Api::_()->getItem('user', $album->owner_id);
 
         $this->view->form = $form = new Album_Form_Photo_Delete();
 
@@ -156,6 +158,12 @@ class Album_PhotoController extends Core_Controller_Action_Standard
                 else {
                     $action->delete();
                 }
+            }
+            
+            //If album photo delete then check profile photo also setup to zero.
+            if($owner->photo_id == $photo->file_id) {
+							$owner->photo_id = 0;
+							$owner->save();
             }
 
             // delete photo
@@ -418,4 +426,20 @@ class Album_PhotoController extends Core_Controller_Action_Standard
         $this->view->status = true;
         $this->view->href = $photo->getPhotoUrl();
     }
+    
+		public function removePhotoAction() {
+		
+			if(empty($_GET['photo_id'])) die('error');
+			$photo = Engine_Api::_()->getItem('album_photo', $_GET['photo_id']);
+			$db = Engine_Api::_()->getDbTable('photos', 'album')->getAdapter();
+			$db->beginTransaction();
+			try {
+				$photo->delete();
+				$db->commit();
+				echo json_encode(array('status'=>"true"));die;
+			} catch (Exception $e) {
+				$db->rollBack();
+				throw $e;
+			}
+		}
 }

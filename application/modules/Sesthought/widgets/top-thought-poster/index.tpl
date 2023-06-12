@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesthought/externals/scripts/core.js'); ?>
 <?php if($this->title == ''){ ?>
 <!--<h3><?php //echo $this->translate('People Like This %s',ucfirst(str_replace('sesblog_','',$this->subject->getType()))); ?></h3>-->
 <?php } ?>

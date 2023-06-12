@@ -422,12 +422,12 @@ class Sesvideo_Form_Edit extends Engine_Form {
             'label' => 'Video Photo',
         ));
 			}
-        $this->photo_id->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+        $this->photo_id->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
       } else {
         $this->addElement('File', 'photo_id', array(
             'label' => 'Video Photo',
         ));
-        $this->photo_id->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+        $this->photo_id->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
       }
     }
 

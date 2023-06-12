@@ -201,9 +201,6 @@
 }
 /*POPUP FORM CSS END HERE*/
 /*GET DIRECTION POPUP CSS START HERE*/
-#global_page_sesbasic-index-get-direction > span{
-	display:block;
-}
 .sesbasic_getdirection_popup{
 	margin:15px 5px 5px 15px;
 	width:802px;
@@ -216,6 +213,9 @@
 .sesbasic_getdirection_popup_close{
 	float:right;
 	cursor:pointer;
+}
+[dir="rtl"] .sesbasic_getdirection_popup_close{
+	float: left;
 }
 .sesbasic_getdirection_popup_close:before{
 	font-size:20px;
@@ -329,6 +329,10 @@
     position:absolute;
     right:5px;
     top:10px;
+	}
+	[dir="rtl"] .sesbasic_getdirection_popup_close{
+		left: 5px;
+		right: auto;
 	}
 	.sesbasic_getdirection_popup_cont{
 		border-width:0;

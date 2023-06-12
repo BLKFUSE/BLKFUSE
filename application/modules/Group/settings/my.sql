@@ -361,8 +361,8 @@ INSERT IGNORE INTO `engine4_activity_actiontypes` (`type`, `module`, `body`, `en
 ('group_create', 'group', '{item:$subject} created a new group:', 1, 5, 1, 1, 1, 0, 1),
 ('group_join', 'group', '{item:$subject} joined the group {item:$object}', 1, 3, 1, 1, 1, 0, 1),
 ('group_promote', 'group', '{item:$subject} has been made an officer for the group {item:$object}', 1, 3, 1, 1, 1, 0, 1),
-('group_topic_create', 'group', '{item:$subject} posted a {itemChild:$object:topic:$child_id} in the group {item:$object}: {body:$body}', 1, 3, 1, 1, 1, 0, 1),
-('group_topic_reply', 'group', '{item:$subject} replied to a {itemChild:$object:topic:$child_id} in the group {item:$object}: {body:$body}', 1, 3, 1, 1, 1, 0, 1),
+('group_topic_create', 'group', '{item:$subject} posted a {itemChild:$object:topic:$child_id} in the group {item:$object}: {body:$body}', 1, 3, 1, 0, 1, 0, 1),
+('group_topic_reply', 'group', '{item:$subject} replied to a {itemChild:$object:topic:$child_id} in the group {item:$object}: {body:$body}', 1, 3, 1, 0, 1, 0, 1),
 ('group_photo_upload', 'group', '{item:$subject} added {var:$count} photo(s).', 1, 3, 2, 1, 1, 0, 1),
 ('post_group', 'group', '{actors:$subject:$object}: {body:$body}', 1, 7, 1, 4, 1, 1, 0),
 ('group_cover_photo_update', 'group', '{item:$subject} has updated {item:$object} cover photo.', 1, 5, 1, 4, 1, 0, 1)
@@ -904,9 +904,15 @@ CREATE TABLE IF NOT EXISTS `engine4_group_ratings` (
   KEY `INDEX` (`group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
 
-ALTER TABLE `engine4_group_groups` ADD `rating` FLOAT NOT NULL;
+ALTER TABLE `engine4_group_groups` ADD `rating` FLOAT NOT NULL DEFAULT '0';
 
 INSERT IGNORE INTO `engine4_activity_notificationtypes` (`type`, `module`, `body`, `is_request`, `handler`) VALUES
 ("group_rating", "group", '{item:$subject} has rated your group {item:$object}.', 0, "");
 
 INSERT IGNORE INTO `engine4_core_mailtemplates` (`type`, `module`, `vars`) VALUES ("notify_group_rating", "group", "[host],[email],[recipient_title],[recipient_link],[recipient_photo],[sender_title],[sender_link],[sender_photo],[object_title],[object_link],[object_photo],[object_description]");
+
+INSERT IGNORE INTO `engine4_activity_actiontypes` (`type`, `module`,  `body`,  `enabled`,  `displayable`,  `attachable`,  `commentable`,  `shareable`, `is_generated`) VALUES
+('group_video_new', 'group', '{item:$subject} posted a new video:', '1', '6', '1', '4', '1', 0),
+('group_event_create', 'group', '{item:$subject} created a new event:', '1', '6', '1', '4', '1', 0),
+('group_poll_new', 'group', '{item:$subject} created a new poll:', '1', '6', '1', '4', '1', 0),
+('group_blog_new', 'group', '{item:$subject} wrote a new blog entry:', '6', '5', '1', '4', '1', 0);

@@ -41,10 +41,9 @@ class Core_Plugin_Composer extends Core_Plugin_Abstract
         $data['description'] = html_entity_decode($filter->filter($data['description']));
       }
       $iframelyConfig = Engine_Api::_()->getApi('settings', 'core')->core_iframely;
-      if( !empty($iframelyConfig['host']) && $iframelyConfig['host'] != 'none' ) {
-        $response = Engine_Iframely::factory($iframelyConfig)
-          ->get($data['uri']);
-          $data['params']['iframely'] = $response ? $response : array();
+      if( !empty($iframelyConfig['host']) && $iframelyConfig['host'] != 'socialengine' ) {
+        $response = Engine_Iframely::factory($iframelyConfig)->get($data['uri']);
+				$data['params']['iframely'] = $response ? json_encode($response) : array();
       }
       $link = Engine_Api::_()->getApi('links', 'core')->createLink($viewer, $data);
     } catch( Exception $e ) {

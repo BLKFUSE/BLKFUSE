@@ -18,8 +18,12 @@ class Sesthought_Widget_BrowseThoughtsController extends Engine_Content_Widget_A
     if (isset($_POST['params']))
       $params = json_decode($_POST['params'], true);
 
-    if(isset($_POST['searchParams']) && $_POST['searchParams'])
-        parse_str($_POST['searchParams'], $searchArray);
+		if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+			if(engine_in_array($_POST['searchParams']))
+				$searchArray = $_POST['searchParams'];
+			elseif(is_string($_POST['searchParams']))
+				parse_str($_POST['searchParams'], $searchArray);
+		}
 
     $this->view->viewmore = $this->_getParam('viewmore', 0);
 

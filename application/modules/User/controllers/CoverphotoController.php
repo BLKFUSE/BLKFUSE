@@ -310,6 +310,31 @@ class User_CoverphotoController extends Core_Controller_Action_Standard {
       }
     } else {
       $this->whenRemove($user,"photo_id");
+      //Remove user photo
+      if($photoType == 'profile') {
+        $file = Engine_Api::_()->getItem('storage_file', $user['photo_id']);
+        if($file->parent_type == 'user') {
+					$getParentChilds = $file->getChildren($file->getIdentity());
+					foreach ($getParentChilds as $child) {
+						// remove child file.
+						$this->unlinkFile(APPLICATION_PATH . DIRECTORY_SEPARATOR . $child['storage_path']);
+						// remove child directory.
+						$childPhotoDir = $this->getDirectoryPath($child['storage_path']);
+						$this->removeDir($childPhotoDir);
+						// remove child row from db.
+						$child->remove();
+					}
+					// remove parent file.
+					$this->unlinkFile(APPLICATION_PATH . DIRECTORY_SEPARATOR . $file['storage_path']);
+					// remove directory.
+					$parentPhotoDir = $this->getDirectoryPath($file['storage_path']);
+					$this->removeDir($parentPhotoDir);
+					if ($file) {
+						// remove parent form db.
+						$file->remove();
+					}
+        }
+      }
       $user->photo_id = 0;
     }
     $user->save();
@@ -542,7 +567,7 @@ class User_CoverphotoController extends Core_Controller_Action_Standard {
       $tmpRow->delete();
     }
 
-    if(!Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('album')){
+    //if(!Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('album')){
       // if user photo_id column is empty.
       if(!empty($user['photo_id'])){
         $file = Engine_Api::_()->getItem('storage_file', $user['photo_id']);
@@ -566,7 +591,7 @@ class User_CoverphotoController extends Core_Controller_Action_Standard {
           $file->remove();
         }
       }
-    }
+    //}
 
     $user->photo_id = $iMain->file_id;
     $user->save();

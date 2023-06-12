@@ -32,8 +32,8 @@
  		Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array_merge(array('error' => '0', 'error_message' => '', 'result' => $result)));
  	}
  	public function browseAction(){
- 		$isCompanyName = isset($_POST['companyname']) ? $_POST['companyname'] : '';
- 		$isJobName = isset($_POST['jobname']) ? $_POST['jobname'] : '';
+		$isCompanyName = isset($_POST['search_company']) ? $_POST['search_company'] : '';
+		$isJobName = isset($_POST['search']) ? $_POST['search'] : '';
  		$isCategory = isset($_POST['category_id']) ? $_POST['category_id'] : '';
  		$isIndustry = isset($_POST['industry_id']) ? $_POST['industry_id'] : '';
  		$isEmployment = isset($_POST['employment_id']) ? $_POST['employment_id'] : '';
@@ -52,9 +52,9 @@
  		$form->populate($_POST);
  		$params = $form->getValues();
  		if(!empty($isCompanyName))
- 			$params['text'] = $isCompanyName;
+ 			$params['searchCompany'] = $isCompanyName;
  		if(!empty($isJobName))
- 			$params['text'] = $isJobName;
+ 			$params['searchJob'] = $isJobName;
  		if(!empty($isCategory))
  			$params['category_id'] = $isCategory;
  		if(!empty($isIndustry))
@@ -128,9 +128,9 @@
  				$_POST['lng'] = $latlng['lng'];
  			}
  		}
+ 
 
-
- 		$paginator = Engine_Api::_()->getDbtable('jobs', 'sesjob')->getSesjobsPaginator($params);	
+ 		$paginator = Engine_Api::_()->getDbtable('jobs', 'sesjob')->getSesjobsPaginator($params,$params);	
  		$paginator->setItemCountPerPage($this->_getParam('limit', 10));
  		$paginator->setCurrentPageNumber($this->_getParam('page', 1));
  		$result = $this->getJobs($paginator);
@@ -162,6 +162,7 @@
 			$result['jobs'][$counter]['enable_add_shortcut'] = $sesshortcut;
 			if($sesshortcut){
 				$isShortcut = Engine_Api::_()->getDbTable('shortcuts', 'sesshortcut')->isShortcut(array('resource_type' => $item->getType(), 'resource_id' => $item->getIdentity()));
+				$shortMessage = array();
 				if (empty($isShortcut)) {
 					$shortMessage['title'] = $this->view->translate('Add to Shortcuts');
 					$shortMessage['resource_type'] = $item->getType();
@@ -280,6 +281,12 @@
  			$formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
  			$this->generateFormFields($formFields,array('resources_type'=>'sesjob'));
  		}   
+
+		if(!empty($_POST["show_start_time"]) && $_POST["show_start_time"] == 1){
+			$form->removeElement('start_date');
+			$form->removeElement('start_time');
+		}
+
  		if(!$form->isValid($this->getRequest()->getPost()) ) { 
  			$validateFields = Engine_Api::_()->getApi('FormFields','sesapi')->validateFormFields($form);
  			if(is_countable($validateFields) && engine_count($validateFields))
@@ -290,39 +297,277 @@
  		$db = $job_table->getAdapter();
  		$db->beginTransaction();
  		try {
- 			$paramss = $values = $form->getValues();
- 			$paramss['owner_id'] = $viewer->getIdentity();
- 			$jobTable = Engine_Api::_()->getDbTable('jobs', 'sesjob');
- 			$job = $jobTable->createRow();
- 			$job->setFromArray($paramss);
- 			$job->save();
-			 if(empty($values['company_id']) && $values['company_name']) {
-				$companiesTable = Engine_Api::_()->getDbtable('companies', 'sesjob');
-				$companies = $companiesTable->createRow();
-				$companies->company_name = $values['company_name'];
-						$companies->owner_id = $viewer->getIdentity();
-				$companies->company_websiteurl = $values['company_websiteurl'];
-				$companies->company_description = $values['company_description'];
-				$companies->industry_id = isset($values['industry_id']) ? $values['industry_id'] : 0 ;
-				$companies->save();
-				$companies->job_count++;
-				$companies->save();
-				$job->company_id = $companies->company_id;
-				$job->save();
-			  } elseif(!empty($values['company_id'])) {
-				$company = Engine_Api::_()->getItem('sesjob_company', $values['company_id']);
-				$company->company_name = $values['company_name'];
-				$company->company_websiteurl = $values['company_websiteurl'];
-				$company->company_description = $values['company_description'];
-				$company->industry_id =  isset($values['industry_id']) ? $values['industry_id'] : 0 ;
-				$company->save();
-				$company->job_count++;
-				$company->save();
-				$job->company_id = $company->company_id;
-				$job->save();
-			  }
+      // Create sesjob
+      $viewer = Engine_Api::_()->user()->getViewer();
+      $values = array_merge($form->getValues(), array(
+        'owner_type' => $viewer->getType(),
+        'owner_id' => $viewer->getIdentity(),
+      ));
+
+        if(isset($values['levels']))
+            $values['levels'] = implode(',',$values['levels']);
+
+        if(isset($values['networks']))
+            $values['networks'] = implode(',',$values['networks']);
+
+        if(isset($values['education_id']))
+            $values['education_id'] = implode(',',$values['education_id']);
+
+      $values['ip_address'] = $_SERVER['REMOTE_ADDR'];
+      $sesjob = $job_table->createRow();
+      if (is_null($values['subsubcat_id']))
+      $values['subsubcat_id'] = 0;
+      if (is_null($values['subcat_id']))
+      $values['subcat_id'] = 0;
+      
+			if(isset($package)) {
+        $values['package_id'] = $package->getIdentity();
+        if ($package->isFree()) {
+          if (isset($params['job_approve']) && $params['job_approve'])
+            $values['is_approved'] = 1;
+        } else
+          $values['is_approved'] = 0;
+        if ($existingpackage) {
+          $values['existing_package_order'] = $existingpackage->getIdentity();
+          $values['orderspackage_id'] = $existingpackage->getIdentity();
+          $existingpackage->item_count = $existingpackage->item_count - 1;
+          $existingpackage->save();
+          $params = json_decode($package->params, true);
+          if (isset($params['job_approve']) && $params['job_approve'])
+            $values['is_approved'] = 1;
+          if (isset($params['job_featured']) && $params['job_featured'])
+            $values['featured'] = 1;
+          if (isset($params['job_sponsored']) && $params['job_sponsored'])
+            $values['sponsored'] = 1;
+          if (isset($params['job_verified']) && $params['job_verified'])
+            $values['verified'] = 1;
+        }
+			}else{
+				$values['is_approved'] = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('sesjob_job', $viewer, 'job_approve');
+				if(isset($sesjob->package_id) && Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesjobpackage') ){
+					$values['package_id'] = Engine_Api::_()->getDbTable('packages','sesjobpackage')->getDefaultPackage();
+				}
+			}
+
+			if($_POST['jobstyle'])
+        $values['style'] = $_POST['jobstyle'];
+
+      //SEO By Default Work
+      //$values['seo_title'] = $values['title'];
+			if($values['tags'])
+			$values['seo_keywords'] = $values['tags'];
+
+      $sesjob->setFromArray($values);
+
+			//Upload Main Image
+			if(isset($_FILES['photo_file']) && $_FILES['photo_file']['name'] != ''){
+			  $sesjob->photo_id = Engine_Api::_()->sesbasic()->setPhoto($form->photo_file, false,false,'sesjob','sesjob_job','',$sesjob,true);
+				//$photo_id = 	$sesjob->setPhoto($form->photo_file,'direct');
+			}
+
+			if(isset($_POST['start_date']) && $_POST['start_date'] != ''){
+				$starttime = isset($_POST['start_date']) ? date('Y-m-d H:i:s',strtotime($_POST['start_date'].' '.$_POST['start_time'])) : '';
+      	$sesjob->publish_date =$starttime;
+			}
+
+			if(isset($_POST['start_date']) && $viewer->timezone && $_POST['start_date'] != ''){
+				//Convert Time Zone
+				$oldTz = date_default_timezone_get();
+				date_default_timezone_set($viewer->timezone);
+				$start = strtotime($_POST['start_date'].' '.$_POST['start_time']);
+				date_default_timezone_set($oldTz);
+				$sesjob->publish_date = date('Y-m-d H:i:s', $start);
+			}
+
+			$sesjob->parent_id = $parentId;
+      $sesjob->save();
+      $job_id = $sesjob->job_id;
+      
+      //Start Default Package Order Work
+      if (isset($package) && $package->isFree()) {
+        if (!$existingpackage) {
+          $transactionsOrdersTable = Engine_Api::_()->getDbtable('orderspackages', 'sesjobpackage');
+          $transactionsOrdersTable->insert(array(
+              'owner_id' => $viewer->user_id,
+              'item_count' => ($package->item_count - 1 ),
+              'package_id' => $package->getIdentity(),
+              'state' => 'active',
+              'expiration_date' => '3000-00-00 00:00:00',
+              'ip_address' => $_SERVER['REMOTE_ADDR'],
+              'creation_date' => new Zend_Db_Expr('NOW()'),
+              'modified_date' => new Zend_Db_Expr('NOW()'),
+          ));
+          $sesjob->orderspackage_id = $transactionsOrdersTable->getAdapter()->lastInsertId();
+          $sesjob->existing_package_order = 0;
+        } else {
+          $existingpackage->item_count = $existingpackage->item_count--;
+          $existingpackage->save();
+        }
+      }
+      //End Default package Order Work
+
+      if (!empty($_POST['custom_url']) && $_POST['custom_url'] != '')
+      $sesjob->custom_url = $_POST['custom_url'];
+      else
+      $sesjob->custom_url = $sesjob->job_id;
+      $sesjob->save();
+      $job_id = $sesjob->job_id;
+
+      $roleTable = Engine_Api::_()->getDbtable('roles', 'sesjob');
+			$row = $roleTable->createRow();
+			$row->job_id = $job_id;
+			$row->user_id = $viewer->getIdentity();
+			$row->save();
+
+			// Other module work
+			if(!empty($resource_type) && !empty($resource_id)) {
+        $sesjob->resource_id = $resource_id;
+        $sesjob->resource_type = $resource_type;
+        $sesjob->save();
+			}
+
+      //Location
+      if (isset($_POST['lat']) && isset($_POST['lng']) && $_POST['lat'] != '' && $_POST['lng'] != '' && !empty($_POST['location'])) {
+        $dbGetInsert = Engine_Db_Table::getDefaultAdapter();
+        $dbGetInsert->query('INSERT INTO engine4_sesbasic_locations (resource_id,venue, lat, lng ,city,state,zip,country,address,address2, resource_type) VALUES ("' . $sesjob->getIdentity() . '","' . $_POST['location'] . '", "' . $_POST['lat'] . '","' . $_POST['lng'] . '","' . $_POST['city'] . '","' . $_POST['state'] . '","' . $_POST['zip'] . '","' . $_POST['country'] . '","' . $_POST['address'] . '","' . $_POST['address2'] . '",  "sesjob_job")	ON DUPLICATE KEY UPDATE	lat = "' . $_POST['lat'] . '" , lng = "' . $_POST['lng'] . '",city = "' . $_POST['city'] . '", state = "' . $_POST['state'] . '", country = "' . $_POST['country'] . '", zip = "' . $_POST['zip'] . '", address = "' . $_POST['address'] . '", address2 = "' . $_POST['address2'] . '", venue = "' . $_POST['venue'] . '"');
+        $sesjob->location = $_POST['location'];
+        $sesjob->save();
+      } else {
+        $dbGetInsert = Engine_Db_Table::getDefaultAdapter();
+        $dbGetInsert->query('INSERT INTO engine4_sesbasic_locations (resource_id,venue, lat, lng ,city,state,zip,country,address,address2, resource_type) VALUES ("' . $sesjob->getIdentity() . '","' . $_POST['location'] . '", "' . $_POST['lat'] . '","' . $_POST['lng'] . '","' . $_POST['city'] . '","' . $_POST['state'] . '","' . $_POST['zip'] . '","' . $_POST['country'] . '","' . $_POST['address'] . '","' . $_POST['address2'] . '",  "sesjob_job")	ON DUPLICATE KEY UPDATE	lat = "' . $_POST['lat'] . '" , lng = "' . $_POST['lng'] . '",city = "' . $_POST['city'] . '", state = "' . $_POST['state'] . '", country = "' . $_POST['country'] . '", zip = "' . $_POST['zip'] . '", address = "' . $_POST['address'] . '", address2 = "' . $_POST['address2'] . '", venue = "' . $_POST['venue'] . '"');
+        $sesjob->location = $_POST['location'];
+        $sesjob->save();
+      }
+
+      if($parentType == 'sesevent_job') {
+        $sesjob->parent_type = $parentType;
+        $sesjob->event_id = $event_id;
+        $sesjob->save();
+        $seseventjob = Engine_Api::_()->getDbtable('mapevents', 'sesjob')->createRow();
+        $seseventjob->event_id = $event_id;
+        $seseventjob->job_id = $job_id;
+        $seseventjob->save();
+      }
+
+      //Save company details
+
+      if(empty($values['company_id']) && $values['company_name']) {
+        $companiesTable = Engine_Api::_()->getDbtable('companies', 'sesjob');
+        $companies = $companiesTable->createRow();
+        $companies->company_name = $values['company_name'];
+				$companies->owner_id = $viewer->getIdentity();
+        $companies->company_websiteurl = $values['company_websiteurl'];
+        $companies->company_description = $values['company_description'];
+        $companies->industry_id = isset($values['industry_id']) ? $values['industry_id'] : 0 ;
+        $companies->save();
+        $companies->job_count++;
+        $companies->save();
+				$sesjob->company_id = $companies->company_id;
+				$sesjob->save();
+      } elseif(!empty($values['company_id'])) {
+        $company = Engine_Api::_()->getItem('sesjob_company', $values['company_id']);
+        $company->company_name = $values['company_name'];
+        $company->company_websiteurl = $values['company_websiteurl'];
+        $company->company_description = $values['company_description'];
+        $company->industry_id =  isset($values['industry_id']) ? $values['industry_id'] : 0 ;
+        $company->save();
+        $company->job_count++;
+        $company->save();
+				$sesjob->company_id = $company->company_id;
+				$sesjob->save();
+      }
+
+
+      if(isset ($_POST['cover']) && !empty($_POST['cover'])) {
+				$sesjob->photo_id = $_POST['cover'];
+				$sesjob->save();
+      }
+
+      $customfieldform = $form->getSubForm('fields');
+      if (!is_null($customfieldform)) {
+				$customfieldform->setItem($sesjob);
+				$customfieldform->saveValues();
+      }
+
+      // Auth
+      $auth = Engine_Api::_()->authorization()->context;
+      $roles = array('owner', 'owner_member', 'owner_member_member', 'owner_network', 'registered', 'everyone');
+
+      if( empty($values['auth_view']) ) {
+        $values['auth_view'] = 'everyone';
+      }
+
+      if( empty($values['auth_comment']) ) {
+        $values['auth_comment'] = 'everyone';
+      }
+
+      $viewMax = array_search($values['auth_view'], $roles);
+      $commentMax = array_search($values['auth_comment'], $roles);
+      $videoMax = array_search(isset($values['auth_video']) ? $values['auth_video']: '', $roles);
+      $musicMax = array_search(isset($values['auth_music']) ? $values['auth_music']: '', $roles);
+
+      foreach( $roles as $i => $role ) {
+        $auth->setAllowed($sesjob, $role, 'view', ($i <= $viewMax));
+        $auth->setAllowed($sesjob, $role, 'comment', ($i <= $commentMax));
+        $auth->setAllowed($sesjob, $role, 'video', ($i <= $videoMax));
+        $auth->setAllowed($sesjob, $role, 'music', ($i <= $musicMax));
+      }
+
+      // Add tags
+      $tags = preg_split('/[,]+/', $values['tags']);
+     // $sesjob->seo_keywords = implode(',',$tags);
+      //$sesjob->seo_title = $sesjob->title;
+      $sesjob->save();
+      $sesjob->tags()->addTagMaps($viewer, $tags);
+
+      $session = new Zend_Session_Namespace();
+      if(!empty($session->album_id)){
+				$album_id = $session->album_id;
+				if(isset($job_id) && isset($sesjob->title)){
+					Engine_Api::_()->getDbTable('albums', 'sesjob')->update(array('job_id' => $job_id,'owner_id' => $viewer->getIdentity(),'title' => $sesjob->title), array('album_id = ?' => $album_id));
+					if(isset ($_POST['cover']) && !empty($_POST['cover'])) {
+						Engine_Api::_()->getDbTable('albums', 'sesjob')->update(array('photo_id' => $_POST['cover']), array('album_id = ?' => $album_id));
+					}
+					Engine_Api::_()->getDbTable('photos', 'sesjob')->update(array('job_id' => $job_id), array('album_id = ?' => $album_id));
+					unset($session->album_id);
+				}
+      }
+
+      // Add activity only if sesjob is published
+      if( $values['draft'] == 0 && $values['is_approved'] == 1 && (!$sesjob->publish_date || strtotime($sesjob->publish_date) <= time())) {
+        $action = Engine_Api::_()->getDbtable('actions', 'activity')->addActivity($viewer, $sesjob, 'sesjob_new');
+        // make sure action exists before attaching the sesjob to the activity
+        if( $action ) {
+          Engine_Api::_()->getDbtable('actions', 'activity')->attachActivity($action, $sesjob);
+        }
+
+        //Tag Work
+        if($action && Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesadvancedactivity') && $tags) {
+          $dbGetInsert = Engine_Db_Table::getDefaultAdapter();
+          foreach($tags as $tag) {
+            $dbGetInsert->query('INSERT INTO `engine4_sesadvancedactivity_hashtags` (`action_id`, `title`) VALUES ("'.$action->getIdentity().'", "'.$tag.'")');
+          }
+        }
+
+        //Send notifications for all company subscribers
+        if(!empty($sesjob->company_id)) {
+            $company = Engine_Api::_()->getItem('sesjob_company', $sesjob->company_id);
+            $getAllsubscribes = Engine_Api::_()->getDbTable('cpnysubscribes', 'sesjob')->getAllsubscribes(array('resource_id' => $company->company_id));
+            $companylink = '<a href="' . $company->getHref() . '">' . $company->company_name . '</a>';
+            if(engine_count($getAllsubscribes) > 0) {
+                foreach($getAllsubscribes as $getAllsubscribe) {
+                    $owner = Engine_Api::_()->getItem('user', $getAllsubscribe->poster_id);
+                    Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($owner, $viewer, $sesjob, 'sesjob_newjobposted', array('companylink' => $companylink));
+
+                    //Engine_Api::_()->getApi('mail', 'core')->sendSystem($user, 'sesjob_newjobposted', array('sender_title' => $sesjob->getOwner()->getTitle(), 'object_link' => $sesjob->getHref(), 'host' => $_SERVER['HTTP_HOST'], 'company_name' => $company->company_name));
+                }
+            }
+        }
+      	$sesjob->is_publish = 1;
+        //$sesjob->save();
+      }
  			$db->commit();	
- 			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => array('job_id' => $job->getIdentity(), 'message' => $this->view->translate('You have successfully created .'))));
+ 			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => array('job_id' => $sesjob->getIdentity(), 'message' => $this->view->translate('You have successfully created .'))));
  		} catch (Exception $e) {
  			$db->rollBack();
  			Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$e->getMessage()));
@@ -353,7 +598,7 @@
  		$paginator->setItemCountPerPage($this->_getParam('limit', 10));
  		$paginator->setCurrentPageNumber($this->_getParam('page', 1));
  		if ($paginator->getCurrentPageNumber() == 1) {
- 			$categories = Engine_Api::_()->getDbtable('categories', 'sesjob')->getCategory(array('column_name' => '*', 'limit' => 25, 'countJobs' => 1));
+ 			$categories = Engine_Api::_()->getDbtable('categories', 'sesjob')->getCategory(array('column_name' => '*', 'limit' => 100, 'countJobs' => 1));
  			$menus = Engine_Api::_()->getApi('menus', 'core')->getNavigation('sesjob_main', array());
  			$category_counter = 0;
  			$menu_counter = 0;
@@ -446,6 +691,7 @@
 			 $result['companies'][$counter]['enable_add_shortcut'] = $sesshortcut;
 			 if($sesshortcut){
 				 $isShortcut = Engine_Api::_()->getDbTable('shortcuts', 'sesshortcut')->isShortcut(array('resource_type' => $item->getType(), 'resource_id' => $item->getIdentity()));
+				 $shortMessage = array();
 				 if (empty($isShortcut)) {
 					 $shortMessage['title'] = $this->view->translate('Add to Shortcuts');
 					 $shortMessage['resource_type'] = $item->getType();
@@ -547,6 +793,7 @@
 		 $result['jobs']['enable_add_shortcut'] = $sesshortcut;
 		 if($sesshortcut){
 			 $isShortcut = Engine_Api::_()->getDbTable('shortcuts', 'sesshortcut')->isShortcut(array('resource_type' => $item->getType(), 'resource_id' => $item->getIdentity()));
+			 $shortMessage = array();
 			 if (empty($isShortcut)) {
 				 $shortMessage['title'] = $this->view->translate('Add to Shortcuts');
 				 $shortMessage['resource_type'] = $item->getType();
@@ -619,6 +866,7 @@
 		 $result['jobs']['enable_add_shortcut'] = $sesshortcut;
 		 if($sesshortcut){
 			 $isShortcut = Engine_Api::_()->getDbTable('shortcuts', 'sesshortcut')->isShortcut(array('resource_type' => $item->getType(), 'resource_id' => $item->getIdentity()));
+			 $shortMessage = array();
 			 if (empty($isShortcut)) {
 				 $shortMessage['title'] = $this->view->translate('Add to Shortcuts');
 				 $shortMessage['resource_type'] = $item->getType();
@@ -643,6 +891,10 @@
 			 "type" => $item->getType(),
 			 "id" => $item->getIdentity()
 		 );
+
+		 $viewerId = $this->view->viewer()->getIdentity();
+		 if($viewerId)
+		 $result['jobs']['applied'] = Engine_Api::_()->getDbTable('applications', 'sesjob')->isApplied(array('job_id' => $item->getIdentity(), 'owner_id' => $viewerId));
 
 
  		$result['jobs']['jobs_image'] = $this->getBaseUrl(true, $item->getPhotoUrl());
@@ -724,56 +976,62 @@
  			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array_merge(array('error' => '0', 'error_message' => '', 'result' => $result), $extraParams));	
  	}
  	public function applyJobAction(){
- 		$viewer = Engine_Api::_()->user()->getViewer();
- 		$viewerId = $viewer->getIdentity();
- 		$jobId = $this->_getParam('job_id', 0);
- 		$applications = Engine_Api::_()->getItem('sesjob_application', $jobId);
+		$viewer = Engine_Api::_()->user()->getViewer();
+		$viewerId = $viewer->getIdentity();
+		$jobId = $this->_getParam('job_id', 0);
+		// $applications = Engine_Api::_()->getItem('sesjob_application', $jobId);
 
- 		$form = new Sesjob_Form_Company_Apply();
- 		if($this->_getParam('getForm')) {
- 			$formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
- 			$this->generateFormFields($formFields,array('resources_type'=>'sesjob'));
- 		}   
- 		if(!$form->isValid($this->getRequest()->getPost()) ) { 
- 			$validateFields = Engine_Api::_()->getApi('FormFields','sesapi')->validateFormFields($form);
- 			if(is_countable($validateFields) && engine_count($validateFields))
- 				$this->validateFormFields($validateFields);
- 		}
- 		if ($this->getRequest()->isPost()) {
- 			$applicationTable = Engine_Api::_()->getDbtable('applications', 'sesjob');
- 			$db = $applicationTable->getAdapter();
- 			$db->beginTransaction();
- 			try { 
- 				$formValues = $form->getValues();
- 				if (!$jobId) { 
- 					$applications = $applicationTable->createRow();
- 					$formValues['name'] =$formValues['name'];
- 					$formValues['email'] =$formValues['email'];
- 					$formValues['mobile_number'] =$formValues['mobile_number'];
- 					$formValues['location'] = $formValues['location'];
- 					$formValues['photo'] = $formValues['file_id'];
- 					$formValues['module_name'] = 'sesjob';
- 					$formValues['job_id'] = $jobId;
- 					$formValues['owner_id'] = $viewerId; 
- 					$applications->setFromArray($formValues);
+		$form = new Sesjob_Form_Company_Apply();
+		if($this->_getParam('getForm')) {
+			$formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
+			$this->generateFormFields($formFields,array('resources_type'=>'sesjob'));
+		}   
+		if(!$form->isValid($this->getRequest()->getPost()) ) { 
+			$validateFields = Engine_Api::_()->getApi('FormFields','sesapi')->validateFormFields($form);
+			if(count($validateFields))
+				$this->validateFormFields($validateFields);
 
- 				} else{ 
- 					$applications->name = $formValues['name'];
- 					$applications->email = $formValues['email'];
- 					$applications->mobile_number = $formValues['mobile_number'];
- 					$applications->location = $formValues['location'];
- 					$applications->photo = $formValues['file_id'];
- 				}
- 				$applications->save();
- 				$db->commit();
 
- 				Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => array('job_id' => $applications->getIdentity(), 'message' => $this->view->translate('You have successfully created job.'))));
- 			} catch (Exception $e) {
- 				$db->rollBack();
- 				Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>$e->getMessage()));
- 			}
- 		}
- 	}
+		   if(empty($_FILES['photo']['name'])){
+			   Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate("Upload Resume: This is required field."), 'result' => array()));
+		   }
+
+		}
+		if ($this->getRequest()->isPost()) {
+			$applicationTable = Engine_Api::_()->getDbtable('applications', 'sesjob');
+			$db = $applicationTable->getAdapter();
+			$db->beginTransaction();
+			try { 
+				$formValues = $form->getValues();
+				// if (!$jobId) { 
+					$applications = $applicationTable->createRow();
+					$formValues['name'] =$formValues['name'];
+					$formValues['email'] =$formValues['email'];
+					$formValues['mobile_number'] =$formValues['mobile_number'];
+					$formValues['location'] = $formValues['location'];
+					$formValues['photo'] = $formValues['file_id'];
+					$formValues['module_name'] = 'sesjob';
+					$formValues['job_id'] = $jobId;
+					$formValues['owner_id'] = $viewerId; 
+					$applications->setFromArray($formValues);
+
+				// } else{ 
+				// 	$applications->name = $formValues['name'];
+				// 	$applications->email = $formValues['email'];
+				// 	$applications->mobile_number = $formValues['mobile_number'];
+				// 	$applications->location = $formValues['location'];
+				// 	$applications->photo = $formValues['file_id'];
+				// }
+				$applications->save();
+				$db->commit();
+
+				Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => array('message' => $this->view->translate('Applied Successfully.'))));
+			} catch (Exception $e) {
+				$db->rollBack();
+				Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>$e->getMessage()));
+			}
+		}
+	}
  	public function likeAction() {
  		$count = "";
  		$item_id = $this->_getParam('job_id', null);

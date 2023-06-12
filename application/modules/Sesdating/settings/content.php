@@ -30,7 +30,7 @@ if(Engine_Api::_()->getDbtable("modules", "core")->isModuleEnabled("sesdating") 
 $moduleEnable = Engine_Api::_()->sesdating()->getModulesEnable();
 $headScript = new Zend_View_Helper_HeadScript();
 $headScript->appendFile(Zend_Registry::get('StaticBaseUrl') . 'externals/ses-scripts/jscolor/jscolor.js');
-$headScript->appendFile(Zend_Registry::get('StaticBaseUrl') . 'application/modules/Sesbasic/externals/scripts/jquery.min.js');
+
 $dating_theme_widget = array(
 		array(
 			'title' => 'SNS - Responsive Dating Theme - Custom Navigation Menu',

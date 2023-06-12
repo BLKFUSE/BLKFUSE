@@ -95,6 +95,25 @@ class Music_PlaylistController extends Sesapi_Controller_Action_Standard {
     if(is_null($response["share"]["title"]))
       unset($response["share"]["title"]);
 
+		$response['resource_type'] = $playlist->getType();
+		
+		$response['is_rated'] = Engine_Api::_()->getDbTable('ratings', 'music')->checkRated($playlist->getIdentity(), $viewer->getIdentity());
+		$response['enable_rating'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('music.enable.rating', 1);
+		$response['ratingicon'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('music.ratingicon', 'fas fa-star');
+		
+    if( !empty($playlist->category_id) ) {
+      $category = Engine_Api::_()->getItem('music_category', $playlist->category_id);
+      $response['category_title'] = $category->category_name;
+			if( !empty($playlist->subcat_id) ) {
+				$category = Engine_Api::_()->getItem('music_category', $playlist->subcat_id);
+				$response['subcategory_title'] = $category->category_name;
+			}
+			if( !empty($playlist->subsubcat_id) ) {
+				$category = Engine_Api::_()->getItem('music_category', $playlist->subsubcat_id);
+				$response['subsubcategory_title'] = $category->category_name;
+			}
+    }
+		
     //$response['songs'] = $response_songs;
     $result['playlist'] = $response;
     Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'No songs created yet.', 'result' => array_merge($result, $response_songs))); 

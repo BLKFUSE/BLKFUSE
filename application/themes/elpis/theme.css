@@ -280,7 +280,7 @@ div.layout_core_menu_footer {
 .layout_core_menu_footer select {
   min-width:auto !important;
   border:0;
-  background:$theme_body_background_color;
+  background-color:$theme_body_background_color;
   border-radius:4px;
 }
 .layout_core_menu_footer a,
@@ -486,6 +486,12 @@ MAIN MENU WIDGET
   color:$theme_topbar_menu_link_color;
   text-decoration:$theme_topbar_menu_link_decoration;
 }
+.layout_core_menu_main .navigation > li > a:focus-visible {
+  color:$theme_topbar_menu_link_hover_color !important;
+  background:$theme_topbar_menu_link_background_color_hover !important;
+  border:2px solid $theme_topbar_menu_link_color;
+}
+  
 /*
 MINI MENU + SEARCH WIDGET
 Shows the mini menu and search widget
@@ -538,6 +544,7 @@ Shows the mini menu and search widget
   color:$theme_topbar_minimenu_link_color;
   background:$theme_topbar_minimenu_link_background_color;
 }
+
 .updates_pulldown_active>a.core_mini_update.show_icons::before {
   color:$theme_topbar_minimenu_link_hover_color;
 }
@@ -557,8 +564,8 @@ Shows the mini menu and search widget
   display:none;
 }
 .layout_core_menu_mini #core_menu_mini_menu > ul > li >a.core_mini_profile > .bg_item_photo {
-  width:40px;
-  height:40px;
+  width:100%;
+  height:100%;
   border-radius:50%;
   border:none;
   margin:0;
@@ -596,6 +603,10 @@ Shows the mini menu and search widget
   width:40px;
   height:40px;
   border-radius:50px;
+}
+.layout_core_menu_mini #core_menu_mini_menu>ul>li a:focus-visible {
+  outline: 0;
+  border:1px solid #000;
 }
 html .layout_core_menu_mini #core_menu_mini_menu>ul>li .core_mini_signup {
   background:$theme_topbar_minimenu_signup_background_color !important;
@@ -677,6 +688,9 @@ html .layout_core_menu_mini #core_menu_mini_menu>ul>li .core_mini_auth i:before,
 [dir="rtl"] .layout_core_search_mini #global_search_form:before {
   right:auto;
   left:0;
+}
+.layout_core_search_mini #global_search_field:focus-visible{
+  border-color: $theme_topbar_menu_link_background_color_hover !important;
 }
 .layout_core_search_mini #global_search_form {
   padding:0;
@@ -879,7 +893,8 @@ button {
   transition:all .2s ease-in-out;
   outline:none !important;
 }
-button:hover {
+button:hover,
+button:focus-visible {
   background-color:$theme_button_background_color_hover;
   border-color:$theme_button_background_color_hover;
   cursor:pointer;
@@ -901,7 +916,12 @@ input[type=text], input[type=email], input[type=password], input.text, textarea 
   resize:none;
   box-sizing:border-box;
   outline-width:0;
-	outline:0 !important;
+}
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+select:focus-visible{
+	border-color: $theme_button_background_color !important;
 }
 input[type=checkbox], input[type=radio] {
   border:none;
@@ -935,11 +955,16 @@ select {
   border-width:1px;
   border-color:$theme_input_border_colors;
   padding:12px 8px;
+  padding-right: 20px;
   font-size:$theme_font_size_small;
   max-width:100%;
   width:100%;
   box-sizing:border-box;
   outline-width:0;
+}
+[dir="rtl"] select{
+  padding:12px 8px;
+  padding-right: 20px;
 }
 select option {
   padding:0px 10px 0px 3px;
@@ -1501,9 +1526,16 @@ Used at the top of most browse pages. Often contains button-style tabs.
   border-bottom:4px solid $theme_buttontabs_border_color_active !important;
   color:$theme_buttontabs_font_color_active !important;
 }
+.tabs > ul > li > a:focus-visible{
+  border-bottom:4px solid $theme_buttontabs_border_color_active !important;
+  color:$theme_buttontabs_font_color_active !important;
+  outline-offset: unset !important;
+  outline: inherit !important;
+}
 .tabs>ul>li.active>a:hover {
   text-decoration:none;
 }
+
 /*
 TABS (TAB STYLE, NON-DEFAULT)
 */
@@ -1527,6 +1559,10 @@ TABS (TAB STYLE, NON-DEFAULT)
   border-bottom:4px solid $theme_tabs_border_color_active !important;
   color:$theme_tabs_font_color_active;
   position:relative;
+}
+.tabs_alt >ul > li > a:focus-visible{
+  border-bottom:4px solid $theme_tabs_border_color_active !important;
+  color:$theme_tabs_font_color_active;
 }
 .tabs_alt>ul>li>a {
   text-decoration:none;
@@ -1562,16 +1598,19 @@ TABS (TAB STYLE, NON-DEFAULT)
   +rounded(3px, false, false, true, true);
   border:1px solid $theme_pulldown_border_color;
   border-bottom:none;
-  background-color:$theme_pulldown_background_color_active;
+  background-color:$theme_pulldown_background_color_active !important;
   color:#fff;
   position:relative;
   top:1px;
   padding:7px 9px 7px 9px;
 }
+.tabs_alt>ul>li.tab_open>a:focus-visible{
+  background-color:$theme_pulldown_background_color_active !important;
+}
 .tab_pulldown_contents_wrapper {
   +rounded(3px, true, false, false, false);
   overflow:hidden;
-  margin-top:53px !important;
+  margin-top:0 !important;
 }
 .tab_pulldown_contents {
   overflow:hidden;
@@ -1580,15 +1619,18 @@ TABS (TAB STYLE, NON-DEFAULT)
 .tab_pulldown_contents>ul>li {
   font-family:$theme_buttontabs_font_family;
 }
-.tab_pulldown_contents>ul>li.active {
+.tab_pulldown_contents>ul>li.active a{
   background-color:$theme_pulldown_contents_list_background_color_active;
 }
-.tab_pulldown_contents>ul>li+li {
+.tab_pulldown_contents>ul>li+li a{
   border-top:1px dashed $theme_border_color;
 }
-.tab_pulldown_contents>ul>li:hover {
+.tab_pulldown_contents > ul > li:hover a{
   background-color:$theme_pulldown_contents_list_background_color_hover;
-  cursor:pointer;
+}
+.tab_pulldown_contents > ul > li a:focus-visible{
+  background-color:$theme_pulldown_contents_list_background_color_hover;
+  outline:none;
 }
 .tabs_alt>ul>li.tab_open .tab_pulldown_contents_wrapper {
   display:block;
@@ -1746,6 +1788,10 @@ These are mostly widget-specific overrides.
 .browsemembers_criteria ul li input[type=checkbox] {
   margin:6px 4px 0px 0px;
 }
+.browsemembers_criteria input:focus-visible,
+.browsemembers_criteria select:focus-visible{
+  border-color: $theme_button_background_color;
+}
 .browsemembers_criteria input+label {
   font-size:$theme_font_size_small;
 }
@@ -1788,6 +1834,14 @@ div.albums_viewmedia_info, html div.event_photo_info, html .group_photo_info {
 }
 #filter_form .form-wrapper+.form-wrapper {
   margin-top:15px;
+}
+#filter_form input:focus-visible,
+#filter_form select:focus-visible,
+#filter_form textarea:focus-visible,
+form.filters input:focus-visible,
+form.filters select:focus-visible,
+form.filters textarea:focus-visible{
+  border-color: $theme_button_background_color !important;
 }
 .blogs_browse_info_title h3 {
   background-color:transparent;
@@ -2268,6 +2322,12 @@ body.global_left_panel .layout_core_menu_main .has_submenu .menu_core_main {
 [dir="rtl"] .global_left_panel .menu_core_main_tip:after {
   border-left-color:$theme_menu_tip_color;
   border-right-color:transparent;
+}
+.global_left_panel button:focus-visible{
+  border:1px solid $theme_button_background_color !important;
+}
+.global_left_panel .navbar-toggler:focus-visible{
+  padding: 5px 10px;
 }
 /* LANDING PAGE */
 .elpis_landingpage{
@@ -3077,7 +3137,7 @@ html ul.forum_topics .forum_topics_icon::before {
   .tabs_alt>ul {
     height:auto;
     line-height:inherit !important;
-    margin:10px 0;
+    margin:25px 0 0 !important;
     padding:0 !important;
   }
   html .tabs_alt .tab_pulldown_contents_wrapper {
@@ -3166,11 +3226,18 @@ html ul.forum_topics .forum_topics_icon::before {
   div.tabs_alt li.more_tab>a, div.tabs_alt li.more_tab:hover>a {
     display:none !important;
   }
-  div.tabs_alt li.more_tab>.tab_pulldown_contents_wrapper ul>li {
+  div.tabs_alt li.more_tab>.tab_pulldown_contents_wrapper ul>li>a {
     border-top-width: 0 !important;
-    padding:11px 20px;
+    padding:11px 15px;
     font-weight:400;
+    border: none;
+    color:$theme_tabs_font_color;
+    display: block;
   }
+  div.tabs_alt li.more_tab>.tab_pulldown_contents_wrapper ul > li.active > a {
+    background-color:$theme_button_background_color;
+    color:$theme_button_font_color !important;
+}
   /* Header */
   .layout_page_header .layout_core_menu_social_sites {
     display:none;
@@ -3419,7 +3486,6 @@ html ul.forum_topics .forum_topics_icon::before {
     display:none;
     position:absolute;
     border-width:1px;
-    margin-top:26px;
     background-color:$theme_pulldown_border_color;
     z-index:99;
   }
@@ -3427,13 +3493,14 @@ html ul.forum_topics .forum_topics_icon::before {
     max-height:500px;
     overflow-y:auto;
   }
-  .tab_pulldown_contents>ul>li {
+  .tab_pulldown_contents > ul > li > a{
     padding:10px;
     font-size:90%;
     min-width:100px;
     max-width:250px;
     -moz-user-select:none;
     -webkit-user-select:none;
+    display: block;
   }
 }
 @media (min-width:1199px) {

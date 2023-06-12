@@ -31,7 +31,7 @@ class Group_Form_CoverPhoto_Cover extends Engine_Form {
     $this->addElement('File', 'Filedata', array(
       'label' => 'Choose a cover photo.',
       'validators' => array(
-          array('Extension', false, 'jpg,jpeg,png,gif'),
+          array('Extension', false, 'jpg,png,gif,jpeg,webp'),
       ),
       'onchange' => 'javascript:uploadPhoto();'
     ));

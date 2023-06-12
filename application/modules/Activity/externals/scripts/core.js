@@ -190,6 +190,7 @@ en4.activity = {
       });
   },
   post : function (composeInstance, event) {
+    scriptJquery("#compose-submit").attr('disabled','disabled');
     event.preventDefault();
     var formElement = composeInstance.getForm();
     var formData = {};
@@ -205,6 +206,7 @@ en4.activity = {
     }),{
       force: true,
       successCallBack : function (resp) {
+        scriptJquery("#compose-submit").removeAttr('disabled');
         if(!resp.status) {
           scriptJquery('#fail_msg').css("display","block");
           return;

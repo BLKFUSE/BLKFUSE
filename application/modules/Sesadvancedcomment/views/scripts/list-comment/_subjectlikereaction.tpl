@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php include APPLICATION_PATH .  '/application/modules/Sesadvancedcomment/views/scripts/_jsFiles.tpl'; ?>
 <?php $subject = !empty($this->subject) ? $this->subject : $this->action; ?>
 <?php 
    $likesGroup = Engine_Api::_()->sesadvancedcomment()->likesGroup($subject,'subject'); 

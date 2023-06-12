@@ -121,6 +121,8 @@ class Sesuserimport_Api_Core extends Core_Api_Abstract {
             $profile_type = array_shift($profleType);
         } else if($values['profile_types']) {
             $profile_type = @$values['profile_types'][0];
+        } else if($values['profile_type']) {
+            $profile_type = @$values['profile_type'];
         } else {
             $profile_type = 1;
         }

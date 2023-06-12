@@ -37,7 +37,7 @@ $viewer_id = Engine_Api::_()->user()->getViewer()->getIdentity();
   </span>
   <?php if($this->share){ ?>
   <span class="sesadct_event_btn">
-    <a href="javascript:;" class="sesbasic_button fa fa-share" onClick="openSmoothBoxInUrl('<?php echo $this->escape($this->url(array('module'=>'sesadvancedactivity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>$events->getType(), 'id' => $events->getIdentity(), 'format' => 'smoothbox'), 'default' , true)); ?>');return false;">Share</a>
+    <a href="javascript:;" class="sesbasic_button fas fa-share-alt" onClick="openSmoothBoxInUrl('<?php echo $this->escape($this->url(array('module'=>'sesadvancedactivity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>$events->getType(), 'id' => $events->getIdentity(), 'format' => 'smoothbox'), 'default' , true)); ?>');return false;">Share</a>
   </span>
   <?php  } ?>
 </div>

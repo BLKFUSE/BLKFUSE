@@ -58,13 +58,17 @@ class Group_Form_Topic_Create extends Engine_Form
         $uploadUrl = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('controller'=>'index', 'action'=>'upload-photo'), 'group_extended', true);
 
       }
-
+      
       $editorOptions = array(
         'uploadUrl' => $uploadUrl,
-        'bbcode' => $settings->getSetting('forum_bbcode', 0),
-        'html' => $settings->getSetting('forum_html', 0)
       );
-
+      
+      if( $allowHtml ) {
+        $editorOptions = array_merge($editorOptions, array('html' => 1, 'bbcode' => 1));
+      } else {
+        $editorOptions = array_merge($editorOptions, array('html' => 0, 'bbcode' => 1));
+      }
+      
       $this->addElement('TinyMce', 'body', array(
         'disableLoadDefaultDecorators' => true,
         'editorOptions' => $editorOptions,

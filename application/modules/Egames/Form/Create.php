@@ -139,7 +139,7 @@ class Egames_Form_Create extends Engine_Form
         'required' => empty($game_id) ?  true : false,
         'description' => '',
       ));
-      $this->photo->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+      $this->photo->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
 
         $this->addElement('Checkbox', 'search', array(
             'label' => 'Show this game entry in search results',

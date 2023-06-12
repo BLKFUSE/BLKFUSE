@@ -12,9 +12,9 @@
 		<li class="eweblivestreaming_live_members_item">
 			<article>
 				<div class="eweblivestreaming_item_thumb">
-					<a href="javascript:;" class="elivestreaming_data_a" data-hostid="<?php $user->max_elivehost_id ?>" data-user="<?php $user->user_id ?>" data-action="<?php $user->max_action_id ?>" data-story="<?php $user->max_story_id ?>">
+					<a href="javascript:;" class="elivestreaming_data_a" data-hostid="<?php echo $user->max_elivehost_id ?>" data-user="<?php echo $user->user_id ?>" data-action="<?php echo $user->max_action_id ?>" data-story="<?php echo $user->max_story_id ?>">
 						<span class="_img">
-							<img src="<?php echo $user->getPhotoUrl() ?>" alt="<?php echo $user->getTitle() ?>" />
+							<?php echo $this->itemBackgroundPhoto($user, 'thumb.profile'); ?>
 						</span>
 						<?php if($this->live_icon){ ?>
 						<span class="_label">

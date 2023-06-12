@@ -12,6 +12,7 @@
  */
 
 ?>
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesthought/externals/scripts/core.js'); ?>
 <?php $viewer = Engine_Api::_()->user()->getViewer();?>
 <?php $viewerId = $viewer->getIdentity();?>
 <?php 

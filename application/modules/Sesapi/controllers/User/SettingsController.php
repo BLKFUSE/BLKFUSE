@@ -315,6 +315,9 @@ class User_SettingsController extends Sesapi_Controller_Action_Standard
     $this->view->form = $form = new User_Form_Settings_Password();
     $form->populate($user->toArray());
     $form->removeElement('passwordroutine');
+    $form->removeElement('showhidenewpassword');
+    $form->removeElement('showhideconfirmpassword');
+    $form->removeElement('showhidepassword');
 
     // Check if post and populate
     if($this->_getParam('getForm')) {
@@ -527,8 +530,10 @@ class User_SettingsController extends Sesapi_Controller_Action_Standard
       $this->generateFormFields($formFields);
     }
     foreach($_POST as $key=>$value){
-       $values = array_filter($_POST[$key],function($a){  return  ($a != 0); });
-       $_POST[$key] = array_keys($values);  
+      if(is_array($_POST[$key])){
+        $values = array_filter($_POST[$key],function($a){  return  ($a != 0); });
+        $_POST[$key] = array_keys($values);  
+       } 
     }
     // Check if valid
     if( !$form->isValid($_POST) ) {

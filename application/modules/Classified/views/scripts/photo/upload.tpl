@@ -14,6 +14,7 @@
 <script type="text/javascript">
   en4.core.runonce.add(function() {
     new Uploader('#upload_file', {
+			removePhotoURL : "<?php echo $this->url(array('controller' => 'photo','action' => 'remove-photo'), 'classified_extended', true); ?>",
       uploadLinkClass : 'buttonlink icon_photos_new',
       uploadLinkTitle : '<?php echo $this->translate("Add Photos");?>',
       uploadLinkDesc : '<?php echo $this->translate("Click \"Add Photos\" to select one or more photos from your computer."

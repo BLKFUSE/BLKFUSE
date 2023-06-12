@@ -210,7 +210,7 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
     {
         $lifetime = $this->getLifetime($specificLifetime);
         if ($this->_options['compression']) {
-            $flag = MEMCACHE_COMPRESSED;
+            $flag = 1; //MEMCACHE_COMPRESSED;
         } else {
             $flag = 0;
         }
@@ -448,7 +448,7 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
     public function touch($id, $extraLifetime)
     {
         if ($this->_options['compression']) {
-            $flag = MEMCACHE_COMPRESSED;
+            $flag = 1; //MEMCACHE_COMPRESSED;
         } else {
             $flag = 0;
         }

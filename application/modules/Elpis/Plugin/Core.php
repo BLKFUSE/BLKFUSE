@@ -49,4 +49,7 @@ class Elpis_Plugin_Core extends Zend_Controller_Plugin_Abstract {
 
     }
 	}
+  public function onRenderLayoutDefaultSimple($event) {
+    return $this->onRenderLayoutDefault($event, 'simple');
+  }
 }

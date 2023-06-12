@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php include APPLICATION_PATH .  '/application/modules/Sesadvancedcomment/views/scripts/_jsFiles.tpl'; ?>
 <?php $commentreply = $this->commentreply; 
       $action = !empty($this->subject) ? $this->subject : $this->action;
       $canComment =($action->authorization()->isAllowed($this->viewer(), 'comment'));
@@ -39,26 +40,24 @@
         <div class="sesadvcmt_pulldown">
           <div class="sesadvcmt_pulldown_cont">
             <ul>
-              <?php if($this->viewer()->getIdentity() == $commentreply->poster_id || Engine_Api::_()->getDbtable('permissions', 'authorization')->getAllowed('user', $this->viewer()->level_id, 'activity')){ ?>
-            <?php if(($this->subject() && method_exists($this->subject(),'canDeleteComment') && $this->subject()->canDeleteComment($this->subject())) || (!$this->subject() || ($this->subject() && !method_exists($this->subject(),'canDeleteComment')))){ ?>
-              <li>
-               <?php echo $this->htmlLink(array(
-                    'route'=>'default',
-                    'module'    => 'sesadvancedcomment',
-                    'controller'=> 'index',
-                    'action'    => 'delete',
-                    'type'=>$action->getType(),
-                    'action_id' => $action->getIdentity(),
-                    'comment_id'=> $commentreply->comment_id,
-                    ), $this->translate('Delete'), array('class' => 'sescommentsmoothbox sesadvancedcomment_delete')) ?>
-              </li>
-              <?php } ?>
-              <?php if(empty($commentreply->emoji_id) && empty($commentreply->gif_id) && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedcomment.editenable', 1)){ ?>
-             <?php if(($this->subject() && method_exists($this->subject(),'canEditComment') && $this->subject()->canEditComment($this->subject())) || (!$this->subject() || ($this->subject() && !method_exists($this->subject(),'canEditComment')))){ ?>
-              <li><?php echo $this->htmlLink(('javascript:;'), $this->translate('Edit'), array('class' => 'sesadvancedcomment_reply_edit')) ?></li>
-              <?php } ?>
-            <?php } ?>
-          <?php } ?>
+              <?php if($this->viewer()->getIdentity() == $commentreply->poster_id || Engine_Api::_()->getDbtable('permissions', 'authorization')->getAllowed('user', $this->viewer()->level_id, 'activity') || (($this->subject() && method_exists($this->subject(),'canDeleteComment') && $this->subject()->canDeleteComment($this->subject())))) { ?>
+								<li>
+								<?php echo $this->htmlLink(array(
+											'route'=>'default',
+											'module'    => 'sesadvancedcomment',
+											'controller'=> 'index',
+											'action'    => 'delete',
+											'type'=>$action->getType(),
+											'action_id' => $action->getIdentity(),
+											'comment_id'=> $commentreply->comment_id,
+											), $this->translate('Delete'), array('class' => 'sescommentsmoothbox sesadvancedcomment_delete')) ?>
+								</li>
+							<?php } ?>
+							<?php if(empty($commentreply->emoji_id) && empty($commentreply->gif_id) && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedcomment.editenable', 1)){ ?>
+								<?php if($this->viewer()->getIdentity() == $commentreply->poster_id || Engine_Api::_()->getDbtable('permissions', 'authorization')->getAllowed('user', $this->viewer()->level_id, 'activity') || ($this->subject() && method_exists($this->subject(),'canEditComment') && $this->subject()->canEditComment($this->subject()))) { ?>
+									<li><?php echo $this->htmlLink(('javascript:;'), $this->translate('Edit'), array('class' => 'sesadvancedcomment_reply_edit')) ?></li>
+								<?php } ?>
+							<?php } ?>
           <?php if($this->viewer()->getIdentity() != $commentreply->poster_id){ ?>
               <?php $reportEnable = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedcomment.reportenable', 1); ?>
               <?php if($reportEnable) { ?>
@@ -75,13 +74,13 @@
   </div>
   <div class="comments_content">
    <span class='comments_reply_author comments_author ses_tooltip' data-src="<?php echo $this->item($commentreply->poster_type, $commentreply->poster_id)->getGuid(); ?>">
-     <?php echo $this->htmlLink($this->item($commentreply->poster_type, $commentreply->poster_id)->getHref(), $this->item($commentreply->poster_type, $commentreply->poster_id)->getTitle()); ?>
-    <?php if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('everification')) { ?>
-      <?php $verifieddocuments = $verifieddocuments = Engine_Api::_()->getDbTable('documents', 'everification')->getAllUserDocuments(array('user_id' => $commentreply->poster_id, 'verified' => '1', 'fetchAll' => '1')); ?>
-      <?php if(count($verifieddocuments) > 0) { ?>
-        <i class="sesbasic_verify_icon" title="<?php echo $this->translate('Verified') ;?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15.67 7.06l-1.08-1.34c-.17-.22-.28-.48-.31-.77l-.19-1.7a1.51 1.51 0 0 0-1.33-1.33l-1.7-.19c-.3-.03-.56-.16-.78-.33L8.94.32c-.55-.44-1.33-.44-1.88 0L5.72 1.4c-.22.17-.48.28-.77.31l-1.7.19c-.7.08-1.25.63-1.33 1.33l-.19 1.7c-.03.3-.16.56-.33.78L.32 7.05c-.44.55-.44 1.33 0 1.88l1.08 1.34c.17.22.28.48.31.77l.19 1.7c.08.7.63 1.25 1.33 1.33l1.7.19c.3.03.56.16.78.33l1.34 1.08c.55.44 1.33.44 1.88 0l1.34-1.08c.22-.17.48-.28.77-.31l1.7-.19c.7-.08 1.25-.63 1.33-1.33l.19-1.7c.03-.3.16-.56.33-.78l1.08-1.34c.44-.55.44-1.33 0-1.88zM6.5 12L3 8.5 4.5 7l2 2 5-5L13 5.55 6.5 12z"/></svg></i>
-      <?php } ?>
-    <?php } ?>
+			<?php echo $this->htmlLink($this->item($commentreply->poster_type, $commentreply->poster_id)->getHref(), $this->item($commentreply->poster_type, $commentreply->poster_id)->getTitle()); ?>
+			<?php if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('everification')) { ?>
+			<?php $verifieddocuments = $verifieddocuments = Engine_Api::_()->getDbTable('documents', 'everification')->getAllUserDocuments(array('user_id' => $commentreply->poster_id, 'verified' => '1', 'fetchAll' => '1')); ?>
+			<?php if(count($verifieddocuments) > 0) { ?>
+				<i class="sesbasic_verify_icon" title="<?php echo $this->translate('Verified') ;?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15.67 7.06l-1.08-1.34c-.17-.22-.28-.48-.31-.77l-.19-1.7a1.51 1.51 0 0 0-1.33-1.33l-1.7-.19c-.3-.03-.56-.16-.78-.33L8.94.32c-.55-.44-1.33-.44-1.88 0L5.72 1.4c-.22.17-.48.28-.77.31l-1.7.19c-.7.08-1.25.63-1.33 1.33l-.19 1.7c-.03.3-.16.56-.33.78L.32 7.05c-.44.55-.44 1.33 0 1.88l1.08 1.34c.17.22.28.48.31.77l.19 1.7c.08.7.63 1.25 1.33 1.33l1.7.19c.3.03.56.16.78.33l1.34 1.08c.55.44 1.33.44 1.88 0l1.34-1.08c.22-.17.48-.28.77-.31l1.7-.19c.7-.08 1.25-.63 1.33-1.33l.19-1.7c.03-.3.16-.56.33-.78l1.08-1.34c.44-.55.44-1.33 0-1.88zM6.5 12L3 8.5 4.5 7l2 2 5-5L13 5.55 6.5 12z"/></svg></i>
+			<?php } ?>
+			<?php } ?>
    </span>
     <?php 
       $emoji = Engine_Api::_()->getApi('emoji','sesbasic')->getEmojisArray();

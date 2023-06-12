@@ -168,7 +168,7 @@ function handleFileUpload(files,obj)
    {
 			var url = files[i].name;
     	var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-			if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif' || ext == 'GIF')){
+			if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif' || ext == 'GIF' || ext == "webp")){
 				var status = new createStatusbar(obj,files[i]); //Using this we can set progress.
 				status.setFileNameSize(files[i].name,files[i].size);
 				statusArray[countUploadSes] =status;
@@ -308,5 +308,5 @@ scriptJquery(document).on('click','.delete_image_upload',function(e){
   }
 </script>
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/styles/customscrollbar.css'); ?>
-<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/jquery.min.js'); ?>
+
 <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/customscrollbar.concat.min.js');

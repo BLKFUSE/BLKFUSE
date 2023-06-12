@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php include APPLICATION_PATH .  '/application/modules/Sesadvancedcomment/views/scripts/_jsFiles.tpl'; ?>
 <?php $action = $this->action; 
       $isPageSubject = !empty($this->isPageSubject) ? $this->isPageSubject : $this->viewer();
 ?>

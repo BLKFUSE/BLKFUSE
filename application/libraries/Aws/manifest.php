@@ -2,7 +2,7 @@
   'package' => array(
     'type' => 'library',
     'name' => 'Aws',
-    'version' => '6.2.0',
+    'version' => '6.4.0',
     'path' => 'application/libraries/Aws',
     'repository' => 'socialengine.com',
     'title' => 'Amazon S3 API',

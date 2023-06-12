@@ -43,7 +43,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
     
       $result = array();
       $counter = 0;
-      $session = new Zend_Session_Namespace('sesproduct_product_quantity');
+      $session = (array) new Zend_Session_Namespace('sesproduct_product_quantity');
       if(engine_count($productsArray)){
         $storeArray = array();
         foreach($productsArray as $cart){
@@ -57,7 +57,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
           $productsCounter = 0;
           foreach($cart['cartproducts'] as $itemCart) {
             $item = Engine_Api::_()->getItem('sesproduct',$itemCart['product_id']);
-            if(!engine_count($item))
+            if(!($item))
               continue;
             $price = $cart['products_extra'][$itemCart['cartproduct_id']]['product_price'];
             $quantity = $cart['products_extra'][$itemCart['cartproduct_id']]['quantity'];
@@ -72,8 +72,8 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
             }
             
             
-            if(!empty($session->cart_product_{$itemCart['cartproduct_id']})){
-              $result['cartData'][$counter]['productData'][$productsCounter]['cart_error'] = $this->view->translate("%s",$session->cart_product_{$itemCart['cartproduct_id']});
+            if(!empty($session["cart_product_".$itemCart['cartproduct_id']])){
+              $result['cartData'][$counter]['productData'][$productsCounter]['cart_error'] = $this->view->translate("%s",$session["cart_product_".$itemCart['cartproduct_id']]);
             }
             
             $images = Engine_Api::_()->sesapi()->getPhotoUrls($item,'',"");
@@ -107,7 +107,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
         $extraParams['checkout'] = $this->view->translate('Checkout');
         $result['extraParams'] = $extraParams;
         
-        $result['grand_total'] = Engine_Api::_()->sesproduct()->getCurrencyPrice(round($this->totalPrice,2));
+        $result['grand_total'] = Engine_Api::_()->sesproduct()->getCurrencyPrice(round($cartData['totalPrice'],2));
 
         $result['checkout'] = $this->view->translate("Proceed to Checkout");
       }
@@ -128,7 +128,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
       $totalPrice = round($cartData['totalPrice'],2);
       
       //update cart values
-      $session = new Zend_Session_Namespace('sesproduct_product_quantity');
+      $session = (array) new Zend_Session_Namespace('sesproduct_product_quantity');
       //$session->unsetAll();
       
       if(engine_count($_POST)){
@@ -144,9 +144,9 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
                         //Check Product Order quantity And add product to cart
                         if ($quantity > $productAvailableQuantity['quantity']) {
                             if($cartProduct->quantity == $productAvailableQuantity['quantity'] ||  $productAvailableQuantity['quantity'] - $cartProduct->quantity < 0){
-                                $session->cart_product_{$id} = $this->view->translate("No more quantity available for this product.");
+                                $session["cart_product_".$id] = $this->view->translate("No more quantity available for this product.");
                             }else {
-                                $session->cart_product_{$id} = $this->view->translate("Only %s quantity left for this product.", $productAvailableQuantity);
+                                $session["cart_product_".$id] = $this->view->translate("Only %s quantity left for this product.", $productAvailableQuantity);
                             }
                         } else {
                             $cartProduct->quantity = $quantity;
@@ -156,11 +156,11 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
                         if(!empty($product->manage_stock)){
                             if((!empty($product->manage_stock) && $product->stock_quatity < $product->min_quantity) || $product->max_quatity < $quantity){
                                 if ($product->stock_quatity == 1)
-                                    $session->cart_product_{$id} = $this->view->translate("Only 1 quantity of this product is available in stock.");
+                                    $session["cart_product_".$id] = $this->view->translate("Only 1 quantity of this product is available in stock.");
                                 else if($product->max_quatity < $quantity)
-                                    $session->cart_product_{$id} = $this->view->translate("Only %s quantities of this product are available in stock. Please enter the quantity less than or equal to %s", $product->max_quatity,$product->max_quatity);
+                                    $session["cart_product_".$id] = $this->view->translate("Only %s quantities of this product are available in stock. Please enter the quantity less than or equal to %s", $product->max_quatity,$product->max_quatity);
                                 else
-                                    $session->cart_product_{$id} = $this->view->translate("Only %s quantities of this product are available in stock. Please enter the quantity less than or equal to %s.", $product->stock_quatity, $product->stock_quatity);
+                                    $session["cart_product_".$id] = $this->view->translate("Only %s quantities of this product are available in stock. Please enter the quantity less than or equal to %s.", $product->stock_quatity, $product->stock_quatity);
                                 //return;
                             }
                             $cartProduct->quantity = $quantity;
@@ -174,11 +174,13 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
             }
           }
       }
-      
+      $cartData = Engine_Api::_()->sesproduct()->cartTotalPrice();
+      $productsArray = $cartData['productsArray'];
+      $totalPrice = round($cartData['totalPrice'],2);
     
       $result = array();
       $counter = 0;
-      $session = new Zend_Session_Namespace('sesproduct_product_quantity');
+      $session = (array) new Zend_Session_Namespace('sesproduct_product_quantity');
       if(engine_count($productsArray)){
         $storeArray = array();
         foreach($productsArray as $cart){
@@ -193,7 +195,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
           foreach($cart['cartproducts'] as $itemCart) {
           
             $item = Engine_Api::_()->getItem('sesproduct',$itemCart['product_id']);
-            if(!engine_count($item))
+            if(!($item))
               continue;
             $price = $cart['products_extra'][$itemCart['cartproduct_id']]['product_price'];
             $quantity = $cart['products_extra'][$itemCart['cartproduct_id']]['quantity'];
@@ -209,8 +211,8 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
             }
             
             
-            if(!empty($session->cart_product_{$itemCart['cartproduct_id']})){
-              $result['cartData'][$counter]['productData'][$productsCounter]['cart_error'] = $this->view->translate("%s",$session->cart_product_{$itemCart['cartproduct_id']});
+            if(!empty($session["cart_product_".$itemCart['cartproduct_id']])){
+              $result['cartData'][$counter]['productData'][$productsCounter]['cart_error'] = $this->view->translate("%s",$session["cart_product_".$itemCart['cartproduct_id']]);
             }
             
             $images = Engine_Api::_()->sesapi()->getPhotoUrls($item,'',"");
@@ -271,7 +273,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
         $result['order_total'] = Engine_Api::_()->sesproduct()->getCurrencyPrice(round($cartData['totalPrice'],2));
 
         $result['checkout'] = $this->view->translate("Proceed to Checkout");
-        $result['checkouturl'] = $this->getBaseUrl(true, $this->view->url(array('action'=>'checkout'),'sesproduct_cart',true));
+        $result['checkouturl'] = $this->view->url(array('action'=>'checkout'),'sesproduct_cart',true);
       }
       if($result <= 0)
         Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=> $this->view->translate('No Category exists.'), 'result' => array()));
@@ -491,8 +493,12 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
     'order_direction' => isset($_GET['order_direction']) ? $_GET['order_direction'] : '',
     ), $values);
 
-    if (isset($_POST['searchParams']) && $_POST['searchParams'])
-        parse_str($_POST['searchParams'], $searchArray);
+    if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+			if(engine_in_array($_POST['searchParams']))
+				$searchArray = $_POST['searchParams'];
+			elseif(is_string($_POST['searchParams']))
+				parse_str($_POST['searchParams'], $searchArray);
+    }
 
     $this->view->assign($values);
 
@@ -976,7 +982,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
       $storeId = $review->store_id;
       $estore = Engine_Api::_()->getItemTable('estore_review');
       $estore->update(array($votesTitle => new Zend_Db_Expr($votesTitle . ' - 1')), array('store_id = ?' => $storeId));
-			$temp['data']['count'] = $review->{$votesTitle};
+			$temp['data']['count'] = $review[$votesTitle];
 			$temp['data']['condition'] = 'reduced';
 			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => $temp));
     } else {
@@ -1005,7 +1011,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
       $estore = Engine_Api::_()->getItemTable('estore_review');
       $estore->update(array($votesTitle => new Zend_Db_Expr($votesTitle . ' + 1')), array('store_id = ?' => $storeId));
 
-      $temp['data']['count'] = $review->{$votesTitle};
+      $temp['data']['count'] = $review[$votesTitle];
 			$temp['data']['condition'] = 'increment';
 			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => $temp));
     }
@@ -1718,9 +1724,11 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
     $viewer = $this->view->viewer();
     $is_ajax_content = $this->view->is_ajax_content = $this->_getParam('is_ajax_content', null) ? $this->_getParam('is_ajax_content') : false;
 
-    if(isset($_POST['searchParams']) && $_POST['searchParams']){
-      parse_str($_POST['searchParams'], $searchArray);
-
+    if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+			if(engine_in_array($_POST['searchParams']))
+				$searchArray = $_POST['searchParams'];
+			elseif(is_string($_POST['searchParams']))
+				parse_str($_POST['searchParams'], $searchArray);
     }
 
     $searchForm = new Estore_Form_Searchorder();
@@ -2434,7 +2442,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
                 $result[$storeCounter] = $storeArray;
                 $statsCounter = 0;
                 $image = Engine_Api::_()->sesapi()->getPhotoUrls($stores, '', "");
-                if (image) {
+                if ($image) {
                     $result[$storeCounter]['images'] = $image;
                 } else {
                     $result[$storeCounter]['images'] = $image;
@@ -2473,9 +2481,9 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
         return false;
     }
 
-    public function menuAction()
+    public function menuAction  ()
     {
-		
+    
         $menus = Engine_Api::_()->getApi('menus', 'core')->getNavigation('estore_main', array());
         $menu_counter = 0;
         
@@ -3110,7 +3118,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
 		 $viewer = ( $viewer && $viewer->getIdentity() ? $viewer : null );
 	if (!$this->_helper->requireAuth()->setAuthParams($store, $viewer, 'view')->isValid())
             Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'permission_error', 'result' => array()));
-        $sesprofilelock_enable_module = unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}'));
+        $sesprofilelock_enable_module = is_string(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}')) ? unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}')) : Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}');
         if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesprofilelock')) && engine_in_array('estore', $sesprofilelock_enable_module) && $viewerId != $store->owner_id) {
             $cookieData = '';
             if ($store->enable_lock && !engine_in_array($store->store_id, explode(',', $cookieData))) {
@@ -3663,7 +3671,7 @@ function getNavigation($store,$viewer){
                 $action = 'dashboard';
                 $baseurl = $this->getBaseUrl();
                 $custumurl = $store->custom_url;
-                $pluralurl = Engine_Api::_()->getApi('settings', 'core')->getSetting('estore_stores_manifest', null);
+                $pluralurl = Engine_Api::_()->getApi('settings', 'core')->getSetting('estore_stores_manifest', 'stores');
                 if ($pluralurl) {
                     $url = $baseurl . $pluralurl . '/dashboard/edit/' . $custumurl;
                 } else {
@@ -3682,7 +3690,11 @@ function getNavigation($store,$viewer){
 				if (!$store->isOwner($viewer)) {
 					$action = 'leave';
 				}
-			}
+			}else if (!$row->resource_approved && $row->user_approved) {
+        $action = 'cancel';    
+    } else if (!$row->user_approved && $row->resource_approved) {
+        $action= 'accept';
+    }
             } elseif ($class == 'estore_profile_invite') {
                 $action = 'invite';
             } elseif ($class == 'estore_profile_report' && $viewer->getIdentity() != $store->owner_id) {
@@ -4247,7 +4259,7 @@ function getNavigation($store,$viewer){
         $hideIdentity = Engine_Api::_()->getApi('settings', 'core')->getSetting('estore_show_userdetail', 0);
         if(!$hideIdentity){
           $result['basicInformation'][$basicInformationCounter]['name'] = 'createdby';
-          $result['basicInformation'][$basicInformationCounter]['value'] = $owner->displayname;
+          $result['basicInformation'][$basicInformationCounter]['value'] = $owner->getTitle();
           $result['basicInformation'][$basicInformationCounter]['label'] = 'Created By';
           $basicInformationCounter++;
         }
@@ -4820,7 +4832,7 @@ function getNavigation($store,$viewer){
         $albumCounter = 0;
         foreach ($paginator as $item) {
             $owner = $item->getOwner();
-            $ownertitle = $owner->displayname;
+            $ownertitle = $owner->getTitle();
             $result['albums'][$albumCounter] = $item->toArray();
             $photo = Engine_Api::_()->getItem('estore_photo',$item->photo_id);
             if($photo)
@@ -6416,12 +6428,7 @@ protected function setPhoto($photo, $id) {
       $this->view->socialshare_icon_limit = $socialshare_icon_limit =isset($params['socialshare_icon_limit']) ? $params['socialshare_icon_limit'] : $this->_getParam('socialshare_icon_limit', 2);
 
       //Need to Discuss
-      $show_criterias = isset($params['show_criterias']) ? $params['show_criterias'] : $this->_getParam('show_criteria', array('like', 'comment', 'rating', 'by', 'title', 'featuredLabel','sponsoredLabel','verifiedLabel', 'category','description_list','description_grid','description_pinboard', 'favouriteButton','likeButton', 'socialSharing', 'view', 'creationDate', 'readmore'));
-      if(is_array($show_criterias)) {
-        foreach ($show_criterias as $show_criteria)
-        $this->view->{$show_criteria . 'Active'} = $show_criteria;
-      }
-
+     
       $this->view->limit_data_pinboard = $limit_data_pinboard = isset($params['limit_data_pinboard']) ? $params['limit_data_pinboard'] : $this->_getParam('limit_data_pinboard', '10');
 
       $this->view->limit_data_grid = $limit_data_grid = isset($params['limit_data_grid']) ? $params['limit_data_grid'] : $this->_getParam('limit_data_grid', '10');
@@ -7072,7 +7079,7 @@ protected function setPhoto($photo, $id) {
 		}
 
 		$viewer = Engine_Api::_()->user()->getViewer();
-		 if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('seslock'))) {
+		 if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesprofilelock'))) {
 			 $viewer = Engine_Api::_()->user()->getViewer();
 			  if ($viewer->getIdentity() == 0)
 				$result['level'] = $level = Engine_Api::_()->getDbtable('levels', 'authorization')->getPublicLevel()->level_id;
@@ -7399,7 +7406,7 @@ protected function setPhoto($photo, $id) {
           unset($values['photo_id']);
 				}
       }
-		if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('seslock'))) {
+		if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesprofilelock'))) {
 			//disable lock if password not set.
 			if (!$values['is_locked']) {
 				$values['is_locked'] = '0';
@@ -7661,8 +7668,12 @@ protected function setPhoto($photo, $id) {
             $params = $_POST;
         }
         $searchArray = array();
-        if (isset($_POST['searchParams']) && $_POST['searchParams'])
-            parse_str($_POST['searchParams'], $searchArray);
+				if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+					if(engine_in_array($_POST['searchParams']))
+						$searchArray = $_POST['searchParams'];
+					elseif(is_string($_POST['searchParams']))
+						parse_str($_POST['searchParams'], $searchArray);
+				}
         $value['store'] = isset($_POST['store']) ? $_POST['store'] : 1;
         $value['sort'] = isset($searchArray['sort']) ? $searchArray['sort'] : (isset($_GET[' ']) ? $_GET['sort'] : (isset($params['sort']) ? $params['sort'] : $this->_getParam('sort', 'mostSPliked')));
         $value['show'] = isset($searchArray['show']) ? $searchArray['show'] : (isset($_GET['show']) ? $_GET['show'] : (isset($params['show']) ? $params['show'] : ''));
@@ -7709,7 +7720,7 @@ protected function setPhoto($photo, $id) {
         $albumCounter = 0;
         foreach ($paginator as $item) {
             $owner = $item->getOwner();
-            $ownertitle = $owner->displayname;
+            $ownertitle = $owner->getTitle();
             $result['albums'][$albumCounter] = $item->toArray();
             $result['albums'][$albumCounter]['images'] = Engine_Api::_()->sesapi()->getPhotoUrls($item, '', "") ? Engine_Api::_()->sesapi()->getPhotoUrls($item, '', "") : $result['members'][$counterLoop]['owner_photo'] = $this->getBaseUrl(true, '/application/modules/User/externals/images/nophoto_user_thumb_icon.png');
             $result['albums'][$albumCounter]['user_title'] = $ownertitle;

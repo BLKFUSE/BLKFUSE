@@ -283,10 +283,7 @@
 	width:100%;
 }
 /*Grid View Layout start here*/
-.sesmember_advgrid_view {
-	display:flex;
-	flex-wrap:wrap;
-}
+
 .sesmember_member_grid{
 	height:calc(100% - 20px);
 	margin-bottom:20px;
@@ -4369,4 +4366,10 @@ html[dir="rtl"] .profile_friends_lists li.friend_list_unjoined
 }
 .sesbasic_button i + span ~ span{
 	margin-left:5px;
+}
+
+.layout_left .layout_sesmember_review_of_the_day .sesmember_list_stats > span,
+.layout_right .layout_sesmember_review_of_the_day .sesmember_list_stats > span {
+	display: inline-block;
+	vertical-align: middle;
 }

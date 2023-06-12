@@ -85,29 +85,18 @@ class Sesiosapp_AdminMenuController extends Core_Controller_Action_Admin {
     return $filename->file_id;    
  }
 
- 
   public function orderAction() {
-
-    $table = Engine_Api::_()->getDbtable('menus', 'sesapi');
-    $menus = $table->fetchAll($table->select()->where('device =?',1));
-    
+    $table = Engine_Api::_()->getDbTable('menus', 'sesapi');
+    $results = $table->fetchAll($table->select()->where('device =?',1));
     $orders = $this->getRequest()->getParam('order');
-    $i = 0;
     foreach ($results as $result) {
-      $order = $orders[$i];
-      if(engine_in_array($order, $orders)) {
-        $order = explode('_', $order);
-        $order = $order[1];
-        
-        if (!$order)
-          $order = 999;
-        $result->order = $order;
-        $result->save();
-        $i++;
-      }
+      $key = array_search ('slide_'.$result->getIdentity(), $orders);
+      $result->order = $key+1;
+      $result->save();
     }
     return;
   }
+
  public function statusAction(){
     $id = $this->_getParam('id');
     if (!empty($id)) {

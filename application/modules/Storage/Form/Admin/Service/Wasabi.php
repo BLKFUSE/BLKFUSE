@@ -18,7 +18,7 @@
  */
 
 // Include the AWS SDK
-require 'application/libraries/Aws/aws-autoloader.php';
+require_once 'application/libraries/Aws/aws-autoloader.php';
 
 use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
@@ -132,9 +132,9 @@ class Storage_Form_Admin_Service_Wasabi extends Storage_Form_Admin_Service_Gener
         'use_path_style_endpoint' => true
       );
       $s3Client = S3Client::factory($raw_credentials);
-      $s3Client->createBucket(array(
-          'Bucket' => $data['bucket']
-      ));
+//       $s3Client->createBucket(array(
+//           'Bucket' => $data['bucket']
+//       ));
     } catch (S3Exception $e) {
       $this->addError($e->getAwsErrorMessage());
       return false;

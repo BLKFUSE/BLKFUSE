@@ -323,7 +323,7 @@ if(isset($this->docActive)) {
           <?php endif; ?>
   
           <?php if($this->viewer()->getIdentity() && $this->songlink && engine_in_array('share', $this->songlink) && $this->information && engine_in_array('share', $this->information)): ?>
-            <?php echo $this->htmlLink(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_albumsong', 'id' => $this->albumsong->getIdentity(), 'format' => 'smoothbox'), $this->translate(""), array('class' => 'smoothbox fa fa-share', 'title' => $this->translate("Share"))); ?>
+            <?php echo $this->htmlLink(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_albumsong', 'id' => $this->albumsong->getIdentity(), 'format' => 'smoothbox'), $this->translate(""), array('class' => 'smoothbox fas fa-share-alt', 'title' => $this->translate("Share"))); ?>
           <?php endif; ?>
           <?php if($this->viewer()->getIdentity()) { ?>
             <div>
@@ -572,7 +572,7 @@ if(isset($this->docActive)) {
         <?php endif; ?>
 
         <?php if($this->songlink && engine_in_array('share', $this->songlink) && $this->information && engine_in_array('share', $this->information)): ?>
-          <?php echo $this->htmlLink(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_albumsong', 'id' => $this->albumsong->getIdentity(), 'format' => 'smoothbox'), $this->translate("Share"), array('class' => 'smoothbox fa fa-share')); ?>
+          <?php echo $this->htmlLink(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_albumsong', 'id' => $this->albumsong->getIdentity(), 'format' => 'smoothbox'), $this->translate("Share"), array('class' => 'smoothbox fas fa-share-alt')); ?>
         <?php endif; ?>
 
         <?php if($this->songlink && engine_in_array('report', $this->songlink) && $this->information && engine_in_array('report', $this->information)): ?>

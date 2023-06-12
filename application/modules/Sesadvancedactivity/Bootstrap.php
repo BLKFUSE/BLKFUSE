@@ -11,17 +11,22 @@
  * @author     socialnetworking.solutions
  */
 
-class Sesadvancedactivity_Bootstrap extends Engine_Application_Bootstrap_Abstract
-{
-  public function __construct($application)
-  {
+class Sesadvancedactivity_Bootstrap extends Engine_Application_Bootstrap_Abstract {
+
+  public function __construct($application) {
     parent::__construct($application);
     $settings = Engine_Api::_()->getApi('settings', 'core');// GitHub Issue #119
     if ($settings->getSetting('sesadvancedactivity.pluginactivated'))
       $this->initViewHelperPath();
 
-      $front = Zend_Controller_Front::getInstance();
-      $front->registerPlugin(new Sesadvancedactivity_Plugin_Core);
+		$front = Zend_Controller_Front::getInstance();
+		$front->registerPlugin(new Sesadvancedactivity_Plugin_Core);
+		
+		$baseUrl = Zend_Registry::get('StaticBaseUrl');
+		$headScript = new Zend_View_Helper_HeadScript();
+		if (strpos($_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'], '/admin/') === FALSE) {
+			$headScript->appendFile($baseUrl . 'application/modules/Sesadvancedactivity/externals/scripts/core.js');
+		}
   }
 
   protected function _initFrontController() {
