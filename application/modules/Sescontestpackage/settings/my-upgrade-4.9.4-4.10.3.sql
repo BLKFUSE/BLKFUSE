@@ -1,0 +1,3 @@
+UPDATE `engine4_authorization_permissions` SET `name` = 'isPackageCont' WHERE `engine4_authorization_permissions`.`name` = 'package_enable_cnt'; 
+UPDATE `engine4_activity_notificationtypes` SET `type` = 'sescontest_payment_notify' WHERE `engine4_activity_notificationtypes`.`type` = 'sescontest_payment_notify_contest';
+UPDATE `engine4_activity_notifications` SET `type` = 'sescontest_payment_notify' WHERE `engine4_activity_notifications`.`type` = 'sescontest_payment_notify_contest';

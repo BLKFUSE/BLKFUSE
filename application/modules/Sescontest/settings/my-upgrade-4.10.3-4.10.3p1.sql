@@ -1,0 +1,1 @@
+INSERT IGNORE INTO engine4_sesbasic_likes (`resource_type`, `resource_id`, `poster_type`, `poster_id`, `creation_date`) SELECT `resource_type`, `resource_id`, `poster_type`, `poster_id`, `creation_date` FROM engine4_core_likes WHERE `resource_type` = 'participant';

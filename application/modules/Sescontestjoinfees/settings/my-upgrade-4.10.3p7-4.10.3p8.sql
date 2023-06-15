@@ -1,0 +1,3 @@
+UPDATE `engine4_authorization_permissions` SET `name` = 'contest_admcosn' WHERE `engine4_authorization_permissions`.`name` = 'sescontest_admin_commission';
+UPDATE `engine4_authorization_permissions` SET `name` = 'contest_commival' WHERE `engine4_authorization_permissions`.`name` = 'sescontest_commission_value';
+UPDATE `engine4_authorization_permissions` SET `name` = 'contest_threamt' WHERE `engine4_authorization_permissions`.`name` = 'sescontest_threshold_amount';

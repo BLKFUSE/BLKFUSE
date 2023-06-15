@@ -1,0 +1,338 @@
+
+
+.db_manage_fees{
+	background-image:url(../images/money.png);
+}
+.sescontest_db_dashboard_threshold_amt{
+  margin-bottom:10px;
+}
+/*Sales Stats*/
+.sescontest_db_sale_stats_container{
+	display:flex;
+	flex-wrap:wrap;
+	margin:0 -10px;
+}
+.sescontest_db_sale_stats{
+	text-align:center;
+	width:33.33%;
+	padding:0 10px;
+	margin-bottom:20px;
+}
+.sescontest_db_sale_stats > section{
+	border-width:1px;
+	background-image:url(../images/t-img-light.png);
+	padding:15px;
+}
+.sescontest_db_sale_stats span:first-child{
+	display:block;
+	font-weight:bold;
+}
+.sescontest_db_sale_stats span:nth-child(2){
+	display:block;
+	font-size:17px;
+	margin-top:20px;
+}
+.sescontest_db_sale_stats_t .sescontest_db_sale_stats{
+	width:25%;
+}
+/*Request Payment*/
+.sescontest_db_request_payment_link {
+	margin-bottom:10px;
+}
+.sescontest_db_request_payment_link a{
+	display:inline-block;
+}
+
+/*Payment Request View Popup*/
+.sescontest_view_detail_popup{
+	margin:10px 0 0 10px;
+	width:600px;
+}
+.sescontest_view_detail_popup h3{
+	margin-bottom:10px;
+}
+.sescontest_view_detail_popup table{
+	border-style:solid;
+	border-width:1px;
+	width:100%;
+}
+.sescontest_view_detail_popup table tr:nth-child(2n) {
+	background-image:url(../images/t-img-light.png);
+}
+.sescontest_view_detail_popup table td{
+	font-weight:bold;
+	padding:10px;
+	width:30%;
+	vertical-align:top;
+}
+.sescontest_view_detail_popup table td + td{
+	font-weight:normal;
+	width:70%;
+}
+
+/*Payment Process*/
+.sescontest_fees_payment_process{
+	border-width: 1px;
+	padding: 15px;
+}
+.sescontest_fees_payment_process #buttons-wrapper{
+	padding-top:15px;
+}
+.sescontest_fees_payment_process #buttons-wrapper button,
+.sescontest_fees_payment_process #buttons-wrapper span{
+	margin-right:10px;
+}
+[dir="rtl"] .sescontest_fees_payment_process #buttons-wrapper button,
+[dir="rtl"] .sescontest_fees_payment_process #buttons-wrapper span{
+	margin-left:10px;
+	margin-right:0;
+}
+.sescontest_fees_process_popup{
+	background-color:rgba(0, 0, 0, 0.33);
+	position:fixed;
+	left:0;
+	top:0;
+	height:100%;
+	width:100%;
+	z-index:101;
+}
+.sescontest_fees_process_popup_content{
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+	width:400px;
+	padding:20px;
+	border-radius:5px;
+}
+.sescontest_fees_process_popup_content h3{
+	font-size:20px;
+	margin:0 0 10px;
+	padding:0;
+}
+.sescontest_fees_process_popup_content ._btns{
+	margin-top:15px;
+}
+.sescontest_fees_process_popup_content ._btns button{
+	float:left;
+	width:calc(50% - 10px);	
+}
+.sescontest_fees_process_popup_content ._btns button + button{
+	float:right;
+}
+.sescontest_fees_process_step{
+	padding:50px 0;
+}
+.sescontest_fees_process_step h3{
+	font-size:20px;
+	margin:0 0 10px;
+	padding:0;
+}
+.sescontest_fees_process_step ._btn button{
+	padding:0 50px;
+	line-height:50px;
+}
+/*Payment Complete*/
+.sescontest_fees_process_complete_page{
+	padding:40px 0;
+}
+.sescontest_fees_process_complete{
+	text-align:center;
+}
+.sescontest_fees_process_complete i{
+	margin:0 auto;
+}
+.sescontest_fees_process_complete ._text{
+	font-size:25px;
+	display:block;
+	color:#44a72d;
+	margin-top:10px;
+}
+.sescontest_fees_process_complete ._error{
+	color:#f00;
+}
+.sescontest_fees_process_complete_btn{
+	text-align: center;
+	padding-top: 20px;
+}
+.sescontest_fees_process_complete_btn > a{
+	display: inline-block;
+	float: none;
+	padding: 10px;
+	min-width: 160px;
+	margin: 0 5px;
+}
+/**************ORDER INVOICE CSS START HERE**************/
+.sescontest_order_view_top{margin-bottom:15px;}
+.sescontest_invoice_header{
+	margin-bottom:5px;
+}
+.sescontest_invoice_header div{
+	font-size:20px;
+}
+.sescontest_invoice_content_wrap{
+	border-style:solid;
+	border-width:1px;
+	display:table;
+	margin-bottom:15px;
+	width:100%;
+}
+.sescontest_invoice_content_left,
+.sescontest_invoice_content_right{
+	display:table-cell;
+	width:50%;
+}
+.sescontest_invoice_content_left{
+	border-right-style:solid;
+	border-right-width:1px;
+}
+.sescontest_invoice_content_box{
+	padding:10px;
+}
+.sescontest_invoice_content_box + .sescontest_invoice_content_box{
+	border-top-style:solid;
+	border-top-width:1px;
+}
+.sescontest_invoice_content_box b.bold{
+	display:block;
+	margin-bottom:5px;
+}
+.sescontest_invoice_content_detail > span{
+	display:block;
+}
+.sescontest_invoice_content_detail .fa-caret-right{
+  margin:0 5px;
+}
+.sescontest_invoice_content_qr{
+	margin:5px;
+	text-align:center;
+}
+/*Popup*/
+#global_page_sescontestjoinfees-order-view #global_content_simple{display:block;margin:10px 0 0 10px;width:800px;}
+#global_page_sescontestjoinfees-order-view #global_content_simple .layout_core_content{margin:0;}
+#global_page_sescontestjoinfees-order-view #global_content_simple .layout_middle{padding:0;}
+
+.sescontest_orderview_popup_close{display:none;}
+#global_content_simple .sescontest_orderview_popup_close{
+  position:absolute;
+  right:10px;
+  top:10px;
+  display:block;
+  text-decoration:none !important;
+}
+[dir="rtl"] #global_content_simple .sescontest_orderview_popup_close{
+  left:10px;
+  right:auto;
+}
+#global_content_simple .sescontest_orderview_popup_close:before{
+  font-size:20px;
+}
+#global_content_simple .sescontest_invoice_header div{
+  float:left; 
+  margin-right:15px;
+}
+[dir="rtl"] #global_content_simple .sescontest_invoice_header div{
+  float:left;
+  margin-left:15px;
+  margin-right:0;
+}
+/*Order Table*/
+.sescontest_table table{
+	margin-bottom:15px;
+	width:100%;
+}
+.sescontest_table table th,
+.sescontest_table table td{
+	border-style:solid;
+	border-width:1px;
+	padding:10px;
+	vertical-align:top;
+}
+.sescontest_table table th{
+	background-image:url(../images/t-img-light.png);
+}
+.sescontest_invoice_total_price_box{
+	border-style:solid;
+	border-width:1px;
+	float:right;
+	max-width:400px;
+	padding:5px;
+	width:250px;
+}
+.sescontest_invoice_total_price_box > div{
+	clear:both;
+	overflow:hidden;
+}
+.sescontest_invoice_total_price_box > div span{
+	float:left;
+	padding:5px;
+	text-align:left;
+	width:70%;
+}
+.sescontest_invoice_total_price_box > div span + span{
+	text-align:right;
+	width:30%;
+}
+[dir="rtl"] .sescontest_invoice_total_price_box > div span + span{
+	text-align:left;
+}
+.sescontest_invoice_total_price_box_total span{
+	font-weight:bold;
+}
+/**************ORDER INVOICE CSS END HERE**************/
+/**************MY ORDER LISTING PAGE CSS START HERE**************/
+.sescontestjoinfees_manage_order_list{
+	border-style:solid;
+	border-width:1px;
+  float:left;
+	padding:10px;
+  margin:.5%;
+  width:49%;
+}
+.sescontestjoinfees_manage_order_list_photo{
+	float:left;
+	margin-right:10px;
+}
+.sescontestjoinfees_manage_order_list_photo img{
+  height:100px;
+  object-fit:cover;
+  width:100px;
+}
+.sescontestjoinfees_manage_order_list_info{
+	overflow:hidden;
+}
+.sescontestjoinfees_manage_order_list_info_title{
+	font-weight:bold;
+  font-size:17px;
+	margin-bottom:5px;
+}
+.sescontest_manage_order_list_options{
+	clear:both;
+}
+.sescontestjoinfees_manage_order_list_options div{
+  float:left;
+  width:50%;
+  margin-top:10px;
+}
+.sescontestjoinfees_manage_order_list_options a{
+	float:left;
+	clear:both;
+}
+.sescontestjoinfees_manage_order_list_options a i{
+	margin-right:3px;
+	text-align:center;
+	width:20px;
+}
+@media (max-width: 767px){
+	.sescontestjoinfees_manage_order_list{
+		margin:.5% 0;
+		width:100%;
+	}
+	.sescontestjoinfees_manage_order_list_options div + div{display:none;}
+	.sescontest_invoice_content_left, .sescontest_invoice_content_right{
+		width:100%;
+		display:block;
+		border-right-width:0;
+	}
+}
+/**************MY ORDER LISTING PAGE CSS END HERE**************/

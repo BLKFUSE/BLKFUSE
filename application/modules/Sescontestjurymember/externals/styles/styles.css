@@ -1,0 +1,63 @@
+
+/*Dashboard*/
+.sescontestjurymember_dashboard_form{
+	border-bottom-width:1px;
+	padding-bottom:15px;
+	margin-bottom:15px;
+}
+.sescontestjurymember_dashboard_form input[type="text"]{
+	width:300px;
+}
+.sescontestjurymember_dashboard_list{
+	margin:0 -5px;
+}
+.sescontestjurymember_dashboard_list li{
+	padding:10px;
+	border-width:1px;
+	float:left;
+	width:calc(50% - 10px);
+	margin:5px;
+}
+.sescontestjurymember_dashboard_list .item_list_thumb{
+	float:left;	
+	margin-right:10px;
+}
+.sescontestjurymember_dashboard_list .item_list_info{
+	overflow:hidden;
+	display:block;
+}
+.sescontestjurymember_dashboard_list .item_list_title{
+	font-weight:bold;
+}
+.sescontestjurymember_dashboard_list .item_list_btn{
+	float:right;
+	margin-top:-8px;
+}
+.sescontestjurymember_dashboard_list .item_list_btn a{
+	display:inline-block;
+}
+/*Listing*/
+.sescontestjurymember_list{
+	display:flex;
+	flex-wrap:wrap;
+	margin:0 -5px;
+}
+.sescontestjurymember_list li{
+	padding:5px;
+}
+.sescontestjurymember_list li article{
+	border-width:1px;
+	border-radius:5px;
+	overflow:hidden;
+	height:100%;
+}
+.sescontestjurymember_list .item_thumb span{
+	border-width:0;
+}
+.sescontestjurymember_list .item_info{
+	padding:10px 5px;
+}
+.sescontestjurymember_list .item_title{
+	text-align:center;
+	font-weight:bold;
+}

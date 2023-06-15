@@ -1,0 +1,49 @@
+
+/*Manage Media*/
+.sescontest_manage_media{
+	clear:both;
+	overflow:hidden;
+}
+.sescontest_manage_media ul > li {
+	box-sizing:border-box;
+	width:50%;
+	float:left;
+	padding:0 5px 10px;
+}
+.sescontest_manage_media_item{
+	box-sizing:border-box;
+	background-color:#f8f8f8;
+	border-radius:5px;
+	padding:10px;
+	position:relative;
+	overflow:hidden;
+}
+.sescontest_manage_media_title{
+	float: left;
+	font-size: 17px;
+	font-weight: bold;
+}
+.sescontest_manage_media_options{
+	float:right;
+	padding-top:2px;
+}
+.sescontest_manage_media_options a{
+	display:inline-block;
+	vertical-align:middle;
+	font-weight:bold;
+}
+.sescontest_manage_media_options_img{
+	background-color:#ccc;
+	margin-top:10px;
+	height:200px;
+	float:left;
+	width:100%;
+}
+.sescontest_manage_media_options_img img {
+	height:100%;
+	width:100%;
+	object-fit:cover;
+}
+td.text-center {
+  text-align:center;
+}

@@ -1,0 +1,100 @@
+/* $Id:main.css 2016-07-23 00:00:00 SocialEngineSolutions $*/
+
+/*Review Add Parameter Popup*/
+.sesnews_review_parameter_popup{
+  width:450px;
+}
+.sesnews_review_parameter_popup .settings .form-wrapper{
+  padding: 0;
+}
+.sesnews_review_parameter_popup .form-label{
+  display:none;
+}
+.sesnews_review_parameter_popup .reviewparameter{
+  margin:0 10px 10px 0;
+}
+.sesnews_review_parameter_popup .sesmember_added_parameter{
+  margin-right: 10px;
+}
+.sesnews_review_parameter_popup .fa:before{
+  margin-right:5px;
+}
+.sesnews_review_parameter_popup a.fa:hover{
+  text-decoration:none;
+}
+.sesnews_view_stats_popup {
+	padding: 20px;
+	width:600px;
+}
+.sesnews_view_popup_con .sesnews_popup_img_news{
+	overflow: hidden;
+	display: block;
+	margin-bottom:10px;
+	border-bottom-width: 1px;
+	padding-bottom: 10px;
+}
+.sesnews_view_popup_con .sesnews_popup_img_news p.popup_img img{
+	margin-right: 15px;
+	float: left;
+	width: 130px;
+}
+.sesnews_view_popup_con .sesnews_popup_img_news p.popup_title{
+	font-size: 15px;
+	font-weight: bold;
+	margin-bottom:8px;
+}
+.sesnews_view_popup_con .sesnews_popup_img_news p.owner_title{
+		margin-bottom:8px;
+}
+.sesnews_view_popup_con .sesnews_popup_img_news p.owner_title b{
+	font-weight:bold;
+	min-width:100px;
+	display:inline-block;
+}
+.sesnews_view_popup_con .sesnews_popup_owner_news p.owner_title{
+	margin-bottom:8px;
+}
+.sesnews_view_popup_con .sesnews_popup_owner_news p.owner_title b{
+	font-weight:bold;
+}
+.sesnews_view_popup_con .sesnews_popup_owner_news p.owner_des{
+	text-align:justify;
+}
+
+/*Import Music*/
+button.sesnews_import_button{
+  background-color: #83b64e;
+  background-image: url(~/application/modules/Sesnews/externals/images/admin/import.png);
+  background-position: 5px center;
+  background-repeat: no-repeat;
+  border: medium none;
+  border-radius: 0;
+  font-size: 17px;
+  font-weight: normal;
+  padding: 10px 10px 10px 35px;
+  text-shadow: inherit;
+}
+button.sesnews_import_button:hover{
+  background-color: #78a946;
+}
+.sesnews_import_msg span{
+  background-position: 5px center;
+  background-repeat: no-repeat;
+  border-radius: 0;
+  color: #fff;
+  display: inline-block;
+  font-size: 17px;
+  padding: 10px 10px 10px 35px;
+}
+.sesnews_import_loading span{
+  background-color: #6fbbde;
+  background-image: url(~/application/modules/Sesnews/externals/images/admin/loading.GIF);
+}
+.sesnews_import_success span{
+  background-color: #83b64e;
+  background-image: url(~/application/modules/Sesnews/externals/images/admin/success.png);
+}
+.sesnews_import_error span{
+  background-color: #c12e2a;
+  background-image: url(~/application/modules/Sesnews/externals/images/admin/error.png);
+}

@@ -1,0 +1,346 @@
+
+.sescontest_cover_full .layout_sescontest_contest_view{
+	padding:0 !important;
+	background:none !important;
+}
+.sescontest_cover_inner{
+	position:relative;
+}
+.sescontest_default_cover{
+	background-position:center;
+	background-size:cover;
+	height:400px;
+	position:relative;
+	overflow:hidden;
+}
+.sescontest_default_cover img{
+	min-height:100%;
+	min-width:100%;
+	width:100%;
+	position:absolute;
+}
+.sescontest_default_cover img.ui-draggable{
+	cursor:-webkit-grab;
+	cursor:grab;
+}
+.sescontest_cover_fade{
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	background-color:rgba(0, 0, 0, .1);
+}
+.sescontest_cover_owner_info{
+	background-color:rgba(0, 0, 0, .5);
+	padding:8px 10px;
+	border-top:0px;
+	position:absolute;
+	bottom:60px;
+	height:40px;
+	right:0px;
+	z-index:1;
+	padding-right:20px;
+}
+.sescontest_cover_owner_info ._media{
+	float:left;
+}
+.sescontest_cover_owner_info ._media .sescontest_list_type{
+	position:inherit;
+	border:1px solid rgba(255, 255, 255, .4);
+}
+.sescontest_cover_owner_info ._photo{
+	margin:-12px 5px 0;
+	float:left;
+	overflow:hidden;
+	width:48px;
+	height:48px;
+	border-radius:50%;
+	border:1px solid rgba(255, 255, 255, .4);
+}
+.sescontest_cover_owner_info ._photo img{
+	height:100%;
+	object-fit:cover;
+	width:100%;
+}
+.sescontest_cover_owner_info ._cont{
+	display:inline-block;
+	overflow:hidden;
+	position:relative;
+	margin:2px 0;
+	color:#ddd;
+}
+.sescontest_cover_owner_info ._cont a{
+	color:#fff;
+}
+.sescontest_cover_mid_cont{
+	margin-top:-50px;
+	position:absolute;
+	top:50%;
+	width:100%;
+	transform:translateY(-50%);
+	text-align:center;
+	z-index:1;
+}
+.sescontest_cover_mid_cont h1{
+	color:#fff;
+	font-size:50px;
+	margin-bottom:20px;
+	text-shadow:-1px 1px 10px rgba(0,0,0,0.5);
+	font-weight:600;
+}
+.sescontest_cover_mid_cont h1 .sescontest_label_verified{
+	vertical-align:middle;
+	text-shadow:none;
+	margin-left:10px;
+}
+.sescontest_cover_social_btns_in{
+	width:100%;
+	text-align:center;
+	margin-top:20px;
+}
+.sescontest_cover_social_btns_in > a{
+	background-color:rgba(0, 0, 0, 0.6) !important;
+	display:inline-block;
+	float:none;
+	height:40px;
+	width:40px;
+	border-radius:50%;
+	padding:10px 0;
+}
+.sescontest_cover_social_btns_in .sesbasic_icon_btn_count i:before,
+.sescontest_cover_social_btns_in .sesbasic_icon_btn_count span{
+	line-height:38px;
+}
+.sescontest_cover_social_btns_in > a.sesbasic_icon_like_btn{
+	border:1px solid #02adea;
+}
+.sescontest_cover_social_btns_in > a.sesbasic_icon_like_btn.button_active i:before{
+	color:#02adea;
+}
+.sescontest_cover_social_btns_in > a.sesbasic_icon_fav_btn{
+	border:1px solid #ff4c4c;
+}
+.sescontest_cover_social_btns_in > a.sesbasic_icon_fav_btn.button_active i:before{
+	color:#ff4c4c;
+}
+.sescontest_cover_social_btns_in > a.sesbasic_icon_follow_btn{
+	border:1px solid #42a62a;
+}
+.sescontest_cover_social_btns_in > a.sesbasic_icon_follow_btn.button_active i:before{
+	color:#42a62a;
+}
+.sescontest_cover_btns{
+	text-align:center;
+}
+.sescontest_cover_btns > span{
+	display:inline-block;	
+}
+.sescontest_cover_btns > span a{
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	background-color:rgba(0,0,0,0.25);
+	font-size:18px;
+	font-weight:400;
+	display:block;
+	margin:0 10px;
+	padding:10px 0;
+	color:#fff;
+	border:2px solid #fff;
+	text-shadow:0 1px 2px rgba(0,0,0,0.4);
+	text-decoration:none;
+	width:220px;
+}
+.sescontest_cover_btns > span a i{
+	margin-right:10px;
+}
+.sescontest_cover_btns > span a span span{
+	font-size:14px;
+}
+.sescontest_cover_labels{
+	bottom:110px;
+	position:absolute;
+	right:20px;
+	text-align:center;
+	z-index:1;
+}
+.sescontest_cover_labels span {
+	display:inline-block;
+	border-radius:50%;
+	height:20px;
+	width:20px;
+	color:#fff;
+	margin:0 2px;
+	box-shadow:0 0 5px rgba(0, 0, 0, .5);
+	border:1px solid #fff;
+	font-size:12px;
+}
+/*Full Tabs*/
+.sescontest_cover_footer{
+	left:0px;
+	width:100%;
+	background-color:rgba(0, 0, 0, 0.5);
+	border-top:1px solid rgba(255, 255, 255, 0.2);
+	bottom:0;
+	position:absolute;
+	z-index:1;
+}
+.sescontest_cover_footer .sescontest_cover_social_btns{
+	float:right;
+}
+.sescontest_cover_footer .sesbasic_icon_btn{
+	border-radius:0px;
+	background-color:transparent;
+	border-left:1px solid rgba(255, 255, 255, 0.2);
+	padding:12px 0;
+	margin:0;
+	height:40px;
+	width:40px;
+}
+.sescontest_cover_footer .sesbasic_icon_btn:nth-last-child(1){
+	border-right:1px solid rgba(255, 255, 255, 0.2);
+}
+.sescontest_cover_footer .sesbasic_icon_like_btn.button_active{background-color:#02adea;}
+.sescontest_cover_footer .sesbasic_icon_fav_btn.button_active {background-color:#ff4c4c;}
+.sescontest_cover_footer .sesbasic_icon_follow_btn.button_active{background-color:#ff4c4c;}
+.sescontest_cover_tabs{
+	float:left;
+}
+.sescontest_cover_footer .sescontest_cover_footer .sesbasic_icon_btn_count i:before,
+.sescontest_cover_footer .sescontest_cover_footer .sesbasic_icon_btn_count span{
+	line-height:40px;
+}
+
+.sescontest_cover_footer .sescontest_cover_tabs .tabs_alt,
+.sescontest_cover_footer .sescontest_cover_tabs .tabs_alt ul{
+	background-color:transparent;
+	margin:0px;
+	padding:0px;
+	border:0px;
+}
+.sescontest_cover_footer .sescontest_cover_tabs .tabs_alt ul li,
+.sescontest_cover_footer .sescontest_cover_tabs .tabs_alt ul li.active + li{
+	border-right:1px solid rgba(255, 255, 255, 0.2) !Important;
+	float:left;
+	margin:0;
+}
+.sescontest_cover_footer .sescontest_cover_tabs .tabs_alt ul li + li{
+	border-left-width:0;
+}
+.sescontest_cover_footer .sescontest_cover_tabs .tabs_alt ul li:nth-child(1){
+	border-left:1px solid rgba(255, 255, 255, 0.2) !important;
+}
+.sescontest_cover_footer .sescontest_cover_tabs > div > ul > li > a:hover, 
+.sescontest_cover_footer .sescontest_cover_tabs > div > ul > li > a:active, 
+.sescontest_cover_footer .sescontest_cover_tabs > div > ul > li.active > a, 
+.sescontest_cover_footer .sescontest_cover_tabs > div > ul > li.active > a:hover, 
+.sescontest_cover_footer .sescontest_cover_tabs > div > ul > li.tab_open > a {
+	background-color:rgba(0, 0, 0, 0.9);
+	color:#fff !important;
+	top:0;
+}
+.sescontest_cover_footer .sescontest_cover_tabs > div > ul > li > a {
+	border-radius:0 !important;
+	border-width:0 !important;
+	color:#fff;
+	display:block;
+	font-size:13px;
+	font-weight:bold;
+	line-height:40px;
+	padding:0 20px !important;
+	text-decoration:none;
+	outline:none;
+	margin:0;
+}
+/*Center Tabs*/
+.sescontest_cover_footer_section .sescontest_cover_tabs{
+	position:absolute;
+	bottom:0;
+	left:0;
+	width:100%;
+	z-index:1;
+}
+.sescontest_cover_footer_section .sescontest_cover_tabs .tabs_alt,
+.sescontest_cover_footer_section .sescontest_cover_tabs .tabs_alt > ul{
+	background-color:transparent !important;
+	margin:0px;
+	padding:0px;
+	border:0px;
+	text-align:center;
+}
+.sescontest_cover_footer_section .sescontest_cover_tabs .tabs_alt #main_tabs > li{
+	border-width:0 !important;
+	display:inline-block;
+	float:none !important;
+}
+.sescontest_cover_footer_section .sescontest_cover_tabs .tabs_alt #main_tabs > li > a{
+	border-width:0;
+	border-radius:8px 8px 0 0;
+	background-color:#333;
+	font-size:16px;
+	font-weight:400;
+	color:#fff;
+	display:block;
+	width:160px;
+	margin:0 2px;
+	line-height:40px;
+	cursor:pointer;
+	text-align:center;
+	position:relative;
+	text-decoration:none;
+}
+
+
+
+/*Change Cover Buttons*/
+.sescontest_cover_reposition_btn{
+	position:absolute;
+	right:20px;
+	bottom:20px;
+	z-index:10;
+}
+.sescontest_cover_reposition_btn a{
+	display:inline-block;
+}
+.sescontest_cover_container .dragncrop-instruction{
+	position:absolute;
+	top:40%;
+	opacity:0.7;
+	background:black;
+	color:#DDD;
+	text-align:center;
+	border-radius:6px;
+	line-height:1;
+	z-index:1;
+	left:50%;
+	padding:10px 12px;
+	width:200px;
+	margin-left:-100px;
+}
+.sescontest_cover_container .dragncrop-instruction-text {
+	color:#DDD;
+	text-align:center;
+	line-height:1;
+	font-family:sans-serif;
+	background-repeat:no-repeat;
+	background-position:0 50%;
+	display:block;
+	padding:5px;
+	font-size:13px;
+}
+.sescontest_cover_container:hover .dragncrop-instruction{
+	display:none;
+}
+/*Full Width*/
+.sescontest_cover_container_full .sescontest_cover_inner{
+	left:0;
+	right:0;
+	position:absolute;
+}
+.sescontest_cover_container_full .sescontest_cover_footer_inner {
+	margin:0 auto;
+}
+@media (max-width:767px){
+	.sescontest_cover, .sescontest_default_cover{height:400px !important;}
+	.sescontest_cover_mid_cont h1{font-size:30px;}
+}
