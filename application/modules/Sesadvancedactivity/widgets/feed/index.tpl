@@ -10,196 +10,206 @@
  * @version    $Id: index.tpl 2017-01-12 00:00:00 socialnetworking.solutions $
  * @author     socialnetworking.solutions
  */
- 
-$staticBaseUrl = $this->layout()->staticBaseUrl;
-
-if($this->feeddesign == 2) {
-  $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/imagesloaded.pkgd.js');
-  $this->headLink()->appendStylesheet($staticBaseUrl . 'application/modules/Sesadvancedactivity/externals/styles/style_pinboard.css'); 
-  $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/wookmark.min.js');
-  $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/pinboardcomment.js');
-  $randonNumber = 'pinFeed'; 
-}
 ?>
-<script type="application/javascript">
-<?php if(!$this->feedOnly && $this->autoloadTimes > 0 && $this->scrollfeed ){ ?>
-    var autoloadTimes = '<?php echo $this->autoloadTimes; ?>';
-    var counterLoadTime = 0;
-scriptJquery( window ).load(function() {
-        scriptJquery(window).scroll( function() {
-        var containerId = '#activity-feed';
-         if(typeof scriptJquery(containerId).offset() != 'undefined' && scriptJquery('#view_more_<?php echo $randonNumber; ?>').length > 0) {
-          var heightOfContentDiv = scriptJquery(containerId).height();
-          var fromtop = scriptJquery(this).scrollTop() + 300;
-          if(fromtop > heightOfContentDiv - 100 && scriptJquery('#feed_viewmore_activityact').css('display') == 'block' && autoloadTimes > counterLoadTime){
-            document.getElementById('feed_viewmore_activityact_link').click();
-            counterLoadTime++;
-          }
-        }
-      });
-    });
-  <?php } ?>
-    function setFocus(){
-
-      document.getElementById("activity_body").focus();
-      
-    }
-    var sesAdvancedActivityGetFeeds = <?php echo $this->getUpdates ?>;
-  var sesAdvancedActivityGetAction_id = <?php echo $this->action_id; ?>;
-    if(!sesAdvancedActivityGetFeeds){
-      en4.core.runonce.add(function() {
-        var subject_guid = '<?php echo $this->subjectGuid ?>';
-        scriptJquery('ul.sesadvancedactivity_filter_tabs li a:first').trigger("click");
-      });
-    }
-    function activateFunctionalityOnFirstLoad() {
-      var action_id = <?php echo $this->action_id; ?>;
-      sesAdvancedActivityGetFeeds = true;
-
-      if(!action_id) {
-        scriptJquery(".sesact_feed_filters").show();
-        if (scriptJquery('#activity-feed').find('li').length > 0)
-          scriptJquery('.sesadv_noresult_tip').hide();
-        else
-          scriptJquery('.sesadv_noresult_tip').show();
-      }else{
-        if (!scriptJquery('#activity-feed').find('li').length > 0)
-          scriptJquery(".no_content_activity_id").show();
-      }
-      scriptJquery(".sesadv_content_load_img").hide();
-    }
-</script>
-<?php if($this->feeddesign != 2){ ?>
-<script type="application/javascript">
-  function feedUpdateFunction(){}
-</script>
-<?php } ?>
 <?php 
+	$staticBaseUrl = $this->layout()->staticBaseUrl;
+
+	if($this->feeddesign == 2) {
+		$this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/imagesloaded.pkgd.js');
+		$this->headLink()->appendStylesheet($staticBaseUrl . 'application/modules/Sesadvancedactivity/externals/styles/style_pinboard.css'); 
+		$this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/wookmark.min.js');
+		$this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/pinboardcomment.js');
+		$randonNumber = 'pinFeed'; 
+	}
+
   $enabledModuleNames = Engine_Api::_()->getDbTable('modules', 'core')->getEnabledModuleNames(); 
   $settings = Engine_Api::_()->getApi('settings', 'core');
   $levelAdapter = Engine_Api::_()->authorization()->getAdapter('levels');
-?> 
+  
+  $this->headTranslate(array('More','Close','Permalink of this Post','Copy link of this feed:','Go to this feed','You won\'t see this post in Feed.',"Undo","Hide all from",'You won\'t see',"post in Feed.","Select","It is a long established fact that a reader will be distracted","If you find it offensive, please","file a report.", "Choose Feeling or activity...", "How are you feeling?", "ADD POST", "Schedule Post"));
+?>
+
 <?php if(engine_in_array('sesfeelingactivity',$enabledModuleNames)) { ?>
   <?php $getFeelings = Engine_Api::_()->getDbTable('feelings', 'sesfeelingactivity')->getFeelings(array('fetchAll' => 1, 'admin' => 0)); ?>
 <?php } ?>
 <?php if(engine_in_array('sesemoji',$enabledModuleNames)) { ?>
   <?php $getEmojis = Engine_Api::_()->getDbTable('emojis', 'sesemoji')->getEmojis(array('fetchAll' => 1)); ?>
 <?php } ?>
-<?php $this->headTranslate(array('More','Close','Permalink of this Post','Copy link of this feed:','Go to this feed','You won\'t see this post in Feed.',"Undo","Hide all from",'You won\'t see',"post in Feed.","Select","It is a long established fact that a reader will be distracted","If you find it offensive, please","file a report.", "Choose Feeling or activity...", "How are you feeling?", "ADD POST")); ?>
-
 <?php
-
-  $this->headScript()->appendFile($staticBaseUrl 
-      . 'application/modules/Sesbasic/externals/scripts/jquery.tooltip.js');
-  $this->headScript()->appendFile($staticBaseUrl 
-      . 'application/modules/Sesbasic/externals/scripts/tooltip.js');
-  $this->headScript()->appendFile($staticBaseUrl
-      . 'application/modules/Sesadvancedactivity/externals/scripts/core.js');
-  $this->headScript()->appendFile($staticBaseUrl
-      . 'application/modules/Sesbasic/externals/scripts/hashtag/autosize.min.js');
-  $this->headScript()->appendFile($staticBaseUrl
-      . 'application/modules/Sesbasic/externals/scripts/hashtag/hashtags.js');
-
-  $this->headLink()->appendStylesheet($staticBaseUrl
-      . 'application/modules/Sesadvancedactivity/externals/styles/styles.css');
-
   $this->headScript()
-     ->appendFile($staticBaseUrl . 'application/modules/Sesadvancedactivity/externals/scripts/core.js')
-     ->appendFile($staticBaseUrl . 'externals/html5media/html5media.min.js')
-     ->appendFile($staticBaseUrl . 'application/modules/Sesadvancedactivity/externals/scripts/editComposer.js');
-
-  if(engine_in_array('sesdiscussion',$enabledModuleNames)) {
-    $this->headLink()->appendStylesheet($staticBaseUrl . 'application/modules/Sesdiscussion/externals/styles/styles.css');
+			->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/jquery.tooltip.js')
+			->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/tooltip.js')
+			->appendFile($staticBaseUrl . 'application/modules/Sesadvancedactivity/externals/scripts/core.js')
+			->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/hashtag/autosize.min.js')
+			->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/hashtag/hashtags.js')
+			->appendFile($staticBaseUrl . 'externals/html5media/html5media.min.js')
+			->appendFile($staticBaseUrl . 'application/modules/Sesadvancedactivity/externals/scripts/editComposer.js');
+	
+	//Tooltip
+	$this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/tooltip/jquery.tooltipster.js');
+	$this->headLink()->appendStylesheet($staticBaseUrl . "application/modules/Sesbasic/externals/styles/tooltip/tooltipster.css");
+	
+	include APPLICATION_PATH .  '/application/modules/Sesadvancedcomment/views/scripts/_jsFiles.tpl';
+	
+  $this->headLink()->appendStylesheet($staticBaseUrl . 'application/modules/Sesadvancedactivity/externals/styles/styles.css');
+  
+  if(engine_in_array('sesvideo',$enabledModuleNames)) {
+		$viewer = Engine_Api::_()->user()->getViewer();
+		if ($viewer->getIdentity() == 0)
+      $level = Engine_Api::_()->getDbtable('levels', 'authorization')->getPublicLevel()->level_id;
+    else
+      $level = $viewer;
+		
+    $type = Engine_Api::_()->authorization()->getPermission($level, 'sesbasic_video', 'videoviewer');
+    if ($type == 1) {
+      $this->headScript()->appendFile($staticBaseUrl
+                      . 'application/modules/Sesbasic/externals/scripts/SesLightbox/photoswipe.min.js')
+              ->appendFile($staticBaseUrl
+                      . 'application/modules/Sesbasic/externals/scripts/SesLightbox/photoswipe-ui-default.min.js')
+              ->appendFile($staticBaseUrl
+                      . 'application/modules/Sesbasic/externals/scripts/videolightbox/sesvideoimagevieweradvance.js');
+      $this->headLink()->appendStylesheet($staticBaseUrl
+              . 'application/modules/Sesbasic/externals/styles/photoswipe.css');
+    } else {
+      $loadImageViewerFile = $staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/videolightbox/sesvideoimageviewerbasic.js';
+      $this->headScript()->appendFile($loadImageViewerFile);
+      $this->headLink()->appendStylesheet($staticBaseUrl
+              . 'application/modules/Sesbasic/externals/styles/medialightbox.css');
+    }
+	}
+  
+  if(engine_in_array('sesadvpoll',$enabledModuleNames)) {
+    $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesadvpoll/externals/scripts/core.js'); 
   }
+  
+  if(engine_in_array('sesgrouppoll',$enabledModuleNames)) {
+    $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesgrouppoll/externals/scripts/core.js'); 
+  }
+  
+  if(engine_in_array('sespagepoll',$enabledModuleNames)) {
+    $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sespagepoll/externals/scripts/core.js'); 
+  }
+  
+  if(engine_in_array('sesbusinesspoll',$enabledModuleNames)) {
+    $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbusinesspoll/externals/scripts/core.js'); 
+  }
+      
   //Web cam upload for profile photo
   if($settings->getSetting('sesadvancedactivity.profilephotoupload', 1) && engine_in_array('sesalbum',$enabledModuleNames)):
     $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/webcam.js'); 
   endif; 
+  
   if(engine_in_array('sesemoji',$enabledModuleNames)) {
     $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesemoji/externals/scripts/emojiscontent.js'); 
   }
+  
   $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesadvancedactivity/externals/scripts/mo.min.js');
   $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesadvancedactivity/externals/scripts/animation.js');
   
   if(defined('SESFEEDGIFENABLED')) {
     $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/flexcroll.js');
   }
-  if(engine_in_array('sesdiscussion',$enabledModuleNames)) {
-    $this->headLink()->appendStylesheet($staticBaseUrl . 'application/modules/Sesdiscussion/externals/styles/styles.css');
-  }
-  if(engine_in_array('sesquote',$enabledModuleNames)) {
-    $this->headLink()->appendStylesheet($staticBaseUrl . 'application/modules/Sesquote/externals/styles/styles.css');
-  }
   
-  if(engine_in_array('seswishe',$enabledModuleNames)) {
-    $this->headLink()->appendStylesheet($staticBaseUrl . 'application/modules/Seswishe/externals/styles/styles.css');
+  if(engine_in_array('elivestreaming',$enabledModuleNames)) {
+		$this->headScript()->appendFile($staticBaseUrl . 'application/modules/Elivestreaming/externals/scripts/core.js');
   }
-  
-  if(engine_in_array('sesprayer',$enabledModuleNames)) {
-    $this->headLink()->appendStylesheet($staticBaseUrl . 'application/modules/Sesprayer/externals/styles/styles.css');
-  }
-  
-  if(engine_in_array('sesthought',$enabledModuleNames)) {
-    $this->headLink()->appendStylesheet($staticBaseUrl . 'application/modules/Sesthought/externals/styles/styles.css');
-  }
-
-if(defined('SESTEXTENABLED')) {
-  $this->headLink()->appendStylesheet($staticBaseUrl . 'application/modules/Sestext/externals/styles/summernote.css'); ?>
-  <?php $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sestext/externals/scripts/jquery.js'); ?>
-  <?php $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sestext/externals/scripts/summernote.js'); ?>
-  <?php $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sestext/externals/scripts/bootstrap.js'); ?>
-
-  <style>
-    .note-btn-group button{display: block !important;}
-  </style>
+?>
+<?php if(engine_in_array('sespymk',$enabledModuleNames)) { ?>
+	<?php 
+		$this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/owl-carousel/jquery.js');
+		$this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/owl-carousel/owl.carousel.js'); 
+		$this->headLink()->appendStylesheet($staticBaseUrl . 'application/modules/Sespymk/externals/styles/styles.css'); 
+	?>
 <?php } ?>
-  <?php if(engine_in_array('sespymk',$enabledModuleNames)){ ?>
-  <?php 
-    $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/owl-carousel/jquery.js');
-    $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/owl-carousel/owl.carousel.js'); 
-  ?>
-  <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sespymk/externals/styles/styles.css'); ?>
-  <?php } ?>
 
-  <?php if(engine_in_array('sescommunityads',$enabledModuleNames)){ ?>
-    <?php
-    $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sescommunityads/externals/scripts/jquery.js');
-    $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sescommunityads/externals/scripts/owl.carousel.js');
-    ?>
+<?php if(engine_in_array('sesgrouppoll',$enabledModuleNames) && Engine_Api::_()->core()->hasSubject('sesgroup_group')) { ?>
+	<?php $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesgrouppoll/externals/scripts/core.js'); ?>
+	<?php if(engine_in_array('poll',$enabledModuleNames)){ ?>
+		<?php $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Poll/externals/scripts/core.js'); ?>
+	<?php } ?>
+<?php } ?>
+<?php if(engine_in_array('sesvideo',$enabledModuleNames)) { ?>
+	<?php
+	$this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesvideo/externals/scripts/core.js');
+	?>
+<?php } ?>
+<?php if(engine_in_array('sesgroup',$enabledModuleNames) && Engine_Api::_()->core()->hasSubject('sesgroup_group')) { ?>
+	<?php
+	$this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesgroup/externals/scripts/core.js');
+	$this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesgroup/externals/scripts/activitySwitchGroup.js');
+	?>
+<?php } ?>
+<?php if(engine_in_array('sespage',$enabledModuleNames) && Engine_Api::_()->core()->hasSubject('sespage_page')) { ?>
+	<?php
+	$this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sespage/externals/scripts/core.js');
+	$this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sespage/externals/scripts/activitySwitchPage.js');
+	?>
+<?php } ?>
+<?php if(engine_in_array('sesbusiness',$enabledModuleNames) && Engine_Api::_()->core()->hasSubject('businesses')) { ?>
+	<?php
+	$this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbusiness/externals/scripts/core.js');
+	$this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbusiness/externals/scripts/activitySwitchBusiness.js');
+	?>
+<?php } ?>
+<?php if(engine_in_array('estore',$enabledModuleNames) && Engine_Api::_()->core()->hasSubject('stores')) { ?>
+	<?php
+	$this->headScript()->appendFile($staticBaseUrl . 'application/modules/Estore/externals/scripts/core.js');
+	$this->headScript()->appendFile($staticBaseUrl . 'application/modules/Estore/externals/scripts/activitySwitchStore.js');
+	?>
+<?php } ?>
+
+<script type="application/javascript">
+	<?php if(!$this->feedOnly && $this->autoloadTimes > 0 && $this->scrollfeed ) { ?>
+		var autoloadTimes = '<?php echo $this->autoloadTimes; ?>';
+		var counterLoadTime = 0;
+		scriptJquery( window ).load(function() {
+			scriptJquery(window).scroll( function() {
+				var containerId = '#activity-feed';
+				if(typeof scriptJquery(containerId).offset() != 'undefined' && scriptJquery('#feed_viewmore_activityact').length > 0) {
+					var heightOfContentDiv = scriptJquery(containerId).height();
+					var fromtop = scriptJquery(this).scrollTop() + 300;
+					if(fromtop > heightOfContentDiv - 100 && scriptJquery('#feed_viewmore_activityact').css('display') == 'block' && autoloadTimes > counterLoadTime){
+						document.getElementById('feed_viewmore_activityact_link').click();
+						counterLoadTime++;
+					}
+				}
+			});
+		});
   <?php } ?>
- <?php if(engine_in_array('sesgrouppoll',$enabledModuleNames)){ ?>
-    <?php
-    $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesgrouppoll/externals/scripts/core.js');
-    ?>
-     <?php if(engine_in_array('poll',$enabledModuleNames)){ ?>
-    <?php
-    $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Poll/externals/scripts/core.js');
-    ?>
-  <?php } ?>
-  <?php } ?>
-  <?php if(engine_in_array('sesvideo',$enabledModuleNames)){ ?>
-    <?php
-    $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesvideo/externals/scripts/core.js');
-    ?>
-  <?php } ?>
-  <?php if(engine_in_array('sesgroup',$enabledModuleNames)){ ?>
-    <?php
-    $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesgroup/externals/scripts/core.js');
-    $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesgroup/externals/scripts/activitySwitchGroup.js');
-    ?>
-  <?php } ?>
-  <?php if(engine_in_array('sespage',$enabledModuleNames)){ ?>
-    <?php
-    $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sespage/externals/scripts/core.js');
-    $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sespage/externals/scripts/activitySwitchPage.js');
-    ?>
-  <?php } ?>
-  <?php if(engine_in_array('sesbusiness',$enabledModuleNames)){ ?>
-    <?php
-    $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbusiness/externals/scripts/core.js');
-    $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbusiness/externals/scripts/activitySwitchBusiness.js');
-    ?>
-  <?php } ?>
+	function setFocus(){
+		document.getElementById("activity_body").focus();
+	}
+	var sesAdvancedActivityGetFeeds = <?php echo $this->getUpdates ?>;
+	var sesAdvancedActivityGetAction_id = <?php echo $this->action_id; ?>;
+	if(!sesAdvancedActivityGetFeeds){
+		en4.core.runonce.add(function() {
+			var subject_guid = '<?php echo $this->subjectGuid ?>';
+			scriptJquery('ul.sesadvancedactivity_filter_tabs li a:first').trigger("click");
+		});
+	}
+	function activateFunctionalityOnFirstLoad() {
+		var action_id = <?php echo $this->action_id; ?>;
+		sesAdvancedActivityGetFeeds = true;
+
+		if(!action_id) {
+			scriptJquery(".sesact_feed_filters").show();
+			if (scriptJquery('#activity-feed').find('li').length > 0)
+				scriptJquery('.sesadv_noresult_tip').hide();
+			else
+				scriptJquery('.sesadv_noresult_tip').show();
+		}else{
+			if (!scriptJquery('#activity-feed').find('li').length > 0)
+				scriptJquery(".no_content_activity_id").show();
+		}
+		scriptJquery(".sesadv_content_load_img").hide();
+	}
+
+	<?php if($this->feeddesign != 2) { ?>
+
+		function feedUpdateFunction(){}
+	<?php } ?>
+</script>
+
 <?php 
 $viewer = $this->viewer();
 $showwelcometab = $settings->getSetting('sesadvancedactivity.showwelcometab', 1);
@@ -230,17 +240,19 @@ if($showwelcometab) {
   }
 }
 ?>
-
-
 <script type="application/javascript">
-var privacySetAct = false;
-var sespageContentSelected = "";
- <?php if( !$this->feedOnly && $this->action_id){ ?>
- scriptJquery(document).ready(function(e){
-   scriptJquery('.tab_<?php echo $this->identity; ?>.tab_layout_sesadvancedactivity_feed').find('a').click();
- });
- <?php } ?>
- </script>
+	scriptJquery(document).ready(function() {
+		carouselSesadvReaction();
+	});
+
+	var privacySetAct = false;
+	var sespageContentSelected = "";
+	<?php if( !$this->feedOnly && $this->action_id){ ?>
+	scriptJquery(document).ready(function(e){
+		scriptJquery('.tab_<?php echo $this->identity; ?>.tab_layout_sesadvancedactivity_feed').find('a').click();
+	});
+	<?php } ?>
+</script>
 <?php if( !$this->feedOnly && $this->isMemberHomePage): ?>
 <div class="sesact_tabs_wrapper sesbasic_clearfix sesbasic_bxs">
   <ul id="sesadv_tabs_cnt" class="sesact_tabs sesbasic_clearfix">
@@ -289,7 +301,6 @@ scriptJquery(document).ready(function(){
 	<?php $this->headLink()->appendStylesheet($staticBaseUrl . 'application/modules/Sesbasic/externals/styles/emoji.css'); ?>    
 <?php $this->headLink()->appendStylesheet($staticBaseUrl . 'application/modules/Sesbasic/externals/styles/customscrollbar.css'); ?>
 
-<?php $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/tooltip.js'); ?>
 
 <?php $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/jquery.min.js'); ?>
 <?php $this->headScript()->appendFile($staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/customscrollbar.concat.min.js'); ?>
@@ -447,7 +458,14 @@ endif; ?>
 <style>
  #scheduled_post, #datetimepicker_edit{display:block !important;}
  </style>
+<?php if($this->design == 2){ ?>
+<style>
+.sesact_post_container_wrapper:not(._sesadv_composer_active) #compose-container .jqueryHashtags{
+  height:60px;
+}
+</style>
 
+<?php } ?>
 <?php if( $this->enableComposer && !$this->isOnThisDayPage): ?>
 <script type="application/javascript">
 var sesadvancedactivityDesign = '<?php echo $this->design; ?>';
@@ -818,7 +836,7 @@ var composeInstance;
               </span>
             <?php endif; ?>
           <?php } ?>
-          
+           
           <?php if(defined('SESFEEDGIFENABLED') && engine_in_array('sesfeedgif',$this->composerOptions)) { ?>
             <?php $enable = (array) $levelAdapter->getAllowed('sesadvactivity', $viewer, 'cmtattachement'); ?>
             <?php if(engine_in_array('gif', $enable)) { ?>
@@ -829,11 +847,11 @@ var composeInstance;
             <?php } ?>
           <?php } ?>
         <?php } ?>
-       <?php $enableattachement = (array) $levelAdapter->getAllowed('sesadvactivity', $viewer, 'cmtattachement'); ?>
-
-        <?php if(engine_in_array('sesemoji',$enabledModuleNames)) { ?>
+				<?php $enableattachement = (array) $levelAdapter->getAllowed('sesadvactivity', $viewer, 'cmtattachement'); ?>
+				<?php $emojiEnable = Engine_Api::_()->authorization()->getPermission($viewer->level_id, 'sesemoji', 'enableemojis'); ?>
+        <?php if($emojiEnable && engine_in_array('sesemoji',$enabledModuleNames)) { ?>
           <?php if(engine_count($getEmojis) > 0 && engine_in_array('emojisses',$this->composerOptions) && $settings->getSetting('sesemoji.enableemoji', 1) && (engine_in_array('emotions', $enableattachement) || engine_in_array('emojis', $enableattachement) )): ?>
-            <span class="sesact_post_tool_i tool_i_feelings feeling_emoji_comment_select" id="sesadvancedactivity_feeling_emojis" style="display:none;">
+            <span class="sesact_post_tool_i tool_i_feelings feeling_emoji_comment_select" id="sesadvancedactivity_feeling_emojis">
               <a href="javascript:;" id="sesadvancedactivity_feeling_emojisa" class="sesadv_tooltip" title="<?php echo $this->translate('Emojis'); ?>">&nbsp;</a>
             </span>
           <?php endif; ?>
@@ -982,7 +1000,7 @@ var composeInstance;
           <?php } ?>
           <?php if(engine_in_array('smilesses',$this->composerOptions)){ ?>
           	<?php if(engine_in_array('sesadvancedcomment',$enabledModuleNames) && $settings->getSetting('sesadvancedcomment.pluginactivated')) { ?>
-              <?php if(engine_in_array('stickers',$this->composerOptions) && engine_in_array('stickers', $enableattachement)){ ?>
+              <?php if($settings->getSetting('sesadvancedcomment.enablestickers', 1) && engine_in_array('stickers',$this->composerOptions) && engine_in_array('stickers', $enableattachement)){ ?>
               	<span class="sesact_post_media_options_icon tool_i_sticker" style="display:none;">
                 	<a href="javascript:;" class="sesadv_tooltip emoji_comment_select activity_emoji_content_a" title="<?php echo $this->translate('Stickers'); ?>"><span class="emoji_comment_select"><?php echo $this->translate('Stickers'); ?></span></a>
                 </span>
@@ -1097,7 +1115,7 @@ var composeInstance;
       </div>
     </div>
   <?php //} ?>
-     <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl.'externals/autocompleter/autocomplete.js'); ?>
+     <?php $this->headScript()->appendFile($staticBaseUrl.'externals/autocompleter/autocomplete.js'); ?>
 
     
     <?php
@@ -2028,6 +2046,7 @@ if(sesFeedBgEnabled && toValueArray.length == 0 && !scriptJquery('#feelingactivi
   scriptJquery('#sesact_post_tags_sesadv').css('display', 'none');
 }
 
+<?php if($viewer->getIdentity()) { ?>
 en4.core.runonce.add(function() {
    AutocompleterRequestJSON('tag_friends_input', "<?php echo $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'suggest'), 'default', true) ?>", function(selecteditem) {
      scriptJquery("#tag_friends_input").val("");
@@ -2058,7 +2077,7 @@ en4.core.runonce.add(function() {
       scriptJquery('#dash_elem_act').show();
   });
 });
-
+<?php } ?>
 </script>
 <script type="application/javascript">
 var isMemberHomePage = <?php echo !empty($this->isMemberHomePage) ? $this->isMemberHomePage : 0; ?>;
@@ -2141,85 +2160,7 @@ var isOnThisDayPage = <?php echo !empty($this->isOnThisDayPage) ? $this->isOnThi
           });  
           }
           </script>      
-      <script type="application/javascript">
-         function  preventSubmitOnSocialNetworking(){
-           if(scriptJquery('.composer_facebook_toggle_active').length)
-            scriptJquery('.composer_facebook_toggle').click();
-           if(scriptJquery('.composer_twitter_toggle_active').length)
-            scriptJquery('.composer_twitter_toggle_active').click();  
-          }
-          scriptJquery(document).on('click','.schedule_post_schedue',function(e){
-           e.preventDefault();
-           var value = scriptJquery('#scheduled_post').val();
-           if(scriptJquery('.sesadvancedactivity_shedulepost_error').css('display') == 'block' || !value){
-            return;   
-           }
-           scriptJquery('.sesadvancedactivity_shedulepost_overlay').hide();
-           scriptJquery('.sesadvancedactivity_shedulepost_select').hide();
-           scriptJquery('.sesadvancedactivity_shedulepost').addClass('active');
-           preventSubmitOnSocialNetworking();
-          });
-          scriptJquery(document).on('click','#sesadvancedactivity_shedulepost',function(e){
-           e.preventDefault();
-           scriptJquery('.sesadvancedactivity_shedulepost_overlay').show();
-           scriptJquery('.sesadvancedactivity_shedulepost_select').show();
-           scriptJquery(this).addClass('active');
-           makeDateTimePicker();
-          });
-          scriptJquery(document).on('click','.schedule_post_close',function(e){
-              e.preventDefault();
-            scriptJquery('.sesadvancedactivity_shedulepost_overlay').hide();
-            scriptJquery('.sesadvancedactivity_shedulepost_select').hide();
-            if(scriptJquery('.sesadvancedactivity_shedulepost_error').css('display') == 'block')
-              scriptJquery('.sesadvancedactivity_shedulepost_error').html('').hide();
-            scriptJquery('#scheduled_post').val('');
-             scriptJquery('#sesadvancedactivity_shedulepost').removeClass('active');
-             scriptJquery('.bootstrap-datetimepicker-widget').hide();
-          });
-          var schedule_post_datepicker;
-          function makeDateTimePicker(){
-            if(scriptJquery('.sesadvancedactivity_shedulepost_edit_overlay').length){
-              var elem = 'scheduled_post_edit';
-              var datepicker = 'datetimepicker_edit';
-            }else{
-              var elem = 'scheduled_post';
-              var datepicker  = 'datetimepicker';
-            }
-            //if(!scriptJquery('#'+elem).val()){
-              var now = new Date();
-              now.setMinutes(now.getMinutes() + 10);
-           // }
-            schedule_post_datepicker = scriptJquery('#'+datepicker).datetimepicker({
-            format: 'dd/MM/yyyy hh:mm:ss',
-            maskInput: false,           // disables the text input mask
-            pickDate: true,            // disables the date picker
-            pickTime: true,            // disables de time picker
-            pick12HourFormat: true,   // enables the 12-hour format time picker
-            pickSeconds: true,         // disables seconds in the time picker
-            startDate: now,      // set a minimum date
-            endDate: Infinity          // set a maximum date
-          });
-          schedule_post_datepicker.on('changeDate', function(e) {
-            var time = e.localDate.toString();
-            var timeObj = new Date(time).getTime();
-            //add 10 minutes
-            var now = new Date();
-            now.setMinutes(now.getMinutes() + 10);
-            if(scriptJquery('.sesadvancedactivity_shedulepost_edit_overlay').length){
-              var error = 'sesadvancedactivity_shedulepost_edit_error';
-            }else{
-              var error = 'sesadvancedactivity_shedulepost_error';
-            }
-            if(timeObj < now.getTime()){
-              scriptJquery('.'+error).html("<?php echo $this->translate('choose time 10 minutes greater than current time.'); ?>").show();
-              return false;
-            }else{
-             scriptJquery('.'+error).html('').hide();
-            }
-          });  
-          }
-          </script>
-
+     
 <?php if(empty($this->subjectGuid) && !$this->isOnThisDayPage){ ?>
 
 <?php if($this->isMemberHomePage){
@@ -2467,7 +2408,7 @@ initSesadvAnimation();
 </div>
 <?php } ?>
 
-<?php if($this->feeddesign == 2){ ?>
+<?php if($this->feeddesign == 2){  ?>
 	<script type="application/javascript">
 		var wookmark = undefined;
 		var isactivityloadedfirst= true;

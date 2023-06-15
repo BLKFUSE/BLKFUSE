@@ -114,7 +114,7 @@ class Sescommunityads_Form_Admin_Global extends Engine_Form {
       if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesmember')) {
         $this->addElement('Radio', "sescommunityads_enable_location", array(
             'label' => 'Enable Location',
-            'description' => "Do you want to enable location for the Ads on your website (dependent on <a href='https://www.socialenginesolutions.com/social-engine/advanced-members-plugin/' target='_blank'>Advanced Member Plugin</a>)?",
+            'description' => "Do you want to enable location for the Ads on your website (dependent on <a href='https://socialnetworking.solutions/social-engine/advanced-members-plugin/' target='_blank'>Advanced Member Plugin</a>)?",
             'multiOptions' => array(
                 '1' => 'Yes',
                 '0' => 'No',

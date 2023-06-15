@@ -215,7 +215,7 @@ class Sesvideo_IndexController extends Sesapi_Controller_Action_Standard {
               unset($values['photo_id']);
           }
       }
-      $sesprofilelock_enable_module = unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}'));
+      $sesprofilelock_enable_module = is_string(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}')) ? unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}')) : Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}');
       //check dependent module sesprofile install or not
       if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesprofilelock'))  && engine_in_array('sesvideo',$sesprofilelock_enable_module)) {
           //disable lock if password not set.
@@ -462,6 +462,18 @@ class Sesvideo_IndexController extends Sesapi_Controller_Action_Standard {
       $parentItem = Engine_Api::_()->getItem($parent_type, $parent_id);
 
     $values['owner_id'] = $viewer->getIdentity();
+    // if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesemoji')) {
+    //   $bodyEmojis = explode(' ', $values['title']);
+    //   foreach($bodyEmojis as $bodyEmoji) {
+    //     $emojisCode = Engine_Api::_()->sesemoji()->EncodeEmoji($bodyEmoji);
+    //     $values['title'] = str_replace($bodyEmoji,$emojisCode,$body);
+    //   }
+    //   $bodyEmojis = explode(' ', $values['description']);
+    //   foreach($bodyEmojis as $bodyEmoji) {
+    //     $emojisCode = Engine_Api::_()->sesemoji()->EncodeEmoji($bodyEmoji);
+    //     $values['description'] = str_replace($bodyEmoji,$emojisCode,$body);
+    //   }
+    // }
     $insert_action = false;
     $db = Engine_Api::_()->getDbtable('videos', 'sesvideo')->getAdapter();
     $db->beginTransaction();
@@ -1208,59 +1220,88 @@ class Sesvideo_IndexController extends Sesapi_Controller_Action_Standard {
       $value['artist']   = $_POST['artist_id'];
       $value['widgetName'] = "artistViewPage";
     }
+    $value['isTickvideo'] = false;
+    if($this->_getParam("user_id") || $this->_getParam("from_tickvideo")){
+      $value['isTickvideo'] = true;
+    }
 
-    $paginator = Engine_Api::_()->getDbTable('videos', 'sesvideo')->getVideo(array_merge($value,array()));
+    $paginator = Engine_Api::_()->getDbTable('videos', 'sesvideo')->getVideo(array_merge($value,array('fromBrowseApi'=>true)));
     $paginator->setItemCountPerPage($this->_getParam('limit',10));
     $paginator->setCurrentPageNumber($this->_getParam('page',0));
     $result["permission"] =  $this->_permission;
     $result['videos'] = $this->getVideos($paginator,$manage);
-    if($this->_getParam("user_id")){
-      $userObj = Engine_Api::_()->getItem("user",$this->_getParam("user_id"));
+    if($this->_getParam("user_id") || $this->_getParam("from_tickvideo")){
+      $user_id_d = $this->_getParam("user_id");
+      if( $this->_getParam("from_tickvideo")){
+          if(!$this->_getParam("user_id")){
+              $user_id_d = $this->view->viewer()->getIdentity();
+          }
+      }
+      $userObj = Engine_Api::_()->getItem("user",$user_id_d);
       $result['user_info']['user_image'] = $this->userImage($userObj->getIdentity(),"thumb.profile");
       $result['user_info']['user_id'] = $userObj->getIdentity();
       $result['user_info']['user_title'] = $userObj->getTitle();
       $result['user_info']['user_username'] = $userObj->username;
-      $memberEnable = false;
-      if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesmember')){
-          $memberEnable = true;
-      }
+      
       $result['user_info']["is_content_follow"] = false;
       if($this->view->viewer()->getIdentity() && $userObj->getIdentity() != $this->view->viewer()->getIdentity()){
-          $followActive = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.follow.active',1);
-          $result['user_info']["follow_enable"] = ($followActive ? true : false) && $memberEnable;                            
-          if($followActive && $userObj->getIdentity() && $userObj->getIdentity() != $this->view->viewer()->getIdentity()){
-              if($memberEnable) {
-                  $FollowUser = Engine_Api::_()->sesmember()->getFollowStatus($userObj->user_id);
+          $result['user_info']["follow_enable"] = true;                            
+          if($userObj->getIdentity() && $userObj->getIdentity() != $this->view->viewer()->getIdentity()){
+              // if($memberEnable) {
+                  $FollowUser = Engine_Api::_()->eticktokclone()->getFollowStatus($userObj->user_id);
                   if ($FollowUser) {
                       $result['user_info']["is_content_follow"] = true;
                   } 
-              }
+              // }
           }
       }
+
+      if($this->view->viewer()->getIdentity() == $userObj->getIdentity()){
+        $result['user_info']["is_self"] = true;
+      }else{
+          $result['user_info']["is_self"] = false;
+      }
+
+      //   block/unblock user from tickvideo
+      if($this->_getParam("from_tickvideo")){
+        if($this->view->viewer()->getIdentity()){
+            if($this->view->viewer()->getIdentity() != $userObj->getIdentity()){
+                $block = Engine_Api::_()->getDbTable("blocks",'eticktokclone')->isBlocked(array("user_id"=>$userObj->getIdentity()));
+                if($block){
+                    // unblock
+                    $result['user_info']['block'] = array(
+                        'label' => $this->view->translate('Unblock Member'),
+                        'name' => 'remove_block_member',
+                        'params' => array(
+                          'user_id' => $userObj->getIdentity()
+                        ),
+                      );
+                }else{
+                    // block
+                
+                    $result['user_info']['block'] = array(
+                        'label' => $this->view->translate('Block Member'),
+                        'name' => 'block_member',
+                        'params' => array(
+                          'user_id' => $userObj->getIdentity()
+                        ),
+                      );
+                }
+            }
+        }
+    }
       $result['user_info']['following_count'] = 0;
       $result['user_info']['tick_video_id'] = $userObj->getIdentity();
-      //follow_count
-      if($memberEnable){
-          $table = Engine_Api::_()->getDbtable('users', 'user');
-          $userinfoTableName = Engine_Api::_()->getDbtable('userinfos', 'sesmember')->info('name');
-          $tableName = $table->info('name');
-          $select = $table->select()
-          ->from($table->info('name'))
-          ->setIntegrityCheck(false)
-          ->joinLeft($userinfoTableName, "$userinfoTableName.user_id = $tableName.user_id",array('userinfo_id', 'follow_count'))
-          ->where($table->info("name").'.user_id = ?',$userObj->getIdentity());
-          $userObjInfo = $table->fetchAll($select);
-          $following = Engine_Api::_()->getDbTable('members', 'sesmember')->following(array('user_id' => $userObj->getIdentity(), 'paginator' => true));
-          $result['user_info']['following_count'] = $following->getTotalItemCount();
-      }
-      if($userObjInfo && engine_count($userObjInfo)){
-          $result['user_info']["follow_count"] = $userObjInfo[0]["follow_count"];
-      }
+      //follow_count         
+      $following = Engine_Api::_()->getDbTable('follows', 'eticktokclone')->following(array('user_id' => $userObj->getIdentity(), 'paginator' => true));
+      $result['user_info']['following_count'] = $following->getTotalItemCount();
+      $result['user_info']["follow_count"] = Engine_Api::_()->eticktokclone()->getFollowCount($userObj->getIdentity());
 
       $result['user_info']['total_video_like_count'] = 0;
       $videoTable = Engine_Api::_()->getDbTable('videos','sesvideo');
       $selectD = $videoTable->select()->from($videoTable->info('name'), new Zend_Db_Expr('SUM(like_count)'))->where('owner_id =?', $userObj->getIdentity());
       $result['user_info']['total_video_like_count'] = $selectD->query()->fetchColumn();
+
     }
 
 
@@ -1366,9 +1407,33 @@ class Sesvideo_IndexController extends Sesapi_Controller_Action_Standard {
     $sesshortcut = Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesshortcut') && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesshortcut.enableshortcut', 1);
 
     foreach($paginator as $videos){
-      $videos = Engine_Api::_()->getItem('video',!$isRes ? $videos->video_id : $videos->resource_id);                
-      $video = $videos->toArray();
 
+      $extraParams = array();
+
+      if(!empty($videos["songtitle"])){
+        $extraParams["songtitle"] = $videos["songtitle"];
+        $extraParams["songduration"] = $videos["songduration"];
+        if (!empty($videos->songfile_id)) {
+          if (!empty($videos->songfile_id)) {
+              $storage_file = Engine_Api::_()->getItem('storage_file', $videos->songfile_id);
+              if($storage_file)
+                  $song['url'] = $this->getBaseUrl(false,$storage_file->map());
+          }
+          if (!empty($videos->songphoto_id)) {
+              $song['images'] = Engine_Api::_()->sesapi()->getPhotoUrls($videos->songphoto_id,'',"");
+          }
+          $song['duration'] = $videos->songduration;
+          $song['title'] = $videos->songtitle;
+          $extraParams['song'] = $song;
+      }
+      }
+
+      $videos = Engine_Api::_()->getItem('video',!$isRes ? $videos->video_id : $videos->resource_id);                
+      $video = array_merge($videos->toArray(),$extraParams);
+      if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesemoji')) {
+        $video["title"] =  Engine_Api::_()->sesemoji()->DecodeEmoji($video["title"]);
+        $video["description"] =  Engine_Api::_()->sesemoji()->DecodeEmoji($video["description"]);
+      }
       if ($videos->category_id) {
         $category = Engine_Api::_()->getItem('sesvideo_category', $videos->category_id);
         if ($category) {
@@ -1417,6 +1482,7 @@ class Sesvideo_IndexController extends Sesapi_Controller_Action_Standard {
       $video['enable_add_shortcut'] = $sesshortcut;
       if($sesshortcut){
           $isShortcut = Engine_Api::_()->getDbTable('shortcuts', 'sesshortcut')->isShortcut(array('resource_type' => $videos->getType(), 'resource_id' => $videos->getIdentity()));
+          $shortMessage = array();
           if (empty($isShortcut)) {
               $shortMessage['title'] = $this->view->translate('Add to Shortcuts');
               $shortMessage['resource_type'] = $videos->getType();

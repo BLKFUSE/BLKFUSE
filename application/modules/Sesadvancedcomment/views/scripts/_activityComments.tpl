@@ -12,7 +12,7 @@
  */
  
 ?>
-
+<?php include APPLICATION_PATH .  '/application/modules/Sesadvancedcomment/views/scripts/_jsFiles.tpl'; ?>
 <?php if( empty($this->actions) ) {
   echo $this->translate("The action you are looking for does not exist.");
   return;
@@ -139,13 +139,13 @@
           <?php //Show like, comment and share to non loggined member accorditg to admin settings
             if($eneblelikecommentshare && empty($viewer_id)) { ?>
             <li class="feed_item_option_like">
-              <a href="<?php echo $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'format' => 'smoothbox'), 'default', true); ?>" class="openSmoothbox">
+              <a href="<?php echo $this->url(array(), 'user_login', true); ?>" class="">
                 <i></i>
                 <span><?php echo $this->translate('SESADVLIKEC');?></span>
               </a>
             </li>
             <li class="feed_item_option_comment">
-              <a href="<?php echo $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'format' => 'smoothbox'), 'default', true); ?>" class="openSmoothbox">
+              <a href="<?php echo $this->url(array(), 'user_login', true); ?>" class="">
                 <i></i>
                 <span><?php echo $this->translate('SESADVCOMMENT');?></span>
               </a>
@@ -155,7 +155,7 @@
           <?php // Share ?>
           <?php if(empty($_SESSION['fromActivityFeed'])){ ?>
           <?php if( $action->getTypeInfo()->shareable): ?>
-            <?php if( $action->getTypeInfo()->shareable == 1 && ($attachment = $action->getFirstAttachment('comment')) ): ?>
+            <?php if($action && $action->getTypeInfo()->shareable == 1 && ($attachment = $action->getFirstAttachment('comment')) ): ?>
               <li class="feed_item_option_share <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.enablesocialshare', 1) || Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.enablesessocialshare', 1)):?> sesadvcmt_hoverbox_wrapper <?php endif; ?>">
                 <?php 
                 $AdvShare = $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'type' => $attachment->item->getType(), 'id' => $attachment->item->getIdentity(), 'format' => 'smoothbox'), 'default', true);
@@ -168,7 +168,10 @@
               </li>
             <?php elseif( $action->getTypeInfo()->shareable == 2 ): ?>
               <li class="feed_item_option_share <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.enablesocialshare', 1) || Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.enablesessocialshare', 1)):?> sesadvcmt_hoverbox_wrapper <?php endif; ?>">
-                 <?php echo $this->partial('_share.tpl', 'sesadvancedcomment', array('href' => $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'type' => $action->getSubject()->getType(), 'id' => $action->getSubject()->getIdentity(), 'format' => 'smoothbox'), 'default', true),'action' => $action)); ?>
+                 <?php 
+                  $AdvShare = $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'type' => $action->getSubject()->getType(), 'id' => $action->getSubject()->getIdentity(), 'format' => 'smoothbox'), 'default', true);
+
+                 echo $this->partial('_share.tpl', 'sesadvancedcomment', array('AdvShare'=>$AdvShare,'href' => $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'type' => $action->getSubject()->getType(), 'id' => $action->getSubject()->getIdentity(), 'format' => 'smoothbox'), 'default', true),'action' => $action)); ?>
                 <a href="<?php echo $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'type' => $action->getSubject()->getType(), 'id' => $action->getSubject()->getIdentity(), 'format' => 'smoothbox'), 'default', true); ?>" class="openSmoothbox">
                 	<i></i>
                   <span><?php echo $this->translate('SESADVSHARE');?></span>
@@ -176,7 +179,9 @@
               </li>
             <?php elseif( $action->getTypeInfo()->shareable == 3 ): ?>
               <li class="feed_item_option_share <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.enablesocialshare', 1) || Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.enablesessocialshare', 1)):?> sesadvcmt_hoverbox_wrapper <?php endif; ?>">
-                 <?php echo $this->partial('_share.tpl', 'sesadvancedcomment', array('href' => $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'type' => $action->getObject()->getType(), 'id' => $action->getObject()->getIdentity(), 'format' => 'smoothbox'), 'default', true), 'action' => $action)); ?>
+                 <?php 
+                 $AdvShare = $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'type' => $action->getObject()->getType(), 'id' => $action->getObject()->getIdentity(), 'format' => 'smoothbox','action_id'=>$action->getIdentity()), 'default', true);
+                 echo $this->partial('_share.tpl', 'sesadvancedcomment', array('AdvShare'=>$AdvShare,'href' => $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'type' => $action->getObject()->getType(), 'id' => $action->getObject()->getIdentity(), 'format' => 'smoothbox'), 'default', true), 'action' => $action)); ?>
                 <a href="<?php echo $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'type' => $action->getObject()->getType(), 'id' => $action->getObject()->getIdentity(), 'format' => 'smoothbox','action_id'=>$action->getIdentity()), 'default', true); ?>" class="openSmoothbox">
                 	<i></i>
                   <span><?php echo $this->translate('SESADVSHARE');?></span>
@@ -185,7 +190,8 @@
             <?php elseif( $action->getTypeInfo()->shareable == 4 ): ?>
               <li class="feed_item_option_share <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.enablesocialshare', 1) || Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.enablesessocialshare', 1)):?> sesadvcmt_hoverbox_wrapper <?php endif; ?>">
 								<?php
-                  echo $this->partial('_share.tpl', 'sesadvancedcomment', array('href' => $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'type' => $action->getType(), 'id' => $action->getIdentity(), 'format' => 'smoothbox'), 'default', true),'action' => $action));
+                $AdvShare = $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'type' => $action->getType(), 'id' => $action->getIdentity(),'action_id'=>$action->getIdentity()), 'default', true);
+                  echo $this->partial('_share.tpl', 'sesadvancedcomment', array('AdvShare' => $AdvShare, 'href' => $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'type' => $action->getType(), 'id' => $action->getIdentity(), 'format' => 'smoothbox'), 'default', true),'action' => $action));
                  ?>
               	<a href="<?php echo $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'type' => $action->getType(), 'id' => $action->getIdentity(),'action_id'=>$action->getIdentity()), 'default', true); ?>" class="openSmoothbox">
                 	<i></i>
@@ -196,7 +202,9 @@
                   $attachment = $action->getBuySellItem();
              ?>
               <li class="feed_item_option_share <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.enablesocialshare', 1) || Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.enablesessocialshare', 1)):?> sesadvcmt_hoverbox_wrapper <?php endif; ?>">
-                <?php echo $this->partial('_share.tpl', 'sesadvancedcomment', array('href' => $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'type' => $attachment->getType(), 'id' => $attachment->getIdentity(), 'format' => 'smoothbox'), 'default', true),'action' => $action)); ?>
+                <?php 
+                $AdvShare = $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'type' => $attachment->getType(), 'id' => $attachment->getIdentity(), 'format' => 'smoothbox','action_id'=>$action->getIdentity()), 'default', true);
+                echo $this->partial('_share.tpl', 'sesadvancedcomment', array('AdvShare' => $AdvShare, 'href' => $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'type' => $attachment->getType(), 'id' => $attachment->getIdentity(), 'format' => 'smoothbox'), 'default', true),'action' => $action)); ?>
                 <a href="<?php echo $this->url(array('module' => 'sesadvancedactivity', 'controller' => 'index', 'action' => 'share', 'type' => $attachment->getType(), 'id' => $attachment->getIdentity(), 'format' => 'smoothbox','action_id'=>$action->getIdentity()), 'default', true); ?>" class="openSmoothbox">
                 	<i></i>
                   <span><?php echo $this->translate('SESADVSHARE');?></span>
@@ -300,14 +308,11 @@
                 echo $this->itemPhoto($isPageSubject, 'thumb.icon', $isPageSubject->getTitle());
                 ?>
               </div>
-          <?php
-          $session = new Zend_Session_Namespace('sesadvcomment');
-           $albumenable = $session->albumenable;
-           $videoenable = $session->videoenable;
-           $enableattachementComment = unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedcomment.enableattachement', ''));
-           $viewer = Engine_Api::_()->user()->getViewer();
-           $enableattachement = (array) Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('sesadvactivity', $viewer, 'cmtattachement');
-        ?>
+							<?php
+								$enableattachementComment = unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedcomment.enableattachement', ''));
+								$viewer = Engine_Api::_()->user()->getViewer();
+								$enableattachement = (array) Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('sesadvactivity', $viewer, 'cmtattachement');
+							?>
               <div class="_form_container sesbasic_clearfix">
                 <div class="comment_form_main">
                 <div class="comment_form sesbasic_clearfix">
@@ -315,7 +320,7 @@
                  
                   <div class="_sesadvcmt_post_icons sesbasic_clearfix">
                     <span>
-                      <?php if($albumenable && Engine_Api::_()->authorization()->isAllowed('album', null, 'create') && engine_in_array('photos', $enableattachementComment)){ ?>
+                      <?php if((Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('album') || Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesalbum')) && Engine_Api::_()->authorization()->isAllowed('album', null, 'create') && engine_in_array('photos', $enableattachementComment)){ ?>
                         <a href="javascript:;" class="sesadv_tooltip file_comment_select"  title="<?php echo $this->translate('Attach 1 or more Photos'); ?>"></a>
                       <?php } ?>
                       <input type="file" name="Filedata" class="select_file" multiple value="0" style="display:none;">
@@ -324,10 +329,10 @@
                       <input type="hidden" name="file_id" class="file_id" value="0">
                       <input type="hidden" class="file" name="action_id" value="<?php echo $action->getIdentity(); ?>">
                       </span>
-                   <?php if($videoenable && Engine_Api::_()->authorization()->isAllowed('video', $viewer, 'create')  && engine_in_array('videos', $enableattachementComment)){ ?>
+                   <?php if((Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('video') || Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesvideo')) && Engine_Api::_()->authorization()->isAllowed('video', $viewer, 'create')  && engine_in_array('videos', $enableattachementComment)){ ?>
                       <span><a href="javascript:;" class="sesadv_tooltip video_comment_select" title="<?php echo $this->translate('Attach 1 or more Videos'); ?>"></a></span>
                     <?php } ?>
-                    <?php if((engine_in_array('stickers', $enableattachement) && engine_in_array('stickers', $enableattachementComment))) { ?>
+                    <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedcomment.enablestickers', 1) && (engine_in_array('stickers', $enableattachement) && engine_in_array('stickers', $enableattachementComment))) { ?>
                       <span class="sesact_post_tool_i tool_i_emoji">
                         <a  href="javascript:;" class="sesadv_tooltip emoji_comment_select"  title="<?php if(engine_in_array('stickers', $enableattachement)) { ?><?php echo $this->translate('Post a Sticker'); ?><?php } ?>"  onclick="setCommentFocus(<?php echo $action->getIdentity(); ?>);">&nbsp;</a>
                       </span>

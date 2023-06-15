@@ -20,6 +20,9 @@ class User_AdminLoginsController extends Core_Controller_Action_Admin
 {
   public function indexAction()
   {
+    if(!Engine_Api::_()->getApi('settings', 'core')->getSetting('core.general.enableloginlogs', 0))
+      return $this->_forward('notfound', 'error', 'core');
+
     $this->view->formFilter = $formFilter = new User_Form_Admin_Manage_Login();
 
     $table = Engine_Api::_()->getDbtable('users', 'user');

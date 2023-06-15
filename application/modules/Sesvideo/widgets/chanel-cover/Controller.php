@@ -14,6 +14,16 @@
 class Sesvideo_Widget_ChanelCoverController extends Engine_Content_Widget_Abstract {
 
   public function indexAction() {
+  
+		$chanel_id = Zend_Controller_Front::getInstance()->getRequest()->getParam('chanel_id', 0);
+
+    if ($chanel_id) {
+      $chanel_id = Engine_Api::_()->getDbtable('chanels', 'sesvideo')->getChanelId($chanel_id);
+    } else {
+      return $this->setNoRender();
+    }
+    $chanel = Engine_Api::_()->getItem('sesvideo_chanel', $chanel_id);
+    
     // Don't render this if not authorized
     $viewer = Engine_Api::_()->user()->getViewer();
     if (!Engine_Api::_()->core()->hasSubject()) {
@@ -28,7 +38,8 @@ class Sesvideo_Widget_ChanelCoverController extends Engine_Content_Widget_Abstra
 		$this->view->option =	$this->_getParam('option',array('report','follow','like','share','delete','edit','favourite','stats','rating','verified','addVideo'));
 		
     // Get subject and check auth
-    $this->view->subject = $subject = Engine_Api::_()->core()->getSubject('sesvideo_chanel');
+    $this->view->subject = $subject = $chanel; //Engine_Api::_()->core()->getSubject('sesvideo_chanel');
+
 		$this->view->video_count = $subject->countVideos();
 		$this->view->photo_count = $subject->count();
 		$this->view->viewer = $viewer = Engine_Api::_()->user()->getViewer();
@@ -85,5 +96,6 @@ class Sesvideo_Widget_ChanelCoverController extends Engine_Content_Widget_Abstra
       }
       $this->view->ratedAgain = $rated;
     }
+
   }
 }

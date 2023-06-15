@@ -16,8 +16,12 @@ class Sesmember_Widget_MemberLocationController extends Engine_Content_Widget_Ab
     if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.enable.location', 1))
       return setNoRender();
     $this->view->is_ajax = $is_ajax = isset($_POST['is_ajax']) ? true : false;
-    if (isset($_POST['searchParams']) && $_POST['searchParams'])
-      parse_str($_POST['searchParams'], $searchArray);
+		if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+			if(engine_in_array($_POST['searchParams']))
+				$searchArray = $_POST['searchParams'];
+			elseif(is_string($_POST['searchParams']))
+				parse_str($_POST['searchParams'], $searchArray);
+		}
     if (!$is_ajax)
       $value['locationWidget'] = true;
     

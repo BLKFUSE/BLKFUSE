@@ -529,7 +529,10 @@ class Sesblog_IndexController extends Sesapi_Controller_Action_Standard
     }else{
       $_POST['starttime'] = "";  
     }  
-    
+    if(!empty($_POST['show_start_time'])){
+      $form->removeElement("start_date");
+      $form->removeElement("start_time");
+    }
     // Check if valid
     if( !$form->isValid($this->getRequest()->getPost()) ) { 
       $validateFields = Engine_Api::_()->getApi('FormFields','sesapi')->validateFormFields($form);

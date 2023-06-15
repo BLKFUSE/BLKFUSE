@@ -261,13 +261,15 @@ class Activity_Model_Action extends Core_Model_Item_Abstract
             ->where('action_id = ?', $this->action_id);
 
         foreach ($table->fetchAll($select) as $row) {
-            $item = Engine_Api::_()->getItem($row->type, $row->id);
-            if ($item instanceof Core_Model_Item_Abstract) {
-                $val = new stdClass();
-                $val->meta = $row;
-                $val->item = $item;
-                $this->_attachments[] = $val;
-            }
+					if(Engine_Api::_()->hasItemType($row->type)) {
+						$item = Engine_Api::_()->getItem($row->type, $row->id);
+						if ($item instanceof Core_Model_Item_Abstract) {
+							$val = new stdClass();
+							$val->meta = $row;
+							$val->item = $item;
+							$this->_attachments[] = $val;
+						}
+					}
         }
 
         return $this->_attachments;

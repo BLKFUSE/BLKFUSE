@@ -129,7 +129,7 @@ class Activity_AdminSettingsController extends Core_Controller_Action_Admin
 
         // Process
         $values = $form->getValues();
-        $values['displayable'] = array_sum($values['displayable']);
+        $values['displayable'] = is_array($values['displayable']) ? array_sum($values['displayable']) : 0;
 
         // Check type
         if( !$selectedTypeObject ||

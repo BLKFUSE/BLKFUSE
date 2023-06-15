@@ -15,11 +15,17 @@ class Sesvideo_ArtistController extends Core_Controller_Action_Standard {
 
   //Browse Action
   public function browseAction() {
+		// only show videos if authorized
+    if (!$this->_helper->requireAuth()->setAuthParams('video', null, 'view')->isValid())
+      return;
     $this->_helper->content->setEnabled();
   }
 
   //Artist View Action
   public function viewAction() {
+		// only show videos if authorized
+    if (!$this->_helper->requireAuth()->setAuthParams('video', null, 'view')->isValid())
+      return;
     $this->_helper->content->setEnabled();
   }
 

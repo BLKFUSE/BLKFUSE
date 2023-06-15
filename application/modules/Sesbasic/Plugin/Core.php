@@ -24,33 +24,11 @@ class Sesbasic_Plugin_Core extends Zend_Controller_Plugin_Abstract {
     return $this->onRenderLayoutDefault($event,'simple');
   }
   
-  public function routeShutdown(Zend_Controller_Request_Abstract $request) {
-    $module = $request->getModuleName();
-    $controller = $request->getControllerName(); 
-    $action = $request->getActionName();
- /*   if(isset($_GET['gateway_id'])) {
-      $gateway = Engine_Api::_()->getItem('payment_gateway', $_GET['gateway_id']);
-    }   
-    if($module == "payment" && $controller == "subscription" && $action == "gateway"){
-      $request->setModuleName('sesbasic');
-      $request->setControllerName('subscription');
-      $request->setActionName('gateway');
-    }
-    if($module == "payment" && $controller == "subscription" && $action == "process"){
-      $request->setModuleName('sesbasic');
-      $request->setControllerName('subscription');
-      $request->setActionName('process');
-    }
-    if($module == "payment" && $controller == "subscription" && $action == "return"){
-      $request->setModuleName('sesbasic');
-      $request->setControllerName('subscription');
-      $request->setActionName('return');
-    } */
-  }
 	public function onRenderLayoutDefault($event) {
 
     $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
-       //write code to hide header footer 
+		
+		//write code to hide header footer 
     if (isset($_GET['removeSiteHeaderFooter']) && Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesapi')){ 
        $view->headLink()->appendStylesheet($view->layout()->staticBaseUrl . 'application/modules/Sesapi/externals/styles/style.css'); 
     } 
@@ -75,7 +53,7 @@ class Sesbasic_Plugin_Core extends Zend_Controller_Plugin_Abstract {
 $script .=
             "var openVideoInLightBoxsesbasic = " . Engine_Api::_()->getApi('settings', 'core')->getSetting('sesbasic.enable.lightbox', 1) . ";
 ";
-    $view->headScript()->appendScript($script);
+
     $singlecart = Engine_Api::_()->getApi('settings', 'core')->getSetting('site.enble.singlecart', 0); 
     $sesproduct_enable_module = Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesproduct');
     $courses_enable_module = Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('courses');
@@ -83,6 +61,7 @@ $script .=
       Engine_Api::_()->sesbasic()->updateCart(0);
       Engine_Api::_()->getApi('settings', 'core')->setSetting('site_enble_singlecart', 0);
     }
+    
     // Common photo lightbox work
     $viewer = Engine_Api::_()->user()->getViewer();
 		if($viewer->getIdentity() == 0)
@@ -117,7 +96,6 @@ $script .=
     "var openPhotoInLightBoxSesalbum = ".Engine_Api::_()->getApi('settings', 'core')->getSetting('sesalbum.enable.lightbox',1).";
     var sesshowShowInfomation = ".Engine_Api::_()->getApi('settings', 'core')->getSetting('sesalbum.show.information', 0).";
     ";
-    $view->headScript()->appendScript($script);
     // Common photo lightbox work
     $sesproduct_enable_module = Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesproduct');
     $courses_enable_module = Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('courses');
@@ -137,22 +115,24 @@ $script .=
         scriptJquery('.site_single_cart_dropdown').show();";
         if ($courses_enable_module) {
                     $script .= "scriptJquery.post('courses/cart/view',{cart_page:cartviewPage},function(res){
-                          totalcartItems = totalcartItems + res;
-                          scriptJquery('.site_single_cart_dropdown').html(totalcartItems); 
+                          
                           scriptJquery('.site_single_cart_dropdown').find('.sesbasic_header_pulldown_inner').each(function(){
                                if(scriptJquery(this).find('.sesbasic_header_pulldown_tip').length)
                                  scriptJquery(this).remove();
                           });
+                          totalcartItems = totalcartItems + res;
+                          scriptJquery('.site_single_cart_dropdown').html(totalcartItems); 
                     });";
         }
         if ($sesproduct_enable_module) {
          $script .= "scriptJquery.post('sesproduct/cart/view',{},function(res){
-                        totalcartItems = totalcartItems + res;
-                        scriptJquery('.site_single_cart_dropdown').html(totalcartItems); 
+                       
                         scriptJquery('.site_single_cart_dropdown').find('.sesbasic_header_pulldown_inner').each(function(){
                             if(scriptJquery(this).find('.sesbasic_header_pulldown_tip').length)
                               scriptJquery(this).remove();
                         });
+                        totalcartItems = totalcartItems + res;
+                        scriptJquery('.site_single_cart_dropdown').html(totalcartItems); 
                     });";
         }
         $script .= "
@@ -166,38 +146,17 @@ $script .=
             scriptJquery('.site_add_cart_dropdown').removeClass('active');
           }
         });";
-      $view->headScript()->appendScript($script);
 		}
-    //Currency function moved in sesmultiplecurrency plugin
-    /*$checkPaymentExtentionsEnable = Engine_Api::_()->sesbasic()->checkSesPaymentExtentionsEnable();
-		$getCurrentCurrency = Engine_Api::_()->sesbasic()->getCurrentCurrency();
-    if($checkPaymentExtentionsEnable && Engine_Api::_()->sesbasic()->multiCurrencyActive()) {
-      $fullySupportedCurrencies = Engine_Api::_()->sesbasic()->getSupportedCurrency();
-      $currencyData = '<li class="sesbasic_mini_menu_currency_chooser"><a href="javascript:;" id="sesbasic_btn_currency"><span>'.Engine_Api::_()->sesbasic()->getCurrentCurrency().'</span><i class="fa fa-caret-down"></i></a><div class="sesbasic_mini_menu_currency_chooser_dropdown" id="sesbasic_currency_change"><ul id="sesbasic_currency_change_data">';
-      foreach ($fullySupportedCurrencies as $key => $values) {
-				if($getCurrentCurrency == $key)
-					$active ='selected';
-				else
-					$active ='';
-        $currencyData .= '<li class="'.$active.'"><a href="javascript:;" data-rel="'.$key.'">'.$key.'</a></li>';
-      }
-      $currencyData .= '</ul></div></li>';
-      $script = 'scriptJquery(document).ready(function(e){
-          if(!scriptJquery(".sesariana_currencydropdown").length)
-          scriptJquery("#core_menu_mini_menu").find("ul").first().append(\''.$currencyData.'\');
-          else{
-          scriptJquery(".sesariana_currencydropdown").html(\''.$currencyData.'\');
-          if(!scriptJquery(".sesariana_currencydropdown").children().length)
-            scriptJquery(".sesariana_currencydropdown").parent().remove();
-          }
-      })';
-      $view->headScript()->appendScript($script);
-    } else{
-      $script = 'scriptJquery(document).ready(function(e){
-            scriptJquery(".sesariana_currencydropdown").parent().remove();
-      })';
-      $view->headScript()->appendScript($script);
-    }*/
+    
+		if($viewer->getIdentity()) {
+			if($viewer->level_id != 1) {
+				$script .= '
+					scriptJquery(document).ready(function() {
+						scriptJquery("#sesmemveroth-sesmemverothadminverificationrequests").parent().remove();
+					});';
+			}
+		}
+		
     $sesalbum_enable_module = Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesalbum'));
     $sesvideo_enable_module = Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesvideo'));
     if($actionName == 'index' && $controllerName == 'index' && $moduleName == 'core'){
@@ -209,12 +168,12 @@ $script .=
         else
           $attr = '';
         $contentAdultFiltering = '<li class="onoffswitch-wrapper"><div class="onoffswitch"><input id="myonoffswitch" name="onoffswitch"  class="onoffswitch-checkbox onoffswitch-checkbox-round" type="checkbox" '.$attr.'><label for="myonoffswitch"></label></div><span>Allow 18+ Content</span></li>';
-        $script = 'scriptJquery(document).ready(function(e){
+        $script .= 'scriptJquery(document).ready(function(e){
         scriptJquery("#core_menu_mini_menu").find("ul").first().append(\''.$contentAdultFiltering.'\');
         })';
-        $view->headScript()->appendScript($script);
       }
     }
+    $view->headScript()->appendScript($script);
   }
 
   public function onUserFormSignupAccountInitAfter($event) {

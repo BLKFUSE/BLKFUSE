@@ -51,7 +51,7 @@ class Sesbasic_Plugin_Task_Publish extends Core_Plugin_Task_Abstract {
                   ->where('is_approved =?', 1)
                   ->where('expired =?', 0)
                   ->where('is_publish =?', 0)
-                  ->where('publish_date <= now() - INTERVAL '.$expiration_days.' DAY');
+                  ->where('creation_date <= now() - INTERVAL '.$expiration_days.' DAY');
       $jobs = $table->fetchAll($select);
       if(engine_count($jobs) > 0) {
         foreach($jobs as $job) {

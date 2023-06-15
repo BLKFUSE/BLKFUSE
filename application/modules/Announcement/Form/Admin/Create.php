@@ -101,15 +101,47 @@ class Announcement_Form_Admin_Create extends Engine_Form
       'required' => true,
       'allowEmpty' => false,
     ));
+
+    $localeObject = Zend_Registry::get('Locale');
+    $languages = Zend_Locale::getTranslationList('language', $localeObject);
+    $defaultLanguage = Engine_Api::_()->getApi('settings', 'core')->getSetting('core.locale.locale', 'en');
+    $languageList = Zend_Registry::get('Zend_Translate')->getList();
     
-    $this->addElement('TinyMce', 'body', array(
-      'label' => 'Body',
-      'required' => true,
-      'editorOptions' => array(
-        'html' => true,
-      ),
-      'allowEmpty' => false,        
-    ));
+    foreach ($languageList as $key => $language) {
+			if(!in_array($key, array('auto', 'en')))
+				continue;
+
+      $this->addElement('TinyMce', 'body', array(
+				'label' => 'Body',
+				'required' => true,
+				'editorOptions' => array(
+					'html' => true,
+				),
+				'allowEmpty' => false,
+      ));
+    }
+    
+    foreach ($languageList as $key => $language) {
+      if(in_array($key, array('auto', 'en')))
+				continue;
+      $key = explode('_', $key);
+      $key = $key[0];
+      if ($language == 'en')
+        $coulmnName = 'body';
+      else
+        $coulmnName = $language . '_body';
+
+      if (engine_count($languageList) == '1')
+        $label = 'Body';
+      else
+        $label = 'Body [' . $languages[$key] . ']';
+      $this->addElement('TinyMce', $coulmnName, array(
+				'label' => $label,
+				'editorOptions' => array(
+					'html' => true,
+				),
+      ));
+    }
 
         // Buttons
     $this->addElement('Button', 'submit', array(

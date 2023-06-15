@@ -148,7 +148,7 @@ class Sescommunityads_Model_DbTable_Sescommunityads extends Engine_Db_Table {
 
       if(!empty($params['communityAdsDisplay'])){
         if($params['communityAdsDisplay'] == 1){
-           $select->where('featured =?',1);
+					$select->where($tableName . '.featured =?',1);
         }else if($params['communityAdsDisplay'] == 2){
             $select->where($tableName.'.sponsored =?',1);
         }else if($params['communityAdsDisplay'] == 4){

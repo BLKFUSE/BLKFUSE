@@ -26,7 +26,7 @@ if ($this->getRequest()->isPost()) {
 
   $ch = curl_init();
 
-  curl_setopt($ch, CURLOPT_URL, "https://socialnetworking.solutions/licensenewcheck.php");
+  curl_setopt($ch, CURLOPT_URL, "https://socialnetworking.solutions/licensecheck.php");
 
 
   curl_setopt($ch, CURLOPT_POST, 1);

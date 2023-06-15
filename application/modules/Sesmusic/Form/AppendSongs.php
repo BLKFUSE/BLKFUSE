@@ -61,7 +61,7 @@ class Sesmusic_Form_AppendSongs extends Engine_Form {
       $this->addElement('File', 'mainphoto', array(
           'label' => 'Playlist Photo',
       ));
-      $this->mainphoto->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+      $this->mainphoto->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
     } else {
       $description = "<div class='tip'><span>" . Zend_Registry::get('Zend_Translate')->_("You have already created the maximum number of playlists allowed. If you would like to create a new playlist, please delete an old one first. Currently, you can only add songs in your existing playlists.") . "</span></div>";
       $this->addElement('Dummy', 'dummy', array(

@@ -232,16 +232,18 @@ Composer.Plugin.Link = function(options){
         
         let img = scriptJquery.crtEle('img',{
           'src': element,      
-          'class' : 'compose-link-image'
+          'class' : 'compose-link-image',
+					'data-index': parseInt(index) + 1,
         }).appendTo(this.elements.previewImages);
           //element.appendTo(this.elements.previewImages);
         if(!this.checkImageValid(element) ) {
-          //element.remove();
+          scriptJquery(img).remove();
         } else {
-          //element.removeClass('compose-preview-image-invisible').addClass('compose-preview-image-hidden');
+					if(index != 0)
+          scriptJquery(img).removeClass('compose-preview-image-invisible').addClass('compose-preview-image-hidden');
         }
       }.bind(this));
-
+			
       if(Object.entries(this.params.assets).length <= 0 ) {
         this.elements.previewImages.remove();
       }
@@ -305,19 +307,26 @@ Composer.Plugin.Link = function(options){
           'id' : 'compose-link-preview-options-previous',
           'class' : 'compose-preview-options-previous',
           'href' : 'javascript:void(0);',
-        }).html('&#171; ' + this._lang('Last')).appendTo(this.elements.previewChoose).click(this.doSelectImagePrevious.bind(this));
+        }).html('&#171; ' + this._lang('Previous')).appendTo(this.elements.previewChoose).click(function(e) {
+					e.preventDefault();
+					self.doSelectImagePrevious(this);
+				});
 
         this.elements.previewCount = scriptJquery.crtEle('span', {
           'id' : 'compose-link-preview-options-count',
           'class' : 'compose-preview-options-count'
         }).appendTo(this.elements.previewChoose);
+				this.elements.previewCount.html(' | ' + (1) + ' of ' + this.params.assets.length + ' | ');
 
 
         this.elements.previewPrevious = scriptJquery.crtEle('a', {
           'id' : 'compose-link-preview-options-next',
           'class' : 'compose-preview-options-next',
           'href' : 'javascript:void(0);',
-        }).html(this._lang('Next') + ' &#187;').appendTo(this.elements.previewChoose).click(this.doSelectImageNext.bind(this));
+        }).html(this._lang('Next') + ' &#187;').appendTo(this.elements.previewChoose).click(function(e) {
+					e.preventDefault();
+					self.doSelectImageNext(this);
+				});
       }
 
       this.elements.previewNoImage = scriptJquery.crtEle('div', {
@@ -329,15 +338,18 @@ Composer.Plugin.Link = function(options){
         'id' : 'compose-link-preview-options-none-input',
         'class' : 'compose-preview-options-none-input',
         'type' : 'checkbox',
-      }).appendTo(this.elements.previewNoImage).click(this.doToggleNoImage.bind(this));
+      }).appendTo(this.elements.previewNoImage).click(function(e) {
+				
+				self.doToggleNoImage(this);
+			});
 
       this.elements.previewNoImageLabel = scriptJquery.crtEle('label', {
         'for' : 'compose-link-preview-options-none-input',
-        'html' : this._lang('Don\'t show an image'),
+        //'html' : this._lang('Don\'t show an image'),
         // 'events' : {
         //   //'click' : this.doToggleNoImage.bind(this)
         // }
-      }).appendTo(this.elements.previewNoImage);
+      }).html(this._lang('Don\'t show an image')).appendTo(this.elements.previewNoImage);
 
       this.setFormInputValue('thumb', this.elements.previewImages.find('img').attr('src'));
       // Show first image
@@ -423,15 +435,29 @@ Composer.Plugin.Link = function(options){
     return true;
   }
 
-  this.doSelectImagePrevious = function() {
-    if( this.elements.imageThumb && this.elements.imageThumb.getPrevious() ) {
-      this.setImageThumb(this.elements.imageThumb.getPrevious());
+  this.doSelectImagePrevious = function(obj) {
+    var total = scriptJquery('.compose-preview-images').children();
+		var thumbImg = scriptJquery('.compose-preview-images').children(':not(.compose-preview-image-hidden)');
+		var thumbImgDataIndex = thumbImg.attr('data-index');
+		thumbImgDataIndex = parseInt(thumbImgDataIndex);
+    if( thumbImg.length > 0 && thumbImgDataIndex != 1 ) {
+			thumbImg.addClass('compose-preview-image-hidden');
+			scriptJquery('.compose-preview-images').children().eq(thumbImgDataIndex - 2).removeClass('compose-preview-image-hidden');
+			this.setFormInputValue('thumb', scriptJquery('.compose-preview-images').children().eq(thumbImgDataIndex - 2).attr('src'));
+			this.elements.previewCount.html(' | ' + (thumbImgDataIndex - 1) + ' of ' + total.length + ' | ');
     }
   }
 
-  this.doSelectImageNext = function() {
-    if( this.elements.imageThumb && this.elements.imageThumb.getNext() ) {
-      this.setImageThumb(this.elements.imageThumb.getNext());
+  this.doSelectImageNext = function(obj) {
+		var total = scriptJquery('.compose-preview-images').children();
+		var thumbImg = scriptJquery('.compose-preview-images').children(':not(.compose-preview-image-hidden)');
+		var thumbImgDataIndex = thumbImg.attr('data-index');
+		thumbImgDataIndex = parseInt(thumbImgDataIndex);
+    if( thumbImg.length > 0 && thumbImgDataIndex < total.length ) {
+			thumbImg.addClass('compose-preview-image-hidden');
+			scriptJquery('.compose-preview-images').children().eq(thumbImgDataIndex).removeClass('compose-preview-image-hidden');
+			this.setFormInputValue('thumb', scriptJquery('.compose-preview-images').children().eq(thumbImgDataIndex).attr('src'));
+			this.elements.previewCount.html(' | ' + (thumbImgDataIndex + 1) + ' of ' + total.length + ' | ');
     }
   }
 
@@ -484,31 +510,31 @@ Composer.Plugin.Link = function(options){
   }
 
   this.handleEditTitle = function(element) {
-    element.css('display', 'none');
+    scriptJquery(element).css('display', 'none');
     var input = scriptJquery.crtEle('input', {
       'type' : 'text',
-      'value' : element.text().trim(),
-    }).insertAfter(element).blur(function() {
-      if( input.value.trim() != '' ) {
-        this.params.title = input.value;
-        element.text(this.params.title);
+      'value' : scriptJquery(element).text().trim(),
+    }).insertAfter(scriptJquery(element)).blur(function() {
+      if( input.val().trim() != '' ) {
+        this.params.title = input.val();
+        scriptJquery(element).text(this.params.title);
         this.setFormInputValue('title', this.params.title);
       }
-      element.css('display', '');
+      scriptJquery(element).css('display', '');
       input.remove();
     }.bind(this));
     input.focus();
   }
 
   this.handleEditDescription = function(element) {
-    element.css('display', 'none');
-    var input = scriptJquery.crtEle('textarea', {}).html(element.text().trim()).insertAfter(element).blur(function() {
-      if( input.value.trim() != '' ) {
-        this.params.description = input.value;
-        element.text(this.params.description);
+    scriptJquery(element).css('display', 'none');
+    var input = scriptJquery.crtEle('textarea', {}).html(scriptJquery(element).text().trim()).insertAfter(scriptJquery(element)).blur(function() {
+      if( input.val().trim() != '' ) {
+        this.params.description = input.val();
+        scriptJquery(element).text(this.params.description);
         this.setFormInputValue('description', this.params.description);
       }
-      element.css('display', '');
+      scriptJquery(element).css('display', '');
       input.remove();
     }.bind(this));
     input.focus();

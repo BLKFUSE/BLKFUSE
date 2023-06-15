@@ -418,6 +418,7 @@ scriptJquery(document).on('click','.deleteCat',function(){
 			scriptJquery.post(window.location.href,{data:selectedCategory,selectDeleted:'true'},function(response){
 			response = scriptJquery.parseJSON(response); 
 				if(response.ids){
+					var scrollToError = false;
 					var ids = response.ids;
 					if(response.diff_ids.length>0){
 						scriptJquery('#error-message-category-delete').html("Red mark category can't delete.You need to delete lower category of that category first.<br></br>");

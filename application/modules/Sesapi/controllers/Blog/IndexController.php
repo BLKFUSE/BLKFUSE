@@ -19,59 +19,47 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
     //Only show to member_level if authorized
     if( !$this->_helper->requireAuth()->setAuthParams('blog', null, 'view')->isValid() )
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array()));
-
     $this->isBlogEnable();
-
-//     $id = $this->_getParam('blog_id', $this->_getParam('id', null));
-//     $this->isBlogEnable();
-//     if($this->_blogEnabled){
-//       $blog_id = Engine_Api::_()->getDbtable('blogs', 'sesblog')->getBlogId($id);
-//       if ($blog_id) {
-//         $blog = Engine_Api::_()->getItem('sesblog_blog', $blog_id);
-//         if ($blog) {
-//             Engine_Api::_()->core()->setSubject($blog);
-//         }
-//       }
-//     }else{
-//       if ($id) {
-//         $blog = Engine_Api::_()->getItem('blog', $id);
-//         if ($blog) {
-//             Engine_Api::_()->core()->setSubject($blog);
-//         }
-//       }
-//     }
   }
 
   protected function isBlogEnable() {
     $this->_blogEnabled = true;
   }
+  
+  public function rateAction() {
+  
+    $viewer = Engine_Api::_()->user()->getViewer();
+    $user_id = $viewer->getIdentity();
+    $rating = $this->_getParam('rating');
+    $resource_id = $this->_getParam('resource_id');
+    $table = Engine_Api::_()->getDbtable('ratings', 'blog');
+    $db = $table->getAdapter();
+    $db->beginTransaction();
+    try {
+    
+			Engine_Api::_()->getDbtable('ratings', 'blog')->setRating($resource_id, $user_id, $rating);
+
+			$blog = Engine_Api::_()->getItem('blog', $resource_id);
+			$blog->rating = Engine_Api::_()->getDbtable('ratings', 'blog')->getRating($blog->getIdentity());
+			$blog->save();
+			
+			$owner = Engine_Api::_()->getItem('user', $blog->owner_id);
+			if($owner->user_id != $user_id)
+				Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($owner, $viewer, $blog, 'blog_rating');
+			
+      $db->commit();
+    } catch (Exception $e) {
+      $db->rollBack();
+      Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$e->getMessage(), 'result' => array()));
+    }
+		Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>"", 'result' => $this->view->translate("You have successfully rated blog.")));
+  }
 
   public function searchFormAction() {
-
-    $filterOptions = (array)$this->_getParam('orderby', array('creation_date DESC' => 'Recently Created',
-      'member_count DESC' => 'Most Popular',));
-    $search_for = $this-> _getParam('search_for', 'blog');
-
-    $default_search_type = $this->_getParam('default_search_type', 'recentlySPcreated');
-
     $form = new Blog_Form_Search();
-   /* if($form->draft)
-      $form->removeElement('draft');
-    if(engine_count($filterOptions)) {
-      $arrayOptions = $filterOptions;
-      $filterOptions = array();
-      foreach ($arrayOptions as $key=>$filterOption) {
-        $value = str_replace(array('SP',''), array(' ',' '), $filterOption);
-        $filterOptions[$key] = ucwords($value);
-      }
-      $filterOptions = array(''=>'')+$filterOptions;
-      $form->orderby->setMultiOptions($filterOptions);
-      $form->orderby->setValue($default_search_type);
-    }*/
-
     $form->populate($_POST);
-    $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form,true);
-    $this->generateFormFields($formFields);
+    $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
+		$this->generateFormFields($formFields,array('resources_type'=>'blog'));
   }
 
 
@@ -91,6 +79,9 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
     if( !$viewer->getIdentity() ) {
       $form->removeElement('show');
     }
+    
+    //In case of My Blog Entry
+    $user_id = $this->_getParam('user_id', null);
 
     // Process form
     $defaultValues = $form->getValues();
@@ -100,10 +91,11 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
       $values = $defaultValues;
     }
     //$this->view->formValues = array_filter($values);
-    $values['draft'] = "0";
+    
+    if(empty($user_id))
+			$values['draft'] = "0";
     $values['visible'] = "1";
-     
-     
+
     // Do the show thingy
     if( @$values['show'] == 2 ) {
       // Get an array of friend ids
@@ -138,21 +130,25 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
     if(!empty($_POST['user_id'])) {
 
       $viewer = Engine_Api::_()->user()->getViewer();
-      $menuoptions= array();
+      $menuoptions = array();
       $canEdit = Engine_Api::_()->authorization()->getPermission($viewer, 'blog', 'edit');
       $counter = 0;
       if($canEdit) {
         $menuoptions[$counter]['name'] = "edit";
-        $menuoptions[$counter]['label'] = $this->view->translate("Edit");
+        $menuoptions[$counter]['label'] = $this->view->translate("Edit Entry");
         $counter++;
       }
 
       $canDelete = Engine_Api::_()->authorization()->getPermission($viewer, 'blog', 'delete');
       if($canDelete) {
         $menuoptions[$counter]['name'] = "delete";
-        $menuoptions[$counter]['label'] = $this->view->translate("Delete");
+        $menuoptions[$counter]['label'] = $this->view->translate("Delete Entry");
       }
       $result['menus'] = $menuoptions;
+    }
+    
+    if(!empty($viewer->getIdentity())) {
+			$result['canCreate'] = $canCreate;
     }
 
     $extraParams['pagging']['total_page'] = $paginator->getPages()->pageCount;
@@ -195,132 +191,6 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array_merge(array('error'=>'0','error_message'=>'', 'result' => $catgeoryArray),array()));
   }
 
-
-
-
-//   public function browseAction() {
-//     if($this->_blogEnabled){
-//         $form = new Sesblog_Form_Search(array('searchTitle' => 'yes','browseBy' => 'yes','categoriesSearch' => 'yes','searchFor'=>'blog','FriendsSearch'=>'yes','defaultSearchtype'=>'mostSPliked','locationSearch' => 'yes','kilometerMiles' => 'yes','hasPhoto' => 'yes'));
-//
-//         $filterOptions = (array)$this->_getParam('sortss', array('recentlySPcreated' => 'Recently Created','mostSPviewed' => 'Most Viewed','mostSPliked' => 'Most Liked', 'mostSPcommented' => 'Most Commented','mostSPfavourite' => 'Most Favourite','featured' => 'Featured','sponsored' => 'Sponsored','verified' => 'Verified','mostSPrated'=>'Most Rated'));
-//     if(!empty($_POST['location'])){
-//       $latlng = Engine_Api::_()->sesapi()->getCoordinates($_POST['location']);
-//       if($latlng){
-//         $_POST['lat'] = $latlng['lat'];
-//         $_POST['lng'] = $latlng['lng'];
-//       }
-//     }
-//     $form->populate($_POST);
-//    if(!Engine_Api::_()->getApi('settings', 'core')->getSetting('sesblog.enable.favourite', 1))
-//      unset($filterOptions['mostSPfavourite']);
-//
-//     $arrayOptions = $filterOptions;
-//     $filterOptions = array();
-//     foreach ($arrayOptions as $key=>$filterOption) {
-//       if(is_numeric($key))
-//         $columnValue = $filterOption;
-//       else
-//         $columnValue = $key;
-//       $value = str_replace(array('SP',''), array(' ',' '), $columnValue);
-//       $filterOptions[$columnValue] = ucwords($value);
-//     }
-//     $filterOptions = array(''=>'')+$filterOptions;
-//     $form->sort->setMultiOptions($filterOptions);
-//     $sort = $this->_getParam('sort','recentlySPcreated');
-//     $form->sort->setValue($sort);
-//     $options = $form->getValues();
-//
-//     if (isset($options['sort']) && $options['sort'] != '') {
-//       $getParamSort = str_replace('SP', '_', $options['sort']);
-//     } else
-//       $getParamSort = 'creation_date';
-//
-//       if (isset($getParamSort)) {
-//         switch ($getParamSort) {
-//           case 'most_viewed':
-//             $options['popularCol'] = 'view_count';
-//             break;
-//           case 'most_liked':
-//             $options['popularCol'] = 'like_count';
-//             break;
-//           case 'most_commented':
-//             $options['popularCol'] = 'comment_count';
-//             break;
-//           case 'most_favourite':
-//             $options['popularCol'] = 'favourite_count';
-//             break;
-//           case 'sponsored':
-//             $options['popularCol'] = 'sponsored';
-//             $options['fixedData'] = 'sponsored';
-//             break;
-//           case 'verified':
-//             $options['popularCol'] = 'verified';
-//             $options['fixedData'] = 'verified';
-//           break;
-//           case 'featured':
-//             $options['popularCol'] = 'featured';
-//             $options['fixedData'] = 'featured';
-//             break;
-//           case 'most_rated':
-//             $options['popularCol'] = 'rating';
-//             break;
-//           case 'recently_created':
-//             default:
-//             $options['popularCol'] = 'creation_date';
-//             break;
-//         }
-//       }
-//       // Get search params
-//       $page = (int)  $this->_getParam('page', 1);
-//
-//       if(!empty($_POST['search']))
-//         $options['text'] = $_POST['search'];
-//       if(!empty($_POST['user_id'])){
-//         $options['user_id'] = $_POST['user_id'];
-//         $condition = array('manage-widget'=>true);
-//       }else{
-//         $condition = array('status'=>1,'draft'=>0,'visible'=>1);
-//       }
-//       if(!empty($_POST['owner_id']))
-//         $options["user_id"] = $_POST['owner_id'];
-//       $paginator = Engine_Api::_()->getDbtable('blogs', 'sesblog')->getSesblogsPaginator(array_merge($options,$condition), $options);
-//        $page = (int)  $this->_getParam('page', 1);
-//       // Build paginator
-//       $paginator->setItemCountPerPage($this->_getParam('limit',10));
-//       $paginator->setCurrentPageNumber($page);
-//
-//       $result = $this->blogResult($paginator);
-//
-//       if(!empty($_POST['user_id'])){
-//         $viewer = Engine_Api::_()->user()->getViewer();
-//         $menuoptions= array();
-//         $canEdit = Engine_Api::_()->authorization()->getPermission($viewer, 'sesblog_blog', 'edit');
-//         $counter = 0;
-//         if($canEdit){
-//           $menuoptions[$counter]['name'] = "edit";
-//           $menuoptions[$counter]['label'] = $this->view->translate("Edit");
-//           $counter++;
-//         }
-//         $canDelete = Engine_Api::_()->authorization()->getPermission($viewer, 'sesblog_blog', 'delete');
-//         if($canDelete){
-//           $menuoptions[$counter]['name'] = "delete";
-//           $menuoptions[$counter]['label'] = $this->view->translate("Delete");
-//         }
-//         $result['menus'] = $menuoptions;
-//       }
-//
-//       $extraParams['pagging']['total_page'] = $paginator->getPages()->pageCount;
-//       $extraParams['pagging']['total'] = $paginator->getTotalItemCount();
-//       $extraParams['pagging']['current_page'] = $paginator->getCurrentPageNumber();
-//       $extraParams['pagging']['next_page'] = $extraParams['pagging']['current_page']+1;
-//       if($result <= 0)
-//         Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=> $this->view->translate('Does not exist blogs.'), 'result' => array()));
-//       else
-//         Engine_Api::_()->getApi('response','sesapi')->sendResponse(array_merge(array('error'=>'0','error_message'=>'', 'result' => $result),$extraParams));
-//     } else {
-//     }
-//   }
-
   function blogResult($paginator) {
 
     $result = array();
@@ -352,14 +222,15 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
         }
       }
       
-           $result['blogs'][$counterLoop] = $resource;
+			$result['blogs'][$counterLoop] = $resource;
+			
       $images = array();
+			$images = Engine_Api::_()->sesapi()->getPhotoUrls($item,'',"");
+			if(!engine_count($images))
+				$images['main'] = $this->getBaseUrl(true, $item->getPhotoUrl());
 
-     if(!engine_count($images))
-        $images['main'] = $this->getBaseUrl(true, $item->getPhotoUrl());
-        $images['user_images'] = $this->userImage($item->owner_id,"thumb.profile");    
-        $images['blog_images'] = $this->getBaseUrl(true, "/application/modules/Blog/externals/images/nophoto_blog_thumb_normal.png");
-      
+			$images['blog_images'] = $images;
+			$images['user_images'] = $this->userImage($item->owner_id,"thumb.profile");
       $result['blogs'][$counterLoop]['images'] = $images;
       $counterLoop++;
     }
@@ -394,7 +265,7 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
 
     $blog_content = $blog->toArray();
 
-      $body = $this->replaceSrc($blog_content['body']);
+		$body = $this->replaceSrc($blog_content['body']);
     $blog_content['body'] = "<link href=\"".$this->getBaseUrl(true,'application/modules/Sesapi/externals/styles/tinymce.css')."\" type=\"text/css\" rel=\"stylesheet\">".($body);
     $blog_content['owner_title'] = Engine_Api::_()->getItem('user', $blog_content['owner_id'])->getTitle();
     $blog_content['resource_type'] = $blog->getType();
@@ -421,6 +292,14 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
     if( !empty($blog->category_id) ) {
       $category = Engine_Api::_()->getItem('blog_category', $blog->category_id);
       $blog_content['category_title'] = $category->category_name;
+			if( !empty($blog->subcat_id) ) {
+				$category = Engine_Api::_()->getItem('blog_category', $blog->subcat_id);
+				$blog_content['subcategory_title'] = $category->category_name;
+			}
+			if( !empty($blog->subsubcat_id) ) {
+				$category = Engine_Api::_()->getItem('blog_category', $blog->subsubcat_id);
+				$blog_content['subsubcategory_title'] = $category->category_name;
+			}
     }
 
     if($this->_blogEnabled) {
@@ -433,7 +312,11 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
     $blog_content['content_url'] = $this->getBaseUrl(false,$blog->getHref());
     $blog_content['can_favorite'] = false;
     $blog_content['can_share'] = false;
-
+		$blog_content['is_rated'] = Engine_Api::_()->getDbTable('ratings', 'blog')->checkRated($blog->getIdentity(), $viewer->getIdentity());
+		
+		$blog_content['enable_rating'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('blog.enable.rating', 1);
+		$blog_content['ratingicon'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('blog.ratingicon', 'fas fa-star');
+		
     $result['blog'] = $blog_content;
 
     if($viewer->getIdentity() > 0) {
@@ -446,21 +329,18 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
       $counter = 0;
     
       if($canEdit) {
-//         $menuoptions[$counter]['name'] = "changephoto";
-//         $menuoptions[$counter]['label'] = $this->view->translate("Change Main Photo");
-//         $counter++;
         $menuoptions[$counter]['name'] = "edit";
-        $menuoptions[$counter]['label'] = $this->view->translate("Edit Blog");
+        $menuoptions[$counter]['label'] = $this->view->translate("Edit This Entry");
         $counter++;
       }
       if($canDelete){
         $menuoptions[$counter]['name'] = "delete";
-        $menuoptions[$counter]['label'] = $this->view->translate("Delete Blog");
+        $menuoptions[$counter]['label'] = $this->view->translate("Delete This Entry");
         $counter++;
       }
       if (!$blog->isOwner($viewer)) {
         $menuoptions[$counter]['name'] = "report";
-        $menuoptions[$counter]['label'] = $this->view->translate("Report Blog");
+        $menuoptions[$counter]['label'] = $this->view->translate("Report");
       }
       $result['menus'] = $menuoptions;
     }
@@ -481,6 +361,20 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
 
     if(is_null($result['blog']["share"]["title"]))
       unset($result['blog']["share"]["title"]);
+      
+		$owner = $blog->getOwner();
+		if( $owner->getIdentity() == $viewer->getIdentity()){ } else {
+			$subscriptionTable = Engine_Api::_()->getDbtable('subscriptions', 'blog');
+			if( !$subscriptionTable->checkSubscription($owner, $viewer) ) {
+				$result['blog']['subscribe']['label'] = $this->view->translate('Subscribe');
+				$result['blog']['subscribe']['user_id'] = $owner->getIdentity();
+				$result['blog']['subscribe']['action'] = 'add';
+			} else {
+				$result['blog']['subscribe']['label'] = $this->view->translate('Unsubscribe');
+				$result['blog']['subscribe']['user_id'] = $owner->getIdentity();
+				$result['blog']['subscribe']['action'] = 'remove';
+			}
+		}
 
     $images = Engine_Api::_()->sesapi()->getPhotoUrls($blog,'',"");
     if(!engine_count($images))
@@ -491,157 +385,30 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
     $result['blog']['user_images'] = $this->userImage($blog->owner_id,"thumb.profile");
     Engine_Api::_()->getApi('response','sesapi')->sendResponse(array_merge(array('error'=>'0','error_message'=>'', 'result' => $result),array()));
   }
+  
   function replaceSrc($html = ""){
       
     preg_match_all( '@src="([^"]+)"@' , $html, $match );
 
     foreach(array_pop($match) as $src){
-        //$url = explode("data:image",$src);
-       
-        if(strpos($src,'data:') !== false){
-          
-        }else if(strpos($src,'http://') === false && strpos($src,'https://') === false && strpos($src,'//') === false){
-          if(Zend_Registry::get('StaticBaseUrl') != "/")
-          $baseUrl = str_replace(Zend_Registry::get('StaticBaseUrl'),'',$this->getBaseUrl());
-          else
-          $baseUrl = $this->getBaseUrl();
-          if(end(explode("",$baseUrl)) != '/')
-            $baseUrl .= '/';
-          $html = str_replace($src,$baseUrl.$src,$html);
-        }else if(strpos($src,'http://') === false && strpos($src,'https://') === false){
-            $html = str_replace($src,'https://'.$src,$html);
-        }
-
-
+			//$url = explode("data:image",$src);
+			
+			if(strpos($src,'data:') !== false){
+				
+			}else if(strpos($src,'http://') === false && strpos($src,'https://') === false && strpos($src,'//') === false){
+				if(Zend_Registry::get('StaticBaseUrl') != "/")
+				$baseUrl = str_replace(Zend_Registry::get('StaticBaseUrl'),'',$this->getBaseUrl());
+				else
+				$baseUrl = $this->getBaseUrl();
+				if(end(explode("",$baseUrl)) != '/')
+					$baseUrl .= '/';
+				$html = str_replace($src,$baseUrl.$src,$html);
+			}else if(strpos($src,'http://') === false && strpos($src,'https://') === false){
+					$html = str_replace($src,'https://'.$src,$html);
+			}
     }
     return $html;
-
-}
-
-//   public function viewAction() {
-//
-//     $viewer = Engine_Api::_()->user()->getViewer();
-//     $id = $this->_getParam('blog_id', null);
-//     $this->view->blog_id = $blog_id = Engine_Api::_()->getDbtable('blogs', 'sesblog')->getBlogId($id);
-//     if(!Engine_Api::_()->core()->hasSubject())
-//       $sesblog = Engine_Api::_()->getItem('sesblog_blog', $blog_id);
-//     else
-//       $sesblog = Engine_Api::_()->core()->getSubject();
-//
-//     if( !$this->_helper->requireSubject()->isValid() )
-//       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array()));
-//
-//     if( !$this->_helper->requireAuth()->setAuthParams($sesblog, $viewer, 'view')->isValid() )
-//       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array()));
-//
-//     if( !$sesblog || !$sesblog->getIdentity() || ($sesblog->draft && !$sesblog->isOwner($viewer)) )
-//       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array()));
-//
-//     $blog = $sesblog->toArray();
-//     $body = @str_replace('src="/', 'src="' . $this->getBaseUrl() . '/', $blog['body']);
-//     $body = preg_replace('/<\/?a[^>]*>/','',$body);
-//     $blog['body'] = "<link href=\"".$this->getBaseUrl(true,'application/modules/Sesapi/externals/styles/tinymce.css')."\" type=\"text/css\" rel=\"stylesheet\">".($body);
-//     $blog['owner_title'] = Engine_Api::_()->getItem('user',$blog['owner_id'])->getTitle();
-//     $blog['resource_type'] = $sesblog->getType();
-//
-//
-//      // Get tags
-//     $blogTags = $sesblog->tags()->getTagMaps();
-//     if (!empty($blogTags)) {
-//         foreach ($blogTags as $tag) {
-//             $blog['tags'][$tag->getTag()->tag_id] = $tag->getTag()->text;
-//         }
-//     }
-//
-//     if($this->_blogEnabled){
-//       if($viewer->getIdentity() != 0){
-//         $blog['is_content_like'] = Engine_Api::_()->sesapi()->contentLike($sesblog);
-//         $blog['content_like_count'] = (int) Engine_Api::_()->sesapi()->getContentLikeCount($sesblog);
-//         if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesblog.enable.favourite', 1)){
-//           $blog['is_content_favourite'] = Engine_Api::_()->sesapi()->contentFavoutites($sesblog,'favourites','sesblog');
-//           $blog['content_favourite_count'] = (int) Engine_Api::_()->sesapi()->getContentFavouriteCount($sesblog,'favourites','sesblog');
-//         }
-//       }
-//     }
-//     if (!$sesblog->isOwner($viewer)) {
-//         $sesblog->view_count = $sesblog->view_count + 1;
-//         $sesblog->save();
-//     }
-//
-//     $category = Engine_Api::_()->getItem('sesblog_category', $sesblog->category_id);
-//     if (!empty($category))
-//         $blog['category_title'] = $category->getTitle();
-//
-//     $subcategory = Engine_Api::_()->getItem('sesblog_category', $sesblog->subcat_id);
-//     if (!empty($subcategory))
-//         $blog['subcategory_title'] = $subcategory->getTitle();
-//
-//     $subsubcat = Engine_Api::_()->getItem('sesblog_category', $sesblog->subsubcat_id);
-//     if (!empty($subsubcat))
-//         $blog['subsubcategory_title'] = $subsubcat->getTitle();
-//
-//     $blog['content_url'] = $this->getBaseUrl(false,$sesblog->getHref());
-//     if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesblog.enable.favourite', 1)){
-//       $blog['can_favorite'] = true;
-//     }else{
-//       $blog['can_favorite'] = false;
-//     }
-//     if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesblog.enable.share', 1)){
-//       $blog['can_share'] = true;
-//     }else{
-//       $blog['can_share'] = false;
-//     }
-//     $result['blog'] = $blog;
-//     if($viewer->getIdentity() > 0){
-//      $result['blog']['permission']['canEdit'] = $canEdit = $viewPermission = $sesblog->authorization()->isAllowed($viewer, 'edit') ? true : false;
-//      $result['blog']['permission']['canComment'] =  $sesblog->authorization()->isAllowed($viewer, 'comment') ? true : false;
-//      $result['blog']['permission']['canCreate'] = Engine_Api::_()->authorization()->getPermission($viewer, 'sesblog_blog', 'create') ? true : false;
-//      $result['blog']['permission']['can_delete'] = $canDelete  = $sesblog->authorization()->isAllowed($viewer,'delete') ? true : false;
-//
-//       $menuoptions= array();
-//       $counter = 0;
-//       if($canEdit){
-//         $menuoptions[$counter]['name'] = "changephoto";
-//         $menuoptions[$counter]['label'] = $this->view->translate("Change Main Photo");
-//         $counter++;
-//         $menuoptions[$counter]['name'] = "edit";
-//         $menuoptions[$counter]['label'] = $this->view->translate("Edit Blog");
-//         $counter++;
-//       }
-//       if($canDelete){
-//         $menuoptions[$counter]['name'] = "delete";
-//         $menuoptions[$counter]['label'] = $this->view->translate("Delete Blog");
-//         $counter++;
-//       }
-//       if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesblog.enable.report', 1)){
-//         $menuoptions[$counter]['name'] = "report";
-//         $menuoptions[$counter]['label'] = $this->view->translate("Report Blog");
-//       }
-//       $result['menus'] = $menuoptions;
-//    }
-//
-//     $result['blog']["share"]["name"] = "share";
-//     $result['blog']["share"]["label"] = $this->view->translate("Share");
-//     $photo = $this->getBaseUrl(false,$sesblog->getPhotoUrl());
-//     if($photo)
-//     $result['blog']["share"]["imageUrl"] = $photo;
-//     $result['blog']["share"]["title"] = $sesblog->getTitle();
-//     $result['blog']["share"]["description"] = strip_tags($sesblog->getDescription());
-//     $result['blog']["share"]['urlParams'] = array(
-//         "type" => $sesblog->getType(),
-//         "id" => $sesblog->getIdentity()
-//     );
-//     if(is_null($result['blog']["share"]["title"]))
-//       unset($result['blog']["share"]["title"]);
-//
-//     $images = Engine_Api::_()->sesapi()->getPhotoUrls($sesblog,'',"");
-//     if(!engine_count($images))
-//       $images['main'] = $this->getBaseUrl(true,$sesblog->getPhotoUrl());
-//     $result['blog']['blog_images'] = $images;
-//
-//     $result['blog']['user_images'] = $this->userImage($sesblog->owner_id,"thumb.profile");
-//     Engine_Api::_()->getApi('response','sesapi')->sendResponse(array_merge(array('error'=>'0','error_message'=>'', 'result' => $result),array()));
-//   }
+	}
 
   public function createAction() {
 
@@ -660,7 +427,7 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
     $current_count = $paginator->getTotalItemCount();
     if (($current_count >= $quota) && !empty($quota)) {
       // return error message
-      $message = $this->view->translate('You have already uploaded the maximum number of blogs allowed.');
+      $message = $this->view->translate('You have already uploaded the maximum number of entries allowed.');
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error' => '1', 'error_message' => $message, 'result' => array()));
     }
 
@@ -671,7 +438,7 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
     // Check if post and populate
     if($this->_getParam('getForm')) {
       $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
-      $this->generateFormFields($formFields,array('resources_type'=>'blog'));
+      $this->generateFormFields($formFields,array('resources_type'=>'blog', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
     }
 
     // If not post or form not valid, return
@@ -699,8 +466,8 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
       }
       $floodItem = $tableFlood->fetchAll($select);
       if(engine_count($floodItem) && $itemFlood[0] <= engine_count($floodItem)){
-           $message = Engine_Api::_()->core()->floodCheckMessage($itemFlood,$this->view);
-              Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => $message));  
+				$message = Engine_Api::_()->core()->floodCheckMessage($itemFlood,$this->view);
+				Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => $message));  
       }
     }
     // Process
@@ -713,8 +480,8 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
       $viewer = Engine_Api::_()->user()->getViewer();
       $formValues = $form->getValues();
       if (isset($formValues['networks'])) {
-          $network_privacy = 'network_'. implode(',network_', $formValues['networks']);
-          $formValues['networks'] = implode(',', $formValues['networks']);
+        $network_privacy = 'network_'. implode(',network_', $formValues['networks']);
+        $formValues['networks'] = implode(',', $formValues['networks']);
       }
 
       if( empty($formValues['auth_view']) ) {
@@ -729,13 +496,19 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
         'owner_id' => $viewer->getIdentity(),
         'view_privacy' => $formValues['auth_view'],
       ));
-
+      
       $blog = $table->createRow();
+      
+      if (is_null($values['subcat_id']))
+        $values['subcat_id'] = 0;
+        
+      if (is_null($values['subsubcat_id']))
+        $values['subsubcat_id'] = 0;
       $blog->setFromArray($values);
       $blog->save();
 
-      if( !empty($_FILES['image']['name']) &&  !empty($_FILES['image']['size']) ) {
-        $this->setPhoto($_FILES['image'],$blog);
+      if( !empty($_FILES['photo']['name']) &&  !empty($_FILES['photo']['size']) ) {
+        $blog->setPhoto($form->photo);
       }
 
       // Auth
@@ -775,84 +548,6 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
     Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'', 'result' => array('blog_id' => $blog->getIdentity(),'message' => $this->view->translate('Blog created successfully.'))));
   }
 
-  public function setPhoto($photo,$blog)
-  {
-    if( $photo instanceof Zend_Form_Element_File ) {
-      $file = $photo->getFileName();
-    } elseif( is_array($photo) && !empty($photo['tmp_name']) ) {
-      $file = $photo['tmp_name'];
-    } elseif( is_string($photo) && file_exists($photo) ) {
-      $file = $photo;
-    } else {
-      throw new Blog_Model_Exception('Invalid argument passed to setPhoto: ' . print_r($photo, 1));
-    }
-
-    $name = basename($photo['name']);
-    $path = APPLICATION_PATH . DIRECTORY_SEPARATOR . 'temporary';
-    $params = array(
-      'parent_type' => 'blog',
-      'parent_id' => $blog->getIdentity()
-    );
-
-    // Save
-    $storage = Engine_Api::_()->storage();
-
-    // Resize image (main)
-    $image = Engine_Image::factory();
-    $image->open($file)
-      ->resize(720, 720)
-      ->write($path . '/m_' . $name)
-      ->destroy();
-
-    // Resize image (profile)
-    $image = Engine_Image::factory();
-    $image->open($file)
-      ->resize(200, 400)
-      ->write($path . '/p_' . $name)
-      ->destroy();
-
-    // Resize image (normal)
-    $image = Engine_Image::factory();
-    $image->open($file)
-      ->resize(140, 160)
-      ->write($path . '/in_' . $name)
-      ->destroy();
-
-    // Resize image (icon)
-    $image = Engine_Image::factory();
-    $image->open($file);
-
-    $size = min($image->height, $image->width);
-    $x = ($image->width - $size) / 2;
-    $y = ($image->height - $size) / 2;
-
-    $image->resample($x, $y, $size, $size, 48, 48)
-      ->write($path . '/is_' . $name)
-      ->destroy();
-
-    // Store
-    $iMain = $storage->create($path . '/m_' . $name, $params);
-    $iProfile = $storage->create($path . '/p_' . $name, $params);
-    $iIconNormal = $storage->create($path . '/in_' . $name, $params);
-    $iSquare = $storage->create($path . '/is_' . $name, $params);
-
-    $iMain->bridge($iProfile, 'thumb.profile');
-    $iMain->bridge($iIconNormal, 'thumb.normal');
-    $iMain->bridge($iSquare, 'thumb.icon');
-
-    // Remove temp files
-    @unlink($path . '/p_' . $name);
-    @unlink($path . '/m_' . $name);
-    @unlink($path . '/in_' . $name);
-    @unlink($path . '/is_' . $name);
-
-    // Update row
-    $blog->modified_date = date('Y-m-d H:i:s');
-    $blog->photo_id = $iMain->getIdentity();
-    $blog->save();
-
-    return $blog;
-  }
   public function editAction() {
 
     if(!$this->_helper->requireUser()->isValid())
@@ -912,8 +607,34 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
     }
     if($this->_getParam('getForm')) {
       $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
-      $formFields[4]['name'] = "file";
-      $this->generateFormFields($formFields,array('resources_type'=>'blog'));
+      //set subcategory and 3rd category populated work
+      $newFormFieldsArray = array();
+      if(is_countable($formFields) && engine_count($formFields) &&  $blog->category_id){
+        foreach($formFields as $fields){
+          foreach($fields as $field){
+            $subcat = array();
+            if($fields['name'] == "subcat_id"){ 
+              $subcat = Engine_Api::_()->getItemTable('blog_category')->getSubcategory(array('category_id'=>$blog->category_id,'column_name'=>'*'));
+            }else if($fields['name'] == "subsubcat_id"){
+              if($blog->subcat_id)
+              $subcat = Engine_Api::_()->getItemTable('blog_category')->getSubSubcategory(array('category_id'=>$blog->subcat_id,'column_name'=>'*'));
+            }
+            if(is_countable($subcat) && engine_count($subcat)){
+              $arrayCat = array();
+              foreach($subcat as $cat){
+                $arrayCat[$cat->getIdentity()] = $cat->getTitle(); 
+              }
+              $fields["multiOptions"] = $arrayCat;  
+            }
+          }
+          $newFormFieldsArray[] = $fields;
+        }
+        if(!engine_count($newFormFieldsArray))
+          $newFormFieldsArray = $formFields;
+				$newFormFieldsArray[6]['name'] = "file";
+        $this->generateFormFields($newFormFieldsArray,array('resources_type'=>'blog', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
+      }
+      $this->generateFormFields($formFields,array('resources_type'=>'blog', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
     }
     // Check post/form
     if( !$this->getRequest()->isPost() ) {
@@ -932,7 +653,10 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
 
     try {
       $values = $form->getValues();
-
+      if (isset($values['networks'])) {
+          $network_privacy = 'network_'. implode(',network_', $values['networks']);
+          $values['networks'] = implode(',', $values['networks']);
+      }
       if( empty($values['auth_view']) ) {
         $values['auth_view'] = 'everyone';
       }
@@ -947,8 +671,8 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
       $blog->save();
 
       // Add photo
-      if( !empty($_FILES['image']['name']) &&  !empty($_FILES['image']['size']) ) {
-        $this->setPhoto($_FILES['image'],$blog);
+      if( !empty($_FILES['photo']['name']) &&  !empty($_FILES['photo']['size']) ) {
+        $blog->setPhoto($form->photo);
       }
 
       // Auth
@@ -1020,9 +744,10 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
       $db->rollBack();
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$e->getMessage(), 'result' => array()));
     }
-    $message = Zend_Registry::get('Zend_Translate')->_('Your sesblog entry has been deleted.');
+    $message = Zend_Registry::get('Zend_Translate')->_('Your blog entry has been deleted.');
     Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'', 'result' => $message));
   }
+  
   public function addAction()
   {
     $blog = Engine_Api::_()->getItem('blog', $this->_getParam('blog_id'));
@@ -1041,115 +766,129 @@ class Blog_IndexController extends Sesapi_Controller_Action_Standard {
     $subscriptionTable = Engine_Api::_()->getDbtable('subscriptions', 'blog');
   
     // Check if they are already subscribed
-  /*  if( $subscriptionTable->checkSubscription($blog, $viewer) ) {
-      $this->view->status = true;
-      $this->view->message = Zend_Registry::get('Zend_Translate')
-          ->_('You are already subscribed to this member\'s blog.');
+		/*  if( $subscriptionTable->checkSubscription($blog, $viewer) ) {
+				$this->view->status = true;
+				$this->view->message = Zend_Registry::get('Zend_Translate')
+						->_('You are already subscribed to this member\'s blog.');
 
-      Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=> $error, 'result' => array()));
-  }*/
-    // Make form
-  $this->view->form = $form = new Core_Form_Confirm(array(
-    'title' => 'Subscribe?',
-    'description' => 'Would you like to subscribe to this member\'s blog?',
-    'class' => 'global_form_popup',
-    'submitLabel' => 'Subscribe',
-    'cancelHref' => 'javascript:parent.Smoothbox.close();',
-  ));
+				Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=> $error, 'result' => array()));
+		}*/
+			// Make form
+		$this->view->form = $form = new Core_Form_Confirm(array(
+			'title' => 'Subscribe?',
+			'description' => 'Would you like to subscribe to this member\'s blog?',
+			'class' => 'global_form_popup',
+			'submitLabel' => 'Subscribe',
+			'cancelHref' => 'javascript:parent.Smoothbox.close();',
+		));
 
-  if($this->_getParam('getForm')) {
-      $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
-      $this->generateFormFields($formFields,array('resources_type'=>'blog'));
-    }
+		if($this->_getParam('getForm')) {
+				$formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
+				$this->generateFormFields($formFields,array('resources_type'=>'blog'));
+			}
 
-    // Check method
-  if( !$this->getRequest()->isPost() ) { 
-    $status = false;
-    $error = Zend_Registry::get('Zend_Translate')->_('Invalid request method');
-    Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=> $error, 'result' => array()));
-  }
+			// Check method
+		if( !$this->getRequest()->isPost() ) { 
+			$status = false;
+			$error = Zend_Registry::get('Zend_Translate')->_('Invalid request method');
+			Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=> $error, 'result' => array()));
+		}
 
-    // Check valid
-  if( !$form->isValid($this->getRequest()->getPost()) ) {
-    $validateFields = Engine_Api::_()->getApi('FormFields','sesapi')->validateFormFields($form);
-    if(is_countable($validateFields) && engine_count($validateFields))
-      $this->validateFormFields($validateFields);
-  }
-    // Process
-  $db = $user->getTable()->getAdapter();
-  $db->beginTransaction();
-  try {
-    $subscriptionTable->createSubscription($user,$viewer);  
-    $db->commit();
-  } catch( Exception $e ) { 
-    $db->rollBack();
-    Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->getMessage(), 'result' => array()));
-  }
+			// Check valid
+		if( !$form->isValid($this->getRequest()->getPost()) ) {
+			$validateFields = Engine_Api::_()->getApi('FormFields','sesapi')->validateFormFields($form);
+			if(is_countable($validateFields) && engine_count($validateFields))
+				$this->validateFormFields($validateFields);
+		}
+			// Process
+		$db = $user->getTable()->getAdapter();
+		$db->beginTransaction();
+		try {
+			$subscriptionTable->createSubscription($user,$viewer);  
+			$db->commit();
+		} catch( Exception $e ) { 
+			$db->rollBack();
+			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->getMessage(), 'result' => array()));
+		}
 
-Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$this->view->translate('Subscribed successfully.'), 'result' => array()));
-}
-public function removeAction()
-{ 
-  $blog = Engine_Api::_()->getItem('blog', $this->_getParam('blog_id'));
-  if( !$this->_helper->requireUser()->isValid() ) {   
+		Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$this->view->translate('Subscribed successfully.'), 'result' => array()));
+	}
+	
+	public function removeAction() {
+	
+		$blog = Engine_Api::_()->getItem('blog', $this->_getParam('blog_id'));
+		if( !$this->_helper->requireUser()->isValid() ) {   
 
-    Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('user_not_autheticate'), 'result' => array()));
-  }
-  $viewer = Engine_Api::_()->user()->getViewer();
-  $user = $blog->getOwner('user');
-  if (!$blog) {
-    $error = Zend_Registry::get('Zend_Translate')->_("Blog doesn't exist or not authorized to delete");
-    Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $error, 'result' => array()));
-  }
-  $subscriptionTable = Engine_Api::_()->getDbtable('subscriptions', 'blog');
+			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('user_not_autheticate'), 'result' => array()));
+		}
+		$viewer = Engine_Api::_()->user()->getViewer();
+		$user = $blog->getOwner('user');
+		if (!$blog) {
+			$error = Zend_Registry::get('Zend_Translate')->_("Blog doesn't exist or not authorized to delete");
+			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $error, 'result' => array()));
+		}
+		$subscriptionTable = Engine_Api::_()->getDbtable('subscriptions', 'blog');
 
-   /* if( !$subscriptionTable->checkSubscription($user, $viewer) ) {
-      $this->view->status = true;
-      $this->view->message = Zend_Registry::get('Zend_Translate')
-          ->_('You are already not subscribed to this member\'s blog.');
-      Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=> $error, 'result' => array()));
-  }*/
+		/* if( !$subscriptionTable->checkSubscription($user, $viewer) ) {
+				$this->view->status = true;
+				$this->view->message = Zend_Registry::get('Zend_Translate')
+						->_('You are already not subscribed to this member\'s blog.');
+				Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=> $error, 'result' => array()));
+		}*/
 
-    // Make form
-  $this->view->form = $form = new Core_Form_Confirm(array(
-    'title' => 'Unsubscribe?',
-    'description' => 'Would you like to unsubscribe from this member\'s blog?',
-    'class' => 'global_form_popup',
-    'submitLabel' => 'Unsubscribe',
-    'cancelHref' => 'javascript:parent.Smoothbox.close();',
-  ));
+			// Make form
+		$this->view->form = $form = new Core_Form_Confirm(array(
+			'title' => 'Unsubscribe?',
+			'description' => 'Would you like to unsubscribe from this member\'s blog?',
+			'class' => 'global_form_popup',
+			'submitLabel' => 'Unsubscribe',
+			'cancelHref' => 'javascript:parent.Smoothbox.close();',
+		));
 
-    // Check method
-  if( !$this->getRequest()->isPost() ) {
-    $status = false;
-    $error = Zend_Registry::get('Zend_Translate')->_('Invalid request method');
-    Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=> $error, 'result' => array()));
-  }
-  if($this->_getParam('getForm')) {
-    $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
-    $this->generateFormFields($formFields,array('resources_type'=>'blog'));
-  }
+			// Check method
+		if( !$this->getRequest()->isPost() ) {
+			$status = false;
+			$error = Zend_Registry::get('Zend_Translate')->_('Invalid request method');
+			Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=> $error, 'result' => array()));
+		}
+		if($this->_getParam('getForm')) {
+			$formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
+			$this->generateFormFields($formFields,array('resources_type'=>'blog'));
+		}
 
-    // Check valid
-  if( !$form->isValid($this->getRequest()->getPost()) ) {
-    $validateFields = Engine_Api::_()->getApi('FormFields','sesapi')->validateFormFields($form);
-    if(is_countable($validateFields) && engine_count($validateFields))
-      $this->validateFormFields($validateFields);
-  }
-  
-    // Process
-  $db = $user->getTable()->getAdapter();
-  $db->beginTransaction();
+			// Check valid
+		if( !$form->isValid($this->getRequest()->getPost()) ) {
+			$validateFields = Engine_Api::_()->getApi('FormFields','sesapi')->validateFormFields($form);
+			if(is_countable($validateFields) && engine_count($validateFields))
+				$this->validateFormFields($validateFields);
+		}
+		
+			// Process
+		$db = $user->getTable()->getAdapter();
+		$db->beginTransaction();
 
-  try {
-    $subscriptionTable->removeSubscription($user, $viewer);
-    $db->commit();
-  } catch( Exception $e ) {
-    $db->rollBack();
-    Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->getMessage(), 'result' => array()));
-  }
+		try {
+			$subscriptionTable->removeSubscription($user, $viewer);
+			$db->commit();
+		} catch( Exception $e ) {
+			$db->rollBack();
+			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->getMessage(), 'result' => array()));
+		}
 
-  Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$this->view->translate('UnSubscribed successfully.'), 'result' => array()));
-}
-
+		Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$this->view->translate('UnSubscribed successfully.'), 'result' => array()));
+	}
+	
+	public function menuAction() {
+		$menus = Engine_Api::_()->getApi('menus', 'core')->getNavigation('blog_main', array());
+		$menu_counter = 0;
+		foreach ($menus as $menu) {
+			$class = end(explode(' ', $menu->class));
+			$result_menu[$menu_counter]['label'] = $this->view->translate($menu->label);
+			$result_menu[$menu_counter]['action'] = $class;
+			$result_menu[$menu_counter]['isActive'] = $menu->active;
+			$menu_counter++;
+		}
+		$result['menus'] = $result_menu;
+		Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array_merge(array('error' => '0', 'error_message' => '', 'result' => $result)));
+	}
 }

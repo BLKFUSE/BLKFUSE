@@ -23,6 +23,7 @@ class Sesthought_Model_DbTable_Recentlyviewitems extends Engine_Db_Table {
     $select = $this->select()
             ->setIntegrityCheck(false)
             ->from($this->info('name'), array('*'))
+            ->joinLeft($thoughtTableName, $thoughtTableName . ".thought_id =  " . $this->info('name') . '.resource_id', null)
             ->where($this->info('name').'.resource_type = ?', 'sesthought_thought')
             ->order('creation_date DESC')
             ->limit($params['limit']);
@@ -36,7 +37,7 @@ class Sesthought_Model_DbTable_Recentlyviewitems extends Engine_Db_Table {
         return array();
       $select->where($this->info('name') . ".owner_id IN ('" . implode(',', $friendIds) . "')");
     }
-    $select->joinLeft($thoughtTableName, $thoughtTableName . ".thought_id =  " . $this->info('name') . '.resource_id', null);
+    $select->group($this->info('name').'.resource_id');
     return $this->fetchAll($select);
   }
 }

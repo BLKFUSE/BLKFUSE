@@ -54,7 +54,7 @@ function selectAll()
           <th><?php echo $this->translate("Title") ?></th>
           <th><?php echo $this->translate("Width") ?></th>
           <th><?php echo $this->translate("Height") ?></th>
-          <th align="center"><?php echo $this->translate("Status");?></th>
+          <th class="admin_table_centered"><?php echo $this->translate("Status");?></th>
           <th><?php echo $this->translate("Options") ?></th>
         </tr>
       </thead>

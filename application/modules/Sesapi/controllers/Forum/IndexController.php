@@ -274,7 +274,7 @@ class Forum_IndexController extends Sesapi_Controller_Action_Standard {
         $form->getElement('body')->setLabel('Body');
       }
       $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
-      $this->generateFormFields($formFields);
+      $this->generateFormFields($formFields,array('resources_type'=>'forum_post', 'formTitle' => "Post Reply"));
     }    
 
     if( !$form->isValid($this->getRequest()->getPost()) ) {
@@ -647,7 +647,7 @@ class Forum_IndexController extends Sesapi_Controller_Action_Standard {
       
       //$pagedata["share"]["imageUrl"] = $this->getBaseUrl(false, $page->getPhotoUrl());
       $post_content["share"]["url"] = $this->getBaseUrl(false,$post->getHref());
-      $post_content["share"]["title"] = $post->getTitle();
+      $post_content["share"]["title"] = '';
       $post_content["share"]["description"] = strip_tags($post->getDescription());
       $post_content["share"]["setting"] = $shareType;
       $post_content["share"]['urlParams'] = array(
@@ -1196,10 +1196,19 @@ class Forum_IndexController extends Sesapi_Controller_Action_Standard {
     $post = $post;
     $topic = $post->getParent();
     $forum = $topic->getParent();
-    if( !$this->_helper->requireAuth()->setAuthParams($post, null, 'edit')->checkRequire() &&
-        !$this->_helper->requireAuth()->setAuthParams($forum, null, 'topic.edit')->checkRequire() ) {
-      Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array()));
+    
+    $postEdit = Engine_Api::_()->authorization()->getPermission($viewer, 'forum', 'post.edit');
+    $topicEdit = Engine_Api::_()->authorization()->getPermission($viewer, 'forum', 'topic.edit');
+    if(!$postEdit) {
+			Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array()));
     }
+    if(!$topicEdit) {
+			Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array()));
+    }
+//     if( !$this->_helper->requireAuth()->setAuthParams($post, null, 'edit')->checkRequire() &&
+//         !$this->_helper->requireAuth()->setAuthParams($forum, null, 'topic.edit')->checkRequire() ) {
+//       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array()));
+//     }
 
     $this->view->form = $form = new Forum_Form_Post_Edit(array('post'=>$post));
 
@@ -1224,7 +1233,7 @@ class Forum_IndexController extends Sesapi_Controller_Action_Standard {
       }
       $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
       $formFields[1]['name'] = "file";
-      $this->generateFormFields($formFields);
+      $this->generateFormFields($formFields,array('resources_type'=>'forum_post', 'formTitle' => "Edit Post"));
     }
 
     // Check post/form
@@ -1257,8 +1266,8 @@ class Forum_IndexController extends Sesapi_Controller_Action_Standard {
         $post->deletePhoto();
       }
 
-      if( !empty($values['photo']) ) {
-        $post->setPhoto($form->photo);
+      if( !empty($_FILES['file']['name']) &&  !empty($_FILES['file']['size']) ) {
+        $post->setPhoto($_FILES['file']);
       }
 
       $post->save();
@@ -1380,7 +1389,7 @@ class Forum_IndexController extends Sesapi_Controller_Action_Standard {
     if( !$this->_helper->requireUser()->isValid() ) {
       Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('user_not_autheticate'), 'result' => array()));
     }
-    
+
     $post_id = $this->_getParam('post_id', null);
     $viewer = Engine_Api::_()->user()->getViewer();
     $post = Engine_Api::_()->getItem('forum_post',$post_id);
@@ -1390,9 +1399,13 @@ class Forum_IndexController extends Sesapi_Controller_Action_Standard {
     if(!$post) {
       Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('user_not_autheticate'), 'result' => array()));
     }
-
-    if( !$this->_helper->requireAuth()->setAuthParams($post, null, 'delete')->checkRequire() &&
-        !$this->_helper->requireAuth()->setAuthParams($forum, null, 'topic.delete')->checkRequire() ) {
+    
+    $postEdit = Engine_Api::_()->authorization()->getPermission($viewer, 'forum', 'post.delete');
+    $topicEdit = Engine_Api::_()->authorization()->getPermission($viewer, 'forum', 'topic.delete');
+    if(!$postEdit) {
+      Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('user_not_autheticate'), 'result' => array()));
+    }
+    if(!$topicEdit) {
       Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('user_not_autheticate'), 'result' => array()));
     }
 
@@ -1444,7 +1457,7 @@ class Forum_IndexController extends Sesapi_Controller_Action_Standard {
     if($this->_getParam('getForm')) {
       $form->getElement('body')->setLabel('Body');
       $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
-      $this->generateFormFields($formFields);
+      $this->generateFormFields($formFields,array('resources_type'=>'forum_topic', 'formTitle' => "Post Topic"));
     }
 
     // Remove the file element if there is no file being posted

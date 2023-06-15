@@ -7,8 +7,8 @@
  */
 
 // Check version
-if (version_compare(phpversion(), '7.3', '<')) {
-    printf('PHP 7.3 is required, you have %s', phpversion());
+if (version_compare(phpversion(), '8.0', '<')) {
+    printf('PHP 8.0 is required, you have %s', phpversion());
     exit(1);
 }
 

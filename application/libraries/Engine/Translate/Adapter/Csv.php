@@ -73,7 +73,7 @@ class Engine_Translate_Adapter_Csv extends Engine_Translate_Adapter
     }
 
     while( ($data = fgetcsv($this->_file, $options['length'], $options['delimiter'], $options['enclosure'])) !== false ) {
-      if( substr($data[0], 0, 1) === '#' ) {
+      if(isset($data[0]) && substr($data[0], 0, 1) === '#' ) {
         continue;
       }
 

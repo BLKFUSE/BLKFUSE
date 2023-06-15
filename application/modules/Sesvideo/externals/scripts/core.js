@@ -465,6 +465,19 @@ scriptJquery(document).on("click", '.sesvideo_lightbox_open', function (e) {
 	var imageObject = scriptJquery(this);
   var getImageHref = imageObject.attr('href');
 	videoURLsesbasic = videoURLsesvideo;
+	
+	
+  //check video embed data
+  let parentDiv = scriptJquery(this).closest('.feed_item_attachments');
+  if(parentDiv.length > 0 && parentDiv.find(".sesvideo_object").html().trim() != "") {
+    parentDiv.find(".sesvideo_attachment_thumb").hide();
+    parentDiv.find(".sesvideo_object").show();
+    parentDiv.find(".sesvideo_object").css("width","100%").css("height",'100%');
+    parentDiv.find(".sesvideo_object").find("iframe").css("width","100%").css("height",'400px');
+    parentDiv.find(".sesvideo_object").find("video").css("width","100%").css("height",'400px');
+    return;
+  }
+	
 	if(openVideoInLightBoxsesbasic == 0 ){
 		window.location.href = getImageHref;
 		return true;

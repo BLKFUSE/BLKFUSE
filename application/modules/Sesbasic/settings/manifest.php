@@ -15,7 +15,7 @@ return array(
         'type' => 'module',
         'name' => 'sesbasic',
         'sku' => 'sesbasic',
-        'version' => '6.2.0',
+        'version' => '6.4.0',
         'dependencies' => array(
             array(
                 'type' => 'module',

@@ -34,7 +34,7 @@ return array(
         'type' => 'module',
         'name' => 'sesvideo',
         //'sku' => 'sesvideo',
-        'version' => '6.3.0',
+        'version' => '6.4.0',
         'dependencies' => array(
             array(
                 'type' => 'module',

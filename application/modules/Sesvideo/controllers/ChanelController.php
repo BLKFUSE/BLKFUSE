@@ -13,6 +13,9 @@
  
 class Sesvideo_ChanelController extends Core_Controller_Action_Standard {
   public function init() {
+		// only show videos if authorized
+    if (!$this->_helper->requireAuth()->setAuthParams('video', null, 'view')->isValid())
+      return;
 		if(!$this->_helper->requireAuth()->setAuthParams('sesvideo_chanel', null, 'view')->isValid())
 			return;
     $setting = Engine_Api::_()->getApi('settings', 'core');

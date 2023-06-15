@@ -563,12 +563,10 @@ div.sesvideo_listing_options_pulldown a{
 	display:flex;
 	flex-wrap:wrap;
 	max-width:510px;
-	margin-left:-5px;
-	margin-right:-5px;
+	justify-content: space-between;
 }
 .sesvideo_video_form #LocationGroup-wrapper #LocationGroup-element .form-wrapper{
-	width:50%;
-	padding:5px;
+	width:calc(50% - 5px);
 }
 .sesvideo_video_form #LocationGroup-wrapper #LocationGroup-element .form-label{
 	display:none;
@@ -576,6 +574,7 @@ div.sesvideo_listing_options_pulldown a{
 .sesvideo_video_form #LocationGroup-wrapper #LocationGroup-element .form-element{
 	min-width:inherit;
 	width:100%;
+	max-width: 100%;
 }
 .sesvideo_video_form #LocationGroup-wrapper #LocationGroup-element input[type="text"]{
 	width:100% !important;

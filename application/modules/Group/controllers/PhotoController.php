@@ -340,4 +340,20 @@ class Group_PhotoController extends Core_Controller_Action_Standard
       'closeSmoothbox' => true,
     ));
   }
+  
+  public function removePhotoAction() {
+  
+		if(empty($_GET['photo_id'])) die('error');
+		$photo = Engine_Api::_()->getItem('group_photo', $_GET['photo_id']);
+		$db = Engine_Api::_()->getDbTable('photos', 'group')->getAdapter();
+		$db->beginTransaction();
+		try {
+			$photo->delete();
+			$db->commit();
+			echo json_encode(array('status'=>"true"));die;
+		} catch (Exception $e) {
+			$db->rollBack();
+			throw $e;
+		}
+  }
 }

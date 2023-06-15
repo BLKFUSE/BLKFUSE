@@ -14,7 +14,7 @@
 ?>
 <?php
 $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/ses-scripts/jscolor/jscolor.js');
-$this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/jquery.min.js');
+
 ?>
 <script>
 hashSign = '#';

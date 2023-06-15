@@ -113,6 +113,10 @@ html .sesact_feed ul.pinfeed > li._photocenter{
 .sesact_feed ul.pinfeed .sesact_feed_item_buysell_btn{
 	padding:10px 0;
 }
+/*Gif Attachment*/
+.sesact_feed ul.pinfeed .feed_item_body .giphy_image {
+	width: 100%;
+}
 /*Comments*/
 .sesact_feed ul.pinfeed .feed_item_icon{
 	margin:0;

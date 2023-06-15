@@ -55,14 +55,14 @@ class Sesfbchat_Form_Admin_Global extends Engine_Form {
       }
 
 
-/*     $this->addElement('Text', "sesfbchat_app_id", array(
+			$this->addElement('Text', "sesfbchat_app_id", array(
           'label' => 'App Id',
           'description' => '',
 
           'value' => $settings->getSetting('sesfbchat_app_id',''),
       ));
       $this->getElement('sesfbchat_app_id')->getDecorator('Description')->setOptions(array('placement' => 'PREPEND', 'escape' => false));
-*/
+
       $this->addElement('Text', "sesfbchat_page_id", array(
           'label' => 'Facebook Page Id',
           'description' => 'Enter the id of the Facebook page on with which you want to enable the live chat messaging.',

@@ -444,7 +444,7 @@ class Sesbasic_Plugin_Gateway_PayPal extends Engine_Payment_Plugin_Abstract
         'BILLINGPERIOD' => ucfirst($package->recurrence_type),
         'BILLINGFREQUENCY' => $package->recurrence,
         'INITAMT' => 0,
-        'AMT' => $params['amount'],
+        'AMT' => $package->price,
         'CURRENCYCODE' => $this->getGateway()->getCurrency(),
       );
       $count = $package->getTotalBillingCycleCount();

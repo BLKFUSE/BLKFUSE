@@ -48,18 +48,18 @@ if ($this->getRequest()->isPost()) {
         $db = Zend_Db_Table_Abstract::getDefaultAdapter();
 
         $db->query('INSERT IGNORE INTO `engine4_activity_notificationtypes` (`type`, `module`, `body`, `is_request`, `handler`, `default`) VALUES
-        ("sescommunityads_adsapprove", "sescommunityads", \'{item:$object} advertisement has been approved.\', "0", "", "1"),
-        ("sescommunityads_adsdisapprove", "sescommunityads", \'{item:$object} advertisement has been disapproved.\', "0", "", "1"),
-        ("sescommunityads_pmtmadeadmin", "sescommunityads", \'Payment for an advertisement {item:$object} is made.\', "0", "", "1"),
-        ("sescommunityads_paymentsuccessfull", "sescommunityads", \'Payment for your {item:$object} advertisement is successful.\', "0", "", "1"),
-        ("sescommunityads_adsactivated", "sescommunityads", \'Your {item:$object} advertisement has been activated.\', "0", "", "1"),
-        ("sescommunityads_paymentpending", "sescommunityads", \'Payment for your {item:$object} advertisement is pending.\', "0", "", "1"),
-        ("sescommunityads_paymentrefunded", "sescommunityads", \'Payment for your {item:$object} advertisement is refunded.\', "0", "", "1"),
-        ("sescommunityads_paymentcancel", "sescommunityads", \'Payment for your {item:$object} advertisement is canceled.\', "0", "", "1"),
+        ("sescommunityads_adsapprove", "sescommunityads", \'{var:$adsLink} advertisement has been approved.\', "0", "", "1"),
+        ("sescommunityads_adsdisapprove", "sescommunityads", \'{var:$adsLink} advertisement has been disapproved.\', "0", "", "1"),
+        ("sescommunityads_pmtmadeadmin", "sescommunityads", \'Payment for an advertisement {var:$adsLink} is made.\', "0", "", "1"),
+        ("sescommunityads_paymentsuccessfull", "sescommunityads", \'Payment for your {var:$adsLink} advertisement is successful.\', "0", "", "1"),
+        ("sescommunityads_adsactivated", "sescommunityads", \'Your {var:$adsLink} advertisement has been activated.\', "0", "", "1"),
+        ("sescommunityads_paymentpending", "sescommunityads", \'Payment for your {var:$adsLink} advertisement is pending.\', "0", "", "1"),
+        ("sescommunityads_paymentrefunded", "sescommunityads", \'Payment for your {var:$adsLink} advertisement is refunded.\', "0", "", "1"),
+        ("sescommunityads_paymentcancel", "sescommunityads", \'Payment for your {var:$adsLink} advertisement is canceled.\', "0", "", "1"),
         ("sescommunityads_newadscreateadmin", "sescommunityads", \'A new {item:$object} advertisement is created.\', "0", "", "1"),
         ("sescommunityads_newadscreateadminapproval", "sescommunityads", \'A new {item:$object} advertisement is created & waiting approval.\', "0", "", "1"),
         ("sescommunityads_adsexpired", "sescommunityads", \'{var:$adsLink} advertisement has expired.\', "0", "", "1"),
-        ("sescommunityads_adsoverdue", "sescommunityads", \'Payment for {item:$object} advertisement is overdue.\', "0", "", "1"),
+        ("sescommunityads_adsoverdue", "sescommunityads", \'Payment for {var:$adsLink} advertisement is overdue.\', "0", "", "1"),
         ("sescommunityads_adspending", "sescommunityads", \'Payment for {item:$object} advertisement is pending.\', "0", "", "1");');
 
         $db->query('INSERT IGNORE INTO `engine4_core_mailtemplates` (`type`, `module`, `vars`) VALUES

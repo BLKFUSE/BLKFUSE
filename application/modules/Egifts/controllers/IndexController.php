@@ -92,6 +92,7 @@ class Egifts_IndexController extends Core_Controller_Action_Standard
         $gift_purchase->gateway_transaction_id = null;
         $gift_purchase->transcation_status = 0;
         $gift_purchase->transcation_date = date("Y-m-d H:i:s");
+        $gift_purchase->gift_id = $_POST['giftid'];
         $gift_purchase->save();
         foreach((array)$_POST['giftid'] as $giftid):
           $gift =  Engine_Api::_()->getItem('egifts_gift', $giftid);

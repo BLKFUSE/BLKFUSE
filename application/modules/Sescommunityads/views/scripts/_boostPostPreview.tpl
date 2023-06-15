@@ -12,6 +12,7 @@
  */
  
  ?>
+ <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sescommunityads/externals/scripts/core.js'); ?>
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesadvancedactivity/externals/styles/styles.css'); ?>
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesadvancedcomment/externals/styles/styles.css'); ?>
 <div class="sescommunityads_ad_preview sescmads_ad_preview_boost_post sescmads_create_preview" style="display:none;">

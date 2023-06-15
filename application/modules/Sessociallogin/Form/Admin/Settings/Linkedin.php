@@ -46,7 +46,7 @@ class Sessociallogin_Form_Admin_Settings_Linkedin extends Engine_Form {
 
         $description = vsprintf($description.$moreinfo.$moreinfo1, array('https://www.linkedin.com/secure/developer', 
 
-        'https://www.socialenginesolutions.com/guidelines-social-login-linkedin-api-key/',
+        'https://socialnetworking.solutions/guidelines-social-login-linkedin-api-key/',
 
         ));
 

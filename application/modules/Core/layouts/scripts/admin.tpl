@@ -68,7 +68,7 @@
         'PREPEND');
     if (APPLICATION_ENV != 'development') {
         $this->headLink()
-            ->prependStylesheet($staticBaseUrl . 'application/css.php?request=application/modules/Core/externals/styles/admin/main.css');
+            ->prependStylesheet('application/css.php?request=application/modules/Core/externals/styles/admin/main.css');
     } else {
         $this->headLink()
             ->prependStylesheet(rtrim($this->baseUrl(), '/') . '/application/css.php?request=application/modules/Core/externals/styles/admin/main.css');
@@ -122,7 +122,7 @@
         <?php echo $this->headScript()->captureEnd(Zend_View_Helper_Placeholder_Container_Abstract::PREPEND) ?>
         var dateFormatCalendar = "<?php echo Engine_Api::_()->core()->dateFormatCalendar(); ?>";
     </script>
-    <link rel="stylesheet" href="externals/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" href="<?php echo $staticBaseUrl . 'externals/font-awesome/css/all.min.css'; ?>">
     <link href="<?php echo $staticBaseUrl . 'externals/bootstrap/css/bootstrap.css'; ?>" media="screen" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="<?php echo $staticBaseUrl . 'externals/jQuery/jquery-ui.css'; ?>">
     <script type="text/javascript" src="<?php echo $staticBaseUrl . 'externals/jQuery/jquery.min.js' ?>"></script>
@@ -190,7 +190,8 @@
         //]]>
     </script>
 </head>
-<body id="global_page_<?php echo $identity ?>">
+<?php $menuType = Engine_Api::_()->getApi('settings', 'core')->getSetting('core.menutype', 'vertical'); ?>
+<body id="global_page_<?php echo $identity ?>" class="menu_<?php echo $menuType; ?>">
 
 <?php if ('development' == APPLICATION_ENV): ?>
     <div class="development_mode_warning">
@@ -203,13 +204,15 @@
 <div class="admin_panel_wrapper">
 <!-- TOP HEADER BAR -->
 <div id='global_header_wrapper'>
-    <div id='global_header'>
-     <div class="global_header_left">
+	<div id='global_header'>
+    <?php if($menuType == 'vertical') { ?>
+      <div class="global_header_left">
         <div class="toggle_cross_button"> <i class="fas fa-times"></i> </div>
-       <?php echo $this->content()->renderWidget('core.admin-menu-logo') ?>
-       <?php echo $this->content()->renderWidget('core.admin-menu-main') ?>
+        <?php echo $this->content()->renderWidget('core.admin-menu-logo') ?>
+        <?php echo $this->content()->renderWidget('core.admin-menu-main') ?>
      </div>
-    </div>
+    <?php } ?>
+	</div>
 </div>
 
 <!-- BEGIN CONTENT -->

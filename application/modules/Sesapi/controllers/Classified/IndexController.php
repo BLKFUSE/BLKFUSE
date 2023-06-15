@@ -19,15 +19,97 @@ class Classified_IndexController extends Sesapi_Controller_Action_Standard {
 		//Only show to member_level if authorized
     if( !$this->_helper->requireAuth()->setAuthParams('classified', null, 'view')->isValid() ) 
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array()));
-
+      
     $this->isClassifiedEnable();
-//     $request = Zend_Controller_Front::getInstance()->getRequest();
-//     echo "<pre>"; var_dump($request);die;
   }
   
   protected function isClassifiedEnable() {
     $this->_classifiedEnabled = true;
   }
+  
+  public function closeAction() {
+
+    $data = array();
+    if (!$this->_helper->requireUser()->isValid())
+      Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('user_not_autheticate'), 'result' => array()));
+    $viewer = Engine_Api::_()->user()->getViewer();
+    if (!Engine_Api::_()->core()->hasSubject())
+      $classified = Engine_Api::_()->getItem('classified', $this->getRequest()->getParam('classified_id'));
+    else
+      $classified = Engine_Api::_()->core()->getSubject();
+    if (!$classified) {
+      $error = Zend_Registry::get('Zend_Translate')->_("Classified doesn't exist or not authorized to delete");
+      Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $error, 'result' => array()));
+    }
+
+    // Check auth
+    if (!$this->_helper->requireAuth()->setAuthParams($classified, $viewer, 'edit')->isValid()) {
+      Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('user_not_autheticate'), 'result' => array()));
+    }
+    if (!$this->getRequest()->isPost()) {
+      $data['status'] = false;
+      $data['message'] = $this->view->translate('Invalid request method');
+      Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $data['message'], 'result' => $data));
+    }
+    // @todo convert this to post only
+    $table = $classified->getTable();
+    $db = $table->getAdapter();
+    $db->beginTransaction();
+    try {
+      $classified->closed = $classified->closed == 1 ? 0 : 1;
+      $classified->save();
+      $db->commit();
+      $data['status'] = true;
+      $data['message'] = $classified->closed == 1 ? $this->view->translate('Successfully Closed') : $this->view->translate('Successfully Unclosed');
+    } catch (Exception $e) {
+      $db->rollBack();
+      Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->getMessage(), 'result' => array()));
+    }
+    Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '', 'error_message' => '', 'result' => $data));
+  }
+  
+  public function rateAction() {
+  
+    $viewer = Engine_Api::_()->user()->getViewer();
+    $user_id = $viewer->getIdentity();
+    $rating = $this->_getParam('rating');
+    $resource_id = $this->_getParam('resource_id');
+    $table = Engine_Api::_()->getDbtable('ratings', 'classified');
+    $db = $table->getAdapter();
+    $db->beginTransaction();
+    try {
+    
+			Engine_Api::_()->getDbtable('ratings', 'classified')->setRating($resource_id, $user_id, $rating);
+
+			$classified = Engine_Api::_()->getItem('classified', $resource_id);
+			$classified->rating = Engine_Api::_()->getDbtable('ratings', 'classified')->getRating($classified->getIdentity());
+			$classified->save();
+			
+			$owner = Engine_Api::_()->getItem('user', $classified->owner_id);
+			if($owner->user_id != $user_id)
+				Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($owner, $viewer, $classified, 'classified_rating');
+			
+      $db->commit();
+    } catch (Exception $e) {
+      $db->rollBack();
+      Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$e->getMessage(), 'result' => array()));
+    }
+		Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>"", 'result' => $this->view->translate("You have successfully rated classified.")));
+  }
+  
+	public function menuAction() {
+		$menus = Engine_Api::_()->getApi('menus', 'core')->getNavigation('classified_main', array());
+		$menu_counter = 0;
+		foreach ($menus as $menu) {
+			$class = end(explode(' ', $menu->class));
+			$result_menu[$menu_counter]['label'] = $this->view->translate($menu->label);
+			$result_menu[$menu_counter]['action'] = $class;
+			$result_menu[$menu_counter]['isActive'] = $menu->active;
+			$menu_counter++;
+		}
+		$result['menus'] = $result_menu;
+		Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array_merge(array('error' => '0', 'error_message' => '', 'result' => $result)));
+	}
   
 
   // NONE USER SPECIFIC METHODS
@@ -131,32 +213,20 @@ class Classified_IndexController extends Sesapi_Controller_Action_Standard {
       $canEdit = Engine_Api::_()->authorization()->getPermission($viewer, 'classified', 'edit');
       $counter = 0;
        if ($canEdit) {
-         $menuoptions[$counter]['name'] = "addphoto";
-         $menuoptions[$counter]['label'] = $this->view->translate("Add Photos");
-         $counter++;
+//          $menuoptions[$counter]['name'] = "addphoto";
+//          $menuoptions[$counter]['label'] = $this->view->translate("Add Photos");
+//          $counter++;
          $menuoptions[$counter]['name'] = "edit";
          $menuoptions[$counter]['label'] = $this->view->translate("Edit Classified");
          $counter++;
        }
 
-        $canDelete = Engine_Api::_()->authorization()->getPermission($viewer, 'classified', 'delete');
-        if ($canDelete) {
-          $menuoptions[$counter]['name'] = "delete";
-          $menuoptions[$counter]['label'] = $this->view->translate("Delete Classified");
-          $counter++;
-        }
-
-       if( !$classified->closed ) {
-          $menuoptions[$counter]['name'] = "close";
-          $menuoptions[$counter]['close'] = "1";
-          $menuoptions[$counter]['label'] = $this->view->translate("Close");
-          $menuoptions++;
-        } else {
-          $menuoptions[$counter]['name'] = "close";
-          $menuoptions[$counter]['close'] = "0";
-          $menuoptions[$counter]['label'] = $this->view->translate("Open");
-          $menuoptions++;
-        }
+			$canDelete = Engine_Api::_()->authorization()->getPermission($viewer, 'classified', 'delete');
+			if ($canDelete) {
+				$menuoptions[$counter]['name'] = "delete";
+				$menuoptions[$counter]['label'] = $this->view->translate("Delete Classified");
+				$counter++;
+			}
       $result['menus'] = $menuoptions;  
     }
     
@@ -292,6 +362,11 @@ class Classified_IndexController extends Sesapi_Controller_Action_Standard {
 //     if( !$classified || !$classified->getIdentity() || (!$classified->isOwner($viewer)) ) {
 //       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array())); 
 //     }
+
+    // Network check
+		$networkPrivacy = Engine_Api::_()->network()->getViewerNetworkPrivacy($classified, 'owner_id');
+		if(empty($networkPrivacy))
+			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'permission_error', 'result' => array()));
     
     // Prepare data
     $classifiedTable = Engine_Api::_()->getDbtable('classifieds', 'classified');
@@ -306,7 +381,7 @@ class Classified_IndexController extends Sesapi_Controller_Action_Standard {
     $classified_content['resource_type'] = $classified->getType();
     $classified_content['resource_id'] = $classified->getType();
     $classified_content['category_id'] = $classified->category_id;
-    
+		$classified_content['is_rated'] = Engine_Api::_()->getDbTable('ratings', 'classified')->checkRated($classified->getIdentity(), $viewer->getIdentity());
     if( !$classified->isOwner($viewer) ) {
       $classifiedTable->update(array(
         'view_count' => new Zend_Db_Expr('view_count + 1'),
@@ -342,8 +417,16 @@ class Classified_IndexController extends Sesapi_Controller_Action_Standard {
     
     // Get category
     if( !empty($classified->category_id) ) {
-      $category_name = $this->getCategoryName(array('column_name' => 'category_name', 'category_id' => $classified->category_id)); 
-      $classified_content['category_title'] = $category_name; //$category->category_name;
+      $category = Engine_Api::_()->getItem('classified_category', $classified->category_id);
+      $classified_content['category_title'] = $category->category_name;
+			if( !empty($classified->subcat_id) ) {
+				$category = Engine_Api::_()->getItem('classified_category', $classified->subcat_id);
+				$classified_content['subcategory_title'] = $category->category_name;
+			}
+			if( !empty($classified->subsubcat_id) ) {
+				$category = Engine_Api::_()->getItem('classified_category', $classified->subsubcat_id);
+				$classified_content['subsubcategory_title'] = $category->category_name;
+			}
     }
     
     if($this->_classifiedEnabled) {
@@ -356,6 +439,10 @@ class Classified_IndexController extends Sesapi_Controller_Action_Standard {
     $classified_content['content_url'] = $this->getBaseUrl(false,$classified->getHref());
     $classified_content['can_favorite'] = false;
     $classified_content['can_share'] = false;
+    
+		$classified_content['is_rated'] = Engine_Api::_()->getDbTable('ratings', 'classified')->checkRated($classified->getIdentity(), $viewer->getIdentity());
+		$classified_content['enable_rating'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('classified.enable.rating', 1);
+		$classified_content['ratingicon'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('classified.ratingicon', 'fas fa-star');
 
     $result['classified'] = $classified_content;
     
@@ -369,22 +456,31 @@ class Classified_IndexController extends Sesapi_Controller_Action_Standard {
       $menuoptions= array();
       $counter = 0;
       if($canEdit) {
-//         $menuoptions[$counter]['name'] = "changephoto";
-//         $menuoptions[$counter]['label'] = $this->view->translate("Change Main Photo");
-//         $counter++;
         $menuoptions[$counter]['name'] = "edit";
-        $menuoptions[$counter]['label'] = $this->view->translate("Edit Classified"); 
+        $menuoptions[$counter]['label'] = $this->view->translate("Edit"); 
         $counter++;
       }
       if($canDelete){
         $menuoptions[$counter]['name'] = "delete";
-        $menuoptions[$counter]['label'] = $this->view->translate("Delete Classified");
+        $menuoptions[$counter]['label'] = $this->view->translate("Delete");
         $counter++;
       }
-      //if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesclassified.enable.report', 1)){
-        $menuoptions[$counter]['name'] = "report";
-        $menuoptions[$counter]['label'] = $this->view->translate("Report Classified");
-      //}
+      
+      if($classified->owner_id == $viewer->getIdentity()) {
+				if( !$classified->closed ) {
+					$menuoptions[$counter]['name'] = "close";
+					$menuoptions[$counter]['close'] = "1";
+					$menuoptions[$counter]['label'] = $this->view->translate("Close");
+					$counter++;
+				} else {
+					$menuoptions[$counter]['name'] = "close";
+					$menuoptions[$counter]['close'] = "0";
+					$menuoptions[$counter]['label'] = $this->view->translate("Open");
+					$counter++;
+				}
+			}
+			$menuoptions[$counter]['name'] = "report";
+			$menuoptions[$counter]['label'] = $this->view->translate("Report");
       $result['menus'] = $menuoptions;
 		}
     
@@ -448,12 +544,12 @@ class Classified_IndexController extends Sesapi_Controller_Action_Standard {
     // Check if post and populate
     if($this->_getParam('getForm')) {
       $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
-      $this->generateFormFields($formFields,array('resources_type'=>'classified'));
+      $this->generateFormFields($formFields,array('resources_type'=>'classified', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
     }
         
     if( !$form->isValid($this->getRequest()->getPost()) ) {
       $validateFields = Engine_Api::_()->getApi('FormFields','sesapi')->validateFormFields($form);
-      $formFields[4]['name'] = "file";
+      //$formFields[4]['name'] = "file";
       if(is_countable($validateFields) && engine_count($validateFields))
         $this->validateFormFields($validateFields);
     }
@@ -500,13 +596,21 @@ class Classified_IndexController extends Sesapi_Controller_Action_Standard {
         'owner_id' => $viewer->getIdentity(),
         'view_privacy' => $formValues['auth_view'],
       ));
-
+      if (isset($values['networks'])) {
+          $network_privacy = 'network_'. implode(',network_', $values['networks']);
+          $values['networks'] = implode(',', $values['networks']);
+      }
+      if (is_null($values['subcat_id']))
+        $values['subcat_id'] = 0;
+        
+      if (is_null($values['subsubcat_id']))
+        $values['subsubcat_id'] = 0;
       $classified = $table->createRow();
       $classified->setFromArray($values);
       $classified->save();
 
-       if( !empty($_FILES['image']['name']) &&  !empty($_FILES['image']['size']) ) {
-        $this->setPhoto($_FILES['image'],$classified);
+			if( !empty($_FILES['photo']['name']) &&  !empty($_FILES['photo']['size']) ) {
+        $classified->setPhoto($form->photo);
       }
 
       // Auth
@@ -546,7 +650,7 @@ class Classified_IndexController extends Sesapi_Controller_Action_Standard {
     Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'', 'result' => array('classified_id' => $classified->getIdentity(),'message' => $this->view->translate('Classified created successfully.'))));
   }
 
-public function editAction() {
+  public function editAction() {
   
     if(!$this->_helper->requireUser()->isValid())
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array()));
@@ -617,8 +721,34 @@ public function editAction() {
 
     if($this->_getParam('getForm')) {
       $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
-      $formFields[4]['name'] = "file";
-      $this->generateFormFields($formFields,array('resources_type'=>'classified'));
+      //set subcategory and 3rd category populated work
+      $newFormFieldsArray = array();
+      if(is_countable($formFields) && engine_count($formFields) &&  $classified->category_id){
+        foreach($formFields as $fields){
+          foreach($fields as $field){
+            $subcat = array();
+            if($fields['name'] == "subcat_id"){ 
+              $subcat = Engine_Api::_()->getItemTable('classified_category')->getSubcategory(array('category_id'=>$classified->category_id,'column_name'=>'*'));
+            }else if($fields['name'] == "subsubcat_id"){
+              if($classified->subcat_id)
+              $subcat = Engine_Api::_()->getItemTable('classified_category')->getSubSubcategory(array('category_id'=>$classified->subcat_id,'column_name'=>'*'));
+            }
+            if(is_countable($subcat) && engine_count($subcat)){
+              $arrayCat = array();
+              foreach($subcat as $cat){
+                $arrayCat[$cat->getIdentity()] = $cat->getTitle(); 
+              }
+              $fields["multiOptions"] = $arrayCat;  
+            }
+          }
+          $newFormFieldsArray[] = $fields;
+        }
+        if(!engine_count($newFormFieldsArray))
+          $newFormFieldsArray = $formFields;
+				//$newFormFieldsArray[4]['name'] = "file";
+        $this->generateFormFields($newFormFieldsArray,array('resources_type'=>'classified', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
+      }
+      $this->generateFormFields($formFields,array('resources_type'=>'classified', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
     }
         
     if( !$form->isValid($this->getRequest()->getPost()) ) {
@@ -633,7 +763,10 @@ public function editAction() {
 
     try {
       $values = $form->getValues();
-
+      if (isset($values['networks'])) {
+          $network_privacy = 'network_'. implode(',network_', $values['networks']);
+          $values['networks'] = implode(',', $values['networks']);
+      }
       if( empty($values['auth_view']) ) {
         $values['auth_view'] = 'everyone';
       }
@@ -725,85 +858,7 @@ public function editAction() {
     $message = Zend_Registry::get('Zend_Translate')->_('Your classified listing has been deleted.');
     Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'', 'result' => $message));
   }
-  
-  public function setPhoto($photo,$classified) {
-  
-    if( $photo instanceof Zend_Form_Element_File ) {
-      $file = $photo->getFileName();
-    } elseif( is_array($photo) && !empty($photo['tmp_name']) ) {
-      $file = $photo['tmp_name'];
-    } elseif( is_string($photo) && file_exists($photo) ) {
-      $file = $photo;
-    } else {
-      throw new Classified_Model_Exception('Invalid argument passed to setPhoto: ' . print_r($photo, 1));
-    }
 
-    $name = basename($photo['name']);
-    $path = APPLICATION_PATH . DIRECTORY_SEPARATOR . 'temporary';
-    $params = array(
-      'parent_type' => 'classified',
-      'parent_id' => $classified->getIdentity()
-    );
-
-    // Save
-    $storage = Engine_Api::_()->storage();
-
-    // Resize image (main)
-    $image = Engine_Image::factory();
-    $image->open($file)
-      ->resize(720, 720)
-      ->write($path . '/m_' . $name)
-      ->destroy();
-
-    // Resize image (profile)
-    $image = Engine_Image::factory();
-    $image->open($file)
-      ->resize(200, 400)
-      ->write($path . '/p_' . $name)
-      ->destroy();
-
-    // Resize image (normal)
-    $image = Engine_Image::factory();
-    $image->open($file)
-      ->resize(140, 160)
-      ->write($path . '/in_' . $name)
-      ->destroy();
-
-    // Resize image (icon)
-    $image = Engine_Image::factory();
-    $image->open($file);
-
-    $size = min($image->height, $image->width);
-    $x = ($image->width - $size) / 2;
-    $y = ($image->height - $size) / 2;
-
-    $image->resample($x, $y, $size, $size, 48, 48)
-      ->write($path . '/is_' . $name)
-      ->destroy();
-
-    // Store
-    $iMain = $storage->create($path . '/m_' . $name, $params);
-    $iProfile = $storage->create($path . '/p_' . $name, $params);
-    $iIconNormal = $storage->create($path . '/in_' . $name, $params);
-    $iSquare = $storage->create($path . '/is_' . $name, $params);
-
-    $iMain->bridge($iProfile, 'thumb.profile');
-    $iMain->bridge($iIconNormal, 'thumb.normal');
-    $iMain->bridge($iSquare, 'thumb.icon');
-
-    // Remove temp files
-    @unlink($path . '/p_' . $name);
-    @unlink($path . '/m_' . $name);
-    @unlink($path . '/in_' . $name);
-    @unlink($path . '/is_' . $name);
-
-    // Update row
-    $classified->modified_date = date('Y-m-d H:i:s');
-    $classified->photo_id = $iMain->getIdentity();
-    $classified->save();
-
-    return $classified;
-  }
    public function uploadAction(){
       $classified_id = $this->_getParam('classified_id', false);
       $classified = Engine_Api::_()->getItem('classified', $classified_id);
@@ -878,46 +933,13 @@ public function editAction() {
     }
 
   
-  public function searchFormAction() {
-  
-    if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesclassified_enable_location', 1))
-      $location = 'yes';	
-    else
-      $location = 'no';
+	public function searchFormAction() {
 
-    $form = new Classified_Form_Search(array('searchTitle' => 'yes','browseBy' => 'yes','categoriesSearch' => 'yes','searchFor'=>'classified','FriendsSearch'=>'yes','defaultSearchtype'=>'mostSPliked','locationSearch' => $location,'kilometerMiles' => 'yes','hasPhoto' => 'yes'));
+    $form = new Classified_Form_Search();
 
-    $filterOptions = (array)$this->_getParam('search_type', array('recentlySPcreated' => 'Recently Created','mostSPviewed' => 'Most Viewed','mostSPliked' => 'Most Liked', 'mostSPcommented' => 'Most Commented','mostSPfavourite' => 'Most Favourite','featured' => 'Featured','sponsored' => 'Sponsored','verified' => 'Verified','mostSPrated'=>'Most Rated'));
-    $categories = Engine_Api::_()->getDbtable('categories', 'classified')->getCategoriesAssoc();
-    asort($categories, SORT_LOCALE_STRING);
-    $categoryOptions = array('0' => '');
-    foreach( $categories as $k => $v ) {
-      $categoryOptions[$k] = $v;
-    }
-     if($form->category) {
-      $form->category->setMultiOptions($categoryOptions);       
-    }
-    
-      
-    $arrayOptions = $filterOptions;
-    $filterOptions = array();
-    foreach ($arrayOptions as $key=>$filterOption) {
-      if(is_numeric($key))
-        $columnValue = $filterOption;
-      else
-        $columnValue = $key;
-        
-      $value = str_replace(array('SP',''), array(' ',' '), $columnValue);
-      $filterOptions[$columnValue] = ucwords($value);
-    }
-    
-    $filterOptions = array(''=>'')+$filterOptions;
-    if($form->sort) {
-      $form->sort->setMultiOptions($filterOptions);
-      $form->sort->setValue('recentlySPcreated');       
-    }
-    $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form,true);
-    $this->generateFormFields($formFields); 
+    $form->populate($_POST);
+    $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
+		$this->generateFormFields($formFields,array('resources_type'=>'classified'));
   }
 
 }

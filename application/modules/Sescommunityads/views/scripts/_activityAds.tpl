@@ -23,7 +23,9 @@
   $select = Engine_Api::_()->getDbTable('sescommunityads','sescommunityads')->getAds($valueAds);
   $paginator =  $select;
 ?>
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sescommunityads/externals/scripts/core.js'); ?>
 <?php 
+
   $baseURL = $this->layout()->staticBaseUrl;
   $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/owl-carousel/jquery.js');
   $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/owl-carousel/owl.carousel.js'); 

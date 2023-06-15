@@ -56,10 +56,10 @@
       'href' : 'javascript:void(0);',
     })).click(function() {
       if( doAutoRefresh ) {
-        this.set('html', '<?php echo $this->translate('Enable Auto-Refresh') ?>');
+				scriptJquery(this).html('<?php echo $this->translate('Enable Auto-Refresh') ?>');
         doAutoRefresh = false;
       } else {
-        this.set('html', '<?php echo $this->translate('Disable Auto-Refresh') ?>');
+        scriptJquery(this).html('<?php echo $this->translate('Disable Auto-Refresh') ?>');
         doAutoRefresh = true;
       }
       Cookie.write('en4_admin_tasks_autorefresh', (doAutoRefresh ? '1' : '0'));
@@ -147,7 +147,7 @@
       }
     } else {
       if(scriptJquery('#task_counter') ) {
-        scriptJquery('task_counter').html(interval - delta);
+        scriptJquery('#task_counter').html(interval - delta);
       }
     }
   },1000);
@@ -162,7 +162,7 @@
 </script>
 
 <div>
-  <?php if( time() - $this->taskSettings['last'] > max($this->taskSettings['interval'] * 3, 60) ): ?>
+  <?php if( time() - (int) $this->taskSettings['last'] > max($this->taskSettings['interval'] * 3, 60) ): ?>
     <ul class="form-errors">
       <li>
         <?php echo $this->translate('Tasks have not executed for more than %1$d seconds. Please check your configuration.', max($this->taskSettings['interval'] * 3, 60)) ?>

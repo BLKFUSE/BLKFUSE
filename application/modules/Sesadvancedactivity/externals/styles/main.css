@@ -13,6 +13,9 @@
 	content:"\\f290";
 	font-weight:900;
 }
+/* .sesact_post_box .highlighter > strong {
+  background-color:$theme_list_background_color_alt;
+} */
 
 #messages_compose #compose-album-activator,
 #messages_form_reply #compose-album-activator,
@@ -38,8 +41,21 @@
 .sesact_post_container{
 	background-color:$theme_list_background_color;
 }
-.sesact_post_box #compose-container textarea{
+.sesact_post_container .jqueryHashtags .highlighter{
 	color:$theme_font_color;
+}
+.sesact_post_box #compose-container textarea::placeholder { 
+	opacity: 1;
+	color:$theme_font_color;
+	-webkit-text-fill-color:initial !important
+}
+.sesact_post_box #compose-container textarea:-ms-input-placeholder {
+	color:$theme_font_color;
+	-webkit-text-fill-color:initial !important
+}
+.sesact_post_box #compose-container textarea::-ms-input-placeholder { 
+	color:$theme_font_color;
+	-webkit-text-fill-color:initial !important
 }
 .sesact_post_container .compose-menu-close,
 .sesact_post_box_close a:before,
@@ -101,15 +117,6 @@
 .sesact_feed_item_buysell_btn button{
 	border:1px solid $theme_button_background_color !important;	
 }
-.advact_compose_photo_uploader i{
-	color:$theme_button_background_color;
-}
-.advact_compose_photo_uploader:hover{
-	border-color:$theme_button_background_color;
-}
-.advact_compose_photo_item{
-	background-color:$theme_border_color;
-}
 .sesact_post_media_options_icon.tool_i_more a i,
 .sesact_post_media_options_icon.tool_i_more a i:before,
 .sesact_post_media_options_icon.tool_i_more a i:after{
@@ -167,6 +174,11 @@
 .sesact_feed_filters > ul > .sesact_pulldown_active > a{
 	background:$theme_button_background_color;
 	color:$theme_button_font_color;
+}
+.sesact_feed_filters > ul > li > a:focus-visible{
+	background:$theme_button_background_color;
+	color:$theme_button_font_color;
+	outline:0;
 }
 .sesact_tip_box,
 .sesact_feed_filters{
@@ -293,6 +305,8 @@
 	color:$theme_font_color;
 	padding:0 15px;
 	text-decoration:none !important;
+	display: block;
+	margin: 0 1px;
 }
 .sesact_tabs li a i{
 	font-size:17px;
@@ -331,9 +345,14 @@
 	display:inline-block;
 	vertical-align:middle;
 }
-.sesact_tabs li.active{
+.sesact_tabs li.active a{
 	border-bottom:3px solid $theme_button_background_color;
 	position:relative;
+}
+.sesact_tabs li a:focus-visible{
+	border-bottom:3px solid $theme_button_background_color;
+	position:relative;
+	outline:0;
 }
 .sesact_tabs li._righttabs{
 	float:right;
@@ -399,7 +418,8 @@ div.sesact_tabs_wrapper ul li.active span{
 /*PinFeed*/
 .sesact_feed ul.feed > li section,
 .sesact_feed ul.pinfeed li.sesact_ads_camp > div,
-.sesact_feed ul.pinfeed li.sesact_ads_pymk > div{
+.sesact_feed ul.pinfeed li.sesact_ads_pymk > div,
+.sesact_feed ul.feed li.sesact_ads_pymk > div{
 	background-color:$theme_list_background_color;
 }
 .sesact_compose_menu .composer_schedulepost_toggle{
@@ -418,10 +438,17 @@ div.sesact_tabs_wrapper ul li.active span{
 	top:5px;
 	z-index:9;
 }
+[dir="rtl"] .sesact_owner_selector_s{
+	left:10px;
+	right:inherit;
+}
 .sesact_owner_selector_c{
 	float:right;
 	position:relative;
 	margin:0 !important;
+}
+[dir="rtl"] .sesact_owner_selector_c{
+	float:left;
 }
 ._sesadv_composer_active .sesact_owner_selector_s{display:none;}
 .sesact_owner_selector ._st{
@@ -440,11 +467,17 @@ div.sesact_tabs_wrapper ul li.active span{
 	border-radius:50%;
 	float:left;
 }
+[dir="rtl"] .sesact_owner_selector ._st img{
+	float:right;
+}
 html .sesact_owner_selector ._st i{
 	float:right;
 	height:16px !important;
 	width:20px !important;
 	position:relative;
+}
+html[dir="rtl"] .sesact_owner_selector ._st i{
+	float:left;
 }
 html .sesact_owner_selector ._st i:before{
 	position:absolute;
@@ -466,10 +499,12 @@ html .sesact_owner_selector ._st i:before{
 	box-shadow:0 0 20px rgba(0, 0, 0, .1);
 	position:absolute;
 	min-width:200px;
-	right:0;
 	width:250px;
 	margin-left:-200px;
 	z-index:111;
+}
+[dir="rtl"] .sesact_owner_selector_pulldown{
+	margin-left:0;
 }
 .sesact_owner_selector_pulldown ._list{
 	max-height:400px;
@@ -506,6 +541,9 @@ html .sesact_owner_selector ._st i:before{
 	margin-top:5px;
 	font-weight:600;
 }
+[dir="rtl"] .sesact_owner_selector_pulldown ._selected ._cont:before{
+	float:left;
+}
 .sesact_owner_selector_pulldown ._listitem:hover{
 	background-color:$theme_button_background_color;
 }
@@ -522,6 +560,9 @@ html .sesact_owner_selector ._st i:before{
 	display:table-cell;
 	width:40px;
 }
+[dir="rtl"] .sesact_owner_selector_pulldown ._listitem ._thumb{
+	padding:6px 15px 5px 10px;
+}
 .sesact_owner_selector_pulldown ._listitem ._thumb img{
 	border-radius:50%;
 	height:30px;
@@ -530,6 +571,10 @@ html .sesact_owner_selector ._st i:before{
 }
 .sesact_owner_selector_pulldown ._listitem ._cont{
 	padding-right:10px;
+}
+[dir="rtl"] .sesact_owner_selector_pulldown ._listitem ._cont{
+	padding-left:10px;
+	padding-right:0;
 }
 /*POST SELECTOR CSS END HERE*/
 @media(max-width:767px){
@@ -546,33 +591,157 @@ html .sesact_sellitem_popup_item_button div button{
 .activity_icon_post_self_buysell::before {
   content:"\\f290" !important;
 }
-/*Feed Delete Popup CSS Start Here*/
-
-.sesact_delete_popup{
-  width:400px;
+/*Photo Composer Start*/
+.advact_compose_photo_uploader{
+  cursor:pointer;
+  border-style:dashed;
+  border-width:2px;
+  float:left;
+  position:relative;
+  height:105px;
+  text-align:center !important;
+  width:105px;
 }
-#global_content_simple .sesact_delete_popup{
-  margin:15px 0 0 15px;
+.advact_compose_photo_uploaderr:hover{
+	border-color:$theme_button_background_color;
 }
-.sesact_delete_popup_head{
-  border-radius:3px 3px 0 0;
-  border-bottom-width:1px;
-  font-weight:bold;
-  font-size:15px;
-  padding:10px;
+.advact_compose_photo_uploader i{
+	color:$theme_button_background_color;
+  font-size:20px;
+  line-height:105px;
 }
-.sesact_delete_popup_cont{
-  padding:10px;
+/*Multiple Photos CSS*/
+.advact_compose_photo_container{
+  max-width:100%;
+  width:100%;
 }
-.sesact_delete_popup_btm{
-  border-top-width:1px;
-  padding:10px;
+.advact_compose_photo_container,
+.advact_compose_photo_container #show_photo,
+.advact_compose_photo_container .mCustomScrollBox{
+  direction:ltr !important;
 }
-.sesact_delete_popup_btm .floatR button{
-  margin-left:5px;
+#advact_compose_photo_container_inner{
+  height:105px;
+  overflow:hidden;
 }
-[dir="rtl"] .sesact_delete_popup_btm .floatR button{
-  margin-left:0;
+.advact_compose_photo_container #show_photo{
+  float:left;
+  height:105px;
+  overflow:hidden;
+}
+.sesact_post_container .advact_compose_photo_uploader {
+  margin:0;
+}
+.advact_compose_photo_item{
+	background-color:$theme_border_color;
+  float:left;
+  position:relative;
   margin-right:5px;
+  height:105px;
+  text-align:center !important;
+  width:105px;
 }
-/*Feed Delete Popup CSS End Here*/
+.advact_compose_photo_item_photo,
+.advact_compose_photo_item_photo img{
+  height:100%;
+  object-fit:cover;
+  width:100%;
+}
+.advact_compose_photo_item_photo:after{
+  content:"";
+  display:none;
+  background-color:rgba(0, 0, 0, .1);
+  bottom:0;
+  left:0;
+  right:0;
+  top:0;
+  position:absolute;
+  z-index:1;
+}
+.advact_compose_photo_item:hover .advact_compose_photo_item_photo:after{
+  display:block;
+}
+.advact_compose_photo_item_overlay{
+  background:rgba(0, 0, 0, .1) url(../images/ajax_loading.gif) no-repeat center center;
+  bottom:0;
+  left:0;
+  right:0;
+  top:0;
+  position:absolute;
+  z-index:1;
+}
+.advact_compose_photo_item .progressBar{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  z-index:2;
+}
+.advact_compose_photo_item .progressBar > div{
+  height:4px;
+  font-size:0;
+}
+.advact_compose_photo_item .sesalbum_upload_item_abort{
+  position:absolute;
+  bottom:5px;
+  top:inherit;
+  text-align:center;
+  width:100%;
+  z-index:3;
+}
+.advact_compose_photo_item .sesalbum_upload_item_abort span{
+  background-color:#d9534f;
+  border:1px solid #d43f3a;
+  border-radius:3px;
+  color:#fff;
+  cursor:pointer;
+  display:inline-block;
+  font-size:11px;
+  padding:3px 5px;
+}
+.advact_compose_photo_item .sesalbum_upload_item_abort span:hover{
+  background-color:#c9302c;
+}
+[dir="rtl"] .advact_compose_photo_item .sesalbum_upload_item_abort{
+  text-align:center;
+}
+.advact_compose_photo_item .sesalbum_upload_item_options{
+  position:absolute;
+  top:5px;
+  right:3px;
+  z-index:2;
+}
+[dir="rtl"] .advact_compose_photo_item .sesalbum_upload_item_options{
+  left:3px;
+  right:inherit;
+}
+.advact_compose_photo_item .sesalbum_upload_item_options a{
+  height:16px;
+  line-height:16px;
+  float:left;
+  text-align:center;
+  margin:0 2px !important;
+  width:16px;
+}
+[dir="rtl"] .advact_compose_photo_item .sesalbum_upload_item_options a{
+  float:right;
+}
+.advact_compose_photo_item .sesalbum_upload_item_options a i:before{
+  color:#fff;
+  font-size:15px;
+  text-shadow:0 0 2px rgba(0, 0, 0, .5);
+}
+.advact_compose_photo_item_info{
+  display:none;
+}
+.advact_compose_photo_container .mCSB_horizontal.mCSB_inside > .mCSB_container{
+  margin:10px 0;
+}
+.advact_compose_photo_container .mCSB_scrollTools.mCSB_scrollTools_horizontal{
+  bottom:-5px;
+}
+.advact_compose_photo_container .mCSB_dragger_bar{
+  background-color:rgba(0, 0, 0, .4) !important;
+  border:1px solid rgba(85, 85, 85, .6) !important;
+}
+
+/*Photo Composer End*/

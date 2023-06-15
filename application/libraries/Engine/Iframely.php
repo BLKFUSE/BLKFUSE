@@ -30,8 +30,8 @@ class Engine_Iframely
       $host = $options['host'];
       unset($options['host']);
     }
-    if($host == "socialengine"){
-      throw new Engine_Image_Exception(sprintf('Missing class for host "%s"', $host));
+    if($host == "socialengine" || empty($host)){
+      $host = 'socialenginecustom';
     }
     $class = 'Engine_Service_Iframely_Host_' . ucfirst($host);
     Engine_Loader::loadClass($class);
@@ -44,9 +44,9 @@ class Engine_Iframely
   static public function getHostingList()
   {
     return array(
+			self::SOCIALENGINE_HOST,
       self::IFRAMELY_HOST,
       self::OWN_HOST,
-      //self::SOCIALENGINE_HOST,
     );
   }
 }

@@ -309,7 +309,7 @@ class Sesmusic_Form_Create extends Engine_Form {
             'onchange' => 'showReadImage(this,"musicalbum_cover_preview")',
             'accept'=>"image/*",
         ));
-        $this->album_cover->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+        $this->album_cover->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
 
         $album_id = Zend_Controller_Front::getInstance()->getRequest()->getParam('album_id');
         $album = Engine_Api::_()->getItem('sesmusic_album', $album_id);
@@ -347,7 +347,7 @@ class Sesmusic_Form_Create extends Engine_Form {
             'onchange' => 'showReadImage(this,"musicalbum_main_preview")',
             'accept'=>"image/*",
         ));
-        $this->art->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+        $this->art->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
 
         if ($album_id && $album && $album->photo_id && Engine_Api::_()->storage()->get($album->photo_id, '')) {
           $img_path = Engine_Api::_()->storage()->get($album->photo_id, '')->getPhotoUrl();
@@ -389,7 +389,7 @@ class Sesmusic_Form_Create extends Engine_Form {
               'onchange' => 'showReadImage(this,"musicalbum_cover_preview")',
               'accept'=>"image/*",
           ));
-          $this->album_cover->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+          $this->album_cover->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
 
           $album_id = Zend_Controller_Front::getInstance()->getRequest()->getParam('album_id');
           $album = Engine_Api::_()->getItem('sesmusic_album', $album_id);
@@ -428,7 +428,7 @@ class Sesmusic_Form_Create extends Engine_Form {
             'onchange' => 'showReadImage(this,"musicalbum_main_preview")',
             'accept'=>"image/*",
         ));
-        $this->art->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+        $this->art->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
 
         if ($album_id && $album && $album->photo_id && Engine_Api::_()->storage()->get($album->photo_id, '')) {
           $img_path = Engine_Api::_()->storage()->get($album->photo_id, '')->getPhotoUrl();

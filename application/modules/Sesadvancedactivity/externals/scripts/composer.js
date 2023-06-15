@@ -250,7 +250,7 @@ Composer = function(element, options){
         'class' : 'composer_schedulepost_toggle sesadv_tooltip',
         'href'  : 'javascript:void(0);',
         'id' : 'sesadvancedactivity_shedulepost',
-        'title' : this._lang('schedule post'),
+        'title' : this._lang('Schedule Post'),
       });
       this.elements.schedule.appendTo(scriptJquery('#compose-menu'));
     }
@@ -296,7 +296,20 @@ Composer = function(element, options){
       }catch(err){
         console.log(err);
       }
-    
+      setTimeout(function(){
+        var textAreal ='activity_body';
+        var className = 'highlighter';
+        if(sesadvancedactivitybigtext) {
+          var textlength = scriptJquery('#'+textAreal).val().length;
+          if(textlength <= sesAdvancedactivitytextlimit) {
+            scriptJquery('.'+className).css("fontSize", sesAdvancedactivityfonttextsize);
+            scriptJquery('#'+textAreal).css("fontSize", sesAdvancedactivityfonttextsize);
+          } else {
+            scriptJquery('.'+className).css("fontSize", '');
+            scriptJquery('#'+textAreal).css("fontSize", '');
+          }
+        }
+      },1000)
   };
   this.detach = function() {
     this.saveContent();
@@ -1185,7 +1198,7 @@ function hideStatusBoxSecond() {
 
   //activityBodyHeight = scriptJquery('#activity_body').height();
   // resize the status box
-  scriptJquery('#activity_body').css('height','auto');
+  // scriptJquery('#activity_body').css('height','auto');
 
   scriptJquery('.sesact_post_box').removeClass('_blank');
 }
@@ -1267,6 +1280,20 @@ scriptJquery(document).on('focus','#activity_body',function(){
     scriptJquery(this).focus();
   }
   autosize(scriptJquery(this));
+  setTimeout(function(){
+    var textAreal ='activity_body';
+    var className = 'highlighter';
+    if(sesadvancedactivitybigtext) {
+      var textlength = scriptJquery('#'+textAreal).val().length;
+      if(textlength <= sesAdvancedactivitytextlimit) {
+        scriptJquery('.'+className).css("fontSize", sesAdvancedactivityfonttextsize);
+        scriptJquery('#'+textAreal).css("fontSize", sesAdvancedactivityfonttextsize);
+      } else {
+        scriptJquery('.'+className).css("fontSize", '');
+        scriptJquery('#'+textAreal).css("fontSize", '');
+      }
+    }
+  },1000)
 });
 function getUrlVars()
 {
@@ -1285,28 +1312,28 @@ scriptJquery(document).on('keydown','#activity_body',function(){
     scriptJquery('.sesact_post_box').removeClass('_blank');
 
 });
-scriptJquery(window).bind('beforeunload',function(){
- if(!scriptJquery('#activity_body').length)
-    return undefined;
- var url      = window.location.href;
- if(url.indexOf('hashtag?hashtag=') >= 0){
-  //if('#'+getUrlVars()["hashtag"] == scriptJquery('#activity_body').val()){
-  if('#'+getUrlVars()["hashtag"] == composeInstance.getContent()){
-    return undefined;
-  }
- }
- var activatedPlugin = composeInstance.getActivePlugin();
- if(activatedPlugin)
-  var pluginName = activatedPlugin.getName();
- else
-  var pluginName = '';
-  //if((pluginName &&  pluginName != 'sesevent') || scriptJquery('#activity_body').val() || scriptJquery('#toValues').val() || scriptJquery('#tag_location').val()){
-  if((pluginName &&  pluginName != 'sesevent' && pluginName != 'photo') || composeInstance.getContent() || scriptJquery('#toValues').val() || scriptJquery('#tag_location').val()){
-    return false;
-  }else{
-    return undefined;
-  }
-});
+// scriptJquery(window).bind('beforeunload',function(){
+//  if(!scriptJquery('#activity_body').length)
+//     return undefined;
+//  var url      = window.location.href;
+//  if(url.indexOf('hashtag?hashtag=') >= 0){
+//   //if('#'+getUrlVars()["hashtag"] == scriptJquery('#activity_body').val()){
+//   if('#'+getUrlVars()["hashtag"] == composeInstance.getContent()){
+//     return undefined;
+//   }
+//  }
+//  var activatedPlugin = composeInstance.getActivePlugin();
+//  if(activatedPlugin)
+//   var pluginName = activatedPlugin.getName();
+//  else
+//   var pluginName = '';
+//   //if((pluginName &&  pluginName != 'sesevent') || scriptJquery('#activity_body').val() || scriptJquery('#toValues').val() || scriptJquery('#tag_location').val()){
+//   if((pluginName &&  pluginName != 'sesevent' && pluginName != 'photo') || composeInstance.getContent() || scriptJquery('#toValues').val() || scriptJquery('#tag_location').val()){
+//     return false;
+//   }else{
+//     return undefined;
+//   }
+// });
 function checkComposerAdv(){
   var activatedPlugin = composeInstance.getActivePlugin();
   if(activatedPlugin)

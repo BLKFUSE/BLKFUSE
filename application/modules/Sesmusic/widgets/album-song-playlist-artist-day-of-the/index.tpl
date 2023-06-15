@@ -22,6 +22,7 @@
 <?php if($this->contentType == 'album'): ?>
 <ul class="sesmusic_side_block sesmusic_browse_listing clear sesbasic_bxs">
   <li class="sesmusic_item_grid sesbasic_bxs<?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.sesmusic',1) && Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('epaidcontent')) && Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.allow',1) && Engine_Api::_()->epaidcontent()->isViewerPlanActive($this->album)) { ?> paid_content <?php } ?>">
+  
   <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.sesmusic',1) && Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('epaidcontent')) && Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.allow',1) && Engine_Api::_()->epaidcontent()->isViewerPlanActive($this->album)) { ?>
        <?php echo $this->partial('application/modules/Epaidcontent/views/scripts/_paidContent.tpl', 'epaidcontent', array('item' => $this->album)); ?>
     <?php } ?> 
@@ -74,7 +75,7 @@
               <a class="sesbasic_icon_btn add-white" title='<?php echo $this->translate("Add to Playlist") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module' =>'sesmusic', 'controller' => 'song', 'action'=>'append - songs','album_id' => $this->album->album_id, 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><i class="fa fa-plus"></i></a>
               <?php endif; ?>
               <?php if($this->albumlink && engine_in_array('share', $this->albumlink)): ?>
-              <a class="sesbasic_icon_btn share-white" title='<?php echo $this->translate("Share") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_album', 'id' => $this->album->getIdentity(), 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><i class="fa fa-share"></i></a>
+              <a class="sesbasic_icon_btn share-white" title='<?php echo $this->translate("Share") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_album', 'id' => $this->album->getIdentity(), 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><i class="fas fa-share-alt"></i></a>
               <?php endif; ?>
               <?php endif; ?>
             </div>
@@ -84,25 +85,25 @@
             <?php if (!empty($this->information) && engine_in_array('favouriteCount', $this->information)) : ?>
               <span>
                 <?php echo $this->album->favourite_count; ?>
-                <i class="fa fa-heart"></i>
+                <i class="sesbasic_icon_favourite_o"></i>
               </span>
             <?php endif; ?>
             <?php if (!empty($this->information) && engine_in_array('commentCount', $this->information)) : ?>
               <span>
               <?php echo $this->album->comment_count; ?>
-              <i class="fa fa-comment"></i>
+              <i class="sesbasic_icon_comment_o"></i>
               </span>
             <?php endif; ?>
             <?php if (!empty($this->information) && engine_in_array('likeCount', $this->information)) : ?>
               <span>
               <?php echo $this->album->like_count; ?>
-                <i class="fa fa-thumbs-up"></i>
+                <i class="sesbasic_icon_like_o"></i>
               </span>
             <?php endif; ?>
             <?php if (!empty($this->information) && engine_in_array('viewCount', $this->information)) : ?>
               <span>
               <?php echo $this->album->view_count; ?>
-              <i class="fa fa-eye"></i>
+              <i class="sesbasic_icon_view_o"></i>
               </span>
             <?php endif; ?>
             <?php if (!empty($this->information) && engine_in_array('songsCount', $this->information)) : ?>
@@ -205,7 +206,7 @@
               
             <?php endif; ?>
             <?php if($this->songlink && engine_in_array('share', $this->songlink)): ?>
-              <a class="sesbasic_icon_btn share-white" title='<?php echo $this->translate("Share") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_albumsong', 'id' => $this->song->getIdentity(), 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><i class="fa fa-share"></i></a>
+              <a class="sesbasic_icon_btn share-white" title='<?php echo $this->translate("Share") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_albumsong', 'id' => $this->song->getIdentity(), 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><i class="fas fa-share-alt"></i></a>
             <?php endif ;?>
           <?php endif; ?>
             </div>
@@ -215,25 +216,25 @@
             <?php if (!empty($this->information) && engine_in_array('favouriteCount', $this->information)) : ?>
               <span>
                 <?php echo $this->song->favourite_count; ?>
-                <i class="fa fa-heart"></i>              
+                <i class="sesbasic_icon_favourite_o"></i>              
               </span>
             <?php endif; ?>
             <?php if (!empty($this->information) && engine_in_array('commentCount', $this->information)) : ?>
             <span>
               <?php echo $this->song->comment_count; ?>
-              <i class="fa fa-comment"></i>
+              <i class="sesbasic_icon_comment_o"></i>
             </span>
             <?php endif; ?>
             <?php if (!empty($this->information) && engine_in_array('likeCount', $this->information)) : ?>
             <span>
               <?php echo $this->song->like_count; ?>
-              <i class="fa fa-thumbs-up"></i>
+              <i class="sesbasic_icon_like_o"></i>
             </span>
             <?php endif; ?>
             <?php if (!empty($this->information) && engine_in_array('viewCount', $this->information)) : ?>
             <span>
               <?php echo $this->song->view_count; ?>
-              <i class="fa fa-eye"></i>
+              <i class="sesbasic_icon_view_o"></i>
             </span>
             <?php endif; ?>
             <?php if (!empty($this->information) && engine_in_array('downloadCount', $this->information)) : ?>

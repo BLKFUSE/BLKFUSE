@@ -11,35 +11,38 @@
  * @author     SocialEngineSolutions
  */
 ?>
-<a href="javascript:;" id="SESscroolToToElement" onclick="SESscrollTopAnimated(1000)" class="sesbasic_scrollup_button sesbasic_animation"><i class="fa fa-angle-up"></i></a>
+<a href="javascript:;" id="BackToTop" onclick="SESscrollTopAnimated(1000)" class="sesbasic_scrollup_button sesbasic_animation"><i class="fa fa-angle-up"></i></a>
 <script>
-	window.addEventListener("scroll", function(event) {
-    var top = this.scrollY;
-		if (top > 100) {
-			scriptJquery('#SESscroolToToElement').fadeIn('slow');
+
+	scriptJquery(window).scroll(function () {
+		if (scriptJquery(this).scrollTop() > 175) {
+		scriptJquery('#BackToTop').css({
+			'visibility': 'visible'
+		});
+
+		scriptJquery("#BackToTop").fadeIn("slow", function () {});
 		} else {
-			scriptJquery('#SESscroolToToElement').fadeOut('slow');
-    }
-	}, false);
+			scriptJquery("#BackToTop").fadeOut("slow", function () {});
+		}
+	});
+
+
 	var stepTime = 20;
 	var docBody = document.body;
 	var focElem = document.documentElement;
 	
 	var scrollAnimationStep = function (initPos, stepAmount) {
-			var newPos = initPos - stepAmount > 0 ? initPos - stepAmount : 0;
-	
-			docBody.scrollTop = focElem.scrollTop = newPos;
-	
-			newPos && setTimeout(function () {
-					scrollAnimationStep(newPos, stepAmount);
-			}, stepTime);
+		var newPos = initPos - stepAmount > 0 ? initPos - stepAmount : 0;
+		docBody.scrollTop = focElem.scrollTop = newPos;
+		newPos && setTimeout(function () {
+				scrollAnimationStep(newPos, stepAmount);
+		}, stepTime);
 	}
+	
 	var SESscrollTopAnimated = function (speed) {
-			var topOffset = docBody.scrollTop || focElem.scrollTop;
-			var stepAmount = topOffset;
-	
-			speed && (stepAmount = (topOffset * stepTime)/speed);
-	
-			scrollAnimationStep(topOffset, stepAmount);
-	};
+		var topOffset = docBody.scrollTop || focElem.scrollTop;
+		var stepAmount = topOffset;
+		speed && (stepAmount = (topOffset * stepTime)/speed);
+		scrollAnimationStep(topOffset, stepAmount);
+	}
 </script>

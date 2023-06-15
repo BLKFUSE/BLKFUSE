@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php include APPLICATION_PATH .  '/application/modules/Sesadvancedcomment/views/scripts/_jsFiles.tpl'; ?>
 <div class="ses_emoji_store_preview sesbasic_clearfix">
 	<div class="ses_emoji_store_preview_back_link">
   	<a href="javascript:;" class="sesact_back_store">

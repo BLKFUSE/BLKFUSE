@@ -677,8 +677,13 @@ class User_ProfileController extends Sesapi_Controller_Action_Standard
     }else if($data){
       //show friendship
       $friendShip = Engine_Api::_()->sesapi()->friendship($subject);
-      if($friendShip)
-        $menu[] = $friendShip;
+      if($friendShip){
+        if(is_array($friendShip) && is_int(array_keys($friendShip)[0])){
+            $menu = array_merge($menu,$friendShip);
+        }else{
+           $menu[] = array_merge($menu,$friendShip);
+        }
+     }
       $message = Engine_Api::_()->sesapi()->hasCheckMessage($subject);
     if($message){
       $menu[]  = array(

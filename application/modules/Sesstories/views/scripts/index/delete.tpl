@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesstories/externals/scripts/core.js'); ?>
 <div class="global_form_popup">
 	<?php echo $this->form->render($this) ?>
 </div>

@@ -1508,7 +1508,7 @@ class Sesvideo_IndexController extends Core_Controller_Action_Standard {
 					unset($values['photo_id']);
 				}
 				$values['approve'] = $approve;
-
+				$values['view_privacy'] = $values['auth_view'];
         $video->setFromArray($values);
         $video->save();
         // Add fields
@@ -2147,7 +2147,7 @@ class Sesvideo_IndexController extends Core_Controller_Action_Standard {
     $db->beginTransaction();
     try {
       $values = $form->getValues();
-
+			$values['view_privacy'] = $values['auth_view'];
     if(isset($values['levels']))
         $values['levels'] = implode(',',$values['levels']);
 
@@ -2562,7 +2562,7 @@ class Sesvideo_IndexController extends Core_Controller_Action_Standard {
     if ($iframelyDisallowHost && engine_in_array($uriHost, $iframelyDisallowHost)) {
         return;
     }
-    if(engine_in_array($uriHost, array('youtube.com','www.youtube.com','youtube', 'youtu.be'))){
+    if(Engine_Api::_()->getApi('settings', 'core')->getSetting('video.youtube.apikey') && engine_in_array($uriHost, array('youtube.com','www.youtube.com','youtube', 'youtu.be'))){
         return $this->YoutubeVideoInfomation($uri);
     } else {
         $config = Engine_Api::_()->getApi('settings', 'core')->core_iframely;

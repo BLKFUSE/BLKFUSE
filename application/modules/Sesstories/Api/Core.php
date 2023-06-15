@@ -297,9 +297,9 @@ class Sesstories_Api_Core extends Core_Api_Abstract
                         $menuoptions[$menucounter]['label'] = $view->translate("SESMute");
                         $menucounter++;
 
-                        $menuoptions[$menucounter]['name'] = "report";
-                        $menuoptions[$menucounter]['label'] = $view->translate("SESReport");
-                        $menucounter++;
+//                         $menuoptions[$menucounter]['name'] = "report";
+//                         $menuoptions[$menucounter]['label'] = $view->translate("SESReport");
+//                         $menucounter++;
 
                         $images['story_content'][$counter]['options'] = $menuoptions;
                     }

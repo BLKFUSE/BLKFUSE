@@ -183,8 +183,8 @@ class User_Plugin_Signup_Account extends Core_Plugin_FormSequence_Abstract
             'host' => $_SERVER['HTTP_HOST'],
             'email' => $user->email,
             'date' => $date->format('F j, Y, g:i a'),
-            'recipient_title' => $super_admin->displayname,
-            'object_title' => $user->displayname,
+            'recipient_title' => $super_admin->getTitle(),
+            'object_title' => $user->getTitle(),
             'object_link' => $user->getHref(),
           );
         }
@@ -201,7 +201,7 @@ class User_Plugin_Signup_Account extends Core_Plugin_FormSequence_Abstract
             'host' => $_SERVER['HTTP_HOST'],
             'email' => $user->email,
             'date' => $date->format('F j, Y, g:i a'),
-            'recipient_title' => $super_admin->displayname,
+            'recipient_title' => $super_admin->getTitle(),
             'object_title' => $user->getTitle(),
             'object_link' => $user->getHref(),
           );
@@ -235,7 +235,7 @@ class User_Plugin_Signup_Account extends Core_Plugin_FormSequence_Abstract
             'host' => $_SERVER['HTTP_HOST'],
             'email' => $user->email,
             'date' => date("F j, Y, g:i a"),
-            'recipient_title' => $super_admin->displayname,
+            'recipient_title' => $super_admin->getTitle(),
             'object_title' => $user->getTitle(),
             'object_link' => $user->getHref(),
           );

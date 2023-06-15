@@ -11,6 +11,17 @@
   text-align:left;
   direction:ltr;
 }
+/*Form Elements*/
+select{
+  -webkit-appearance: none;
+  background-image:url(~/application/modules/Core/externals/images/select-icon.png);
+  background-position: right 5px center;
+  background-repeat: no-repeat;
+  background-size: 14px;
+}
+[dir="rtl"] select{
+  background-position:left 5px center;
+}
 /*
 MAIN LOGIN FORM
 Gives special positioning to the elements in the main
@@ -1476,10 +1487,13 @@ Used for the modal popup smoothbox.
 }
 #TB_ajaxContent{
   clear:both;
-  padding:12px 15px 38px 10px;
   overflow:auto;
   text-align:left;
   line-height:1.4em;
+  box-sizing:initial;
+}
+#TB_ajaxContent > div{
+  margin:10px;
 }
 #TB_ajaxContent p{
   padding:5px 0px 5px 0px;

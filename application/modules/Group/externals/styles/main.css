@@ -470,6 +470,24 @@ html[dir="rtl"] ul.group_discussions .group_discussions_lastreply_info {
 ul.group_discussions .group_discussions_lastreply_info_date {
  color:$theme_font_color_light;
 }
+
+/* reset some styles for forum posts */
+.group_discussions_topic_posts_info_body blockquote,
+.group_discussions_topic_posts_info_body q{
+  border:1px dashed $theme_border_medium_color;
+  background:$theme_list_background_color_hover;
+  padding:15px;
+  margin:15px 0 10px;
+  display:block;
+}
+.group_discussions_topic_posts_info_body q{
+  quotes:none;
+}
+.group_discussions_topic_posts_info_body blockquote p,
+.group_discussions_topic_posts_info_body blockquote q p{
+  margin:0px;
+}
+
 /* some overrides on the tab page for spacing purposes */
 div.group_discussions_list {
 	margin-top:10px;
@@ -1285,14 +1303,17 @@ TAGS FOR MESSEAGE RECIPIENTS
 	max-width:100%;
 }
 @media (max-width:600px) {
-.layout_group_profile_groups ul .groups_profile_tab_photo,  .layout_group_profile_events ul .groups_profile_tab_photo {
-	display:none;
-}
-ul.list_wrapper .groups_info {
-	clear:both;
-	padding-top:5px;
-	padding-left:0;
-}
+	.layout_group_profile_groups ul .groups_profile_tab_photo,  .layout_group_profile_events ul .groups_profile_tab_photo {
+		display:none;
+	}
+	ul.list_wrapper .groups_info {
+		clear:both;
+		padding-top:5px;
+		padding-left:0;
+	}
+	html .group_photos_list .thumbs_photo{
+		height:120px !important;	
+	}
 }
 @media(min-width:768px) {
 .thumbs_group > li {

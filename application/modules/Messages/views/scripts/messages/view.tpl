@@ -47,7 +47,7 @@
           echo $this->translate('Between %1$s and %2$s', $you, $this->fluentList($them));
         }
         else {
-          echo 'Conversation with a deleted member.';
+          echo $this->translate('Conversation with a deleted member.');
         }
       }
     ?>

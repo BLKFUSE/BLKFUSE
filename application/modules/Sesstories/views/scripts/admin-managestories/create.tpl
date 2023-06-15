@@ -53,11 +53,11 @@
   })
 
   scriptJquery('#starttime-date').attr("type","text").attr("autocomplete","off").attr("placeholder","Select a Date").datepicker({
-    dateFormat: "mm/dd/yy",
+    
     timepicker: true,
     })
   scriptJquery('#endtime-date').attr("type","text").attr("autocomplete","off").attr("placeholder","Select a Date").datepicker({
-      dateFormat: "mm/dd/yy",
+      
       timepicker: true,
   })
 

@@ -24,6 +24,8 @@
 "<em>(No Subject)</em>";"<em>(No Subject)</em>"
 "(No Subject)";"(No Subject)"
 "Between %1$s and %2$s";"Between %1$s and %2$s"
+"Between %1$s, %2$s";"Between %1$s, %2$s"
+"To members of %1$s";"To members of %1$s"
 "You";"You"
 "Start typing...";"Start typing..."
 "Check All";"Check All"
@@ -38,6 +40,8 @@
 "Users in the same network";"Users in the same network"
 "Friends";"Friends"
 "Edit Level";"Edit Level"
+"You can no longer respond to this message because you have blocked %1$s.";"You can no longer respond to this message because you have blocked %1$s."
+"You can no longer respond to this message because %1$s has blocked you.";"You can no longer respond to this message because %1$s has blocked you."
 
 "ACTIVITY_TYPE_MESSAGE_NEW";"When I receive a message."
 

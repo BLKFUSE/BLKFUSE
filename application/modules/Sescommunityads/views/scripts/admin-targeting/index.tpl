@@ -15,7 +15,7 @@
 <?php include APPLICATION_PATH .  '/application/modules/Sescommunityads/views/scripts/dismiss_message.tpl';?>
 
 <div class='clear'>
-  <div class='settings sesbasic_admin_form'>
+  <div class='settings sescommunityads_taggeting_form'>
     <?php echo $this->form->render($this); ?>
   </div>
 </div>

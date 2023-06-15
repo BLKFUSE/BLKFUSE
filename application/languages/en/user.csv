@@ -6,6 +6,9 @@
 "If you already have an account, please enter your details below. If you don't have one yet, please <a href='%s'>sign up</a> first.";"If you already have an account, please enter your details below. If you don't have one yet, please <a href='%s'>sign up</a> first."
 "<span><a href='%s'>Forgot Password?</a></span>";"<span><a href='%s'>Forgot Password?</a></span>"
 
+"If you already have an account, please enter your details below. If you don't have one yet, please <a href='%s' target='_blank'>sign up</a> first.";"If you already have an account, please enter your details below. If you don't have one yet, please <a href='%s' target='_blank'>sign up</a> first."
+"<span><a href='%s' target='_blank'>Forgot Password?</a></span>";"<span><a href='%s' target='_blank'>Forgot Password?</a></span>"
+
 "Block Member";"Block Member"
 "Do you want to block this member?";"Do you want to block this member?"
 "Cancel";"Cancel"
@@ -858,3 +861,5 @@ Verification Code: [code]
 "Yes, allow to receive code for verification";"Yes, allow to receive code for verification"
 "No, do not enable two step authentication";"No, do not enable two step authentication"
 "Step %d: Two Step Authentication";"Step %d: Two Step Authentication"
+
+"Not a Member? <b>Join</b>";"Not a Member? <b>Join</b>"

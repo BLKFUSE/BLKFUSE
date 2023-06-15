@@ -69,6 +69,15 @@ class User_Plugin_Menus
     }
     return $route;
   }
+  
+  public function onMenuInitialize_UserSettingsNotifications($row) {
+  
+    $notificationTypes = Engine_Api::_()->getDbtable('notificationTypes', 'activity')->getDefaultNotifications();
+		if(count($notificationTypes) == 0)
+			return false;
+		
+		return true;
+  }
 
   // core_mini
   public function onMenuInitialize_CoreMiniAdmin($row)

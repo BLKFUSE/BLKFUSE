@@ -97,10 +97,7 @@ if ($this->getRequest()->isPost()) {
         `creation_date` DATETIME NOT NULL,
         UNIQUE KEY `uniqueKey` (`resource_id`, `owner_id`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
-      
-      $db->query('INSERT IGNORE INTO `engine4_activity_notificationtypes` (`type`, `module`, `body`, `is_request`, `handler`) VALUES
-      ("sesstories_storycreate", "sesstories", \'{item:$object} create a story.\', 0, "");');
-      
+
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesstories_usersettings` (
         `usersetting_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
         `user_id` int(11) unsigned NOT NULL,

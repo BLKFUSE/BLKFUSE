@@ -120,9 +120,9 @@
 </dl>
 
 
-<h2 class="payment_transaction_detail_headline">
+<h3 class="payment_transaction_detail_headline">
   <?php echo $this->translate('Related Transactions') ?>
-</h2>
+</h3>
 
 <table class="admin_table payment_transaction_list">
   <thead>

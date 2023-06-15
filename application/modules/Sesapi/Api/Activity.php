@@ -87,22 +87,30 @@ class Sesapi_Api_Activity extends Core_Api_Abstract {
       $content = $r->invokeArgs($helper, $helperArgs);
       if ($contentHelper == "var"){
         if(is_string(($content)) && strpos($content,'<a ') !== false && strpos($content,'action_id') !== false){
-            $a = new SimpleXMLElement($content);
-            $content1['href'] =  Engine_Api::_()->sesapi()->getBaseUrl('',$a['href']);
+          preg_match_all('/<a[^>]+href=([\'"])(?<href>.+?)\1[^>]*>/i', $content, $result);
+          if (!empty($result)) {
+            $content1['href'] =  Engine_Api::_()->sesapi()->getBaseUrl('',$result['href'][0]);
             $content1["title"] = strip_tags($content); 
             $content1['id'] = (int) end(explode('/',$content1['href']));
             $content1['type'] = "sesadvancedactivity";
             $content = $content1;
+          }
         }  
         //Forum Topic Work
         if(is_string(($content)) && strpos($content,'<a ') !== false && strpos($content,'topic') !== false){
-            $a = new SimpleXMLElement($content);
-            $content1['href'] =  Engine_Api::_()->sesapi()->getBaseUrl('',$a['href']); 
+          preg_match_all('/<a[^>]+href=([\'"])(?<href>.+?)\1[^>]*>/i', $content, $result);
+          if (!empty($result)) {
+            # Found a link.
+            $content1['href'] =  Engine_Api::_()->sesapi()->getBaseUrl('',$result['href'][0]); 
             $content1["title"] = strip_tags($content); 
             $idCont = explode('/',$content1['href']);
             $content1['id'] = (int) $idCont[5];
+            if(empty($content1['id'])){
+              $content1["id"] = $params["object_id"];
+            }
             $content1['type'] = "sesforum_topic";
             $content = $content1;
+          }
         }
       }
       if(is_string($content)){

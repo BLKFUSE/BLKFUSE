@@ -39,6 +39,9 @@ class Install_Import_Phpfox_PollPolls extends Install_Import_Phpfox_Abstract
     $newData['view_count'] = $data['total_view'];
     $newData['comment_count'] = $data['total_comment'];
     $newData['search'] = 1;
+    $newData['parent_type'] = '';
+    $newData['parent_id'] = 0;
+    $newData['rating'] = 0;
 
     // FIND VOTE COUNT OF THIS POLL
     $pollVoteCount = $this->getFromDb()->select()

@@ -59,7 +59,7 @@ class Elivestreaming_IndexController extends Core_Controller_Action_Standard
             $viewerId = $viewer->getIdentity();
             $elivestreamingHost = $livestreamingTable->createRow();
             $values['user_id'] = $viewerId;
-            $values['name'] = $viewer->displayname;
+            $values['name'] = $viewer->getTitle();
             $values['status'] = 'started';
             $elivestreamingHost->setFromArray($values);
             $elivestreamingHost->save();

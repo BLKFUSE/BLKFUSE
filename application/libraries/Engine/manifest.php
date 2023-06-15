@@ -12,7 +12,7 @@ return array(
   'package' => array(
     'type' => 'library',
     'name' => 'engine',
-    'version' => '6.2.0',
+    'version' => '6.4.0',
     'revision' => '$Revision: 10271 $',
     'path' => 'application/libraries/Engine',
     'repository' => 'socialengine.com',

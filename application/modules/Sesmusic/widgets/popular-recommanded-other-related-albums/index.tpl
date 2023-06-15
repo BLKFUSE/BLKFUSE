@@ -26,7 +26,7 @@
 <ul class="sesmusic_side_block sesmusic_browse_listing">
 
   <?php foreach( $this->results as $item ): ?>
-  <?php if($item && $this->viewType == 'listview'): ?>
+  <?php if($this->viewType == 'listview'): ?>
   <li class="sesmusic_sidebar_list<?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.sesmusic',1) && Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('epaidcontent')) && Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.allow',1) && Engine_Api::_()->epaidcontent()->isViewerPlanActive($item)) { ?> paid_content <?php } ?>">
   <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.sesmusic',1) && Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('epaidcontent')) && Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.allow',1) && Engine_Api::_()->epaidcontent()->isViewerPlanActive($item)) { ?>
        <?php echo $this->partial('application/modules/Epaidcontent/views/scripts/_paidContent.tpl', 'epaidcontent', array('item' => $item)); ?>
@@ -56,19 +56,19 @@
       <div class="sesmusic_sidebar_list_stats sesmusic_list_stats sesbasic_text_light">
         <?php if (!empty($this->information) && engine_in_array('commentCount', $this->information)) :?>
           <span title="<?php echo $this->translate(array('%s comment', '%s comments', $item->comment_count), $this->locale()->toNumber($item->comment_count)); ?>">
-            <i class="fa fa-comment"></i>
+            <i class="sesbasic_icon_comment_o"></i>
             <?php echo $item->comment_count; ?>
           </span>
         <?php endif; ?>
         <?php if (!empty($this->information) && engine_in_array('likeCount', $this->information)) : ?>
           <span title="<?php echo $this->translate(array('%s like', '%s likes', $item->like_count), $this->locale()->toNumber($item->like_count));?>">
-            <i class="fa fa-thumbs-up"></i>
+            <i class="sesbasic_icon_like_o"></i>
             <?php echo $item->like_count; ?>
           </span>
         <?php endif; ?>
         <?php if (!empty($this->information) && engine_in_array('viewCount', $this->information)) : ?>
           <span title="<?php echo $this->translate(array('%s view', '%s views', $item->view_count), $this->locale()->toNumber($item->view_count)); ?>">
-            <i class="fa fa-eye"></i>
+            <i class="sesbasic_icon_view_o"></i>
             <?php echo $item->view_count; ?>
           </span>
         <?php endif; ?>
@@ -81,7 +81,7 @@
       </div>
     </div>
   </li>
-  <?php elseif($item && $this->viewType == 'gridview'): ?>
+  <?php elseif($this->viewType == 'gridview'): ?>
   <li class="sesmusic_item_grid sesbasic_bxs <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.sesmusic',1) && Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('epaidcontent')) && Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.allow',1) && Engine_Api::_()->epaidcontent()->isViewerPlanActive($item)) { ?> paid_content <?php } ?>" style="width:<?php echo $this->width ?>px;">
   <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.sesmusic',1) && Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('epaidcontent')) && Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.allow',1) && Engine_Api::_()->epaidcontent()->isViewerPlanActive($item)) { ?>
        <?php echo $this->partial('application/modules/Epaidcontent/views/scripts/_paidContent.tpl', 'epaidcontent', array('item' => $item)); ?>
@@ -135,7 +135,7 @@
               <a class="sesbasic_icon_btn add-white" title='<?php echo $this->translate("Add to Playlist") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module' =>'sesmusic', 'controller' => 'song', 'action'=>'append - songs','album_id' => $item->album_id, 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><i class="fa fa-plus"></i></a>
             <?php endif; ?>
             <?php if($this->albumlink && engine_in_array('share', $this->albumlink)): ?>
-              <a class="sesbasic_icon_btn share-white" title='<?php echo $this->translate("Share") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_album', 'id' => $item->album_id, 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><i class="fa fa-share"></i></a>
+              <a class="sesbasic_icon_btn share-white" title='<?php echo $this->translate("Share") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_album', 'id' => $item->album_id, 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><i class="fas fa-share-alt"></i></a>
             <?php endif; ?>
           <?php endif; ?>
       </div>
@@ -145,19 +145,19 @@
         <?php if (!empty($this->information) && engine_in_array('commentCount', $this->information)) :?>
           <span>
             <?php echo $item->comment_count; ?>
-            <i class="fa fa-comment"></i>
+            <i class="sesbasic_icon_comment_o"></i>
           </span>
         <?php endif; ?>
         <?php if (!empty($this->information) && engine_in_array('likeCount', $this->information)) : ?>
         <span>
         <?php echo $item->like_count; ?>
-        <i class="fa fa-thumbs-up"></i>
+        <i class="sesbasic_icon_like_o"></i>
         </span>
         <?php endif; ?>
         <?php if (!empty($this->information) && engine_in_array('viewCount', $this->information)) : ?>
         <span>
         <?php echo $item->view_count; ?>
-        <i class="fa fa-eye"></i>
+        <i class="sesbasic_icon_view_o"></i>
         </span>
         <?php endif; ?>
         <?php if (!empty($this->information) && engine_in_array('songsCount', $this->information)) : ?>

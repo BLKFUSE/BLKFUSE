@@ -690,6 +690,7 @@ class Sesadvancedcomment_IndexController extends Core_Controller_Action_Standard
     // Make sure user exists
     if( !$this->_helper->requireUser()->isValid() ) return;
 
+    
     $guid = $this->_getParam('guid',0);
     if($guid){
       $guid = Engine_Api::_()->getItemByGuid($guid);
@@ -734,6 +735,9 @@ class Sesadvancedcomment_IndexController extends Core_Controller_Action_Standard
       }
 
       $body = !empty($_POST['bodymention']) ? $_POST['bodymention'] : $_POST['body'];
+
+      $censor  = new Engine_Filter_Censor();
+      $body = $censor->filter( $body );
 
       //Feeling Emojis Work
       if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesemoji')) {
@@ -1390,7 +1394,11 @@ class Sesadvancedcomment_IndexController extends Core_Controller_Action_Standard
                   $parentCommentType = 'activity_comment';
               }
               $parentCommentId = $activitycomments->parent_id;
-              $parentComment = Engine_Api::_()->getItem($parentCommentType,$parentCommentId);
+              if($parentCommentType == 'activity_comment') {
+                $parentComment = Engine_Api::_()->getDbTable('activitycomments', 'sesadvancedactivity')->rowExists($parentCommentId);
+              } else if($parentCommentType == 'core_comment') {
+                  $parentComment = Engine_Api::_()->getDbTable('corecomments', 'sesadvancedactivity')->rowExists($parentCommentId);
+              }
               $parentComment->reply_count = new Zend_Db_Expr('reply_count - 1');
               $parentComment->save();
             }

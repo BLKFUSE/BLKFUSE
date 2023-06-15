@@ -560,7 +560,8 @@
 	height:inherit;
 	width:inherit;
 	float:none !important;
-	display:inline;
+	display:inline-block;
+	vertical-align: middle;
 }
 .layout_page_sesmusic_artist_view{
 	position:relative;

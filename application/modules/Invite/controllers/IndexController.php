@@ -99,11 +99,9 @@ class Invite_IndexController extends Core_Controller_Action_Standard
     $db = $inviteTable->getAdapter();
     $db->beginTransaction();
     try {
-        
-      
-    
       $emailsSent = $inviteTable->sendInvites($viewer, $invite->recipient, 'You are being invited to join our social network.', '', 'resend');
-      $invite->delete();
+      if($invite)
+				$invite->delete();
       $db->commit();
       echo json_encode(array('status' => 'true', 'message' => 'Resend Invite Successfully.'));die;
     } catch( Exception $e ) {

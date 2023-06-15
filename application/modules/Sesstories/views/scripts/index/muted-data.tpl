@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesstories/externals/scripts/core.js'); ?>
 <li class="sesstories_stories_muted_item">
     <div class="_thumb">
         <img class="thumb_icon" src="<?php echo $muted['user_image'] ?>" alt="<?php echo $muted['user_title'] ?>" />

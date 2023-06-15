@@ -283,6 +283,9 @@ class Sesadvancedactivity_AjaxController extends Core_Controller_Action_Standard
       'survey',
       'file'
     );
+    if(!is_array($iframely['links'])){
+      $iframely['links'] = array();
+    }
     $typeOfContent = array_intersect(array_keys($iframely['links']), $allowRichHtmlTyes);
     if( $typeOfContent ) {
       $this->view->richHtml = $iframely['html'];
@@ -466,11 +469,16 @@ class Sesadvancedactivity_AjaxController extends Core_Controller_Action_Standard
   public function commentLikesAction() {
 
     $this->view->resource_id = $resource_id = $this->_getParam('id');
+    $this->view->resource_type = $resource_type = $this->_getParam('resource_type');
     $this->view->is_ajax = $is_ajax = $this->_getParam('is_ajax_content',false);
     $this->view->comment_id = $comment_id = $this->_getParam('comment_id');
 
-    $action = Engine_Api::_()->getDbtable('actions', 'sesadvancedactivity')->getActionById($resource_id);
-    $resource = $action->likes(true);
+    if($resource_type == 'activity_action'){
+      $action = Engine_Api::_()->getDbtable('actions', 'sesadvancedactivity')->getActionById($resource_id);
+      $resource = $action->likes(true);
+    }else{
+      $resource = Engine_Api::_()->getItem($resource_type,$resource_id);
+    }
 
     if($resource->getType() == 'activity_action') {
         $resource_type = 'activity_comment';

@@ -90,7 +90,7 @@ for ($i=0; $i<6; $i++) { $d=rand(1,30)%2; $random .= ($d?chr(rand(65,90)):chr(ra
                   <a id="sesmusic_player_download" href="#"><i class="fa fa-download"></i><span><?php echo $this->translate("Download"); ?></span></a>
                   <?php endif; ?>
                   <?php if(!empty($this->songlink) && engine_in_array('share', $this->songlink) && !empty($viewer_id)): ?>
-                  <a id="sesmusic_player_share" href="javascript:void(0);"><i class="fa fa-share"></i><span><?php echo $this->translate("Share"); ?></span></a>
+                  <a id="sesmusic_player_share" href="javascript:void(0);"><i class="fas fa-share-alt"></i><span><?php echo $this->translate("Share"); ?></span></a>
                   <?php endif; ?>
                 </div>
               <?php } ?>
@@ -107,7 +107,7 @@ for ($i=0; $i<6; $i++) { $d=rand(1,30)%2; $random .= ($d?chr(rand(65,90)):chr(ra
                   <a id="sesmusic_player_download" href="#"><i class="fa fa-download"></i><span><?php echo $this->translate("Download"); ?></span></a>
                   <?php endif; ?>
                   <?php if(!empty($this->songlink) && engine_in_array('share', $this->songlink)): ?>
-                  <a id="sesmusic_player_share" href="javascript:void(0);"><i class="fa fa-share"></i><span><?php echo $this->translate("Share"); ?></span></a>
+                  <a id="sesmusic_player_share" href="javascript:void(0);"><i class="fas fa-share-alt"></i><span><?php echo $this->translate("Share"); ?></span></a>
                   <?php endif; ?>
                 </div>
               <?php endif; ?>

@@ -101,7 +101,8 @@ class Install_Import_Phpfox_PagesGroupStatusFeed extends Install_Import_Phpfox_A
       'body' => $body,
       'params' => $params,
       'date' => $this->_translateTime($data['time_stamp']),
-      'attachment_count' => 1
+      'attachment_count' => 1,
+      'modified_date' => date('Y-m-d H:i:s'),
     );
     $privacy_field = $this->getToDb()->query("SHOW COLUMNS FROM engine4_activity_actions LIKE 'privacy'")->fetch();
     $privacy = 'everyone';

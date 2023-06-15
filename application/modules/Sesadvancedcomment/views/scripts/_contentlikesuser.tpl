@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php include APPLICATION_PATH .  '/application/modules/Sesadvancedcomment/views/scripts/_jsFiles.tpl'; ?>
 <?php
 $isPageSubject = !empty($this->isPageSubject) ? $this->isPageSubject : $this->viewer();
 foreach($this->users as $user){ 

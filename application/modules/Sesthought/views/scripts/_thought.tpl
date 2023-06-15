@@ -12,6 +12,7 @@
  */
 
 ?>
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesthought/externals/scripts/core.js'); ?>
 <div class="sesthought_feed_thought">
   <?php if($this->thought->mediatype == 1 && !empty($this->thought->photo_id)) { ?>
     <div class="sesthought_img"><?php echo $this->itemPhoto($this->thought, 'thumb.main') ?></div>

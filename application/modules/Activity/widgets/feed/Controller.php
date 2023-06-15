@@ -381,7 +381,7 @@ class Activity_Widget_FeedController extends Engine_Content_Widget_Abstract
     foreach ($attachments as $attachment) {
       $tagMaps = array();
       $object = Engine_Api::_()->getItem($attachment->type, $attachment->id);
-      if (method_exists($object, 'tags')) {
+      if ($object && method_exists($object, 'tags')) {
         $tagMaps = $object->tags()->getTagMaps()->toArray();
       }
 

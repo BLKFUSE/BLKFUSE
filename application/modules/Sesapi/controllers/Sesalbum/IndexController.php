@@ -46,6 +46,7 @@ class Sesalbum_IndexController extends Sesapi_Controller_Action_Standard
       $form->removeElement('fancyuploadfileids');
       $form->removeElement('tabs_form_albumcreate');
       $form->removeElement('drag-drop');
+      $form->removeElement('orText');
 
       $form->removeElement('from-url');
       $form->removeElement('file_multi_sesalbum');

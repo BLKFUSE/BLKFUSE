@@ -354,6 +354,7 @@ class Sesbasic_FriendsController extends Core_Controller_Action_User
 
     // Get viewer and other user
     $viewer = Engine_Api::_()->user()->getViewer();
+    $format = $this->_getParam('format', null);
     if( null == ($user_id = $this->_getParam('user_id')) ||
         null == ($user = Engine_Api::_()->getItem('user', $user_id)) ) {
       $this->view->status = false;
@@ -368,7 +369,7 @@ class Sesbasic_FriendsController extends Core_Controller_Action_User
     // Make form
     $this->view->form = $form = new User_Form_Friends_Confirm(array('user' => $user));
 
-    if( !$this->getRequest()->isPost() ) {
+    if(empty($format) && !$this->getRequest()->isPost() ) {
       $this->view->status = false;
       $this->view->error = Zend_Registry::get('Zend_Translate')->_('No action taken');
       return;
@@ -451,6 +452,7 @@ class Sesbasic_FriendsController extends Core_Controller_Action_User
 
     // Get viewer and other user
     $viewer = Engine_Api::_()->user()->getViewer();
+    $format = $this->_getParam('format', null);
     if( null == ($user_id = $this->_getParam('user_id')) ||
         null == ($user = Engine_Api::_()->getItem('user', $user_id)) ) {
       $this->view->status = false;
@@ -461,7 +463,7 @@ class Sesbasic_FriendsController extends Core_Controller_Action_User
     // Make form
     $this->view->form = $form = new User_Form_Friends_Reject(array('user' => $user));
 
-    if( !$this->getRequest()->isPost() ) {
+    if(empty($format) &&  !$this->getRequest()->isPost() ) {
       $this->view->status = false;
       $this->view->error = Zend_Registry::get('Zend_Translate')->_('No action taken');
       return;
@@ -730,7 +732,7 @@ class Sesbasic_FriendsController extends Core_Controller_Action_User
 
         $listsByUser = array();
         foreach( $listItems as $listItem ) {
-          $listsByUser[$listItem->list_id][$listItem->user_id]= $listItem->displayname ;
+          $listsByUser[$listItem->list_id][$listItem->user_id]= $listItem->getTitle() ;
         }
         
         foreach ($listArray as $key => $value){

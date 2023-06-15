@@ -23,7 +23,7 @@
 <?php } ?>
 
 <div class="core_landingpage_banner" style="height:<?php echo $this->height; ?>px">
-  <section style="height:<?php echo $this->height; ?>px;background-image: url(<?php echo $bgPhoto ?>)">
+  <section style="height:<?php echo $this->height; ?>px; background-image: url(<?php echo $bgPhoto ?>)">
     <div>
       <h1>
         <?php echo $this->translate($this->banner->getTitle()) ?>

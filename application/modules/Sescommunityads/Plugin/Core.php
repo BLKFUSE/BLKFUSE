@@ -41,17 +41,17 @@ class Sescommunityads_Plugin_Core {
       unset($_SESSION[$key]);
     $_SESSION[$key] = array();
     $_SESSION[$key."_stop"] = false;
+    
     $headScript = new Zend_View_Helper_HeadScript();
-		$headScript->appendFile(Zend_Registry::get('StaticBaseUrl')
-								 .'application/modules/Sescommunityads/externals/scripts/core.js');
-          if($moduleName == "sescommunityads" && ($actionName == "create" || $actionName == "edit-ad") && $controllerName == "index"){
-              $headScript->appendFile(Zend_Registry::get('StaticBaseUrl')
-								 .'application/modules/Sescommunityads/externals/scripts/ad_edit_create.js');      
-          }
-        if($viewer->getIdentity()){
-            $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
-            $script = 'var currentUserTimezone = "'.$viewer->timezone.'";';
-            $view->headScript()->appendScript($script);
-        }
+		$headScript->appendFile(Zend_Registry::get('StaticBaseUrl') .'application/modules/Sescommunityads/externals/scripts/core.js');
+		
+		if($moduleName == "sescommunityads" && ($actionName == "create" || $actionName == "edit-ad") && $controllerName == "index"){
+			$headScript->appendFile(Zend_Registry::get('StaticBaseUrl') .'application/modules/Sescommunityads/externals/scripts/ad_edit_create.js');
+		}
+		if($viewer->getIdentity()){
+				$view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
+				$script = 'var currentUserTimezone = "'.$viewer->timezone.'";';
+				$view->headScript()->appendScript($script);
+		}
 	}
 }

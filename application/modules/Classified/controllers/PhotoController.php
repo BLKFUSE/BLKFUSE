@@ -307,5 +307,20 @@ class Classified_PhotoController extends Core_Controller_Action_Standard
     }
   }
 
+  public function removePhotoAction() {
+  
+		if(empty($_GET['photo_id'])) die('error');
+		$photo = Engine_Api::_()->getItem('classified_photo', $_GET['photo_id']);
+		$db = Engine_Api::_()->getDbTable('photos', 'classified')->getAdapter();
+		$db->beginTransaction();
+		try {
+			$photo->delete();
+			$db->commit();
+			echo json_encode(array('status'=>"true"));die;
+		} catch (Exception $e) {
+			$db->rollBack();
+			throw $e;
+		}
+  }
 
 }

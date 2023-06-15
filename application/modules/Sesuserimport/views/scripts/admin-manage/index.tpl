@@ -22,7 +22,7 @@
   ));
 ?>
 <div class='clear'>
-  <div class='settings sesbasic_admin_form'>
+  <div class='settings sesbasic_admin_form sesuserimport_add_form'>
     <?php echo $this->form->render($this); ?>
   </div>
 </div>

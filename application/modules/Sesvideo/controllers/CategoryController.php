@@ -14,10 +14,16 @@
 class Sesvideo_CategoryController extends Core_Controller_Action_Standard {
 
   public function browseAction() {
+		// only show videos if authorized
+    if (!$this->_helper->requireAuth()->setAuthParams('video', null, 'view')->isValid())
+      return;
     $this->_helper->content->setEnabled();
   }
 
   public function indexAction() {
+		// only show videos if authorized
+    if (!$this->_helper->requireAuth()->setAuthParams('video', null, 'view')->isValid())
+      return;
     $category_id = $this->_getParam('category_id', false);
     if ($category_id) {
       $category_id = Engine_Api::_()->getDbtable('categories', 'sesvideo')->getCategoryId($category_id);

@@ -105,7 +105,7 @@ class Messages_MessagesController extends Sesapi_Controller_Action_Standard {
     // if( !$this->getRequest()->isPost() ) {
     //   return;
     // }
-
+    $form->removeElement("to");
     if( !$form->isValid($this->getRequest()->getPost()) ) {
       $validateFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->validateFormFields($form);
       if (is_countable($validateFields) && engine_count($validateFields))
@@ -152,7 +152,7 @@ class Messages_MessagesController extends Sesapi_Controller_Action_Standard {
         // Validate friends
         if( 'friends' == Engine_Api::_()->authorization()->getPermission($viewer, 'messages', 'auth') ) {
           if( !$viewer->membership()->isMember($recipients) ) {
-            return $form->addError('One of the members specified is not in your friends list.');
+            // return $form->addError('One of the members specified is not in your friends list.');
           }
         }
         
@@ -168,7 +168,7 @@ class Messages_MessagesController extends Sesapi_Controller_Action_Standard {
       // Normal
       else {
         //$recipients = preg_split('/[,. ]+/', $values['toValues']);
-        $recipients = explode(',', $values['to']);
+        $recipients = explode(',', $_POST['to']);
         // clean the recipients for repeating ids
         // this can happen if recipient is selected and then a friend list is selected
         $recipients = array_unique($recipients);
@@ -209,6 +209,8 @@ class Messages_MessagesController extends Sesapi_Controller_Action_Standard {
           'message_new'
         );
       }
+      
+      
 
       // Increment messages counter
       Engine_Api::_()->getDbtable('statistics', 'core')->increment('messages.creations');

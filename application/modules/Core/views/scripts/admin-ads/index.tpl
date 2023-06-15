@@ -76,7 +76,6 @@
 </h3>
 <p>
   <?php echo $this->translate("CORE_VIEWS_SCRIPTS_ADMINADS_INDEX_DESCRIPTION") ?>
-  <a class="admin help" href="http://support.socialengine.com/questions/161/Admin-Panel-Ads" target="_blank"> </a>
 </p>
 <?php
 $settings = Engine_Api::_()->getApi('settings', 'core');

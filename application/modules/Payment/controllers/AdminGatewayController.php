@@ -46,6 +46,8 @@ class Payment_AdminGatewayController extends Core_Controller_Action_Admin
 
   public function editAction()
   {
+		$this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_payment', array(), 'core_admin_main_payment_gateways');
+		
     // Get gateway
     $gateway = Engine_Api::_()->getDbtable('gateways', 'payment')
       ->find($this->_getParam('gateway_id'))

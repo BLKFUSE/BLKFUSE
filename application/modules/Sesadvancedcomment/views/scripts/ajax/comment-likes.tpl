@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php include APPLICATION_PATH .  '/application/modules/Sesadvancedcomment/views/scripts/_jsFiles.tpl'; ?>
 <?php if(!$this->is_ajax){ ?>
 <div class="sesadvcmt_mlist_popup sesbasic_clearfix sesbasic_bxs">
  <div class="sesadvcmt_mlist_popup_header sesbasic_clearfix">

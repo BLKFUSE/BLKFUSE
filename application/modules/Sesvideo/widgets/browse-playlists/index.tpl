@@ -133,7 +133,7 @@ for ($i=0; $i<6; $i++) { $d=rand(1,30)%2; $random .= ($d?chr(rand(65,90)):chr(ra
         <?php if($this->viewer_id): ?>
           <?php if($this->viewer_id && !empty($this->information) && engine_in_array('share', $this->information)): ?>
           	<a  class="sesbasic_icon_btn" title='<?php echo $this->translate("Share") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesvideo_playlist', 'id' => $item->playlist_id, 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" >
-          		<i class="fa fa-share"></i>
+          		<i class="fas fa-share-alt"></i>
           	</a>
         	<?php endif; ?>
         <?php endif; ?>

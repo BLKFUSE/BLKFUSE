@@ -10,12 +10,9 @@
  * @version    $Id: IndexController.php 2018-08-14 00:00:00 socialnetworking.solutions $
  * @author     socialnetworking.solutions
  */
-class Poll_IndexController extends Sesapi_Controller_Action_Standard
-{
+class Poll_IndexController extends Sesapi_Controller_Action_Standard {
 
-  public function init()
-  {
-
+  public function init() {
     // Get subject
     $poll = null;
     if (null !== ($pollIdentity = $this->_getParam('poll_id'))) {
@@ -36,9 +33,52 @@ class Poll_IndexController extends Sesapi_Controller_Action_Standard
       Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'permission_error', 'result' => array()));
     }
   }
+  
+  
+  public function rateAction() {
+  
+    $viewer = Engine_Api::_()->user()->getViewer();
+    $user_id = $viewer->getIdentity();
+    $rating = $this->_getParam('rating');
+    $resource_id = $this->_getParam('resource_id');
+    $table = Engine_Api::_()->getDbtable('ratings', 'poll');
+    $db = $table->getAdapter();
+    $db->beginTransaction();
+    try {
+    
+			Engine_Api::_()->getDbtable('ratings', 'poll')->setRating($resource_id, $user_id, $rating);
 
-  public function browseAction()
-  {
+			$poll = Engine_Api::_()->getItem('poll', $resource_id);
+			$poll->rating = Engine_Api::_()->getDbtable('ratings', 'poll')->getRating($poll->getIdentity());
+			$poll->save();
+			
+			$owner = Engine_Api::_()->getItem('user', $poll->user_id);
+			if($owner->user_id != $user_id)
+				Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($owner, $viewer, $poll, 'poll_rating');
+			
+      $db->commit();
+    } catch (Exception $e) {
+      $db->rollBack();
+      Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$e->getMessage(), 'result' => array()));
+    }
+		Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>"", 'result' => $this->view->translate("You have successfully rated poll.")));
+  }
+  
+	public function menuAction() {
+		$menus = Engine_Api::_()->getApi('menus', 'core')->getNavigation('poll_main', array());
+		$menu_counter = 0;
+		foreach ($menus as $menu) {
+			$class = end(explode(' ', $menu->class));
+			$result_menu[$menu_counter]['label'] = $this->view->translate($menu->label);
+			$result_menu[$menu_counter]['action'] = $class;
+			$result_menu[$menu_counter]['isActive'] = $menu->active;
+			$menu_counter++;
+		}
+		$result['menus'] = $result_menu;
+		Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array_merge(array('error' => '0', 'error_message' => '', 'result' => $result)));
+	}
+
+  public function browseAction() {
 
     // Prepare
     $viewer = Engine_Api::_()->user()->getViewer();
@@ -66,7 +106,7 @@ class Poll_IndexController extends Sesapi_Controller_Action_Standard
 
     // Make paginator
     $currentPageNumber = $this->_getParam('page', 1);
-    $itemCountPerPage = Engine_Api::_()->getApi('settings', 'core')->getSetting('poll.perPage', 10);
+    $itemCountPerPage = Engine_Api::_()->getApi('settings', 'core')->getSetting('poll.perpage', 10);
 
     // check to see if request is for specific user's listings
     if (($user_id = $this->_getParam('user_id'))) {
@@ -111,7 +151,7 @@ class Poll_IndexController extends Sesapi_Controller_Action_Standard
           $counter++;
         }
 
-         $menuoptions[$counter]['name'] = "close";
+				$menuoptions[$counter]['name'] = "close";
         $menuoptions[$counter]['label'] = $this->view->translate("Open Poll");
         $menuoptions[$counter]['cl'] = $value['closed'];
         if ($value['closed'] == "0") {
@@ -161,16 +201,20 @@ class Poll_IndexController extends Sesapi_Controller_Action_Standard
         $resource['content_like_count'] = (int) Engine_Api::_()->sesapi()->getContentLikeCount($item);
       }
 
-      $owner = $item->getOwner();
-      if ($owner && $owner->photo_id) {
-        $photo = $this->getBaseUrl(false, $owner->getPhotoUrl('thumb.profile'));
-        $resource['owner_photo']  = $photo;
-      } else {
-        $resource['owner_photo'] = $this->getBaseUrl(true, '/application/modules/User/externals/images/nophoto_user_thumb_profile.png');
-      }
       $resource['owner_title'] = $this->view->translate("Posted by ") . $item->getOwner()->getTitle();
-
+      
+      $resource['is_rated'] = Engine_Api::_()->getDbTable('ratings', 'poll')->checkRated($item->getIdentity(), $viewer->getIdentity());
+			$resource['enable_rating'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('poll.enable.rating', 1);
+			$resource['ratingicon'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('poll.ratingicon', 'fas fa-star');
+      
       $result['polls'][$counterLoop] = $resource;
+      
+      $images = array();
+      if (!empty($item->photo_id)) {
+        $images['main'] = $this->getBaseUrl(true, $item->getPhotoUrl());
+      } else {
+        $images['main'] = $this->getBaseUrl(true, "/application/modules/Poll/externals/images/nophoto_poll_thumb_main.png");
+      }
       $result['polls'][$counterLoop]['images'] = $images;
       $counterLoop++;
     }
@@ -217,37 +261,41 @@ class Poll_IndexController extends Sesapi_Controller_Action_Standard
     // Check if post and populate
     if ($this->_getParam('getForm')) {
       $formFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->generateFormFields($form);
-      // $formFields['maxOptions'] = $max_options;
-      $this->generateFormFields($formFields, array('resources_type' => 'poll', 'maxOptions' => $max_options));
+      $formFields[5]['name'] = "polloptions";
+      $this->generateFormFields($formFields, array('resources_type' => 'poll', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription(), 'maxOptions' => $max_options));
     }
 
     if (!$this->getRequest()->isPost()) {
       Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'post data error', 'result' => array()));
     }
-
-    if (!$form->isValid($this->getRequest()->getPost())) {
-      $validateFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->validateFormFields($form);
-      if (is_countable($validateFields) && engine_count($validateFields))
-        $this->validateFormFields($validateFields);
+    
+    
+    if( !$form->isValid($this->getRequest()->getPost()) ) {
+      $validateFields = Engine_Api::_()->getApi('FormFields','sesapi')->validateFormFields($form);
+      $formFields[6]['name'] = "file";
+      
+      if(is_countable($validateFields) && engine_count($validateFields))
+      $this->validateFormFields($validateFields);
     }
-   $itemFlood = Engine_Api::_()->getDbtable('permissions', 'authorization')->getAllowed('poll', $this->view->viewer()->level_id, 'flood');
-        if(!empty($itemFlood[0])){
-            //get last activity
-          $tableFlood = Engine_Api::_()->getDbTable("polls",'poll');
-          $select = $tableFlood->select()->where("user_id = ?",$this->view->viewer()->getIdentity())->order("creation_date DESC");
-          if($itemFlood[1] == "minute"){
-            $select->where("creation_date >= DATE_SUB(NOW(),INTERVAL 1 MINUTE)");
-          }else if($itemFlood[1] == "day"){
-            $select->where("creation_date >= DATE_SUB(NOW(),INTERVAL 1 DAY)");
-          }else{
-            $select->where("creation_date >= DATE_SUB(NOW(),INTERVAL 1 HOUR)");    
-          }
-          $floodItem = $tableFlood->fetchAll($select);
-          if(engine_count($floodItem) && $itemFlood[0] <= engine_count($floodItem)){
-            $message = Engine_Api::_()->core()->floodCheckMessage($itemFlood,$this->view);
-            Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => $message));
-            }
+
+    $itemFlood = Engine_Api::_()->getDbtable('permissions', 'authorization')->getAllowed('poll', $this->view->viewer()->level_id, 'flood');
+    if(!empty($itemFlood[0])){
+        //get last activity
+      $tableFlood = Engine_Api::_()->getDbTable("polls",'poll');
+      $select = $tableFlood->select()->where("user_id = ?",$this->view->viewer()->getIdentity())->order("creation_date DESC");
+      if($itemFlood[1] == "minute"){
+        $select->where("creation_date >= DATE_SUB(NOW(),INTERVAL 1 MINUTE)");
+      }else if($itemFlood[1] == "day"){
+        $select->where("creation_date >= DATE_SUB(NOW(),INTERVAL 1 DAY)");
+      }else{
+        $select->where("creation_date >= DATE_SUB(NOW(),INTERVAL 1 HOUR)");    
+      }
+      $floodItem = $tableFlood->fetchAll($select);
+      if(engine_count($floodItem) && $itemFlood[0] <= engine_count($floodItem)){
+        $message = Engine_Api::_()->core()->floodCheckMessage($itemFlood,$this->view);
+        Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => $message));
         }
+    }
 
 
     // Check options
@@ -273,7 +321,10 @@ class Poll_IndexController extends Sesapi_Controller_Action_Standard
     try {
       $values = $form->getValues();
       $values['user_id'] = $viewer->getIdentity();
-
+      if (isset($values['networks'])) {
+          $network_privacy = 'network_'. implode(',network_', $values['networks']);
+          $values['networks'] = implode(',', $values['networks']);
+      }
       if (empty($values['auth_view'])) {
         $values['auth_view'] = 'everyone';
       }
@@ -282,11 +333,18 @@ class Poll_IndexController extends Sesapi_Controller_Action_Standard
       }
 
       $values['view_privacy'] = $values['auth_view'];
-
+      if (is_null($values['subcat_id']))
+        $values['subcat_id'] = 0;
+      if (is_null($values['subsubcat_id']))
+        $values['subsubcat_id'] = 0;
       // Create poll
       $poll = $pollTable->createRow();
       $poll->setFromArray($values);
       $poll->save();
+      
+			if( !empty($_FILES['photo']['name']) &&  !empty($_FILES['photo']['size']) ) {
+        $poll->setPhoto($form->photo);
+      }
 
       // Create options
       $censor = new Engine_Filter_Censor();
@@ -384,6 +442,8 @@ class Poll_IndexController extends Sesapi_Controller_Action_Standard
         'parent_type' => $parent_type,
         'parent_id' => $parent_id
     ));
+    // Populate form
+    $form->populate($poll->toArray());
     $form->removeElement('title');
     $form->removeElement('description');
     $form->removeElement('options');
@@ -402,15 +462,41 @@ class Poll_IndexController extends Sesapi_Controller_Action_Standard
         $form->auth_comment->setValue($role);
       }
     }
-
-    if ($this->_getParam('getForm')) {
-      $formFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->generateFormFields($form);
-      $this->generateFormFields($formFields, array('resources_type' => 'poll'));
+    
+    if($this->_getParam('getForm')) {
+      $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
+      //set subcategory and 3rd category populated work
+      $newFormFieldsArray = array();
+      if(is_countable($formFields) && engine_count($formFields) &&  $poll->category_id){
+        foreach($formFields as $fields){
+          foreach($fields as $field){
+            $subcat = array();
+            if($fields['name'] == "subcat_id"){ 
+              $subcat = Engine_Api::_()->getItemTable('poll_category')->getSubcategory(array('category_id'=>$poll->category_id,'column_name'=>'*'));
+            }else if($fields['name'] == "subsubcat_id"){
+              if($poll->subcat_id)
+              $subcat = Engine_Api::_()->getItemTable('poll_category')->getSubSubcategory(array('category_id'=>$poll->subcat_id,'column_name'=>'*'));
+            }
+            if(is_countable($subcat) && engine_count($subcat)){
+              $arrayCat = array();
+              foreach($subcat as $cat){
+                $arrayCat[$cat->getIdentity()] = $cat->getTitle(); 
+              }
+              $fields["multiOptions"] = $arrayCat;  
+            }
+          }
+          $newFormFieldsArray[] = $fields;
+        }
+        if(!engine_count($newFormFieldsArray))
+          $newFormFieldsArray = $formFields;
+        $formFields[4]['name'] = "file";
+				$this->generateFormFields($newFormFieldsArray,array('resources_type'=>'poll', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
+      }
     }
 
-    if (!$form->isValid($this->getRequest()->getPost())) {
-      $validateFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->validateFormFields($form);
-      if (is_countable($validateFields) && engine_count($validateFields))
+    if( !$form->isValid($this->getRequest()->getPost()) ) {
+      $validateFields = Engine_Api::_()->getApi('FormFields','sesapi')->validateFormFields($form);
+      if(engine_count($validateFields))
         $this->validateFormFields($validateFields);
     }
 
@@ -429,7 +515,10 @@ class Poll_IndexController extends Sesapi_Controller_Action_Standard
       if (empty($values['auth_comment'])) {
         $values['auth_comment'] = 'everyone';
       }
-
+      if (isset($values['networks'])) {
+        $network_privacy = 'network_'. implode(',network_', $values['networks']);
+        $values['networks'] = implode(',', $values['networks']);
+      }
       $viewMax = array_search($values['auth_view'], $roles);
       $commentMax = array_search($values['auth_comment'], $roles);
 
@@ -437,11 +526,17 @@ class Poll_IndexController extends Sesapi_Controller_Action_Standard
         $auth->setAllowed($poll, $role, 'view', ($i <= $viewMax));
         $auth->setAllowed($poll, $role, 'comment', ($i <= $commentMax));
       }
-
-      $poll->search = (bool) $values['search'];
-      $poll->view_privacy = $values['auth_view'];
+			
+			$poll->setFromArray($values);
+      //$poll->search = (bool) $values['search'];
+      //$poll->view_privacy = $values['auth_view'];
       $poll->save();
-
+      
+      // Add photo
+			if( !empty($_FILES['photo']['name']) &&  !empty($_FILES['photo']['size']) ) {
+        $poll->setPhoto($form->photo);
+      }
+      
       $db->commit();
     } catch (Exception $e) {
       $db->rollBack();
@@ -558,6 +653,11 @@ class Poll_IndexController extends Sesapi_Controller_Action_Standard
       Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('permission_error'), 'result' => array()));
     }
 
+    // Network check
+		$networkPrivacy = Engine_Api::_()->network()->getViewerNetworkPrivacy($poll, 'user_id');
+		if(empty($networkPrivacy))
+			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'permission_error', 'result' => array()));
+			
     $result = array();
     $owner = $poll->getOwner();
     $keyPoll = 'poll';
@@ -582,10 +682,29 @@ class Poll_IndexController extends Sesapi_Controller_Action_Standard
     $data['can_delete'] = Engine_Api::_()->authorization()->isAllowed(null, null, 'delete') ? 'true' : 'false';
     $data['can_edit'] = Engine_Api::_()->authorization()->isAllowed(null, null, 'edit') ? 'true' : 'false';
     $data['can_change_votes'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('poll.canchangevote', false) ? 'true' : 'false';
+    
+    $data['is_rated'] = Engine_Api::_()->getDbTable('ratings', 'poll')->checkRated($poll->getIdentity(), $viewer->getIdentity());
+    $data['enable_rating'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('poll.enable.rating', 1);
+		$data['ratingicon'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('poll.ratingicon', 'fas fa-star');
+		
     // $data["vote_count"] = $this->view->translate(array('%s vote', '%s votes', $poll->vote_count), $this->view->locale()->toNumber($poll->vote_count));
     $data["vote_count"] = $poll->vote_count;
     // $data["view_count"]  =   $this->view->translate(array('%s view', '%s views', $poll->view_count), $this->view->locale()->toNumber($poll->view_count));
     $data["view_count"]  = $poll->view_count;
+    
+    if( !empty($poll->category_id) ) {
+      $category = Engine_Api::_()->getItem('poll_category', $poll->category_id);
+      $data['category_title'] = $category->category_name;
+			if( !empty($poll->subcat_id) ) {
+				$category = Engine_Api::_()->getItem('poll_category', $poll->subcat_id);
+				$data['subcategory_title'] = $category->category_name;
+			}
+			if( !empty($poll->subsubcat_id) ) {
+				$category = Engine_Api::_()->getItem('poll_category', $poll->subsubcat_id);
+				$data['subsubcategory_title'] = $category->category_name;
+			}
+    }
+
     $data['options'] = $pollOptions->toArray();
     foreach ($pollOptions as $key => $option) {
       $pct = $poll->vote_count
@@ -594,6 +713,12 @@ class Poll_IndexController extends Sesapi_Controller_Action_Standard
       if (!$pct)
         $pct = 1;
       $data['options'][$key]['vote_percent'] = $this->view->translate(array('%1$s vote', '%1$s votes', $option->votes), $this->view->locale()->toNumber($option->votes)) . '(' . $this->view->translate('%1$s%%', $this->view->locale()->toNumber($option->votes ? $pct : 0)) . ')';
+      
+      if( $poll->viewerVoted() == $option->poll_option_id ) {
+				$data['options'][$key]['voted_user'] = true;
+      } else {
+				$data['options'][$key]['voted_user'] = false;
+      }
     }
     $data["share"]["imageUrl"] = $data['owner_photo'];
     $data["share"]["url"] = $this->getBaseUrl(false, $poll->getHref());
@@ -630,6 +755,14 @@ class Poll_IndexController extends Sesapi_Controller_Action_Standard
       $poll->view_count++;
       $poll->save();
     }
+    
+    $images = Engine_Api::_()->sesapi()->getPhotoUrls($poll,'',"");
+    if(!engine_count($images))
+      $images['main'] = $this->getBaseUrl(true, $poll->getPhotoUrl());
+
+    $result['poll_images'] = $images;
+
+    $result['user_images'] = $this->userImage($poll->user_id,"thumb.profile");
     Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array_merge(array('error' => '', 'error_message' => '', 'result' => $result)));
   }
 
@@ -644,8 +777,8 @@ class Poll_IndexController extends Sesapi_Controller_Action_Standard
     }
     // Process form
     if ($this->_getParam('getForm')) {
-      $formFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->generateFormFields($form);
-      $this->generateFormFields($formFields, array('resources_type' => 'poll'));
+      $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
+			$this->generateFormFields($formFields,array('resources_type'=>'poll'));
     } else {
       Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('parameter_missing'), 'result' => array()));
     }

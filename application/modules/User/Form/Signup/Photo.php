@@ -44,7 +44,7 @@ class User_Form_Signup_Photo extends Engine_Form
       'multiFile' => 1,
       'validators' => array(
         array('Count', false, 1),
-        array('Extension', false, 'jpg,png,gif,jpeg'),
+        array('Extension', false, 'jpg,png,gif,jpeg,webp'),
       ),
       'data-function' => 'uploadSignupPhoto',
     ));

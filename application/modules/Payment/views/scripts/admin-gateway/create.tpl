@@ -10,7 +10,6 @@
  * @author     John Boehr <j@webligo.com>
  */
 ?>
-
 <div class="settings">
   <?php echo $this->form->render($this) ?>
 </div>

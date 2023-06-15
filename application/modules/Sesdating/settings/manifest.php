@@ -16,7 +16,7 @@ return array(
         'type' => 'module',
         'name' => 'sesdating',
         //'sku' => 'sesdating',
-        'version' => '6.2.0p1',
+        'version' => '6.4.0',
         'dependencies' => array(
             array(
                 'type' => 'module',

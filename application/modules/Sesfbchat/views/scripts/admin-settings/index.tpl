@@ -89,4 +89,23 @@ scriptJquery(document).on('change','input[type=radio][name=sesfbchat_enable_mess
   scriptJquery(document).ready(function(e){
     scriptJquery('input[type=radio][name=sesfbchat_enable_timing]:checked').trigger('change');    
   });
+
+  scriptJquery(``).insertBefore(scriptJquery('#sesfbchat_starttime-date').attr("type","text").attr("autocomplete","off").attr("placeholder","Select a Date").datepicker({
+    dateFormat: "dd/mm/yy",
+    timepicker: true,
+   })
+  );
+  
+  scriptJquery(``).insertBefore(scriptJquery('#sesfbchat_endtime-date').attr("type","text").attr("autocomplete","off").attr("placeholder","Select a Date").datepicker({
+      dateFormat: "dd/mm/yy",
+      timepicker: true,
+    })
+  );
+
+  scriptJquery('#sesfbchat_starttime-hour').hide();
+  scriptJquery('#sesfbchat_starttime-minute').hide();
+  scriptJquery('#sesfbchat_starttime-ampm').hide();
+  scriptJquery('#sesfbchat_endtime-hour').hide();
+  scriptJquery('#sesfbchat_endtime-minute').hide();
+  scriptJquery('#sesfbchat_endtime-ampm').hide();
 </script>

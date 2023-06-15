@@ -39,27 +39,3 @@
     </li>
   <?php endforeach; ?>
 </ul>
-<script type="text/javascript">
-  scriptJquery(document).ready(function(){
-    var menuElement = scriptJquery('.menu_core_admin_main').parent();
-    menuElement.addClass('menu_link');
-    var submenu = scriptJquery('.main_menu_submenu > li > .active');
-    submenu.closest('.menu_link').addClass('active');
-    submenu.closest('.menu_link').children().eq(0).addClass('active');
-    menuElement.find('ul').hide();
-    if(menuElement.find('ul').length)
-      menuElement.find('a').addClass('toggled_menu');
-    scriptJquery('.navigation').children().eq(0).find ('a').removeClass('toggled_menu')
-    scriptJquery('.menu_link.active').find('ul').show();
-  });
-  scriptJquery(document).on('click', '.toggled_menu', function () {
-    if(scriptJquery(this).hasClass('active')){
-      scriptJquery(this).removeClass('active')
-      scriptJquery(this).parent().find('ul').slideUp()
-    }
-    else{
-      scriptJquery(this).addClass('active')
-      scriptJquery(this).parent().find('ul').slideToggle()
-    }
-  });
-</script>

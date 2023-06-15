@@ -16,9 +16,14 @@
  * @copyright  Copyright 2006-2020 Webligo Developments
  * @license    http://www.socialengine.com/license/
  */
-class Core_AdminIndexController extends Core_Controller_Action_Admin
-{
-    public function indexAction(){}
+class Core_AdminIndexController extends Core_Controller_Action_Admin {
+
+    public function indexAction() {
+			if( !Engine_Api::_()->getApi('settings', 'core')->getSetting('core.general.site.url')) {
+				Engine_Api::_()->getApi('settings', 'core')->setSetting('core.general.site.url', _ENGINE_SITE_URL);
+			}
+    }
+    
     public function changeEnvironmentModeAction()
     {
         if ($this->getRequest()->isPost() && $this->_getParam('environment_mode', false)) {

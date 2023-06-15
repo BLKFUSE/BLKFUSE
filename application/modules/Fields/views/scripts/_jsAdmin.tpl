@@ -117,7 +117,8 @@
         helper: "clone",
         handle : '.item_handle',
         stop: function( event, ui ) {
-          showSaveOrderButton(event, ui )
+					saveOrder();
+          //showSaveOrderButton(event, ui )
         }
       });
     }

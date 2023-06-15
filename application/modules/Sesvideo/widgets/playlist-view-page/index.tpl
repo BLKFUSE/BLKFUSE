@@ -91,7 +91,7 @@ if(isset($this->docActive)){
                 	<?php if($this->viewer_id): ?>
                     <?php if(!empty($this->informationPlaylist) && engine_in_array('sharePlaylist', $this->informationPlaylist)): ?>
                       <a href="<?php echo $this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesvideo_playlist', 'id' => $this->playlist->getIdentity(), 'format' => 'smoothbox'),'default',true) ?>" class="smoothbox sesbasic_icon_btn" title="<?php echo $this->translate("Share") ?>">
-                      <i class="fa fa-share"></i>
+                      <i class="fas fa-share-alt"></i>
                       </a>
                     <?php endif; ?>
                     

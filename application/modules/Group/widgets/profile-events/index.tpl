@@ -70,12 +70,12 @@
 </div>
 <?php if( $this->paginator->getTotalItemCount() > 0 ): ?>
 <div class="container no-padding">
-  <div class='row events_browse <?php echo $tabClass ?>'>
+  <div class='row events_browse'>
     <?php foreach( $this->paginator as $event ): ?>
     <div class="col-lg-4 col-md-6 event_grid_outer">
       <div class="events_browse_inner grid_wrapper">
         <div class='events_photo'>
-          <?php echo $this->htmlLink($event->getHref(), $this->itemBackgroundPhoto($event, 'thumb.profile'), $imgTitle) ?>
+          <?php echo $this->htmlLink($event->getHref(), $this->itemBackgroundPhoto($event, 'thumb.profile')) ?>
           <div class="events_held_info">
             <i class="fa fa-calendar">
             </i>

@@ -3,7 +3,7 @@ return array(
   'package' => array(
     'type' => 'external',
     'name' => 'simplelightbox',
-    'version' => '6.2.0',
+    'version' => '6.4.0',
     'revision' => '$Revision: 9747 $',
     'path' => 'externals/simplelightbox',
     'repository' => 'socialengine.com',

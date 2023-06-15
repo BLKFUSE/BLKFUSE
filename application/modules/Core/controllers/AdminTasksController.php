@@ -446,6 +446,13 @@ class Core_AdminTasksController extends Core_Controller_Action_Admin
     }
   }
   
+  public function cancelAction() {
+		$pid = $this->_getParam('pid');
+		$db = Engine_Db_Table::getDefaultAdapter();
+		$db->query('DELETE FROM engine4_core_processes WHERE `engine4_core_processes`.`pid` = "'.$pid.'";');
+		return $this->_helper->redirector->gotoRoute(array('controller' => 'tasks'), 'admin_default', true);
+  }
+  
   public function getNavigation()
   {
     return new Zend_Navigation(array(

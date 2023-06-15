@@ -492,7 +492,7 @@ class Zend_Session extends Zend_Session_Abstract
                 session_write_close();
                 if (self::$_throwStartupExceptions) {
                     restore_error_handler();
-                    throw new Zend_Session_Exception(__CLASS__ . '::' . __FUNCTION__ . '() - ' . Zend_Session_Exception::$sessionStartError);
+                    //throw new Zend_Session_Exception(__CLASS__ . '::' . __FUNCTION__ . '() - ' . Zend_Session_Exception::$sessionStartError);
                 }
             }
         }
@@ -788,7 +788,7 @@ class Zend_Session extends Zend_Session_Abstract
                 session_name(),
                 false,
                 315554400, // strtotime('1980-01-01'),
-                $cookie_params['path'],
+                str_replace(";SameSite=Lax", "", $cookie_params['path']),
                 $cookie_params['domain'],
                 $cookie_params['secure']
                 );

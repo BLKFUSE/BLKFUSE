@@ -606,7 +606,7 @@ class Sesforum_IndexController extends Sesapi_Controller_Action_Standard {
 
       
       $post_content['owner_title'] = Engine_Api::_()->getItem('user',$post->user_id)->getTitle();
-      $post_content['description'] = $description;
+      //$post_content['description'] = $description;
       $post_content['owner_images'] = $this->userImage($post->user_id,"thumb.icon");
       $post_content['resource_type'] = $post->getType();
       if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesforum.thanks', 1)) {
@@ -650,7 +650,7 @@ class Sesforum_IndexController extends Sesapi_Controller_Action_Standard {
       $post_content["share"]["url"] = $this->getBaseUrl(false,$post->getHref());
       $post_content["share"]["title"] = $post->getTitle();
       $post_content["share"]["description"] = strip_tags($post->getDescription());
-      $post_content["share"]["setting"] = $shareType;
+      $post_content["share"]["setting"] = true;
       $post_content["share"]['urlParams'] = array(
         "type" => $post->getType(),
         "id" => $post->getIdentity()

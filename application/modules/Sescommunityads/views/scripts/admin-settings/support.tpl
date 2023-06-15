@@ -19,7 +19,7 @@
     <h4>FAQs</h4>
     <p>Get answers to all your random queries about this plugin from our Help Center. Click to read the tutorials and FAQs.</p>
   </a>
-  <a href="https://www.socialenginesolutions.com/support/" target="_blank">
+  <a href="https://socialnetworking.solutions/support/" target="_blank">
     <img src="application/modules/Sesbasic/externals/images/support/support.png" />
     <h4>Support</h4>
     <p>If you face any issues with the plugin or you do not find answer to your query in our Help Center, then file a support ticket from here.</p>
@@ -39,7 +39,7 @@
     <h4>Blog Updates</h4>
     <p>We regularly post blogs about new releases & announcements. To read the new updates, check out our Blog Posts.</p>
   </a>
-  <a href="https://www.socialenginesolutions.com/social-engine/community-advertisements-plugin/#tab-reviews">
+  <a href="https://socialnetworking.solutions/social-engine/community-advertisements-plugin/#tab-reviews">
     <img src="application/modules/Sesbasic/externals/images/support/review.png" style="filter:invert(0);" />
     <h4>Write a Review</h4>
     <p>Do you like this theme and wish to leave your feedback or review? You just have to "Write a Review" for it.</p>

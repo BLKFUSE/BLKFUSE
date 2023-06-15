@@ -59,7 +59,7 @@ class Sesmusic_Form_Append extends Engine_Form {
       $this->addElement('File', 'mainphoto', array(
           'label' => 'Playlist Photo',
       ));
-      $this->mainphoto->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+      $this->mainphoto->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
       //Element: execute
     $this->addElement('Button', 'execute', array(
         'label' => 'Add Song',

@@ -126,7 +126,12 @@ class Sesbasic_Form_Custom_Fields extends Engine_Form {
     }
     foreach ($struct as $fskey => $map) {
       $field = $map->getChild();
-
+      
+      // Ignore fields not searchable (even though getFieldsStructureSearch should have skipped it already)
+      if( !$this->_item && !$field->search ) {
+        continue;
+      }
+      
       // Skip fields hidden on signup
       if (isset($field->show) && !$field->show && $this->_isCreation) {
         continue;

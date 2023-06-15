@@ -652,14 +652,14 @@ class Sesmember_Form_Filter_Browse extends Fields_Form_Search {
         'parent_' . 0 . ' ' .
         'option_' . 0 . ' ' .
         'field_' . $profileTypeField->field_id . ' ' . $classForHide . ' ',
-        'onchange' => 'changeFields($(this));',
+        'onchange' => 'changeFields(scriptJquery(this));',
         'decorators' => array(
             'ViewHelper',
             array('Label', array('tag' => 'span')),
             array('HtmlTag', array('tag' => 'li'))
         ),
         'multiOptions' => $multiOptions,
-       // 'value' => ($this->getMemberType() == 'hide') ? 0 : $defaultProfiletypes,
+				'value' => ($this->getMemberType() == 'hide') ? 0 : $defaultProfiletypes,
     ));
     return $this->profile_type;
   }

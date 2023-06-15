@@ -74,7 +74,6 @@ class Core_Form_Admin_Settings_General extends Engine_Form
     ));
     $this->site_title->getDecorator('Description')->setOption('placement', 'append');
 
-
     // init site description
     $this->addElement('Textarea', 'site_description', array(
       'label' => 'Site Description',
@@ -151,7 +150,7 @@ class Core_Form_Admin_Settings_General extends Engine_Form
 
     // Get available files
     $banner_options = array('' => '');
-    $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png')));
+    $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png', 'webp')));
     foreach( $files as $file ) {
       $banner_options[$file->storage_path] = $file->name;
     }
@@ -161,6 +160,22 @@ class Core_Form_Admin_Settings_General extends Engine_Form
       'description' => 'Choose from below the image that you want to show with the login form on your website.',
       'multiOptions' => $banner_options,
     ));
+
+    $this->addElement('Radio', 'enableloginlogs', array(
+      'label' => 'Enable Login Logs',
+      'description' => "Do you want to enable login logs when members log in to your website? If you choose yes then the login entry will save in the database.",
+      'multiOptions' => array(
+        1 => 'Yes',
+        0 => 'No',
+      ),
+      'onchange' => "loginLogs(this.value);",
+    ));
+    
+		$this->addElement('Text', 'logincrondays', array(
+			'label' => 'Cron Job Schedule to Clear Login Logs',
+			'description' => 'Enter the number of days login logs will be stored before clearing.',
+			'required' => true,
+		));
 
     $this->addElement('Select', 'notificationupdate', array(
       'label' => 'Notification Update Frequency',
@@ -192,10 +207,10 @@ class Core_Form_Admin_Settings_General extends Engine_Form
         ->setOption('escape', false)
         ->setOptSuffix(sprintf(
         '<a class="admin help" href="%1$s" target="_blank"> </a>',
-        'https://socialengine.atlassian.net/wiki/spaces/SU/pages/5243168/SE+PHP+-+How+to+use+the+Cloud+Storage+Feature'));
+        'https://community.socialengine.com/blogs/597/123/how-to-use-the-cloud-storage-feature'));
 
     $this->addElement('Text', 'analytics', array(
-      'label' => 'Google Analytics ID',
+      'label' => 'Measurement ID',
       'description' => 'Enter the Website Profile ID to use Google Analytics.',
       'filters' => array(
         'StringTrim',
@@ -208,7 +223,7 @@ class Core_Form_Admin_Settings_General extends Engine_Form
         ->setOption('escape', false)
         ->setOptSuffix(sprintf(
         '<a class="admin help" href="%1$s" target="_blank"> </a>',
-        'https://socialengine.atlassian.net/wiki/spaces/SU/pages/5308698/SE+PHP+-+How+to+install+Google+Analytics'));
+        'https://support.google.com/analytics/answer/9306384?hl=en'));
 
     // scripts/styles
     $this->addElement('Textarea', 'includes', array(

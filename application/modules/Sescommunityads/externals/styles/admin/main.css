@@ -93,11 +93,17 @@
 	background: #efeef1;
 	color: #000;
 }
-#global_page_sescommunityads-admin-targeting-index div[id^=profilefield] .form-label {
-  display:none;
+.settings.sescommunityads_taggeting_form div[id^=profile_field_],
+.settings.sescommunityads_taggeting_form div#netowrk-wrapper{
+	padding-bottom: 0;
+	margin:0;
 }
-#global_page_sescommunityads-admin-targeting-index .settings .form-label {
-  width: 200px;
+.settings.sescommunityads_taggeting_form .form-label{
+	display:none;
+}
+.settings.sescommunityads_taggeting_form div[id^=profile_field_] .form-label,
+.settings.sescommunityads_taggeting_form div#netowrk-wrapper .form-label{
+	display:block;
 }
 td.text-center {
   text-align:center;

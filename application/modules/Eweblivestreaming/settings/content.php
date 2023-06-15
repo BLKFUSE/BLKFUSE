@@ -12,7 +12,14 @@
  */
 
 return array(
-
+  array(
+    'title' => 'SNS - Live Streaming in Website - User Go Live Widget',
+    'description' => 'Placed this widget on anywhere on your website',
+    'category' => 'SNS - Live Streaming in Website',
+    'type' => 'widget',
+    'name' => 'eweblivestreaming.create-live-streaming',
+    'autoEdit' => false
+  ),
   array(
     'title' => 'SNS - Live Streaming in Website - Live Members',
     'description' => 'Displays a search form in the blog gutter.',
@@ -49,5 +56,4 @@ return array(
       ),
     ),
 ),
-
 );

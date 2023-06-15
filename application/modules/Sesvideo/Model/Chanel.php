@@ -51,7 +51,7 @@ class Sesvideo_Model_Chanel extends Core_Model_Item_Abstract {
                     ->query()
                     ->fetchColumn();
   }
-  public function engine_count() {
+  public function count() {
     $photoTable = Engine_Api::_()->getItemTable('chanelphoto');
     return $photoTable->select()
                     ->from($photoTable, new Zend_Db_Expr('COUNT(chanelphoto_id)'))

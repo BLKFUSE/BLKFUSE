@@ -630,7 +630,7 @@ class Activity_PostController extends Sesapi_Controller_Action_Standard {
             }
             //Tagging People by status box
         }
-          $reactionId = $this->_getParam('reaction_id', $_POST['reaction_id']); /* write this line because some time reaction_id has not come with $_POST keyword */
+          $reactionId = $this->_getParam('reaction_id', @$_POST['reaction_id']); /* write this line because some time reaction_id has not come with $_POST keyword */
           //insert reaction
           if(!empty($reactionId) && $this->activityType()){
              $detail_id = Engine_Api::_()->getDbTable('details', 'sesadvancedactivity')->isRowExists($action->getIdentity());
@@ -676,7 +676,7 @@ class Activity_PostController extends Sesapi_Controller_Action_Standard {
           }
           
           //Feed Background Image Work
-          if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesfeedbg') && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesfeedbg.enablefeedbg', 1) && $_POST['feedbg_id']) {
+          if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesfeedbg') && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesfeedbg.enablefeedbg', 1) && @$_POST['feedbg_id']) {
             $detail_id = Engine_Api::_()->getDbTable('details', 'sesadvancedactivity')->isRowExists($action->getIdentity());
             if($detail_id) {
               $detailAction = Engine_Api::_()->getItem('sesadvancedactivity_detail',$detail_id);

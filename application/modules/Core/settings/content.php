@@ -19,7 +19,7 @@ foreach( $banners as $banner ) {
 
 //New File System Code
 $fileOptions = array('' => '');
-$files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png')));
+$files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png', 'webp')));
 foreach( $files as $file ) {
   $fileOptions[$file->storage_path] = $file->name;
 }

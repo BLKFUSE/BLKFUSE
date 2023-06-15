@@ -955,7 +955,7 @@ $db->query("UPDATE `engine4_sesadvancedactivity_filterlists` SET `icon`= 'fas fa
 $db->query("UPDATE `engine4_sesadvancedactivity_filterlists` SET `icon`= 'fas fa-save' WHERE `filtertype` = 'saved_feeds';");
 $db->query("UPDATE `engine4_sesadvancedactivity_filterlists` SET `icon`= 'fas fa-shopping-cart' WHERE `filtertype` = 'post_self_buysell';");
 $db->query("UPDATE `engine4_sesadvancedactivity_filterlists` SET `icon`= 'fas fa-clock' WHERE `filtertype` = 'scheduled_post';");
-$db->query("UPDATE `engine4_sesadvancedactivity_filterlists` SET `icon`= 'fas fa-share' WHERE `filtertype` = 'share';");
+$db->query("UPDATE `engine4_sesadvancedactivity_filterlists` SET `icon`= 'fas fa-share-alt' WHERE `filtertype` = 'share';");
 $db->query("UPDATE `engine4_sesadvancedactivity_filterlists` SET `icon`= 'fa fa-image' WHERE `filtertype` = 'sesalbum' OR `filtertype` = 'album';");
 $db->query("UPDATE `engine4_sesadvancedactivity_filterlists` SET `icon`= 'fa fa-video' WHERE `filtertype` = 'sesvideo' OR `filtertype` = 'video';");
 $db->query("UPDATE `engine4_sesadvancedactivity_filterlists` SET `icon`= 'fa fa-music' WHERE `filtertype` = 'sesmusic' OR `filtertype` = 'music';");

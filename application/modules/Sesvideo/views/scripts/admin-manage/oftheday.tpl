@@ -17,12 +17,12 @@
 </div>
 <script type="text/javascript">
   scriptJquery(``).insertBefore(scriptJquery('#starttime-date').attr("type","text").attr("autocomplete","off").attr("placeholder","Select a Date").datepicker({
-    timepicker: true,
+    timepicker: false,
    })
   );
   
   scriptJquery(``).insertBefore(scriptJquery('#endtime-date').attr("type","text").attr("autocomplete","off").attr("placeholder","Select a Date").datepicker({
-      timepicker: true,
+      timepicker: false,
     })
   );
 

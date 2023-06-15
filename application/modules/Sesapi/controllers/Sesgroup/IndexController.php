@@ -192,7 +192,7 @@ class Sesgroup_IndexController extends Sesapi_Controller_Action_Standard
 
                 $statsCounter = 0;
                 $image = Engine_Api::_()->sesapi()->getPhotoUrls($groups, '', "");
-                if (image) {
+                if ($image) {
                     $result[$groupCounter]['images'] = $image;
                 } else {
                     $result[$groupCounter]['images'] = $image;
@@ -459,6 +459,7 @@ class Sesgroup_IndexController extends Sesapi_Controller_Action_Standard
             $result[$counter]['enable_add_shortcut'] = $sesshortcut;
             if($sesshortcut){
                 $isShortcut = Engine_Api::_()->getDbTable('shortcuts', 'sesshortcut')->isShortcut(array('resource_type' => $groups->getType(), 'resource_id' => $groups->getIdentity()));
+                $shortMessage = array();
                 if (empty($isShortcut)) {
                     $shortMessage['title'] = $this->view->translate('Add to Shortcuts');
                     $shortMessage['resource_type'] = $groups->getType();
@@ -485,7 +486,7 @@ class Sesgroup_IndexController extends Sesapi_Controller_Action_Standard
                         if($cnt > 4){
                             break;
                         }
-                        $usersFriends[$cnt]['name'] = $friend->displayname;
+                        $usersFriends[$cnt]['name'] = $friend->getTitle();
                         $usersFriends[$cnt]['user_id'] = $friend->user_id;
                         $usersFriends[$cnt]['image'] = Engine_Api::_()->sesapi()->getPhotoUrls($friend->photo_id, '', "");
                         $cnt++;
@@ -1348,7 +1349,22 @@ class Sesgroup_IndexController extends Sesapi_Controller_Action_Standard
             Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => $temp));
         }
     }
-
+    function deletePhotoAction(){
+        $photo = Engine_Api::_()->getItem('sesgroup_photo',$this->_getParam('photo_id',''));
+        $photo_id = $photo->getIdentity();
+        $viewer = Engine_Api::_()->user()->getViewer();
+       
+        $db = $photo->getTable()->getAdapter();
+        $db->beginTransaction();
+        try {
+          $photo->delete();
+          $db->commit();
+        } catch (Exception $e) {
+          $db->rollBack();
+          Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$e->getMessage(), 'result' => array()));
+        }
+        Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'', 'result' => $this->view->translate('Photo Deleted Successfully.')));
+      }
     public function favouriteAction()
     {
         $viewer = Engine_Api::_()->user()->getViewer();
@@ -1464,7 +1480,7 @@ class Sesgroup_IndexController extends Sesapi_Controller_Action_Standard
 		 $viewer = ( $viewer && $viewer->getIdentity() ? $viewer : null );
 	if (!$this->_helper->requireAuth()->setAuthParams($group, $viewer, 'view')->isValid())
             Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'permission_error', 'result' => array()));
-        $sesprofilelock_enable_module = unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}'));
+        $sesprofilelock_enable_module = is_string(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}')) ? unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}')) : Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}');
         if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesprofilelock')) && engine_in_array('sesgroup', $sesprofilelock_enable_module) && $viewerId != $group->owner_id) {
             $cookieData = '';
             if ($group->enable_lock && !engine_in_array($group->group_id, explode(',', $cookieData))) {
@@ -2600,7 +2616,7 @@ function getNavigation($group,$viewer){
         $hideIdentity = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesgroup_show_userdetail', 0);
         if(!$hideIdentity){
           $result['basicInformation'][$basicInformationCounter]['name'] = 'createdby';
-          $result['basicInformation'][$basicInformationCounter]['value'] = $owner->displayname;
+          $result['basicInformation'][$basicInformationCounter]['value'] = $owner->getTitle();
           $result['basicInformation'][$basicInformationCounter]['label'] = 'Created By';
           $basicInformationCounter++;
         }
@@ -3153,24 +3169,31 @@ function getNavigation($group,$viewer){
 			$orderval = 'album_id';
 		
         $paginator = Engine_Api::_()->getDbTable('albums', 'sesgroup')->getAlbumSelect(array('group_id' => $group->group_id, 'order' => $orderval,'search'=>$search));
-		$albumCount = Engine_Api::_()->getDbTable('albums', 'sesgroup')->getUserGroupAlbumCount(array('group_id' => $group->group_id, 'user_id' => $viewer->getIdentity()));
+				$albumCount = Engine_Api::_()->getDbTable('albums', 'sesgroup')->getUserGroupAlbumCount(array('group_id' => $group->group_id, 'user_id' => $viewer->getIdentity()));
         $paginator->setItemCountPerPage(5);
         $paginator->setCurrentPageNumber($this->_getParam('page', 1));
-        $getGroupRolePermission = Engine_Api::_()->sesgroup()->getGroupRolePermission($group->getIdentity(), 'post_content', 'album', false);
-        $canUpload = $getGroupRolePermission ? $getGroupRolePermission : $this->_helper->requireAuth()->setAuthParams('sesgroup_group', null, 'album')->isValid();
+        
         $optioncounter = 0;
-		$quota = Engine_Api::_()->authorization()->getPermission($levelId, 'sesgroup_group', 'gp_album_count');
-		if($albumCount >= $quota && $quota != 0){
-			$allowMore = false;
-		}else{
-			$allowMore = true;
-		}
+				$quota = Engine_Api::_()->authorization()->getPermission($levelId, 'sesgroup_group', 'gp_album_count');
+				if($albumCount >= $quota && $quota != 0){
+					$allowMore = false;
+				}else{
+					$allowMore = true;
+				}
 		
-        if ($canUpload && $allowMore) {
-            $result['can_create'] = true;
+				
+				$levelId = $viewer->getIdentity() ? $viewer->level_id : Engine_Api::_()->getDbTable('levels', 'authorization')->getPublicLevel()->level_id;
+				$toCheckUserRole  = Engine_Api::_()->getDbTable('grouproles', 'sesgroup')->toCheckUserGroupRole($viewer->getIdentity(), $group->getIdentity(), 'manage_dashboard', 'edit');
+				$allowAlbum = $toCheckUserRole ? $toCheckUserRole : $group->authorization()->isAllowed($viewer, 'album');
+				$canUpload = Engine_Api::_()->authorization()->getPermission($levelId, 'sesgroup_group', 'album');
+				$group_album_count = Engine_Api::_()->authorization()->getPermission($levelId, 'sesgroup_group', 'group_album_count');
+				
+				if($allowAlbum && $canUpload && ($paginator->count() > 1 || $canUpload )  && (!$group_album_count || $paginator->getTotalItemCount() <= $group_album_count)) {
+					$result['can_create'] = true;
         } else {
-            $result['can_create'] = false;
+					$result['can_create'] = false;
         }
+        
         $result['menus'][$optioncounter]['name'] = 'creation_date';
         $result['menus'][$optioncounter]['label'] = $this->view->translate('Recently Created');
         $optioncounter++;
@@ -3187,7 +3210,7 @@ function getNavigation($group,$viewer){
         $albumCounter = 0;
         foreach ($paginator as $item) {
             $owner = $item->getOwner();
-            $ownertitle = $owner->displayname;
+            $ownertitle = $owner->getTitle();
             $result['albums'][$albumCounter] = $item->toArray();
             $photo = Engine_Api::_()->getItem('sesgroup_photo',$item->photo_id);
             if($photo)
@@ -4663,27 +4686,22 @@ protected function setPhoto($photo, $id) {
 		$form->removeElement('map-canvas');
 		$form->removeElement('ses_location');
 		$form->removeElement('lng');
-        if($form->removeElement('is_locked'))
-            $form->removeElement('password');
-        if($form->removeElement('password'))
-            $form->removeElement('password');
+		if($form->removeElement('is_locked'))
+				$form->removeElement('password');
+		if($form->removeElement('password'))
+				$form->removeElement('password');
   
-	 if ($this->_getParam('getForm')) {
-            $formFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->generateFormFields($form);
-            $this->generateFormFields($formFields);
-        }
-        if (!$form->isValid($_POST)) {
-            $validateFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->validateFormFields($form);
-            if (is_countable($validateFields) && engine_count($validateFields))
-                $this->validateFormFields($validateFields);
-        }
-    if (!$this->getRequest()->isPost()) {
-      Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('invalid_request'), 'result' => array()));
-    }
-    if (!$form->isValid($this->getRequest()->getPost())) {
-      $values = $form->getValues('url');
-       Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('validation_error'), 'result' => array()));
-    }
+		if ($this->_getParam('getForm')) {
+			$formFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->generateFormFields($form);
+			$this->generateFormFields($formFields);
+		}
+
+		// Check if valid
+		if( !$form->isValid($this->getRequest()->getPost()) ) {
+			$validateFields = Engine_Api::_()->getApi('FormFields','sesapi')->validateFormFields($form);
+			if(is_countable($validateFields) && engine_count($validateFields))
+				$this->validateFormFields($validateFields);
+		}
 	
     // Process
     $values = $form->getValues();
@@ -4724,7 +4742,9 @@ protected function setPhoto($photo, $id) {
 			$video = $table->createRow();
 		}
 	  else if ($values['type'] == 3) {
-		$video = Engine_Api::_()->getItem('groupvideo', $this->_getParam('id'));
+			$values['owner_id'] = $viewer->getIdentity();
+			$params = array('owner_type' => 'user', 'owner_id' => $viewer->getIdentity());
+			$video = Engine_Api::_()->sesgroupvideo()->createVideo($params, $_FILES['video'], $values);
 	  } else
         $video = $table->createRow();
 		  if ($values['type'] == 3 && isset($_FILES['photo_id']['name']) && $_FILES['photo_id']['name'] != '') {
@@ -4986,7 +5006,7 @@ protected function setPhoto($photo, $id) {
 		}
                 
 		$viewer = Engine_Api::_()->user()->getViewer();
-		 if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('seslock'))) {
+		 if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesprofilelock'))) {
 			 $viewer = Engine_Api::_()->user()->getViewer();
 			  if ($viewer->getIdentity() == 0)
 				$result['level'] = $level = Engine_Api::_()->getDbtable('levels', 'authorization')->getPublicLevel()->level_id;
@@ -5038,6 +5058,16 @@ protected function setPhoto($photo, $id) {
 				  $result['video_extension'] = $storage_file->extension;
 				}
 			}
+            if(!empty($video['iframeURL'])){
+                $dataIframeURL = $video['iframeURL'];
+                if(strpos($dataIframeURL,'youtube') !== false ){
+                    if(strpos($dataIframeURL,'?') !== false ){
+                        $video['iframeURL'] = $video['iframeURL']."&feature=oembed";
+                    }else{
+                        $video['iframeURL'] = $video['iframeURL']."?feature=oembed";
+                    }
+                }
+            }
 			$photo = $this->getBaseUrl(false,$video->getPhotoUrl());
 			if($photo)
 			 $result["share"]["imageUrl"] = $photo;
@@ -5300,7 +5330,7 @@ protected function setPhoto($photo, $id) {
           unset($values['photo_id']);
 				}
       }
-		if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('seslock'))) {
+		if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesprofilelock'))) {
 			//disable lock if password not set.
 			if (!$values['is_locked']) {
 				$values['is_locked'] = '0';
@@ -5562,8 +5592,12 @@ protected function setPhoto($photo, $id) {
             $params = $_POST;
         }
         $searchArray = array();
-        if (isset($_POST['searchParams']) && $_POST['searchParams'])
-            parse_str($_POST['searchParams'], $searchArray);
+				if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+					if(engine_in_array($_POST['searchParams']))
+						$searchArray = $_POST['searchParams'];
+					elseif(is_string($_POST['searchParams']))
+						parse_str($_POST['searchParams'], $searchArray);
+				}
         $value['page'] = isset($_POST['page']) ? $_POST['page'] : 1;
         $value['sort'] = isset($searchArray['sort']) ? $searchArray['sort'] : (isset($_GET[' ']) ? $_GET['sort'] : (isset($params['sort']) ? $params['sort'] : $this->_getParam('sort', 'mostSPliked')));
         $value['show'] = isset($searchArray['show']) ? $searchArray['show'] : (isset($_GET['show']) ? $_GET['show'] : (isset($params['show']) ? $params['show'] : ''));
@@ -5609,7 +5643,7 @@ protected function setPhoto($photo, $id) {
         $albumCounter = 0;
         foreach ($paginator as $item) {
             $owner = $item->getOwner();
-            $ownertitle = $owner->displayname;
+            $ownertitle = $owner->getTitle();
             $result['albums'][$albumCounter] = $item->toArray();
             $result['albums'][$albumCounter]['images'] = Engine_Api::_()->sesapi()->getPhotoUrls($item, '', "") ?
                 Engine_Api::_()->sesapi()->getPhotoUrls($item, '', "") :

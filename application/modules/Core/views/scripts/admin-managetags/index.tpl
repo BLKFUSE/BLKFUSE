@@ -78,7 +78,7 @@ function selectAll(obj)
             <th style='width: 1%;'><input onclick="selectAll(this)" type='checkbox' class='checkbox'></th>
             <th style='width: 1%;'><?php echo $this->translate("ID") ?></th>
             <th><?php echo $this->translate("Tag Name") ?></th>
-            <th style='width: 1%;' class='admin_table_options'><?php echo $this->translate("Option") ?></th>
+            <th style='width: 1%;' class='admin_table_options'><?php echo $this->translate("Options") ?></th>
           </tr>
         </thead>
         <tbody>
@@ -91,6 +91,10 @@ function selectAll(obj)
                 <?php echo $item->text; ?>
                 </td>
                 <td class='admin_table_options'>
+									<a class='smoothbox' href='<?php echo $this->url(array('action' => 'edit', 'id' => $item->tag_id));?>'>
+                    <?php echo $this->translate("Edit") ?>
+                  </a>
+                  |
                   <a class='smoothbox' href='<?php echo $this->url(array('action' => 'delete', 'id' => $item->tag_id));?>'>
                     <?php echo $this->translate("Delete") ?>
                   </a>

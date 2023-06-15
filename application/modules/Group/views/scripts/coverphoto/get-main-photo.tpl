@@ -89,14 +89,16 @@
 <?php if (empty($this->uploadDefaultCover)): ?>
   <div class="cover_photo_profile_options">
     <div id='profile_status'>
-      <h2>
-        <?php echo $this->subject()->getTitle() ?>
-      </h2>
+      <?php if($this->subject()) { ?>
+        <h2>
+          <?php echo $this->subject()->getTitle() ?>
+        </h2>
+      <?php } ?>
       <span class="coverphoto_navigation">
         <ul>
           <?php foreach( $this->groupNavigation as $link ): ?>
             <li>
-              <a class="<?php echo  'buttonlink' . ( $link->getClass() ? ' ' . $link->getClass() : '' ); ?>" href='<?php echo $link->getHref() ?>'>
+              <a class="<?php echo  'buttonlink' . ( $link->getClass() ? ' ' . $link->getClass() : '' ) . (!empty($link->get('icon')) ? $link->get('icon') : ''); ?>" href='<?php echo $link->getHref() ?>' aria-label="<?php echo $this->translate($link->getlabel()) ?>">
                <span><?php echo $this->translate($link->getlabel()) ?></span>
               </a>
             </li>

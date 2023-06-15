@@ -20,7 +20,7 @@
   <?php echo $this->translate("Native Android Mobile App") ?>
 </h2>
 <?php if(is_countable($this->navigation) && engine_count($this->navigation) ): ?>
-  <div class='sesandroidapp-admin-navgation'>
+  <div class='tabs'>
     <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render() ?>
   </div>
 <?php endif; ?>
@@ -28,7 +28,7 @@
 	<?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesandroidapp', 'controller' => 'slideshow', 'action' => 'index'), $this->translate("Back to Manage Photo") , array('class'=>'sesandroidapp_icon_back buttonlink')); ?>
 </div>
 <div class='clear'>
-  <div class='settings sesandroidapp_admin_form'>
+  <div class='settings sesbasic_admin_form'>
     <?php echo $this->form->render($this); ?>
   </div>
 </div>

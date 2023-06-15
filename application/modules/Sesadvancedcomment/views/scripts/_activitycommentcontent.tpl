@@ -12,7 +12,7 @@
  */
  
 ?>
-
+<?php include APPLICATION_PATH .  '/application/modules/Sesadvancedcomment/views/scripts/_jsFiles.tpl'; ?>
 <?php $comment = $this->comment;       
       if($comment->getType() == 'activity_comment') {
         $activitycomments = Engine_Api::_()->getDbTable('activitycomments', 'sesadvancedactivity')->rowExists($comment->getIdentity());
@@ -60,11 +60,11 @@
    <span class="comments_body_actual" rel="<?php echo $module; ?>" style="display:none;">
     <?php if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesemoji') && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesemoji.pluginactivated')) {
         //Emoji Share Work
-        require_once 'application/modules/Sesemoji/controllers/lib/php/autoload.php';
-        $client = new Client(new Ruleset());
-        $client->imagePathPNG = 'application/modules/Sesemoji/externals/images/emoji/';
-        $emojisCode = Engine_Api::_()->sesemoji()->DecodeEmoji(nl2br($comment->body));
-        echo $client->toImage($emojisCode);  
+        //require_once 'application/modules/Sesemoji/controllers/lib/php/autoload.php';
+       // $client = new Client(new Ruleset());
+       // $client->imagePathPNG = 'application/modules/Sesemoji/externals/images/emoji/';
+        echo Engine_Api::_()->sesemoji()->DecodeEmoji(nl2br($comment->body));
+       // echo $client->toImage($emojisCode);  
     ?>
     <?php } else { ?>
       <?php echo nl2br($comment->body); ?>

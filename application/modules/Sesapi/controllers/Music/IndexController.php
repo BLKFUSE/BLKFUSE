@@ -30,21 +30,58 @@ class Music_IndexController extends Sesapi_Controller_Action_Standard {
 		
 		echo $moduleName . $controllerName . $actionName;die;*/
   }
+  
+	public function menuAction() {
+		$menus = Engine_Api::_()->getApi('menus', 'core')->getNavigation('music_main', array());
+		$menu_counter = 0;
+		foreach ($menus as $menu) {
+			$class = end(explode(' ', $menu->class));
+			$result_menu[$menu_counter]['label'] = $this->view->translate($menu->label);
+			$result_menu[$menu_counter]['action'] = $class;
+			$result_menu[$menu_counter]['isActive'] = $menu->active;
+			$menu_counter++;
+		}
+		$result['menus'] = $result_menu;
+		Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array_merge(array('error' => '0', 'error_message' => '', 'result' => $result)));
+	}
+	
+  public function rateAction() {
+  
+    $viewer = Engine_Api::_()->user()->getViewer();
+    $user_id = $viewer->getIdentity();
+    $rating = $this->_getParam('rating');
+    $resource_id = $this->_getParam('resource_id');
+    $table = Engine_Api::_()->getDbtable('ratings', 'music');
+    $db = $table->getAdapter();
+    $db->beginTransaction();
+    try {
+    
+			Engine_Api::_()->getDbtable('ratings', 'music')->setRating($resource_id, $user_id, $rating);
 
-  public function searchFormAction(){
-    $viewer = Engine_Api::_()->user()->getViewer();    
-    $formFilter = new Music_Form_Search();
-    $formFilter->sort->setValue('recent');
-    $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($formFilter,true);
-    $this->generateFormFields($formFields); 
+			$music = Engine_Api::_()->getItem('music_playlist', $resource_id);
+			$music->rating = Engine_Api::_()->getDbtable('ratings', 'music')->getRating($music->getIdentity());
+			$music->save();
+			
+			$owner = Engine_Api::_()->getItem('user', $music->owner_id);
+			if($owner->user_id != $user_id)
+				Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($owner, $viewer, $music, 'music_rating');
+			
+      $db->commit();
+    } catch (Exception $e) {
+      $db->rollBack();
+      Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$e->getMessage(), 'result' => array()));
+    }
+		Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>"", 'result' => $this->view->translate("You have successfully rated music.")));
+  }
+
+  public function searchFormAction() {
+    $form = new Music_Form_Search();
+    $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form,true);
+    $this->generateFormFields($formFields,array('resources_type'=>'music_playlist'));
   }
   
   public function editAction() {
-
-//     if(!Engine_Api::_()->core()->hasSubject()){
-//        Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>"parameter_missing", 'result' => array()));
-//     }
-    
+  
     $playlist_id = $this->_getParam('playlist_id', null);
     $playlist = Engine_Api::_()->getItem('music_playlist', $playlist_id);
     
@@ -63,7 +100,7 @@ class Music_IndexController extends Sesapi_Controller_Action_Standard {
 
     if($this->_getParam('getForm')) {
       $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
-      $this->generateFormFields($formFields);
+      $this->generateFormFields($formFields,array('resources_type'=>'music_playlist', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
     }
 
      // Check if valid
@@ -81,7 +118,10 @@ class Music_IndexController extends Sesapi_Controller_Action_Standard {
       $playlist->title = $values['title'];
       $playlist->description = $values['description'];
       $playlist->search = $values['search'];
-
+      if (isset($values['networks'])) {
+          $network_privacy = 'network_'. implode(',network_', $values['networks']);
+          $playlist->networks = $values['networks'] = implode(',', $values['networks']);
+      }
       $_roles = array(
         'everyone' => 'Everyone',
         'registered' => 'All Registered Members',
@@ -109,8 +149,10 @@ class Music_IndexController extends Sesapi_Controller_Action_Standard {
           $auth->setAllowed($playlist, $role, 'comment', 0);
       }
 
-      if (!empty($_FILES['art']['size']))
-        $playlist->setPhoto($form->art);
+      // Add photo
+      if( !empty($_FILES['image']['name']) &&  !empty($_FILES['image']['size']) ) {
+        $this->setPhoto($_FILES['image'],$playlist);
+      }
         
       $playlist->save();
       $db->commit();
@@ -135,7 +177,7 @@ class Music_IndexController extends Sesapi_Controller_Action_Standard {
 
     if($this->_getParam('getForm')) {
       $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
-      $this->generateFormFields($formFields);
+      $this->generateFormFields($formFields,array('resources_type'=>'music_playlist', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
     }
 
     // Check if valid
@@ -191,10 +233,6 @@ class Music_IndexController extends Sesapi_Controller_Action_Standard {
       }
       $album = $this->view->form->saveValues();
       $db->commit();
-      //Count Songs according to album_id
-      //$song_count = Engine_Api::_()->getDbTable('albumsongs', 'sesmusic')->songsCount($album->album_id);
-      //$album->song_count = $song_count;
-      //$album->save();
     } catch (Exception $e) {
       $db->rollback();
       throw $e;
@@ -223,9 +261,10 @@ class Music_IndexController extends Sesapi_Controller_Action_Standard {
   }
   
   public function browseAction() {
-
+		
+		$userId = $this->_getParam('user_id', 0);
     // Get browse params
-      $isTitleName = isset($_POST['title_name']) ? $_POST['title_name'] : '';
+		$isTitleName = isset($_POST['title_name']) ? $_POST['title_name'] : '';
     $formFilter = new Music_Form_Search();
     $formFilter = new Music_Form_Search();
     if( $formFilter->isValid($this->_getAllParams()) ) {
@@ -250,6 +289,9 @@ class Music_IndexController extends Sesapi_Controller_Action_Standard {
       $values['user'] = $viewer->getIdentity();  
     } elseif ($type == "manage") {
         Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'permission_error', 'result' => array())); 
+    }
+    if(!empty($userId)) {
+			$values['user'] = $userId;
     }
 
     // Get paginator
@@ -288,13 +330,13 @@ class Music_IndexController extends Sesapi_Controller_Action_Standard {
             $counterMenu = 0;
             if($canEdit){
               $menuoptions[$counterMenu]['name'] = "edit";
-              $menuoptions[$counterMenu]['label'] = $this->view->translate("Edit"); 
+              $menuoptions[$counterMenu]['label'] = $this->view->translate("Edit Playlist"); 
               $counterMenu++;
             }
             $canDelete = $this->_helper->requireAuth()->setAuthParams($playlist, null, 'delete')->isValid();
             if($canDelete){
               $menuoptions[$counterMenu]['name'] = "delete";
-              $menuoptions[$counterMenu]['label'] = $this->view->translate("Delete");
+              $menuoptions[$counterMenu]['label'] = $this->view->translate("Delete Playlist");
             }
             $album['menus'] = $menuoptions;
         }
@@ -302,7 +344,8 @@ class Music_IndexController extends Sesapi_Controller_Action_Standard {
           $album['is_content_like'] = Engine_Api::_()->sesapi()->contentLike($playlist);
           $album['content_like_count'] = (int) Engine_Api::_()->sesapi()->getContentLikeCount($playlist);
         }  
-        
+				
+				$album['enable_rating'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('music.enable.rating', 1);
         $result['albums'][$counterLoop] = $album;
         if($playlist->photo_id)
           $images = Engine_Api::_()->sesapi()->getPhotoUrls($playlist,'','');
@@ -358,5 +401,85 @@ class Music_IndexController extends Sesapi_Controller_Action_Standard {
     $this->view->status = true;
     $this->view->message = Zend_Registry::get('Zend_Translate')->_('The selected playlist has been deleted.');
     Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>"", 'result' => $this->view->message));
+  }
+  
+
+  public function setPhoto($photo,$item)
+  {
+    if( $photo instanceof Zend_Form_Element_File ) {
+      $file = $photo->getFileName();
+    } elseif( is_array($photo) && !empty($photo['tmp_name']) ) {
+      $file = $photo['tmp_name'];
+    } elseif( is_string($photo) && file_exists($photo) ) {
+      $file = $photo;
+    } else {
+      throw new Blog_Model_Exception('Invalid argument passed to setPhoto: ' . print_r($photo, 1));
+    }
+
+    $name = basename($photo['name']);
+    $path = APPLICATION_PATH . DIRECTORY_SEPARATOR . 'temporary';
+    $params = array(
+      'parent_type' => 'music_playlist',
+      'parent_id' => $item->getIdentity()
+    );
+
+    // Save
+    $storage = Engine_Api::_()->storage();
+
+    // Resize image (main)
+    $image = Engine_Image::factory();
+    $image->open($file)
+      ->resize(720, 720)
+      ->write($path . '/m_' . $name)
+      ->destroy();
+
+    // Resize image (profile)
+    $image = Engine_Image::factory();
+    $image->open($file)
+      ->resize(200, 400)
+      ->write($path . '/p_' . $name)
+      ->destroy();
+
+    // Resize image (normal)
+    $image = Engine_Image::factory();
+    $image->open($file)
+      ->resize(140, 160)
+      ->write($path . '/in_' . $name)
+      ->destroy();
+
+    // Resize image (icon)
+    $image = Engine_Image::factory();
+    $image->open($file);
+
+    $size = min($image->height, $image->width);
+    $x = ($image->width - $size) / 2;
+    $y = ($image->height - $size) / 2;
+
+    $image->resample($x, $y, $size, $size, 48, 48)
+      ->write($path . '/is_' . $name)
+      ->destroy();
+
+    // Store
+    $iMain = $storage->create($path . '/m_' . $name, $params);
+    $iProfile = $storage->create($path . '/p_' . $name, $params);
+    $iIconNormal = $storage->create($path . '/in_' . $name, $params);
+    $iSquare = $storage->create($path . '/is_' . $name, $params);
+
+    $iMain->bridge($iProfile, 'thumb.profile');
+    $iMain->bridge($iIconNormal, 'thumb.normal');
+    $iMain->bridge($iSquare, 'thumb.icon');
+
+    // Remove temp files
+    @unlink($path . '/p_' . $name);
+    @unlink($path . '/m_' . $name);
+    @unlink($path . '/in_' . $name);
+    @unlink($path . '/is_' . $name);
+
+    // Update row
+    $item->modified_date = date('Y-m-d H:i:s');
+    $item->photo_id = $iMain->getIdentity();
+    $item->save();
+
+    return $item;
   }
 }

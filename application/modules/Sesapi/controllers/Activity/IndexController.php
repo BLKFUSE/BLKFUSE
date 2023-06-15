@@ -22,7 +22,7 @@ class Activity_IndexController extends Sesapi_Controller_Action_Standard {
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=> $this->view->translate('Gify API key not set!'), 'result' => array()));
     } else {
       if($emessages_gif_search) {
-        $url = 'https://api.giphy.com/v1/gifs/trending?api_key='.$giphyApi.'&limit='.$limit.'&rating=G&q='.urldecode($emessages_gif_search);
+        $url = 'https://api.giphy.com/v1/gifs/search?api_key='.$giphyApi.'&limit='.$limit.'&rating=G&q='.urldecode($emessages_gif_search);
       } else {
         $url = 'https://api.giphy.com/v1/gifs/trending?api_key='.$giphyApi.'&limit='.$limit.'&rating=G';
       }
@@ -105,8 +105,8 @@ class Activity_IndexController extends Sesapi_Controller_Action_Standard {
 				$networkOptions = array();
 				$counterVal =  0;
 				foreach ($usernetworks as $networkfilter) {
-					if ($counterVal == 0)
-						$networkOptions[$counterVal]['first'] = 1;
+					// if ($counterVal == 0)
+					// 	$networkOptions[$counterVal]['first'] = 1;
 					$networkOptions[$counterVal]['name'] = "network_list_" . $networkfilter->getIdentity();
 					$networkOptions[$counterVal]['value'] = $this->view->translate($networkfilter["title"]);
 					$counterVal++;
@@ -129,8 +129,8 @@ class Activity_IndexController extends Sesapi_Controller_Action_Standard {
 				$listsOptions = array();
 				$counterVal =  0;
 				foreach ($userlists as $listsOption) {
-					if ($counterVal == 0)
-						$listsOptions[$counterVal]['first'] = 1;
+					// if ($counterVal == 0)
+					// 	$listsOptions[$counterVal]['first'] = 1;
             $listsOptions[$counterVal]['name'] = "members_list_" . $listsOption->getIdentity();
             $listsOptions[$counterVal]['value'] = $this->view->translate($listsOption["title"]);
             $counterVal++;
@@ -260,7 +260,7 @@ class Activity_IndexController extends Sesapi_Controller_Action_Standard {
           $composerOptions['addMusic'] = $this->view->translate('Add Music');
         }
         // For core  video
-        if(false !== strpos($partial[0], '_composeVideo' && (!$subject || ($subject->getType() != 'sesgroup_group' && $subject->getType() != 'businesses')))) {
+        if(false !== strpos($partial[0], '_composeVideo') && (!$subject || ($subject->getType() != 'sesgroup_group' && $subject->getType() != 'businesses'))) {
           $composerOptions['addVideo'] = $this->view->translate('Add Video');
         }
         // For sesmusic
@@ -391,7 +391,7 @@ class Activity_IndexController extends Sesapi_Controller_Action_Standard {
     else
       $contentResponse['privacySetting'] =  true;
     $contentResponse['privacyOptions'] = Engine_Api::_()->sesapi()->privacyOptions();
-
+	$feedSearchOptions = array();
 	if (!$subject) {
 	  $allownetworkprivacy = Engine_Api::_()->getApi('settings', 'core')->getSetting('activity.network.privacy',0);
 	  $allowlistprivacy = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.allowlistprivacy', 1);
@@ -418,7 +418,7 @@ class Activity_IndexController extends Sesapi_Controller_Action_Standard {
       $counterVal =  0;
       foreach ($usernetworks as $networkfilter) {
         if ($counterVal == 0)
-        $networkOptions[$counterVal]['first'] = 1;
+        // $networkOptions[$counterVal]['first'] = 1;
         $networkOptions[$counterVal]['name'] = "network_list_" . $networkfilter->getIdentity();
         $networkOptions[$counterVal]['value'] = $this->view->translate($networkfilter["title"]);
         $counterVal++;
@@ -444,8 +444,8 @@ class Activity_IndexController extends Sesapi_Controller_Action_Standard {
       $listsOptions = array();
       $counterVal =  0;
       foreach ($userlists as $listsOption) {
-        if ($counterVal == 0)
-        $listsOptions[$counterVal]['first'] = 1;
+        //if ($counterVal == 0)
+        // $listsOptions[$counterVal]['first'] = 1;
         $listsOptions[$counterVal]['name'] = "members_list_" . $listsOption->getIdentity();
         $listsOptions[$counterVal]['value'] = $this->view->translate($listsOption["title"]);
         $counterVal++;
@@ -481,7 +481,7 @@ class Activity_IndexController extends Sesapi_Controller_Action_Standard {
 		}
 	  }
 	  $filterFeed = $listsArray[0]['filtertype'];
-	  $feedSearchOptions = array();
+	  
 	  $counter = 0;
 	  foreach ($listsArray as $searchOptions) {
 		if (isset($searchOptions['network_id'])) {
@@ -742,7 +742,7 @@ class Activity_IndexController extends Sesapi_Controller_Action_Standard {
 	  $contentResponse['textStringColor'] = $textStringColor;
 	}
 
-	if (Engine_Api::_()->sesbasic()->isModuleEnable('sesfeedbg') && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesfeedbg.enablefeedbg', 1) && $viewer->getIdentity()) {
+	if (Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesfeedbg') && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesfeedbg.enablefeedbg', 1) && $viewer->getIdentity()) {
     $sesfeedbg_enablefeedbg = false;
     $enablefeedbg = (array) Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('sesadvactivity', $viewer, 'composeroptions');
     if(engine_in_array('enablefeedbg', $enablefeedbg)) {
@@ -830,7 +830,7 @@ class Activity_IndexController extends Sesapi_Controller_Action_Standard {
 	$actionTypeGroup = $filterFeed;
 	$actionTypeFilters = array();
 	//SES advanced member plugin followig work
-	$isSesmember = $actionTypeGroup == 'sesmember' && Engine_Api::_()->sesbasic()->isModuleEnable('sesmember') && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.follow.active', 1);
+	$isSesmember = $actionTypeGroup == 'sesmember' && Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesmember') && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.follow.active', 1);
 	if (!$isSesmember) {
 		if ($actionTypeGroup && isset($groupedActionTypes[$actionTypeGroup])) {
 		$actionTypeFilters = $groupedActionTypes[$actionTypeGroup];
@@ -907,7 +907,7 @@ class Activity_IndexController extends Sesapi_Controller_Action_Standard {
 	do {
 		$request = Zend_Controller_Front::getInstance()->getRequest();
 	    if($request->getParam('action_id') && empty($subject)){
-	        $action = Engine_Api::_()->getItem("sesadvancedactivity_action",$request->getParam('action_id'));
+	        $action = Engine_Api::_()->getItem($sesAdv ? "sesadvancedactivity_action" : "activity_action",$request->getParam('action_id'));
 	        if($action){
 	            $subject = Engine_Api::_()->user()->getUser($action->subject_id);
                 if( $subject->getIdentity() )
@@ -987,14 +987,14 @@ class Activity_IndexController extends Sesapi_Controller_Action_Standard {
 	$contentCounter = $this->_getParam('contentCounter', 0);
 	$activityArrayContent = array();
 	$communityadsExecuted = false;
-	if ($communityAdsEnable && Engine_Api::_()->sesbasic()->isModuleEnable('sescommunityads') && Engine_Api::_()->getApi('settings', 'core')->getSetting('sescommunityads_advertisement_enable', '1')) {
+	if ($communityAdsEnable && Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sescommunityads') && Engine_Api::_()->getApi('settings', 'core')->getSetting('sescommunityads_advertisement_enable', '1')) {
 		$counterActivity = 0;
 		$communityadsExecuted = true;
 		foreach ($activity as $acti) {
 		$content = $this->sescommunityAds($subject, $contentCounter);
 		if (engine_count($content)) {
 			$activityArrayContent[$counterActivity] = $content;
-			if ($activityArrayContent[$counterActivity]['ad_type'] != "boost_post_cnt")
+			if (@$activityArrayContent[$counterActivity]['ad_type'] != "boost_post_cnt")
 			$activityArrayContent[$counterActivity]['content_type'] = 'communityads';
 			else
 			$activityArrayContent[$counterActivity]['content_type'] = 'feed';

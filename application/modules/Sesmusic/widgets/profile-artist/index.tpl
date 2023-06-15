@@ -213,7 +213,7 @@ $artist = $this->artists;
 
       <div class="sesmusic_artist_view_options">
       <!--<a href="" class="fa fa-thumbs-up sesmusic_like">Like</a>
-      <a href="" class="fa fa-share sesmusic_like">Share</a>-->
+      <a href="" class="fas fa-share-alt sesmusic_like">Share</a>-->
          <?php if (engine_in_array('addFavouriteButtonAr', $this->informationArtist) && !empty($this->viewer_id)): ?>
          <?php if($this->artistlink && engine_in_array('favourite', $this->artistlink)): ?>
            <a class="sesbasic_icon_favourite sesmusic_favourite" id="sesmusic_artist_unfavourite_<?php echo $this->artists->getIdentity(); ?>" style ='display:<?php echo $this->isFavourite ? "inline-block" : "none" ?>' href = "javascript:void(0);" onclick = "sesmusicFavourite('<?php echo $this->artists->getIdentity(); ?>', 'sesmusic_artist');"><?php echo $this->translate("Remove from Favorite") ?></a>

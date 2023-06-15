@@ -45,7 +45,7 @@ class Sesvideo_Form_EditPlaylist extends Engine_Form {
     $this->addElement('File', 'mainphoto', array(
         'label' => 'Playlist Photo',
     ));
-    $this->mainphoto->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+    $this->mainphoto->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
     $playlist_id = Zend_Controller_Front::getInstance()->getRequest()->getParam('playlist_id');
     if ($playlist_id) {
       $photoId = Engine_Api::_()->getItem('sesvideo_playlist', $playlist_id)->photo_id;

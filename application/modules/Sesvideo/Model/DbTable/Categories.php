@@ -33,7 +33,7 @@ class Sesvideo_Model_DbTable_Categories extends Engine_Db_Table {
   }
   public function deleteCategory($params = array()) {
     $isValid = false;
-    if (isset($params) && !empty($params) && engine_count($params) > 0) {
+    if (!empty($params)) {
       if ($params->subcat_id != 0) {
         $Subcategory = $this->getModuleSubsubcategory(array('column_name' => '*', 'category_id' => $params->category_id));
         if (is_countable($Subcategory) && engine_count($Subcategory) > 0)

@@ -55,31 +55,8 @@
       </div>
   </form>
 </div>
-
-
 <?php if( @$this->closeSmoothbox ): ?>
 <script type="text/javascript">
   TB_close();
-</script>
-<?php else: ?>
-<script type="text/javascript">
-  scriptJquery(document).on('submit','#sesact_adv_comment_delete',function(e){
-    e.preventDefault();
-    var id = scriptJquery('#sesact_adv_comment_delete').find('.hidden_cmnt').val();
-    var savefeed = scriptJquery.ajax({
-      type:'POST',
-      url: scriptJquery( this ).attr( 'action' ),
-      cache:false,
-      contentType: false,
-      processData: false,
-      success:function(responseHTML){
-        scriptJquery("#comment-"+id).remove();
-        sessmoothboxclose();
-      },
-     error: function(data){
-
-      },
-    });
-  });
 </script>
 <?php endif; ?>

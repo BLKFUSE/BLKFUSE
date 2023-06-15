@@ -203,11 +203,11 @@ class Tickvideo_Plugin_Job_Encode extends Core_Plugin_Job_Abstract {
 
     $notificationMessage = $translate->translate(sprintf($notificationMessage, '', ''), $language);
 
-    Engine_Api::_()->getDbtable('notifications', 'activity')
-            ->addNotification($owner, $owner, $video, 'tickvideo_processed_failed', array(
-                'message' => $notificationMessage,
-                'message_link' => Zend_Controller_Front::getInstance()->getRouter()->assemble(array('action' => 'manage'), 'sesvideo_general', true),
-    ));
+//     Engine_Api::_()->getDbtable('notifications', 'activity')
+//             ->addNotification($owner, $owner, $video, 'tickvideo_processed_failed', array(
+//                 'message' => $notificationMessage,
+//                 'message_link' => Zend_Controller_Front::getInstance()->getRouter()->assemble(array('action' => 'manage'), 'sesvideo_general', true),
+//     ));
 
     return $exceptionMessage;
   }
@@ -504,8 +504,8 @@ class Tickvideo_Plugin_Job_Encode extends Core_Plugin_Job_Abstract {
 
 
         // notify the owner
-        Engine_Api::_()->getDbtable('notifications', 'activity')
-                ->addNotification($owner, $owner, $video, 'tickvideo_processed');
+//         Engine_Api::_()->getDbtable('notifications', 'activity')
+//                 ->addNotification($owner, $owner, $video, 'tickvideo_processed');
 
         $db->commit();
       } catch (Exception $e) {

@@ -55,22 +55,22 @@ class Sesmember_Controller_Action_Helper_MemberLocation extends Zend_Controller_
       }
     }
     
-    if ($module == 'user' && $controller == 'admin-fields' && ($action == 'field-create' || $action == 'field-edit' || $action == 'heading-edit' || $action == 'heading-create')) {
-      $form = $this->getActionController()->view->form;
-      if (!$this->getRequest()->isPost()) {
-        $form->addElement('Select', 'ses_field', array(
-            'label' => 'Show on SNS - Ultimate Members Plugin Widgets?',
-            'multiOptions' => array(
-                0 => 'Hide on SNS - Ultimate Members Plugin Widgets',
-                1 => 'Show on SNS - Ultimate Members Plugin Widgets',
-            ),
-        ));
-        $form->buttons->setOrder(500);
-        $fieldId = $front->getRequest()->getParam('field_id', 0);
-        if ($fieldId) {
-          $form->ses_field->setValue(Engine_Api::_()->fields()->getField($fieldId, 'user')->ses_field);
-        }
-      }
-    }
+//     if ($module == 'user' && $controller == 'admin-fields' && ($action == 'field-create' || $action == 'field-edit' || $action == 'heading-edit' || $action == 'heading-create')) {
+//       $form = $this->getActionController()->view->form;
+//       if (!$this->getRequest()->isPost()) {
+//         $form->addElement('Select', 'ses_field', array(
+//             'label' => 'Show on SNS - Ultimate Members Plugin Widgets?',
+//             'multiOptions' => array(
+//                 0 => 'Hide on SNS - Ultimate Members Plugin Widgets',
+//                 1 => 'Show on SNS - Ultimate Members Plugin Widgets',
+//             ),
+//         ));
+//         $form->buttons->setOrder(500);
+//         $fieldId = $front->getRequest()->getParam('field_id', 0);
+//         if ($fieldId) {
+//           $form->ses_field->setValue(Engine_Api::_()->fields()->getField($fieldId, 'user')->ses_field);
+//         }
+//       }
+//     }
   }
 }

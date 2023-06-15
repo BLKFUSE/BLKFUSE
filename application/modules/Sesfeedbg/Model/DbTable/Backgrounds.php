@@ -25,7 +25,7 @@ class Sesfeedbg_Model_DbTable_Backgrounds extends Engine_Db_Table {
     if(!empty($params['admin'])) {
       $select->where('enabled =?', 1)
         ->where('starttime <= DATE(NOW())')
-        ->where("endtime >= DATE(NOW()) OR endtime IS NULL OR endtime = '0000-00-00'");
+        ->where("(enableenddate = 0 || endtime IS NULL OR endtime = '0000-00-00' OR endtime >= DATE(NOW() )) ");
     }
     
     if(isset($params['featured']) && !empty($params['featured'])) {
@@ -37,7 +37,6 @@ class Sesfeedbg_Model_DbTable_Backgrounds extends Engine_Db_Table {
     }
     
     $select->order('order ASC');
-      
     if(isset($params['sesfeedbg_limit_show']) && !empty($params['sesfeedbg_limit_show']))
       $select->limit($params['sesfeedbg_limit_show']);
 

@@ -26,6 +26,49 @@ class Group_IndexController extends Sesapi_Controller_Action_Standard
     }
   }
   
+	public function menuAction() {
+		$menus = Engine_Api::_()->getApi('menus', 'core')->getNavigation('group_main', array());
+		$menu_counter = 0;
+		foreach ($menus as $menu) {
+			$class = end(explode(' ', $menu->class));
+			$result_menu[$menu_counter]['label'] = $this->view->translate($menu->label);
+			$result_menu[$menu_counter]['action'] = $class;
+			$result_menu[$menu_counter]['isActive'] = $menu->active;
+			$menu_counter++;
+		}
+		$result['menus'] = $result_menu;
+		Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array_merge(array('error' => '0', 'error_message' => '', 'result' => $result)));
+	}
+	
+  public function rateAction() {
+  
+    $viewer = Engine_Api::_()->user()->getViewer();
+    $user_id = $viewer->getIdentity();
+    $rating = $this->_getParam('rating');
+    $resource_id = $this->_getParam('resource_id');
+    $table = Engine_Api::_()->getDbtable('ratings', 'group');
+    $db = $table->getAdapter();
+    $db->beginTransaction();
+    try {
+    
+			Engine_Api::_()->getDbtable('ratings', 'group')->setRating($resource_id, $user_id, $rating);
+
+			$group = Engine_Api::_()->getItem('group', $resource_id);
+			$group->rating = Engine_Api::_()->getDbtable('ratings', 'group')->getRating($group->getIdentity());
+			$group->save();
+			
+			$owner = Engine_Api::_()->getItem('user', $group->user_id);
+			if($owner->user_id != $user_id)
+				Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($owner, $viewer, $group, 'group_rating');
+			
+      $db->commit();
+    } catch (Exception $e) {
+      $db->rollBack();
+      Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$e->getMessage(), 'result' => array()));
+    }
+		Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>"", 'result' => $this->view->translate("You have successfully rated group.")));
+  }
+  
   public function createalbumAction(){
 
       $group_id = $this->_getParam('group_id', false);
@@ -48,7 +91,7 @@ class Group_IndexController extends Sesapi_Controller_Action_Standard
       //$form->populate(array('album' => $album_id));
       if ($this->_getParam('getForm')) {
           $formFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->generateFormFields($form);
-          $this->generateFormFields($formFields, array('resources_type' => 'group'));
+          $this->generateFormFields($formFields, array('resources_type' => 'group', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
       }
       if (!$form->isValid($this->getRequest()->getPost())){
         $validateFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->validateFormFields($form);
@@ -125,8 +168,8 @@ class Group_IndexController extends Sesapi_Controller_Action_Standard
     }
 
     $form->populate($_POST);
-    $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form,true);
-    $this->generateFormFields($formFields);
+    $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
+		$this->generateFormFields($formFields,array('resources_type'=>'group'));
   }
 
   public function browseAction()
@@ -242,7 +285,7 @@ class Group_IndexController extends Sesapi_Controller_Action_Standard
     
       if($resource['user_id']) {
         $user = Engine_Api::_()->getItem('user', $resource['user_id']);
-        $resource['created_by'] = $this->view->translate('by ') . $user->getTitle();
+        $resource['created_by'] = $this->view->translate('led by ') . $user->getTitle();
       }
 
       if ($user_id)
@@ -355,7 +398,7 @@ class Group_IndexController extends Sesapi_Controller_Action_Standard
     // Check if post and populate
     if($this->_getParam('getForm')) {
       $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
-      $this->generateFormFields($formFields,array('resources_type'=>'group'));
+      $this->generateFormFields($formFields,array('resources_type'=>'group', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
     }
 
     if( !$form->isValid($this->getRequest()->getPost()) ) {
@@ -379,7 +422,14 @@ class Group_IndexController extends Sesapi_Controller_Action_Standard
     }
 
     $values['view_privacy'] =  $values['auth_view'];
-
+    if (isset($values['networks'])) {
+      $network_privacy = 'network_'. implode(',network_', $values['networks']);
+      $values['networks'] = implode(',', $values['networks']);
+    }
+    if (is_null($values['subcat_id']))
+      $values['subcat_id'] = 0;
+    if (is_null($values['subsubcat_id']))
+      $values['subsubcat_id'] = 0;
     $db = Engine_Api::_()->getDbtable('groups', 'group')->getAdapter();
     $db->beginTransaction();
 
@@ -395,8 +445,8 @@ class Group_IndexController extends Sesapi_Controller_Action_Standard
           ->setUserApproved($viewer)
           ->setResourceApproved($viewer);
 
-      if( !empty($_FILES['image']['name']) &&  !empty($_FILES['image']['size']) ) {
-        $this->setPhoto($_FILES['image'],$group);
+      if( !empty($_FILES['photo']['name']) &&  !empty($_FILES['photo']['size']) ) {
+        $group->setPhoto($form->photo);
       }
 
       // Process privacy
@@ -448,102 +498,6 @@ class Group_IndexController extends Sesapi_Controller_Action_Standard
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$e->getMessage(), 'result' => array()));
       //return $this->exceptionWrapper($e, $form, $db);
     }
-  }
-  
-
-  public function setPhoto($photo,$group)
-  {
-  
-    if( $photo instanceof Zend_Form_Element_File ) {
-      $file = $photo->getFileName();
-    } elseif( is_array($photo) && !empty($photo['tmp_name']) ) {
-      $file = $photo['tmp_name'];
-    } elseif( is_string($photo) && file_exists($photo) ) {
-      $file = $photo;
-    } else {
-      throw new Group_Model_Exception('Invalid argument passed to setPhoto: ' . print_r($photo, 1));
-    }
-
-    $name = basename($photo['name']);
-    $path = APPLICATION_PATH . DIRECTORY_SEPARATOR . 'temporary';
-    $params = array(
-      'parent_type' => 'group',
-      'parent_id' => $group->getIdentity()
-    );
-
-    
-    // Save
-    $storage = Engine_Api::_()->storage();
-    
-    // Resize image (main)
-    $image = Engine_Image::factory();
-    $image->open($file)
-      ->resize(720, 720)
-      ->write($path.'/m_'.$name)
-      ->destroy();
-
-    // Resize image (profile)
-    $image = Engine_Image::factory();
-    $image->open($file)
-      ->resize(330, 660)
-      ->write($path.'/p_'.$name)
-      ->destroy();
-
-    // Resize image (normal)
-    $image = Engine_Image::factory();
-    $image->open($file)
-      ->resize(140, 160)
-      ->write($path.'/in_'.$name)
-      ->destroy();
-
-    // Resize image (icon)
-    $image = Engine_Image::factory();
-    $image->open($file);
-
-    $size = min($image->height, $image->width);
-    $x = ($image->width - $size) / 2;
-    $y = ($image->height - $size) / 2;
-
-    $image->resample($x, $y, $size, $size, 48, 48)
-      ->write($path.'/is_'.$name)
-      ->destroy();
-
-    // Store
-    $iMain = $storage->create($path.'/m_'.$name, $params);
-    $iProfile = $storage->create($path.'/p_'.$name, $params);
-    $iIconNormal = $storage->create($path.'/in_'.$name, $params);
-    $iSquare = $storage->create($path.'/is_'.$name, $params);
-
-    $iMain->bridge($iProfile, 'thumb.profile');
-    $iMain->bridge($iIconNormal, 'thumb.normal');
-    $iMain->bridge($iSquare, 'thumb.icon');
-
-    // Remove temp files
-    @unlink($path.'/p_'.$name);
-    @unlink($path.'/m_'.$name);
-    @unlink($path.'/in_'.$name);
-    @unlink($path.'/is_'.$name);
-
-    // Update row
-    $group->modified_date = date('Y-m-d H:i:s');
-    $group->photo_id = $iMain->file_id;
-    $group->save();
-
-    // Add to album
-    $viewer = Engine_Api::_()->user()->getViewer();
-    $photoTable = Engine_Api::_()->getItemTable('group_photo');
-    $groupAlbum = $group->getSingletonAlbum();
-    $photoItem = $photoTable->createRow();
-    $photoItem->setFromArray(array(
-      'group_id' => $group->getIdentity(),
-      'album_id' => $groupAlbum->getIdentity(),
-      'user_id' => $viewer->getIdentity(),
-      'file_id' => $iMain->getIdentity(),
-      'collection_id' => $groupAlbum->getIdentity(),
-    ));
-    $photoItem->save();
-
-    return $group;
   }
   
   public function editAction()
@@ -600,8 +554,34 @@ class Group_IndexController extends Sesapi_Controller_Action_Standard
     
     if($this->_getParam('getForm')) {
       $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
-      $formFields[2]['name'] = "file";
-      $this->generateFormFields($formFields,array('resources_type'=>'group'));
+      //set subcategory and 3rd category populated work
+      $newFormFieldsArray = array();
+      if(is_countable($formFields) && engine_count($formFields) &&  $group->category_id){
+        foreach($formFields as $fields){
+          foreach($fields as $field){
+            $subcat = array();
+            if($fields['name'] == "subcat_id"){ 
+              $subcat = Engine_Api::_()->getItemTable('group_category')->getSubcategory(array('category_id'=>$group->category_id,'column_name'=>'*'));
+            }else if($fields['name'] == "subsubcat_id"){
+              if($group->subcat_id)
+              $subcat = Engine_Api::_()->getItemTable('group_category')->getSubSubcategory(array('category_id'=>$group->subcat_id,'column_name'=>'*'));
+            }
+            if(is_countable($subcat) && engine_count($subcat)){
+              $arrayCat = array();
+              foreach($subcat as $cat){
+                $arrayCat[$cat->getIdentity()] = $cat->getTitle(); 
+              }
+              $fields["multiOptions"] = $arrayCat;  
+            }
+          }
+          $newFormFieldsArray[] = $fields;
+        }
+        if(!engine_count($newFormFieldsArray))
+          $newFormFieldsArray = $formFields;
+        $formFields[2]['name'] = "file";
+				$this->generateFormFields($newFormFieldsArray,array('resources_type'=>'group', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
+      }
+      
     }
 
     if( !$form->isValid($this->getRequest()->getPost()) ) {
@@ -616,7 +596,10 @@ class Group_IndexController extends Sesapi_Controller_Action_Standard
 
     try {
       $values = $form->getValues();
-
+      if (isset($values['networks'])) {
+        $network_privacy = 'network_'. implode(',network_', $values['networks']);
+        $values['networks'] = implode(',', $values['networks']);
+      }
       if( empty($values['auth_view']) ) {
         $values['auth_view'] = 'everyone';
       }
@@ -631,8 +614,8 @@ class Group_IndexController extends Sesapi_Controller_Action_Standard
       $group->setFromArray($values);
       $group->save();
 
-      if( !empty($_FILES['image']['name']) &&  !empty($_FILES['image']['size']) ) {
-        $this->setPhoto($_FILES['image'],$group);
+      if( !empty($_FILES['photo']['name']) &&  !empty($_FILES['photo']['size']) ) {
+        $group->setPhoto($form->photo);
       }
 
       // Process privacy

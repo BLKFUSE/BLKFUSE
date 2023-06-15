@@ -18,7 +18,7 @@
   <?php echo $this->translate('Native Android Mobile App'); ?>
 </h2>
 <?php if( engine_count($this->navigation)): ?>
-  <div class='sesandroidapp-admin-navgation'> <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?> </div>
+  <div class='tabs'> <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?> </div>
 <?php endif; ?>
 <h3>Manage Mobile App Subscribers</h3><br>
 <p>This page lists all the subscribers of your Android mobile app. You can also revoke users to suspend the current session of the app on their Phones or Tablets. After revoking, they will have to restart the app. This is normally done if you forcely want your users to restart their app in case you have done any changes to the splash screen or the welcome screen.<br><br>
@@ -41,10 +41,10 @@ Entering criteria into the filter fields will help you find specific subscriber.
         <th class='admin_table_short'>Token ID</th>
         <th><?php echo $this->translate('User ID') ?></th>
         <th><?php echo $this->translate('User') ?></th>
-        <th align="center"><?php echo $this->translate('Email') ?></th>
-        <th align="center"><?php echo $this->translate('Revoke') ?></th>
-        <th align="center"><?php echo $this->translate('Session') ?></th>
-        <th align="center"><?php echo $this->translate('Creation Date') ?></th>
+        <th class="admin_table_centered"><?php echo $this->translate('Email') ?></th>
+        <th class="admin_table_centered"><?php echo $this->translate('Revoke') ?></th>
+        <th class="admin_table_centered"><?php echo $this->translate('Session') ?></th>
+        <th class="admin_table_centered"><?php echo $this->translate('Creation Date') ?></th>
         <th><?php echo $this->translate('Options') ?></th>
       </tr>
     </thead>

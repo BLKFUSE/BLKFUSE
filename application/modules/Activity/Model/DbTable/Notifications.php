@@ -44,7 +44,13 @@ class Activity_Model_DbTable_Notifications extends Engine_Db_Table
             return;
         }
         
-        //Don't send notification if use disabled from notification setting
+        //Don't send notification if admin disabled notification from notification setting
+        $isEnableNotificationType = Engine_Api::_()->getDbtable('notificationTypes', 'activity')->isEnableNotificationType($type);
+        if(empty($isEnableNotificationType)) {
+          return;
+        }
+        
+        //Don't send notification if user disabled from notification setting
         $checkDisableNotification = Engine_Api::_()->getDbtable('notificationSettings', 'activity')->checkDisableNotification($user, $type);
         if(!empty($checkDisableNotification)) {
           return;
@@ -261,7 +267,9 @@ class Activity_Model_DbTable_Notifications extends Engine_Db_Table
     {
         $enabledNotificationTypes = array();
         foreach (Engine_Api::_()->getDbtable('NotificationTypes', 'activity')->getNotificationTypes() as $type) {
-            $enabledNotificationTypes[] = $type->type;
+						if(!empty($type->default)) {
+							$enabledNotificationTypes[] = $type->type;
+            }
         }
 
         // Only get enabled-messages notifications
@@ -285,14 +293,16 @@ class Activity_Model_DbTable_Notifications extends Engine_Db_Table
         }
 
         $sql1 = $this->select()
-            ->where('user_id = ?', $user->getIdentity())
-            ->where('`type` IN(?)', $enabledNotificationTypes)
-            ->where("`object_type`<>'messages_conversation'");
+            ->where('user_id = ?', $user->getIdentity());
+				if($enabledNotificationTypes)
+            $sql1->where('`type` IN(?)', $enabledNotificationTypes);
+				$sql1->where("`object_type`<>'messages_conversation'");
 
         $sql2 = $this->select()
-            ->where('user_id = ?', $user->getIdentity())
-            ->where('`type` IN(?)', $enabledNotificationTypes)
-            ->where("`object_type`='messages_conversation' and `object_id` NOT IN (?)", $disabledMessages);
+            ->where('user_id = ?', $user->getIdentity());
+				if($enabledNotificationTypes)
+            $sql2->where('`type` IN(?)', $enabledNotificationTypes);
+				$sql2->where("`object_type`='messages_conversation' and `object_id` NOT IN (?)", $disabledMessages);
 
         $select = $this->select()
             ->union(array($sql1,$sql2))

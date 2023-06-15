@@ -12,9 +12,9 @@
 ?>
 
 <?php
-  if( $this->form ):
-    echo $this->form->render($this);
-  else:
+  if( $this->form ): ?>
+    <div class="required_login_form"><?php echo $this->form->render($this); ?></div>
+  <?php else:
     echo $this->translate('Please sign in to continue.');
   endif;
 ?>

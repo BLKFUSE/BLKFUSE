@@ -15,7 +15,7 @@
   array (
     'type' => 'module',
     'name' => 'eioslivestreaming',
-    'version' => '6.2.0',
+    'version' => '6.4.0',
     'dependencies' => array(
       array(
         'type' => 'module',

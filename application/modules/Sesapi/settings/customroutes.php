@@ -146,7 +146,7 @@ if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesalbum')) 
             'action' => 'browse',
         ),
     ),
-    'sesalbum_specific_album' => array(
+    'sesalbum_specific_album_custom' => array(
         'route' =>  'album/view/:album_id',
         'defaults' => array(
             'module' => 'sesalbum',

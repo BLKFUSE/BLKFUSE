@@ -12,10 +12,12 @@
 ?>
 
 <div id='profile_status'>
-  <h2>
-    <?php echo $this->subject()->getTitle() ?>
-	<br>
-  </h2>
+	<?php if($this->subject()) { ?>
+		<h2>
+			<?php echo $this->subject()->getTitle() ?>
+		</h2>
+		<br />
+	<?php } ?>
   <?php if( $this->auth ): ?>
     <span class="profile_status_text" id="user_profile_status_container">
       <?php echo $this->viewMore($this->getHelper('getActionContent')->smileyToEmoticons($this->subject()->status)) ?>

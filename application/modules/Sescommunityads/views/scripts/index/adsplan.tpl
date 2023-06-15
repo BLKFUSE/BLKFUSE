@@ -27,7 +27,7 @@
  ?>
 
 
-
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sescommunityads/externals/scripts/core.js'); ?>
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sescommunityads/externals/styles/styles.css'); ?>
 
 <?php 
@@ -59,6 +59,7 @@ $showinfo = Engine_Api::_()->sescommunityads()->allowedTypes();
       <?php foreach($this->existingleftpackages as $packageleft)	{
 
             $package = Engine_Api::_()->getItem('sescommunityads_package',$packageleft->package_id);
+            if($package) {
             if($package->rentpackage == 1) continue;
        ?>
 
@@ -72,7 +73,7 @@ $showinfo = Engine_Api::_()->sescommunityads()->allowedTypes();
 
          <?php //endif;?>
 
-      <?php } ?>
+      <?php } } ?>
 
       </ul>
 

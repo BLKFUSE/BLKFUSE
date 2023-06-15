@@ -20,7 +20,7 @@
 DROP TABLE IF EXISTS `engine4_music_playlists`;
 CREATE TABLE IF NOT EXISTS `engine4_music_playlists` (
   `playlist_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(63) NOT NULL default '',
+  `title` varchar(255) NOT NULL default '',
   `description` text NOT NULL,
   `photo_id` int(11) unsigned NOT NULL default '0',
   `owner_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `engine4_music_playlist_songs` (
   `song_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `playlist_id` int(11) unsigned NOT NULL,
   `file_id` int(11) unsigned NOT NULL,
-  `title` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `play_count` int(11) unsigned NOT NULL default '0',
   `order` smallint(6) NOT NULL default '0',
   PRIMARY KEY (`song_id`),

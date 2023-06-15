@@ -16,7 +16,7 @@ class Sesadvancedcomment_Form_Admin_Settings_General extends Engine_Form {
 
     $headScript = new Zend_View_Helper_HeadScript();
     $headScript->appendFile(Zend_Registry::get('StaticBaseUrl') . 'externals/ses-scripts/jscolor/jscolor.js');
-    $headScript->appendFile(Zend_Registry::get('StaticBaseUrl') . 'application/modules/Sesbasic/externals/scripts/jquery.min.js');
+    
     $settings = Engine_Api::_()->getApi('settings', 'core');
 
     $this->setTitle('Global Settings')

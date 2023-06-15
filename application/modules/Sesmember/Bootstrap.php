@@ -38,9 +38,10 @@ class Sesmember_Bootstrap extends Engine_Application_Bootstrap_Abstract {
     $front->registerPlugin(new Sesmember_Plugin_Core);
 
     //Overwrite User Model forPhoto URL function
-    if(!class_exists('User_Model_DbTable_Users', false))
+    if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.pluginactivated') && !class_exists('User_Model_DbTable_Users', false)) {
         include_once APPLICATION_PATH .'/application/modules/User/Model/DbTable/Users.php';
       Engine_Api::_()->getDbTable('users', 'user')->setRowClass('Sesmember_Model_User');
+		}
   }
 
   protected function _initFrontController() {

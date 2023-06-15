@@ -14,7 +14,9 @@
 class Sesvideo_PlaylistController extends Core_Controller_Action_Standard {
 
   public function init() {
-
+		// only show videos if authorized
+    if (!$this->_helper->requireAuth()->setAuthParams('video', null, 'view')->isValid())
+      return;
     //Get viewer info
     $this->view->viewer = $viewer = Engine_Api::_()->user()->getViewer();
     $this->view->viewer_id = $viewer->getIdentity();

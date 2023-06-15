@@ -105,6 +105,74 @@ class Elpis_Installer extends Engine_Package_Installer_Module {
   function onEnable() {
 
     $db = $this->getDb();
+    
+    $db->query('DELETE FROM `engine4_core_content` WHERE `engine4_core_content`.`name` = "inspira.header";');
+    $db->query('DELETE FROM `engine4_core_content` WHERE `engine4_core_content`.`name` = "charity.header";');
+    $db->query('DELETE FROM `engine4_core_content` WHERE `engine4_core_content`.`name` = "core.menu-main";');
+		$db->query('DELETE FROM `engine4_core_content` WHERE `engine4_core_content`.`name` = "core.menu-mini";');
+		$db->query('DELETE FROM `engine4_core_content` WHERE `engine4_core_content`.`name` = "core.menu-logo";');
+		$db->query('DELETE FROM `engine4_core_content` WHERE `engine4_core_content`.`name` = "core.search-mini";');
+		$db->query('DELETE FROM engine4_core_content WHERE `engine4_core_content`.`page_id` = 1 AND `engine4_core_content`.`name` = "serenity.menu-top";');
+    $parent_content_id = $db->select()
+		        ->from('engine4_core_content', 'content_id')
+		        ->where('type = ?', 'container')
+		        ->where('page_id = ?', '1')
+		        ->where('name = ?', 'main')
+		        ->limit(1)
+		        ->query()
+		        ->fetchColumn();
+		if($parent_content_id) {
+		  $db->insert('engine4_core_content', array(
+        'type' => 'widget',
+        'name' => 'core.menu-mini',
+        'page_id' => 1,
+        'parent_content_id' => $parent_content_id,
+        'order' => 9,
+      ));
+      $db->insert('engine4_core_content', array(
+        'type' => 'widget',
+        'name' => 'core.search-mini',
+        'page_id' => 1,
+        'parent_content_id' => $parent_content_id,
+        'order' => 10,
+      ));
+			$db->insert('engine4_core_content', array(
+		      'type' => 'widget',
+		      'name' => 'core.menu-logo',
+		      'page_id' => 1,
+		      'parent_content_id' => $parent_content_id,
+		      'order' => 11,
+		  ));
+		  $db->insert('engine4_core_content', array(
+		      'type' => 'widget',
+		      'name' => 'core.menu-main',
+		      'page_id' => 1,
+		      'parent_content_id' => $parent_content_id,
+		      'order' => 12,
+		  ));
+	  }
+	  
+	  //Footer
+	  $db->query('DELETE FROM `engine4_core_content` WHERE `engine4_core_content`.`name` = "inspira.footer";');
+    $db->query('DELETE FROM `engine4_core_content` WHERE `engine4_core_content`.`name` = "charity.footer";');
+    $db->query('DELETE FROM engine4_core_content WHERE `engine4_core_content`.`page_id` = 2 AND `engine4_core_content`.`name` = "core.menu-footer";');
+		$parent_content_id = $db->select()
+		        ->from('engine4_core_content', 'content_id')
+		        ->where('type = ?', 'container')
+		        ->where('page_id = ?', '2')
+		        ->where('name = ?', 'main')
+		        ->limit(1)
+		        ->query()
+		        ->fetchColumn();
+		if(!empty($parent_content_id)) {
+			$db->insert('engine4_core_content', array(
+        'type' => 'widget',
+        'name' => 'core.menu-footer',
+        'page_id' => 2,
+        'parent_content_id' => $parent_content_id,
+        'order' => 9,
+      ));
+	  }
 
     //Theme Enabled and disabled
     $select = new Zend_Db_Select($db);
@@ -114,6 +182,7 @@ class Elpis_Installer extends Engine_Package_Installer_Module {
     $themeActive = $select->query()->fetch();
     if($themeActive) {
       $db->query("UPDATE  `engine4_core_themes` SET  `active` =  '0' WHERE  `engine4_core_themes`.`name` ='".$themeActive['name']."' LIMIT 1");
+      $db->query("UPDATE  `engine4_core_modules` SET  `enabled` =  '0' WHERE  `engine4_core_modules`.`name` ='".$themeActive['name']."' LIMIT 1");
       $db->query("UPDATE  `engine4_core_themes` SET  `active` =  '1' WHERE  `engine4_core_themes`.`name` ='elpis' LIMIT 1");
     }
     parent::onEnable();

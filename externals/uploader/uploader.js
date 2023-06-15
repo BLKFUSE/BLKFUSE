@@ -5,6 +5,7 @@ Uploader = class {
     uploadLinkClass : '',
     uploadLinkTitle : '',
     uploadLinkDesc : '',
+		removePhotoURL: '',
   };
 
   constructor(uploadElement, options) {
@@ -70,11 +71,13 @@ Uploader = class {
     if(FileSize > post_max_size) {
       return;
     }
-    
+
     //Check image
-    if(file.type.split('/')[0] != 'image') {
-			return self.processUploadError(file['name'] + ' is not an image.');
-    }
+		if(obj.attr('accept').split('/')[0] == 'image') {
+			if(file.type.split('/')[0] != 'image') {
+				return self.processUploadError(file['name'] + ' is not an image.');
+			}
+		}
 
     if (this.alreadyUploaded(file)) {
       return self.processUploadError(file['name'] + ' already added.');
@@ -200,6 +203,19 @@ Uploader = class {
 
   removeFile(el) {
     var file_id = el.attr('data-file_id');
+		
+		if(this.options.removePhotoURL) {
+			scriptJquery.ajax({
+				dataType: 'json',
+				'url' : this.options.removePhotoURL,
+				'data': {
+					'photo_id' : file_id
+				},
+				success : function(responseJSON) {
+				}
+			});
+		}
+		
     delete this.uploadedFileArray[file_id];
     var fancyUploadFileds = scriptJquery('#fancyuploadfileids');
     var currentValue = fancyUploadFileds.val();

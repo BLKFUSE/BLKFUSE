@@ -22,11 +22,16 @@ class Sesadvpmnt_Plugin_Core extends Zend_Controller_Plugin_Abstract
       $gateway = Engine_Api::_()->getItem('payment_gateway', $_GET['gateway_id']);
     }else if($request->getParam("gateway_id")){ 
       $gateway = Engine_Api::_()->getItem('payment_gateway',$request->getParam("gateway_id"));
-    }
+    } 
     $gatewayEnabled = false;
     if(!empty($gateway))
       $gatewayEnabled = ($gateway->plugin == 'Sesadvpmnt_Plugin_Gateway_Stripe') ? 1 : 0;
-    if(($module == "payment" || $module == "sesapi") && $controller == "subscription" && $action == "process" && $gatewayEnabled){
+      if(($module == "payment" || $module == "sesapi") && $controller == "subscription" && $action == "gateway"){
+        $request->setModuleName('sesbasic');
+        $request->setControllerName('subscription');
+        $request->setActionName('gateway');
+        $request->setParam('type','user');
+      }else if(($module == "payment" || $module == "sesapi") && $controller == "subscription" && $action == "process" && $gatewayEnabled){
         $request->setModuleName('sesadvpmnt');
         $request->setControllerName('payment');
         $request->setActionName('index');

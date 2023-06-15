@@ -45,7 +45,7 @@ class Sesandroidapp_AdminPushnotificationController extends Core_Controller_Acti
             $params = $user_ids = $values['toValues'];
             $tokens = Engine_Api::_()->getDbTable('users','sesapi')->getTokens(array('user_ids'=>$user_ids,'platform'=>2));
         }
-        echo "<pre>";var_dump($tokens);die;
+        
         $db = Engine_Db_Table::getDefaultAdapter();
         $db->query("INSERT INTO `engine4_sesandroidapp_pushnotifications`(`title`, `description`, `criteria`, `param`, `sent`, `creation_date`) VALUES ('".$title."','".$body."','".$values['criteria']."','".$params."','1','".date('Y-m-d H:i:s')."')");
         //send notifications

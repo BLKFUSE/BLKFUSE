@@ -166,4 +166,12 @@ class Activity_Model_DbTable_NotificationTypes extends Engine_Db_Table
     }
 
   }
+  
+  public function isEnableNotificationType($type) {
+    return $this->select()
+									->from($this->info('name'), 'default')
+									->where('type = ?', $type)
+									->query()
+									->fetchColumn();
+  }
 }

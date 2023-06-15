@@ -58,7 +58,7 @@ abstract class Sesapi_Controller_Action_Standard extends Engine_Controller_Actio
   
   public function generateFormFields($formFields = array(),$customParams = array()){
      $result['formFields'] = $formFields;
-     if(!empty($customParams) && engine_count($customParams) > 0){
+     if(!empty($customParams)){
       $result['customParams'] = $customParams;  
      }
      Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'', 'result' => $result)); 

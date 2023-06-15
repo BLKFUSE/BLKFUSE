@@ -143,7 +143,7 @@ class Sesstories_Plugin_Job_Encode extends Core_Plugin_Job_Abstract
   }
 
   private function getSesstoriesFilters($video, $width, $height) {
-    $filters = "scale=$width:$height";
+    $filters = "scale=iw:ih";
 
     if ($video->rotation > 0) {
       $filters = "pad='max(iw,ih*($width/$height))':ow/($width/$height):(ow-iw)/2:(oh-ih)/2,$filters";

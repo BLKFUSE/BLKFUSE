@@ -665,25 +665,27 @@ class User_SettingsController extends Core_Controller_Action_User
             if(engine_in_array($type->type, array('invite_notify_admin',"abuse_report", "payment_manual_subscribe")) && !$viewer->isAdmin()){
                 continue;
             }
-            if( isset($modules[$type->module]) ) {
-                $category = 'ACTIVITY_CATEGORY_TYPE_' . strtoupper($type->module);
-                $translateCategory = Zend_Registry::get('Zend_Translate')->_($category);
-                if( $translateCategory === $category ) {
-                    $elementName = preg_replace('/[^a-zA-Z0-9]+/', '_', $type->module);
-                    $category = $modules[$type->module]->title;
-                } else {
-                    $elementName = preg_replace('/[^a-zA-Z0-9]+/', '_', strtolower($translateCategory));
-                }
-            } else {
-                $elementName = 'misc';
-                $category = 'Misc';
-            }
+            if(!empty($type->default)) {
+							if( isset($modules[$type->module]) ) {
+								$category = 'ACTIVITY_CATEGORY_TYPE_' . strtoupper($type->module);
+								$translateCategory = Zend_Registry::get('Zend_Translate')->_($category);
+								if( $translateCategory === $category ) {
+										$elementName = preg_replace('/[^a-zA-Z0-9]+/', '_', $type->module);
+										$category = $modules[$type->module]->title;
+								} else {
+										$elementName = preg_replace('/[^a-zA-Z0-9]+/', '_', strtolower($translateCategory));
+								}
+							} else {
+								$elementName = 'misc';
+								$category = 'Misc';
+							}
 
-            $notificationTypesAssoc[$elementName]['category'] = $category;
-            $notificationTypesAssoc[$elementName]['types'][$type->type] = 'ACTIVITY_TYPE_' . strtoupper($type->type);
+							$notificationTypesAssoc[$elementName]['category'] = $category;
+							$notificationTypesAssoc[$elementName]['types'][$type->type] = 'ACTIVITY_TYPE_' . strtoupper($type->type);
 
-            if( engine_in_array($type->type, $notificationSettings) ) {
-                $notificationSettingsAssoc[$elementName][] = $type->type;
+							if( engine_in_array($type->type, $notificationSettings) ) {
+									$notificationSettingsAssoc[$elementName][] = $type->type;
+							}
             }
         }
 
@@ -758,26 +760,28 @@ class User_SettingsController extends Core_Controller_Action_User
             if($type->type == "abuse_report" && !$viewer->isAdmin()){
                 continue;
             }
-            if( isset($modules[$type->module]) ) {
-                $category = 'ACTIVITY_CATEGORY_TYPE_' . strtoupper($type->module);
-                $translateCategory = Zend_Registry::get('Zend_Translate')->_($category);
-                if( $translateCategory === $category ) {
-                    $elementName = preg_replace('/[^a-zA-Z0-9]+/', '_', $type->module);
-                    $category = $modules[$type->module]->title;
-                } else {
-                    $elementName = preg_replace('/[^a-zA-Z0-9]+/', '_', strtolower($translateCategory));
-                }
-            } else {
-                $elementName = 'misc';
-                $category = 'Misc';
-            }
+            if(!empty($type->default)) {
+							if( isset($modules[$type->module]) ) {
+									$category = 'ACTIVITY_CATEGORY_TYPE_' . strtoupper($type->module);
+									$translateCategory = Zend_Registry::get('Zend_Translate')->_($category);
+									if( $translateCategory === $category ) {
+											$elementName = preg_replace('/[^a-zA-Z0-9]+/', '_', $type->module);
+											$category = $modules[$type->module]->title;
+									} else {
+											$elementName = preg_replace('/[^a-zA-Z0-9]+/', '_', strtolower($translateCategory));
+									}
+							} else {
+									$elementName = 'misc';
+									$category = 'Misc';
+							}
 
-            $emailTypesAssoc[$elementName]['category'] = $category;
-            $emailTypesAssoc[$elementName]['types'][$type->type] = '_EMAIL_' . strtoupper($type->type) . '_TITLE';
+							$emailTypesAssoc[$elementName]['category'] = $category;
+							$emailTypesAssoc[$elementName]['types'][$type->type] = '_EMAIL_' . strtoupper($type->type) . '_TITLE';
 
-            if( engine_in_array($type->type, $emailSettings) ) {
-                $emailSettingsAssoc[$elementName][] = $type->type;
-            }
+							if( engine_in_array($type->type, $emailSettings) ) {
+									$emailSettingsAssoc[$elementName][] = $type->type;
+							}
+						}
         }
 
         ksort($emailTypesAssoc);

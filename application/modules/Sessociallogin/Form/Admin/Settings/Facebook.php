@@ -44,7 +44,7 @@ class Sessociallogin_Form_Admin_Settings_Facebook extends Engine_Form {
 
         $description = vsprintf($description.$moreinfo.$moreinfo1, array('https://developers.facebook.com/apps', 
 
-        'https://www.socialenginesolutions.com/guidelines-social-login-facebook-api-key/',
+        'https://socialnetworking.solutions/guidelines-social-login-facebook-api-key/',
 
         ));
 

@@ -9,7 +9,7 @@ UPDATE `engine4_sesadvancedactivity_filterlists` SET `icon`= 'fas fa-comment' WH
 UPDATE `engine4_sesadvancedactivity_filterlists` SET `icon`= 'fas fa-save' WHERE `filtertype` = 'saved_feeds';
 UPDATE `engine4_sesadvancedactivity_filterlists` SET `icon`= 'fas fa-shopping-cart' WHERE `filtertype` = 'post_self_buysell';
 UPDATE `engine4_sesadvancedactivity_filterlists` SET `icon`= 'fas fa-clock' WHERE `filtertype` = 'scheduled_post';
-UPDATE `engine4_sesadvancedactivity_filterlists` SET `icon`= 'fas fa-share' WHERE `filtertype` = 'share';
+UPDATE `engine4_sesadvancedactivity_filterlists` SET `icon`= 'fas fa-share-alt' WHERE `filtertype` = 'share';
 UPDATE `engine4_sesadvancedactivity_filterlists` SET `icon`= 'fa fa-photo' WHERE `filtertype` = 'sesalbum' OR `filtertype` = 'album';
 UPDATE `engine4_sesadvancedactivity_filterlists` SET `icon`= 'fa fa-video' WHERE `filtertype` = 'sesvideo' OR `filtertype` = 'video';
 UPDATE `engine4_sesadvancedactivity_filterlists` SET `icon`= 'fa fa-music' WHERE `filtertype` = 'sesmusic' OR `filtertype` = 'music';

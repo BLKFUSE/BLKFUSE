@@ -29,7 +29,7 @@ class Install_Import_Phpfox_BlogCategories extends Install_Import_Phpfox_Abstrac
     //MAKING CATEGORY ARRAY FOR INSERTION
     $newData = array();
     $newData['category_id'] = $data['category_id'];
-    $newData['user_id'] = $data['user_id'] ? $data['user_id'] : $this->getSuperAdminUserId();
+    $newData['user_id'] = 1; //$data['user_id'] ? $data['user_id'] : $this->getSuperAdminUserId();
     $newData['category_name'] = $this->getPharseLabel($data['name']);
     return $newData;
   }

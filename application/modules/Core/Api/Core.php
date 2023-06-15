@@ -347,32 +347,58 @@ class Core_Api_Core extends Core_Api_Abstract
       return trim($dateLocaleString, '/');
     }
     
-    /**
-      * This function transforms the php.ini notation for numbers (like '2M') to an integer (2*1024*1024 in this case)
-      * 
-      * @param string $sSize
-      * @return integer The value in bytes
-      */
-      public function convertPHPSizeToBytes($sSize) {
-        $sSuffix = strtoupper(substr($sSize, -1));
-        if (!engine_in_array($sSuffix,array('P','T','G','M','K'))){
-            return (int)$sSize;  
-        } 
-        $iValue = substr($sSize, 0, -1);
-        switch ($sSuffix) {
-          case 'P':
-            $iValue *= 1024;
-          case 'T':
-            $iValue *= 1024;
-          case 'G':
-            $iValue *= 1024;
-          case 'M':
-            $iValue *= 1024;
-          case 'K':
-            $iValue *= 1024;
-            break;
-        }
-        return (int)$iValue;
-      }
+	/**
+	* This function transforms the php.ini notation for numbers (like '2M') to an integer (2*1024*1024 in this case)
+	* 
+	* @param string $sSize
+	* @return integer The value in bytes
+	*/
+	public function convertPHPSizeToBytes($sSize) {
+		$sSuffix = strtoupper(substr($sSize, -1));
+		if (!engine_in_array($sSuffix,array('P','T','G','M','K'))){
+				return (int)$sSize;  
+		} 
+		$iValue = substr($sSize, 0, -1);
+		switch ($sSuffix) {
+			case 'P':
+				$iValue *= 1024;
+			case 'T':
+				$iValue *= 1024;
+			case 'G':
+				$iValue *= 1024;
+			case 'M':
+				$iValue *= 1024;
+			case 'K':
+				$iValue *= 1024;
+				break;
+		}
+		return (int)$iValue;
+	}
 
+	public function isViewPermission($resource_id) {
+	
+		$viewer = Engine_Api::_()->user()->getViewer();
+		if( null !== $viewer && $viewer->getIdentity() ) {
+			$level_id = $viewer->level_id;
+		} else {
+			$level_id = '5';
+		}
+		$allowTable = Engine_Api::_()->getDbTable('allow', 'authorization');
+		return $allowTable->select()
+							->from($allowTable->info('name'), 'value')
+							->where('resource_type = ?', 'forum')
+							->where('resource_id = ?', $resource_id)
+							->where('action = ?', 'view')
+							->where('role_id = ? OR role_id = 0', $level_id)
+							->query()
+							->fetchColumn();
+	}
+	
+	public function isAcpProSetting() {
+		$show = true;
+    if(Engine_Api::_()->user()->getViewer()->isOnlyAdmin() && !Engine_Api::_()->getApi('settings', 'core')->getSetting('acppro.smtp', 1)) {
+			$show = false;
+    }
+    return $show;
+	}
 }

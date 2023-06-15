@@ -22,7 +22,6 @@ body{
   border-style:solid;
   border-width:0px;
   border-color:$theme_border_color;
-	outline:none;
 }
 *:active{
 	outline:none;
@@ -1633,6 +1632,11 @@ div.comments_comment_likes_tips{
 	background-color:$theme_buttontabs_background_color_active;
 	color:$theme_button_tabs_font_color_active !important;
 }
+.tabs > ul li > a:focus-visible{
+	background-color:$theme_buttontabs_background_color_active;
+	color:$theme_button_tabs_font_color_active !important;	
+	outline:0;
+}
 .tabs > ul li.active,
 .tabs > ul li.active + li,
 .sesbasic_browse_nav_tab_open{border-width:0 !important;}
@@ -1695,9 +1699,11 @@ TABS (TAB STYLE, NON-DEFAULT)
 	text-decoration:none;
 }
 .tabs_alt > ul > li.tab_active > a, 
-.tabs_alt > ul > li.active > a{
+.tabs_alt > ul > li.active > a,
+.tabs_alt > ul > li > a:focus-visible{
   background-color:$theme_tabs_background_color_active;
 	color:$theme_tabs_font_color_active;
+	outline:0;
 }
 .tabs_alt > ul > li > a > span{
 	margin-left:5px;
@@ -1720,7 +1726,7 @@ TABS (TAB STYLE, NON-DEFAULT)
 	border:2px solid $theme_pulldown_border_color;
 	display:none;
 	position:absolute;
-	margin-top:45px;
+	margin-top:10px;
 	z-index:99;
 }
 .tab_pulldown_contents_wrapper:before{
@@ -1745,7 +1751,7 @@ TABS (TAB STYLE, NON-DEFAULT)
 	overflow-y:auto;
 }
 .tabs > ul .sesbasic_browse_nav_pulldown ul li a,
-.tab_pulldown_contents > ul > li{
+.tab_pulldown_contents > ul > li > a{
 	+noselect;
 	color:$theme_pulldown_contents_list_color;
 	cursor:pointer;
@@ -1754,18 +1760,21 @@ TABS (TAB STYLE, NON-DEFAULT)
 	min-width:150px;
 	max-width:250px;
 	padding:10px;
+	display: block;
 }
-.tab_pulldown_contents > ul > li + li{
+.tab_pulldown_contents > ul > li + li a{
 	border-top-width:1px;
 }
 .tabs > ul .sesbasic_browse_nav_pulldown ul li a:hover,
-.tab_pulldown_contents > ul > li:hover{
+.tab_pulldown_contents > ul > li a:hover,
+.tab_pulldown_contents > ul > li a:focus-visible{
 	background-color:rgba(0, 0, 0, .1);
 	color:$theme_tabs_font_color_hover;
 	cursor:pointer;
+	outline:0;
 }
 .tabs > ul .sesbasic_browse_nav_pulldown ul li.active a,
-.tab_pulldown_contents > ul > li.active{
+.tab_pulldown_contents > ul > li.active a{
 	background-color:$theme_tabs_background_color_active;
 	color:$theme_tabs_font_color_active;
 	border-bottom-width:1px;
@@ -1799,6 +1808,12 @@ TABS (TAB STYLE, NON-DEFAULT)
 .profile_cover_photo_tabs .tabs_alt > ul > li.active > a{
 	color:$theme_tabs_background_color_active;
 	border-bottom-color:$theme_tabs_background_color_active;
+}
+.profile_cover_photo_tabs .tabs_alt > ul > li > a:focus-visible{
+	color:$theme_tabs_background_color_active;
+	border-bottom-color:$theme_tabs_background_color_active;
+	background: transparent !important;
+	border-bottom-width: 2px;
 }
 /*
 PULLDOWN SELECT BOX
@@ -1900,17 +1915,14 @@ as an alternative to regular input select boxes in some places.
   +rounded(3px);
   display:block;
   color:$theme_base_color;
-  
   padding:6px 7px 6px 7px;
   text-transform:uppercase;
 }
 .updates_pulldown > a{
   display:block;
   +rounded(3px);
-  
   padding:6px 7px 6px 7px;
   text-transform:uppercase;
-  outline:none;
 }
 .updates_pulldown > a.new_updates{
   background-color:rgba(0, 0, 0, ,0.1);
@@ -2864,6 +2876,21 @@ html .emoticons-activator{
 }
 .sesdating_lp_main .sesdating_login:before{
 	border-top:10px solid $theme_base_color;
+}
+#global_page_core-index-index .layout_core_landing_page_banner,
+#global_page_core-index-index .layout_core_landing_page_features,
+#global_page_core-index-index .layout_core_parallax{
+	background-color: transparent !important;
+}
+.layout_core_landing_page_features > h3 {
+	background-color: transparent;
+	text-align: center;
+}
+.core_landingpage_banner > section > div > h1{
+	color: #fff;
+}
+.layout_middle .generic_layout_container.layout_sesbasic_simple_html_block > div {
+	margin-top: 0px !important;
 }
 
 /*Media Queries for RESPONSIVE DESIGN*/

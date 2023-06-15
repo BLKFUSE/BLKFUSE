@@ -28,7 +28,7 @@
   <?php endforeach; ?>
     <?php if($this->paginator->getTotalItemCount() > $this->data_show){ ?>
   <li>
-    <a href="javascript:;" onclick="getLikeData('<?php echo $this->subject()->getIdentity(); ?>','<?php echo urlencode($this->translate($this->title)); ?>')" class="sesbasic_user_grid_list_more">
+    <a href="javascript:;" onclick="getLikeData('<?php echo $this->subject()->getIdentity(); ?>','<?php echo urlencode($this->translate(!empty($this->title) ? $this->title : "")); ?>')" class="sesbasic_user_grid_list_more">
      <?php echo '+';echo $this->paginator->getTotalItemCount() - $this->data_show ; ?>
     </a>
   </li>

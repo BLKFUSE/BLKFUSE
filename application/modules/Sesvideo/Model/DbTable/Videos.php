@@ -90,6 +90,10 @@ class Sesvideo_Model_DbTable_Videos extends Engine_Db_Table {
     } elseif(isset($params['lat']) && isset($params['lng']) && $params['lat'] != '' && $params['lng'] != '' && ((isset($params['location']) && $params['location'] != ''))) {
       $select->joinLeft($tableLocationName, $tableLocationName . '.resource_id = ' . $tableName . '.video_id AND ' . $tableLocationName . '.resource_type = "sesvideo_video" ', array('lat', 'lng'));
     } 
+    
+		if(empty($params['user_id']) && method_exists('Core_Model_Item_DbTable_Abstract','getItemsSelect') ) {
+      $select = $this->getItemsSelect($params, $select);
+    }
 
     if(!empty($params['location']) && !Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) {
       $select->where('`' . $tableName . '`.`location` LIKE ?', '%' . $params['location'] . '%');
@@ -281,6 +285,55 @@ class Sesvideo_Model_DbTable_Videos extends Engine_Db_Table {
       return Zend_Paginator::factory($select);
     else
       return $this->fetchAll($select);
+  }
+  
+  public function getItemsSelect($params, $select = null) {
+  
+    if( $select == null ) {
+			$select = $this->select();
+    }
+    
+    $tableName = $this->info('name');
+
+    $registeredPrivacy = array('everyone', 'registered');
+    $viewer = Engine_Api::_()->user()->getViewer();
+    if($viewer->isAdmin()) return $select;
+    if($viewer->getIdentity() && !engine_in_array($viewer->level_id, $this->_excludedLevels) ) {
+        $viewerId = $viewer->getIdentity();
+        $netMembershipTable = Engine_Api::_()->getDbtable('membership', 'network');
+        $viewerNetwork = $netMembershipTable->getMembershipsOfIds($viewer);
+//         if( !empty($viewerNetwork) ) {
+//             array_push($registeredPrivacy,'owner_network');
+//         }
+        $friendsIds = $viewer->membership()->getMembersIds();
+        $friendsOfFriendsIds = $friendsIds;
+        foreach( $friendsIds as $friendId ) {
+            $friend = Engine_Api::_()->getItem('user', $friendId);
+            $friendMembersIds = $friend->membership()->getMembersIds();
+            $friendsOfFriendsIds = array_merge($friendsOfFriendsIds, $friendMembersIds);
+        }
+    }
+    if( !$viewer->getIdentity() ) {
+        $select->where("view_privacy = ? OR view_privacy IS NULL", 'everyone');
+    } elseif( !engine_in_array($viewer->level_id, $this->_excludedLevels) ) {
+
+			$select->where("
+				CASE 
+					WHEN $tableName.owner_id = {$viewer->getIdentity()} THEN true
+					WHEN $tableName.view_privacy IN (".sprintf("'%s'", implode("','", $registeredPrivacy ) ).") OR view_privacy IS NULL THEN TRUE
+					WHEN $tableName.view_privacy = 'owner_member' AND ".count($friendsIds)." > 0 THEN $tableName.owner_id IN (".sprintf("'%s'", implode("','", $friendsIds ) ).")
+					WHEN $tableName.view_privacy = 'owner_member' THEN false
+					WHEN $tableName.view_privacy = 'owner_member_member' THEN $tableName.owner_id IN (".sprintf("'%s'", implode("','", $friendsOfFriendsIds ) ).")
+					WHEN $tableName.view_privacy = 'owner_network' THEN $tableName.owner_id IN (".sprintf("'%s'", implode("','", $friendsIds ) ).") AND (select count(resource_id) from engine4_network_membership where user_id = $tableName.owner_id AND resource_id IN (".sprintf("'%s'", implode("','", $viewerNetwork ) ).")) > 0 
+					ELSE false 
+				END
+			");
+
+			$subquery = $select->getPart(Zend_Db_Select::WHERE);
+			$select ->reset(Zend_Db_Select::WHERE);
+			$select ->where(implode(' ',$subquery));
+    }
+    return $select;
   }
 
   public function peopleAlsoLiked($id = 0) {

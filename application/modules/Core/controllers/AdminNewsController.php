@@ -73,9 +73,9 @@ class Core_AdminNewsController extends Core_Controller_Action_Admin
             $this->view->isCached = false;
 
             // Caching
-            if ($cacheId && !empty($channel)) {
-                $cache->save($channel, $cacheId);
-            }
+//             if ($cacheId && !empty($channel)) {
+//                 $cache->save($channel, $cacheId);
+//             }
         } else {
             $this->view->isCached = true;
         }

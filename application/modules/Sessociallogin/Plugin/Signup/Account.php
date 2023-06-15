@@ -197,6 +197,23 @@ class Sessociallogin_Plugin_Signup_Account extends Core_Plugin_FormSequence_Abst
             }
         }
     }
+    
+    public function onSubmit(Zend_Controller_Request_Abstract $request) {
+			// Form was valid
+			if ($this->getForm()->isValid($request->getPost())) {
+					$this->getSession()->data = $this->getForm()->getValues();
+					$_SESSION['User_Plugin_Signup_Account']['data'] = $this->getForm()->getValues();
+					$this->getSession()->active = false;
+					$this->onSubmitIsValid();
+					return true;
+			}
+			// Form was not valid
+			else {
+					$this->getSession()->active = true;
+					$this->onSubmitNotIsValid();
+					return false;
+			}
+    }
 
     public function onProcess() {
         $settings = Engine_Api::_()->getApi('settings', 'core');
@@ -279,8 +296,8 @@ class Sessociallogin_Plugin_Signup_Account extends Core_Plugin_FormSequence_Abst
             'host' => $_SERVER['HTTP_HOST'],
             'email' => $user->email,
             'date' => $date->format('F j, Y, g:i a'),
-            'recipient_title' => $super_admin->displayname,
-            'object_title' => $user->displayname,
+            'recipient_title' => $super_admin->getTitle(),
+            'object_title' => $user->getTitle(),
             'object_link' => $user->getHref(),
           );
         }
@@ -297,7 +314,7 @@ class Sessociallogin_Plugin_Signup_Account extends Core_Plugin_FormSequence_Abst
             'host' => $_SERVER['HTTP_HOST'],
             'email' => $user->email,
             'date' => $date->format('F j, Y, g:i a'),
-            'recipient_title' => $super_admin->displayname,
+            'recipient_title' => $super_admin->getTitle(),
             'object_title' => $user->getTitle(),
             'object_link' => $user->getHref(),
           );
@@ -332,7 +349,7 @@ class Sessociallogin_Plugin_Signup_Account extends Core_Plugin_FormSequence_Abst
             'host' => $_SERVER['HTTP_HOST'],
             'email' => $user->email,
             'date' => date("F j, Y, g:i a"),
-            'recipient_title' => $super_admin->displayname,
+            'recipient_title' => $super_admin->getTitle(),
             'object_title' => $user->getTitle(),
             'object_link' => $user->getHref(),
           );

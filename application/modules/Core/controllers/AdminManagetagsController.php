@@ -118,6 +118,43 @@ class Core_AdminManagetagsController extends Core_Controller_Action_Admin {
       ));
     }
   }
+  
+  public function editAction() {
+
+    $this->_helper->layout->setLayout('admin-simple');
+		
+		$id = $this->_getParam('id', null);
+    $tag = Engine_Api::_()->getItem('core_tag', (int) $id);
+    
+    //Generate and assign form
+    $this->view->form = $form = new Core_Form_Admin_Managetags_Edit();
+    $form->setTitle('Edit Tags');
+    $form->text->setLabel('Tag Name');
+    
+    $form->populate($tag->toArray());
+    //$form->text->setDescription('Enter tags seprate by comma.');
+
+    if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
+
+      $values = $form->getValues();
+
+      $db = Engine_Db_Table::getDefaultAdapter();
+      $db->beginTransaction();
+      try {
+				$tag->text = $values['text'];
+				$tag->save();
+        $db->commit();
+      } catch (Exception $e) {
+				$db->rollBack();
+				throw $e;
+      }
+      return $this->_forward('success', 'utility', 'core', array(
+        'smoothboxClose' => 10,
+        'parentRefresh' => 10,
+        'messages' => array('You have successfully edited tag.')
+      ));
+    }
+  }
 
   public function multiModifyAction() {
     if( $this->getRequest()->isPost() ) {

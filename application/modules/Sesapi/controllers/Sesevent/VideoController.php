@@ -33,7 +33,7 @@ class Sesevent_VideoController extends Sesapi_Controller_Action_Standard {
         }
         $viewer = Engine_Api::_()->user()->getViewer();
          //check dependent module sesprofile install or not
-        if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('seslock'))) {
+        if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesprofilelock'))) {
           //member level check for lock videos
           if ($viewer->getIdentity() == 0)
             $result['level'] = $level = Engine_Api::_()->getDbtable('levels', 'authorization')->getPublicLevel()->level_id;

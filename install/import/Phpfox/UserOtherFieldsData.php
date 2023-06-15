@@ -164,7 +164,7 @@ class Install_Import_Phpfox_UserOtherFieldsData extends Install_Import_Phpfox_Ab
       $userInfo['profile_type'] = $this->_customFields['profile_type'];
 
     //Set birthday 
-    $userInfo['birthdate'] = $birthdate;
+    $userInfo['birthdate'] = $birthdate ? $birthdate : null;
     $toFieldId = $this->_customFields['fieldsId']['profile_type'];
     $udata = array
       (
@@ -213,7 +213,11 @@ class Install_Import_Phpfox_UserOtherFieldsData extends Install_Import_Phpfox_Ab
         );
       }
     }
-    //Insert User information into user field search
-    $this->_insertFieldSearch($udata);
+		try {
+			//Insert User information into user field search
+			$this->_insertFieldSearch($udata);
+	  } catch(Exception $e) {
+			
+	  }
   }
 }

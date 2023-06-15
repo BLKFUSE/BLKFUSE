@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesstories/externals/scripts/core.js'); ?>
 <?php if(!empty($this->archived)){ ?>
 <script type="application/javascript">
     en4.core.runonce.add(function() {

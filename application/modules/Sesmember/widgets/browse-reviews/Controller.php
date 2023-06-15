@@ -16,8 +16,12 @@ class Sesmember_Widget_BrowseReviewsController extends Engine_Content_Widget_Abs
 
     if (isset($_POST['params']))
       $params = json_decode($_POST['params'], true);
-    if (isset($_POST['searchParams']) && $_POST['searchParams'])
-      parse_str($_POST['searchParams'], $searchArray);
+		if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+			if(engine_in_array($_POST['searchParams']))
+				$searchArray = $_POST['searchParams'];
+			elseif(is_string($_POST['searchParams']))
+				parse_str($_POST['searchParams'], $searchArray);
+		}
 
     $this->view->is_ajax = $is_ajax = isset($_POST['is_ajax']) ? true : false;
     $this->view->page = $page = $this->_getParam('page', 1);

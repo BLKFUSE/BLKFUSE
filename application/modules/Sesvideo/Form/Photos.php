@@ -34,9 +34,11 @@ class Sesvideo_Form_Photos extends Engine_Form {
     foreach ($myChanels as $myChanel) {
       $chanelOptions[$myChanel['chanel_id']] = $myChanel['title'];
     }
+    $chanel_id = Zend_Controller_Front::getInstance()->getRequest()->getParam('chanel_id', 0);
     $this->addElement('Select', 'chanel', array(
         'label' => 'Choose Channel',
         'multiOptions' => $chanelOptions,
+        'value' => $chanel_id,
     ));
     $translate = Zend_Registry::get('Zend_Translate');
     $this->addElement('Dummy', 'fancyuploadfileids', array('content' => '<input id="fancyuploadfileids" name="file" type="hidden" value="" >'));

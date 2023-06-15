@@ -24,11 +24,11 @@ function getRequestedAlbumPhotoForImageViewer(imageURL,requestedURL,manageData){
 	makeLayoutForImageViewer();
   if(firstStartPoint == 0){
     offsetY = window.pageYOffset;
-    scriptJquery('html').css('position','fixed').css('width','100%').css('overflow','hidden');
-    scriptJquery('html').css('top', -offsetY + 'px');
+    scriptJquery('html').css('position','fixed').css('width','100%').css('overflow-y','hidden');
+		scriptJquery('html').css('top', -offsetY + 'px');
   }
 	scriptJquery('#ses_media_lightbox_container').show();
-	scriptJquery('body').css({ 'overflow': 'hidden' });
+	// scriptJquery('body').css({ 'overflow': 'hidden' });
  //check function call from image viewer or direct
  if(!dataCommentSes){
 		dataCommentSes = scriptJquery('.layout_core_comments').html();
@@ -140,6 +140,9 @@ scriptJquery(document).on('click','.ses_media_lightbox_overlay, #crossSes, .cros
 		getTagData = '';
     sesCustomPhotoURL = false;
 	}
+	scriptJquery('html').css('position','inherit').css('overflow-y','auto');
+	scriptJquery(window).scrollTop(offsetY);
+
 	scriptJquery('#ses_media_lightbox_container').remove();
 	scriptJquery('#ses_media_lightbox_container_video').remove();
 });

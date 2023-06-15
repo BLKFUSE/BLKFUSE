@@ -44,7 +44,7 @@
 						
 						$namestr =  trim($namestr,', ');
 						if($countBirthday == 2)
-						$namestr =  substr($namestr,0,strlen-3);
+						$namestr =  substr($namestr,0,$strlen-3);
 						echo $namestr;
 					}
 					if($countBirthday > 2){ ?>

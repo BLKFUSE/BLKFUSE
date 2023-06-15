@@ -228,21 +228,4 @@ class User_IndexController extends Core_Controller_Action_Standard
 
     return true;
   }
-  public function fieldsAction(){
-    $params = $this->_getAllParams();
-    $subject = Engine_Api::_()->getItemByGuid($params['guid']);
-    $params = [
-        'item' => $subject,
-        'topLevelId'=> $params['parent_field_id'],
-        'topLevelValue'=> $params['parent_option_id'],
-        'hasPrivacy' => true,
-        'privacyValues' => $this->getRequest()->getParam('privacy'),
-        'enableAjaxLoad' => true
-    ];
-    $form = new Fields_Form_Standard($params);
-    if($form->getElement("submit")){
-        $form->removeElement("submit");
-    }
-    $this->view->form = $form;
-  }
 }

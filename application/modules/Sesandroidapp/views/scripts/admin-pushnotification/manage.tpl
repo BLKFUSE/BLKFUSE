@@ -17,10 +17,10 @@
   <?php echo $this->translate('Native Android Mobile App'); ?>
 </h2>
 <?php if( engine_count($this->navigation)): ?>
-  <div class='sesandroidapp-admin-navgation'> <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?> </div>
+  <div class='tabs'> <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?> </div>
 <?php endif; ?>
 <?php if(is_countable($this->subnavigation) &&  engine_count($this->subnavigation)): ?>
-  <div class='sesandroidapp-admin-navgation'> <?php echo $this->navigation()->menu()->setContainer($this->subnavigation)->render(); ?> </div>
+  <div class='tabs'> <?php echo $this->navigation()->menu()->setContainer($this->subnavigation)->render(); ?> </div>
 <?php endif; ?>
 <h3><?php echo $this->translate('Manage & Send Push Notifications'); ?></h3>
 <p><?php echo $this->translate('Here you can configure the push notification message and send to all subscribers of your choice. You can send new push notification by using the “Send Push Notification” link below.'); ?></p><br>

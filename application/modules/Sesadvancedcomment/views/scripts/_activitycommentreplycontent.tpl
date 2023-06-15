@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php include APPLICATION_PATH .  '/application/modules/Sesadvancedcomment/views/scripts/_jsFiles.tpl'; ?>
 <?php $commentreply = $this->commentreply; 
       if($commentreply->getType() == 'activity_comment') {
         $activitycomments = Engine_Api::_()->getDbTable('activitycomments', 'sesadvancedactivity')->rowExists($commentreply->getIdentity());
@@ -43,7 +44,7 @@
             continue;
           $item = Engine_Api::_()->getItem($resource_type,$resource_id);  
           if(!$item || !$item->getIdentity())
-            continue;
+            continue; 
           $item = $item->getOwner();
           if(!$item || !$item->getIdentity())
            continue;
@@ -60,11 +61,11 @@
    <span class="comments_reply_body_actual" rel="<?php echo $module; ?>" style="display:none;">
     <?php if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesemoji') && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesemoji.pluginactivated')) {
         //Emoji Share Work
-        require_once 'application/modules/Sesemoji/controllers/lib/php/autoload.php';
-        $client = new Client(new Ruleset());
-        $client->imagePathPNG = 'application/modules/Sesemoji/externals/images/emoji/';
-        $emojisCode = Engine_Api::_()->sesemoji()->DecodeEmoji($commentreply->body);
-        echo $client->toImage($emojisCode);
+        //require_once 'application/modules/Sesemoji/controllers/lib/php/autoload.php';
+        //$client = new Client(new Ruleset());
+        //$client->imagePathPNG = 'application/modules/Sesemoji/externals/images/emoji/';
+        echo Engine_Api::_()->sesemoji()->DecodeEmoji($commentreply->body);
+        //echo $client->toImage($emojisCode);
         //echo Engine_Api::_()->sesemoji()->DecodeEmoji($commentreply->body); ?>
     <?php } else { ?>
       <?php echo nl2br($commentreply->body); ?>

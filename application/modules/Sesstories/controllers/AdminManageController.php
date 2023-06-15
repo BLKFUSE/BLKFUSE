@@ -60,7 +60,7 @@ class Sesstories_AdminManageController extends Core_Controller_Action_Admin {
     if (isset($_GET['plateform']) && $_GET['plateform'] != '')
       $select->where($tableName.'.plateform = ?', $values['plateform']);
     if (!empty($values['creation_date']))
-      $select->where($tableName.'.date(' . $tableName . '.creation_date) = ?', $values['creation_date']);
+      $select->where($tableName . '.creation_date LIKE ?', $values['creation_date'] . '%');
 
     if (!empty($_GET['owner_name']))
       $select->where($tableUserName . '.displayname LIKE ?', '%' . $_GET['owner_name'] . '%');

@@ -586,24 +586,24 @@ class ManageController extends Zend_Controller_Action
         if (preg_match('/^(.*?)\:([0-9]+)$/i', $httpHost, $matches)) {
             $httpHost = $matches[1];
         }
-        if ($packages && !preg_match('/^([a-z]+)\.socialenginedev\.com$/i', $httpHost)) {
-            foreach ($packages as $package) {
-                if (!method_exists($package, 'getSku')) {
-                    continue;
-                }
-                $sku = $package->getSku();
-
-                if (!$sku) {
-                    $manifestFile = $package->getBasePath() . '/' . $package->getPath() . '/settings/manifest.php';
-                    if (file_exists($manifestFile)) {
-                        $manifest = require($manifestFile);
-                        if (isset($manifest['package']) && isset($manifest['package']['sku'])) {
-                            $sku = $manifest['package']['sku'];
-                        }
-                    }
-                }
-            }
-        }
+//         if ($packages && !preg_match('/^([a-z]+)\.socialenginedev\.com$/i', $httpHost)) {
+//             foreach ($packages as $package) {
+//                 if (!method_exists($package, 'getSku')) {
+//                     continue;
+//                 }
+//                 $sku = $package->getSku();
+// 
+//                 if (!$sku) {
+//                     $manifestFile = $package->getBasePath() . '/' . $package->getPath() . '/settings/manifest.php';
+//                     if (file_exists($manifestFile)) {
+//                         $manifest = require($manifestFile);
+//                         if (isset($manifest['package']) && isset($manifest['package']['sku'])) {
+//                             $sku = $manifest['package']['sku'];
+//                         }
+//                     }
+//                 }
+//             }
+//         }
 
         // Check for modifications to installer (to prevent problems)
         $this->_checkForModifications(true);

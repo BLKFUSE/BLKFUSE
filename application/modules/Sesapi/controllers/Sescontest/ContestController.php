@@ -205,16 +205,16 @@ class Sescontest_ContestController extends Sesapi_Controller_Action_Standard {
         $result['contest']['options'][$optionscounter]['label'] =  $this->view->translate($overviewEdit->title);
         $optionscounter++;
       }
-       if($feesEdit->enabled && $isContestEdit){
-          $result['contest']['options'][$optionscounter]['name'] = 'editfees';
-          $result['contest']['options'][$optionscounter]['label'] =  $this->view->translate($feesEdit->title);
-          $optionscounter++;
-        }
-         if($juryEdit->enabled && $isContestEdit){
-          $result['contest']['options'][$optionscounter]['name'] = 'editjury';
-          $result['contest']['options'][$optionscounter]['label'] =  $this->view->translate($juryEdit->title);
-          $optionscounter++;
-        }
+      //  if($feesEdit->enabled && $isContestEdit){
+      //     $result['contest']['options'][$optionscounter]['name'] = 'editfees';
+      //     $result['contest']['options'][$optionscounter]['label'] =  $this->view->translate($feesEdit->title);
+      //     $optionscounter++;
+      //   }
+      //    if($juryEdit->enabled && $isContestEdit){
+      //     $result['contest']['options'][$optionscounter]['name'] = 'editjury';
+      //     $result['contest']['options'][$optionscounter]['label'] =  $this->view->translate($juryEdit->title);
+      //     $optionscounter++;
+      //   }
         if ($isContestDelete) {
             $result['contest']['options'][$optionscounter]['name'] = 'delete';
             $result['contest']['options'][$optionscounter]['label'] = $this->view->translate("Delete Contest");
@@ -1048,10 +1048,10 @@ class Sescontest_ContestController extends Sesapi_Controller_Action_Standard {
           $contest->resource_type = $resource_type;
           $contest->save();
         }
+        $tags = preg_split('/[,]+/', $values['tags']);
         $contest->seo_keywords = implode(',', $tags);
         //$contest->seo_title = $contest->title;
         $contest->save();
-        $tags = preg_split('/[,]+/', $values['tags']);
         $contest->tags()->addTagMaps($viewer, $tags);
 
         $count = 0;
@@ -2286,7 +2286,7 @@ class Sescontest_ContestController extends Sesapi_Controller_Action_Standard {
       $owner = $contests->getOwner();
 
       $result['basicInformation'][$basicInformationCounter]['name'] = 'createdby';
-      $result['basicInformation'][$basicInformationCounter]['value'] = $owner->displayname;
+      $result['basicInformation'][$basicInformationCounter]['value'] = $owner->getTitle();
       $result['basicInformation'][$basicInformationCounter]['label'] = 'Created By';
       $basicInformationCounter++;
 

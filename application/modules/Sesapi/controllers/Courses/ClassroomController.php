@@ -239,13 +239,13 @@ class Courses_ClassroomController extends Sesapi_Controller_Action_Standard
                     $dbGetInsert->query('INSERT INTO `engine4_sesadvancedactivity_hashtags` (`action_id`, `title`) VALUES ("'.$action->getIdentity().'", "'.$tag.'")');
                   }
                 }
-                $users = array_unique(array_merge($likesClassroom ,$followerClassroom, $favouriteClassroom), SORT_REGULAR);
-                foreach($users as $user){ 
-                    $usersOject = Engine_Api::_()->getItem('user', $user);
-                    Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($usersOject, $viewer, $classroom, 'eclassroom_classroom_create');
+                // $users = array_unique(array_merge($likesClassroom ,$followerClassroom, $favouriteClassroom), SORT_REGULAR);
+                // foreach($users as $user){ 
+                //     $usersOject = Engine_Api::_()->getItem('user', $user);
+                //     Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($usersOject, $viewer, $classroom, 'eclassroom_classroom_create');
 
-                    Engine_Api::_()->getApi('mail', 'core')->sendSystem($usersOject->email, 'eclassroom_classroom_create', array('host' => $_SERVER['HTTP_HOST'], 'classroom_name' => $classroomname,'object_link'=>$classroom->getHref()));
-                }
+                //     Engine_Api::_()->getApi('mail', 'core')->sendSystem($usersOject->email, 'eclassroom_classroom_create', array('host' => $_SERVER['HTTP_HOST'], 'classroom_name' => $classroomname,'object_link'=>$classroom->getHref()));
+                // }
             }
             $emails = Engine_Api::_()->getApi('settings', 'core')->getSetting('eclassroom.receivenewalertemails', null);
             if(!empty($emails)) {
@@ -674,7 +674,7 @@ class Courses_ClassroomController extends Sesapi_Controller_Action_Standard
                 $result[$classroomCounter] = $classroomArray;
                 $statsCounter = 0;
                 $image = Engine_Api::_()->sesapi()->getPhotoUrls($classroom, '', "");
-                if (image) {
+                if ($image) {
                     $result[$classroomCounter]['images'] = $image;
                 } else {
                     $result[$classroomCounter]['images'] = $image;
@@ -1963,7 +1963,8 @@ class Courses_ClassroomController extends Sesapi_Controller_Action_Standard
     $levelId = ($viewerId) ? $viewer->level_id : Engine_Api::_()->getDbtable('levels', 'authorization')->getPublicLevel()->level_id;
     $canJoin = Engine_Api::_()->authorization()->getPermission($levelId, 'classroom', 'bs_can_join');
     foreach ($navigation as $link) {
-        $class = end(explode(' ', $link->class));
+				$classMenu = explode(' ', $link->class);
+        $class = end($classMenu);
         $label = $this->view->translate($link->getLabel());
         if ($class != "eclassroom_profile_addtoshortcut") {
           $action = 'cancel';
@@ -2898,7 +2899,7 @@ class Courses_ClassroomController extends Sesapi_Controller_Action_Standard
     $albumCounter = 0;
     foreach ($paginator as $item) {
         $owner = $item->getOwner();
-        $ownertitle = $owner->displayname;
+        $ownertitle = $owner->getTitle();
         $result['albums'][$albumCounter] = $item->toArray();
         $photo = Engine_Api::_()->getItem('eclassroom_photo',$item->photo_id);
         if($photo)
@@ -3232,8 +3233,12 @@ class Courses_ClassroomController extends Sesapi_Controller_Action_Standard
         $params = $_POST;
     }
     $searchArray = array();
-    if (isset($_POST['searchParams']) && $_POST['searchParams'])
-        parse_str($_POST['searchParams'], $searchArray);
+    if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+			if(engine_in_array($_POST['searchParams']))
+				$searchArray = $_POST['searchParams'];
+			elseif(is_string($_POST['searchParams']))
+				parse_str($_POST['searchParams'], $searchArray);
+    }
     $value['classroom'] = isset($_POST['classroom']) ? $_POST['classroom'] : 1;
     $value['sort'] = isset($searchArray['sort']) ? $searchArray['sort'] : (isset($_GET[' ']) ? $_GET['sort'] : (isset($params['sort']) ? $params['sort'] : $this->_getParam('sort', 'mostSPliked')));
     $value['show'] = isset($searchArray['show']) ? $searchArray['show'] : (isset($_GET['show']) ? $_GET['show'] : (isset($params['show']) ? $params['show'] : ''));
@@ -3280,7 +3285,7 @@ class Courses_ClassroomController extends Sesapi_Controller_Action_Standard
     $albumCounter = 0;
     foreach ($paginator as $item) {
         $owner = $item->getOwner();
-        $ownertitle = $owner->displayname;
+        $ownertitle = $owner->getTitle();
         $result['albums'][$albumCounter] = $item->toArray();
         $result['albums'][$albumCounter]['images'] = $this->getBaseUrl(true, (!empty($item->photo_id)) ? $item->getPhotoUrl() : '/application/modules/User/externals/images/nophoto_classroom_thumb_profile.png');
         $result['albums'][$albumCounter]['user_title'] = $ownertitle;
@@ -3964,7 +3969,7 @@ class Courses_ClassroomController extends Sesapi_Controller_Action_Standard
         $hideIdentity = Engine_Api::_()->getApi('settings', 'core')->getSetting('eclassroom_show_userdetail', 0);
         if(!$hideIdentity){
             $result['basicInformation'][$basicInformationCounter]['name'] = 'createdby';
-            $result['basicInformation'][$basicInformationCounter]['value'] = $owner->displayname;
+            $result['basicInformation'][$basicInformationCounter]['value'] = $owner->getTitle();
             $result['basicInformation'][$basicInformationCounter]['label'] = 'Created By';
             $basicInformationCounter++;
         }

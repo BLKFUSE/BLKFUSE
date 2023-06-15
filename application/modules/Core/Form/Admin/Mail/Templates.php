@@ -20,6 +20,9 @@ class Core_Form_Admin_Mail_Templates extends Engine_Form
 {
   public function init()
   {
+		
+		$template = Zend_Controller_Front::getInstance()->getRequest()->getParam('template', 1);
+		
     // Set form attributes
     $description = $this->getTranslator()->translate(
       'Various notification emails are sent to your members as they interact with the community.'
@@ -146,6 +149,17 @@ class Core_Form_Admin_Mail_Templates extends Engine_Form
       'label' => 'Message Body',
       'editorOptions' => $editorOptions,
     ));
+    
+    if(!in_array($template, array(1,2,3,4))) {
+			$this->addElement('Radio', 'default', array(
+				'label' => 'Enable',
+				'description' => "Do you want to enable this email type? If you choose No then mail will not sent to member of your website.",
+				'multiOptions' => array(
+					1 => "Yes",
+					0 => "No",
+				),
+			));
+    }
 
 
 

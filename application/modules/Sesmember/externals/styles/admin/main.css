@@ -1,8 +1,8 @@
 /* $Id:main.css 2016-05-25 00:00:00 SocialEngineSolutions $*/
 
 .sesmember_view_details_rating .sesbasic_rating_star > span.fa:before {
-	color: #FFC107;
-	font-size: 18px;
+	color:#FFC107;
+	font-size:18px;
 }
 .event_calendar_container button.event_calendar{
 	margin-top:0 !important;
@@ -13,11 +13,11 @@
   width:450px;
 }
 .sesmember_parameter_popup .sesbasic_icon_delete {
-	background-repeat: no-repeat;
-	padding-left: 20px;
+	background-repeat:no-repeat;
+	padding-left:20px;
 }
 .sesmember_parameter_popup .settings .form-wrapper{
-  padding: 0;
+  padding:0;
 }
 .sesmember_parameter_popup .form-label{
   display:none;
@@ -27,7 +27,7 @@
 	min-width:inherit !important;
 }
 .sesmember_parameter_popup .sesmember_added_parameter{
-  margin-right: 10px;
+  margin-right:10px;
 }
 .sesmember_parameter_popup .fa:before{
   margin-right:5px;
@@ -39,11 +39,23 @@
 	padding:15px;
 }
 .sesmember_profile_popup .form-description {
-  margin: 5px 0;
+  margin:5px 0;
 }
 #sesmember_allow_review-element .description,
 #sesmember_licensekey-element .hint{
 	max-width:100%;
 	margin-bottom:5px;
 }
-
+/*User Info*/
+.sesmember_member_stats_photo{
+	text-align:center;
+}
+.sesmember_member_stats_photo img{
+	width:150px;
+	vertical-align:middle;
+	height:150px;
+	object-fit:cover;
+	border-radius:10px;
+	box-shadow:0 5px 10px rgb(0 0 0 / 20%);
+	margin-bottom:15px;
+}

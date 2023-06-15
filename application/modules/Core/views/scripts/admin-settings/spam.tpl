@@ -14,15 +14,16 @@
 <h2>
   <?php echo $this->translate("Spam & Banning Tools") ?>
 </h2>
-
-<?php if( engine_count($this->navigation) > 1 ): ?>
-  <div class='tabs'>
-    <?php
-      // Render the menu
-      //->setUlClass()
-      echo $this->navigation()->menu()->setContainer($this->navigation)->render()
-    ?>
-  </div>
+<?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('core.general.enableloginlogs', 0)): ?>
+  <?php if( engine_count($this->navigation) > 1 ): ?>
+    <div class='tabs'>
+      <?php
+        // Render the menu
+        //->setUlClass()
+        echo $this->navigation()->menu()->setContainer($this->navigation)->render()
+      ?>
+    </div>
+  <?php endif; ?>
 <?php endif; ?>
 
 <div class='settings'>

@@ -101,23 +101,26 @@
         )
         )) ?>
 
-
         <script type="text/javascript">
-            var quotePost = function(user, href, body) {
-                if( $type(body) == 'element' ) {
-                    body = $(body).getParent('li').getElement('.group_discussions_thread_body_raw').get('html').trim();
-                }
-                var value = '<blockquote>' + '[b][url=' + href + ']' + user + '[/url] <?php echo $this->translate('said');?>: [/b]\n' + htmlspecialchars_decode(body) + '</blockquote>\n\n';
-            <?php if ( $this->form && ($this->form->body->getType() === 'Engine_Form_Element_TinyMce') ): ?>
-                tinymce.activeEditor.execCommand('mceInsertContent', false, value);
-                tinyMCE.activeEditor.focus();
-            <?php else: ?>
-                document.getElementById('body').value = value;
-                $("body").focus();
-            <?php endif; ?>
+          var quotePost = function(user, href, body, post_id) {
+							body = scriptJquery('#group_discussions_thread_body_raw_'+post_id).html();
+							body = scriptJquery.trim(body);
+              if( $type(body) == 'element' ) {
+                  body = $(body).getParent('li').getElement('.group_discussions_thread_body_raw').get('html').trim();
+              }
+              var value = '<blockquote>' + '[b][url=' + href + ']' + user + '[/url] <?php echo $this->translate('said');?>: [/b]\n' + htmlspecialchars_decode(body) + '</blockquote>\n\n';
+              value = value.replace(/\s+/g,' ').trim()+"<br />";
+          <?php if ( $this->form && ($this->form->body->getType() === 'Engine_Form_Element_TinyMce') ): ?>
+              tinymce.activeEditor.execCommand('mceInsertContent', false, value);
+              tinyMCE.activeEditor.focus();
+          <?php else: ?>
+              document.getElementById('body').value = value;
+              scriptJquery("#body").focus();
+          <?php endif; ?>
               scriptJquery('html, body').animate({ scrollTop: scriptJquery(document).height() }, 'fast');
-            }
+          }
         </script>
+
 
         <ul class='group_discussions_topic_posts'>
           <?php foreach( $this->paginator as $post ):
@@ -174,7 +177,7 @@
                       <?php if( $this->canPostCreate ): ?>
                     <?php echo $this->htmlLink('javascript:void(0);', $this->translate('Quote'), array(
                     'class' => 'buttonlink icon_group_post_quote',
-                    'onclick' => 'quotePost("'.$this->escape($user->getTitle()).'", "'.$this->escape($user->getHref()).'", this);',
+                    'onclick' => 'quotePost("'.$this->escape($user->getTitle()).'", "'.$this->escape($user->getHref()).'", this, "'.$post->getIdentity().'");',
                     )) ?>
                       <?php endif; ?>
                     <?php endif; ?>
@@ -211,7 +214,7 @@
                   }
                 ?><?php echo $body ?>
               </div>
-              <span class="group_discussions_thread_body_raw" style="display: none;">
+              <span id="group_discussions_thread_body_raw_<?php echo $post->getIdentity(); ?>" class="group_discussions_thread_body_raw" style="display: none;">
         <?php echo $post->body; ?>
       </span>
             </div>

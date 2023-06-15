@@ -42,7 +42,9 @@ class Tickvideo_Form_Admin_Createmusic extends Authorization_Form_Admin_Level_Ab
             'description' => 'Upload a image for this music which will be shown in full background of the music. [Note: photos with extension: “jpg, png and jpeg” will only be supported.]',
             'allowEmpty' => true,
             'required' => false,
+            'accept' => 'image/*',
         ));
+        $this->image->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
 		 if($musicId)
              $music = Engine_Api::_()->getItem('tickvideo_music', $musicId);
         else
@@ -61,7 +63,9 @@ class Tickvideo_Form_Admin_Createmusic extends Authorization_Form_Admin_Level_Ab
                 'description' => 'Upload a mp3 file for this music.',
                 'allowEmpty' => false,
                 'required' => true,
+                'accept' => 'audio/*',
             ));
+            $this->upload->addValidator('Extension', false, 'mp3');
         }
         $this->addElement('Button', 'submit', array(
             'label' => 'Save',

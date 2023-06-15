@@ -399,7 +399,7 @@ class User_IndexController extends Sesapi_Controller_Action_Standard
            $result['notification'][$counterLoop]['location'] =   $member->location;
         if($memberEnable){
           $userLocation = Engine_Api::_()->getDbtable('locations', 'sesbasic')->getLocationData($member->getType(),$member->getIdentity());
-          if($userLocation){
+          if($userLocation && !empty($member->location)){
             $result['notification'][$counterLoop]['location_data'] = $userLocation->toArray();
             $result['notification'][$counterLoop]['location_data']['location'] = $member->location;
           }
@@ -608,7 +608,7 @@ class User_IndexController extends Sesapi_Controller_Action_Standard
       $result["user_id"] = $user->user_id;
       $result["email"] = $user->email;
       $result["username"] = $user->username;
-      $result["displayname"] = $user->displayname;
+      $result["displayname"] = $user->getTitle();
       $result["photo_id"] = $user->photo_id;
       $result["status"] = $user->status;
       $result["password"] = $user->password;

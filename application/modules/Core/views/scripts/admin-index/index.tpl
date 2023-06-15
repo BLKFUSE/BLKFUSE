@@ -10,8 +10,29 @@
  * @author     John
  */
 ?>
+<?php $menuType = Engine_Api::_()->getApi('settings', 'core')->getSetting('core.menutype', 'vertical'); ?> 
 <div class="admin_home_wrapper">
   <div class="admin_home_right">
+     <div class="admin_menu_setting">
+      <div class="admin_menu_setting_inner">
+        <div class="admin_menu_setting_inner_right">
+          <h3><?php echo $this->translate("Menu Type "); ?><i class="fas fa-angle-double-right"></i></h3>
+          <ul>
+            <li>
+              <input onclick="menuType('horizontal')" name="menutype" type="radio" id="f-option" name="selector" value="horizontal" <?php if($menuType == 'horizontal') { ?> checked ="checked" <?php } ?> >
+              <label for="f-option"><?php echo $this->translate("Horizontal"); ?></label>
+              <div class="check"></div>
+            </li>
+            <li>
+              <input onclick="menuType('vertical')" name="menutype" type="radio" id="s-option" name="selector" value="vertical" <?php if($menuType == 'vertical') { ?> checked ="checked" <?php } ?>>
+              <label for="s-option"><?php echo $this->translate("Vertical"); ?></label>
+              <div class="check"><div class="inside"></div>
+            </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+     </div>
     <?php echo $this->content()->renderWidget('core.admin-statistics') ?>
     <?php echo $this->content()->renderWidget('core.admin-environment') ?>
   </div>
@@ -23,3 +44,22 @@
     <?php } ?>
   </div>
 </div>
+<script>
+  function menuType(value) {
+    var checkBox = document.getElementById("newsupdates");
+    (scriptJquery.ajax({
+      method: 'post',
+      dataType: 'json',
+      url: en4.core.baseUrl + 'core/index/adminmenutype/',
+      data: {
+        format: 'json',
+        //showcontent: checkBox.checked,
+        value: value,
+      },
+      success : function(responseHTML) {
+        location.reload();
+      }
+    }));
+    return false;
+  }
+</script>

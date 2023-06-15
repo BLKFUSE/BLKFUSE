@@ -29,7 +29,15 @@ class Network_View_Helper_NetworkField extends Zend_View_Helper_Abstract
     }
 
     $type = $network->pattern['type'];
-    $value = $network->pattern['value'];
+		try {
+			if(!is_string($network->pattern['value']))
+			throw new Exception("");
+			$value = json_decode($network->pattern['value']);
+			if(json_last_error() != 0) 
+			throw new Exception("");
+		} catch(Exception $e) {
+			$value = $network->pattern['value'];
+		}
 
     $info = Engine_Api::_()->fields()->getFieldInfo($field->type);
     $genericType = $field->type;

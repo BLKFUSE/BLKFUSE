@@ -1,6 +1,6 @@
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/styles/styles.css'); ?>
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/styles/customscrollbar.css'); ?>
-<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/jquery.min.js'); ?>
+
 <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/customscrollbar.concat.min.js'); ?>
 
 <script type="text/javascript">
@@ -159,7 +159,7 @@ scriptJquery(document).on('click','#get-direction',function(){
 scriptJquery(document).on('click','.modeC',function(){
 	var len = scriptJquery('.sesbasic_getdirection_popup_left_tbs > a');
 	for(var i=0;i<len.length;i++){
-			len[i].removeClass('selected');
+			scriptJquery(len[i]).removeClass('selected');
 	}
 	scriptJquery(this).addClass('selected');
 });

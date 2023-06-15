@@ -17,10 +17,10 @@
   <?php echo $this->translate('Native Android Mobile App'); ?>
 </h2>
 <?php if( engine_count($this->navigation)): ?>
-  <div class='sesandroidapp-admin-navgation'> <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?> </div>
+  <div class='tabs'> <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?> </div>
 <?php endif; ?>
 <?php if(is_countable($this->subnavigation) &&  engine_count($this->subnavigation)): ?>
-  <div class='sesandroidapp-admin-navgation'> <?php echo $this->navigation()->menu()->setContainer($this->subnavigation)->render(); ?> </div>
+  <div class='tabs'> <?php echo $this->navigation()->menu()->setContainer($this->subnavigation)->render(); ?> </div>
 <?php endif; ?>
 <div class="settings sesandroidapp_admin_form sesandroidapp_notification">
   <div class='settings'>

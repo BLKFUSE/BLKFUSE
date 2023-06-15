@@ -144,10 +144,10 @@ class Announcement_IndexController extends Sesapi_Controller_Action_Standard
         $counter = 0;
         $data=array();
         foreach ($paginator as $announcement) {
-            $data[$counter] = $announcement->toArray();
-            $counter++;
-     
-        }
+					$data[$counter] = $announcement->toArray();
+					$data[$counter]['body'] = $data[$counter]['body'] . '<style>img{border-radius: 20px;max-width:100%;}</style>';
+					$counter++;
+				}
        
         $result['announcement'] = $data;
         $extraParams['pagging']['total_page'] = $paginator->getPages()->pageCount;

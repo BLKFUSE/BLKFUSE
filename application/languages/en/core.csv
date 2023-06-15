@@ -1194,7 +1194,7 @@ http://[host][object_link]
 
 #IFRAMELYOPTIONS
 "CORE_FORM_ADMIN_SETTINGS_IFRAMELY_OPTION_IFRAMELY";"Yes, I want to use API hosted by Iframely."
-"CORE_FORM_ADMIN_SETTINGS_IFRAMELY_OPTION_SOCIALENGINE";"Yes, I want to use API hosted by Social Engine."
+"CORE_FORM_ADMIN_SETTINGS_IFRAMELY_OPTION_SOCIALENGINE";"Disable Iframely"
 "CORE_FORM_ADMIN_SETTINGS_IFRAMELY_OPTION_SELF";"Yes, I want to host API on my own server using the <a href=""https://github.com/itteco/iframely"" target=""_blank"">opensource version</a>."
 
 #Admin Pages Title
@@ -1359,3 +1359,6 @@ http://[host][object_link]
 "Plugin Name";"Plugin Name"
 "Delete Tag";"Delete Tag"
 "Are you sure you want to delete this tag?";"Are you sure you want to delete this tag?"
+"Measurement ID";"Measurement ID"
+"Enable Login Logs";"Enable Login Logs"
+"Do you want to enable login logs when members log in to your website? If you choose yes then the login entry will save in the database.";"Do you want to enable login logs when members log in to your website? If you choose yes then the login entry will save in the database."

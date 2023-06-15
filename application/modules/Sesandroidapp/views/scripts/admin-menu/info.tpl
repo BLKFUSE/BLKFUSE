@@ -17,7 +17,13 @@
   <h3>Information</h3>
   <table>
   	<tr>
-    <td colspan="1"><img src="<?php echo $this->item->getPhotoUrl(); ?>" style="height:40px; width:40px;"/></td>
+    <td colspan="1">
+      <?php if($this->item->getPhotoUrl()){?>
+        <img src="<?php echo $this->item->getPhotoUrl(); ?>" style="height:40px; width:40px;"/>
+      <?php }else{ ?>
+        <img src="application/modules/Sesandroidapp/externals/images/admin/star.png">
+        <?php } ?>
+    </td>
     <td><?php if(!is_null($this->item->label) && $this->item->label != '') {
               echo  $this->item->label ;
             }else{ 

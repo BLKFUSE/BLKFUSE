@@ -188,7 +188,7 @@ if($this->canphotoshow == 1) {
       function readImageUrlAdd(input){
         var url = input.files[0].name;
         var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-        if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif' || ext == 'GIF')){
+        if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif' || ext == 'GIF' || ext == "webp")){
           var formData = new FormData();
           formData.append('webcam', input.files[0]);
           formData.append('user_id', '<?php echo $this->user_id; ?>');
@@ -343,8 +343,11 @@ if($this->canphotoshow == 1) {
               <button type="submit" onclick='welcomewidget_request_send("confirm", <?php echo $this->string()->escapeJavascript($friendRequest->getSubject()->getIdentity()) ?>, <?php echo $friendRequest->notification_id ?>, event, "<?php echo $tokenName; ?>", "<?php echo $tokenValue; ?>")'>
                 <?php echo $this->translate('Add Friend');?>
               </button>
+              <button type="submit" onclick='welcomewidget_request_send("reject", <?php echo $this->string()->escapeJavascript($friendRequest->getSubject()->getIdentity()) ?>, <?php echo $friendRequest->notification_id ?>, event, "<?php echo $tokenName; ?>", "<?php echo $tokenValue; ?>")'>
+                <?php echo $this->translate('Ignore Request');?>
+              </button>
               </p>
-							<a href="javascript:void(0);" class="sesact_welcome_user_list_close fas fa-times sesbasic_text_light" onclick='welcomewidget_request_send("reject", <?php echo $this->string()->escapeJavascript($friendRequest->getSubject()->getIdentity()) ?>, <?php echo $friendRequest->notification_id ?>, event, "<?php echo $tokenName; ?>", "<?php echo $tokenValue; ?>")' title="<?php echo $this->translate('ignore request');?>"></a>
+							<!-- <a href="javascript:void(0);" class="sesact_welcome_user_list_close fas fa-times sesbasic_text_light" onclick='welcomewidget_request_send("reject", <?php //echo $this->string()->escapeJavascript($friendRequest->getSubject()->getIdentity()) ?>, <?php // echo $friendRequest->notification_id ?>, event, "<?php // echo $tokenName; ?>", "<?php // echo $tokenValue; ?>")' title="<?php // echo $this->translate('ignore request');?>"></a> -->
             </div>
           </li>
         <?php endforeach; ?>

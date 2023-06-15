@@ -21,10 +21,16 @@ $end_date = date('m/d/Y',strtotime('+5 Days' ,$end));
 $end_time = $start_time;
 date_default_timezone_set($oldTz);
  ?>
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sescommunityads/externals/scripts/core.js'); ?>
 <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sescommunityads/externals/scripts/moment.js'); ?>
 
 <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sescommunityads/externals/scripts/moment-timezone.js'); ?>
 <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sescommunityads/externals/scripts/moment-timezone-with-data.js'); ?>
+<?php
+	if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesadvancedcomment')) {
+		include APPLICATION_PATH .  '/application/modules/Sesadvancedcomment/views/scripts/_jsFiles.tpl';
+	}
+?>
 <script type="application/javascript">
 var selectedBoostPostId = "<?php echo !empty($this->action_id) ? $this->action_id : 0; ?>";
 </script>

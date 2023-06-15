@@ -65,7 +65,7 @@ class Sespymk_Widget_SuggestionFriendsController extends Engine_Content_Widget_A
     }
     $select->where($userTableName.'.user_id NOT IN (SELECT user_id FROM engine4_sespymk_ignores WHERE owner_id = '.$viewer_id.')');
 
-    $select->order($userTableName.'.user_id RAND()');
+    $select->order($userTableName.'.user_id DESC');
     $this->view->peopleyoumayknow = $peopleyoumayknow = Zend_Paginator::factory($select);
     $peopleyoumayknow->setItemCountPerPage($itemCount);
     $peopleyoumayknow->setCurrentPageNumber($this->_getParam('page'));

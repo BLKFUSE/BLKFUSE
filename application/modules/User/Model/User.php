@@ -281,6 +281,27 @@ class User_Model_User extends Core_Model_Item_Abstract
         ->query()
         ->fetchColumn();
   }
+  
+  public function isOnlyAdmin()
+  {
+    // Not logged in, not an admin
+    if( !$this->getIdentity() || empty($this->level_id) ) {
+      return false;
+    }
+    
+    // Check level
+    //return (bool) Engine_Registry::get('database-default')
+    // return (bool) Zend_Registry::get('Zend_Db')
+    return $this->getTable()->getAdapter()
+        ->select()
+        ->from('engine4_authorization_levels', new Zend_Db_Expr('TRUE'))
+        ->where('level_id = ?', $this->level_id)
+        ->where('flag != ?', 'superadmin')
+        ->where('type IN(?)', array('admin'))
+        ->limit(1)
+        ->query()
+        ->fetchColumn();
+  }
 
   // Internal hooks
 

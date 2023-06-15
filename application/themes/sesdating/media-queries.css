@@ -225,6 +225,9 @@
     left: 20px;
     bottom: -40px;
   }
+	div.tabs > ul, div.tabs_alt > ul {
+    overflow-x: auto !important;
+  }
 }
 @media only screen and (max-width:540px){
 	#core_menu_mini_menu > ul > li{

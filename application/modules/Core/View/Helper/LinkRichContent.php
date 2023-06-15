@@ -16,8 +16,7 @@
  * @copyright  Copyright 2006-2020 Webligo Developments
  * @license    http://www.socialengine.com/license/
  */
-class Core_View_Helper_LinkRichContent extends Engine_View_Helper_HtmlImage
-{
+class Core_View_Helper_LinkRichContent extends Engine_View_Helper_HtmlImage {
 
   protected $_allowTyes = array(
     'player',
@@ -26,13 +25,18 @@ class Core_View_Helper_LinkRichContent extends Engine_View_Helper_HtmlImage
     'survey',
     'file'
   );
-
-  public function linkRichContent(Core_Model_Link $item)
-  {
+  
+	public function linkRichContent(Core_Model_Link $item) {
     if( empty($item->params['iframely']) ) {
       return;
     }
-    $iframely = $item->params['iframely'];
+    try {
+			if(!is_string($item->params['iframely']))
+				throw new Exception("");
+			$iframely = json_decode($item->params['iframely'], true);
+    } catch (Exception $e) {
+			$iframely = $item->params['iframely'];
+    }
     $typeOfContent = array_intersect(array_keys($iframely['links']), $this->_allowTyes);
     if( empty($typeOfContent) || empty($iframely['html']) ) {
       return;

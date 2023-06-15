@@ -108,7 +108,10 @@ class Sesmember_Plugin_Core extends Zend_Controller_Plugin_Abstract {
     $module = $request->getModuleName();
     $controller = $request->getControllerName();
     $action = $request->getActionName();
-
+		if ($module == 'user' && $action == 'index' && $controller == 'signup') {
+			$headScript = new Zend_View_Helper_HeadScript();
+			$headScript->appendFile(Zend_Registry::get('StaticBaseUrl') . 'application/modules/Sesmember/externals/scripts/core.js');
+		}
     $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
     $view->headTranslate(array(
         Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.follow.unfollowtext', 'Unfollow'), Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.follow.followtext', 'Follow')
@@ -116,20 +119,8 @@ class Sesmember_Plugin_Core extends Zend_Controller_Plugin_Abstract {
     
     $headScript = new Zend_View_Helper_HeadScript();
     $headScript->appendFile(Zend_Registry::get('StaticBaseUrl') . 'application/modules/Sesmember/externals/scripts/core.js');
-    
-    $script = '';
-    
-//     $themes = Engine_Api::_()->getDbtable('themes', 'core')->fetchAll();
-//     $activeTheme = $themes->getRowMatching('active', 1);
-//     if (stripos($activeTheme->name, 'insignia') !== false) {
-//       $showLocation = "<script type=\"application/javascript\"> function setPopupContent(event, contentId) {if(contentId != \"user_signup_popup\")return;event.stop();Smoothbox.open($(contentId).get(\"html\"));en4.core.reCaptcha.render();$(\"TB_window\").addClass(\"signup_login_popup_wrapper\");scriptJquery(\"#TB_ajaxContent > div > form > div > div > div\").find(\"#ses_location-wrapper\").find(\"#ses_location-element\").find(\"input\").attr(\"id\",\"ses_location_76568\");sesMemberLocation(76568)}<\/script>";
-// 
-//       $script = "en4.core.runonce.add(function() {
-//         setTimeout(function(){scriptJquery('" . $showLocation . "').appendTo('body')}, 1000);
-//       });
-//       ";
-//     }
 
+    $script = '';
     $script .= "var sesmemeberLocation = '" . Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.showsignup.location', 1). "';";
     $script .= "var enableLocation = '" . Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1). "';";
     $script .= "var sesmemeberFollow = '" . Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.follow.followtext', 'Follow') . "';
@@ -143,9 +134,17 @@ class Sesmember_Plugin_Core extends Zend_Controller_Plugin_Abstract {
       });
       ";
     }
+    
+    //Location fields show on signup page
+    $viewerId = Engine_Api::_()->user()->getViewer()->getIdentity();
+    if ($module == 'user' && $controller == 'signup' && $action == 'index' && empty($viewerId) && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.showsignup.location', 1) && Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) {
+			$headScript = new Zend_View_Helper_HeadScript();
+			$headScript->appendFile(Zend_Registry::get('StaticBaseUrl') . 'application/modules/Sesmember/externals/scripts/core.js');
+		}
+    
     $view->headScript()->appendScript($script);
 
-    $viewerId = Engine_Api::_()->user()->getViewer()->getIdentity();
+    
     if (($module == 'user' || $module == 'sesmember') && $controller == 'profile' && $action == 'index' && $viewerId) {
       $subject = Engine_Api::_()->core()->getSubject();
       if (!$subject)

@@ -60,7 +60,7 @@ class Sesbday_AdminBirthdayController extends Core_Controller_Action_Admin {
         $description = preg_replace($search, $replace, $description);
 
 
-        Engine_Api::_()->getApi('mail', 'core')->sendSystem($_POST['testemailval'], 'sesbday_birthday_email', array('host' => $_SERVER['HTTP_HOST'], 'birthday_content' => $description, 'birthday_subject' => $values['sesbday_birthday_subject'], 'queue' => false, 'recipient_title' => $users->displayname));
+        Engine_Api::_()->getApi('mail', 'core')->sendSystem($_POST['testemailval'], 'sesbday_birthday_email', array('host' => $_SERVER['HTTP_HOST'], 'birthday_content' => $description, 'birthday_subject' => $values['sesbday_birthday_subject'], 'queue' => false, 'recipient_title' => $users->getTitle()));
         $form->addNotice('Test email send successfully.');
       } else {
         $settings = Engine_Api::_()->getApi('settings', 'core');

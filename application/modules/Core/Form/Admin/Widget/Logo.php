@@ -30,7 +30,7 @@ class Core_Form_Admin_Widget_Logo extends Core_Form_Admin_Widget_Standard
     // Get available files
     $logoOptions = array('' => 'Text-only (No logo)');
 
-    $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png')));
+    $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png', 'webp')));
     foreach( $files as $file ) {
       $logoOptions[$file->storage_path] = $file->name;
     }

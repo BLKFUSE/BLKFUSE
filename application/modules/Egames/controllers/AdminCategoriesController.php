@@ -102,7 +102,7 @@ class Egames_AdminCategoriesController extends Core_Controller_Action_Admin {
 				if(isset($row->cat_icon) && $row->cat_icon != '') {
                     $cat_icon = Engine_Api::_()->storage()->get($row->cat_icon);
                     if($cat_icon) {
-                       // $data = '<img  class="sesbasic-category-icon"  src="' . Engine_Api::_()->storage()->get($row->cat_icon)->getPhotoUrl('thumb.icon') . '" />';
+                       // $data = '<img style="max-width:20px;"  class="sesbasic-category-icon"  src="' . Engine_Api::_()->storage()->get($row->cat_icon)->getPhotoUrl('thumb.icon') . '" />';
                     }
             }else{ 
 				//$data = "---";

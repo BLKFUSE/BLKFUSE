@@ -17,6 +17,7 @@
   .layout_sescommunityads_browse_menu{display:none !important;}
   </style>
  <?php } ?>
+<?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sescommunityads/externals/scripts/core.js'); ?>
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sescommunityads/externals/styles/styles.css'); ?>
 <div class="headline sescmads_browse_menu">
    <div class="tabs">

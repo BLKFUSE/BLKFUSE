@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php include APPLICATION_PATH .  '/application/modules/Sesadvancedcomment/views/scripts/_jsFiles.tpl'; ?>
 <?php $comment = $this->comment; 
      
       $actionBody = $this->action;
@@ -44,25 +45,23 @@
         <div class="sesadvcmt_pulldown">
           <div class="sesadvcmt_pulldown_cont">
             <ul>
-               <?php if($this->viewer()->getIdentity() == $comment->poster_id || Engine_Api::_()->getDbtable('permissions', 'authorization')->getAllowed('user', $this->viewer()->level_id, 'activity')){ ?>
-            <?php if(($this->subject() && method_exists($this->subject(),'canDeleteComment') && $this->subject()->canDeleteComment($this->subject())) || (!$this->subject() || ($this->subject() && !method_exists($this->subject(),'canDeleteComment')))) { ?>
-              <li>
-                <?php echo $this->htmlLink(array(
-                'route'=>'default',
-                'module'    => 'sesadvancedactivity',
-                'controller'=> 'index',
-                'action'    => 'delete',
-                'action_id' => $actionBody->action_id,
-                'comment_id'=> $comment->comment_id,
-                ), $this->translate('Delete'), array('class' => 'sescommentsmoothbox sesadvancedcomment_delete')) ?>
-              </li>
-              <?php } ?>
-             <?php if(empty($comment->gif_id) && empty($comment->emoji_id) && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedcomment.editenable', 1)){ ?>
-             <?php if(($this->subject() && method_exists($this->subject(),'canEditComment') && $this->subject()->canEditComment($this->subject())) || (!$this->subject() || ($this->subject() && !method_exists($this->subject(),'canEditComment')))){ ?>
-              <li><?php echo $this->htmlLink(('javascript:;'), $this->translate('Edit'), array('class' => 'sesadvancedcomment_edit')) ?></li>
-              <?php } ?>
-            <?php } ?>
-          <?php } ?>
+							<?php if(($this->viewer()->getIdentity() == $comment->poster_id || Engine_Api::_()->getDbtable('permissions', 'authorization')->getAllowed('user', $this->viewer()->level_id, 'activity')) || ( ($this->subject() && method_exists($this->subject(),'canDeleteComment') && $this->subject()->canDeleteComment($this->subject())) )) { ?>
+								<li>
+									<?php echo $this->htmlLink(array(
+									'route'=>'default',
+									'module'    => 'sesadvancedactivity',
+									'controller'=> 'index',
+									'action'    => 'delete',
+									'action_id' => $actionBody->action_id,
+									'comment_id'=> $comment->comment_id,
+									), $this->translate('Delete'), array('class' => 'sescommentsmoothbox sesadvancedcomment_delete')) ?>
+								</li>
+							<?php } ?>
+							<?php if(empty($comment->gif_id) && empty($comment->emoji_id) && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedcomment.editenable', 1)){ ?>
+								<?php if((($this->subject() && method_exists($this->subject(),'canEditComment') && $this->subject()->canEditComment($this->subject()))) || ($this->viewer()->getIdentity() == $comment->poster_id || Engine_Api::_()->getDbtable('permissions', 'authorization')->getAllowed('user', $this->viewer()->level_id, 'activity'))) { ?>
+									<li><?php echo $this->htmlLink(('javascript:;'), $this->translate('Edit'), array('class' => 'sesadvancedcomment_edit')) ?></li>
+								<?php } ?>
+							<?php } ?>
             <?php if($this->viewer()->getIdentity() != $comment->poster_id){ ?>
               <?php $reportEnable = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedcomment.reportenable', 1); ?>
               <?php if($reportEnable) { ?>
@@ -79,13 +78,13 @@
    </div> 
    <div class="comments_content">
    <span class='comments_author ses_tooltip' data-src="<?php echo $this->item($comment->poster_type, $comment->poster_id)->getGuid(); ?>">
-     <?php echo $this->htmlLink($this->item($comment->poster_type, $comment->poster_id)->getHref(), $this->item($comment->poster_type, $comment->poster_id)->getTitle()); ?>
-         <?php if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('everification')) { ?>
-      <?php $verifieddocuments = $verifieddocuments = Engine_Api::_()->getDbTable('documents', 'everification')->getAllUserDocuments(array('user_id' => $comment->poster_id, 'verified' => '1', 'fetchAll' => '1')); ?>
-      <?php if(count($verifieddocuments) > 0) { ?>
-        <i class="sesbasic_verify_icon" title="<?php echo $this->translate('Verified') ;?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15.67 7.06l-1.08-1.34c-.17-.22-.28-.48-.31-.77l-.19-1.7a1.51 1.51 0 0 0-1.33-1.33l-1.7-.19c-.3-.03-.56-.16-.78-.33L8.94.32c-.55-.44-1.33-.44-1.88 0L5.72 1.4c-.22.17-.48.28-.77.31l-1.7.19c-.7.08-1.25.63-1.33 1.33l-.19 1.7c-.03.3-.16.56-.33.78L.32 7.05c-.44.55-.44 1.33 0 1.88l1.08 1.34c.17.22.28.48.31.77l.19 1.7c.08.7.63 1.25 1.33 1.33l1.7.19c.3.03.56.16.78.33l1.34 1.08c.55.44 1.33.44 1.88 0l1.34-1.08c.22-.17.48-.28.77-.31l1.7-.19c.7-.08 1.25-.63 1.33-1.33l.19-1.7c.03-.3.16-.56.33-.78l1.08-1.34c.44-.55.44-1.33 0-1.88zM6.5 12L3 8.5 4.5 7l2 2 5-5L13 5.55 6.5 12z"/></svg></i>
-      <?php } ?>
-    <?php } ?>
+			<?php echo $this->htmlLink($this->item($comment->poster_type, $comment->poster_id)->getHref(), $this->item($comment->poster_type, $comment->poster_id)->getTitle()); ?>
+			<?php if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('everification')) { ?>
+			<?php $verifieddocuments = $verifieddocuments = Engine_Api::_()->getDbTable('documents', 'everification')->getAllUserDocuments(array('user_id' => $comment->poster_id, 'verified' => '1', 'fetchAll' => '1')); ?>
+			<?php if(count($verifieddocuments) > 0) { ?>
+				<i class="sesbasic_verify_icon" title="<?php echo $this->translate('Verified') ;?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15.67 7.06l-1.08-1.34c-.17-.22-.28-.48-.31-.77l-.19-1.7a1.51 1.51 0 0 0-1.33-1.33l-1.7-.19c-.3-.03-.56-.16-.78-.33L8.94.32c-.55-.44-1.33-.44-1.88 0L5.72 1.4c-.22.17-.48.28-.77.31l-1.7.19c-.7.08-1.25.63-1.33 1.33l-.19 1.7c-.03.3-.16.56-.33.78L.32 7.05c-.44.55-.44 1.33 0 1.88l1.08 1.34c.17.22.28.48.31.77l.19 1.7c.08.7.63 1.25 1.33 1.33l1.7.19c.3.03.56.16.78.33l1.34 1.08c.55.44 1.33.44 1.88 0l1.34-1.08c.22-.17.48-.28.77-.31l1.7-.19c.7-.08 1.25-.63 1.33-1.33l.19-1.7c.03-.3.16-.56.33-.78l1.08-1.34c.44-.55.44-1.33 0-1.88zM6.5 12L3 8.5 4.5 7l2 2 5-5L13 5.55 6.5 12z"/></svg></i>
+			<?php } ?>
+			<?php } ?>
    </span>
     <?php 
       $emoji = Engine_Api::_()->getApi('emoji','sesbasic')->getEmojisArray();
@@ -141,12 +140,9 @@
         <?php echo $this->itemPhoto($isPageSubject, 'thumb.icon', $isPageSubject->getTitle()); ?>
         </div>
         <?php
-          $session = new Zend_Session_Namespace('sesadvcomment');
-           $albumenable = $session->albumenable;
-           $videoenable = $session->videoenable;
-            $enableattachementComment = unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedcomment.enableattachement', ''));
-            $viewer = Engine_Api::_()->user()->getViewer();
-            $enableattachement = (array) Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('sesadvactivity', $viewer, 'cmtattachement');
+					$enableattachementComment = unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedcomment.enableattachement', ''));
+					$viewer = Engine_Api::_()->user()->getViewer();
+					$enableattachement = (array) Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('sesadvactivity', $viewer, 'cmtattachement');
         ?>
         <div class="_form_container sesbasic_clearfix">
          <div class="comment_form_main">
@@ -154,7 +150,7 @@
             <textarea class="body" name="body" cols="45" rows="1" placeholder="Write a reply..."></textarea>
             <div class="_sesadvcmt_post_icons sesbasic_clearfix">
             	<span>
-              <?php if($albumenable && Engine_Api::_()->authorization()->isAllowed('album', null, 'create') && engine_in_array('photos', $enableattachementComment)){ ?>
+              <?php if((Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('album') || Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesalbum')) && Engine_Api::_()->authorization()->isAllowed('album', null, 'create') && engine_in_array('photos', $enableattachementComment)){ ?>
               	<a href="javascript:;" class="sesadv_tooltip file_comment_select" title="<?php echo $this->translate('Attach 1 or more Photos'); ?>"></a>
               <?php } ?>
                 <input type="file" name="Filedata" class="select_file" multiple style="display:none;">
@@ -164,10 +160,10 @@
                 <input type="hidden" class="file" name="action_id" value="<?php echo $actionBody->getIdentity(); ?>">
                 <input type="hidden" class="comment_id" name="comment_id" value="<?php echo $comment->comment_id; ?>">
               </span>
-              <?php if($videoenable && Engine_Api::_()->authorization()->isAllowed('video', $viewer, 'create') && engine_in_array('videos', $enableattachementComment)){ ?>
+              <?php if((Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('video') || Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesvideo')) && Engine_Api::_()->authorization()->isAllowed('video', $viewer, 'create') && engine_in_array('videos', $enableattachementComment)){ ?>
                 <span><a href="javascript:;" class="sesadv_tooltip video_comment_select" title="<?php echo $this->translate('Attach 1 or more Videos'); ?>"></a></span>
               <?php } ?>
-              <?php if((engine_in_array('stickers', $enableattachement) && engine_in_array('stickers', $enableattachementComment) )) { ?>
+              <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedcomment.enablestickers', 1) && (engine_in_array('stickers', $enableattachement) && engine_in_array('stickers', $enableattachementComment) )) { ?>
                 <span class="sesact_post_tool_i tool_i_emoji">
                   <a href="javascript:;" class="sesadv_tooltip emoji_comment_select" title="<?php echo $this->translate('Post a Sticker'); ?>"></a>
                 </span>

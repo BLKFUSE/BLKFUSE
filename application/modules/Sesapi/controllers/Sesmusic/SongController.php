@@ -270,6 +270,7 @@ class Sesmusic_SongController extends Sesapi_Controller_Action_Standard
       $response['playlist']['enable_add_shortcut'] = $sesshortcut;
       if($sesshortcut){
           $isShortcut = Engine_Api::_()->getDbTable('shortcuts', 'sesshortcut')->isShortcut(array('resource_type' => $playlist->getType(), 'resource_id' => $playlist->getIdentity()));
+          $shortMessage = array();
           if (empty($isShortcut)) {
               $shortMessage['title'] = $this->view->translate('Add to Shortcuts');
               $shortMessage['resource_type'] = $playlist->getType();
@@ -352,6 +353,7 @@ class Sesmusic_SongController extends Sesapi_Controller_Action_Standard
           $album['enable_add_shortcut'] = $sesshortcut;
           if($sesshortcut){
               $isShortcut = Engine_Api::_()->getDbTable('shortcuts', 'sesshortcut')->isShortcut(array('resource_type' => $albums->getType(), 'resource_id' => $albums->getIdentity()));
+              $shortMessage = array();
               if (empty($isShortcut)) {
                   $shortMessage['title'] = $this->view->translate('Add to Shortcuts');
                   $shortMessage['resource_type'] = $albums->getType();
@@ -635,6 +637,7 @@ class Sesmusic_SongController extends Sesapi_Controller_Action_Standard
       $response['enable_add_shortcut'] = $sesshortcut;
       if($sesshortcut){
           $isShortcut = Engine_Api::_()->getDbTable('shortcuts', 'sesshortcut')->isShortcut(array('resource_type' => $song->getType(), 'resource_id' => $song->getIdentity()));
+          $shortMessage = array();
           if (empty($isShortcut)) {
               $shortMessage['title'] = $this->view->translate('Add to Shortcuts');
               $shortMessage['resource_type'] = $song->getType();
@@ -895,6 +898,7 @@ class Sesmusic_SongController extends Sesapi_Controller_Action_Standard
         $result['albums']['enable_add_shortcut'] = $sesshortcut;
         if($sesshortcut){
             $isShortcut = Engine_Api::_()->getDbTable('shortcuts', 'sesshortcut')->isShortcut(array('resource_type' => $albums->getType(), 'resource_id' => $albums->getIdentity()));
+            $shortMessage = array();
             if (empty($isShortcut)) {
                 $shortMessage['title'] = $this->view->translate('Add to Shortcuts');
                 $shortMessage['resource_type'] = $albums->getType();
@@ -964,6 +968,7 @@ class Sesmusic_SongController extends Sesapi_Controller_Action_Standard
 			$im = Engine_Api::_()->getItem('storage_file', $item->photo_id);
 			$item->photo_id = 0;
 			$item->save();
+      if($im)
 			$im->delete();
 		}
 		Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'parameter_missing','result'=>$this->view->translate("Song photo removed successfully.")));
@@ -978,6 +983,7 @@ class Sesmusic_SongController extends Sesapi_Controller_Action_Standard
 			$im = Engine_Api::_()->getItem('storage_file', $item->song_cover);
 			$item->song_cover = 0;
 			$item->save();
+      if($im)
 			$im->delete();
 		}
 		Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'parameter_missing','result'=>$this->view->translate("Song cover removed successfully.")));
@@ -1011,6 +1017,7 @@ class Sesmusic_SongController extends Sesapi_Controller_Action_Standard
 
         if($art_cover != 0){
           $im = Engine_Api::_()->getItem('storage_file', $art_cover);
+          if($im)
           $im->delete();
         }
         $db->commit();
@@ -1053,6 +1060,7 @@ class Sesmusic_SongController extends Sesapi_Controller_Action_Standard
 
         if($art_cover != 0){
           $im = Engine_Api::_()->getItem('storage_file', $art_cover);
+          if($im)
           $im->delete();
         }
         $db->commit();

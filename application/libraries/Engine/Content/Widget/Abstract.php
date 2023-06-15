@@ -200,7 +200,13 @@ abstract class Engine_Content_Widget_Abstract
   {
     try {
       ob_start();
-
+			
+			//Responsive Work
+			$nomobile = $this->_getParam('nomobile', 0);
+			if(Engine_Api::_()->isMobile() && !empty($nomobile)) {
+				return $this->setNoRender();
+			}
+			
       // Check action
       if( null !== $action && !is_string($action) ) {
         throw new Engine_Content_Widget_Exception('Action must be a string');

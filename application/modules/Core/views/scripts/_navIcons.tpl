@@ -14,11 +14,7 @@
 <ul>
   <?php foreach( $this->container as $link ): ?>
     <li>
-      <?php echo $this->htmlLink($link->getHref(), $this->translate($link->getLabel()), array(
-        'class' => 'buttonlink' . ( $link->getClass() ? ' ' . $link->getClass() : '' ),
-        'style' => $link->get('icon') ? 'background-image: url('.$link->get('icon').');' : '',
-        'target' => $link->get('target'),
-      )) ?>
+      <?php echo $this->htmlLink($link->getHref(), $this->translate($link->getLabel()), array('class' => 'buttonlink' . ( $link->getClass() ? ' ' . $link->getClass() : '' ) . ' ' . (!empty($link->get('icon')) ? $link->get('icon') : ''),'target' => $link->get('target'))) ?>
     </li>
   <?php endforeach; ?>
 </ul>

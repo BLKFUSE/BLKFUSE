@@ -37,15 +37,19 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
             else
                 Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'permission_error', 'result' => array()));
         } else if ($review_id) {
-            $review = Engine_Api::_()->getItem('seseventreview_review', $review_id);
+            $review = Engine_Api::_()->getItem('eventreview', $review_id);
             Engine_Api::_()->core()->setSubject($review);
         }
     }
     public function browseAction(){
         if (isset($_POST['params']))
             $params = json_decode($_POST['params'], true);
-        if (isset($_POST['searchParams']) && $_POST['searchParams'])
-            parse_str($_POST['searchParams'], $searchArray);
+				if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+					if(engine_in_array($_POST['searchParams']))
+						$searchArray = $_POST['searchParams'];
+					elseif(is_string($_POST['searchParams']))
+						parse_str($_POST['searchParams'], $searchArray);
+				}
         $viewer = Engine_Api::_()->user()->getViewer();
         $identity = Engine_Api::_()->sesevent()->getIdentityWidget('sesevent.browse-events', 'widget', 'sesevent_index_browse');
         if ($identity) {
@@ -556,7 +560,7 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
                     $table = Engine_Api::_()->getDbtable('hosts', 'sesevent');
                     $user = Engine_Api::_()->getItem('user', $event->user_id);
                     $hostIn = $table->createRow();
-                    $hostIn->host_name = $user->displayname;
+                    $hostIn->host_name = $user->getTitle();
                     $hostIn->host_email = $user->email;
                     $hostIn->photo_id = $user->photo_id;
                     $hostIn->user_id = $user->getIdentity();
@@ -898,7 +902,11 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
         $viewer = Engine_Api::_()->user()->getViewer();
         $viewer_id = $viewer->getIdentity();
         if (!$viewer_id) {
+            if(!$this->_getParam("user_id"))
             Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' =>'permission_error', 'result' => array()));
+        }
+        if($this->_getParam("user_id")){
+            $viewer_id = $this->_getParam("user_id");
         }
         $params['user_id'] = $viewer_id;
         $search = $this->_getParam('search_filter', null);
@@ -1106,7 +1114,7 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
         } else {
             $event = Engine_Api::_()->core()->getSubject();
         }
-        $sesprofilelock_enable_module = unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}'));
+        $sesprofilelock_enable_module = is_string(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}')) ? unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}')) : Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}');
         if (Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesprofilelock')) && engine_in_array('sesevent', $sesprofilelock_enable_module) && $viewerId != $event->owner_id) {
             $cookieData = '';
             if ($event->enable_lock && !engine_in_array($event->page_id, explode(',', $cookieData))) {
@@ -1124,49 +1132,49 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
         if ($menus) {
             $tabcounter = 0;
             $result['menus'][$tabcounter]['name'] = 'updates';
-            $result['menus'][$tabcounter]['label'] = 'Updates';
+            $result['menus'][$tabcounter]['label'] = $this->view->translate('Updates');
             $tabcounter++;
             $result['menus'][$tabcounter]['name'] = 'info';
-            $result['menus'][$tabcounter]['label'] = 'Info';
+            $result['menus'][$tabcounter]['label'] = $this->view->translate('Info');
             $tabcounter++;
             if (Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('seseventticket') && Engine_Api::_()->getApi('settings', 'core')->getSetting('seseventticket.pluginactivated')) {
                 $eventHasTicket = Engine_Api::_()->getDbtable('tickets', 'sesevent')->getTicket(array('event_id' => $event->getIdentity()));
                 if (!engine_count($eventHasTicket)) {
                     $result['menus'][$tabcounter]['name'] = 'members';
-                    $result['menus'][$tabcounter]['label'] = 'Guest';
+                    $result['menus'][$tabcounter]['label'] = $this->view->translate('Guest');
                     $tabcounter++;
                 }
             } else {
                 $result['menus'][$tabcounter]['name'] = 'members';
-                $result['menus'][$tabcounter]['label'] = 'Guest';
+                $result['menus'][$tabcounter]['label'] = $this->view->translate('Guest');
                 $tabcounter++;
             }
             $result['menus'][$tabcounter]['name'] = 'album';
-            $result['menus'][$tabcounter]['label'] = 'Album';
+            $result['menus'][$tabcounter]['label'] = $this->view->translate('Album');
             $tabcounter++;
             if ($event->location && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesevent.enable.location', 1)) {
                 $result['menus'][$tabcounter]['name'] = 'location';
-                $result['menus'][$tabcounter]['label'] = 'Location';
+                $result['menus'][$tabcounter]['label'] = $this->view->translate('Location');
                 $tabcounter++;
             }
             $editOverview = $event->authorization()->isAllowed($viewer, 'edit');
             if (($event->overview || !is_null($event->overview)) || ($editOverview && (!$event->overview || is_null($event->overview)))) {
                 $result['menus'][$tabcounter]['name'] = 'overview';
-                $result['menus'][$tabcounter]['label'] = 'Overview';
+                $result['menus'][$tabcounter]['label'] = $this->view->translate('Overview');
                 $tabcounter++;
             }
             $result['menus'][$tabcounter]['name'] = 'discussions';
-            $result['menus'][$tabcounter]['label'] = 'Discussions';
+            $result['menus'][$tabcounter]['label'] = $this->view->translate('Discussions');
             $tabcounter++;
             if (Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('seseventvideo')) {
                 $result['menus'][$tabcounter]['name'] = 'video';
-                $result['menus'][$tabcounter]['label'] = 'Video';
+                $result['menus'][$tabcounter]['label'] = $this->view->translate('Video');
                 $tabcounter++;
             }
-			if (Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('seseventreview') && Engine_Api::_()->getApi('settings', 'core')->getSetting('seseventreview_allow_review', 1) && $this->_helper->requireAuth()->setAuthParams('seseventreview_review', null, 'view')->isValid()) {
-            $result['menus'][$tabcounter]['name'] = 'reviews';
-            $result['menus'][$tabcounter]['label'] = 'Reviews';
-			}
+						if (Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('seseventreview') && Engine_Api::_()->getApi('settings', 'core')->getSetting('seseventreview_allow_review', 1) && $this->_helper->requireAuth()->setAuthParams('eventreview', null, 'view')->isValid()) {
+							$result['menus'][$tabcounter]['name'] = 'reviews';
+							$result['menus'][$tabcounter]['label'] = $this->view->translate('Reviews');
+						}
         }
         $category_id = $event->category_id;
         $value['category_id'] = $category_id;
@@ -1976,8 +1984,10 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
             $auth->setAllowed($event, 'member_requested', 'view', 1);
             //Add fields
             $customfieldform = $form->getSubForm('fields');
-            $customfieldform->setItem($event);
-            $customfieldform->saveValues();
+            if(!empty($customfieldform)){
+                $customfieldform->setItem($event);
+                $customfieldform->saveValues();
+            }
             $event->save();
             // Commit
             $db->commit();
@@ -1992,12 +2002,12 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
                 $action = $activityApi->addActivity($viewer, $event, 'sesevent_create');
                 if ($action) {
                     $activityApi->attachActivity($action, $event);
-                }
-                //Tag Work
-                if (Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesadvancedactivity') && $tags) {
-                    $dbGetInsert = Engine_Db_Table::getDefaultAdapter();
-                    foreach ($tags as $tag) {
-                        $dbGetInsert->query('INSERT INTO `engine4_sesadvancedactivity_hashtags` (`action_id`, `title`) VALUES ("' . $action->getIdentity() . '", "' . $tag . '")');
+                    //Tag Work
+                    if (Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesadvancedactivity') && $tags) {
+                        $dbGetInsert = Engine_Db_Table::getDefaultAdapter();
+                        foreach ($tags as $tag) {
+                            $dbGetInsert->query('INSERT INTO `engine4_sesadvancedactivity_hashtags` (`action_id`, `title`) VALUES ("' . $action->getIdentity() . '", "' . $tag . '")');
+                        }
                     }
                 }
                 //Event create mail send to event owner
@@ -2375,7 +2385,7 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
         $albumCounter = 0;
         foreach ($paginator as $item) {
             $owner = $item->getOwner();
-            $ownertitle = $owner->displayname;
+            $ownertitle = $owner->getTitle();
             $result['albums'][$albumCounter] = $item->toArray();
             $image = $item->getPhotoUrl('thumb.normalmain');
             if ($image)
@@ -3412,8 +3422,12 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
     public function reviewsAction(){
         if (isset($_POST['params']))
             $params = json_decode($_POST['params'], true);
-        if (isset($_POST['searchParams']) && $_POST['searchParams'])
-            parse_str($_POST['searchParams'], $searchArray);
+				if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+					if(engine_in_array($_POST['searchParams']))
+						$searchArray = $_POST['searchParams'];
+					elseif(is_string($_POST['searchParams']))
+						parse_str($_POST['searchParams'], $searchArray);
+				}
 
         $page = $this->_getParam('page', 1);
         $limit = $this->_getParam('limit', 10);
@@ -4532,12 +4546,12 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
 		if(!$event_id)
 			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'parameter_missing', 'result' => array()));
         $item = Engine_Api::_()->getItemByGuid($this->getParam('type'));
-        if (!Engine_Api::_()->authorization()->getPermission($levelId, 'seseventreview_review', 'create'))
+        if (!Engine_Api::_()->authorization()->getPermission($levelId, 'eventreview', 'create'))
             Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'permission_error', 'result' => array()));
         if (!$item)
             Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('Invalid Type'), 'result' => array()));
         //check review exists
-        $isReview = Engine_Api::_()->getDbtable('reviews', 'seseventreview')->isReview(array('content_id' => $item->getIdentity(), 'content_type' => $item->getType(), 'module_name' => 'sesevent', 'column_name' => 'review_id'));
+        $isReview = Engine_Api::_()->getDbtable('eventreviews', 'seseventreview')->isReview(array('content_id' => $item->getIdentity(), 'content_type' => $item->getType(), 'module_name' => 'sesevent', 'column_name' => 'review_id'));
         if (Engine_Api::_()->getApi('settings', 'core')->getSetting('seseventreview.allow.owner', 1)) {
             $allowedCreate = true;
         } else {
@@ -4602,7 +4616,7 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
         $values['module_name'] = strtolower($item->getModuleName());
         $values['content_type'] = $item->getType();
         $values['content_id'] = $item->getIdentity();
-        $reviews_table = Engine_Api::_()->getDbtable('reviews', 'seseventreview');
+        $reviews_table = Engine_Api::_()->getDbtable('eventreviews', 'seseventreview');
         $db = $reviews_table->getAdapter();
         $db->beginTransaction();
         try {
@@ -4639,7 +4653,7 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
             $db->commit();
             //save rating in parent table if exists
             if (isset($item->rating)) {
-                $item->rating = Engine_Api::_()->getDbtable('reviews', 'seseventreview')->getRating($review->content_id, $review->content_type);
+                $item->rating = Engine_Api::_()->getDbtable('eventreviews', 'seseventreview')->getRating($review->content_id, $review->content_type);
                 $item->save();
             }
             //Add fields
@@ -4661,10 +4675,10 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
         $review_id = $this->_getParam('review_id', null);
         if (!$review_id)
             Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'parameter_missing', 'result' => array()));
-        $subject = Engine_Api::_()->getItem('seseventreview_review', $review_id);
+        $subject = Engine_Api::_()->getItem('eventreview', $review_id);
         if (!$subject)
             Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('Data not found'), 'result' => array()));
-        if (!Engine_Api::_()->authorization()->getPermission($levelId, 'seseventreview_review', 'edit'))
+        if (!Engine_Api::_()->authorization()->getPermission($levelId, 'eventreview', 'edit'))
             Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'permission_error', 'result' => array()));
         $item = Engine_Api::_()->getItem($subject->content_type, $subject->content_id);
         if (isset($item->category_id) && $item->category_id != 0)
@@ -4706,7 +4720,7 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
         }
         $values = $form->getValues();
         $values['rating'] = $_POST['review_star'];
-        $reviews_table = Engine_Api::_()->getDbtable('reviews', 'seseventreview');
+        $reviews_table = Engine_Api::_()->getDbtable('eventreviews', 'seseventreview');
         $db = $reviews_table->getAdapter();
         $db->beginTransaction();
         try {
@@ -4741,7 +4755,7 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
                 $parameter->save();
             }
             if (isset($item->rating)) {
-                $item->rating = Engine_Api::_()->getDbtable('reviews', 'seseventreview')->getRating($subject->content_id, $subject->content_type);
+                $item->rating = Engine_Api::_()->getDbtable('eventreviews', 'seseventreview')->getRating($subject->content_id, $subject->content_type);
                 $item->save();
             }
             //Add fields
@@ -4758,7 +4772,7 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
     }
     public function deletereviewsAction(){
         $viewer = Engine_Api::_()->user()->getViewer();
-        $review = Engine_Api::_()->getItem('seseventreview_review', $this->getRequest()->getParam('type'));
+        $review = Engine_Api::_()->getItem('eventreview', $this->getRequest()->getParam('type'));
         $content_item = Engine_Api::_()->getItem($review->content_type, $review->content_id);
         if (!$this->_helper->requireAuth()->setAuthParams($review, $viewer, 'delete')->isValid())
             Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'permission_error', 'result' => array()));
@@ -4781,12 +4795,12 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
     }
     public function reviewviewAction(){
         $viewer = Engine_Api::_()->user()->getViewer();
-        if (Engine_Api::_()->core()->hasSubject('seseventreview_review'))
+        if (Engine_Api::_()->core()->hasSubject('eventreview'))
             $review = $subject = Engine_Api::_()->core()->getSubject();
         else
             Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('Data not found.'), 'result' => array()));
         $review_id = $this->_getParam('review_id', null);
-        if (!$this->_helper->requireAuth()->setAuthParams('seseventreview_review', null, 'view')->isValid())
+        if (!$this->_helper->requireAuth()->setAuthParams('eventreview', null, 'view')->isValid())
             Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'permission_error', 'result' => array()));
         if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('seseventreview.allow.review', 1))
             Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'permission_error', 'result' => array()));
@@ -4843,7 +4857,7 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
         $subject = Engine_Api::_()->getItem('sesevent_event', $event_id);
         if (!$event_id)
             Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'parameter_missing', 'result' => array()));
-        $table = Engine_Api::_()->getDbTable('reviews', 'seseventreview');
+        $table = Engine_Api::_()->getDbTable('eventreviews', 'seseventreview');
         $params = array('content_id' => $event_id);
         $select = $table->getEventReviewSelect($params);
         $paginator = Zend_Paginator::factory($select);
@@ -4858,13 +4872,13 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
                 $cancreate = false;
             else
                 $cancreate = true;
-        }
-        if (!$this->_helper->requireAuth()->setAuthParams('seseventreview_review', null, 'view')->isValid())
+        } 
+        if (!$this->_helper->requireAuth()->setAuthParams('eventreview', null, 'view')->isValid())
             Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'permission_error', 'result' => array()));
         $permission = $viewer->getIdentity() ? $viewer : Engine_Api::_()->getDbtable('levels', 'authorization')->getPublicLevel()->level_id;
-		$allowedCreate= Engine_Api::_()->authorization()->getPermission($permission, 'seseventreview_review', 'create');
+		$allowedCreate= Engine_Api::_()->authorization()->getPermission($permission, 'eventreview', 'create');
 		//$allowedCreate = Engine_Api::_()->getApi('core', 'sesevent')->allowReviewRating();
-		$isReview = Engine_Api::_()->getDbtable('reviews', 'seseventreview')->isReview(array('content_id' => $subject->getIdentity(), 'content_type' => $subject->getType(), 'module_name' => 'sesevent', 'column_name' => 'review_id'));
+		$isReview = Engine_Api::_()->getDbtable('eventreviews', 'seseventreview')->isReview(array('content_id' => $subject->getIdentity(), 'content_type' => $subject->getType(), 'module_name' => 'sesevent', 'column_name' => 'review_id'));
         if ($allowedCreate && $viewer->getIdentity() && $cancreate && !$isReview) {
             $button['label'] = $this->view->translate('Write a Review');
             $button['name'] = 'writeareview';

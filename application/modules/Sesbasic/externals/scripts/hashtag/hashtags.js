@@ -8,7 +8,7 @@
           var classMain = '';       
           var className = '';     
        } 		
-       $(this).wrap('<div class="jqueryHashtags '+classMain+'"><div class="highlighter '+className+'"></div></div>').unwrap().before('<div class="highlighter '+className+'"></div>').wrap('<div class="typehead"></div></div>'); 		
+       $(this).wrap('<div class="jqueryHashtags '+classMain+'"><div style="font-size:'+sesAdvancedactivityfonttextsize+'px" class="highlighter '+className+'"></div></div>').unwrap().before('<div class="highlighter '+className+'"></div>').wrap('<div class="typehead"></div></div>'); 		
        $(this).addClass("theSelector"); 		
        autosize($(this)); 		
        $(this).parent().prev().on('click', function() { 			

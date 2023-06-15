@@ -172,10 +172,10 @@ class Sesvideo_ChanelController extends Sesapi_Controller_Action_Standard {
           'label' => $this->view->translate("Discussion"),
           'name' => 'discussion',
       );
-        $tabs[] = array(
-          'label' => $this->view->translate("Comments"),
-          'name' => 'comments',
-      );
+      //   $tabs[] = array(
+      //     'label' => $this->view->translate("Comments"),
+      //     'name' => 'comments',
+      // );
       $response['channel']['tabs'] = $tabs;
 
       //share

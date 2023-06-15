@@ -44,7 +44,7 @@ class Sesapi_Api_Oauth extends Core_Api_Abstract {
         //check existance
         $check =  $table->check($token);
         if($check)
-          $token = $this->getAuthRandomString();
+          $token = $this->getAuthRandomString().time();
       } while ($check != 0);
     }
     $db = Engine_Db_Table::getDefaultAdapter();

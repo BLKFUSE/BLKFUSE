@@ -13,6 +13,12 @@
 
 <div id='global_header_logo'>
   <a href='<?php echo $this->url(array(), 'admin_default', true) ?>'>
-    <?php echo $this->htmlImage($this->layout()->staticBaseUrl . 'application/modules/Core/externals/images/socialengine_logo_admin.png', $this->translate('SocialEngine Control Panel')) ?>
+    <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('core.menutype', 'vertical') == 'horizontal') { ?>
+      <?php echo $this->htmlImage($this->layout()->staticBaseUrl . 'application/modules/Core/externals/images/logo.png', $this->translate('SocialEngine Control Panel')) ?>
+    <?php } else{ ?>
+      <?php echo $this->htmlImage($this->layout()->staticBaseUrl . 'application/modules/Core/externals/images/logo-light.png', $this->translate('SocialEngine Control Panel')) ?>
+    <?php } ?>
   </a>
 </div>
+
+

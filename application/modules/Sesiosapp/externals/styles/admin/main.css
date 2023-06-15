@@ -161,39 +161,6 @@
 	width:100%;
 }
 /*Tabs*/
-.sesiosapp-admin-navgation{
-	display: block;
-	margin: 10px 0 0;
-	border-top: 1px solid #ddd;
-	overflow: hidden;
-	padding: 10px 0;
-}
-.sesiosapp-admin-navgation *{
-  -webkit-box-sizing:border-box;
-  -moz-box-sizing:border-box;
-  box-sizing:border-box;
-}
-.sesiosapp-admin-navgation ul{
-	margin:0 -5px;
-}
-.sesiosapp-admin-navgation ul li{
-  float:left;
-	margin:5px;
-}
-.sesiosapp-admin-navgation ul li a{
-	color: #0dc7f1;
-	display: block;
-	font-weight: bold;
-	padding: 10px 20px;
-	border-radius: 20px;
-	border: 1px solid #0dc7f1;
-}
-.sesiosapp-admin-navgation ul li a:hover,
-.sesiosapp-admin-navgation ul li.active a{
-	background-color:#0dc7f1;
-	text-decoration:none;
-	color:#fff;
-}
 .sesiosapp_nav_btns{
 	float:right;
 	margin-top:-40px;
@@ -366,9 +333,6 @@ div .sesiosapp_admin_form label.required:after{
 /*Popup Form*/
 .sesiosapp_popup_form{
 	margin:15px 0 0 15px;
-}
-.sesiosapp_popup_form form > div > div{
-	width:600px;
 }
 .sesiosapp_popup_form form > div > div .form-element input[type="text"],
 .sesiosapp_popup_form form > div > div .form-element textarea{

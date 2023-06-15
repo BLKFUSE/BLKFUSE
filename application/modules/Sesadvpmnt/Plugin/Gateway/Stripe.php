@@ -84,13 +84,18 @@ class Sesadvpmnt_Plugin_Gateway_Stripe extends Engine_Payment_Plugin_Abstract
       return \Stripe\Checkout\Session::create([
         'payment_method_types' => ['card'],
         'line_items' => [[
-          'name' => $package->title." ",
-          'description' => $package->description." ",
-          'images' => [$logo],
-          'amount_decimal' => $params['amount']*100,
-          'currency' => $currency,
+					'price_data' => [
+						'currency' => $currency,
+						'unit_amount' => intval($params['amount']*100),
+						'product_data' => [
+							'name' => $package->title." ",
+							'description' => $package->description." ",
+							'images' => [$logo],
+						],
+					],
           'quantity' => 1,
         ]],
+				'mode' => 'payment',
         'metadata'=>['gateway_id'=>$order->gateway_id,'order_id'=>$order->order_id],
         'success_url' => $params['return_url'].'&session_id={CHECKOUT_SESSION_ID}',
         'cancel_url' => $params['cancel_url'].'&session_id={CHECKOUT_SESSION_ID}',
@@ -347,7 +352,7 @@ class Sesadvpmnt_Plugin_Gateway_Stripe extends Engine_Payment_Plugin_Abstract
       // Should we throw?
       return $this;
     }
-    $this->view->secretKey = $secretKey = $this->_gatewayInfo->config['sesadvpmnt_stripe_secret'];
+    $secretKey = $this->_gatewayInfo->config['sesadvpmnt_stripe_secret'];
     \Stripe\Stripe::setApiKey($secretKey);
     $sub = \Stripe\Subscription::retrieve($profileId);
     $cancel = $sub->cancel();
@@ -465,7 +470,7 @@ class Sesadvpmnt_Plugin_Gateway_Stripe extends Engine_Payment_Plugin_Abstract
   public function cancelResourcePackage($transactionId, $note = null) {
   }
   public function cancelSubscriptionOnExpiry($source, $package) {
-      $this->view->secretKey = $secretKey = $this->_gatewayInfo->config['sesadvpmnt_stripe_secret'];
+      $secretKey = $this->_gatewayInfo->config['sesadvpmnt_stripe_secret'];
         if($package->duration_type != "forever"){
               $durationTime = (($package->duration > 1 || $package->duration == 0) ? ("+".$package->duration." ".$package->duration_type."s") : ("+".$package->duration." ".$package->duration_type));
                 $subscriptionDate = strtotime($source->creation_date);

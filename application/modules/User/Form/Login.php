@@ -41,8 +41,12 @@ class User_Form_Login extends Engine_Form_Email
 
     // Used to redirect users to the correct page after login with Facebook
     $_SESSION['redirectURL'] = Zend_Controller_Front::getInstance()->getRequest()->getRequestUri();
-
-    $description = Zend_Registry::get('Zend_Translate')->_("If you already have an account, please enter your details below. If you don't have one yet, please <a href='%s'>sign up</a> first.");
+		
+		if($_GET['format'] == 'smoothbox') {
+			$description = Zend_Registry::get('Zend_Translate')->_("If you already have an account, please enter your details below. If you don't have one yet, please <a href='%s' target='_blank'>sign up</a> first.");
+    } else {
+			$description = Zend_Registry::get('Zend_Translate')->_("If you already have an account, please enter your details below. If you don't have one yet, please <a href='%s'>sign up</a> first.");
+    }
     $description= sprintf($description, Zend_Controller_Front::getInstance()->getRouter()->assemble(array(), 'user_signup', true));
 
     // Init form
@@ -106,8 +110,12 @@ class User_Form_Login extends Engine_Form_Email
         'size' => ($this->getMode() == 'column') ? 'compact' : 'normal',
       )));
     }
-
-    $content = Zend_Registry::get('Zend_Translate')->_("<span><a href='%s'>Forgot Password?</a></span>");
+			
+		if($_GET['format'] == 'smoothbox') {
+			$content = Zend_Registry::get('Zend_Translate')->_("<span><a href='%s' target='_blank'>Forgot Password?</a></span>");
+		} else {
+			$content = Zend_Registry::get('Zend_Translate')->_("<span><a href='%s'>Forgot Password?</a></span>");
+		}
     $content= sprintf($content, Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'user', 'controller' => 'auth', 'action' => 'forgot'), 'default', true));
 
 

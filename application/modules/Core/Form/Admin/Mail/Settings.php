@@ -86,72 +86,74 @@ class Core_Form_Admin_Mail_Settings extends Engine_Form
      'value' => 1,
     ));
 
-    // Element: mail_smtp
-    $this->addElement('Radio', 'mail_smtp', array(
-      'label' => 'Send through SMTP',
-      'description' => 'Emails typically get sent through the web server using the PHP mail() function.  Alternatively you can have emails sent out using SMTP, usually requiring a username and password, and optionally using an external mail server.',
-      'required' => false,
-      'multiOptions' => array(
-        0 => 'Use the built-in mail() function',
-        1 => 'Send emails through an SMTP server',
-      ),
-      'value' => 0,
-    ));
+		if(Engine_Api::_()->core()->isAcpProSetting()) {
+			// Element: mail_smtp
+			$this->addElement('Radio', 'mail_smtp', array(
+				'label' => 'Send through SMTP',
+				'description' => 'Emails typically get sent through the web server using the PHP mail() function.  Alternatively you can have emails sent out using SMTP, usually requiring a username and password, and optionally using an external mail server.',
+				'required' => false,
+				'multiOptions' => array(
+					0 => 'Use the built-in mail() function',
+					1 => 'Send emails through an SMTP server',
+				),
+				'value' => 0,
+			));
 
-    // Element: mail_smtp_server
-    $this->addElement('Text', 'mail_smtp_server', array(
-      'label' => 'SMTP Server Address',
-      'required' => false,
-      'value' => '127.0.0.1',
-    ));
+			// Element: mail_smtp_server
+			$this->addElement('Text', 'mail_smtp_server', array(
+				'label' => 'SMTP Server Address',
+				'required' => false,
+				'value' => '127.0.0.1',
+			));
 
-    // Element: mail_smtp_port
-    $this->addElement('Text', 'mail_smtp_port', array(
-      'label' => 'SMTP Server Port',
-      'description' => 'Default: 25. Also commonly on port 465 (SMTP over SSL) or port 587.',
-      'required' => false,
-      'value' => '25',
-      'validators' => array(
-        'Int'
-      ),
-    ));
-    $this->mail_smtp_port->getDecorator("Description")->setOption("placement", "append");
+			// Element: mail_smtp_port
+			$this->addElement('Text', 'mail_smtp_port', array(
+				'label' => 'SMTP Server Port',
+				'description' => 'Default: 25. Also commonly on port 465 (SMTP over SSL) or port 587.',
+				'required' => false,
+				'value' => '25',
+				'validators' => array(
+					'Int'
+				),
+			));
+			$this->mail_smtp_port->getDecorator("Description")->setOption("placement", "append");
 
-    // Element: mail_smtp_authentication
-    $this->addElement('Radio', 'mail_smtp_authentication', array(
-      'label' => 'SMTP Authentication?',
-      'description' => 'Does your SMTP Server require authentication?',
-      'required' => false,
-      'multiOptions' => array(
-        1 => 'Yes',
-        0 => 'No',
-      ),
-      'value' => 0,
-    ));
+			// Element: mail_smtp_authentication
+			$this->addElement('Radio', 'mail_smtp_authentication', array(
+				'label' => 'SMTP Authentication?',
+				'description' => 'Does your SMTP Server require authentication?',
+				'required' => false,
+				'multiOptions' => array(
+					1 => 'Yes',
+					0 => 'No',
+				),
+				'value' => 0,
+			));
 
-    // Element: mail_smtp_username
-    $this->addElement('Text', 'mail_smtp_username', array(
-      'label' => 'SMTP Username',
-    ));
+			// Element: mail_smtp_username
+			$this->addElement('Text', 'mail_smtp_username', array(
+				'label' => 'SMTP Username',
+			));
 
-    // Element: mail_smtp_password
-    $this->addElement('Password', 'mail_smtp_password', array(
-      'label' => 'SMTP Password',
-      'description' => 'Leave blank to use previous.',
-    ));
-    $this->mail_smtp_password->getDecorator("Description")->setOption("placement", "append");
+			// Element: mail_smtp_password
+			$this->addElement('Password', 'mail_smtp_password', array(
+				'label' => 'SMTP Password',
+				'description' => 'Leave blank to use previous.',
+			));
+			$this->mail_smtp_password->getDecorator("Description")->setOption("placement", "append");
 
-    // Element: mail_smtp_ssl
-    $this->addElement('Radio', 'mail_smtp_ssl', array(
-      'label' => 'Use SSL or TLS?',
-      'required' => false,
-      'multiOptions' => array(
-        '' => 'None',
-        'tls' => 'TLS',
-        'ssl' => 'SSL',
-      ),
-      'value' => '',
-    ));
+			// Element: mail_smtp_ssl
+			$this->addElement('Radio', 'mail_smtp_ssl', array(
+				'label' => 'Use SSL or TLS?',
+				'required' => false,
+				'multiOptions' => array(
+					'' => 'None',
+					'tls' => 'TLS',
+					'ssl' => 'SSL',
+				),
+				'value' => '',
+			));
+    }
 
     // Element: submit
     $this->addElement('Button', 'submit', array(

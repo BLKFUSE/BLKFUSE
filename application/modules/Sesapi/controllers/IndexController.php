@@ -145,13 +145,20 @@ class Sesapi_IndexController extends Sesapi_Controller_Action_Standard
       } else {
         $result['is_core_activity'] = true;
       }
-
+      
       //check core plugins
       $coreModules = array();
+      if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('tickvideo')){
+        $coreModules["tickvideo"] = true;
+      }
+      if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('seslocation')){
+        $coreModules["seslocation"] = true;
+      }
       //blog,classified,event,forum,group,music,album,poll,video,activity
       if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('blog')){
         $coreModules["blog"] = "blog";
       }
+      
       if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('classified')){
         $coreModules["classified"] = "classified";
       }
@@ -295,7 +302,7 @@ class Sesapi_IndexController extends Sesapi_Controller_Action_Standard
           $result['user']["user_id"] = $user->user_id;
           $result['user']["email"] = $user->email;
           $result['user']["username"] = $user->username;
-          $result['user']["displayname"] = $user->displayname;
+          $result['user']["displayname"] = $user->getTitle();
           $result['user']["photo_id"] = $user->photo_id;
           $result['user']["status"] = $user->status;
           $result['user']["password"] = $user->password;
@@ -450,7 +457,7 @@ class Sesapi_IndexController extends Sesapi_Controller_Action_Standard
         if($defaultimage){
           $defaultimage = $this->view->baseUrl() . '/' . $this->defaultimage;;
         }else{
-          $defaultimage = $this->getBaseUrl(true,$this->view->layout()->staticBaseUrl.'application/modules/Sesdemouser/externals/images/nophoto_user_thumb_icon.png');
+          $defaultimage = $this->view->layout()->staticBaseUrl.'application/modules/Sesdemouser/externals/images/nophoto_user_thumb_icon.png';
         }
         if (engine_count($results) > 0){
           $demoUsers = array();
@@ -609,7 +616,7 @@ class Sesapi_IndexController extends Sesapi_Controller_Action_Standard
     $resource_id = $this->_getParam('resource_id',0);
     $resource_type = $this->_getParam('resource_type',0);
     $type = $this->_getParam('reaction_type',0);
-    $notificationType = $actionType = $resource_type.'_like';
+    $notificationType = $actionType = "liked";// $resource_type.'_like';
     if(!$resource_id || !$resource_type)
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'parameter_missing', 'result' => array()));
 
@@ -1032,18 +1039,18 @@ class Sesapi_IndexController extends Sesapi_Controller_Action_Standard
       $array[$counter] = $comment->toArray();
       $array[$counter]["is_like"] = Engine_Api::_()->sesapi()->contentLike($comment);
       $replies = array();
-      if($isComment && $this->checkVersion(3.0,4.0)){
+      if($isComment && $this->checkVersion(3.0,3.3)){
         //if(0){
         //get comment replies
        if($sesAdv)
         $replies  = $this->getReplies($subject,$comment["comment_id"]);
-       if(@count($replies)){
+       if(@engine_count($replies)){
          $array[$counter]["replies"] = $replies;
 			 }
         $viewMoreData = array();
          if($sesAdv)
           $viewMoreData = $this->getReplies($subject,$comment["comment_id"],'zero',true);
-         if (@count($viewMoreData)){
+         if (@engine_count($viewMoreData)){
             $array[$counter]['viewMoreReplyData'] = $viewMoreData;
             $array[$counter]['viewMoreReplyData']['comment_id'] = $comment->getIdentity();
             $array[$counter]['viewMoreReplyData']['action_id'] = $subject->getIdentity();
@@ -1052,9 +1059,6 @@ class Sesapi_IndexController extends Sesapi_Controller_Action_Standard
 					$likesGroup = array();
 					if($sesAdv)
             $likesGroup = Engine_Api::_()->sesadvancedcomment()->commentLikesGroup($comment,false);
-					//echo '<pre>';print_r($likesGroup);
-					//echo '<pre>';print_r($likesGroup);die;
-					//$photo['is_like'] = Engine_Api::_()->sesapi()->contentLike($comment);
 					$reactionData = array();
 					$reactionCounter = 0;
 					if(@count($likesGroup['data'])){
@@ -1897,11 +1901,24 @@ class Sesapi_IndexController extends Sesapi_Controller_Action_Standard
           $sesadcRow->save();
       }
 
+      //GIF Work
+      if(isset($_POST['image_id']) && $_POST['image_id']) {
+        $sesadcRow->gif_id = 1;
+        $sesadcRow->gif_url = $_POST['image_id'];
+        $sesadcRow->save();
+        $gifImageUrl = $_POST['image_id'];
+        $bodyGif = sprintf('<img src="%s" class="giphy_image" alt="%s">' , $gifImageUrl , $gifImageUrl);
+        $comment->body = $bodyGif;
+        $comment->save();
+      }
+
 			  //sespage comment
       if($guid){
+        if(isset($sesadcRow->poster_type)){
           $sesadcRow->poster_type = $guid->getType();
           $sesadcRow->poster_id = $guid->getIdentity();
           $sesadcRow->save();
+        }
       }
 
 			$gif_id = $_POST['gif_id'];
@@ -1918,9 +1935,9 @@ class Sesapi_IndexController extends Sesapi_Controller_Action_Standard
 
 
       $parentCommentType = 'core_comment';
-      if($action->getType() == 'activity_action'){
+      if($action->getType() == 'activity_action' || $action->getType() == 'sesadvancedactivity_action'){
         $commentType = $action->likes(true);
-        if($commentType->getType() == 'activity_action')
+        if($commentType->getType() == 'activity_action' || $action->getType() == 'sesadvancedactivity_action')
           $parentCommentType = 'activity_comment';
       }
 
@@ -2029,7 +2046,7 @@ class Sesapi_IndexController extends Sesapi_Controller_Action_Standard
       $resource_type = $this->_getParam('resource_type','');
       $comment_id = $this->view->comment_id = $this->_getParam('comment_id', null);
       $module = $this->_getParam('modulecomment','');
-      if($resource_type == 'activity_action')
+      if($resource_type == 'activity_action' || $resource_type == 'sesadvancedactivity_action')
         $comment = Engine_Api::_()->getItem('activity_comment',$comment_id);
       else
         $comment = Engine_Api::_()->getItem('core_comment',$comment_id);

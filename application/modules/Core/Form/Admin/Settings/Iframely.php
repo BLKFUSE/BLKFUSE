@@ -50,6 +50,7 @@ class Core_Form_Admin_Settings_Iframely extends Engine_Form
       'attribs' => array(
         'escape' => false,
       ),
+      'value' => 'socialengine',
       'onclick' => 'updateFields();',
     ));
 

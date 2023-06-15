@@ -121,28 +121,6 @@ abstract class Install_Import_Phpfox_AbstractActivityComments extends Install_Im
       $this->getToDb()->insert('engine4_core_likes', $newLikeData);
     }
 
-    $isNestedCommentPlugin = $this->isPluginExist('nestedcomment');
-    if( $isNestedCommentPlugin ) {
-      $dislikes = $this->getFromDb()->select()
-        ->from($this->getFromPrefix() . 'action', '*')
-        ->where('item_id= ?', $data['comment_id'])
-        ->where('item_type_id = ?', 'comment')
-        ->query()
-        ->fetchAll();
-
-      foreach( $dislikes as $dislike ) {
-        $newDisLikeData = array(
-          'resource_type' => 'activity_comment',
-          'resource_id' => $comment_id,
-          'poster_type' => 'user',
-          'poster_id' => $dislike['user_id'],
-          'creation_date' => $this->_translateTime($dislike['time_stamp'])
-        );
-
-        $this->getToDb()->insert('engine4_nestedcomment_dislikes', $newDisLikeData);
-      }
-    }
-
     $this->getToDb()->update('engine4_activity_actions', array(
       'comment_count' => $count,
     ), array(

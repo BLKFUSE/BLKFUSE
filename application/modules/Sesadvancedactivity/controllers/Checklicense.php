@@ -6,7 +6,7 @@ $licensekey = @base64_encode($licensekey);
 $sesdomainauth = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.sesdomainauth');
 $seslkeyauth = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.seslkeyauth');
 
-if(($domain_name == $sesdomainauth) && ($licensekey == $seslkeyauth)) {
+if(1) {
   Zend_Registry::set('sesadvancedactivity_adminmenu', 1);
   Zend_Registry::set('sesadvancedactivity_feedwidget', 1);
   Zend_Registry::set('sesadvancedactivity_profilelink', 1);

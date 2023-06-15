@@ -69,7 +69,7 @@ if(!$this->is_ajax){
         <?php  echo $this->partial('_socialShareIcons.tpl','sesbasic',array('resource' => $this->photo, 'param' => 'photoviewpage')); ?>
 
         
-        <a title="<?php echo $this->translate('Share'); ?>" href="<?php echo $this->url(array("action" => "share", "type" => "sesvideo_chanelphoto", "photo_id" => $this->photo->getIdentity(),"format" => "smoothbox"), 'sesalbum_general', true); ?>" class="sesalbum_photo_view_share_button smoothbox"><i class="fa fa-share"></i></a>
+        <a title="<?php echo $this->translate('Share'); ?>" href="<?php echo $this->url(array("action" => "share", "type" => "sesvideo_chanelphoto", "photo_id" => $this->photo->getIdentity(),"format" => "smoothbox"), 'sesalbum_general', true); ?>" class="sesalbum_photo_view_share_button smoothbox"><i class="fas fa-share-alt"></i></a>
         <a title="<?php echo $this->translate('Download'); ?>" href="<?php echo $this->url(array('module' => 'sesvideo', 'action' => 'download', 'photo_id' => $this->photo->chanelphoto_id,'file_id'=>$this->photo->file_id), 'sesvideo_chanel', true); ?>" class="sesalbum_photo_view_download_button"><i class="fa fa-download"></i></a>
        <?php if($this->canComment){ ?>
      	 <?php $LikeStatus = Engine_Api::_()->sesalbum()->getLikeStatusPhoto($this->photo->chanelphoto_id,'chanelphoto'); ?>

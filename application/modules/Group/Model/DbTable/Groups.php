@@ -72,8 +72,12 @@ class Group_Model_DbTable_Groups extends Core_Model_Item_DbTable_Abstract
             $select->where('category_id = ?', $params['category_id']);
         }
         
-        if (@$params['category_id'] != '' && @$params['category_id'] == 0) {
-            $select->where('category_id = ?', $params['category_id']);
+        if (!empty($params['subcat_id'])) {
+            $select->where('subcat_id = ?', $params['subcat_id']);
+        }
+        
+        if (!empty($params['subsubcat_id'])) {
+            $select->where('subsubcat_id = ?', $params['subsubcat_id']);
         }
 
         //Full Text

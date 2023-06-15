@@ -372,7 +372,13 @@ class Sesadvancedactivity_IndexController extends Core_Controller_Action_Standar
               $type = 'eclassroom_post_video';
             else
               $type = 'post_video';
-           
+						if($attachment->status != 1) {
+              $videoProcess = 1;
+              if(isset($attachment->activity_text) && empty($attachment->activity_text)){
+                $attachment->activity_text = $body;
+                $attachment->save();
+              }
+            }
           }else if($attachment->getType() == "pagevideo"){
             if($attachment->status != 1){
               $videoProcess = 1;
@@ -1666,10 +1672,20 @@ class Sesadvancedactivity_IndexController extends Core_Controller_Action_Standar
       return;
 
     // Both the author and the person being written about get to delete the action_id
+    if(!$comment_id) {
+			$subject = Engine_Api::_()->getItem($action->subject_type, $action->subject_id);
+    } else {
+			$comment = $action->comments()->getComment($comment_id);
+			
+			if($comment->getType() == 'core_comment') 
+				$subject = Engine_Api::_()->getItem($comment->resource_type, $comment->resource_id);
+			else	
+				$subject = $action;
+    }
     if (!$comment_id && (
         $activity_moderate ||
         ('user' == $action->subject_type && $viewer->getIdentity() == $action->subject_id) || // owner of profile being commented on
-        ('user' == $action->object_type  && $viewer->getIdentity() == $action->object_id)))   // commenter
+        ('user' == $action->object_type  && $viewer->getIdentity() == $action->object_id) || (($subject && method_exists($subject,'canDeleteComment') && $subject->canDeleteComment($subject)) || (!$subject || ($subject && !method_exists($subject,'canDeleteComment'))))))   // commenter
     {
       // Delete action item and all comments/likes
       $db = Engine_Api::_()->getDbTable('actions', 'sesadvancedactivity')->getAdapter();
@@ -1707,7 +1723,7 @@ class Sesadvancedactivity_IndexController extends Core_Controller_Action_Standar
         $db->beginTransaction();
         if ($activity_moderate ||
            ('user' == $comment->poster_type && $viewer->getIdentity() == $comment->poster_id) ||
-           ('user' == $action->object_type  && $viewer->getIdentity() == $action->object_id))
+           ('user' == $action->object_type  && $viewer->getIdentity() == $action->object_id)  || (($subject && method_exists($subject,'canDeleteComment') && $subject->canDeleteComment($subject)) || (!$subject || ($subject && !method_exists($subject,'canDeleteComment')))))
         {
           try {
             if (!($comment->getType())) {
@@ -1846,7 +1862,7 @@ class Sesadvancedactivity_IndexController extends Core_Controller_Action_Standar
       $sesdata[] = array(
           'id' => $user->user_id,
           'user_id' => $user->user_id,
-          'label' => $user->displayname,
+          'label' => $user->getTitle(),
           'photo' => $user_icon
       );
     }

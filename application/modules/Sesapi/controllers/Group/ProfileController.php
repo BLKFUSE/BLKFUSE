@@ -44,6 +44,11 @@ class Group_ProfileController extends Sesapi_Controller_Action_Standard
   {
     $subject = Engine_Api::_()->core()->getSubject();
     $viewer = Engine_Api::_()->user()->getViewer();
+    
+    // Network check
+		$networkPrivacy = Engine_Api::_()->network()->getViewerNetworkPrivacy($subject, 'user_id');
+		if(empty($networkPrivacy))
+			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => 'permission_error', 'result' => array()));
 
     // Increment view count
     if( !$subject->getOwner()->isSelf($viewer) )
@@ -70,6 +75,19 @@ class Group_ProfileController extends Sesapi_Controller_Action_Standard
     $result["group_content"] = $subject->toarray();
     
     $result["group_content"]['member_count'] = $this->view->translate(array('%s member', '%s members', $subject->member_count), $this->view->locale()->toNumber($subject->member_count));
+    
+    if( !empty($subject->category_id) ) {
+      $category = Engine_Api::_()->getItem('group_category', $subject->category_id);
+      $result["group_content"]['category_title'] = $category->title;
+			if( !empty($subject->subcat_id) ) {
+				$category = Engine_Api::_()->getItem('group_category', $subject->subcat_id);
+				$result["group_content"]['subcategory_title'] = $category->title;
+			}
+			if( !empty($subject->subsubcat_id) ) {
+				$category = Engine_Api::_()->getItem('group_category', $subject->subsubcat_id);
+				$result["group_content"]['subsubcategory_title'] = $category->title;
+			}
+    }
     
     //Cover Photo
     if($subject->photo_id) {
@@ -110,6 +128,10 @@ class Group_ProfileController extends Sesapi_Controller_Action_Standard
       $result['group_content']['owner_photo'] = $this->getBaseUrl(true,'/application/modules/User/externals/images/nophoto_user_thumb_icon.png');
     }
     $result['group_content']['owner_title'] = $this->view->translate("by ") . $subject->getOwner()->getTitle();
+    
+		$result['group_content']['is_rated'] = Engine_Api::_()->getDbTable('ratings', 'group')->checkRated($subject->getIdentity(), $viewer->getIdentity());
+		$result['group_content']['enable_rating'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('group.enable.rating', 1);
+		$result['group_content']['ratingicon'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('group.ratingicon', 'fas fa-star');
     
     if($viewer->getIdentity() > 0) {
 			$result['group_content']['permission']['canEdit'] = $canEdit = $viewPermission = $subject->authorization()->isAllowed($viewer, 'edit') ? true : false;
@@ -213,11 +235,14 @@ class Group_ProfileController extends Sesapi_Controller_Action_Standard
         // Set item count per page and current page number
         $paginator->setItemCountPerPage($this->_getParam('limit', 5));
         $paginator->setCurrentPageNumber($this->_getParam('page', 1));
+        
+        $canPost = Engine_Api::_()->authorization()->isAllowed('group', $viewer, 'topic_create');
+        
         if ($viewer->getIdentity()) {
-            //if ($canTopicCreate) {
-                $result['label'] = $this->view->translate('Post New Topic');
-                $result['name'] = 'pastnewtopic';
-            //}
+            if ($canPost) {
+							$result['label'] = $this->view->translate('Post New Topic');
+							$result['name'] = 'pastnewtopic';
+            }
         }
         $counter = 0;
         foreach ($paginator as $topic) {
@@ -555,7 +580,7 @@ return $result;
         $form->getElement('body')->setLabel('Description');
         if ($this->_getParam('getForm')) {
             $formFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->generateFormFields($form);
-            $this->generateFormFields($formFields, array('resources_type' => 'group'));
+            $this->generateFormFields($formFields, array('resources_type' => 'group', 'formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
         }
         if (!$form->isValid($_POST)) {
             $validateFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->validateFormFields($form);
@@ -615,7 +640,10 @@ return $result;
         $topic = $topic = Engine_Api::_()->core()->getSubject();
         $group = $group = $topic->getParentGroup();
         $canEdit = $canEdit = $group->authorization()->isAllowed($viewer, 'edit');
-        $canPost = $canPost = $group->authorization()->isAllowed($viewer, 'comment');
+        $canPost = $group->authorization()->isAllowed(null,  'topic_create');
+        
+        $canPostCreate = $topic->canPostCreate(Engine_Api::_()->user()->getViewer());
+        
         $canAdminEdit = Engine_Api::_()->authorization()->isAllowed($group, null, 'edit');
         if (!$viewer || !$viewer->getIdentity() || $viewer->getIdentity() != $topic->user_id) {
             $topic->view_count = new Zend_Db_Expr('view_count + 1');
@@ -649,7 +677,7 @@ return $result;
         $paginator = Zend_Paginator::factory($select);
         $topicdata['label'] = $topic->getTitle();
         $headeroptionscounter = 0;
-        if ($canPost) {
+        if ($canPostCreate) {
             $data[$headeroptionscounter]['name'] = 'postreply';
             $data[$headeroptionscounter]['label'] = $this->view->translate('Post Reply');
             $headeroptionscounter++;
@@ -682,9 +710,7 @@ return $result;
             }
             $posts[$counter]['post_id'] = $post->getIdentity();
             $posts[$counter]['title'] = $user->getTitle();
-            $imagepath = $user->getPhotoUrl('thumb.profile');
-            if ($imagepath)
-                $posts[$counter]['user_photo'] = $this->getBaseUrl(false, $imagepath);
+            $posts[$counter]['user_photo'] = $this->userImage($user->user_id,"thumb.profile");
 
             if ($isOwner) {
                 $posts[$counter]['is_owner_label'] = $this->view->translate('Host');
@@ -692,12 +718,21 @@ return $result;
                 $posts[$counter]['is_owner_label'] = $this->view->translate('Member');
             }
             $optioncounter = 0;
+            
+            $canPostEdit = $topic->canPostEdit(Engine_Api::_()->user()->getViewer());
+            $canPostDelete = $topic->canPostDelete(Engine_Api::_()->user()->getViewer());
+            
             if ($post->user_id == $viewer->getIdentity() || $group->getOwner()->getIdentity() == $viewer->getIdentity() || $canAdminEdit) {
-                $posts[$counter]['options'][$optioncounter]['name'] = 'edit';
-                $posts[$counter]['options'][$optioncounter]['label'] = $this->view->translate('Edit');
-                $optioncounter++;
-                $posts[$counter]['options'][$optioncounter]['name'] = 'delete';
-                $posts[$counter]['options'][$optioncounter]['label'] = $this->view->translate('Delete');
+								if($canPostEdit) {
+									$posts[$counter]['options'][$optioncounter]['name'] = 'edit';
+									$posts[$counter]['options'][$optioncounter]['label'] = $this->view->translate('Edit');
+									$optioncounter++;
+                }
+                if($canPostDelete) { 
+									$posts[$counter]['options'][$optioncounter]['name'] = 'delete';
+									$posts[$counter]['options'][$optioncounter]['label'] = $this->view->translate('Delete');
+									$optioncounter++;
+                }
             }
 
             $posts[$counter]['creation_date'] = $group->creation_date;
@@ -777,7 +812,8 @@ return $result;
           $form->getElement('body')->setLabel('Body');
         if ($this->_getParam('getForm')) {
             $formFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->generateFormFields($form);
-            $this->generateFormFields($formFields, array('resources_type' => 'group'));
+            $this->generateFormFields($formFields, array('resources_type' => 'group', 'formTitle' => 
+            "Post Reply"));
         }
         if (!$form->isValid($_POST)) {
             $validateFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->validateFormFields($form);
@@ -982,8 +1018,8 @@ return $result;
         $form->body->setValue(html_entity_decode($post->body));
         $form->populate($post->toArray());
         if ($this->_getParam('getForm')) {
-            $formFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->generateFormFields($form);
-            $this->generateFormFields($formFields, array());
+            $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);
+						$this->generateFormFields($formFields,array('formTitle' => $form->getTitle(), 'formDescription' => $form->getDescription()));
         }
         if (!$form->isValid($_POST)) {
             $validateFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->validateFormFields($form);
@@ -1238,7 +1274,7 @@ return $result;
                         ->where('poster_type = ?', 'user')
                         ->where('resource_id = ?', $photos->getIdentity());
                     $resultData = $tableLike->fetchRow($select);
-                    if ($resultData) {
+                    if ($resultData && Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesadvancedactivity')) {
                         $item_activity_like = Engine_Api::_()->getDbTable('corelikes', 'sesadvancedactivity')->rowExists($resultData->like_id);
                         $photo['reaction_type'] = $item_activity_like->type;
                     }
@@ -1269,8 +1305,10 @@ return $result;
                     $photo['is_like'] = true;
                     $like = true;
                     $type = $photo['reaction_type'];
+                    if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesadvancedactivity')) { 
                     $imageLike = Engine_Api::_()->sesapi()->getBaseUrl(false, Engine_Api::_()->sesadvancedcomment()->likeImage($type));
                     $text = Engine_Api::_()->sesadvancedcomment()->likeWord($type);
+                    }
                 } else {
                     $photo['is_like'] = false;
                     $like = false;
@@ -1334,7 +1372,7 @@ return $result;
     
     if($subject->category_id) {
       $category = Engine_Api::_()->getItem('group_category', $subject->category_id);
-      $result['category_name'] = $this->view->translate("Category: ") . $category->getTitle();
+      $result['category_name'] = $category->getTitle();
     }
     Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'', 'result' => $result));
   }
@@ -2109,38 +2147,42 @@ return $result;
       'label' => $this->view->translate('Info'),
       'name' => 'info'
     );
-    
     $tabs[] = array(
       'label' => $this->view->translate('Members'),
       'name' => 'members'
     );
-    
     $tabs[] = array(
       'label' => $this->view->translate('Photos'),
       'name' => 'photos'
     );
-    
     $tabs[] = array(
       'label' => $this->view->translate('Discussions'),
       'name' => 'discussions'
     );
-    $tabs[] = array(
-      'label' => $this->view->translate('Events'),
-      'name' => 'events'
-    );
-     $tabs[] = array(
-      'label' => $this->view->translate('Blogs'),
-      'name' => 'blogs'
-    );
-      $tabs[] = array(
-      'label' => $this->view->translate('Polls'),
-      'name' => 'polls'
-    );
-       $tabs[] = array(
-      'label' => $this->view->translate('Videos'),
-      'name' => 'videos'
-    );
-
+//     if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('event')) {
+// 			$tabs[] = array(
+// 				'label' => $this->view->translate('Events'),
+// 				'name' => 'events'
+// 			);
+//     }
+//     if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('blog')) {
+// 			$tabs[] = array(
+// 				'label' => $this->view->translate('Blogs'),
+// 				'name' => 'blogs'
+// 			);
+//     }
+//     if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('poll')) {
+// 			$tabs[] = array(
+// 				'label' => $this->view->translate('Polls'),
+// 				'name' => 'polls'
+// 			);
+//     }
+//     if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('video')) {
+// 			$tabs[] = array(
+// 				'label' => $this->view->translate('Videos'),
+// 				'name' => 'videos'
+// 			);
+// 		}
     return $tabs;
   }
 }

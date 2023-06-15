@@ -107,12 +107,12 @@ class Sescommunityads_AdminCategoriesController extends Core_Controller_Action_A
       if (isset($row->cat_icon) && $row->cat_icon != '') {
         $cat_icon = Engine_Api::_()->storage()->get($row->cat_icon);
         if($cat_icon) {
-            $data = '<img  class="sesbasic-category-icon"  src="' . Engine_Api::_()->storage()->get($row->cat_icon)->getPhotoUrl('thumb.icon') . '" />';
+            $data = '<img style="max-width:20px;"  class="sesbasic-category-icon"  src="' . Engine_Api::_()->storage()->get($row->cat_icon)->getPhotoUrl('thumb.icon') . '" />';
         }
       } else {
         $data = "---";
       }
-      $tableData = '<tr id="categoryid-' . $row->category_id . '"><td><input type="checkbox" name="delete_tag[]" class="checkbox" value="' . $parentId . '" /></td><td>' . $data . '</td><td>' . $tableSeprator . $row->category_name . ' <div class="hidden" style="display:none" id="inline_' . $row->category_id . '"><div class="parent">' . $parentId . '</div></div></td><td>' . $row->slug . '</td><td>' . $this->view->htmlLink(array("route" => "admin_default", "module" => "sescommunityads", "controller" => "categories", "action" => "edit-category", "id" => $row->category_id, "catparam" => "subsub"), "Edit", array()) . ' | ' . $this->view->htmlLink('javascript:void(0);', "Delete", array("class" => "deleteCat", "data-url" => $row->category_id)) . '</td></tr>';
+      $tableData = '<tr id="categoryid-' . $row->category_id . '"><td><input type="checkbox" name="delete_tag[]" class="checkbox" value="' . $row->getIdentity() . '" /></td><td>' . $data . '</td><td>' . $tableSeprator . $row->category_name . ' <div class="hidden" style="display:none" id="inline_' . $row->category_id . '"><div class="parent">' . $parentId . '</div></div></td><td>' . $row->slug . '</td><td>' . $this->view->htmlLink(array("route" => "admin_default", "module" => "sescommunityads", "controller" => "categories", "action" => "edit-category", "id" => $row->category_id, "catparam" => "subsub"), "Edit", array()) . ' | ' . $this->view->htmlLink('javascript:void(0);', "Delete", array("class" => "deleteCat", "data-url" => $row->category_id)) . '</td></tr>';
       echo json_encode(array('seprator' => $seprator, 'tableData' => $tableData, 'id' => $row->category_id, 'name' => $row->category_name, 'slugError' => false));
       die;
     }

@@ -32,12 +32,38 @@
 .sesuserimport_admin_manage_table tbody tr{
 	cursor:move;
 }
-#global_page_sesuserimport-admin-manage-index .settings .form-wrapper:nth-child(11) select{
-	min-width:95px;
-	max-width:95px;
-	margin-left:0;
-	margin-right:2px;
+.sesuserimport_add_form .form-wrapper .form-label i{
+	display:none;
 }
-#global_page_sesuserimport-admin-manage-index i{
-  display:none;	
+.sesuserimport_add_form .form-wrapper .form-element{
+	width:60%;
+}
+.sesuserimport_add_form input[type=text],
+.sesuserimport_add_form input[type=email],
+.sesuserimport_add_form input[type=password],
+.sesuserimport_add_form textarea{
+	width:100% !important;
+}
+.sesuserimport_add_form .form-wrapper .form-element select{
+	margin-right:4px;
+	margin-left: 0;
+	width: 32.33% !important;
+	max-width: 32.33% !important;
+	display: inline-block;
+	vertical-align: middle;
+}
+.sesuserimport_add_form .form-wrapper div#timezone-element select,
+.sesuserimport_add_form .form-wrapper div#language-element select,
+.sesuserimport_add_form .form-wrapper div#level_id-element select,
+.sesuserimport_add_form .form-wrapper div#network_id-element select{
+	width: 100% !important;
+	max-width: 100% !important;
+}
+.sesuserimport_add_form .form-wrapper .form-element select:last-child{
+	margin-right:0px;
+}
+.sesuserimport_add_form div#approved-wrapper div#approved-label,
+.sesuserimport_add_form div#verified-wrapper div#verified-label,
+.sesuserimport_add_form div#enabled-wrapper div#enabled-label{
+	display: none;
 }

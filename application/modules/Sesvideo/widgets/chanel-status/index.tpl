@@ -46,7 +46,7 @@
             <a href="<?php echo $this->url(array("module"=> "core", "controller" => "report", "action" => "create", "route" => "default", "subject" => $this->subject->getGuid()),'default',true); ?>" onclick='opensmoothboxurl(this.href);return false;' class="sesbasic_icon_btn sesbasic_icon_share_btn" ><i class="fa fa-flag"></i></a>
           <?php } ?>
           <?php if(engine_in_array('share',$this->option)){ ?>
-            <a href="<?php echo $this->url(array('module'=> 'sesvideo', 'controller' => 'index','action' => 'share','route' => 'default','type' => 'sesvideo_chanel','id' => $this->subject->getIdentity(),'format' => 'smoothbox'),'default',true); ?>" class="sesbasic_icon_btn sesbasic_icon_share_btn" onclick='opensmoothboxurl(this.href);return false;' ><i class="fa fa-share"></i></a>
+            <a href="<?php echo $this->url(array('module'=> 'sesvideo', 'controller' => 'index','action' => 'share','route' => 'default','type' => 'sesvideo_chanel','id' => $this->subject->getIdentity(),'format' => 'smoothbox'),'default',true); ?>" class="sesbasic_icon_btn sesbasic_icon_share_btn" onclick='opensmoothboxurl(this.href);return false;' ><i class="fas fa-share-alt"></i></a>
             <?php } ?>
           <?php if(engine_in_array('edit',$this->option)){ ?>
            <?php if($this->can_edit){ ?>

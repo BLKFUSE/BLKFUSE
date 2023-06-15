@@ -41,10 +41,8 @@ class Engine_View_Helper_HtmlLink extends Zend_View_Helper_HtmlElement
       $href = $href->getHref();
     }
 
-    if( null !== $href ) {
-      $attribs = array_merge(array(
-        'href' => $href
-      ), $attribs);
+    if( null !== $href && is_array($attribs)) {
+      $attribs = array_merge(array('href' => $href), $attribs);
     }
     
     // Merge data and type

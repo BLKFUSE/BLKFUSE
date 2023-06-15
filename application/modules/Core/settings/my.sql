@@ -852,9 +852,9 @@ CREATE TABLE IF NOT EXISTS `engine4_core_search` (
   `type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `id` int(11) unsigned NOT NULL,
   `title` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `description` varchar(255) NULL DEFAULT NULL,
   `keywords` varchar(255) NOT NULL,
-  `hidden` varchar(255) NOT NULL,
+  `hidden` varchar(255) NULL DEFAULT NULL,
   PRIMARY KEY  (`type`,`id`),
   FULLTEXT KEY `LOOKUP` (`title`, `description`, `keywords`, `hidden`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
@@ -1000,7 +1000,6 @@ INSERT IGNORE INTO `engine4_core_settings` (`name`, `value`) VALUES
 ('core.general.profile', '1'),
 ('core.general.quota', '0'),
 ('core.general.search', '1'),
-('core.iframely.host', 'socialengine'),
 ('core.license.email', 'email@domain.com'),
 ('core.license.key', '6666-6666-6666-6666'),
 ('core.license.statistics', '1'),
@@ -1053,7 +1052,9 @@ INSERT IGNORE INTO `engine4_core_settings` (`name`, `value`) VALUES
 ('user.support.links', 1),
 ('elpis.changelanding', '1'),
 ('core.storelisting', '1'),
-('core.newsupdates', '1');
+('core.newsupdates', '1'),
+('core.general.enableloginlogs', '1'),
+('core.general.logincrondays', '5');
 
 
 -- --------------------------------------------------------
@@ -1182,7 +1183,8 @@ INSERT IGNORE INTO `engine4_core_tasks` (`title`, `module`, `plugin`, `timeout`)
 ('Background Mailer', 'core', 'Core_Plugin_Task_Mail', 15),
 ('Cache Prefetch', 'core', 'Core_Plugin_Task_Prefetch', 300),
 ('Statistics', 'core', 'Core_Plugin_Task_Statistics', 43200),
-('Log Rotation', 'core', 'Core_Plugin_Task_LogRotation', 7200);
+('Log Rotation', 'core', 'Core_Plugin_Task_LogRotation', 7200),
+('Clear Login Logs', 'core', 'Core_Plugin_Task_ClarLoginLog', 432000);
 
 
 -- --------------------------------------------------------

@@ -57,7 +57,7 @@ class Group_Form_Create extends Engine_Form
             'label' => 'Profile Photo',
 						'accept' => 'image/*',
         ));
-        $this->photo->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+        $this->photo->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
 
 //         $this->addElement('Select', 'category_id', array(
 //             'label' => 'Category',

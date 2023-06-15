@@ -22,11 +22,15 @@
 <?php endif; ?>
 
 <div class="quicklinks">
-  <?php
-    echo $this->navigation()
-      ->menu()
-      ->setContainer($this->navigation)
-      ->setPartial(array('_navIcons.tpl', 'core'))
-      ->render()
-  ?>
+	<ul>
+		<?php foreach( $this->navigation as $link ): ?>
+			<li>
+				<?php if(!empty($this->showMenuIcon)) { ?>
+					<?php echo $this->htmlLink($link->getHref(), $this->translate($link->getLabel()), array('class' => 'buttonlink' . ( $link->getClass() ? ' ' . $link->getClass() : '' ) . ' ' . (!empty($link->get('icon')) ? $link->get('icon') : ''),'target' => $link->get('target'))) ?>
+				<?php } else { ?>
+					<?php echo $this->htmlLink($link->getHref(), $this->translate($link->getLabel()), array('target' => $link->get('target'))) ?>
+				<?php } ?>
+			</li>
+		<?php endforeach; ?>
+	</ul>
 </div>

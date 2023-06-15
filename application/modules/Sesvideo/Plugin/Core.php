@@ -73,8 +73,29 @@ class Sesvideo_Plugin_Core {
 		if($moduleName == 'sesvideo' && $actionName == 'index' && $controllerName == 'chanel')
 			$view->headLink()->appendStylesheet($view->layout()->staticBaseUrl
               . 'application/modules/Sesvideo/externals/styles/styles.css');
+              
     $viewer = Engine_Api::_()->user()->getViewer();
-    
+    if ($viewer->getIdentity() == 0)
+      $level = Engine_Api::_()->getDbtable('levels', 'authorization')->getPublicLevel()->level_id;
+    else
+      $level = $viewer;
+		$headScript = new Zend_View_Helper_HeadScript();
+    $type = Engine_Api::_()->authorization()->getPermission($level, 'sesbasic_video', 'videoviewer');
+    if ($type == 1) {
+      $headScript->appendFile(Zend_Registry::get('StaticBaseUrl')
+                      . 'application/modules/Sesbasic/externals/scripts/SesLightbox/photoswipe.min.js')
+              ->appendFile(Zend_Registry::get('StaticBaseUrl')
+                      . 'application/modules/Sesbasic/externals/scripts/SesLightbox/photoswipe-ui-default.min.js')
+              ->appendFile(Zend_Registry::get('StaticBaseUrl')
+                      . 'application/modules/Sesbasic/externals/scripts/videolightbox/sesvideoimagevieweradvance.js');
+      $view->headLink()->appendStylesheet($view->layout()->staticBaseUrl
+              . 'application/modules/Sesbasic/externals/styles/photoswipe.css');
+    } else {
+      $loadImageViewerFile = Zend_Registry::get('StaticBaseUrl') . 'application/modules/Sesbasic/externals/scripts/videolightbox/sesvideoimageviewerbasic.js';
+      $headScript->appendFile($loadImageViewerFile);
+      $view->headLink()->appendStylesheet($view->layout()->staticBaseUrl
+              . 'application/modules/Sesbasic/externals/styles/medialightbox.css');
+    }    
     $script = '';
     if ($moduleName == 'sesvideo') {
       $script .=

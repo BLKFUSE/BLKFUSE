@@ -473,53 +473,53 @@ class User_EditController extends Core_Controller_Action_User
                 $photoParent->type == 'profile') {
 
                 // ensure thumb.icon and thumb.profile exist
-                $newStorageFile = Engine_Api::_()->getItem('storage_file', $photo->file_id);
-                $filesTable = Engine_Api::_()->getDbtable('files', 'storage');
-                if ($photo->file_id == $filesTable->lookupFile($photo->file_id, 'thumb.profile')) {
-                    try {
-                        $tmpFile = $newStorageFile->temporary();
-                        $image = Engine_Image::factory();
-                        $image->open($tmpFile)
-                            ->resize(200, 400)
-                            ->write($tmpFile)
-                            ->destroy();
-                        $iProfile = $filesTable->createFile($tmpFile, array(
-                            'parent_type' => $user->getType(),
-                            'parent_id' => $user->getIdentity(),
-                            'user_id' => $user->getIdentity(),
-                            'name' => basename($tmpFile),
-                        ));
-                        $newStorageFile->bridge($iProfile, 'thumb.profile');
-                        @unlink($tmpFile);
-                    } catch (Exception $e) {
-                        echo $e;
-                        die();
-                    }
-                }
-                if ($photo->file_id == $filesTable->lookupFile($photo->file_id, 'thumb.icon')) {
-                    try {
-                        $tmpFile = $newStorageFile->temporary();
-                        $image = Engine_Image::factory();
-                        $image->open($tmpFile);
-                        $size = min($image->height, $image->width);
-                        $x = ($image->width - $size) / 2;
-                        $y = ($image->height - $size) / 2;
-                        $image->resample($x, $y, $size, $size, 48, 48)
-                            ->write($tmpFile)
-                            ->destroy();
-                        $iSquare = $filesTable->createFile($tmpFile, array(
-                            'parent_type' => $user->getType(),
-                            'parent_id' => $user->getIdentity(),
-                            'user_id' => $user->getIdentity(),
-                            'name' => basename($tmpFile),
-                        ));
-                        $newStorageFile->bridge($iSquare, 'thumb.icon');
-                        @unlink($tmpFile);
-                    } catch (Exception $e) {
-                        echo $e;
-                        die();
-                    }
-                }
+//                 $newStorageFile = Engine_Api::_()->getItem('storage_file', $photo->file_id);
+//                 $filesTable = Engine_Api::_()->getDbtable('files', 'storage');
+//                 if ($photo->file_id == $filesTable->lookupFile($photo->file_id, 'thumb.profile')) {
+//                     try {
+//                         $tmpFile = $newStorageFile->temporary();
+//                         $image = Engine_Image::factory();
+//                         $image->open($tmpFile)
+//                             ->resize(200, 400)
+//                             ->write($tmpFile)
+//                             ->destroy();
+//                         $iProfile = $filesTable->createFile($tmpFile, array(
+//                             'parent_type' => $user->getType(),
+//                             'parent_id' => $user->getIdentity(),
+//                             'user_id' => $user->getIdentity(),
+//                             'name' => basename($tmpFile),
+//                         ));
+//                         $newStorageFile->bridge($iProfile, 'thumb.profile');
+//                         @unlink($tmpFile);
+//                     } catch (Exception $e) {
+//                         echo $e;
+//                         die();
+//                     }
+//                 }
+//                 if ($photo->file_id == $filesTable->lookupFile($photo->file_id, 'thumb.icon')) {
+//                     try {
+//                         $tmpFile = $newStorageFile->temporary();
+//                         $image = Engine_Image::factory();
+//                         $image->open($tmpFile);
+//                         $size = min($image->height, $image->width);
+//                         $x = ($image->width - $size) / 2;
+//                         $y = ($image->height - $size) / 2;
+//                         $image->resample($x, $y, $size, $size, 48, 48)
+//                             ->write($tmpFile)
+//                             ->destroy();
+//                         $iSquare = $filesTable->createFile($tmpFile, array(
+//                             'parent_type' => $user->getType(),
+//                             'parent_id' => $user->getIdentity(),
+//                             'user_id' => $user->getIdentity(),
+//                             'name' => basename($tmpFile),
+//                         ));
+//                         $newStorageFile->bridge($iSquare, 'thumb.icon');
+//                         @unlink($tmpFile);
+//                     } catch (Exception $e) {
+//                         echo $e;
+//                         die();
+//                     }
+//                 }
 
                 // Set it
                 $user->photo_id = $photo->file_id;

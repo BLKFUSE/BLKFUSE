@@ -42,7 +42,7 @@ class User_Form_Edit_Photo extends Engine_Form
       'validators' => array(
         array('Count', false, 1),
         // array('Size', false, 612000),
-        array('Extension', false, 'jpg,jpeg,png,gif'),
+        array('Extension', false, 'jpg,png,gif,jpeg,webp'),
       ),
       'data-function' => 'uploadSignupPhoto',
     ));

@@ -127,13 +127,17 @@
   display:block;
   padding-left:55px;
 	padding-right:20px;
-	padding-top:10px;
 }
 [dir="rtl"] .sesact_post_box #compose-container{
   padding-left:20px;
   padding-right:55px;
 }
+.sesact_post_container_wrapper:not(._sesadv_composer_active) #compose-container .jqueryHashtags{
+  overflow: hidden;
+  position: relative;
+}
 .sesact_post_box #compose-container textarea{
+  -webkit-text-fill-color: transparent;
   border-width:0;
   outline:none;
   padding:1px;
@@ -142,6 +146,12 @@
 	min-height:28px;
 	background:none;
 	font-family:inherit;
+  position:relative;
+}
+.sesact_post_container .jqueryHashtags .highlighter,
+.sesact_post_box #compose-container textarea{
+  font-size:14px;
+  line-height:150%;
 }
 .sesact_post_container .feed_background_image .jqueryHashtags .highlighter,
 .feed_background_image .sesact_post_box #compose-container textarea{
@@ -233,6 +243,7 @@
 .sesact_post_tool_i > a:before{
   display:block;
   font-family:'Font Awesome 5 Free';
+  font-weight:700;
   font-size:15px;
   background-position:center center;
   text-rendering:auto;
@@ -267,8 +278,11 @@
 }
 .tool_i_photo a:before,
 .tool_i_sesalbum a:before,
-.tool_i_seseventphoto a:before{
-  content:"\f030";
+.tool_i_seseventphoto a:before,
+.tool_i_event_photo a:before,
+#compose-photo-activatorr:before, 
+#compose-eclassroom_photo-activator:before{
+  content:"\f030" !important;
 }
 .tool_i_video a:before,
 .tool_i_sesvideo a:before,
@@ -441,12 +455,15 @@ a#compose-sespagepoll-activator:before,a#compose-sesgrouppoll-activator:before{
 .tool_i_photo a:before,
 .tool_i_sesalbum a:before,
 .tool_i_seseventphoto a:before,
+.tool_i_event_photo a:before,
 .sesact_post_media_options .tool_i_photo a:before,
 .sesact_post_media_options .tool_i_sesalbum a:before,
 .sesact_post_media_options .tool_i_seseventphoto a:before,
+.sesact_post_media_options .tool_i_event_photo a:before,
 .sesact_post_head .tool_i_photo a:before,
 .sesact_post_head .tool_i_sesalbum a:before,
-.sesact_post_head .tool_i_seseventphoto a:before{
+.sesact_post_head .tool_i_seseventphoto a:before,
+.sesact_post_head .tool_i_event_photo a:before{
   color:#88c044;
 }
 .tool_i_album a:before,
@@ -729,9 +746,6 @@ a#compose-sespagepoll-activator:before,a#compose-sesgrouppoll-activator:before{
 .sesact_post_tag_input{
   overflow:hidden;
   min-width:100px;
-}
-.sesact_post_box .highlighter > strong {
-  background:none;
 }
 .sesact_post_box .highlighter > strong > span{
 	color:inherit;
@@ -1262,146 +1276,15 @@ a#compose-sespagepoll-activator:before,a#compose-sesgrouppoll-activator:before{
 	margin-left:-2px;
 	margin-right:0;
 }
-/*Multiple Photos CSS*/
-.advact_compose_photo_container{
-  max-width:100%;
-  width:100%;
-}
-.advact_compose_photo_container,
-.advact_compose_photo_container #show_photo,
-.advact_compose_photo_container .mCustomScrollBox{
-  direction:ltr !important;
-}
-#advact_compose_photo_container_inner{
-  height:105px;
-  overflow:hidden;
-}
-.advact_compose_photo_container #show_photo{
-  float:left;
-  height:105px;
-  overflow:hidden;
-}
-.sesact_post_container .advact_compose_photo_uploader {
-  margin:0;
-}
-.advact_compose_photo_item{
-  float:left;
-  position:relative;
-  margin-right:5px;
-  height:105px;
-  text-align:center !important;
-  width:105px;
-}
-.advact_compose_photo_item_photo,
-.advact_compose_photo_item_photo img{
-  height:100%;
-  object-fit:cover;
-  width:100%;
-}
-.advact_compose_photo_item_photo:after{
-  content:"";
-  display:none;
-  background-color:rgba(0, 0, 0, .1);
-  bottom:0;
-  left:0;
-  right:0;
-  top:0;
-  position:absolute;
-  z-index:1;
-}
-.advact_compose_photo_item:hover .advact_compose_photo_item_photo:after{
-  display:block;
-}
-.advact_compose_photo_item_overlay{
-  background:rgba(0, 0, 0, .1) url(../images/ajax_loading.gif) no-repeat center center;
-  bottom:0;
-  left:0;
-  right:0;
-  top:0;
-  position:absolute;
-  z-index:1;
-}
-.advact_compose_photo_item .progressBar{
-  position:absolute;
-  bottom:0;
-  width:100%;
-  z-index:2;
-}
-.advact_compose_photo_item .progressBar > div{
-  height:4px;
-  font-size:0;
-}
-.advact_compose_photo_item .sesalbum_upload_item_abort{
-  position:absolute;
-  bottom:5px;
-  top:inherit;
-  text-align:center;
-  width:100%;
-  z-index:3;
-}
-.advact_compose_photo_item .sesalbum_upload_item_abort span{
-  background-color:#d9534f;
-  border:1px solid #d43f3a;
-  border-radius:3px;
-  color:#fff;
-  cursor:pointer;
-  display:inline-block;
-  font-size:11px;
-  padding:3px 5px;
-}
-.advact_compose_photo_item .sesalbum_upload_item_abort span:hover{
-  background-color:#c9302c;
-}
-[dir="rtl"] .advact_compose_photo_item .sesalbum_upload_item_abort{
-  text-align:center;
-}
-.advact_compose_photo_item .sesalbum_upload_item_options{
-  position:absolute;
-  top:5px;
-  right:3px;
-  z-index:2;
-}
-[dir="rtl"] .advact_compose_photo_item .sesalbum_upload_item_options{
-  left:3px;
-  right:inherit;
-}
-.advact_compose_photo_item .sesalbum_upload_item_options a{
-  height:16px;
-  line-height:16px;
-  float:left;
-  text-align:center;
-  margin:0 2px !important;
-  width:16px;
-}
-[dir="rtl"] .advact_compose_photo_item .sesalbum_upload_item_options a{
-  float:right;
-}
-.advact_compose_photo_item .sesalbum_upload_item_options a i:before{
-  color:#fff;
-  font-size:15px;
-  text-shadow:0 0 2px rgba(0, 0, 0, .5);
-}
-.advact_compose_photo_item_info{
-  display:none;
-}
-.advact_compose_photo_container .mCSB_horizontal.mCSB_inside > .mCSB_container{
-  margin:10px 0;
-}
-.advact_compose_photo_container .mCSB_scrollTools.mCSB_scrollTools_horizontal{
-  bottom:-5px;
-}
-.advact_compose_photo_container .mCSB_dragger_bar{
-  background-color:rgba(0, 0, 0, .4) !important;
-  border:1px solid rgba(85, 85, 85, .6) !important;
-}
 /*Has Tag CSS*/
 .sesact_post_container .jqueryHashtags .highlighter{
   white-space:pre-wrap;
-  color:transparent;
+  /* color:transparent; */
   overflow:hidden;
   position:absolute;
   padding:1px;
   font-size:14px;
+  word-break:break-word;
 }
 .sesact_post_container .feed_background_image .jqueryHashtags .highlighter{
   width:100% !important;
@@ -1945,10 +1828,10 @@ ul.feed .feed_attachment_core_link.sesact_attachement_gif > div{
   background-color:#f1f1f1;
   float:left;
   margin-right:15px;
-  height:65px;
-  line-height:65px;
+  height:80px;
+  line-height:80px;
   position:relative;
-  width:65px;
+  width:80px;
 }
 [dir="rtl"] .sesact_attachment_file_img{
   float:right;
@@ -2005,16 +1888,20 @@ ul.feed .feed_attachment_core_link.sesact_attachement_gif > div{
   height:auto !important;
   padding:0 !important;
 }
+.sesact_img_preview_popup_wrapper{
+  width: 100% !important;
+}
 .sesact_img_preview_popup_img{
   padding:10px;
   text-align:center;
+  height: 350px;
 }
 [dir="rtl"] .sesact_img_preview_popup_img{
   text-align:center;
 }
 .sesact_img_preview_popup_img img{
-  max-height:50vh;
-	max-width:400px;
+  max-height:100%;
+	max-width:100%;
 }
 .sesact_img_preview_popup_btm{
   border-top-width:1px;
@@ -2298,7 +2185,7 @@ ul.feed .feed_attachment_core_link.sesact_attachement_gif > div{
   font-weight:bold;
 }
 .feed_background_image .sesact_post_box .jqueryHashtags .highlighter{
-  -webkit-text-fill-color:transparent;
+  color: #fff;
 	word-break:break-word;
 }
 .feed_background_image .sesact_post_box #compose-container textarea{
@@ -2624,7 +2511,7 @@ ul.feed .feed_attachment_core_link.sesact_attachement_gif > div{
 }
 .sesact_feed_filters > ul > li > a{
   display:block;
-  padding:10px;
+  padding:14px 10px;
   text-decoration:none !important;
 }
 .sesact_feed_filters > ul > li.active > a,
@@ -2947,8 +2834,11 @@ ul.feed .feed_attachment_core_link.sesact_attachement_gif > div{
   margin-bottom:10px; 
   word-break:break-word;
 }
+.sesact_feed_item_bodytext > span{
+  line-height: 150%;
+}
 .sesact_feed_item_bodytext ._emojiicon{
-  vertical-align:middle;
+  vertical-align:text-bottom;
 }
 .sesact_feed_schedule_post_time{
   background-color:rgba(0, 0, 0, .05);
@@ -3300,6 +3190,14 @@ html .sesact_feed ul.feed .sesact_feed_usercover ._mainphoto img{
   border-width:0 1px 1px;
   padding:10px;
 }
+.compose-loading img{
+  max-width: 20px;
+  margin-right:6px;
+}
+[dir="rtl"] .compose-loading img{
+  margin-left: 6px;
+  margin-right: 0;
+}
 /*Facebook Post*/
 .sesact_feed .feed_item_body iframe{
   max-width:100%;
@@ -3395,8 +3293,7 @@ html .sesact_feed ul.feed .feed_item_icon ul > .advcomnt_feed_votebtn{
 	font-weight:400 !important;
 }
 .sesact_feed .feed_item_option_share a i:before{
-  content:"\f14d";
-	font-weight:400 !important;
+  content:"\f1e0";
 }
 .sesact_feed .feed_item_option_unlike a._reaction i:before{
   display:none !important;
@@ -3451,7 +3348,14 @@ html .sesact_feed ul.feed .feed_item_icon ul > .advcomnt_feed_votebtn{
 .sesact_feed_tags{
   margin-bottom:10px;
   font-size:12px;
-  font-weight:bold;
+  font-weight:bold; 
+}
+.sesact_feed_tags a{
+  margin-right:3px;
+}
+[dir="rtl"] .sesact_feed_tags a{
+  margin-right:0;
+  margin-left:3px;
 }
 /*Shared Feed*/
 .feed_item_link_desc .sesact_pinfeed{
@@ -3672,7 +3576,7 @@ html .sesact_feed ul.feed .feed_item_icon ul > .advcomnt_feed_votebtn{
 .sesact_sellitem_popup{
   border-radius:5px;
   overflow:hidden;
-  width:900px;
+  width:1000px;
 }
 .sesact_sellitem_popup_header{
   border-bottom-width:1px;
@@ -3683,7 +3587,7 @@ html .sesact_feed ul.feed .feed_item_icon ul > .advcomnt_feed_votebtn{
   height:500px;
   border-left-width:1px;
   float:right;
-  width:330px;
+  width:400px;
 	margin-left:20px;
 }
 [dir="rtl"] .sesact_sellitem_popup_right{
@@ -4495,6 +4399,7 @@ html .sesact_sellitem_popup_item_button div button{
   padding:0 !important;
   margin:0 !important;
   box-shadow:none !important;
+  position:inherit !important;
 }
 .layout_page_sesadvancedactivity_index_welcome .generic_layout_container.layout_main{
   padding:10px !important;
@@ -4678,8 +4583,8 @@ html .sesact_sellitem_popup_item_button div button{
   margin-bottom:10px;
 }
 .sesact_welcome_user_list_btns button{
-  font-size:12px;
-  padding:5px;
+  font-size:13px;
+  padding:2px 10px;
 }
 .sesact_welcome_user_list_more{
   float:right;
@@ -4762,6 +4667,35 @@ html .sesact_sellitem_popup_item_button div button{
 .sesact_feed ul.feed > li .sesact_show_ads_3 .sescmads_ads_listing_item{
   width:calc(33.33% - 10px) !important;
 }
+/*Feed Delete Popup CSS Start Here*/
+.sesact_delete_popup{
+  width:400px;
+}
+#global_content_simple .sesact_delete_popup{
+  margin:15px 0 0 15px;
+}
+.sesact_delete_popup_head{
+  border-radius:3px 3px 0 0;
+  border-bottom-width:1px;
+  font-weight:bold;
+  font-size:15px;
+  padding:10px;
+}
+.sesact_delete_popup_cont{
+  padding:10px;
+}
+.sesact_delete_popup_btm{
+  border-top-width:1px;
+  padding:10px;
+}
+.sesact_delete_popup_btm .floatR button{
+  margin-left:5px;
+}
+[dir="rtl"] .sesact_delete_popup_btm .floatR button{
+  margin-left:0;
+  margin-right:5px;
+}
+/*Feed Delete Popup CSS End Here*/
 
 /*RESPONSIVE CSS START HERE*/
 @media only screen and (max-width:979px){
@@ -4795,7 +4729,8 @@ html .sesact_sellitem_popup_item_button div button{
   .sesact_sellitem_popup_photo_container,  .sesact_sellitem_popup_photo_container > div > div{
     height:auto;
   }
-  .sesact_sellitem_popup_photos_strip,  .sesact_delete_popup{
+  .sesact_sellitem_popup_photos_strip,
+  .sesact_delete_popup{
     width:100%;
   }
   .sesact_sellitem_popup_photo_container{
@@ -4962,21 +4897,8 @@ html .sesact_sellitem_popup_item_button div button{
     margin-bottom:10px;
     display:inline-block;
   }
-	.feed_item_body .comments ul ul > li > a > span,
-	.sesadvcmt_comments .comments_date > .advcomnt_feed_votebtn,
-	.sesadvcmt_comments form.advcomment_form .comment_form_main button{
+	.feed_item_body .comments ul ul > li > a > span{
     display:none;
-   }
-	.comments_reply .sesadvancedcommentreply, 
-	.comments_reply_btn .sesadvancedcommentreplyreply{
-		font-size:0;
-	}
-	.sesadvcmt_comments .comments_date > li {
-    vertical-align:top;
-	}
-	.sesadvcmt_comments div._form_container div.comment_form {
-    width:100%;
-    margin-right:0;
   }
 }
 /*RESPONSIVE CSS END HERE*/
@@ -5027,6 +4949,11 @@ html .sesact_sellitem_popup_item_button div button{
 }
 .sesact_sell_box .sesact_feed_item_buysell_location {
 	display:block;
+}
+[dir="rtl"] .sesact_owner_selector_pulldown ._sep i{
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 0;
 }
 @media(max-width:767px){
  .sesact_sell_box{

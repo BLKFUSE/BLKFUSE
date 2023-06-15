@@ -12,11 +12,11 @@
  */
  
 ?>
-<div class="global_form_popup admin_member_stats">
+<div class="global_form_popup admin_member_stats sesmember_member_stats">
   <h3>Member Statistics</h3>
   <ul>
-    <li>
-      <?php echo $this->itemPhoto($this->user, 'thumb.icon', $this->user->getTitle()) ?>
+    <li class="sesmember_member_stats_photo">
+      <?php echo $this->itemPhoto($this->user, 'thumb.profile', $this->user->getTitle()) ?>
     </li>
     <?php if( !empty($this->memberType) ): ?>
     <li>

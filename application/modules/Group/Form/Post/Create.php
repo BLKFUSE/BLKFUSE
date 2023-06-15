@@ -51,10 +51,13 @@ class Group_Form_Post_Create extends Engine_Form
       }
 
       $editorOptions = array(
-        'uploadUrl' => $uploadUrl,
-        'bbcode' => $settings->getSetting('forum_bbcode', 0),
-        'html' => $settings->getSetting('forum_html', 0)
+        'uploadUrl' => $uploadUrl
       );
+      if( $allowHtml ) {
+        $editorOptions = array_merge($editorOptions, array('html' => 1, 'bbcode' => 1));
+      } else {
+        $editorOptions = array_merge($editorOptions, array('html' => 0, 'bbcode' => 1));
+      }
 
       $this->addElement('TinyMce', 'body', array(
         'disableLoadDefaultDecorators' => true,

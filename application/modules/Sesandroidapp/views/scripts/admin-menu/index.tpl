@@ -22,7 +22,7 @@ $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jQue
   <?php echo $this->translate('Native Android Mobile App'); ?>
 </h2>
 <?php if( engine_count($this->navigation)): ?>
-  <div class='sesandroidapp-admin-navgation'> <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?> </div>
+  <div class='tabs'> <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?> </div>
 <?php endif; ?>
 <h3>Manage Dashboard Menu Items</h3>
 <br>

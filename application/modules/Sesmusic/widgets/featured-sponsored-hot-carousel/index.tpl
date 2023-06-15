@@ -93,7 +93,7 @@
                     <a class="sesbasic_icon_btn" title='<?php echo $this->translate("Add to Playlist") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module' =>'sesmusic', 'controller' => 'song', 'action'=>'append - songs','album_id' => $item->album_id, 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><i class="fa fa-plus"></i></a>
                   <?php endif; ?>
                   <?php if($this->albumlink && engine_in_array('share', $this->albumlink) && !empty($this->information) && engine_in_array('share', $this->information)): ?>
-                    <a class="sesbasic_icon_btn" title='<?php echo $this->translate("Share") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_album', 'id' => $item->album_id, 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><i class="fa fa-share"></i></a>
+                    <a class="sesbasic_icon_btn" title='<?php echo $this->translate("Share") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_album', 'id' => $item->album_id, 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><i class="fas fa-share-alt"></i></a>
                   <?php endif; ?>
                 <?php endif; ?>
               <?php else: ?>
@@ -134,7 +134,7 @@
                     <a title="<?php echo $this->translate('Add to Playlist');?>" href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('action'=>'append','albumsong_id' => $item->albumsong_id, 'format' => 'smoothbox'), 'sesmusic_albumsong_specific' , true)); ?>'); return false;" class="sesbasic_icon_btn"><i class="fa fa-plus"></i></a>
                   <?php endif; ?>
                   <?php if($this->songlink && engine_in_array('share', $this->songlink)): ?>
-                  <a class="sesbasic_icon_btn" title='<?php echo $this->translate("Share") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_albumsong', 'id' => $item->albumsong_id, 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><i class="fa fa-share"></i></a>
+                  <a class="sesbasic_icon_btn" title='<?php echo $this->translate("Share") ?>' href="javascript:void(0);" onclick="showPopUp('<?php echo $this->escape($this->url(array('module'=>'activity', 'controller'=>'index', 'action'=>'share', 'route'=>'default', 'type'=>'sesmusic_albumsong', 'id' => $item->albumsong_id, 'format' => 'smoothbox'), 'default' , true)); ?>'); return false;" ><i class="fas fa-share-alt"></i></a>
                   <?php endif; ?>
                 <?php endif; ?>
               <?php endif; ?>
@@ -169,19 +169,19 @@
                 <?php if (!empty($this->information) && engine_in_array('commentCount', $this->information)) :?>
                   <span>
                     <?php echo $item->comment_count; ?>
-                    <i class="fa fa-comment"></i>
+                    <i class="sesbasic_icon_comment_o"></i>
                   </span>
                 <?php endif; ?>
                 <?php if (!empty($this->information) && engine_in_array('likeCount', $this->information)) : ?>
                   <span>
                     <?php echo $item->like_count; ?>
-                    <i class="fa fa-thumbs-up"></i>
+                    <i class="sesbasic_icon_like_o"></i>
                   </span>
                 <?php endif; ?>
                 <?php if (!empty($this->information) && engine_in_array('viewCount', $this->information)) : ?>
                   <span>
                     <?php echo $item->view_count; ?>
-                    <i class="fa fa-eye"></i>
+                    <i class="sesbasic_icon_view_o"></i>
                   </span>
                 <?php endif; ?>
                 <?php if ($this->contentType == 'albums' && !empty($this->information) && engine_in_array('songCount', $this->information)) : ?>

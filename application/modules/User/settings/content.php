@@ -21,20 +21,32 @@ return array(
       'viewer',
     ),
     'adminForm' => array(
-        'elements' => array(  
-            array(
-                'Radio',
-                'showPhoto',
-                array(
-                  'label' => 'Show Photo and Name?',
-                  'multiOptions' => array(
-                    1 => 'Yes',
-                    0 => 'No',
-                  ),
-                  'value' => 1,
-                )
-              ),
-        ),
+			'elements' => array(  
+				array(
+					'Radio',
+					'showPhoto',
+					array(
+						'label' => 'Show Photo and Name?',
+						'multiOptions' => array(
+							1 => 'Yes',
+							0 => 'No',
+						),
+						'value' => 1,
+					)
+				),
+				array(
+					'Radio',
+					'showMenuIcon',
+					array(
+						'label' => 'Show Menu Icon?',
+						'multiOptions' => array(
+							1 => 'Yes',
+							0 => 'No',
+						),
+						'value' => 1,
+					)
+				),
+			),
     ),      
   ),
   array(

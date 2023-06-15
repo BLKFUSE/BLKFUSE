@@ -171,12 +171,13 @@ scriptJquery(document).on('click','.sesadvancedcommentreply',function(e){
      data = data;
   });
   if(body.val().length){
-    body.val('');
+    body.val(' ');
   }
   if(!body.val().length){
     scriptJquery(body).mentionsInput("addmention",ownerInfo); 
     body.val(body.val()+' ');
   }
+  console.log(body.val());
   complitionRequestTrigger();
 })
 function sesadvancedcommentlike(action_id, comment_id,obj,page_id,type,sbjecttype,subjectid,guid) {
@@ -847,7 +848,7 @@ scriptJquery(document).on('click','.sesadvancedcommentreplyreply',function(e){
      data = data;
   });  
   if(body.val().length){
-    body.val('');
+    body.val(' ');
   }
   if(!body.val().length){
     scriptJquery(body).mentionsInput("addmention",ownerInfo); 
@@ -1092,7 +1093,7 @@ scriptJquery(document).on('change','.select_file',function(e){
    {
 			var url = files[i].name;
     	var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-			if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif' || ext == 'GIF')){
+			if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif' || ext == 'GIF' || ext == "webp")){
 				uploadImageOnServer(this,files[i]);
 			}
    }
@@ -1865,14 +1866,14 @@ scriptJquery(document).on('click','.sesadvcnt_reset_emoji',function(){
 });
 
 function carouselSesadvReaction(){
-  jqueryObjectOfSes(".ses_emoji_tabs").owlCarousel({
+  sesowlJqueryObject(".ses_emoji_tabs").owlCarousel({
         items : 6,
         itemsDesktop : [1199, 6],
         itemsDesktopSmall : [979, 6],
         itemsTablet : [768, 6],
         itemsMobile : [479, 6],
-    navigation : true,
-    pagination : false,
+    nav : true,
+    dots : false,
     loop: false,
     afterAction: function(){
       if ( this.itemsAmount > this.visibleItems.length ) {

@@ -553,7 +553,7 @@ class User_SignupController extends Sesapi_Controller_Action_Standard
       $result["user_id"] = $user->user_id;
       $result["email"] = $user->email;
       $result["username"] = $user->username;
-      $result["displayname"] = $user->displayname;
+      $result["displayname"] = $user->getTitle();
       $result["photo_id"] = $user->photo_id;
       $result["status"] = $user->status;
       $result["password"] = $user->password;
@@ -687,22 +687,22 @@ class User_SignupController extends Sesapi_Controller_Action_Standard
       $iMain = $storage->getFile($session->tmp_file_id);
       $iMain->setFromArray($params);
       $iMain->save();
-      $iMain->updatePath();
+      //$iMain->updatePath();
 
       $iProfile = $storage->getFile($session->tmp_file_id, 'thumb.profile');
       $iProfile->setFromArray($params);
       $iProfile->save();
-      $iProfile->updatePath();
+      //$iProfile->updatePath();
 
       $iNormal = $storage->getFile($session->tmp_file_id, 'thumb.normal');
       $iNormal->setFromArray($params);
       $iNormal->save();
-      $iNormal->updatePath();
+      //$iNormal->updatePath();
 
       $iSquare = $storage->getFile($session->tmp_file_id, 'thumb.icon');
       $iSquare->setFromArray($params);
       $iSquare->save();
-      $iSquare->updatePath();
+      //$iSquare->updatePath();
       
       // Update row
       $user->photo_id = $iMain->file_id;
@@ -873,8 +873,8 @@ class User_SignupController extends Sesapi_Controller_Action_Standard
             'host' => $_SERVER['HTTP_HOST'],
             'email' => $user->email,
             'date' => $date->format('F j, Y, g:i a'),
-            'recipient_title' => $super_admin->displayname,
-            'object_title' => $user->displayname,
+            'recipient_title' => $super_admin->getTitle(),
+            'object_title' => $user->getTitle(),
             'object_link' => $user->getHref(),
           );
         }
@@ -891,7 +891,7 @@ class User_SignupController extends Sesapi_Controller_Action_Standard
             'host' => $_SERVER['HTTP_HOST'],
             'email' => $user->email,
             'date' => $date->format('F j, Y, g:i a'),
-            'recipient_title' => $super_admin->displayname,
+            'recipient_title' => $super_admin->getTitle(),
             'object_title' => $user->getTitle(),
             'object_link' => $user->getHref(),
           );
@@ -926,7 +926,7 @@ class User_SignupController extends Sesapi_Controller_Action_Standard
             'host' => $_SERVER['HTTP_HOST'],
             'email' => $user->email,
             'date' => date("F j, Y, g:i a"),
-            'recipient_title' => $super_admin->displayname,
+            'recipient_title' => $super_admin->getTitle(),
             'object_title' => $user->getTitle(),
             'object_link' => $user->getHref(),
           );

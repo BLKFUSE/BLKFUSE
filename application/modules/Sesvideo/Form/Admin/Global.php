@@ -325,11 +325,11 @@ class Sesvideo_Form_Admin_Global extends Engine_Form {
               '1' => 'Yes'
           )
       ));
-//       $this->addElement('Text', 'sesvideo_youtube_playlist', array(
-//           'label' => 'Youtube Playlist Video Limit',
-//           'description' => 'Enter the number of songs to be imported from Youtube Playlists. [We suggest you to choose less than 25 videos to be imported for a playlist as importing more videos may break the connection from Youtube and abort the process.]',
-//           'value' => $settings->getSetting('sesvideo.youtube.playlist', '25'),
-//       ));
+      $this->addElement('Text', 'sesvideo_youtube_playlist', array(
+          'label' => 'Youtube Playlist Video Limit',
+          'description' => 'Enter the number of songs to be imported from Youtube Playlists. [We suggest you to choose less than 25 videos to be imported for a playlist as importing more videos may break the connection from Youtube and abort the process.]',
+          'value' => $settings->getSetting('sesvideo.youtube.playlist', '25'),
+      ));
        $description = 'While creating videos on your website, users can choose Youtube as a source. For this, create an Application Key through the <a href="https://console.developers.google.com" target="_blank">Google Developers Console</a> page. <br>For more information, see: <a href="https://developers.google.com/youtube/v3/getting-started" target="_blank">YouTube Data API</a>.';
 
        $this->addElement('Text', 'video_youtube_apikey', array(

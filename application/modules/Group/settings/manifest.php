@@ -13,7 +13,7 @@ return array(
   'package' => array(
     'type' => 'module',
     'name' => 'group',
-    'version' => '6.2.0',
+    'version' => '6.4.0',
     'revision' => '$Revision: 10271 $',
     'path' => 'application/modules/Group',
     'repository' => 'socialengine.com',
@@ -135,6 +135,8 @@ return array(
       'reqs' => array(
         'controller' => '\D+',
         'action' => '\D+',
+        'group_id' => '\d+',
+        'topic_id' => '\d+',
       )
     ),
     'group_coverphoto' => array(

@@ -50,7 +50,7 @@ class Storage_Model_File extends Core_Model_Item_Abstract
     }
 
     // should we filter out non-image extensions?
-    if( !engine_in_array(strtolower($file->extension), array('jpg', 'png', 'jpeg', 'gif', 'tif', 'bmp')) ) {
+    if( !engine_in_array(strtolower($file->extension), array('jpg', 'png', 'jpeg', 'gif', 'tif', 'bmp', 'webp')) ) {
       return null;
     }
 

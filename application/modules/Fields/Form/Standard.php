@@ -32,10 +32,6 @@ class Fields_Form_Standard extends Engine_Form
   protected $_isCreation = false;
   
   protected $_hasPrivacy = false;
-
-  protected $_enableAjaxLoad = false;
-
-  protected $_ajaxUrl = '';
   
   protected $_privacyValues = array();
 
@@ -97,28 +93,6 @@ class Fields_Form_Standard extends Engine_Form
     return $this;
   }
 
-  public function setEnableAjaxLoad($flag = true)
-  {
-    $this->_enableAjaxLoad = (bool) $flag;
-    return $this;
-  }
-
-  public function getEnableAjaxLoad()
-  {
-    return $this->_enableAjaxLoad;
-  }
-
-  public function setAjaxUrl($url = '')
-  {
-    $this->_ajaxUrl = $url;
-    return $this;
-  }
-
-  public function getAjaxUrl()
-  {
-    return $this->_ajaxUrl;
-  }
-
   public function setProcessedValues($values)
   {
     $this->_processedValues = $values;
@@ -148,14 +122,14 @@ class Fields_Form_Standard extends Engine_Form
     return Engine_Api::_()->fields()->getFieldsMeta($this->getItem());
   }
 
-  public function getFieldStructure($get_only_top_level = false)
+  public function getFieldStructure()
   {
     // Let's allow fallback for no profile type (for now at least)
     if( !$this->_topLevelId || !$this->_topLevelValue ) {
       $this->_topLevelId = null;
       $this->_topLevelValue = null;
     }
-    return Engine_Api::_()->fields()->getFieldsStructureFull($this->getItem(), $this->_topLevelId, $this->_topLevelValue,$get_only_top_level);
+    return Engine_Api::_()->fields()->getFieldsStructureFull($this->getItem(), $this->_topLevelId, $this->_topLevelValue);
   }
 
 
@@ -164,29 +138,11 @@ class Fields_Form_Standard extends Engine_Form
 
   public function generate()
   {
-    $struct = $this->getFieldStructure($this->getEnableAjaxLoad());
+    $struct = $this->getFieldStructure();
 
     $orderIndex = 0;
-    if($this->getEnableAjaxLoad()){
-      if(!$this->getElement('enable_ajax_load')){
-        $this->addElement('hidden','enable_ajax_load',array(
-          'id'=>'enable_ajax_load',
-          'order'=>$orderIndex++,
-          'value'=>$this->getEnableAjaxLoad(),
-        ));
-      }
 
-      if(!$this->getElement('field_ajax_url')){
-        $this->addElement('hidden','field_ajax_url',array(
-          'id'=>'field_ajax_url',
-          'order'=>$orderIndex++,
-          'value'=>$this->getAjaxUrl()
-        ));
-      }
-    }
-    //echo "<pre>"; print_r($struct);die;
-
-    foreach($struct as $fskey => $map )
+    foreach( $struct as $fskey => $map )
     {
       $field = $map->getChild();
 
@@ -197,6 +153,7 @@ class Fields_Form_Standard extends Engine_Form
       
       // Add field and load options if necessary
       $params = $field->getElementParams($this->getItem());
+
       //$key = 'field_' . $field->field_id;
       $key = $map->getKey();
       
@@ -216,7 +173,7 @@ class Fields_Form_Standard extends Engine_Form
       }
 
       if( $params['type'] != 'Heading' ){
-        if(@$params['options']['icon'])
+        if(isset($params['options']['icon']))
           $params['options']['label'] = '<i class="'.$params['options']['icon'].'"></i>' . Zend_Registry::get('Zend_Translate')->_($params['options']['label']);
       }
       
@@ -235,26 +192,11 @@ class Fields_Form_Standard extends Engine_Form
       unset($params['options']['alias']);
       unset($params['options']['publish']);
       $this->addElement($inflectedType, $key, $params['options']);
-
       if( $params['type'] != 'Heading' ){
         $this->getElement($key)->getDecorator('label')
           ->setOption('escape', false);
-        $this->getElement($key)->getDecorator('HtmlTag2')->setOption('data-guid',$this->getItem()->getGuid());
-        $this->getElement($key)->addDecorator('FormErrors');
-        $this->getElement($key)->getDecorator('FormErrors')->setEscape(false);
-
-        if( $field->canHaveDependents() ) {
-          $childrenInfo = array();
-          $options = $field->getOptions();
-          foreach( $options as $option ) {
-            $optionId = $option->option_id;
-            $dependentFieldCount = engine_count(Engine_Api::_()->fields()->getFieldsMaps($option->getFieldType())->getRowsMatching('option_id', $optionId));
-            if($dependentFieldCount > 0){
-              $childrenInfo[] = $optionId;
-            }
-          }
-          $this->getElement($key)->getDecorator('HtmlTag2')->setOption('data-childrens',json_encode($childrenInfo));
-        }
+          $this->getElement($key)->addDecorator('FormErrors');
+          $this->getElement($key)->getDecorator('FormErrors')->setEscape(false);
       }
 
       $element = $this->getElement($key);
@@ -416,7 +358,7 @@ class Fields_Form_Standard extends Engine_Form
           $valueRow->privacy = $this->_privacyValues[$key];
         }
         try {
-          $valueRow->save();
+        $valueRow->save();
         } catch(Exception $e) {
         }
 

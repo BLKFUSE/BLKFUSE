@@ -16,8 +16,12 @@ class Sesmember_Widget_TabbedMembersController extends Engine_Content_Widget_Abs
     // Prepare
     if (isset($_POST['params']))
       $params = json_decode($_POST['params'], true);
-    if (isset($_POST['searchParams']) && $_POST['searchParams'])
-      parse_str($_POST['searchParams'], $searchArray);
+		if (isset($_POST['searchParams']) && $_POST['searchParams']) {
+			if(engine_in_array($_POST['searchParams']))
+				$searchArray = $_POST['searchParams'];
+			elseif(is_string($_POST['searchParams']))
+				parse_str($_POST['searchParams'], $searchArray);
+		}
     $viewer = Engine_Api::_()->user()->getViewer();
 		$this->view->gridblock = $gridblock = isset($params['gridblock']) ? $params['gridblock'] : $this->_getParam('gridblock', '3');
     $this->view->is_ajax = $is_ajax = isset($_POST['is_ajax']) ? true : false;

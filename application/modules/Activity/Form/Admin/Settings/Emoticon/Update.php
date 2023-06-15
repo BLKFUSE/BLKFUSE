@@ -52,7 +52,7 @@ class Activity_Form_Admin_Settings_Emoticon_Update extends Engine_Form
       'label' => 'Choose a emoticon',
       'destination' => APPLICATION_PATH . '/application/modules/Activity/externals/emoticons/images',
       'validators' => array(
-        array('Extension', false, 'jpg,jpeg,png'),
+        array('Extension', false, 'jpg,png,gif,jpeg,webp'),
       ),
     ));
 

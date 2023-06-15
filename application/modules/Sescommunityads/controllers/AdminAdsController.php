@@ -187,15 +187,16 @@ class Sescommunityads_AdminAdsController extends Core_Controller_Action_Admin {
     if($ad->status == 1) {
 
         $link = '/ads/view/ad_id/'.$ad->sescommunityad_id;
-
-        Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($user, $user, $ad, 'sescommunityads_adsapprove', array("adsLink" => $link));
+				$notificationlink = '<a href="' . $link . '">' . $ads->getTitle() . '</a>';
+        Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($user, $user, $ad, 'sescommunityads_adsapprove', array("adsLink" => $notificationlink));
 
         //Send email to user
         Engine_Api::_()->getApi('mail', 'core')->sendSystem($user->email, 'sescommunityads_adsapprove', array('host' => $_SERVER['HTTP_HOST'], 'queue' => false, 'title' => $ad->title, 'description' => $ad->description, 'ad_link' => $link));
 
     } else if($ad->status == 4) {
         $link = '/ads/view/ad_id/'.$ad->sescommunityad_id;
-        Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($user, $user, $ad, 'sescommunityads_adsdisapprove', array("adsLink" => $link));
+        $notificationlink = '<a href="' . $link . '">' . $ads->getTitle() . '</a>';
+        Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($user, $user, $ad, 'sescommunityads_adsdisapprove', array("adsLink" => $notificationlink));
 
         //Send email to user
         Engine_Api::_()->getApi('mail', 'core')->sendSystem($user->email, 'sescommunityads_adsdisapprove', array('host' => $_SERVER['HTTP_HOST'], 'queue' => false, 'title' => $ad->title, 'description' => $ad->description, 'ad_link' => $link));

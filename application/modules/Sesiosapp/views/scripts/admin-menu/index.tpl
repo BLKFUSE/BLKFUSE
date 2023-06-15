@@ -22,7 +22,7 @@ $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jQue
   <?php echo $this->translate('Native iOS Mobile App'); ?>
 </h2>
 <?php if( engine_count($this->navigation)): ?>
-  <div class='sesiosapp-admin-navgation'> <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?> </div>
+  <div class='tabs'> <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?> </div>
 <?php endif; ?>
 <h3>Manage Dashboard Menu Items</h3>
 <br>
@@ -110,7 +110,7 @@ Note: Below, you can also add links to any other 3rd party plugin (which is not 
                     <img src="<?php echo $url; ?>" style="width:48px;">
                   <?php }else{ echo "-";} ?>
                 </div>                   
-                <div style="width:15%;" class="admin_table_centered">
+                <div style="width:15%;">
                   <?php echo $item->visibility == 0 ? "All users" : ($item->visibility == 1 ? "Only logged-in" : "Only non-logged in") ; ?>
                 </div> 
                 <div style="width:15%;">          

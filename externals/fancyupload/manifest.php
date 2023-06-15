@@ -2,7 +2,7 @@
   'package' => array(
     'type' => 'external',
     'name' => 'fancyupload',
-    'version' => '6.2.0',
+    'version' => '6.4.0',
     'revision' => '$Revision: 10171 $',
     'path' => 'externals/fancyupload',
     'repository' => 'socialengine.com',
