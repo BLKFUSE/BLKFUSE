@@ -4,6 +4,10 @@
   max-width:1200px;
 }
 
+#global_wrapper{
+  margin-top:100px;
+}
+
 /*Verify Badge Work*/
 html .sesbasic_verify_icon{
 	filter:none;

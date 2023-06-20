@@ -1,0 +1,84 @@
+/* $Id:carousel.css 2015-5-25 00:00:00 SocialEngineSolutions $*/
+
+.sesalbum_carousel{
+	position:relative;
+}
+.sesalbum_carousel .owl-stage-outer{
+	overflow:hidden;
+}
+.sesalbum_carousel .owl-stage{
+	display:flex;
+}
+.sesalbum_carousel .owl-stage .owl-item{
+	padding:0 10px;
+}
+.sesalbum_carousel .owl-stage .sesalbum_list_grid{
+	margin:0;
+	width:100%;
+}
+.sesalbum_carousel .owl-dots.disabled,
+.sesalbum_carousel .owl-nav.disabled{
+	display:none;
+}
+.sesalbum_carousel .owl-nav > div{
+	border-width:1px;
+	border-radius:50%;
+	cursor:pointer;
+	height:30px;
+	width:30px;
+	justify-content:center;
+	align-items:center;
+	display:flex;
+}
+.sesalbum_carousel .owl-nav > div:hover{
+	background-image:url(../images/transprant-bg.png);
+}
+.sesalbum_carousel .owl-nav > div.disabled{
+	opacity:.8;
+	cursor:default;
+}
+/*Horizontal Placement*/
+.layout_middle .sesalbum_carousel .owl-nav > div{
+	position:absolute;
+	top:50%;
+	height:50px;
+	width:50px;
+	margin-top:-25px;
+}
+.layout_middle .sesalbum_carousel .owl-nav > div i{
+	font-size:25px;
+}
+[dir="rtl"] .layout_middle .sesalbum_carousel .owl-nav > div i{
+  filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);
+  -webkit-transform:scale(-1, 1);
+  -ms-transform:scale(-1, 1);
+  transform:scale(-1, 1);
+}
+.layout_middle .sesalbum_carousel .owl-nav > div.owl-prev{
+	left:-10px;
+}
+[dir="rtl"] .layout_middle .sesalbum_carousel .owl-nav > div.owl-prev{
+	left:inherit;
+	right:-10px;
+}
+.layout_middle .sesalbum_carousel .owl-nav > div.owl-next{
+	right:-10px;
+}
+[dir="rtl"] .layout_middle .sesalbum_carousel .owl-nav > div.owl-next{
+	right:inherit;
+	left:-10px;
+}
+/*Sidebar Placement*/
+.layout_left .sesalbum_carousel .owl-stage .owl-item,
+.layout_right .sesalbum_carousel .owl-stage .owl-item{
+	padding:0;
+}
+.layout_left .sesalbum_carousel .owl-nav,
+.layout_right .sesalbum_carousel .owl-nav{
+	display:flex;
+	justify-content:center;
+}
+.layout_left .sesalbum_carousel .owl-nav > div,
+.layout_right .sesalbum_carousel .owl-nav > div{
+	margin:10px 5px 5px;
+}
