@@ -55,4 +55,3 @@ INSERT IGNORE INTO `engine4_sescredit_managemodules` ( `module`,`type`, `title`,
 INSERT IGNORE INTO `engine4_sescredit_managemodules` ( `module`,`type`, `title`, `min_credit`, `min_checkout_price`, `limit_use`, `enabled`) VALUES ('courses','courses', 'Courses - Learning Management System', 0, 0, '0', 1);
 
 INSERT IGNORE INTO `engine4_sescredit_managemodules` ( `module`,`type`, `title`, `min_credit`, `min_checkout_price`, `limit_use`, `enabled`) VALUES ('egifts','egifts', 'SNS - Gifts', 0, 0, '0', 1);
-	

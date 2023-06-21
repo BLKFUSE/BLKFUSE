@@ -32,7 +32,7 @@ return array (
   'package' => array(
     'type' => 'module',
     'name' => 'egifts',
-    'version' => '6.4.0',
+    'version' => '6.4.0p2',
 		'dependencies' => array(
         array(
           'type' => 'module',
@@ -68,6 +68,8 @@ return array (
 		'egifts_gift',
 		'egifts_giftorder',
 		'egifts_giftpurchase',
+		'egifts_usergateway',
+		'egifts_userpayrequest',
 	),
 
 	// Routes --------------------------------------------------------------------
@@ -82,7 +84,7 @@ return array (
 			),
 			'reqs' => array(
 				'userid' => '\d+',
-				'action' => '(index|manage|browse|my-gifts|send-gift|get-user|purchasegift|my-orders)',
+				'action' => '(index|manage|browse|my-gifts|send-gift|get-user|purchasegift|my-orders|payment-requests|payment-request|delete-payment|detail-payment|payment-transaction|account-details)',
 			),
 		),
     'egifts_payment' => array(

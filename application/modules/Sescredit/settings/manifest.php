@@ -30,8 +30,7 @@ return array(
     array(
         'type' => 'module',
         'name' => 'sescredit',
-        //'sku' => 'sescredit',
-        'version' => '6.4.0',
+        'version' => '6.4.0p1',
         'dependencies' => array(
             array(
                 'type' => 'module',
@@ -100,7 +99,9 @@ return array(
         'sescredit_modulesetting',
         'sescredit_detail',
         'sescredit_rewardpoint',
-        'sescredit_managemodule'
+        'sescredit_managemodule',
+        'sescredit_usergateway',
+        'sescredit_userpayrequest',
     ),
     'routes' => array(
         'sescredit_general' => array(
@@ -111,7 +112,7 @@ return array(
                 'action' => 'manage',
             ),
             'reqs' => array(
-                'action' => '(manage|transaction|earn-credit|invite|signup|show-detail|show-member-level|help|badges|leaderboard)',
+                'action' => '(manage|transaction|earn-credit|invite|signup|show-detail|show-member-level|help|badges|leaderboard|payment-requests|payment-request|delete-payment|detail-payment|payment-transaction|account-details)',
             )
         ),
     )

@@ -30,7 +30,7 @@ class Sescredit_AdminLevelController extends Core_Controller_Action_Admin
     }
 
     $id = $level->level_id;
-
+		$this->view->sescredit_cashcredit = Engine_Api::_()->authorization()->getPermission($id, 'sescredit', 'sescredit_cashcredit');
     // Make form
     $this->view->form = $form = new Sescredit_Form_Admin_Settings_Level(array(
       'public' => ( engine_in_array($level->type, array('public')) ),
@@ -81,5 +81,6 @@ class Sescredit_AdminLevelController extends Core_Controller_Action_Admin
       throw $e;
     }
     $form->addNotice('Your changes have been saved.');
+    $this->_helper->redirector->gotoRoute(array());
   }
 }

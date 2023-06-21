@@ -49,7 +49,7 @@ class Sescredit_Form_Admin_Badge_Add extends Engine_Form {
         'allowEmpty' => false,
         'required' => true,
     ));
-    $this->photo_id->addValidator('Extension', false, 'jpg,jpeg,png,gif,PNG,GIF,JPG,JPEG');
+    $this->photo_id->addValidator('Extension', false, 'jpg,jpeg,png,gif,webp');
 
     //Add Element: Submit
     $this->addElement('Button', 'submit', array(

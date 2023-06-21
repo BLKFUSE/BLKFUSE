@@ -68,7 +68,7 @@
       <?php else:?>
         <?php $currencyValue = 1;?>
       <?php endif;?>
-      finalValue = value*parseInt('<?php echo $currencyValue;?>')/parseInt('<?php echo Engine_Api::_()->getApi('settings','core')->getSetting('sescredit.creditvalue', '100'); ?>');
+      finalValue = value*parseInt('<?php echo $currencyValue;?>')/parseInt('<?php echo Engine_Api::_()->getApi('settings','core')->getSetting('sescredit.creditvalue', '1000'); ?>');
       scriptJquery('#sescredit_number_point_value-element').html("<?php echo $currencySymbol;?>"+round2Fixed(finalValue));
     }
     else { 

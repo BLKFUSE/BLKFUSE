@@ -116,7 +116,7 @@ class Sescredit_Plugin_Gateway_PayPal extends Engine_Payment_Plugin_Abstract {
     if ($orderDetail->purchase_type == 1) {
       $price = Engine_Api::_()->getItem('sescredit_offer', $orderDetail->offer_id)->point_value;
     } else {
-      $price = $orderDetail->point / Engine_Api::_()->getApi('settings', 'core')->getSetting('sescredit.creditvalue', '100');
+      $price = $orderDetail->point / Engine_Api::_()->getApi('settings', 'core')->getSetting('sescredit.creditvalue', '1000');
     }
     $price = @round(($price * $currencyValue), 2);
     // This is a one-time fee

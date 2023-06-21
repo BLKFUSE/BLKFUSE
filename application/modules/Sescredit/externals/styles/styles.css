@@ -1681,3 +1681,376 @@
 		font-size:30px;
 	}
 }
+
+/*DASHBOARD START*/
+.sescredit_dashboard_main .layout_sescredit_browse_menu{
+	margin-bottom:0;
+}
+.sescredit_dashboard{
+	display:flex;
+	flex-wrap:wrap;
+}
+.sescredit_dashboard_tabs{
+	width:250px;
+	margin-right:15px;
+	border-width:1px;
+}
+[dir="rtl"] .sescredit_dashboard_tabs{
+  margin-right:0;
+	margin-left:15px;
+}
+.sescredit_dashboard_tabs ul li a{
+	display:block;
+	padding:14px 15px;
+	border-bottom-width:1px;
+	position:relative;
+	z-index:1;
+	overflow:hidden;
+}
+.sescredit_dashboard_tabs ul li a::after{
+	content:'';
+	position:absolute;
+	left:-100%;
+	top:0;
+	width:100%;
+  height:100%;
+	z-index:-1;
+	transition:0.8s;
+}
+.sescredit_dashboard_tabs ul li a:hover::after{
+	left:0%;
+}
+.sescredit_dashboard_tabs ul li:last-child a{
+  border-bottom-width:0;
+}
+@media(max-width:767px){
+	.sescredit_dashboard_tabs{
+		width:100%;
+		margin-right:0;
+		margin-bottom:20px;
+	}
+	[dir="rtl"] .sescredit_dashboard_tabs{
+		margin-left:0;
+	}
+	.sescredit_dashboard_content{
+		padding:15px;
+		flex:auto;
+	}
+	.sescredit_dashboard_tabs .navigation{
+		white-space:nowrap;
+		display:flex;
+		overflow-y:auto;
+	}
+	.sescredit_dashboard_tabs ul li a{
+		padding:12px;
+	}
+}
+/*Content*/
+.sescredit_dashboard_content{
+	border-style:solid;
+	border-width:1px;
+	flex:1;
+	padding:20px;
+	position:relative;
+	overflow:hidden;
+}
+.sescredit_dashboard_content > .tabs{
+	display:block;
+}
+.sescredit_dashboard_content > .tabs > ul{
+	border-bottom-width:1px;
+	margin-bottom:15px;
+	padding-bottom:10px;
+	width:100%;
+}
+.sescredit_dashboard_sub_tabs{
+	border-bottom-width:1px;
+	display:flex;
+	margin-bottom:15px;
+	width:100%;
+}
+.sescredit_dashboard_sub_tabs li a{
+	padding:10px 15px;
+	display:block;
+	position:relative;
+}
+.sescredit_dashboard_sub_tabs li a i{
+	font-size:22px;
+	margin-right:10px;
+	vertical-align:middle;
+}
+.sescredit_dashboard_sub_tabs li._active{
+	border-width:1px 1px 0 1px;
+	border-radius:5px 5px 0 0;
+	position:relative;
+	bottom:-1px;
+}
+.sescredit_dashboard_form{position:relative;}
+.sescredit_dashboard_form .global_form,
+.sescredit_dashboard_form .global_form > div,
+.sescredit_dashboard_form .global_form > div > div{
+	background:none !important;
+	border-width:0 !important;
+	border-radius:0;
+	float:none;
+	padding:0;
+}
+.sescredit_dashboard_form .global_form .form-elements{
+  width:600px;
+}
+.sescredit_dashboard_form .global_form > div > div > h3 + div{
+	margin:0;
+}
+.sescredit_dashboard_form .global_form div.form-label,
+.sescredit_dashboard_form .global_form div.form-element{
+	text-align:left;
+	width:100%;
+	max-width:100%;
+	min-width:100%;
+}
+[dir="rtl"] .sescredit_dashboard_form .global_form div.form-label{
+	text-align:right;
+}
+.sescredit_dashboard_form .global_form #execute-wrapper .form-label,
+.sescredit_dashboard_form .global_form #submit-wrapper .form-label{
+	display:none;
+}
+.sescredit_dashboard_content_header{
+	margin-bottom:20px;
+}
+.sescredit_dashboard_form .global_form h3,
+.sescredit_dashboard_content_header h3{
+	background-image:url(../images/transprant-bg.png);
+	font-size:17px;
+	font-weight:bold;
+	letter-spacing:normal;
+	margin:0 0 10px;
+	padding:10px;
+	border:0;
+}
+.sescredit_dashboard_content_header .payment_link_btn,
+.sescredit_dashboard_content_header .payment_link_btn_alt{
+	font-weight:normal;
+	margin-top:-3px;
+	height:28px;
+	line-height:28px;
+	padding:0 15px;
+}
+.sescredit_dashboard_content_header .payment_link_btn:before,
+.sescredit_dashboard_content_header .payment_link_btn_alt:before{
+	margin-right:5px;
+}
+.sescredit_dashboard_content_btns{
+	margin-bottom:20px;
+}
+.sescredit_dashboard_content_btns a{
+	display:inline-block;
+}
+.sescredit_dashboard_content .payment_link_btn{
+	padding:0 20px;
+  display:inline-block;
+  height:35px;
+  margin:5px 0 5px 5px;
+  line-height:35px;
+}
+.sescredit_dashboard_content div.event_calendar_container button{
+	padding:0;
+}
+.sescredit_dashboard_content div.event_calendar_container + select,
+.sescredit_dashboard_content div.event_calendar_container + select + select,
+.sescredit_dashboard_content div.event_calendar_container + select + select + select{
+	margin-left:5px;
+}
+@media (max-width:991px){
+	.sescredit_dashboard_sub_tabs{
+		white-space:nowrap;
+		overflow-x:scroll;
+	}
+	.sescredit_dashboard_sub_tabs li._active{
+	  bottom:0 !important;
+	}
+	.sescredit_dashboard_form .global_form .form-elements{
+		width:100%;
+	}
+	.sescredit_dashboard_form .global_form input[type=text],
+	.sescredit_dashboard_form .global_form input[type=email],
+	.sescredit_dashboard_form .global_form input[type=password],
+	.sescredit_dashboard_form .global_form textarea,
+	.sescredit_dashboard_form .global_form select{
+		padding:6px 10px;
+		font-size:13px !important;
+	}
+}
+/*Table*/
+.sescredit_dashboard_table::-webkit-scrollbar{
+  width:3px;
+  height:5px;
+}
+.sescredit_dashboard_table::-webkit-scrollbar-track{
+  background:#f1f1f1;
+}
+.sescredit_dashboard_table::-webkit-scrollbar-thumb{
+  background:#999;
+  border-radius:10px;
+}
+.sescredit_dashboard_table::-webkit-scrollbar-thumb:hover{
+  background:#666;
+}
+.sescredit_dashboard_table{
+	overflow-x:auto;
+	padding-bottom:15px;
+}
+.sescredit_dashboard_table table{
+	width:100%;
+}
+.sescredit_dashboard_table table th,
+.sescredit_dashboard_table table td{
+	border-style:solid;
+	border-width:1px;
+	vertical-align:top;
+  white-space:nowrap;
+	font-size:12px;
+	padding:10px;
+}
+.sescredit_dashboard_table table th{
+	background-image:url(../images/transprant-bg.png);
+}
+.sescredit_dashboard_table table td ._msg{
+	white-space:normal;
+	min-width:300px;
+	clear:both;
+}
+.sescredit_dashboard_table table td.table_options a{
+	clear:both;
+  white-space:nowrap;
+	text-decoration:none !important;
+	font-size:12px;
+}
+.sescredit_dashboard_table table td.table_options a + a{
+	margin-left:10px;
+}
+[dir="rtl"] .sescredit_dashboard_table table td.table_options a + a{
+	margin-left:0;
+	margin-right:10px;
+}
+.sescredit_dashboard_table table td a:before,
+.sescredit_dashboard_table table td i{
+	margin-right:5px;
+	text-decoration:none !important;
+}
+[dir="rtl"] .sescredit_dashboard_table table td a:before,
+[dir="rtl"] .sescredit_dashboard_table table td i{
+	margin-right:0;
+	margin-left:5px;
+}
+.sescredit_dashboard_table table td .fa:before{
+	font-size:12px;
+}
+@media(max-width:767px){
+	.sescredit_dashboard_table{
+		overflow:visible;
+	}
+	.sescredit_dashboard_table table thead{
+		border:none;
+		clip:rect(0 0 0 0);
+		height:1px;
+		margin:-1px;
+		overflow:hidden;
+		padding:0;
+		position:absolute;
+		width:1px;
+	}
+	.sescredit_dashboard_table tr{
+		border-width:2px;
+		display:block;
+		margin-bottom:10px;
+	}
+	.sescredit_dashboard_table table tbody tr td{
+		display:block;
+		text-align:right;
+		border-bottom-width:2px !important;
+		font-size:13px !important;
+		white-space:inherit !important;
+		width:100% !important;
+		min-height:40px;
+	}
+	.sescredit_dashboard_table table tbody tr .table_options{
+		text-align:center;
+	}
+	.sescredit_dashboard_table table td::before{
+		content:attr(data-label);
+		float:left;
+		font-weight:700;
+		text-transform:uppercase;
+  }
+	.sescredit_dashboard_table_right_links a{
+		display:inline-block;
+	}
+}
+/*Payment Requests*/
+.sescredit_dashboard_threshold_amt{
+	margin-bottom:10px;
+}
+.sescredit_request_payment_link{
+	margin-bottom:10px;
+}
+.sescredit_dashboard_stats_container{
+	margin:0 -5px;
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:center;
+}
+.sescredit_dashboard_stat{
+	background-image:url(../images/transprant-bg.png);
+	text-align:center;
+	width:calc(33.33% - 10px);
+	border-width:1px;
+	margin:0 5px 10px;
+	padding:10px;
+	min-height:100px;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	justify-content:center;
+}
+.sescredit_dashboard_stat > span:last-child{
+	font-weight:bold;
+}
+.sescredit_dashboard_popup{
+	padding:10px;
+}
+@media (max-width:991px){
+	.sescredit_dashboard_stat{
+		width:calc(50% - 10px);
+	}
+}
+/*DASHBOARD END*/
+/*Payment Request Detail Popup Start*/
+.sescredit_payment_request_popup > h3{
+	background-image:url(../images/transprant-bg.png);
+	border-bottom-width:1px;
+	padding:10px 15px;
+	font-weight:bold;
+}
+.sescredit_payment_request_popup ._details{
+	padding:10px 15px;
+}
+.sescredit_payment_request_popup ._details tr + tr{
+	border-top-width:1px;
+	border-top-style:dashed;
+}
+.sescredit_payment_request_popup ._details td{
+	padding:5px 0;
+}
+.sescredit_payment_request_popup ._details td + td{
+	padding-left:10px;
+}
+[dir="rtl"] .sescredit_payment_request_popup ._details td + td{
+	padding-left:0;
+	padding-right:10px;
+}
+.sescredit_payment_request_popup ._btn{
+	border-top-width:1px;
+	padding:10px 15px 0;
+}
+/*Payment Request Detail Popup End*/

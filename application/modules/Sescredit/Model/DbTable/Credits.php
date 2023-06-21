@@ -23,8 +23,12 @@ class Sescredit_Model_DbTable_Credits extends Core_Model_Item_DbTable_Abstract {
         $select->where("point_type = 'credit' OR point_type = 'affiliate' OR point_type = 'receive_friend' OR point_type = 'purchase' OR point_type = 'reward'");
       } elseif ($params['point_type'] == 'total_debit') {
         $select->where("point_type = 'deduction' OR point_type = 'transfer_friend' OR point_type = 'sesproduct_order' OR point_type = 'po'");
+      } elseif($params['point_type'] == 'cashcredit_byowner' && $params['type'] == 'deduction') {
+        $select->where('type =?', $params['point_type']);
+        $select->where('point_type =?', "deduction");
       } else {
         $select->where('point_type =?', $params['point_type']);
+        $select->where('type <> ?', 'cashcredit_byowner');
       }
       $select->where('owner_id =?', Engine_Api::_()->user()->getViewer()->getIdentity());
     }
@@ -39,7 +43,7 @@ class Sescredit_Model_DbTable_Credits extends Core_Model_Item_DbTable_Abstract {
     $actionId = $params['action_id'];
     $pointType = $params['point_type'];
     $creditTable = Engine_Api::_()->getDbTable('credits', 'sescredit');
-    if ($pointType != 'affiliate' && $pointType != 'receive_friend' && $pointType != "sesproduct_order" && $pointType != 'transfer_friend' && $pointType != 'purchase' && $pointType != 'upgrade_level' && $pointType != 'reward') {
+    if ($activityType != 'cashcredit_byowner' && $pointType != 'affiliate' && $pointType != 'receive_friend' && $pointType != "sesproduct_order" && $pointType != 'transfer_friend' && $pointType != 'purchase' && $pointType != 'upgrade_level' && $pointType != 'reward') {
       $creditValueTable = Engine_Api::_()->getDbTable('values', 'sescredit');
       $selectCreditValueTable = $creditValueTable->select()
               ->from($creditValueTable->info('name'), array('*'))
@@ -114,7 +118,11 @@ class Sescredit_Model_DbTable_Credits extends Core_Model_Item_DbTable_Abstract {
       $userCreditDetailTable = Engine_Api::_()->getDbTable('details', 'sescredit');
       if ($pointType == 'transfer_friend' || $pointType == "sesproduct_order" || $pointType == 'deduction' || $pointType == 'upgrade_level') {
         $userCreditDetailTable->update(array('total_credit' => new Zend_Db_Expr('total_credit - ' . $creditPoint)), array('owner_id =?' => $activityOwnerId));
-      } else {
+      }
+      elseif ($activityType == 'cashcredit_byowner' && $pointType == 'deduction') {
+        $userCreditDetailTable->update(array('total_credit' => new Zend_Db_Expr('total_credit - ' . $creditPoint)), array('owner_id =?' => $activityOwnerId));
+      }  
+      else {
         $select = $userCreditDetailTable->select()
                 ->from($userCreditDetailTable->info('name'), array('detail_id', 'first_activity_date'))
                 ->where('owner_id =?', $activityOwnerId);

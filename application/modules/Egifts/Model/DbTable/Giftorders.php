@@ -39,14 +39,17 @@ class Egifts_Model_DbTable_Giftorders extends Core_Model_Item_DbTable_Abstract
 
 		$giftOderTableName = $this->info('name');
 		$select = $this->select()->setIntegrityCheck(false)
-			->from($giftOderTableName)
-			->joinLeft($giftPurchaseTableName,"$giftPurchaseTableName.giftpurchase_id =  $giftOderTableName.giftpurchase_id",array('owner_id as sender_id','message','total_amount','purchase_user_id','created_date','giftpurchase_id','is_private'));
+														->from($giftOderTableName)
+														->joinLeft($giftPurchaseTableName,"$giftPurchaseTableName.giftpurchase_id =  $giftOderTableName.giftpurchase_id",array('owner_id as sender_id','message','total_amount','purchase_user_id','created_date','giftpurchase_id','is_private'));
 		$select->joinLeft($giftTableName,"$giftTableName.gift_id =  $giftOderTableName.gift_id",null);
 		if(isset($params['purchase_user_id'])){
 			$select->where($giftPurchaseTableName.'.purchase_user_id = ?', $params['purchase_user_id']);
+			$select->where($giftPurchaseTableName.'.state =?', 'complete');
 		}
 		if(isset($params['owner_id'])){
 			$select->where($giftPurchaseTableName.'.owner_id = ?', $params['owner_id']);
+			$select->where($giftPurchaseTableName.'.state =?', 'complete');
+			
 		}
 		$select->where($giftPurchaseTableName.".gateway_transaction_id IS NOT NULL")
 			->order($giftOderTableName.".giftpurchase_id DESC");

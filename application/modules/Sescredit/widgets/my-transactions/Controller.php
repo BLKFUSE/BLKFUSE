@@ -54,7 +54,7 @@ class Sescredit_Widget_MyTransactionsController extends Engine_Content_Widget_Ab
     $select = $creditTable->select()
             ->setIntegrityCheck(false)
             ->from($creditTableName, array('*'))
-            ->joinLeft($creditValueTableName, $creditValueTableName . '.type = ' . $creditTableName . '.type AND '.$creditValueTableName . '.member_level ='. $viewer->level_id, array('type', 'language' => new Zend_Db_Expr("Case when $language IS NULL or $language = '' then en else $language end")))
+            ->joinLeft($creditValueTableName, $creditValueTableName . '.type = ' . $creditTableName . '.type AND '.$creditValueTableName . '.member_level ='. $viewer->level_id, array('language' => new Zend_Db_Expr("Case when $language IS NULL or $language = '' then en else $language end")))
             ->where($creditTableName . '.owner_id =?', $viewer->getIdentity());
             //->where($creditValueTableName . '.member_level =?', $viewer->level_id);
     if (isset($params['show']) && $params['show'] == 'week') {

@@ -353,4 +353,18 @@ class Egifts_Plugin_Menus {
           ),
       );
   }
+  
+
+  public function onMenuInitialize_EgiftsMainManagecashgifts() {
+
+		$viewer = Engine_Api::_()->user()->getViewer();
+		$viewer_id = $viewer->getIdentity();
+    if (!$viewer_id)
+      return false;
+      
+		$levelId = $viewer_id ? $viewer->level_id : Engine_Api::_()->getDbTable('levels', 'authorization')->getPublicLevel()->level_id;
+    if (!Engine_Api::_()->authorization()->getPermission($levelId, 'egifts', 'egifts_cashgifts'))
+			return false;
+		return true;
+  }
 }

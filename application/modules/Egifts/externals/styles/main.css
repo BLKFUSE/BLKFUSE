@@ -39,3 +39,7 @@
 .egifts_listing_item_msg{
   font-size:$theme_font_size_small;	
 }
+.egifts_dashboard_tabs ul li.active a{
+  background-color: $theme_button_background_color;
+  color: $theme_button_font_color;
+}

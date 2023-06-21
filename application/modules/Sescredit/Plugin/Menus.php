@@ -54,5 +54,25 @@ class Sescredit_Plugin_Menus {
       return false;
     return true;
   }
+  
+  public function onMenuInitialize_SescreditMainMyorders() {
+
+    if (!Engine_Api::_()->user()->getViewer()->getIdentity())
+      return false;
+    return true;
+  }
+
+  public function onMenuInitialize_SescreditMainManagecashcredit() {
+  
+		$viewer = Engine_Api::_()->user()->getViewer();
+		$viewer_id = $viewer->getIdentity();
+    if (!$viewer_id)
+      return false;
+      
+		$levelId = $viewer_id ? $viewer->level_id : Engine_Api::_()->getDbTable('levels', 'authorization')->getPublicLevel()->level_id;
+    if (!Engine_Api::_()->authorization()->getPermission($levelId, 'sescredit', 'sescredit_cashcredit'))
+			return false;
+    return true;
+  }
 
 }

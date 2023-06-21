@@ -60,4 +60,12 @@ class Egifts_Model_DbTable_Giftpurchases extends Core_Model_Item_DbTable_Abstrac
 		$select->order($orderTableName.'.giftpurchase_id DESC');
 		return $select;
 	}
+	
+	public function getGiftStats($params = array()) {
+	 $select = $this->select()
+								->from($this->info('name'), array('totalOrder'=> new Zend_Db_Expr("COUNT(giftpurchase_id)"), 'totalAmountSale' => new Zend_Db_Expr("(sum(total_amount))")))
+								->where('purchase_user_id =?',$params['purchase_user_id'])
+								->where("state = 'complete'");
+		return $select->query()->fetch();
+	}
 }

@@ -33,7 +33,7 @@
           </div>
           <div class="_mytransactionstable_content" id="activity-transaction_<?php echo $randonNumber; ?>">
   <?php } ?>
-          <?php foreach($this->paginator as $transaction):?>
+          <?php foreach($this->paginator as $transaction): ?>
             <div class="_mytransactionstable_item">
               <?php if($transaction->point_type == 'affiliate'):?>
                 <div class="_activitytype"><?php echo $this->translate("Inviter Affiliation");?></div>
@@ -47,6 +47,8 @@
                 <div class="_activitytype"><?php echo $this->translate("Buy from site");?></div>
               <?php elseif($transaction->point_type == 'upgrade_level'):?>
                 <div class="_activitytype"><?php echo $this->translate("On Membership Upgrade");?></div>
+							<?php elseif($transaction->point_type == 'po' && $transaction->type == 'egifts_giftorder'):?>
+                <div class="_activitytype"><?php echo $this->translate("Gift Order");?></div>
               <?php elseif($transaction->point_type == 'reward'):?>
                 <div class="_activitytype"><?php echo $this->translate("Reward");?></div>
               <?php elseif($transaction->point_type == 'credit'):?>
@@ -56,6 +58,7 @@
               <?php else:?>
                 <div class="_activitytype"><?php echo $transaction->language; ?></div>
               <?php endif;?>
+              
               <?php if($transaction->point_type == 'credit'):?>
                 <div class="_activitypoint"><?php echo $transaction->credit;?></div>
                 <div class="_activitypoint">-</div>
@@ -65,7 +68,10 @@
               <?php elseif($transaction->point_type == 'transfer_friend'):?>
                 <div class="_activitypoint">-</div>
                 <div class="_activitypoint"><?php echo $transaction->credit;?></div>
-                <?php elseif($transaction->point_type == 'sesproduct_order'):?>
+							<?php elseif($transaction->point_type == 'sesproduct_order'):?>
+                <div class="_activitypoint">-</div>
+                <div class="_activitypoint"><?php echo $transaction->credit;?></div>
+							<?php elseif($transaction->point_type == 'po' && $transaction->type == 'egifts_giftorder'):?>
                 <div class="_activitypoint">-</div>
                 <div class="_activitypoint"><?php echo $transaction->credit;?></div>
               <?php elseif($transaction->point_type == 'affiliate'):?>

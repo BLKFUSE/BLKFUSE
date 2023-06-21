@@ -54,13 +54,20 @@
         </thead>
         <tbody class="sescredit_transactions" id="activity-transaction">
         <?php foreach($this->paginator as $transaction):?>
-          <tr>
-            <td><?php echo $transaction->user_id;?></td>
-            <td><a href="<?php echo $transaction->getHref();?>" ><?php echo $transaction->getTitle();?></a></td>
-            <td class="admin_table_cantered"><?php echo ($transaction->total_credit) ? $transaction->total_credit : 0;?></td>
-            <td><?php echo ($transaction->expiry_date) ? $transaction->expiry_date : 'N/A';?></td>
-            <td class="_options"><?php if($transaction->total_credit):?><a class="smoothbox" href="<?php echo $this->url(array('module' => 'sescredit','controller' => 'credits','action' => 'show-member-point-detail','id' => $transaction->detail_id),'admin_default',true);?>"><?php echo $this->translate("View Details");?> &raquo;</a><?php else:?>N/A<?php endif;?></td>
-          </tr>
+					<?php if($transaction) { ?>
+						<?php $user = Engine_Api::_()->getItem('user', $transaction->user_id); ?>
+						<tr>
+							<td><?php echo $transaction->user_id;?></td>
+							<?php if($user) { ?>
+								<td><a href="<?php echo $user->getHref();?>" ><?php echo $user->getTitle();?></a></td>
+							<?php } else { ?>
+								<td>---</td>
+							<?php } ?>
+							<td class="admin_table_cantered"><?php echo ($transaction->total_credit) ? $transaction->total_credit : 0;?></td>
+							<td><?php echo ($transaction->expiry_date) ? $transaction->expiry_date : 'N/A';?></td>
+							<td class="_options"><?php if($transaction->total_credit):?><a class="smoothbox" href="<?php echo $this->url(array('module' => 'sescredit','controller' => 'credits','action' => 'show-member-point-detail','id' => $transaction->detail_id),'admin_default',true);?>"><?php echo $this->translate("View Details");?> &raquo;</a><?php else:?>N/A<?php endif;?></td>
+						</tr>
+					<?php } ?>
         <?php endforeach;?>
         </tbody>
       </table>
@@ -77,4 +84,3 @@
     </span>
   </div>
 <?php endif;?>
-

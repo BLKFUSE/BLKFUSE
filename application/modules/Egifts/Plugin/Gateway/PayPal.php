@@ -126,7 +126,7 @@ class Egifts_Plugin_Gateway_PayPal extends Engine_Payment_Plugin_Abstract {
 					array(
             'NAME' => $gift->title,
             'DESC' => $gift->description,
-            'AMT' => $gift->price,
+            'AMT' => @round($totalprice, 2),
             //'NUMBER' => $subscription->subscription_id,
             //'QTY' => 1,
           ),
@@ -357,11 +357,28 @@ class Egifts_Plugin_Gateway_PayPal extends Engine_Payment_Plugin_Abstract {
       if ($paymentStatus == 'okay' || $paymentStatus == 'active' ||
               ($paymentStatus == 'pending')) {
         // Payment success
+        
+        $tableRemaining = Engine_Api::_()->getDbTable('remainingpayments', 'egifts');
+        $tableName = $tableRemaining->info('name');
+        
         try{
           foreach ($giftorders as $key => $egift) {
             $gift = Engine_Api::_()->getItem('egifts_gift', $egift->gift_id);
             $giftTitle = '<a href="'.$gift->getHref().'" >'.$gift->getTitle().'</a>';
             $receiver = Engine_Api::_()->getItem('user', $item->purchase_user_id);
+            
+						//update gift OWNER REMAINING amount
+						$select = $tableRemaining->select()->from($tableName)->where('user_id =?', $receiver->user_id);
+						$select = $tableRemaining->fetchAll($select);
+						$orderAmount = $egift->gift_price;
+						if (engine_count($select)) {
+							$tableRemaining->update(array('remaining_payment' => new Zend_Db_Expr("remaining_payment + $orderAmount")), array('user_id =?' => $receiver->user_id));
+						} else {
+							$tableRemaining->insert(array(
+								'remaining_payment' => $orderAmount,
+								'user_id' => $receiver->user_id,
+							));
+						}
 
             $getAdminnSuperAdmins = Engine_Api::_()->egifts()->getAdminnSuperAdmins();
             foreach ($getAdminnSuperAdmins as $key => $getAdminnSuperAdmin) {

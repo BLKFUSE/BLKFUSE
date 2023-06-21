@@ -144,3 +144,7 @@
 .sescredit_cart_total table td{
 	padding: 10px;
 }
+.sescredit_dashboard_tabs ul li.active a{
+  background-color: $theme_button_background_color;
+  color: $theme_button_font_color;
+}

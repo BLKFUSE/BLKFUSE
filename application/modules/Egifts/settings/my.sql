@@ -12,5 +12,3 @@
 INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
 ('core_admin_main_plugins_gift', 'egifts', 'SNS - Virtual Gifts', '', '{"route":"admin_default","module":"egifts","controller":"settings"}', 'core_admin_main_plugins', '',999),
 ('egifts_admin_main_settings', 'egifts', 'Global Settings', '', '{"route":"admin_default","module":"egifts","controller":"settings"}', 'egifts_admin_main', '', 1);
-
-ALTER TABLE `engine4_egifts_giftpurchases` ADD `gift_id` INT(11) NOT NULL;

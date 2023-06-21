@@ -32,7 +32,7 @@ $creditCheckout = new Zend_Session_Namespace('sescredit_points');
             <?php echo Engine_Api::_()->egifts()->getCurrencyPrice(round($this->itemPrice,2),$currentCurrency); ?>
           </div>
           <?php if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sescredit')) { ?>
-            <div class="egifts_payment_process_credit">
+            <div class="egifts_payment_process_page">
               <?php  echo $this->partial('apply_credit.tpl','sescredit',array('id'=>$this->item->getIdentity(),'moduleName'=>'egifts','item_price'=>$this->itemPrice,'item_id'=>$this->item->getIdentity())); ?>
             </div>
           <?php } ?>

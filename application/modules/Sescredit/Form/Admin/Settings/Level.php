@@ -28,6 +28,42 @@ class Sescredit_Form_Admin_Settings_Level extends Authorization_Form_Admin_Level
               new Engine_Validate_AtLeast(0),
           ),
       ));
+
+			$this->addElement('Select', 'sescredit_cashcredit', array(
+				'label' => 'Earn Cash Credits',
+				'description' => 'Do you want to allow member to earn cash credit?',
+				'multiOptions' => array(
+					1 => 'Yes',
+					0 => 'No'
+				),
+				'onchange' => 'hideShow(this.value);',
+			));
+			
+			$this->addElement('Select', 'sescredit_admcosn', array(
+	      'label' => 'Unit for Commission',
+	      'description' => 'Choose the unit for admin commission.',
+	      'multiOptions' => array(
+						1 => 'Percentage',
+						2 => 'Fixed'
+	      ),
+				'allowEmpty' => false,
+        'required' => true,
+	      'value' => 1,
+	    ));
+			$this->addElement('Text', "sescredit_commival", array(
+	        'label' => 'Commission Value',
+	        'description' => "Enter the value for commission according to the unit chosen in above setting. [If you have chosen Percentage, then value should be in range 1 to 100.]",
+	        'allowEmpty' => true,
+	        'required' => false,
+	        'value' => 1,
+	    ));
+	    $this->addElement('Text', "sescredit_threamt", array(
+	        'label' => 'Threshold Amount for Releasing Credit Points',
+	        'description' => "Enter the threshold amount which will be required before making request for releasing credit points from admins.",
+	        'allowEmpty' => false,
+	        'required' => true,
+	        'value' => 100,
+	    ));
     }
   }
 

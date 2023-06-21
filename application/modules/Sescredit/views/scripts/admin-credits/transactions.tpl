@@ -68,58 +68,65 @@
         </div>
         <div class="_transactionstable_content" id="activity-transaction">
         <?php foreach($this->paginator as $transaction):?>
-          <div class="_transactionstable_item">
-            <div class="_id"><?php echo $transaction->credit_id;?></div>
-            <div class="_owner"><a href="<?php echo $transaction->getHref();?>" ><?php echo $transaction->getTitle();?></a></div>
-            <?php if($transaction->point_type == 'affiliate'):?>
-              <div class="_activitytype"><?php echo "Inviter Affiliation";?></div>
-            <?php elseif($transaction->point_type == 'receive_friend'):?>
-              <div class="_activitytype"><?php echo "Received from Friend";?></div>
-            <?php elseif($transaction->point_type == 'transfer_friend'):?>
-              <div class="_activitytype"><?php echo "Transferred to Friend";?></div>
-            <?php elseif($transaction->point_type == 'sesproduct_order'):?>
-            <div class="_activitytype"><?php echo "Product Purchased";?></div>
+					<?php if($transaction) { ?>
+						<?php $user = Engine_Api::_()->getItem('user', $transaction->user_id); ?>
+						<div class="_transactionstable_item">
+							<div class="_id"><?php echo $transaction->credit_id;?></div>
+							<div class="_owner"><a href="<?php echo $user->getHref();?>" ><?php echo $user->getTitle();?></a></div>
+							<?php if($transaction->point_type == 'affiliate'):?>
+								<div class="_activitytype"><?php echo "Inviter Affiliation";?></div>
+							<?php elseif($transaction->point_type == 'receive_friend'):?>
+								<div class="_activitytype"><?php echo "Received from Friend";?></div>
+							<?php elseif($transaction->point_type == 'transfer_friend'):?>
+								<div class="_activitytype"><?php echo "Transferred to Friend";?></div>
+							<?php elseif($transaction->point_type == 'sesproduct_order'):?>
+								<div class="_activitytype"><?php echo "Product Purchased";?></div>
 
-
-            <?php elseif($transaction->point_type == 'deduction'):?>
-              <div class="_activitytype"><?php echo "On Activity Deletion";?></div>
-            <?php elseif($transaction->point_type == 'reward'):?>
-              <div class="_activitytype"><?php echo "On Receiving Point from Site Admin";?></div>
-            <?php else:?>
-              <div class="_activitytype"><?php echo "For New Activity";?></div>
-            <?php endif;?>
-            
-            <?php if($transaction->point_type == 'credit'):?>
-              <div class="_activitypoint"><?php echo $transaction->credit;?></div>
-              <div class="_activitypoint">-</div>
-            <?php elseif($transaction->point_type == 'deduction'):?>
-              <div class="_activitypoint">-</div>
-              <div class="_activitypoint"><?php echo $transaction->credit;?></div>
-            <?php elseif($transaction->point_type == 'affiliate'):?>
-              <div class="_activitypoint"><?php echo $transaction->credit;?></div>
-              <div class="_activitypoint">-</div>
-              <?php elseif($transaction->point_type == 'receive_friend'):?>
-              <div class="_activitypoint"><?php echo $transaction->credit;?></div>
-              <div class="_activitypoint">-</div>
-            <?php elseif($transaction->point_type == 'transfer_friend'):?>
-              <div class="_activitypoint">-</div>
-              <div class="_activitypoint"><?php echo $transaction->credit;?></div>
-            <?php elseif($transaction->point_type == 'sesproduct_order'):?>
-            <div class="_activitypoint">-</div>
-            <div class="_activitypoint"><?php echo $transaction->credit;?></div>
-            <?php elseif($transaction->point_type == 'purchase'):?>
-              <div class="_activitypoint"><?php echo $transaction->credit;?></div>
-              <div class="_activitypoint">-</div>
-            <?php elseif($transaction->point_type == 'upgrade_level'):?>
-              <div class="_activitypoint">-</div>
-              <div class="_activitypoint"><?php echo $transaction->credit;?></div>
-            <?php elseif($transaction->point_type == 'reward'):?>
-              <div class="_activitypoint"><?php echo $transaction->credit;?></div>
-              <div class="_activitypoint">-</div>
-            <?php endif;?>
-            <?php include APPLICATION_PATH .  '/application/modules/Sescredit/views/scripts/_date.tpl';?>
-            <div class="_options"><a class="smoothbox" href="<?php echo $this->url(array('module' => 'sescredit','controller' => 'credits','action' => 'show-detail','id' => $transaction->credit_id),'admin_default',true);?>"><?php echo $this->translate("View Details");?> &raquo;</a></div>
-          </div>
+							<?php elseif($transaction->point_type == 'po' && $transaction->type == 'egifts_giftorder'):?>
+                <div class="_activitytype"><?php echo $this->translate("Gift Order");?></div>
+							<?php elseif($transaction->point_type == 'deduction'):?>
+								<div class="_activitytype"><?php echo "On Activity Deletion";?></div>
+							<?php elseif($transaction->point_type == 'reward'):?>
+								<div class="_activitytype"><?php echo "On Receiving Point from Site Admin";?></div>
+							<?php else:?>
+								<div class="_activitytype"><?php echo "For New Activity";?></div>
+							<?php endif;?>
+							
+							<?php if($transaction->point_type == 'credit'):?>
+								<div class="_activitypoint"><?php echo $transaction->credit;?></div>
+								<div class="_activitypoint">-</div>
+							<?php elseif($transaction->point_type == 'deduction'):?>
+								<div class="_activitypoint">-</div>
+								<div class="_activitypoint"><?php echo $transaction->credit;?></div>
+							<?php elseif($transaction->point_type == 'affiliate'):?>
+								<div class="_activitypoint"><?php echo $transaction->credit;?></div>
+								<div class="_activitypoint">-</div>
+								<?php elseif($transaction->point_type == 'receive_friend'):?>
+								<div class="_activitypoint"><?php echo $transaction->credit;?></div>
+								<div class="_activitypoint">-</div>
+							<?php elseif($transaction->point_type == 'transfer_friend'):?>
+								<div class="_activitypoint">-</div>
+								<div class="_activitypoint"><?php echo $transaction->credit;?></div>
+							<?php elseif($transaction->point_type == 'sesproduct_order'):?>
+								<div class="_activitypoint">-</div>
+								<div class="_activitypoint"><?php echo $transaction->credit;?></div>
+							<?php elseif($transaction->point_type == 'po' && $transaction->type == 'egifts_giftorder'):?>
+                <div class="_activitypoint">-</div>
+                <div class="_activitypoint"><?php echo $transaction->credit;?></div>
+							<?php elseif($transaction->point_type == 'purchase'):?>
+								<div class="_activitypoint"><?php echo $transaction->credit;?></div>
+								<div class="_activitypoint">-</div>
+							<?php elseif($transaction->point_type == 'upgrade_level'):?>
+								<div class="_activitypoint">-</div>
+								<div class="_activitypoint"><?php echo $transaction->credit;?></div>
+							<?php elseif($transaction->point_type == 'reward'):?>
+								<div class="_activitypoint"><?php echo $transaction->credit;?></div>
+								<div class="_activitypoint">-</div>
+							<?php endif;?>
+							<?php include APPLICATION_PATH .  '/application/modules/Sescredit/views/scripts/_date.tpl';?>
+							<div class="_options"><a class="smoothbox" href="<?php echo $this->url(array('module' => 'sescredit','controller' => 'credits','action' => 'show-detail','id' => $transaction->credit_id),'admin_default',true);?>"><?php echo $this->translate("View Details");?> &raquo;</a></div>
+						</div>
+					<?php } ?>
         <?php endforeach;?>
         </div>
       </div>

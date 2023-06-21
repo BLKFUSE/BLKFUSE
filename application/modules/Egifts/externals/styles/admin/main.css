@@ -32,5 +32,32 @@
 @media(max-width: 767px){
 	.egifts_search_form #integer-wrapper .form-wrapper input {
     width: 100%;
+	}
 }
+/*Payment Approve Popup Start*/
+.egifts_approve_payment_popup{
+	padding:15px;
 }
+.egifts_approve_payment_popup .settings .form-wrapper{
+	padding:10px 0px 0 0px;
+}
+/*Payment Approve Popup End*/
+/*Payment Message Start*/
+.egifts_payment_success_message{
+	padding:20px 0;
+	text-align:center;
+}
+.egifts_payment_success_message > i img{
+	max-width:120px;
+}
+.egifts_payment_success_message p{
+	margin-top:15px;
+	font-weight:bold;
+}
+.egifts_payment_success_message p span{
+	display:block;
+}
+.egifts_payment_success_message p span i{
+	margin-right:5px;
+}
+/*Payment Message End*/

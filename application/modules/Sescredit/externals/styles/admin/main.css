@@ -130,6 +130,10 @@
 .sescredit_points_info_table_item ._points input{
 	width:60px;
 	text-align:center;
+	padding:5px;
+}
+.sescredit_points_info_table_item ._lang textarea{
+	padding:5px;
 }
 .sescredit_points_info_table_content_head{
 	padding:10px;
@@ -297,3 +301,27 @@ html .sescredit_manage_module_popup .form-element{
 	margin-top:20px;
 }
 /*Member Level Upgrade End*/
+/*Payment Approve Popup Start*/
+.sescredit_approve_payment_popup{
+	padding:15px;
+}
+.sescredit_approve_payment_popup .settings .form-wrapper{
+	padding:10px 0px 0 0px;
+}
+/*Payment Approve Popup End*/
+/*Payment Message Start*/
+.sescredit_payment_success_message{
+	padding:20px 0;
+	text-align:center;
+}
+.sescredit_payment_success_message p{
+	margin-top:15px;
+	font-weight:bold;
+}
+.sescredit_payment_success_message p span{
+	display:block;
+}
+.sescredit_payment_success_message p span i{
+	margin-right:5px;
+}
+/*Payment Message End*/

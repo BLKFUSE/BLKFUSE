@@ -51,8 +51,10 @@ class Sescredit_PaymentController extends Core_Controller_Action_Standard {
       }
       // If no user, redirect to home?
       if (!$this->_user || !$this->_user->getIdentity()) {
-        $this->_session->unsetAll();
-        return $this->_helper->redirector->gotoRoute(array('action' => 'manage'), 'sescredit_general', true);
+        if(!$this->_getParam('sesapiPaymentModel')){
+          $this->_session->unsetAll();
+          return $this->_helper->redirector->gotoRoute(array('action' => 'manage'), 'sescredit_general', true);
+        }
       }
     }
     $this->_session->user_id = $this->_user->getIdentity();
@@ -67,7 +69,6 @@ class Sescredit_PaymentController extends Core_Controller_Action_Standard {
           $_POST['sescredit_purchase_type'] = $_GET['sescredit_purchase_type'];
           $_POST['sescredit_number_point'] = $_GET['sescredit_number_point'];
           $_POST['sescredit_site_offers'] = $_GET['sescredit_site_offers'];
-          $_POST['sescredit_purchase_type'] = $_GET['sescredit_purchase_type'];
       }
     // Get gateway
     $gatewayId = $this->_getParam('gateway_id', $this->_session->gateway_id);
@@ -165,7 +166,7 @@ class Sescredit_PaymentController extends Core_Controller_Action_Standard {
     if ($orderDetail->purchase_type == 1) {
       $price = Engine_Api::_()->getItem('sescredit_offer', $orderDetail->offer_id)->point_value;
     } else {
-      $price = $orderDetail->point / Engine_Api::_()->getApi('settings', 'core')->getSetting('sescredit.creditvalue', '100');
+      $price = $orderDetail->point / Engine_Api::_()->getApi('settings', 'core')->getSetting('sescredit.creditvalue', '1000');
     }
     $params['amount'] = @isset($_SESSION[$couponSessionCode]) ? round($price - $_SESSION[$couponSessionCode]['discount_amount']) : $price;
     $this->_session->amount = $params['amount'];
@@ -233,7 +234,7 @@ class Sescredit_PaymentController extends Core_Controller_Action_Standard {
       if ($item->purchase_type == 1) {
         $price = Engine_Api::_()->getItem('sescredit_offer', $item->offer_id)->point_value;
       } else {
-        $price = $item->point / Engine_Api::_()->getApi('settings', 'core')->getSetting('sescredit.creditvalue', '100');
+        $price = $item->point / Engine_Api::_()->getApi('settings', 'core')->getSetting('sescredit.creditvalue', '1000');
       }
       $postData['amount'] = @isset($_SESSION[$couponSessionCode]) ? round($price - $_SESSION[$couponSessionCode]['discount_amount']) : $price;
 
