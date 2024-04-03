@@ -93,18 +93,30 @@ if ($this->getRequest()->isPost()) {
       `resource_id` int(11) NOT NULL,
       PRIMARY KEY (`favourite_id`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+
+			$table_exist_video = $db->query('SHOW TABLES LIKE \'engine4_sesvideo_videos\'')->fetch();
+			if (!empty($table_exist_video)) {
+				$song_id = $db->query('SHOW COLUMNS FROM engine4_sesvideo_videos LIKE \'song_id\'')->fetch();
+				if (empty($song_id)) {
+					$db->query('ALTER TABLE `engine4_sesvideo_videos` ADD `song_id` INT(11) UNSIGNED NOT NULL DEFAULT "0";');
+				}
+				$is_tickvideo = $db->query('SHOW COLUMNS FROM engine4_sesvideo_videos LIKE \'is_tickvideo\'')->fetch();
+				if (empty($is_tickvideo)) {
+					$db->query('ALTER TABLE `engine4_sesvideo_videos` ADD `is_tickvideo` TINYINT NOT NULL DEFAULT "0";');
+				}
+			}
+			
+			$table_exist_chanels = $db->query('SHOW TABLES LIKE \'engine4_sesvideo_chanels\'')->fetch();
+			if (!empty($table_exist_chanels)) {
+				$is_default = $db->query('SHOW COLUMNS FROM engine4_sesvideo_chanels LIKE \'is_default\'')->fetch();
+				if (empty($is_default)) {
+					$db->query('ALTER TABLE `engine4_sesvideo_chanels` ADD `is_default` tinyint(1) NOT NULL DEFAULT "0";');
+				}
+			}
+			
+      $db->query('INSERT IGNORE INTO `engine4_core_jobtypes` ( `title`, `type`, `module`, `plugin`, `form`, `enabled`, `priority`, `multi`) VALUES ( "SNS - Tick Video - Video Encode", "tickvideo_encode", "tickvideo", "Tickvideo_Plugin_Job_Encode", NULL, 1, 75, 2);');
       
-//       $db->query('INSERT IGNORE INTO `engine4_core_mailtemplates` (`type`, `module`, `vars`) VALUES
-//       ("notify_tickvideo_processed", "tickvideo", "[host],[email],[recipient_title],[recipient_link],[recipient_photo],[sender_title],[sender_link],[sender_photo],[object_title],[object_link],[object_photo],[object_description]"),
-//       ("notify_tickvideo_processed_failed", "tickvideo", "[host],[email],[recipient_title],[recipient_link],[recipient_photo],[sender_title],[sender_link],[sender_photo],[object_title],[object_link],[object_photo],[object_description]");');
-//       
-//       $db->query('INSERT IGNORE INTO `engine4_activity_notificationtypes` (`type`, `module`, `body`, `is_request`, `handler`) VALUES
-//       ("tickvideo_processed", "tickvideo", \'Your {item:$object:video} is ready to be viewed.\', 0, ""),
-//       ("tickvideo_processed_failed", "tickvideo", \'Your {item:$object:video} has failed to process.\', 0, "");');
-      
-      $db->query('ALTER TABLE `engine4_sesvideo_videos` ADD `song_id` INT(11) UNSIGNED NOT NULL DEFAULT "0";');
-      $db->query('ALTER TABLE `engine4_sesvideo_chanels` ADD `is_default` tinyint(1) NOT NULL DEFAULT "0";');
-      $db->query('ALTER TABLE `engine4_sesvideo_videos` ADD `is_tickvideo` TINYINT NOT NULL DEFAULT "0";');
+      include_once APPLICATION_PATH . "/application/modules/Eticktokclone/controllers/License.php";
 
       include_once APPLICATION_PATH . "/application/modules/Tickvideo/controllers/defaultsettings.php";
 

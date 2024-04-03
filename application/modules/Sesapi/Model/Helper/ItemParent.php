@@ -24,6 +24,6 @@ class Sesapi_Model_Helper_ItemParent extends Sesapi_Model_Helper_Item
     }
     
     $item = $item->getParent($type);
-    return parent::direct($item, $text, $href);
+    return parent::direct($item, $text, $href, false);
   }
 }

@@ -1209,17 +1209,29 @@ class Sesapi_IndexController extends Sesapi_Controller_Action_Standard
       }
     }
       //user
+      $text = "";
       if($comment->poster_type == "user"){
         $user = Engine_Api::_()->getItem('user',$comment->poster_id);
         $array[$counter]['user_image'] = $this->userImage($user->getIdentity(),"thumb.profile");
         $user_id = $user->getIdentity();
+        $text = $user->getTitle();;
+        if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('everification')) {
+          $verifieddocuments = $verifieddocuments = Engine_Api::_()->getDbTable('documents', 'everification')->getAllUserDocuments(array('user_id' => $user->getIdentity(), 'verified' => '1', 'fetchAll' => '1'));
+          if(count($verifieddocuments) > 0) {
+$text .= '&nbsp;<img src="https://blkfuse.com/application/modules/Sesbasic/externals/images/verify.png" />';
+          }
+        }
       }else{
         $user = Engine_Api::_()->getItem($comment->poster_type,$comment->poster_id);
         $array[$counter]['user_image'] = $this->getBaseUrl(true,$user->getPhotoUrl('thumb.profile'));
         $user_id = $user->getParent()->getIdentity();
+        $text = $user->getTitle();
       }
         $array[$counter]['user_href'] = $this->getBaseUrl(true,$user->getHref());
-      $array[$counter]['user_title'] = $user->getTitle();
+      $array[$counter]['user_title'] = $text;
+      
+      
+      
       
       //GIF work
       if($activitycomments && isset($activitycomments->gif_url) && $activitycomments->gif_url) {

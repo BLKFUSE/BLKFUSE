@@ -224,6 +224,7 @@ class Sescontest_Form_Create extends Engine_Form {
         $customFields = new Sesbasic_Form_Custom_Fields(array(
             'packageId' => isset($package) ? $package->package_id : '',
             'resourceType' => 'sescontestpackage_package',
+            'isCreation' => true,
             'item' => isset($contest) ? $contest : 'contest',
             'decorators' => array(
                 'FormElements'

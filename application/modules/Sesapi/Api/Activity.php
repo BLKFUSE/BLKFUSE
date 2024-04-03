@@ -53,7 +53,7 @@ class Sesapi_Api_Activity extends Core_Api_Abstract {
     preg_match_all('~\{([^{}]+)\}~', $body, $matches, PREG_SET_ORDER);
     $arrayBody = array();
     $counter = 0;
-    foreach( $matches as $match )
+    foreach( $matches as $key=>$match )
     {
       $tag = $match[0];
       $args = explode(':', $match[1]);
@@ -81,7 +81,12 @@ class Sesapi_Api_Activity extends Core_Api_Abstract {
         }
       }
       $contentHelper = $helper;
-      
+      //Verified icon Work
+      if($key > 0 && $contentHelper == 'item') {
+        $helperArgs[1] = null;
+        $helperArgs[2] = null;
+        $helperArgs[3] = false;
+      }
       $helper = $this->getHelper($helper);
       $r = new ReflectionMethod($helper, 'direct');
       $content = $r->invokeArgs($helper, $helperArgs);

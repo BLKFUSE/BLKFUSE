@@ -21,7 +21,7 @@ class Sesapi_Model_Helper_Item extends Sesapi_Model_Helper_Abstract
    * @param string $href (OPTIONAL)
    * @return string
    */
-  public function direct($item, $text = null, $href = null)
+  public function direct($item, $text = null, $href = null, $hideVerifiedIcon = true)
   {
     $item = $this->_getItem($item, false);
 
@@ -31,10 +31,22 @@ class Sesapi_Model_Helper_Item extends Sesapi_Model_Helper_Abstract
       return false;
     }
 
-    if( !isset($text) )
-    {
-      $text = $item->getTitle();
+    
+    
+    if( !isset($text) ) {
+      if($item->getType() == 'user') {
+        $text = $item->getTitle();
+        if($hideVerifiedIcon && Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('everification')) {
+          $verifieddocuments = $verifieddocuments = Engine_Api::_()->getDbTable('documents', 'everification')->getAllUserDocuments(array('user_id' => $item->getIdentity(), 'verified' => '1', 'fetchAll' => '1'));
+          if(count($verifieddocuments) > 0) {
+            $text .= '&nbsp;<img src="https://blkfuse.com/application/modules/Sesbasic/externals/images/verify.png?v=1" />';
+          }
+        }
+      } else {
+        $text = $item->getTitle();
+      }
     }
+
 
     // translate text
     $translate = Zend_Registry::get('Zend_Translate');

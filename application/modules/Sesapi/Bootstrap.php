@@ -33,6 +33,7 @@ if (defined('_SESAPI_R_TARG')) {
 
 		public function run()
 		{
+		    
 			// Ensure frontcontroller and router are bootstrapped
 			$this->bootstrap('frontcontroller');
 			$this->bootstrap('router');

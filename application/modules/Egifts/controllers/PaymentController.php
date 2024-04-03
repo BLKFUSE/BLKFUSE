@@ -225,6 +225,7 @@ class Egifts_PaymentController extends Core_Controller_Action_Standard
   {
     $orderId = $this->_getParam('order_id',$this->_session->order_id);
     $order = Engine_Api::_()->getItem('payment_order', $orderId);
+    
     // Get order
     if( ((!$this->_user || $order->user_id != $this->_user->getIdentity())) ||
         !($orderId) ||
@@ -233,7 +234,7 @@ class Egifts_PaymentController extends Core_Controller_Action_Standard
         return $this->_helper->redirector->gotoRoute(array('action'=>'manage','id'=>$this->_session->order_id), 'egifts_general', true);
     }
     // Get gateway plugin
-	  $gateway = Engine_Api::_()->getDbtable('gateways', 'egifts')->find($this->_getParam('gateway_id',1))->current();
+	  $gateway = Engine_Api::_()->getDbtable('gateways', 'egifts')->find($order->gateway_id)->current();
     $this->view->gatewayPlugin = $gatewayPlugin = $gateway->getGateway();
     if(($gateway->plugin == "Epaytm_Plugin_Gateway_Paytm") || ($gateway->plugin == "Sesadvpmnt_Plugin_Gateway_Stripe")){
         return $this->_finishPayment($order->state);

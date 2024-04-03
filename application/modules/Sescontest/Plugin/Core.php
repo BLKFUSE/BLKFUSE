@@ -52,11 +52,7 @@ class Sescontest_Plugin_Core {
 								";
       }
     }
-    if (Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestpackage.enable.package', 0)) {
-      $openPopup = 0;
-    } else {
-      $openPopup = Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontest.icon.open.smoothbox', 1);
-    }
+    $openPopup = 0;
     $script .= "var isOpenPopup = '" . $openPopup . "';var showAddnewContestIconShortCut = " . Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontest.enable.addcontestshortcut', 1) . ";
   ";
     if ($viewer->getIdentity() != 0 && Engine_Api::_()->authorization()->isAllowed('contest', $viewer, 'create')) {

@@ -39,6 +39,6 @@ class Sesapi_Model_Helper_ItemChild extends Sesapi_Model_Helper_Item
       return false;
     }    
     
-    return parent::direct($item, $type);
+    return parent::direct($item, $type, null, false);
   }
 }

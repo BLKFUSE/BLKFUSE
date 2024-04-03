@@ -210,7 +210,9 @@ class Sescontest_Plugin_Job_Encode extends Core_Plugin_Job_Abstract {
 
     if (preg_match('/Duration:\s+(.*?)[.]/i', $contestOutput, $matches)) {
       list($hours, $minutes, $seconds) = preg_split('[:]', $matches[1]);
-      $duration = ceil($seconds + ($minutes * 60) + ($hours * 3600));
+      try{
+      $duration = ceil((int) $seconds + ((int) $minutes * 60) + ( (int) $hours * 3600));
+      }catch(Exception $e){}
     }
 
     return $duration;

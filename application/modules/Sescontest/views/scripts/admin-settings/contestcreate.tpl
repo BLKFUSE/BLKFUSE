@@ -36,13 +36,6 @@
 <?php $enableEditorChoice = Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontest.editor.media.type', 1);?>
 <?php $enableGuidelines = Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontest.guidelines', 1);?>
 <script type="text/javascript">
- showQuickOption('<?php echo $isPopup;?>');
- function showQuickOption(value) {
-  if(value == 1)
-    scriptJquery('#sescontest_icon_open_smoothbox-wrapper').show();
-  else
-    scriptJquery('#sescontest_icon_open_smoothbox-wrapper').hide();
- }
  showCategoryIcon('<?php echo $isCategorySelection;?>');
  function showCategoryIcon(value) {
   if(value == 1)

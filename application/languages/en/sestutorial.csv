@@ -1,0 +1,123 @@
+"How Can We Help You Today?";"How Can We Help You Today?"
+"Please try to search your queries from our Help Center. But, if you are still not getting the resolution, please contact our support team.";"Please try to search your queries from our Help Center. But, if you are still not getting the resolution, please contact our support team."
+"Type your keyword for search";"Type your keyword for search"
+"Tutorials";"Tutorials"
+"Tutorial Home";"Tutorial Home"
+"Browse Tutorials";"Browse Tutorials"
+"Categories";"Categories"
+"Ask Question";"Ask Question"
+"Browse help topics";"Browse help topics"
+"Using SocialEngineSolutions Demo";"Using SocialEngineSolutions Demo"
+"Music";"Music"
+"Articles";"Articles"
+"Blog";"Blog"
+"Events";"Events"
+"Groups";"Groups"
+"Videos";"Videos"
+"Video Artists";"Video Artists"
+"Video Playlists";"Video Playlists"
+"Video Channels";"Video Channels"
+"Photos";"Photos"
+"Importing Photos from Other Social Media";"Importing Photos from Other Social Media"
+"Messaging";"Messaging"
+"Your Home Page";"Your Home Page"
+"Friendships";"Friendships"
+"Un-Friending";"Un-Friending"
+"Who Can Follow Me";"Who Can Follow Me"
+"Adding Friend";"Adding Friend"
+"Creating an Account";"Creating an Account"
+"Managing Your Account";"Managing Your Account"
+"Account Deletion";"Account Deletion"
+"Notifications";"Notifications"
+"Account Security";"Account Security"
+"Account Settings";"Account Settings"
+"Login & Password";"Login & Password"
+"Mobile Apps";"Mobile Apps"
+"Android App";"Android App"
+"iOS App";"iOS App"
+"Fix a problem";"Fix a problem"
+"Trouble with Emails";"Trouble with Emails"
+"Troubleshooting tips";"Troubleshooting tips"
+"Policies & Reporting";"Policies & Reporting"
+"Privacy & Safety Standards";"Privacy & Safety Standards"
+"Hacked & Faked Accounts";"Hacked & Faked Accounts"
+"Your Privacy";"Your Privacy"
+"Reporting";"Reporting"
+"Blocking and Un-blocking";"Blocking and Un-blocking"
+"Browse Search";"Browse Search"
+"Tutorial Title";"Tutorial Title"
+"Category";"Category"
+"Browse By";"Browse By"
+"2nd-level Category";"2nd-level Category"
+"Select Popularity";"Select Popularity"
+"Most Recent";"Most Recent"
+"Most Commented";"Most Commented"
+"Most Liked";"Most Liked"
+"Most Viewed";"Most Viewed"
+"Most Rated";"Most Rated"
+"Most Helpful";"Most Helpful"
+"Search";"Search"
+"There are no Tutorials.";"There are no Tutorials."
+"Ask a Question";"Ask a Question"
+"If you still does not get answer of your query, please feel free to ask a question from our administrators. We will get back to you at our earliest.";"If you still does not get answer of your query, please feel free to ask a question from our administrators. We will get back to you at our earliest."
+"Choose Category";"Choose Category"
+"Question";"Question"
+"Ask Question";"Ask Question"
+" or ";" or "
+"cancel";"cancel"
+"Popular Questions";"Popular Questions"
+"Popular Tags";"Popular Tags"
+"Tutorials Home";"Tutorials Home"
+"See All Tags";"See All Tags"
+"View All";"View All"
+"Read More";"Read More"
+"%s view";"%s view";"%s views"
+"%s comment";"%s comment";"%s comments"
+"%s like";"%s like";"%s likes"
+"%s rating";"%s rating";"%s ratings"
+"Browse Tutorials by Categories";"Browse Tutorials by Categories"
+"Category Accociated Tutorials";"Category Accociated Tutorials"
+"See All Tutorials";"See All Tutorials"
+"Top Rated Tutorials";"Top Rated Tutorials"
+
+
+"_ACTIVITY_ACTIONTYPE_SESTUTORIAL_TUTORIAL_LIKE";"When I liked the Tutorial"
+"_ACTIVITY_ACTIONTYPE_SESTUTORIAL_NEW";"Create New Tutorial"
+
+"ADMIN_ACTIVITY_TYPE_SESTUTORIAL_TUTORIAL_LIKE";"When a user (subject) likes another user's (object) Tutorials."
+"ADMIN_ACTIVITY_TYPE_SESTUTORIAL_NEW";"When a admin (subject) create a new Tutorial (object)."
+
+
+
+#SESTutorial_ASKANSWER_EMAIL
+"_EMAIL_SESTUTORIAL_ASKANSWER_EMAIL_TITLE";"Multi - Use Tutorials Plugin - Answer to Your Question"
+"_EMAIL_SESTUTORIAL_ASKANSWER_EMAIL_DESCRIPTION";"This is the email that goes to a non site user in reply of his question."
+"_EMAIL_SESTUTORIAL_ASKANSWER_EMAIL_SUBJECT";"[site_title]: Answer to your Query"
+"_EMAIL_SESTUTORIAL_ASKANSWER_EMAIL_BODY";"[header]
+
+
+You had asked a question from the [site_title] administrator: [description]
+
+Answer to Your question: [questionreply]
+
+
+[footer]
+"
+
+
+#SESTutorial_ASKQUESTION_EMAIL
+"_EMAIL_SESTUTORIAL_ASKQUESTION_EMAIL_TITLE";"Multi - Use Tutorials Plugin - Someone asked a question"
+"_EMAIL_SESTUTORIAL_ASKQUESTION_EMAIL_DESCRIPTION";"This is the email that goes to a site admin when someone asked a question."
+"_EMAIL_SESTUTORIAL_ASKQUESTION_EMAIL_SUBJECT";"Someone asked a question"
+"_EMAIL_SESTUTORIAL_ASKQUESTION_EMAIL_BODY";"[header]
+
+
+Someone asked a question to the [site_title] administrator: 
+[description]
+
+
+[footer]
+"
+
+"SES - Multi - Use Tutorials Plugin";"Multi - Use Tutorials Plugin"
+"SNS - Multi - Use Tutorials Plugin";"Multi - Use Tutorials Plugin"

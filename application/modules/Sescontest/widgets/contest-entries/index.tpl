@@ -129,7 +129,7 @@
           contest_id:'<?php echo $this->contest_id;?>',
         },
         success: function(responseHTML) {
-          document.getElementById('tabbed-widget_<?php echo $randonNumber; ?>').innerHTML = responseHTML;
+          scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').html(responseHTML);
           if(scriptJquery('.selectView_<?php echo $randonNumber; ?>.active').attr('rel') == 'grid') {
             scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').addClass('row');
           } else {

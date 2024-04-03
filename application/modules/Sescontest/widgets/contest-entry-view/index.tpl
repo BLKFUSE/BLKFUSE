@@ -242,11 +242,11 @@
             <?php if($contestType == 3):?>
               <a href="<?php echo $this->url(array('action' => 'video'),'sescontest_media',true);?>"><?php echo $this->translate('Video Contest');?></a>
             <?php elseif($contestType == 4):?>
-              <a href="<?php echo $this->url(array('action' => 'video'),'sescontest_media',true);?>"><?php echo $this->translate('Audio Contest');?></a>
+              <a href="<?php echo $this->url(array('action' => 'audio'),'sescontest_media',true);?>"><?php echo $this->translate('Audio Contest');?></a>
             <?php elseif($contestType == 2):?>
-              <a href="<?php echo $this->url(array('action' => 'video'),'sescontest_media',true);?>"><?php echo $this->translate('Photo Contest');?></a>
+              <a href="<?php echo $this->url(array('action' => 'photo'),'sescontest_media',true);?>"><?php echo $this->translate('Photo Contest');?></a>
             <?php else:?>
-              <a href="<?php echo $this->url(array('action' => 'video'),'sescontest_media',true);?>"><?php echo $this->translate('Writing Contest');?></a>
+              <a href="<?php echo $this->url(array('action' => 'text'),'sescontest_media',true);?>"><?php echo $this->translate('Writing Contest');?></a>
             <?php endif;?>
             <?php endif;?>
           </span>

@@ -76,7 +76,7 @@ return array (
       ),
     ),
     'epaidcontent_general' => array(
-      'route' => 'paidcontent/:action/*',
+      'route' => 'paidcontents/:action/*',
       'defaults' => array(
         'module' => 'epaidcontent',
         'controller' => 'index',

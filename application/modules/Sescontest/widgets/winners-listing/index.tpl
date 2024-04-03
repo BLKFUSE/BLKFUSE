@@ -163,7 +163,7 @@
           widget_id: '<?php echo $this->widgetId;?>',
         },
         success: function(responseHTML) {
-          document.getElementById('tabbed-widget_<?php echo $randonNumber; ?>').innerHTML = responseHTML;
+          scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').html(responseHTML);
           if(scriptJquery('.selectView_<?php echo $randonNumber; ?>.active').attr('rel') == 'grid') {
             scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').addClass('row');
           } else {
@@ -204,7 +204,11 @@
                 wookmark<?php echo $randonNumber ?> = new Wookmark('.sesbasic_pinboard_<?php echo $randonNumber; ?>', {
                     itemWidth: <?php echo isset($this->params['width_pinboard']) ? str_replace(array('px','%'),array(''),$this->params['width_pinboard']) : '300'; ?>, // Optional min width of a grid item
                     outerOffset: 0, // Optional the distance from grid to parent
-                    align:'left',
+                    <?php if($orientation = ($this->layout()->orientation == 'right-to-left')){ ?>
+                        align:'right',
+                      <?php }else{ ?>
+                        align:'left',
+                      <?php } ?>
                     flexibleWidth: function () {
                         // Return a maximum width depending on the viewport
                         return getWindowWidth() < 1024 ? '100%' : '40%';

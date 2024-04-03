@@ -12,6 +12,6 @@
  */
 
 class Tickvideo_Model_Category extends Core_Model_Item_Abstract
-{
-
+{   
+    protected $_searchTriggers = false;
 }

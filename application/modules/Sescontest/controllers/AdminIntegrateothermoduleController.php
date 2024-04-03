@@ -45,10 +45,10 @@ class Sescontest_AdminIntegrateothermoduleController extends Core_Controller_Act
         $row->setFromArray($values);
         $row->save();
 
-        $modulename = $values['module_name'];
-        $dbInsert->query('INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `enabled`, `custom`, `order`) VALUES ("sescontest_main_browsecontest_'.$row->getIdentity().'", "sescontest", "Browse Contests", "", \'{"route":"sescontest_browsecontest_'.$row->getIdentity().'","action":"browse-contests", "resource_type":"'.$values['content_type'].'"}\', "'.$modulename.'_main", "", 1, 0, 999)');
-
-        $this->createBrowseContestPage($modulename, $row->getIdentity());
+//         $modulename = $values['module_name'];
+//         $dbInsert->query('INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `enabled`, `custom`, `order`) VALUES ("sescontest_main_browsecontest_'.$row->getIdentity().'", "sescontest", "Browse Contests", "", \'{"route":"sescontest_browsecontest_'.$row->getIdentity().'","action":"browse-contests", "resource_type":"'.$values['content_type'].'"}\', "'.$modulename.'_main", "", 1, 0, 999)');
+// 
+//         $this->createBrowseContestPage($modulename, $row->getIdentity());
 
         $db->commit();
       } catch (Exception $e) {
@@ -153,21 +153,21 @@ class Sescontest_AdminIntegrateothermoduleController extends Core_Controller_Act
       $db->beginTransaction();
       try {
 
-        $inttable = Engine_Api::_()->getItem('sescontest_integrateothermodule', $id);
-        $pageName = "sescontest_index_".$this->_getParam('integrateothermodule_id');
-        if (!empty($pageName)) {
-          $page_id = $db->select()
-                  ->from('engine4_core_pages', 'page_id')
-                  ->where('name = ?', $pageName)
-                  ->limit(1)
-                  ->query()
-                  ->fetchColumn();
-          if($page_id) {
-            Engine_Api::_()->getDbTable('content', 'core')->delete(array('page_id =?' => $page_id));
-            Engine_Api::_()->getDbTable('pages', 'core')->delete(array('page_id =?' => $page_id));
-          }
-        }
-        Engine_Api::_()->getDbtable('menuItems', 'core')->delete(array('name =?' => 'sescontest_main_browsecontest_' . $this->_getParam('integrateothermodule_id')));
+//         $inttable = Engine_Api::_()->getItem('sescontest_integrateothermodule', $id);
+//         $pageName = "sescontest_index_".$this->_getParam('integrateothermodule_id');
+//         if (!empty($pageName)) {
+//           $page_id = $db->select()
+//                   ->from('engine4_core_pages', 'page_id')
+//                   ->where('name = ?', $pageName)
+//                   ->limit(1)
+//                   ->query()
+//                   ->fetchColumn();
+//           if($page_id) {
+//             Engine_Api::_()->getDbTable('content', 'core')->delete(array('page_id =?' => $page_id));
+//             Engine_Api::_()->getDbTable('pages', 'core')->delete(array('page_id =?' => $page_id));
+//           }
+//         }
+//         Engine_Api::_()->getDbtable('menuItems', 'core')->delete(array('name =?' => 'sescontest_main_browsecontest_' . $this->_getParam('integrateothermodule_id')));
 
         $integrateothermodule = Engine_Api::_()->getItem('sescontest_integrateothermodule', $this->_getParam('integrateothermodule_id'));
         $integrateothermodule->delete();
@@ -192,7 +192,7 @@ class Sescontest_AdminIntegrateothermoduleController extends Core_Controller_Act
     $content = Engine_Api::_()->getItemTable('sescontest_integrateothermodule')->fetchRow(array('integrateothermodule_id = ?' => $this->_getParam('integrateothermodule_id')));
     try {
 
-      Engine_Api::_()->getDbtable('menuItems', 'core')->update(array('enabled' => !$content->enabled), array('name =?' => 'sescontest_main_browsecontest_' . $this->_getParam('integrateothermodule_id')));
+      //Engine_Api::_()->getDbtable('menuItems', 'core')->update(array('enabled' => !$content->enabled), array('name =?' => 'sescontest_main_browsecontest_' . $this->_getParam('integrateothermodule_id')));
 
       $content->enabled = !$content->enabled;
       $content->save();

@@ -92,7 +92,7 @@ if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestjoinfees
     `title` varchar(244) COLLATE utf8_unicode_ci NOT NULL,
     `description` text COLLATE utf8_unicode_ci,
     `enabled` tinyint(1) UNSIGNED NOT NULL DEFAULT "0",
-    `plugin` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+    `plugin` varchar(128) NOT NULL,
     `config` mediumblob,
     `test_mode` tinyint(1) UNSIGNED NOT NULL DEFAULT "0",
     PRIMARY KEY (`usergateway_id`)

@@ -183,7 +183,7 @@
           resource_id: '<?php echo !empty($this->resource_id) ? $this->resource_id : "";?>',
 				},
 				success: function(responseHTML) {
-					document.getElementById('tabbed-widget_<?php echo $randonNumber; ?>').innerHTML = responseHTML;
+					scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').html(responseHTML);
           if(scriptJquery('.selectView_<?php echo $randonNumber; ?>.active').attr('rel') == 'grid' || 'advgrid') {
             scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').addClass('row');
           } else {
@@ -194,7 +194,11 @@
           totalContest.remove();
 					if(document.getElementById("loading_image_<?php echo $randonNumber; ?>"))
 					document.getElementById('loading_image_<?php echo $randonNumber; ?>').style.display = 'none';
-          pinboardLayout_<?php echo $randonNumber ?>('true');
+          pinboardLayout_<?php echo $randonNumber ?>();
+          setTimeout(function(){
+						scriptJquery(window).trigger('resize');
+          }, 50);
+          viewMoreHide_<?php echo $randonNumber; ?>();
 				}
       }));
     });
@@ -218,6 +222,7 @@
               scriptJquery(image.img).parent().parent().parent().parent().parent().removeClass('new_image_pinboard_<?php echo $randonNumber; ?>');
               imageLoadedAll<?php echo $randonNumber ?>(force);
           });
+          
       }
       function imageLoadedAll<?php echo $randonNumber ?>(force){
           scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').addClass('sesbasic_pinboard_<?php echo $randonNumber; ?>');
@@ -230,7 +235,11 @@
                   wookmark<?php echo $randonNumber ?> = new Wookmark('.sesbasic_pinboard_<?php echo $randonNumber; ?>', {
                       itemWidth: <?php echo isset($this->params['width_pinboard']) ? str_replace(array('px','%'),array(''),$this->params['width_pinboard']) : '300'; ?>, // Optional min width of a grid item
                       outerOffset: 0, // Optional the distance from grid to parent
-                      align:'left',
+                      <?php if($orientation = ($this->layout()->orientation == 'right-to-left')){ ?>
+                          align:'right',
+                        <?php }else{ ?>
+                          align:'left',
+                        <?php } ?>
                       flexibleWidth: function () {
                           // Return a maximum width depending on the viewport
                           return getWindowWidth() < 1024 ? '100%' : '40%';
@@ -350,4 +359,3 @@
         }
     <?php } ?>
 </script>
-

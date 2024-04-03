@@ -142,7 +142,7 @@
 	    scriptJquery('#error-message_<?php echo $randonNumber;?>').remove();
 	    var check = true;
 	    if(document.getElementById('tabbed-widget_<?php echo $randonNumber; ?>'))
-	    document.getElementById('tabbed-widget_<?php echo $randonNumber; ?>').innerHTML = responseHTML;
+	    scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').html(responseHTML);
 	    if(document.getElementById('sescontest_pinboard_view_<?php echo $randonNumber;?>') && scriptJquery('.sesbasic_view_type_options_<?php echo $randonNumber; ?>').find('.active').attr('rel') == 'pinboard') {
 	      if(document.getElementById('sescontest_pinboard_view_<?php echo $randonNumber;?>'))
 	      document.getElementById('sescontest_pinboard_view_<?php echo $randonNumber;?>').style.display = 'block';

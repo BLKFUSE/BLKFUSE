@@ -1,0 +1,98 @@
+
+[class*="eticktokclone_icon_"]::before{
+  font-family:"Font Awesome 5 Free" !important;
+  font-style:normal;
+  font-weight:900;
+}
+.eticktokclone_icon_like:before{
+	content:"\\f004";
+	font-weight:400;
+}
+.bg_item_nophoto.bg_item_photo_eticktokclone_user:before{
+	content:"\\f007";
+}
+.eticktokclone_videos_feed_item_options > div > a{
+	background-color:$theme_list_background_color_alt;
+}
+.eticktokclone_videos_feed_item_options > div > a.button_active{
+	background-color:$theme_button_background_color;
+	color:$theme_button_font_color;
+}
+.eticktokclone_button{
+	border-width:1px;
+	background-color:$theme_list_background_color;
+	color:$theme_font_color !important;
+	border-radius:3px;
+	line-height:30px;
+	padding:0 15px;
+	display:flex;
+	justify-content:center;
+	-webkit-transition:all 500ms ease 0s;
+	-moz-transition:all 500ms ease 0s;
+	-o-transition:all 500ms ease 0s;
+	transition:all 500ms ease 0s;
+}
+.eticktokclone_follow_button{
+	display:flex;
+	border:1px solid $theme_button_background_color;
+	background-color:$theme_button_background_color;
+	color:$theme_button_font_color !important;
+	border-radius:3px;
+	line-height:30px;
+	padding:0 15px;
+	font-weight:bold;
+	justify-content:center;
+	-webkit-transition:all 500ms ease 0s;
+	-moz-transition:all 500ms ease 0s;
+	-o-transition:all 500ms ease 0s;
+	transition:all 500ms ease 0s;
+}
+.eticktokclone_follow_button.active{
+	background-color:$theme_list_background_color;
+	border-color:$theme_border_color;
+	color:$theme_font_color !important;
+}
+.eticktokclone_follow_button:hover{
+	opacity:.8;
+}
+.eticktokclone_follow_button.active:hover,
+.eticktokclone_button:hover{
+	border-color:$theme_button_background_color;
+	color:$theme_button_background_color !important;
+	opacity:.8;
+}
+.eticktokclone_button > i,
+.eticktokclone_follow_button{
+	line-height:30px;
+}
+.eticktokclone_sidebar_links li a{
+	color:$theme_font_color;
+}
+.eticktokclone_sidebar_links li a i svg{
+	fill:$theme_font_color;
+}
+.eticktokclone_sidebar_links li.active a{
+	color:$theme_button_background_color;
+}
+.eticktokclone_sidebar_links li.active a svg{
+	fill:$theme_button_background_color;
+}
+.eticktokclone_member_profile_info ._img ._tag{
+	background-color:$theme_list_background_color_hover;
+}
+.eticktokclone_members_listing_item article{
+	background-color:$theme_list_background_color;
+}
+.eticktokclone_sidebar_footer_links div{
+	font-size:$theme_font_size_small;
+}
+.eticktokclone_sidebar_footer_links a,
+.eticktokclone_sidebar_footer .footer_copyright{
+	color:$theme_footer_font_color;
+}
+.eticktokclone_sidebar_footer_links a:hover{
+	color:$theme_link_color;
+}
+.eticktokclone_sidebar_footer ._sociallinks a{
+	color:$theme_button_background_color;
+}

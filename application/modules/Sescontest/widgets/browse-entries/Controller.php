@@ -27,13 +27,8 @@ class Sescontest_Widget_BrowseEntriesController extends Engine_Content_Widget_Ab
     $this->view->loadMoreLink = $this->_getParam('openTab') != NULL ? true : false;
     $this->view->loadJs = true;
 
-    $db = Engine_Db_Table::getDefaultAdapter();
-    $params = $db->select()
-            ->from('engine4_core_content', 'params')
-            ->where('`content_id` = ?', $widgetId)
-            ->query()
-            ->fetchColumn();
-    $this->view->params = $params = json_decode($params, true);
+		$this->view->params = $params = Engine_Api::_()->sescontest()->getWidgetParams($widgetId);
+		
     if (!empty($searchArray)) {
       foreach ($searchArray as $key => $search) {
         $params[$key] = $search;

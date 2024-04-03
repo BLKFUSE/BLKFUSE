@@ -175,7 +175,7 @@ class Sescontestpackage_Form_Admin_Package_Create extends Engine_Form {
     ));
     //New File System Code
     $default_photos = array('' => '');
-    $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png')));
+    $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png', 'webp')));
     foreach( $files as $file ) {
       $default_photos[$file->storage_path] = $file->name;
     }

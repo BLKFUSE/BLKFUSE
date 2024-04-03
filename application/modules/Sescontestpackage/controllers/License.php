@@ -37,7 +37,7 @@ if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestpackage.
     `creation_date` datetime NOT NULL,
     `modified_date` datetime NOT NULL,
     PRIMARY KEY (`package_id`)
-  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
 
   $db->query('INSERT IGNORE INTO `engine4_sescontestpackage_packages` (`title`, `description`, `member_level`, `price`, `recurrence`, `recurrence_type`, `duration`, `duration_type`, `enabled`, `params`, `default`, `creation_date`, `modified_date`) VALUES ("Free Contest Package", NULL, "0,1,2,3,4", "0", "0", "forever", "0", "forever", "1", \'{"is_featured":"1","is_sponsored":"1","is_verified":"1","award_count":"5","allow_participant":null,"upload_cover":"1","upload_mainphoto":"1","contest_choose_style":"1","contest_chooselayout":["1","2","3","4"],"contest_approve":"1","contest_featured":"0","contest_sponsored":"0","contest_verified":"0","contest_hot":0,"contest_seo":"1","contest_overview":"1","contest_bgphoto":"1","contest_contactinfo":"1","contest_enable_contactparticipant":"1","custom_fields":1}\', "1", "NOW()", "NOW()");');
 
@@ -63,7 +63,7 @@ if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestpackage.
     `creation_date` datetime NOT NULL,
     `modified_date` datetime NOT NULL,
     PRIMARY KEY (`transaction_id`)
-  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT = 1 ;');
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT = 1 ;');
 
   $db->query('DROP TABLE IF EXISTS `engine4_sescontestpackage_orderspackages`;');
   $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescontestpackage_orderspackages` (
@@ -77,7 +77,7 @@ if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestpackage.
     `creation_date` datetime NOT NULL,
     `modified_date` datetime NOT NULL,
     PRIMARY KEY (`orderspackage_id`)
-  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
 
   $db->query('INSERT IGNORE INTO `engine4_activity_notificationtypes` (`type`, `module`, `body`, `is_request`, `handler`) VALUES ("sescontest_payment_notify", "sescontest", \'Make payment of your contest {item:$object} to get your contest approved.\', 0, "");');
 

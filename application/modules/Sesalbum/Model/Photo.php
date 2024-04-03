@@ -47,7 +47,7 @@ class Sesalbum_Model_Photo extends Core_Model_Item_Abstract
     }
   }
   
-  public function getRichContent($view = false, $params = array()) {
+  public function getRichContent1($view = false, $params = array()) {
 		if(!Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('epaidcontent')))
 			return null;
     $albumFeed = '';

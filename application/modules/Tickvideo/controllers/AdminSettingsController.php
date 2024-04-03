@@ -13,10 +13,16 @@
 class Tickvideo_AdminSettingsController extends Core_Controller_Action_Admin {
 
   public function indexAction() {
+  
+		$db = Engine_Db_Table::getDefaultAdapter();
 
     $this->view->navigation = $navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('tickvideo_admin_main', array(), 'tickvideo_admin_main_settings');
 
     $this->view->form = $form = new Tickvideo_Form_Admin_Global();
+
+    if(!empty($_GET["createpage"])){
+      include_once APPLICATION_PATH . "/application/modules/Tickvideo/controllers/defaultsettings.php";
+    }
 
     if( $this->getRequest()->isPost() && $form->isValid($this->_getAllParams())) {
       $values = $form->getValues();

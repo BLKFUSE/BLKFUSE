@@ -18,17 +18,7 @@ class Sescontest_Form_Admin_ContestCreatePageSettings extends Engine_Form {
     $settings = Engine_Api::_()->getApi('settings', 'core');
 
     $this->setTitle('Contest Creation Settings')
-            ->setDescription('Here, you can configure the settings which are related to the Contest Creation. The settings enabled or disabled will effect contest creation page and popup both.');
-
-    $this->addElement('Radio', 'sescontest_open_smoothbox', array(
-        'label' => 'Display Creation Form in Page or Popup?',
-        'description' => 'Do you want to open the create contest form in \'Popup\' or redirect users to create contest \'Page\' when they click on the "Create New Contest" link available in the Main Navigation Menu of this plugin?',
-        'multiOptions' => array(
-            '1' => 'Yes, open form in popup',
-            '0' => 'No, redirect users to create contest page',
-        ),
-        'value' => $settings->getSetting('sescontest.open.smoothbox', 0),
-    ));
+            ->setDescription('Here, you can configure the settings which are related to the Contest Creation. The settings enabled or disabled will effect contest creation page.');
 
     $this->addElement('Radio', 'sescontest_enable_addcontestshortcut', array(
         'label' => 'Show “Create New Contest” Icon',
@@ -38,19 +28,7 @@ class Sescontest_Form_Admin_ContestCreatePageSettings extends Engine_Form {
             0 => 'No'
         ),
         'value' => $settings->getSetting('sescontest.enable.addcontestshortcut', 1),
-        'onclick' => 'showQuickOption(this.value)',
     ));
-
-    $this->addElement('Radio', 'sescontest_icon_open_smoothbox', array(
-        'label' => 'Redirect to Create Page or Popup',
-        'description' => 'Do you want to open the create contest form in \'Popup\' or redirect users to create contest \'Page\' when they click on the "Create New Contest Icon" available in the bottom right side of all pages of this plugin?',
-        'multiOptions' => array(
-            '1' => 'Yes, open form in popup',
-            '0' => 'No, redirect users to create contest page',
-        ),
-        'value' => $settings->getSetting('sescontest.icon.open.smoothbox', 0),
-    ));
-
     $this->addElement('Radio', 'sescontest_category_selection', array(
         'label' => 'Choose Category Before Creating Contest',
         'description' => 'Do you want to show the "Category Selection Page" as the first page, when user creates a contest. If Yes, then user will be moved to Contest Create Form only after selecting the category. If No, then user will be directly moved to Contest Create Form. Note: This setting will work on the Contest Create Page only and not in the Contest Create Popup.',

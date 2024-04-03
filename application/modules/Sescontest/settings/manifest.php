@@ -30,7 +30,7 @@ return array(
         'type' => 'module',
         'name' => 'sescontest',
         //'sku' => 'sescontest',
-        'version' => '6.4.0p1',
+        'version' => '6.4.4',
         'dependencies' => array(
             array(
                 'type' => 'module',

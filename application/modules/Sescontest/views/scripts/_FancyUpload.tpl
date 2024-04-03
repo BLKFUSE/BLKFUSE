@@ -24,14 +24,14 @@
 
 <script type="text/javascript">
   var videoType = 1;
-  en4.core.runonce.add(function() {
-    scriptJquery('#uploadWebCamVideo').click(function(e){
+  // en4.core.runonce.add(function() {
+    scriptJquery(document).on('click','#uploadWebCamVideo',function(e){
       scriptJquery('#demo-fallback').hide();
       scriptJquery('#audovideo-record').show();
-      if($('contest_link_video_preview-wrapper'))
-      $('contest_link_video_preview-wrapper').style.display = 'none';
-      if($('remove_link_video-wrapper'))
-      $('remove_link_video-wrapper').style.display = 'none';
+      if(document.getElementById('contest_link_video_preview-wrapper'))
+      document.getElementById('contest_link_video_preview-wrapper').style.display = 'none';
+      if(document.getElementById('remove_link_video-wrapper'))
+      document.getElementById('remove_link_video-wrapper').style.display = 'none';
       scriptJquery('#uploadvideo').removeClass('active');
       if(scriptJquery('#sescontest_video_link').length > 0)
       scriptJquery('#sescontest_video_link').removeClass('active');
@@ -39,19 +39,21 @@
       videoType = 2;
       scriptJquery('#uploaded_content_type').val(videoType);
     });
-    scriptJquery('#uploadvideo').click(function(e){
+    scriptJquery(document).on('click','#uploadvideo',function(e){
      scriptJquery('#demo-fallback').show();
      scriptJquery('#uploadvideo').addClass('active');
      scriptJquery('#uploadWebCamVideo').removeClass('active');
      if(scriptJquery('#sescontest_video_link').length > 0)
       scriptJquery('#sescontest_video_link').removeClass('active');
      scriptJquery('#audovideo-record').hide();
-     $('contest_link_video_preview-wrapper').style.display = 'none';
-     $('remove_link_video-wrapper').style.display = 'none';
+     if(document.getElementById('contest_link_video_preview-wrapper'))
+     document.getElementById('contest_link_video_preview-wrapper').style.display = 'none';
+     if(document.getElementById('remove_link_video-wrapper'))
+     document.getElementById('remove_link_video-wrapper').style.display = 'none';
      videoType = 1;
      scriptJquery('#uploaded_content_type').val(videoType);
     });
-  });
+  // });
   function resetFullVideoData(obj) {
      if("<?php echo $uploadSize ;?>" < obj.files[0].size/1024/1024) {
       alert(en4.core.language.translate('Video you are selecting is exceeding the size. You can upload the video of max size') +"<?php echo $uploadSize ;?>"+" MB");

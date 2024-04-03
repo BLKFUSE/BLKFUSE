@@ -544,7 +544,7 @@ if(engine_count($hashTagActivity)){
       $uArray["title"] = $this->view->viewer()->getTitle();
       $uArray["id"] = $this->view->viewer()->getIdentity();
       $uArray["type"] = $this->view->viewer()->getType();
-      array_unshift($itemS,$uArray);
+    //   array_unshift($itemS,$uArray);
     }
     $activity[$counter]['comment']['likeUserData'] = $itemsLike;
 
@@ -865,6 +865,15 @@ if ($action->getTypeInfo()->shareable == 1 && ($attachment = $action->getFirstAt
   $activity[$counter]['item_user']["title"] = $subjectModule->getTitle();
   $activity[$counter]['item_user']["user_image"] = $subjectModule->getType() == "user" ? $this->userImage($subjectModule->getIdentity(),"thumb.profile") : $this->getBaseUrl(true,$subjectModule->getPhotoUrl('thumb.profile'));
   $activity[$counter]['item_user']["user_type"] = $subjectModule->getType();
+  $activity[$counter]['item_user']["verified"] = 0;
+   if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('everification')) {
+          $verifieddocuments = $verifieddocuments = Engine_Api::_()->getDbTable('documents', 'everification')->getAllUserDocuments(array('user_id' => $subjectModule->getIdentity(), 'verified' => '1', 'fetchAll' => '1'));
+          if(count($verifieddocuments) > 0) {
+               $activity[$counter]['item_user']["verified"] = 1;
+               $activity[$counter]['item_user']["image_url"] = 'https://blkfuse.com/application/modules/Sesbasic/externals/images/verify.png';
+          }
+        }
+  
   $counterOptions = 0;
 
   if(!empty($fromActivityFeed)){

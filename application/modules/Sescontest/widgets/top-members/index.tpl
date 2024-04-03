@@ -124,7 +124,7 @@
             scriptJquery('#error-message_<?php echo $randonNumber;?>').remove();
             var check = true;
             if(document.getElementById('tabbed-widget_<?php echo $randonNumber; ?>'))
-            document.getElementById('tabbed-widget_<?php echo $randonNumber; ?>').innerHTML = responseHTML;
+            scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').html(responseHTML);
             scriptJquery('.sesbasic_view_more_loading_<?php echo $randonNumber;?>').hide();
             if(typeof viewMoreHide_<?php echo $randonNumber; ?> == 'function')
             viewMoreHide_<?php echo $randonNumber; ?>();

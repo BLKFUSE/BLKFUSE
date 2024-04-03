@@ -138,7 +138,7 @@ class User_IndexController extends Sesapi_Controller_Action_Standard
     $paginator->setItemCountPerPage($this->_getParam('limit',10));
     $paginator->setCurrentPageNumber($page);
     
-    $result = $this->memberResult($paginator);
+    $result = $this->memberResult($paginator,true);
     $extraParams['pagging']['total_page'] = $paginator->getPages()->pageCount;
     $extraParams['pagging']['total'] = $paginator->getTotalItemCount();
     $extraParams['pagging']['current_page'] = $paginator->getCurrentPageNumber();
@@ -371,7 +371,7 @@ class User_IndexController extends Sesapi_Controller_Action_Standard
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array_merge(array('error'=>'0','error_message'=>'', 'result' => $result),$extraParams));
   }
   
-  public function memberResult($paginator){
+  public function memberResult($paginator,$verify = false){
       $result = array();
       $counterLoop = 0;
       $viewer = Engine_Api::_()->user()->getViewer();
@@ -388,8 +388,15 @@ class User_IndexController extends Sesapi_Controller_Action_Standard
           continue;
         endif;
         $result['notification'][$counterLoop]['user_id'] = $member->getIdentity();
-        $result['notification'][$counterLoop]['title'] = $member->getTitle();//preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
-        
+        $text = $member->getTitle();
+         if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('everification')) {
+          $verifieddocuments = $verifieddocuments = Engine_Api::_()->getDbTable('documents', 'everification')->getAllUserDocuments(array('user_id' => $member->getIdentity(), 'verified' => '1', 'fetchAll' => '1'));
+          if(count($verifieddocuments) > 0) {
+$text .= '&nbsp;<img src="https://blkfuse.com/application/modules/Sesbasic/externals/images/verify.png" />';
+          }
+        }
+        $result['notification'][$counterLoop]['title'] = $text;//preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
+
         //$age = $this->userAge($member);
         //if($age){
           //$result['notification'][$counterLoop]['age'] =  $age ;

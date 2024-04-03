@@ -320,7 +320,14 @@ class User_ProfileController extends Sesapi_Controller_Action_Standard
         $result['mutual_friends'] = $mutualFriends;
       }
     }
-    $result['profile']['displayname'] = $result['profile']['displayname'];//preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '',$result['profile']['displayname']);
+    $text = $result['profile']['displayname'];
+    if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('everification')) {
+          $verifieddocuments = $verifieddocuments = Engine_Api::_()->getDbTable('documents', 'everification')->getAllUserDocuments(array('user_id' => $subject->getIdentity(), 'verified' => '1', 'fetchAll' => '1'));
+          if(count($verifieddocuments) > 0) {
+                $text .= '&nbsp;<img src="https://blkfuse.com/application/modules/Sesbasic/externals/images/verify.png" />';
+            }
+        }
+    $result['profile']['displayname'] = $text;//preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '',$result['profile']['displayname']);
     //echo "<pre>";var_dump($result);die;
     Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'', 'result' => $result));
   }

@@ -12,7 +12,7 @@
 ?>
 
 <script type="text/javascript">
-  scriptJquery(document).ready(function() {
+  //scriptJquery(document).ready(function() {
     var tabContainerSwitch = window.tabContainerSwitch = function(element) {
       element = scriptJquery(element);
       if( element.prop('tagName').toLowerCase() == 'a' ) {
@@ -40,7 +40,7 @@
     scriptJquery('.tab_collapsed_action').on('click', function(event) {
       scriptJquery(event.target).parents('.tabs_alt').toggleClass('tab_collapsed');
     });
-  });
+  //});
 </script>
 
 <div class='tabs_alt tabs_parent tab_collapsed'>

@@ -123,14 +123,20 @@ $controller_name = Zend_Controller_Front::getInstance()->getRequest()->getContro
   </ul>
 </div>
 <script>
-scriptJquery(document).on('click','.dating_mobile_nav_toggle',function(event){
-	event.stop();
-	if(document.getElementById('dating_mobile_nav').hasClass('show-nav'))
-		document.getElementById('dating_mobile_nav').removeClass('show-nav');
-	else
-		document.getElementById('dating_mobile_nav').addClass('show-nav');
-	return false;
+ scriptJquery(document).on('click','.dating_mobile_nav_toggle',function(event){
+
+	// event.stop();
+
+	if(scriptJquery("#dating_mobile_nav").hasClass('show-nav')){
+		scriptJquery("#dating_mobile_nav").removeClass('show-nav')
+     }
+      else{
+		 scriptJquery("#dating_mobile_nav").addClass('show-nav');
+		}
+	// return false;
 });
+
+
 </script>
 
 <?php  }else{ ?>

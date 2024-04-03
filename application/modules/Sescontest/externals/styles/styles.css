@@ -2045,6 +2045,9 @@
 	float:left;
 	margin:5px 0 0 5px;
 }
+[dir="rtl"] .sescontest_search_result{
+	float:right;
+}
 .sescontest_contest_listing{
 	position:relative;
 	flex-wrap:wrap;
@@ -2130,6 +2133,10 @@
 	text-align:center;
 	height:26px;
 	line-height:24px;
+}
+[dir="rtl"] .sescontest_list_type{
+	right: auto;
+	left:2px;
 }
 .sescontest_list_type i{
 	color:#fff;

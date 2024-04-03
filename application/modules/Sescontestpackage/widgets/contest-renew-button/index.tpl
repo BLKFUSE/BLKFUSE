@@ -28,6 +28,10 @@ $renew_link_days = $package->renew_link_days;
         }
       }
      ?>
+    <?php }else{  ?>
+      <div>
+        <a href="<?php echo $this->url(array('contest_id' => $item->contest_id,'action'=>'index'), 'sescontestpackage_payment', true); ?>" class="sescontest_payment_btn sesbasic_animation"><i class="fa fa-money-bill"></i><span><?php echo $this->translate("Make Payment"); ?></span></a>
+      </div>
     <?php } ?>
     <?php }else{  ?>
       <div>

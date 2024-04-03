@@ -70,7 +70,7 @@
       </ul>
     </div>
 	<?php if($this->createButton && $this->createPrivacy) { ?>
-	  <div class="sescontest_create_right_btn"><a <?php if(!empty(Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontest.open.smoothbox', 0))) { ?> class="sessmoothbox" <?php } ?> href="<?php echo $this->url(array('action' => 'create'), 'sescontest_general', true); ?>"><?php echo $this->translate("Create New Contest"); ?></a></div>
+	  <div class="sescontest_create_right_btn"><a href="<?php echo $this->url(array('action' => 'create'), 'sescontest_general', true); ?>"><?php echo $this->translate("Create New Contest"); ?></a></div>
 	<?php } ?>
   <?php endif; ?>
 </div>
@@ -81,14 +81,4 @@
       el.toggleClass('sesbasic_browse_nav_tab_closed');
     }
   });
-  <?php if($this->popup && !Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestpackage.enable.package', 0)){ ?>
-    <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl.'externals/autocompleter/autocomplete.js'); ?>
-    <?php $this->headScript()->appendFile('externals/tinymce/tinymce.min.js'); ?>
-    <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/styles/datepicker/jquery.timepicker.css'); ?>
-    <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/styles/datepicker/bootstrap-datepicker.css'); ?>
-    <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/jquery1.11.js'); ?>
-    <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/datepicker/jquery.timepicker.js'); ?>
-    <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/datepicker/bootstrap-datepicker.js'); ?>
-    scriptJquery('.sescontest_main_create').addClass('sessmoothbox');
-  <?php } ?>
 </script>

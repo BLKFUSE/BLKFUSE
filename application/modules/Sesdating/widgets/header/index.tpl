@@ -105,16 +105,16 @@ scriptJquery(document).ready(function(e){
 });
 
  // Main Menu Toggle
- scriptJquery(document).ready(function(){
-      scriptJquery(".dating_mobile_nav_toggle").click(function () {
-        if(scriptJquery("#dating_mobile_nav").hasClass('show-nav')){
-          scriptJquery("#dating_mobile_nav").removeClass('show-nav')
-        }
-        else{
-          scriptJquery("#dating_mobile_nav").addClass('show-nav');
-        }
-      });
-    });
+ // scriptJquery(document).ready(function(){
+ //      scriptJquery(".dating_mobile_nav_toggle").click(function () {
+ //       if(scriptJquery("#dating_mobile_nav").hasClass('show-nav')){
+ //         scriptJquery("#dating_mobile_nav").removeClass('show-nav')
+ //       }
+ //       else{
+ //         scriptJquery("#dating_mobile_nav").addClass('show-nav');
+ //       }
+ //     });
+ //   });
 
 
 </script>

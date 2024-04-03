@@ -244,7 +244,7 @@ if ($this->getRequest()->isPost()) {
       $db->query('DROP TABLE IF EXISTS `engine4_sescontest_favourites`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescontest_favourites` (
         `favourite_id` int(11) unsigned NOT NULL auto_increment,
-        `resource_type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+        `resource_type` varchar(32) NOT NULL,
         `resource_id` int(11) unsigned NOT NULL,
         `user_id` int(11) unsigned NOT NULL,
         `creation_date` datetime NOT NULL,
@@ -255,7 +255,7 @@ if ($this->getRequest()->isPost()) {
       $db->query('DROP TABLE IF EXISTS `engine4_sescontest_followers`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescontest_followers` (
         `follower_id` int(11) unsigned NOT NULL auto_increment,
-        `resource_type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+        `resource_type` varchar(32) NOT NULL,
         `resource_id` int(11) unsigned NOT NULL,
         `user_id` int(11) unsigned NOT NULL,
         PRIMARY KEY  (`follower_id`),
@@ -387,7 +387,7 @@ if ($this->getRequest()->isPost()) {
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
 
       $db->query('INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
-      ("core_main_sescontest", "sescontest", "Contests", "", \'{"route":"sescontest_general"}\', "core_main", "", 999),
+      ("core_main_sescontest", "sescontest", "Contests", "", \'{"route":"sescontest_general","icon":"fas fa-award"}\', "core_main", "", 999),
       ("sescontest_main_home", "sescontest", "Contest Home", "", \'{"route":"sescontest_general","action":"home"}\', "sescontest_main", "", 1),
       ("sescontest_main_browse", "sescontest", "Browse Contests", "", \'{"route":"sescontest_general","action":"browse"}\', "sescontest_main", "", 2),
       ("sescontest_main_entries-browse", "sescontest", "Entries", "", \'{"route":"sescontest_general","action":"entries"}\', "sescontest_main", "", 3),
@@ -406,7 +406,6 @@ if ($this->getRequest()->isPost()) {
       ("sescontest_admin_main_contcreate", "sescontest", "Contest Creation Settings", "", \'{"route":"admin_default","module":"sescontest","controller":"settings", "action":"contestcreate"}\', "sescontest_admin_main", "", 2),
       ("sescontest_admin_main_subcontestcreatesetting", "sescontest", "Creation Global Settings", "", \'{"route":"admin_default","module":"sescontest","controller":"settings", "action":"contestcreate"}\', "sescontest_admin_main_contcreate", "", 1),
       ("sescontest_admin_main_subcontestcreatepagesetting", "sescontest", "Create Page Fields Visibility", "", \'{"route":"admin_default","module":"sescontest","controller":"settings", "action":"contestcreatepage"}\', "sescontest_admin_main_contcreate", "", 2),
-      ("sescontest_admin_main_subcontestcreatepopupsetting", "sescontest", "Create Pop-up Fields Visibility", "", \'{"route":"admin_default","module":"sescontest","controller":"settings", "action":"contestcreatepopup"}\', "sescontest_admin_main_contcreate", "", 3),
       ("sescontest_admin_main_entrysettings", "sescontest", "Entry Submission Settings", "", \'{"route":"admin_default","module":"sescontest","controller":"settings", "action":"entrycreate"}\', "sescontest_admin_main", "", 3),
       ("sescontest_admin_main_level", "sescontest", "Member Level Settings", "", \'{"route":"admin_default","module":"sescontest","controller":"settings","action":"level"}\', "sescontest_admin_main", "", 4),
       ("sescontest_admin_main_subcontestmemberlevelsetting", "sescontest", "Contest Member Level Settings", "", \'{"route":"admin_default","module":"sescontest","controller":"settings", "action":"level"}\', "sescontest_admin_main_level", "", 1),

@@ -35,7 +35,7 @@ return array (
   array (
     'type' => 'module',
     'name' => 'tickvideo',
-    'version' => '6.4.0',
+    'version' => '6.4.1',
 	'dependencies' => array(
       array(
         'type' => 'module',
@@ -61,25 +61,16 @@ return array (
     ),
     'directories' => 
     array (
-      0 => 'application/modules/Tickvideo',
+			'application/modules/Tickvideo',
+			'application/modules/Eticktokclone',
     ),
     'files' => 
     array (
-      0 => 'application/languages/en/tickvideo.csv',
+			'application/languages/en/tickvideo.csv',
+			'application/languages/en/eticktokclone.csv',
     ),
   ),
-    'items' =>array(
-        'tickvideo_category','tickvideo_music'
-    ),
-    // Routes --------------------------------------------------------------------
-    'routes' => array(
-        'tickvideo_general' => array(
-//            'route' =>   $videosRoute.'/:action/*',
-//            'defaults' => array(
-//                'module' => 'sesvideo',
-//                'controller' => 'index',
-//                'action' => 'welcome',
-//            ),
-        ),
-    )
-); ?>
+  'items' =>array(
+      'tickvideo_category','tickvideo_music'
+  ),
+);

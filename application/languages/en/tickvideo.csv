@@ -31,3 +31,21 @@ http://[host][message_link]
 [footer]"
 
 "SNS - Short TikTak Videos Plugin for Mobile Apps";"Short TikTak Videos Plugin for Mobile Apps"
+
+
+"{item:$subject} follow {item:$object}.";"{item:$subject} follow {item:$object}."
+"ACTIVITY_TYPE_TICKVIDEO_FOLLOW";"When someone follow you."
+"ADMIN_ACTIVITY_TYPE_TICKVIDEO_FOLLOW";"When a user (subject) follow another user (object)."
+"{item:$subject} follow you.";"{item:$subject} follow you."
+
+# tickvideo_follow
+"_EMAIL_TICKVIDEO_FOLLOW_TITLE";"SNS - Short TikTak Videos Plugin for Mobile Apps - Follow"
+"_EMAIL_TICKVIDEO_FOLLOW_DESCRIPTION";"This is the email that gets sent to a member when another member starts following them."
+"_EMAIL_TICKVIDEO_FOLLOW_SUBJECT";"[sender_title] has started following you."
+"_EMAIL_TICKVIDEO_FOLLOW_BODY";"[header]
+
+[sender_title] has started following you. Please click the following link to view the member:
+
+http://[host][object_link]
+
+[footer]"

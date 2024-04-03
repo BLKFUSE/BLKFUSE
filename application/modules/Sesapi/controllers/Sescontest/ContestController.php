@@ -309,8 +309,9 @@ class Sescontest_ContestController extends Sesapi_Controller_Action_Standard {
 			if($canFollow)
 				$result['contest']['is_content_follow'] =  $followStatus ? true : false;
 			}
-        if (isset($participate['can_join']) && isset($participate['show_button']) && Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestjoinfees.allow.entryfees', 1)) {
-            if (Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sescontestjoinfees') && $contest->entry_fees > 0) {
+// 			var_dump($participate);die;
+        if (isset($participate['can_join']) && isset($participate['show_button'])) {
+            if (Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sescontestjoinfees') && $contest->entry_fees > 0 && Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestjoinfees.allow.entryfees', 1)) {
                
                 $result['contest']['join'] = $this->view->translate('Join Contest in %s', Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($contest->entry_fees));
             } else {

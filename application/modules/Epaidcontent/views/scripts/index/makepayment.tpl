@@ -37,6 +37,8 @@
             $supportedCurrencies = $gatewayObject->getSupportedCurrencies();
             if(!engine_in_array($givenSymbol,$supportedCurrencies))
               continue;
+            if(engine_in_array($gateway->gateway_id, array('4', '5', '6', '7', '8')))
+              continue;
           ?>
           <button type="submit" name="execute"  onclick="scriptJquery('#gateway_id').attr('value', '<?php echo $gateway->gateway_id ?>')">
             <?php echo $this->translate('Pay with %1$s', $this->translate($gateway->title)) ?>

@@ -13,5 +13,5 @@
 
 class Tickvideo_Model_Music extends Core_Model_Item_Abstract
 {
-
+    protected $_searchTriggers = false;
 }

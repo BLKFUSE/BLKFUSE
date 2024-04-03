@@ -267,11 +267,11 @@ scriptJquery (document).on('dragover', function (e)
            return false;
         }
         else if(uploadType == 1 && scriptJquery('#sescontest_audio_file').val() == '') {
-           alert('Please seslect the audio.');
+           alert('Please select the audio.');
            return false;
         }
         else if(uploadType == 3 && scriptJquery('#contest_link_audio_data-wrapper').find('audio').length <= 0) {
-           alert('Please seslect the audio from popup.');
+           alert('Please select the audio from popup.');
            return false;
         }
       }
@@ -280,7 +280,7 @@ scriptJquery (document).on('dragover', function (e)
            alert('Please record the video for uploading content.');
            return false;
         } else if(uploadType == 1 && scriptJquery('#sescontest_video_file').val() == '') {
-           alert('Please seslect the video.');
+           alert('Please select the video.');
            return false;
         }
         else if(uploadType == 3 && (scriptJquery('#contest_link_video_preview-wrapper').find('iframe').length <= 0 && scriptJquery('#contest_link_video_preview-wrapper').find('video').length <= 0)) {

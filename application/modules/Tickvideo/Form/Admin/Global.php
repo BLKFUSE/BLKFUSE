@@ -36,6 +36,16 @@ class Tickvideo_Form_Admin_Global extends Engine_Form {
 
     if ($settings->getSetting('tickvideo.pluginactivated')) {
 
+      $this->addElement('Radio', 'tickvideo_allow_video', array(
+        'label' => 'Do you want to allow to show tickvideo inside video module.?',
+        // 'description' => 'Do you want to make a unauthorized videos searchable? (If set to no, videos that are not authorized for the current user will not be displayed in the video search results and widgets.)',
+        'value' => Engine_Api::_()->getApi('settings', 'core')->getSetting('tickvideo_allow_video', 0),
+        'multiOptions' => array(
+          '1' => 'Yes',
+          '0' => 'No',
+        ),
+      ));
+
       // Add submit button
       $this->addElement('Button', 'submit', array(
           'label' => 'Save Changes',

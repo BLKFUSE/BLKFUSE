@@ -26,7 +26,6 @@
 <?php if($isContestEdit):?>
   <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/webcam.js'); ?>
   <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/imagesloaded.pkgd.js');?>
-   <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jQuery/jquery-ui.js'); ?>
   <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/jquery.drag-n-crop.js');?>
 <?php endif;?>
   <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sescontest/externals/styles/styles.css'); ?>
@@ -479,10 +478,15 @@
   <?php endif;?>
   <?php if($this->params['tab_placement'] == 'in'):?>
     if (matchMedia('only screen and (min-width: 767px)').matches) {
-        scriptJquery(document).ready(function(){
+      scriptJquery(document).ready(function(){
         if(scriptJquery('.layout_core_container_tabs').length>0){
-          var tabs = scriptJquery('.layout_core_container_tabs').find('.tabs_alt').get(0).outerHTML;
-          scriptJquery('.layout_core_container_tabs').find('.tabs_alt').remove();
+					if(scriptJquery('.layout_core_container_tabs').find('.tabs_alt').length > 0) {
+						var tabs = scriptJquery('.layout_core_container_tabs').find('.tabs_alt').get(0).outerHTML;
+						scriptJquery('.layout_core_container_tabs').find('.tabs_alt').remove();
+          } else {
+						var tabs = scriptJquery('._vtabs').find('.tabs_alt').get(0).outerHTML;
+						scriptJquery('._vtabs').find('.tabs_alt').remove();
+          }
           scriptJquery('.sescontest_cover_tabs').html(tabs);
         }
       });

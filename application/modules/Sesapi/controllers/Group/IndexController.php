@@ -423,8 +423,8 @@ class Group_IndexController extends Sesapi_Controller_Action_Standard
 
     $values['view_privacy'] =  $values['auth_view'];
     if (isset($values['networks'])) {
-      $network_privacy = 'network_'. implode(',network_', $values['networks']);
-      $values['networks'] = implode(',', $values['networks']);
+    //   $network_privacy = 'network_'. implode(',network_', explode(',',$values['networks']));
+      $values['networks'] = $network_privacy;//implode(',', $values['networks']);
     }
     if (is_null($values['subcat_id']))
       $values['subcat_id'] = 0;
@@ -597,8 +597,8 @@ class Group_IndexController extends Sesapi_Controller_Action_Standard
     try {
       $values = $form->getValues();
       if (isset($values['networks'])) {
-        $network_privacy = 'network_'. implode(',network_', $values['networks']);
-        $values['networks'] = implode(',', $values['networks']);
+        // $network_privacy = 'network_'. implode(',network_', $values['networks']);
+        // $values['networks'] = implode(',', $values['networks']);
       }
       if( empty($values['auth_view']) ) {
         $values['auth_view'] = 'everyone';

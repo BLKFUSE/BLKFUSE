@@ -36,7 +36,7 @@ var selectedBoostPostId = "<?php echo !empty($this->action_id) ? $this->action_i
 </script>
 <div class="sescmads_create_container sesbasic_bxs">
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sescommunityads/externals/styles/styles.css'); ?>
-<div class="sescommunity_create_cnt sescomm_stp_1" rel="1" style="display:none;">
+<div class="sescommunity_create_cnt sescomm_stp_1" rel="1">
   <?php include('application/modules/Sescommunityads/views/scripts/_adType.tpl'); ?>
 </div>
 <div class="sescommunity_create_cnt" rel="2" style="display:none;">

@@ -163,7 +163,6 @@ class Elivestreaming_NotificationController extends Core_Controller_Action_Stand
     if (!Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesstories'))
       $result['message'] = $message = $this->view->translate("story_plugin_disable");
 
-    Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => $result),0,true);
 
     if (!empty($users)) {
       foreach ($users as $receivers) {
@@ -184,5 +183,7 @@ class Elivestreaming_NotificationController extends Core_Controller_Action_Stand
         }
       }
     }
+        Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => $result),0,true);
+
   }
 }

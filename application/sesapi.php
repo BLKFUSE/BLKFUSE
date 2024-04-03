@@ -135,6 +135,7 @@ if( _ENGINE_R_INIT ) {
 }
 	$applicationName = ucfirst(APPLICATION_NAME);
 	$nameClass = $applicationName . '_Bootstrap';
+
   $sesApiBootstrap =  new $nameClass($application);
 	$sesApiBootstrap->bootstrap();
   $sesApiBootstrap->run($application);
