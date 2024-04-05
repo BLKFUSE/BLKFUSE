@@ -280,17 +280,17 @@ class Install_Import_Phpfox_UserUsers extends Install_Import_Phpfox_Abstract
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_users` (
   `user_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `email` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `username` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `displayname` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `email` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(128) collate utf8mb4_unicode_ci default NULL,
+  `displayname` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `photo_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `status` text COLLATE utf8_unicode_ci,
+  `status` text COLLATE utf8mb4_unicode_ci,
   `status_date` datetime DEFAULT NULL,
-  `password` char(32) COLLATE utf8_unicode_ci NOT NULL,
-  `salt` char(64) COLLATE utf8_unicode_ci NOT NULL,
-  `locale` varchar(16) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL DEFAULT 'auto',
-  `language` varchar(8) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL DEFAULT 'en_US',
-  `timezone` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL DEFAULT 'America/Los_Angeles',
+  `password` char(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `salt` char(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `locale` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'auto',
+  `language` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'en_US',
+  `timezone` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'America/Los_Angeles',
   `search` tinyint(1) NOT NULL DEFAULT '1',
   `show_profileviewers` tinyint(1) NOT NULL DEFAULT '1',
   `level_id` int(11) unsigned NOT NULL,
@@ -315,5 +315,5 @@ class Install_Import_Phpfox_UserUsers extends Install_Import_Phpfox_Abstract
   KEY `CREATION_DATE` (`creation_date`),
   KEY `search` (`search`),
   KEY `enabled` (`enabled`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */

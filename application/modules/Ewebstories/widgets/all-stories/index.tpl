@@ -28,7 +28,7 @@
 <?php } ?>
 <script type="application/javascript">
   //function to fetch stories
-  setInterval(getSesStories,8000);
+  setTimeout(getSesStories(), 2000);
   function getSesStories() {
     scriptJquery.post(en4.core.baseUrl + 'widget/index/mod/ewebstories/name/all-stories',{is_ajax:true},function (response) {
 
@@ -49,74 +49,117 @@
       sesowlJqueryObject(".owl-next").html('<i class="fas fa-chevron-right"></i>');
     })
   }
+  
+
 </script>
+<?php if(!empty($_GET['story_id']) && !empty($_GET['owner_id'])) { ?>
+  <script>
+    setTimeout(() => {
+      selectedStoryId = <?php echo $_GET['story_id']; ?>;
+      selectedStoryUserId = <?php echo $_GET['owner_id']; ?>;
+      //en4.core.runonce.add(function() {
+        var isExist = scriptJquery("#sesstory_id_"+selectedStoryUserId);
+        if(isExist.length){
+          scriptJquery("#sesstory_id_"+selectedStoryUserId).trigger("click");
+        }
+      //});
+    }, 1000);
+  </script>
+<?php } ?>
+<div class="sesstories_confirm_popup_container"  id="success_sesstories_cnt">
+  <div class="sesstories_confirm_popup sesbasic_bg">
+    <div class="_head text-center">
+      <?php echo $this->translate("Story Success!"); ?>
+    </div> 
+    <div class="_cont" id="success_stories_create">
+      
+    </div>
+  <div class="_footer">
+    <button id="confirm_success_sesstories">
+      <?php echo $this->translate("Okay") ?>
+    </button>
+  </div>
+</div>
+</div>
+
 <h3 class="sesstories_allstories_title"><?php echo $this->translate($this->title ? $this->title : "Stories"); ?> <a href="javascript:;" data-url="sesstories/index/archive" class="sessmoothbox"><?php echo $this->translate('Settings & Archive'); ?> <i class="fas fa-angle-right"></i></a></h3>
 <div class="sesstories_bxs sesstories_allstories_container">
   <section class="sesStories_content">
     <div class="sesstories_bxs sesstories_allstories sesstories_allstories_<?php echo $this->identity;?>">
       <?php } ?>
-      <?php if($this->viewer()->getIdentity()){ ?>
-      <div class="sesstories_allstories_item">
-        <div class="sesstories_allstories_item_img">
-          <?php
-            $image =  "";
-            if(!empty($this->story['my_story']['story_content'])) {
-              if(!empty($this->story['my_story']['story_content'][0]['photo'])){
-                $image = $this->story['my_story']['story_content'][0]['photo'] ;
+      <?php if($this->isAjax) { ?>
+        <?php if($this->viewer()->getIdentity()){ ?>
+        <div class="sesstories_allstories_item">
+          <div class="sesstories_allstories_item_img">
+            <?php
+              $image =  "";
+              if(!empty($this->story['my_story']['story_content'])) {
+                if(!empty($this->story['my_story']['story_content'][0]['photo'])){
+                  $image = $this->story['my_story']['story_content'][0]['photo'] ;
+                }else{
+                  $image = $this->story['my_story']['story_content'][0]['media_url'] ;
+                }
               }else{
-                $image = $this->story['my_story']['story_content'][0]['media_url'] ;
+                $image = $this->story['my_story']['user_image'];
               }
-            }else{
-              $image = $this->story['my_story']['user_image'];
-            }
-          ?>
-          <img src="<?php echo $image; ?>" />
-        </div>
-        <div class="sesstories_allstories_item_cont">
-          <div class="sesstories_allstories_item_thumb _add">
-            <a href="javascript:;" class="create_sesstories"><i class="fas fa-plus"></i></a>
-          </div>
-          <div class="sesstories_allstories_item_name">
-            <?php echo $this->viewer()->getTitle(); ?>
-          </div>
-          <a href="javascript:;" id="sesstory_id_<?php echo $this->viewer()->getIdentity(); ?>" rel="<?php echo $this->viewer()->getIdentity(); ?>" class="sesstories_allstories_item_link<?php if(empty($this->story['my_story']['story_content'])) { ?> create_sesstories <?php }else{ ?> open_sesstory <?php } ?>"></a>
-        </div>
-      </div>
-      <?php } ?>
-      <?php foreach($this->story['stories'] as $story) { ?>
-      <?php
-        $image =  "";
-        if($story['story_content'][0]['is_video']) {
-          if($story['story_content'][0]['photo']){
-            $image = $story['story_content'][0]['photo'] ;
-          }else{
-            $image = $story['user_image'];
-          }
-        }else{
-          $image = $story['story_content'][0]['media_url'];
-        }
-      ?>
-      <div class="sesstories_allstories_item<?php echo $story["is_live"] ? ' _islive' : ''; ?>">
-        <div class="sesstories_allstories_item_img">
-          <img src="<?php echo $image ? $image : $story['user_image']; ?>" alt="" />
-        </div>
-        <span class="liveicon"><?php echo $this->translate("Live");?></span>
-        <div class="sesstories_allstories_item_cont">
-          <div class="sesstories_allstories_item_thumb">
-            <img src="<?php echo $story['user_image']; ?>" />
-          </div>
-          <div class="sesstories_allstories_item_name">
-            <?php echo $story['username']; ?>
-          </div>
-        </div>
-        <?php 
-          if(!isset($story["is_live"]) || empty($story["is_live"])){
             ?>
-        <a href="javascript:;"  rel="<?php echo $story['user_id']; ?>" class="sesstories_allstories_item_link open_sesstory"></a>
-        <?php }else{ ?>
-           <a href="javascript:;" data-hostid="<?php echo $story['elivehost_id']; ?>" data-user="<?php echo $story['user_id']; ?>" data-action="<?php echo $story['activity_id']; ?>" data-story="" class="sesstories_allstories_item_link elivestreaming_data_a"></a>
+            <img src="<?php echo $image; ?>" />
+          </div>
+          <div class="sesstories_allstories_item_cont">
+            <div class="sesstories_allstories_item_thumb _add">
+              <a href="javascript:;" class="create_sesstories"><i class="fas fa-plus"></i></a>
+            </div>
+            <div class="sesstories_allstories_item_name">
+              <?php echo $this->viewer()->getTitle(); ?>
+            </div>
+            <a href="javascript:;" id="sesstory_id_<?php echo $this->viewer()->getIdentity(); ?>" rel="<?php echo $this->viewer()->getIdentity(); ?>" class="sesstories_allstories_item_link<?php if(empty($this->story['my_story']['story_content'])) { ?> create_sesstories <?php }else{ ?> open_sesstory <?php } ?>"></a>
+          </div>
+        </div>
         <?php } ?>
-      </div>
+        
+        <?php foreach($this->story['stories'] as $story) { ?>
+        <?php
+          $image =  "";
+          if($story['story_content'][0]['is_video']) {
+            if($story['story_content'][0]['photo']){
+              $image = $story['story_content'][0]['photo'] ;
+            }else{
+              $image = $story['user_image'];
+            }
+          }else{
+            $image = $story['story_content'][0]['media_url'];
+          }
+        ?>
+        <div class="sesstories_allstories_item<?php echo $story["is_live"] ? ' _islive' : ''; ?>">
+          <div class="sesstories_allstories_item_img">
+            <img src="<?php echo $image ? $image : $story['user_image']; ?>" alt="" />
+          </div>
+          <span class="liveicon"><?php echo $this->translate("Live");?></span>
+          <div class="sesstories_allstories_item_cont">
+            <div class="sesstories_allstories_item_thumb">
+              <img src="<?php echo $story['user_image']; ?>" />
+            </div>
+            <div class="sesstories_allstories_item_name">
+              <?php echo $story['username']; ?>
+            </div>
+          </div>
+          <?php 
+            if(!isset($story["is_live"]) || empty($story["is_live"])){
+              ?>
+          <a href="javascript:;"  rel="<?php echo $story['user_id']; ?>" class="sesstories_allstories_item_link open_sesstory"></a>
+          <?php }else{ ?>
+            <a href="javascript:;" data-hostid="<?php echo $story['elivehost_id']; ?>" data-user="<?php echo $story['user_id']; ?>" data-action="<?php echo $story['activity_id']; ?>" data-story="" class="sesstories_allstories_item_link elivestreaming_data_a"></a>
+          <?php } ?>
+        </div>
+      <?php } } else { ?>
+        <?php for($i=1;$i<=4;$i++) { ?>
+          <div class="sesstories_allstories_item sesstories_allstories_item_loading">
+            <div class="sesstories_allstories_item_img">
+            </div>
+            <div class="sesstories_allstories_item_cont">
+            </div>
+          </div>
+        <?php } ?>
       <?php } ?>
       <?php if(!$this->isAjax){ ?>
     </div>
@@ -165,7 +208,7 @@
           <div class="sesstories_story_item_content">
             <?php  //Photo Story  ?>
             <div class="sesstories_content"></div>
-            <div>
+            <div class="sesstories_media_content">
               <div class="sesstories_story_item_caption"></div>
               <div class="sesstories_reaction_data"></div>
             </div>
@@ -176,7 +219,7 @@
                 <div class="sesstories_contenttext" class="_txt"></div>
               </div>
             </div>
-            <div>
+            <div class="sesstories_content_text_reaction sesstories_media_content" style="display:none;">
               <div class="sesstories_reaction_data"></div>
             </div>
           </div>
@@ -236,7 +279,9 @@
     })
     <?php } ?>
 </script>
+
 <?php if($this->isAjax){ die; ?>
 
 
 <?php } ?>
+

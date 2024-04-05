@@ -25,29 +25,29 @@ class Sesadvancedcomment_View_Helper_GetCommentContent
     $content = $this->getMentionTags($content);
     //$content = $this->bodyLink($content);
     //Emojis Work
-    if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesemoji') && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesemoji.pluginactivated')) {
-      $bodyEmojis = explode(' ', $content);
-      require_once 'application/modules/Sesemoji/controllers/lib/php/autoload.php';
-      $client = new Client(new Ruleset());
-      $client->imagePathPNG = 'application/modules/Sesemoji/externals/images/emoji/';
-      foreach($bodyEmojis as $bodyEmoji) {
-        $getEmojiFileId = Engine_Api::_()->getDbTable('emojiicons', 'sesemoji')->getEmojiFileId(array('emoji_encodecode' => $bodyEmoji, 'column' => 'file_id'));
-        $getEmojiTitle = Engine_Api::_()->getDbTable('emojiicons', 'sesemoji')->getEmojiFileId(array('emoji_encodecode' => $bodyEmoji, 'column' => 'title'));
-        if($getEmojiFileId) {
-          $emojisCode = Engine_Api::_()->sesemoji()->DecodeEmoji($bodyEmoji);
-          $emojisCode = $client->toImage($emojisCode);
-          $content = str_replace($bodyEmoji, $emojisCode, $content);
-//           $emojiURL = Engine_Api::_()->storage()->get($getEmojiFileId, '')->getPhotoUrl();
-//           $content = str_replace($bodyEmoji,'<img title="'.$getEmojiTitle.'" style="height:24px;width:24px;" src="'.$emojiURL.'">', $content);
-        } else {
-          //Emoji Share Work
-          $emojisCode = Engine_Api::_()->sesemoji()->DecodeEmoji($bodyEmoji);
-          $emojisCode = $client->toImage($emojisCode);
-          //$emojisCode = Engine_Api::_()->sesemoji()->DecodeEmoji($bodyEmoji);
-          $content = str_replace($bodyEmoji, $emojisCode, $content);
-        }
-      }
-    }
+//     if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesemoji') && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesemoji.pluginactivated')) {
+//       $bodyEmojis = explode(' ', $content);
+//       require_once 'application/modules/Sesemoji/controllers/lib/php/autoload.php';
+//       $client = new Client(new Ruleset());
+//       $client->imagePathPNG = 'application/modules/Sesemoji/externals/images/emoji/';
+//       foreach($bodyEmojis as $bodyEmoji) {
+//         $getEmojiFileId = Engine_Api::_()->getDbTable('emojiicons', 'sesemoji')->getEmojiFileId(array('emoji_encodecode' => $bodyEmoji, 'column' => 'file_id'));
+//         $getEmojiTitle = Engine_Api::_()->getDbTable('emojiicons', 'sesemoji')->getEmojiFileId(array('emoji_encodecode' => $bodyEmoji, 'column' => 'title'));
+//         if($getEmojiFileId) {
+//           $emojisCode = Engine_Api::_()->sesemoji()->DecodeEmoji($bodyEmoji);
+//           $emojisCode = $client->toImage($emojisCode);
+//           $content = str_replace($bodyEmoji, $emojisCode, $content);
+// //           $emojiURL = Engine_Api::_()->storage()->get($getEmojiFileId, '')->getPhotoUrl();
+// //           $content = str_replace($bodyEmoji,'<img title="'.$getEmojiTitle.'" style="height:24px;width:24px;" src="'.$emojiURL.'">', $content);
+//         } else {
+//           //Emoji Share Work
+//           $emojisCode = Engine_Api::_()->sesemoji()->DecodeEmoji($bodyEmoji);
+//           $emojisCode = $client->toImage($emojisCode);
+//           //$emojisCode = Engine_Api::_()->sesemoji()->DecodeEmoji($bodyEmoji);
+//           $content = str_replace($bodyEmoji, $emojisCode, $content);
+//         }
+//       }
+//     }
     //Emojis Work End
 
     return ($content);

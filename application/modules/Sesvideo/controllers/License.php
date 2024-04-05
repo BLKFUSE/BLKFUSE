@@ -56,16 +56,16 @@ if ($this->getRequest()->isPost()) {
       `creation_date` DATETIME NOT NULL ,
       PRIMARY KEY  (`rating_id`),
       UNIQUE KEY `uniqueKey` (`user_id`,`resource_type`,`resource_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesvideo_videos` (
         `video_id` int(11) unsigned NOT NULL auto_increment,
         `title` varchar(100) NOT NULL,
         `description` text NOT NULL,
         `search` tinyint(1) NOT NULL default 1,
-        `owner_type` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+        `owner_type` varchar(128) NOT NULL,
         `owner_id` int(11) NOT NULL,
-        `parent_type` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci default NULL,
+        `parent_type` varchar(128) default NULL,
         `parent_id` int(11) unsigned default NULL,
         `creation_date` datetime NOT NULL,
         `modified_date` datetime NOT NULL,
@@ -74,7 +74,7 @@ if ($this->getRequest()->isPost()) {
         `comment_count` int(11) unsigned NOT NULL default 0,
         `like_count` int(11) unsigned NOT NULL default 0,
         `type` VARCHAR( 32 ) NOT NULL,
-        `code` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+        `code` TEXT NOT NULL,
         `location` varchar (255) default NULL,
         `photo_id` int(11) unsigned default NULL,
         `rating` float NOT NULL,
@@ -82,7 +82,7 @@ if ($this->getRequest()->isPost()) {
         `subcat_id` int(11) unsigned  NULL default 0,
         `thumbnail_id` int(11) unsigned default NULL,
         `is_locked` tinyint(1) unsigned  NULL default 0,
-        `password` VARCHAR(255)  CHARACTER SET latin1 COLLATE latin1_general_ci default NULL,
+        `password` VARCHAR(255)  default NULL,
         `subsubcat_id` int(11) unsigned  NULL default 0,
         `status` tinyint(1) NOT NULL,
         `file_id` int(11) unsigned NOT NULL,
@@ -102,7 +102,7 @@ if ($this->getRequest()->isPost()) {
           KEY `search` (`search`),
           KEY `creation_date` (`creation_date`),
           KEY `view_count` (`view_count`)
-        )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;');
+        )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
 
     $query = 'DROP TABLE IF EXISTS `engine4_sesvideo_artists`;
       CREATE TABLE IF NOT EXISTS `engine4_sesvideo_artists` (
@@ -118,7 +118,7 @@ if ($this->getRequest()->isPost()) {
       `starttime` DATE NOT NULL,
       `endtime` DATE NOT NULL,
       PRIMARY KEY (`artist_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
       DROP TABLE IF EXISTS `engine4_sesvideo_chanels`;
       CREATE TABLE IF NOT EXISTS `engine4_sesvideo_chanels` (
@@ -159,7 +159,7 @@ if ($this->getRequest()->isPost()) {
         KEY `search` (`search`),
         KEY `creation_date` (`creation_date`),
         KEY `view_count` (`view_count`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
       DROP TABLE IF EXISTS `engine4_sesvideo_chanelphotos`;
       CREATE TABLE IF NOT EXISTS `engine4_sesvideo_chanelphotos` (
@@ -184,7 +184,7 @@ if ($this->getRequest()->isPost()) {
         KEY `owner_id` (`owner_id`),
         KEY `creation_date` (`creation_date`),
         KEY `view_count` (`view_count`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
       DROP TABLE IF EXISTS `engine4_sesvideo_chanelvideos`;
       CREATE TABLE IF NOT EXISTS `engine4_sesvideo_chanelvideos` (
@@ -197,7 +197,7 @@ if ($this->getRequest()->isPost()) {
         PRIMARY KEY  (`chanelvideo_id`),
         KEY `creation_date` (`creation_date`),
         UNIQUE KEY `uniqueKey` (`chanel_id`,`video_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
       DROP TABLE IF EXISTS `engine4_sesvideo_watchlaters`;
       CREATE TABLE IF NOT EXISTS `engine4_sesvideo_watchlaters` (
@@ -209,7 +209,7 @@ if ($this->getRequest()->isPost()) {
         PRIMARY KEY  (`watchlater_id`),
         UNIQUE KEY `uniqueKey` (`video_id`,`owner_id`),
         KEY `creation_date` (`creation_date`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
       DROP TABLE IF EXISTS `engine4_sesvideo_chanelfollows`;
       CREATE TABLE IF NOT EXISTS `engine4_sesvideo_chanelfollows` (
@@ -221,15 +221,15 @@ if ($this->getRequest()->isPost()) {
         PRIMARY KEY  (`chanelfollow_id`),
         UNIQUE KEY `uniqueKey` (`chanel_id`,`owner_id`),
         KEY `creation_date` (`creation_date`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
       DROP TABLE IF EXISTS `engine4_sesvideo_playlists`;
       CREATE TABLE IF NOT EXISTS `engine4_sesvideo_playlists` (
       `playlist_id` int(11) unsigned NOT NULL auto_increment,
       `owner_id` int(11) unsigned NOT NULL,
-      `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-      `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+      `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+      `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
       `photo_id` INT(11) NULL DEFAULT 0,
       `cover_id` INT(11) NULL DEFAULT 0,
       `video_count`	INT(3) NULL DEFAULT 0,
@@ -251,7 +251,7 @@ if ($this->getRequest()->isPost()) {
       KEY `is_private` (`is_private`),
       KEY `creation_date` (`creation_date`),
       KEY `view_count` (`view_count`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
       DROP TABLE IF EXISTS `engine4_sesvideo_slides`;
       CREATE TABLE IF NOT EXISTS `engine4_sesvideo_slides` (
@@ -286,7 +286,7 @@ if ($this->getRequest()->isPost()) {
       `creation_date` datetime NOT NULL,
       `modified_date` datetime NOT NULL,
       PRIMARY KEY (`slide_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
       DROP TABLE IF EXISTS `engine4_sesvideo_galleries`;
       CREATE TABLE IF NOT EXISTS `engine4_sesvideo_galleries` (
@@ -295,7 +295,7 @@ if ($this->getRequest()->isPost()) {
       `creation_date` datetime NOT NULL,
       `modified_date` datetime NOT NULL,
       PRIMARY KEY (`gallery_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
       DROP TABLE IF EXISTS `engine4_sesvideo_playlistvideos`;
       CREATE TABLE IF NOT EXISTS `engine4_sesvideo_playlistvideos` (
@@ -304,17 +304,17 @@ if ($this->getRequest()->isPost()) {
       `file_id` int(11) unsigned NOT NULL,
       `order` int(11) unsigned NOT NULL,
       PRIMARY KEY (`playlistvideo_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
       DROP TABLE IF EXISTS `engine4_sesvideo_favourites`;
       CREATE TABLE IF NOT EXISTS `engine4_sesvideo_favourites` (
       `favourite_id` int(11) unsigned NOT NULL auto_increment,
       `user_id` int(11) unsigned NOT NULL,
-      `resource_type` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+      `resource_type` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
       `resource_id` int(11) NOT NULL,
       PRIMARY KEY (`favourite_id`),
       KEY `user_id` (`user_id`,`resource_type`,`resource_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
       DROP TABLE IF EXISTS `engine4_sesvideo_recentlyviewitems`;
       CREATE TABLE IF NOT EXISTS  `engine4_sesvideo_recentlyviewitems` (
@@ -324,7 +324,7 @@ if ($this->getRequest()->isPost()) {
       `owner_id` INT NOT NULL ,
       `creation_date` DATETIME NOT NULL,
       UNIQUE KEY `uniqueKey` (`resource_id`,`resource_type`, `owner_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
       DROP TABLE IF EXISTS `engine4_video_fields_maps`;
       CREATE TABLE IF NOT EXISTS `engine4_video_fields_maps` (
@@ -333,7 +333,7 @@ if ($this->getRequest()->isPost()) {
       `child_id` int(11) NOT NULL,
       `order` smallint(6) NOT NULL,
       PRIMARY KEY (`field_id`,`option_id`,`child_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 
       INSERT IGNORE INTO `engine4_video_fields_maps` (`field_id`, `option_id`, `child_id`, `order`) VALUES (0, 0, 1, 1);
@@ -352,12 +352,12 @@ if ($this->getRequest()->isPost()) {
       `show` tinyint(1) unsigned DEFAULT "0",
       `order` smallint(3) unsigned NOT NULL DEFAULT "999",
       `config` text NOT NULL,
-      `validators` text COLLATE utf8_unicode_ci,
-      `filters` text COLLATE utf8_unicode_ci,
-      `style` text COLLATE utf8_unicode_ci,
-      `error` text COLLATE utf8_unicode_ci,
+      `validators` text COLLATE utf8mb4_unicode_ci,
+      `filters` text COLLATE utf8mb4_unicode_ci,
+      `style` text COLLATE utf8mb4_unicode_ci,
+      `error` text COLLATE utf8mb4_unicode_ci,
       PRIMARY KEY (`field_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
       INSERT IGNORE INTO `engine4_video_fields_meta` (`field_id`, `type`, `label`, `description`, `alias`, `required`, `display`, `publish`, `search`, `show`, `order`, `config`, `validators`, `filters`, `style`, `error`) VALUES
       (1, "profile_type", "Profile Type", "", "profile_type", 1, 0, 0, 2, 0, 999, "", NULL, NULL, NULL, NULL);
@@ -371,7 +371,7 @@ if ($this->getRequest()->isPost()) {
       `type` tinyint(1) NOT NULL DEFAULT "0",
       PRIMARY KEY (`option_id`),
       KEY `field_id` (`field_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
 
       INSERT IGNORE INTO `engine4_video_fields_options` (`option_id`, `field_id`, `label`, `order`) VALUES
       (1, 1, "Rock Videos", 0);
@@ -382,7 +382,7 @@ if ($this->getRequest()->isPost()) {
       `profile_type` smallint(11) unsigned DEFAULT NULL,
       PRIMARY KEY (`item_id`),
       KEY `profile_type` (`profile_type`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
       DROP TABLE IF EXISTS `engine4_video_fields_values`;
       CREATE TABLE IF NOT EXISTS `engine4_video_fields_values` (
@@ -391,7 +391,7 @@ if ($this->getRequest()->isPost()) {
       `index` smallint(3) NOT NULL DEFAULT "0",
       `value` text NOT NULL,
       PRIMARY KEY (`item_id`,`field_id`,`index`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 
       INSERT IGNORE INTO `engine4_core_jobtypes` (`title`, `type`, `module`, `plugin`, `enabled`, `multi`, `priority`) VALUES
@@ -402,7 +402,7 @@ if ($this->getRequest()->isPost()) {
       ("sesvideo_main", "standard", "SNS - Advanced Videos & Channels Plugin Main Navigation Menu");
 
       INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
-      ("core_main_sesvideo", "sesvideo", "Videos", "", \'{"route":"sesvideo_general","action":"welcome"}\', "core_main", "", 7),
+      ("core_main_sesvideo", "sesvideo", "Videos", "", \'{"route":"sesvideo_general", "icon":"fas fa-video","action":"welcome"}\', "core_main", "", 7),
       ("core_sitemap_sesvideo", "sesvideo", "Videos", "", \'{"route":"sesvideo_general"}\', "core_sitemap", "", 7),
       ("sesvideo_main_browsehome", "sesvideo", "Videos Home", "", \'{"route":"sesvideo_general","action":"home"}\', "sesvideo_main", "", 1),
       ("sesvideo_main_browsevideo", "sesvideo", "Browse Videos", "", \'{"route":"sesvideo_general","action":"browse"}\', "sesvideo_main", "", 2),

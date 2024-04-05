@@ -84,7 +84,6 @@ class Activity_IndexController extends Core_Controller_Action_Standard
         $body = html_entity_decode($body, ENT_QUOTES, 'UTF-8');
         //$body = htmlentities($body, ENT_QUOTES, 'UTF-8');
         $postData['body'] = $body;
-
         if (!$form->isValid($postData)) {
             $this->view->status = false;
             $this->view->error =  Zend_Registry::get('Zend_Translate')->_('Invalid data');
@@ -171,7 +170,7 @@ class Activity_IndexController extends Core_Controller_Action_Standard
             //$body = html_entity_decode($body, ENT_QUOTES, 'UTF-8');
             //$body = html_entity_decode($body, ENT_QUOTES, 'UTF-8');
             //$body = htmlentities($body, ENT_QUOTES, 'UTF-8');
-
+           
             // Special case: status
             if (!$attachmentCount && $viewer->isSelf($subject)) {
                 if ($body != '') {
@@ -217,6 +216,10 @@ class Activity_IndexController extends Core_Controller_Action_Standard
 
                 // Add activity
                 $actionTable = Engine_Api::_()->getDbtable('actions', 'activity');
+                //In case of composer post data.
+                if($attachment && engine_in_array($attachment->getType(), array('video', 'music_playlist_song'))) {
+                  $subject = $attachment;
+                }
                 $action = $actionTable->addActivity($viewer, $subject, $activityType, $body, array(
                     'count' => $attachmentCount,
                     'privacy' => $privacy
@@ -610,15 +613,17 @@ class Activity_IndexController extends Core_Controller_Action_Standard
             $body = $form->getValue('body') . ' ';
             $bodyEmojis = explode(' ', $body);
             foreach($bodyEmojis as $bodyEmoji) {
-                $emojisCode = Engine_Text_Emoji::encode($bodyEmoji);
+                $emojisCode = $bodyEmoji;
                 $body = str_replace($bodyEmoji,$emojisCode,$body);
             }
+            
             // Check authorization
             if (!Engine_Api::_()->authorization()->isAllowed($action->getCommentableItem(), null, 'comment')) {
                 throw new Engine_Exception('This user is not allowed to comment on this item.');
             }
 
             // Add the comment
+            
             $commentRow = $action->comments()->addComment($viewer, $body);
             $this->addHashtags($commentRow);
 
@@ -763,6 +768,15 @@ class Activity_IndexController extends Core_Controller_Action_Standard
             $action = $api->addActivity($viewer, $attachment->getOwner(), 'share', $body, $params);
             if ($action) {
                 $api->attachActivity($action, $attachment);
+            }
+            
+            if(isset($actionItem->share_count)) {
+              $actionItem->share_count++;
+              $actionItem->save();
+            }
+            if($attachment->getType() == 'activity_action' && isset($attachment->share_count)) {
+              $attachment->share_count++;
+              $attachment->save();
             }
             $db->commit();
 
@@ -949,10 +963,10 @@ class Activity_IndexController extends Core_Controller_Action_Standard
         $body = html_entity_decode($body, ENT_QUOTES, 'UTF-8');
         $values['body'] = html_entity_decode($body, ENT_QUOTES, 'UTF-8');
         $bodyEmojis = explode(' ', $body);
-        foreach($bodyEmojis as $bodyEmoji) {
-            $emojisCode = Engine_Text_Emoji::encode($bodyEmoji);
-            $body = $values['body'] = str_replace($bodyEmoji,$emojisCode,$body);
-        }
+        // foreach($bodyEmojis as $bodyEmoji) {
+        //     $emojisCode = Engine_Text_Emoji::encode($bodyEmoji);
+        //     $body = $values['body'] = str_replace($bodyEmoji,$emojisCode,$body);
+        // }
         try {
             $privacy = 'privacy_'.$action->getIdentity();
             $privacyValue = (($values['networkprivacy']=="multi_networks") ? $_POST[$privacy] : $values['networkprivacy']);
@@ -1099,7 +1113,10 @@ class Activity_IndexController extends Core_Controller_Action_Standard
     }
 
     public function getLikesAction()
-    {
+    {		
+				if ('json' != $this->_getParam('format', null)) {
+					 return $this->_forward('notfound', 'error', 'core');
+				}
         $action_id = $this->_getParam('action_id');
         $comment_id = $this->_getParam('comment_id');
 
@@ -1144,6 +1161,29 @@ class Activity_IndexController extends Core_Controller_Action_Standard
                 Engine_Api::_()->getApi('settings', 'core')->getSetting('activity.network.privacy', 0),
                 Engine_Api::_()->user()->getViewer()
             );
+    }
+    
+    public function viewAction() {
+
+      $action_id = $this->_getParam("action_id",0);
+      $action = Engine_Api::_()->getItem("activity_action", $action_id);
+      $viewer = Engine_Api::_()->user()->getViewer();
+      
+      if($action) {
+        $subject = Engine_Api::_()->user()->getUser($action->subject_id);
+        if($subject->getIdentity()) {
+          Engine_Api::_()->core()->setSubject($subject);
+        }
+
+        $this->_helper->requireSubject('user');
+        $this->_helper->requireAuth()
+            //  ->setNoForward()                         // for showing image and name irrespective of privacy
+            ->setAuthParams($subject, $viewer, 'view')
+            ->isValid();
+      }
+      
+      // Render
+      $this->_helper->content->setNoRender()->setEnabled();
     }
 
     private function sendTagNotification($tagsArray, $action)

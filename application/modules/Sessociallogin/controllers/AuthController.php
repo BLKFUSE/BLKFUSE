@@ -131,7 +131,7 @@ class Sessociallogin_AuthController extends Core_Controller_Action_Standard {
     $ipExpr = new Zend_Db_Expr($db->quoteInto('UNHEX(?)', bin2hex($ipObj->toBinary())));
     $client_id = $settings->getSetting('sessociallogin.hotmailclientid', false);
     $client_secret = $settings->getSetting('sessociallogin.hotmailclientsecret', false);
-    $baseURL = Zend_Registry::get('StaticBaseUrl');
+    $baseURL = $this->view->baseUrl().'/';
     if ($baseURL)
       $baseurl = $baseURL;
     else
@@ -140,6 +140,7 @@ class Sessociallogin_AuthController extends Core_Controller_Action_Standard {
     if (!isset($_GET['code'])) {
       $urls_ = 'https://login.live.com/oauth20_authorize.srf?client_id=' . $client_id . '&scope=wl.signin%20wl.basic%20wl.emails%20wl.contacts_emails&response_type=code&redirect_uri=' . $redirect_uri;
       header('location:' . $urls_);
+      return;
     }
     if (isset($_GET['code'])) {
       $auth_code = $_GET["code"];
@@ -185,7 +186,7 @@ class Sessociallogin_AuthController extends Core_Controller_Action_Standard {
         $FieldArray['first_name'] = $profile["first_name"];
         $FieldArray['last_name'] = $profile["last_name"];
         $FieldArray['email'] = $profile["emails"]["account"];
-        $FieldArray['photo'] = "https://apis.live.net/v5.0/" . $hotmailId . "/picture?type=large";
+        // $FieldArray['photo'] = "https://apis.live.net/v5.0/" . $hotmailId . "/picture?type=large";
       }
       // Attempt to login
       if (!$viewer->getIdentity()) {
@@ -414,7 +415,7 @@ class Sessociallogin_AuthController extends Core_Controller_Action_Standard {
     require_once(APPLICATION_PATH . '/application/modules/Sessociallogin/Api/PinterestApi.php');
     $api_key = Engine_Api::_()->getApi('settings', 'core')->getSetting('sessociallogin.pinterest.appid', '');
     $api_secret = Engine_Api::_()->getApi('settings', 'core')->getSetting('sessociallogin.pinterest.secret', '');
-    $redirectURL = ("https://" . $_SERVER['HTTP_HOST']) . Zend_Registry::get('StaticBaseUrl') . 'sessociallogin/auth/pinterest';
+    $redirectURL = ("https://" . $_SERVER['HTTP_HOST']) . $this->view->baseUrl().'/' . 'sessociallogin/auth/pinterest';
     // Pinterest passes a parameter 'code' in the Redirect Url
     if (isset($_GET['code'])) {
       try {
@@ -515,7 +516,7 @@ class Sessociallogin_AuthController extends Core_Controller_Action_Standard {
     require(realpath(dirname(__FILE__) . '/..') . DIRECTORY_SEPARATOR . 'Api' . DIRECTORY_SEPARATOR . 'Yahoo'. DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php');
 
 
-      $url = ((_ENGINE_SSL ? "https://" : "http://") . $_SERVER['HTTP_HOST']) . Zend_Registry::get('StaticBaseUrl') . 'sessociallogin/auth/yahoo';
+      $url = ((_ENGINE_SSL ? "https://" : "http://") . $_SERVER['HTTP_HOST']) . $this->view->baseUrl().'/' . 'sessociallogin/auth/yahoo';
     $provider = new Hayageek\OAuth2\Client\Provider\Yahoo([
         'clientId'     => OAUTH_CONSUMER_KEY,
         'clientSecret' => OAUTH_CONSUMER_SECRET,
@@ -563,7 +564,7 @@ class Sessociallogin_AuthController extends Core_Controller_Action_Standard {
     $hasSession = YahooSession::hasSession(OAUTH_CONSUMER_KEY, OAUTH_CONSUMER_SECRET, OAUTH_APP_ID);
     if ($hasSession == FALSE) { 
       // create the callback url,
-      $callback = (((!empty($_SERVER["HTTPS"]) && strtolower($_SERVER["HTTPS"]) == 'on') ? "https://" : "http://") . $_SERVER['HTTP_HOST']) . Zend_Registry::get('StaticBaseUrl') . 'sessociallogin/auth/yahoo';
+      $callback = (((!empty($_SERVER["HTTPS"]) && strtolower($_SERVER["HTTPS"]) == 'on') ? "https://" : "http://") . $_SERVER['HTTP_HOST']) . $this->view->baseUrl().'/' . 'sessociallogin/auth/yahoo';
       $sessionStore = new NativeSessionStore();
       // pass the credentials to get an auth url.
       // this URL will be used for the pop-up.
@@ -627,7 +628,7 @@ class Sessociallogin_AuthController extends Core_Controller_Action_Standard {
   public function twitterAction(){
     session_start();
 
-    $callback = ((_ENGINE_SSL ? "https://" : "http://") . $_SERVER['HTTP_HOST']) . Zend_Registry::get('StaticBaseUrl') . 'sessociallogin/auth/twitter';
+    $callback = ((_ENGINE_SSL ? "https://" : "http://") . $_SERVER['HTTP_HOST']) . $this->view->baseUrl().'/' . 'sessociallogin/auth/twitter';
     $settings = Engine_Api::_()->getApi('settings', 'core')->getSetting('core.twitter');
     $viewer = Engine_Api::_()->user()->getViewer();
     $twitterTable = Engine_Api::_()->getDbtable('twitter', 'user');
@@ -748,7 +749,7 @@ class Sessociallogin_AuthController extends Core_Controller_Action_Standard {
     $this->view->success = false;
     $api_key = Engine_Api::_()->getApi('settings', 'core')->getSetting('sessociallogin.google.clientid', '');
     $api_secret = Engine_Api::_()->getApi('settings', 'core')->getSetting('sessociallogin.google.clientsecret', '');
-    $siteURL = ((_ENGINE_SSL ? "https://" : "http://") . $_SERVER['HTTP_HOST']) . Zend_Registry::get('StaticBaseUrl') . 'sessociallogin/auth/google';
+    $siteURL = ((_ENGINE_SSL ? "https://" : "http://") . $_SERVER['HTTP_HOST']) . $this->view->baseUrl().'/' . 'sessociallogin/auth/google';
     // Already connected
 
     $queryString = $_SERVER['REQUEST_URI'];
@@ -887,7 +888,7 @@ class Sessociallogin_AuthController extends Core_Controller_Action_Standard {
     $vkTable->isConnected();
     $api_key = Engine_Api::_()->getApi('settings', 'core')->getSetting('sessociallogin.vkkey', '');
     $api_secret = Engine_Api::_()->getApi('settings', 'core')->getSetting('sessociallogin.vksecret', '');
-    $siteURL = ((_ENGINE_SSL ? "https://" : "http://") . $_SERVER['HTTP_HOST']) . Zend_Registry::get('StaticBaseUrl') . 'sessociallogin/auth/vk';
+    $siteURL = ((_ENGINE_SSL ? "https://" : "http://") . $_SERVER['HTTP_HOST']) . $this->view->baseUrl().'/' . 'sessociallogin/auth/vk';
     $vk = new Vkontakte([
         'client_id' => $api_key,
         'client_secret' => $api_secret,
@@ -989,7 +990,7 @@ class Sessociallogin_AuthController extends Core_Controller_Action_Standard {
     $api_key = Engine_Api::_()->getApi('settings', 'core')->getSetting('sessociallogin.flickrkey', '');
     $api_secret = Engine_Api::_()->getApi('settings', 'core')->getSetting('sessociallogin.flickrsecret', '');
     $permissions = "read";
-    $siteURL = ((_ENGINE_SSL ? "https://" : "http://") . $_SERVER['HTTP_HOST']) . Zend_Registry::get('StaticBaseUrl') . 'sessociallogin/auth/flickr';
+    $siteURL = ((_ENGINE_SSL ? "https://" : "http://") . $_SERVER['HTTP_HOST']) . $this->view->baseUrl().'/' . 'sessociallogin/auth/flickr';
     $flickr = new Flickr($api_key, $api_secret, $siteURL);
 
     // Already connected
@@ -1192,11 +1193,13 @@ class Sessociallogin_AuthController extends Core_Controller_Action_Standard {
       $this->error = true;
     }
     try {
-
+      if(!empty($_GET["error_description"])){
+        die($_GET["error_description"]);
+      }
       if (empty($_GET['code'])) {
         $likedin->setCallbackUrl((_ENGINE_SSL ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $this->view->url());
         $likedin->setTokenAccess(NULL);
-        $result = $likedin->retrieveTokenRequest();
+        // $result = $likedin->retrieveTokenRequest();
         // if ($result['success'] === TRUE) {
         //   $_SESSION['linkedin_token'] = $result['linkedin']['oauth_token'];
         //   $_SESSION['oauth_token_secret'] = $result['linkedin']['oauth_token_secret'];
@@ -1204,7 +1207,7 @@ class Sessociallogin_AuthController extends Core_Controller_Action_Standard {
         //   header('Location: https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id='.$access.'&redirect_uri='.urlencode((_ENGINE_SSL ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $this->view->url()).'&state=fooobar&scope=r_liteprofile%20r_emailaddress');
         //   exit();
         // }
-        header('Location: https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id='.$access.'&redirect_uri='.urlencode((_ENGINE_SSL ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $this->view->url()).'&state=fooobar&scope=r_liteprofile%20r_emailaddress');
+        header('Location: https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id='.$access.'&redirect_uri='.urlencode((_ENGINE_SSL ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $this->view->url()).'&state=fooobar&scope=profile%20email%20openid');
           exit();
       } else if (!empty($_GET['code'])) {
 
@@ -1214,21 +1217,37 @@ class Sessociallogin_AuthController extends Core_Controller_Action_Standard {
             $_SESSION['linkedin_secret'] = $secret = $result['access_token'];
             $_SESSION['linkedin_access'] = $result;
 
+
+            $url = "https://api.linkedin.com/v2/userinfo";
+            $curl = curl_init();
+            curl_setopt_array( $curl, 
+              array( CURLOPT_CUSTOMREQUEST => 'GET'
+                    , CURLOPT_URL => $url
+                    , CURLOPT_HTTPHEADER => array(  'Authorization: Bearer '.$result['access_token'] )
+                    , CURLOPT_RETURNTRANSFER => 1 // means output will be a return value from curl_exec() instead of simply echoed
+              ) );
+              $response = curl_exec($curl);
+              $http_code = curl_getinfo($curl,CURLINFO_HTTP_CODE);
+              curl_close($curl);
+
+              $basicProfile = json_decode($response,true);
             // Get account info
-            $basicProfile = json_decode($this->url_get_contents("https://api.linkedin.com/v2/me?projection=(id,firstName,lastName,profilePicture(displayImage~:playableStreams))&oauth2_access_token=" . $result['access_token']), true);
-            $emailAddress = json_decode($this->url_get_contents("https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))&oauth2_access_token=" . $result['access_token']), true);
-            if ($basicProfile && $emailAddress) {
+            // $basicProfile = json_decode($this->url_get_contents("https://api.linkedin.com/v2/userinfo?projection=(id,firstName,lastName,profilePicture(displayImage~:playableStreams))&oauth2_access_token=" . $result['access_token']), true);
+            // $emailAddress = json_decode($this->url_get_contents("https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))&oauth2_access_token=" . $result['access_token']), true);
+
+            
+            if ($basicProfile) {
 
 
               $image = "";
-              if(!empty($basicProfile['profilePicture']['displayImage~']['elements'][3]['identifiers'][0]['identifier']))
-                  $image = $basicProfile['profilePicture']['displayImage~']['elements'][3]['identifiers'][0]['identifier'];
-              $FieldArray['id'] = $basicProfile['id'];
+              if(!empty($basicProfile["picture"]))
+                  $image = $basicProfile["picture"];
+              $FieldArray['id'] = $basicProfile['sub'];
               $FieldArray['photo'] = $image;
-              $FieldArray['email'] = $emailAddress['elements'][0]['handle~']['emailAddress'];
-              $FieldArray['first_name'] = $basicProfile['firstName']['localized'][$basicProfile['firstName']['preferredLocale']['language'].'_'.$basicProfile['firstName']['preferredLocale']['country']];
-              $FieldArray['last_name'] = $basicProfile['lastName']['localized'][$basicProfile['lastName']['preferredLocale']['language'].'_'.$basicProfile['lastName']['preferredLocale']['country']];
-              $infoId = $basicProfile['id'];
+              $FieldArray['email'] = $basicProfile["email"];
+              $FieldArray['first_name'] = $basicProfile['given_name'];
+              $FieldArray['last_name'] = $basicProfile['family_name'];
+              $infoId = $basicProfile['sub'];
 
               if (!$infoId)
                   return;

@@ -24,6 +24,8 @@
       <th><?php echo $this->translate("Page Name") ?></th>
       <th><?php echo $this->translate("Options") ?></th>
       <th><?php echo $this->translate("Demo Links") ?></th>
+      <th><?php echo $this->translate("&nbsp") ?></th>
+      <th><?php echo $this->translate("&nbsp") ?></th>
     </tr>
   </thead>
   <tbody>

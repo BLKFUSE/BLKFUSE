@@ -12,6 +12,7 @@
  */
 
 ?>
+<?php include APPLICATION_PATH .  '/application/modules/Album/views/scripts/_adminHeader.tpl';?>
 
 <?php 
 $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jQuery/jquery-ui.js');
@@ -21,23 +22,12 @@ $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/mo
 <script type="application/javascript">
   ajaxurl = en4.core.baseUrl+"admin/album/settings/change-order";
 </script>
-<?php $flushData = Engine_Api::_()->album()->getFlushPhotoData(); ?>
-<?php if($flushData >0){ ?>
-  <div class="unmapped_warning">
-    You have <span class="_num"><?php echo $flushData; ?></span> unmapped photos. <?php echo $this->htmlLink(array('module' => 'album', 'controller' => 'settings', 'action' => 'flush-photo'), $this->translate('Click here'), array('class' => 'smoothbox icon_photos_delete')); ?> to remove them.
-  </div>
-  <br />
-<?php } ?>
-<?php if( engine_count($this->navigation) ): ?>
-<div class='tabs'>
-  <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?>
-</div>
-<?php endif; ?>
+
 <div class='admin-categories-form'>
   <div>
     <div class="admin-form-cont">
       <h3><?php echo $this->translate("Album Categories") ?> </h3>
-      <p class="description"><?php echo $this->translate('ALBUM_VIEW_SCRIPTS_ADMINSETTINGS_CATEGORIES_DESCRIPTION'); ?></p>
+      <p class="description"><?php echo $this->translate('VIEW_SCRIPTS_ADMINSETTINGS_CATEGORIES_DESCRIPTION'); ?></p>
       <div class="admin-categories-add-form">
         <h4 class="bold"><?php echo $this->translate("Add New Category"); ?></h4>
         <form id="addcategory" method="post" enctype="multipart/form-data">

@@ -13,11 +13,8 @@
  
 ?>
 <?php include APPLICATION_PATH .  '/application/modules/Sesmember/views/scripts/dismiss_message.tpl';?>
-
 <h3><?php echo "Manage Member Home Pages";?></h3>
-
 <p><?php echo "This page lists all of the Widgetized Pages created by you using this plugin. Below, you can create a new page by clicking on “Create New Member Home Page” link. You can manage below pages by using various links for them in the “Options” section below." ?></p>
-<br />	
 <div>
   <?php 
    foreach (Engine_Api::_()->getDbtable('levels', 'authorization')->fetchAll() as $level) {
@@ -37,8 +34,6 @@
   </div>
       <?php } ?>
 </div>
-<br />
-
 <?php if( engine_count($this->pages) ): ?>
 <form id='multidelete_form' method="post" action="<?php echo $this->url();?>" onSubmit="return multiDelete()">
   <table class='admin_table' style="width:100%;">

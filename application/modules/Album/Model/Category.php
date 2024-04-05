@@ -20,6 +20,7 @@ class Album_Model_Category extends Core_Model_Category
 {
   // Properties
   protected $_route = 'album_general';
+  protected $_searchTriggers = false;
 
   // General
 

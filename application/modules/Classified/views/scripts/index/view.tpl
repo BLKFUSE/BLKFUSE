@@ -49,47 +49,46 @@ endif; ?>
 </script>
 
 <form id='filter_form' class='global_form_box' method='post' action='<?php echo $this->url(array('module' => 'classified', 'controller' => 'index', 'action' => 'index'), 'default', true) ?>' style='display:none;'>
-<input type="hidden" id="tag" name="tag" value=""/>
+  <input type="hidden" id="tag" name="tag" value=""/>
 </form>
 
 <div class='classified_view'>
   <div class="classified_top">
-    <?php if($this->classified->photo_id) { ?>
+    <?php //if($this->classified->photo_id) { ?>
       <div class="classified_left">
         <div class="classifieds_thumbs_nav vertical slider">
-          <?php $mainPhoto = 0; ?>
-        <?php foreach( $this->paginator as $photo ): ?>
-          <div>
+          <?php if($this->main_photo): ?>
             <div>
-            <?php if(!$mainPhoto && $this->main_photo): ?>
-              <div class="classifieds_thumbs_description" style="display: none;">
-                <?php if( '' != $this->main_photo->getDescription() ): ?>
-                <?php echo Engine_Api::_()->core()->smileyToEmoticons($this->main_photo->getDescription()); ?>
-                <?php endif; ?>
+              <div>
+                <div class="classifieds_thumbs_description" style="display: none;">
+                  <?php if( '' != $this->main_photo->getDescription() ): ?>
+                    <?php echo Engine_Api::_()->core()->smileyToEmoticons($this->main_photo->getDescription()); ?>
+                  <?php endif; ?>
+                </div>
+                <?php echo $this->htmlImage($this->main_photo->getPhotoUrl(), $this->main_photo->getTitle(), array('id' => 'media_photo',"class"=>"classifieds_thumbs")); ?>
               </div>
-              <?php echo $this->htmlImage($this->main_photo->getPhotoUrl(), $this->main_photo->getTitle(), array('id' => 'media_photo',"class"=>"classifieds_thumbs")); ?>
-              <?php $mainPhoto = $this->main_photo; ?>
-            <?php elseif($this->classified->photo_id != $photo->file_id): ?>
-              <?php if(!$mainPhoto): $mainPhoto = $photo; endif; ?>
-              <div class="classifieds_thumbs_description" style="display: none;">
-                <?php if( '' != $photo->getDescription() ): ?>
-                <?php echo Engine_Api::_()->core()->smileyToEmoticons($photo->getDescription()); ?>
-                <?php endif; ?>
-              </div>
-              <?php echo $this->htmlImage($photo->getPhotoUrl(), $photo->getTitle(), array('id' => 'media_photo',"class"=>"classifieds_thumbs")); ?>
-            <?php endif; ?>
             </div>
-          </div>
-          <?php endforeach;?>
-          </div>
-          <div class="classifieds_thumbs_main_image">
-              <div class="classifieds_thumbs_main">
+          <?php endif; ?>
+          <?php foreach( $this->paginator as $photo ): ?>
+            <?php if($this->classified->photo_id == $photo->getIdentity()) continue; ?>
+            <div>
+              <div>
+                <div class="classifieds_thumbs_description" style="display: none;">
+                  <?php if( '' != $photo->getDescription() ): ?>
+                  <?php echo Engine_Api::_()->core()->smileyToEmoticons($photo->getDescription()); ?>
+                  <?php endif; ?>
+                </div>
+                <?php echo $this->htmlImage($photo->getPhotoUrl(), $photo->getTitle(), array('id' => 'media_photo',"class"=>"classifieds_thumbs")); ?>
               </div>
-            <div class="classifieds_thumbs_description">
-          </div>
+            </div>
+          <?php endforeach;?>
+        </div>
+        <div class="classifieds_thumbs_main_image">
+          <div class="classifieds_thumbs_main"></div>
+          <div class="classifieds_thumbs_description"></div>
         </div>
       </div>
-    <?php } ?>
+    <?php //} ?>
     <div class="classified_right">
       <h2>
         <?php echo $this->classified->getTitle(); ?>
@@ -111,7 +110,6 @@ endif; ?>
           </span>
         </div>
       <?php endif; ?>
-
       <br/>
       <h3><?php echo $this->translate('About'); ?></h3>
       <div class="rich_content_body">
@@ -267,4 +265,9 @@ endif; ?>
       });
     });
 
+  // Add parant element to table
+  scriptJquery('.rich_content_body table').each(function() {                            
+    scriptJquery(this).addClass('table');
+    scriptJquery(this).wrap('<div class="table_wrap"></div>');
+  });
 </script>

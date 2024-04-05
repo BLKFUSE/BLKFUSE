@@ -36,6 +36,7 @@ class Invite_Form_Invite extends Engine_Form
       ->setTitle('Invite Your Friends')
       ->setDescription('_INVITE_FORM_DESCRIPTION')
       ->setLegend('');
+    $this->setAttribs(array('id' => 'invite_invite','class' => 'global_form'))->setMethod('GET');
     
     // Init recipients
     $this->addElement('Textarea', 'recipients', array(

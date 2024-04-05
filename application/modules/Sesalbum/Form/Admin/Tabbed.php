@@ -23,12 +23,12 @@ class Sesalbum_Form_Admin_Tabbed extends Engine_Form
     ));
 		$this->addElement('Radio', "tab_option", array(
 			'label' => "Choose the design of the tabs.",
-        'multiOptions' => array(
+      'multiOptions' => array(
 			'default' => 'Default SE Tabs',
-            'advance' => 'Advanced Tabs',
-			'filter' =>'Advanced Tabs like Buttons'
-        ),
-        'value' => 'filter',
+        'advance' => 'Advanced Tabs',
+        'filter' =>'Advanced Tabs Filter Buttons'
+      ),
+      'value' => 'filter',
     ));
 		$this->addElement('Radio', "view_type", array(
 			'label' => "Choose the View Type for Photos (Pinboard View for photos only).",
@@ -81,7 +81,7 @@ class Sesalbum_Form_Admin_Tabbed extends Engine_Form
 						'title' => 'Photo / Album Title',
 						'by' => 'Owner\'s Name',
 						'description'=>'Description (pinboard view photo only)',
-						'socialSharing' =>'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+						'socialSharing' =>'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
 						'favouriteCount' => 'Favourites Count',
 						'downloadCount' => 'Downloads Count',
 						'photoCount' => 'Photos Count',

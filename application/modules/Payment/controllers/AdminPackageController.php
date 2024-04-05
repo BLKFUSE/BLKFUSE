@@ -16,11 +16,11 @@
  * @copyright  Copyright 2006-2020 Webligo Developments
  * @license    http://www.socialengine.com/license/
  */
-class Payment_AdminPackageController extends Core_Controller_Action_Admin
-{
-  public function indexAction()
-  {
-    $this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_payment', array(), 'core_admin_main_payment_packages');
+class Payment_AdminPackageController extends Core_Controller_Action_Admin {
+
+  public function indexAction() {
+
+    $this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_membership', array(), 'core_admin_main_payment_packages');
     // Test curl support
     if( !function_exists('curl_version') ||
         !($info = curl_version()) ) {
@@ -64,10 +64,10 @@ class Payment_AdminPackageController extends Core_Controller_Action_Admin
       $formFilter->populate(array('enabled' => 1));
     }
     if( empty($filterValues['order']) ) {
-      $filterValues['order'] = 'package_id';
+      $filterValues['order'] = 'order';
     }
     if( empty($filterValues['direction']) ) {
-      $filterValues['direction'] = 'DESC';
+      $filterValues['direction'] = 'ASC';
     }
     $this->view->filterValues = $filterValues;
     $this->view->order = $filterValues['order'];
@@ -115,10 +115,47 @@ class Payment_AdminPackageController extends Core_Controller_Action_Admin
     }
     $this->view->memberCounts = $memberCounts;
   }
+  
+  public function settingsAction() {
+  
+    $this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_membership', array(), 'core_admin_main_membership_settings');
+    
+    $settings = Engine_Api::_()->getApi('settings', 'core');
+    
+    // Make form
+    $this->view->form = $form = new Payment_Form_Admin_Package_Global();
+
+    // Check method/data
+    if( !$this->getRequest()->isPost() ) {
+      return;
+    }
+    if( !$form->isValid($this->getRequest()->getPost()) ) {
+      return;
+    }
+
+    $values = $form->getValues();
+
+    // Save settings
+    Engine_Api::_()->getApi('settings', 'core')->payment = $values;
+
+    $form->addNotice('Your changes have been saved.');
+  }
+  
+  public function orderAction() {
+    $table = Engine_Api::_()->getDbTable('packages', 'payment');
+    $results = $table->fetchAll($table->select());
+    $orders = $this->getRequest()->getParam('order');
+    foreach ($results as $result) {
+      $key = array_search ('order_'.$result->getIdentity(), $orders);
+      $result->order = $key+1;
+      $result->save();
+    }
+    return;
+  }
 
   public function createAction() {
   
-		$this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_payment', array(), 'core_admin_main_payment_packages');
+		$this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_membership', array(), 'core_admin_main_payment_packages');
 		
     // Make form
     $this->view->form = $form = new Payment_Form_Admin_Package_Create();
@@ -240,6 +277,8 @@ class Payment_AdminPackageController extends Core_Controller_Action_Admin
       $package = $packageTable->createRow();
       $package->setFromArray($values);
       $package->save();
+      $package->order = $package->getIdentity();
+      $package->save();
 
       // Create package in gateways?
       if( !$package->isFree() ) {
@@ -271,7 +310,7 @@ class Payment_AdminPackageController extends Core_Controller_Action_Admin
 
   public function editAction()
   {
-		$this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_payment', array(), 'core_admin_main_payment_packages');
+		$this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_membership', array(), 'core_admin_main_payment_packages');
 		
     // Get package
     if( null === ($packageIdentity = $this->_getParam('package_id')) ||
@@ -434,13 +473,9 @@ class Payment_AdminPackageController extends Core_Controller_Action_Admin
         !($package = Engine_Api::_()->getDbtable('packages', 'payment')->find($packageIdentity)->current()) ) {
       throw new Engine_Exception('No package found');
     }
-
-
-
+    
     $this->view->form = $form = new Payment_Form_Admin_Package_Delete();
-
-
-
+    
     // Check method/data
     if( !$this->getRequest()->isPost() ) {
       return;
@@ -450,16 +485,11 @@ class Payment_AdminPackageController extends Core_Controller_Action_Admin
       return;
     }
 
-
-
     // Process
-
     $packageTable = Engine_Api::_()->getDbtable('packages', 'payment');
     $db = $packageTable->getAdapter();
     $db->beginTransaction();
-
     try {
-
       // Delete package in gateways?
       $gatewaysTable = Engine_Api::_()->getDbtable('gateways', 'payment');
       foreach( $gatewaysTable->fetchAll(array('enabled = ?' => 1)) as $gateway ) {
@@ -473,13 +503,89 @@ class Payment_AdminPackageController extends Core_Controller_Action_Admin
 
       // Delete package
       $package->delete();
-
       $db->commit();
     } catch( Exception $e ) {
       $db->rollBack();
       throw $e;
     }
-
     $this->view->status = true;
+  }
+
+  public function featuresAction() {
+  
+    $this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_membership', array(), 'core_admin_main_payment_packages');
+    
+    if( null === ($packageIdentity = $this->_getParam('package_id')) || !($package = Engine_Api::_()->getDbtable('packages', 'payment')->find($packageIdentity)->current()) ) {
+      throw new Engine_Exception('No package found');
+    }
+    
+    $this->view->form = $form = new Payment_Form_Admin_Package_Features();
+    $features = (array) json_decode($package->features);
+    $form->populate($features);
+    $this->view->package = $package;
+    
+    // Check method/data
+    if(!$this->getRequest()->isPost()){
+      return;
+    }
+    
+    if(!$form->isValid($this->getRequest()->getPost()) ) {
+      return;
+    }
+
+    $packageTable = Engine_Api::_()->getDbtable('packages', 'payment');
+    $db = $packageTable->getAdapter();
+    $db->beginTransaction();
+    try {
+      $values = $form->getValues();
+      $package->features = json_encode($values);
+      $package->save();
+      $db->commit();
+    } catch( Exception $e ) { 
+      $db->rollBack();
+      throw $e;
+    }
+    return $this->_helper->redirector->gotoRoute(array('action' => 'index'));
+  }
+  
+  public function changeStylesAction() {
+
+    $this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_membership', array(), 'core_admin_main_payment_packages');
+
+    $packageIdentity = $this->_getParam('package_id');
+    
+    if( null === ($packageIdentity) || !($package = Engine_Api::_()->getDbtable('packages', 'payment')->find($packageIdentity)->current())) {
+      throw new Engine_Exception('No package found');
+    }
+    
+    $this->view->form = $form = new Payment_Form_Admin_Package_Style();
+    if(!empty($package->packagestyles)) {
+      $values = (array) json_decode($package->packagestyles);
+      $this->view->show_label = $values['show_label'];
+      $form->populate($values);
+    }
+    $form->column_title->setValue($package->getTitle());
+
+    if (!$this->getRequest()->isPost())
+      return;
+      
+    if (!$form->isValid($this->getRequest()->getPost()))
+      return;
+      
+    $values = $form->getValues();
+    unset($values['column_title']);
+    $values['column_title'] = $package->getTitle();
+    
+    $db = Engine_Db_Table::getDefaultAdapter();
+    $db->beginTransaction();
+    try {
+      $package->packagestyles = json_encode($values);
+      $package->save();
+      $db->commit();
+      return $this->_helper->redirector->gotoRoute(array('module' => 'payment', 'controller' => 'package', 'action' => 'index'), 'admin_default', true);
+    } catch (Exception $e) {
+      $db->rollBack();
+      throw $e;
+    }
   }
 }

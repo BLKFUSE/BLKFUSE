@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `engine4_music_playlists` (
   `title` varchar(255) NOT NULL default '',
   `description` text NOT NULL,
   `photo_id` int(11) unsigned NOT NULL default '0',
-  `owner_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `owner_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner_id` int(11) unsigned NOT NULL,
   `search` tinyint(1) NOT NULL default '1',
   `profile` tinyint(1) NOT NULL default '0',
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `engine4_music_playlists` (
   KEY `creation_date` (`creation_date`),
   KEY `play_count` (`play_count`),
   KEY `owner_id` (`owner_type`,`owner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -54,13 +54,13 @@ CREATE TABLE IF NOT EXISTS `engine4_music_playlist_songs` (
   `song_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `playlist_id` int(11) unsigned NOT NULL,
   `file_id` int(11) unsigned NOT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `play_count` int(11) unsigned NOT NULL default '0',
   `order` smallint(6) NOT NULL default '0',
   PRIMARY KEY (`song_id`),
   KEY (`playlist_id`,`file_id`),
   KEY `play_count` (`play_count`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- --------------------------------------------------------
 
 --
@@ -79,7 +79,7 @@ CREATE TABLE `engine4_music_categories` (
   KEY `user_id` (`user_id`),
   KEY `category_id` (`category_id`, `category_name`),
   KEY `category_name` (`category_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_music_categories`
@@ -351,7 +351,7 @@ CREATE TABLE IF NOT EXISTS `engine4_music_ratings` (
   `rating` tinyint(1) unsigned default NULL,
   PRIMARY KEY  (`playlist_id`,`user_id`),
   KEY `INDEX` (`playlist_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 ALTER TABLE `engine4_music_playlists` ADD `rating` FLOAT NOT NULL;
 ALTER TABLE `engine4_music_playlists` ADD `category_id` INT(11) NOT NULL DEFAULT '0';
@@ -362,3 +362,29 @@ INSERT IGNORE INTO `engine4_activity_notificationtypes` (`type`, `module`, `body
 ("music_rating", "music", '{item:$subject} has rated your music {item:$object}.', 0, "");
 
 INSERT IGNORE INTO `engine4_core_mailtemplates` (`type`, `module`, `vars`) VALUES ("notify_music_rating", "music", "[host],[email],[recipient_title],[recipient_link],[recipient_photo],[sender_title],[sender_link],[sender_photo],[object_title],[object_link],[object_photo],[object_description]");
+
+
+
+ALTER TABLE `engine4_music_playlists` ADD `approved` TINYINT(1) NOT NULL DEFAULT "1";
+ALTER TABLE `engine4_music_playlists` ADD INDEX(`approved`);
+
+ALTER TABLE `engine4_music_playlists` ADD `resubmit` TINYINT(1) NOT NULL DEFAULT "0";
+ALTER TABLE `engine4_music_playlists` ADD INDEX(`resubmit`);
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'music_playlist' as `type`,
+    'approve' as `name`,
+    1 as `value`,
+    NULL as `params`
+FROM `engine4_authorization_levels` WHERE `type` IN('moderator', 'admin');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'music_playlist' as `type`,
+    'approve' as `name`,
+    1 as `value`,
+    NULL as `params`
+FROM `engine4_authorization_levels` WHERE `type` IN('user');

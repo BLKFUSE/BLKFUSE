@@ -10,7 +10,7 @@
  * @version    $Id: Stripe.php  2019-04-25 00:00:00 SocialEngineSolutions $
  * @author     SocialEngineSolutions
  */
-include_once APPLICATION_PATH . "/application/modules/Sesadvpmnt/Api/Stripe/init.php";
+include_once APPLICATION_PATH . "/application/libraries/Engine/Service/Stripe/init.php";
 class Sescontestjoinfees_Plugin_Gateway_Event_Stripe extends Engine_Payment_Plugin_Abstract {
     protected $_gatewayInfo;
     protected $_gateway;
@@ -89,7 +89,7 @@ class Sescontestjoinfees_Plugin_Gateway_Event_Stripe extends Engine_Payment_Plug
     */
 	public function createSubscriptionTransaction(User_Model_User $user, Zend_Db_Table_Row_Abstract $user_order, Payment_Model_Package $package, array $params = array()){}
   public function createOrderTransaction($order,$event,array $params = array()) { 
-    $params['currency'] = Engine_Api::_()->sescontestjoinfees()->defaultCurrency();   
+    $params['currency'] = Engine_Api::_()->payment()->defaultCurrency();   
     $logo = !empty($this->_gatewayInfo->config['sesadvpmnt_stripe_logo']) ? $this->_gatewayInfo->config['sesadvpmnt_stripe_logo'] : "https://";
     $logo = 'http://' . $_SERVER['HTTP_HOST'].$logo;
     $gateway_id = $params['gateway_id'] ?? null;
@@ -116,8 +116,8 @@ class Sescontestjoinfees_Plugin_Gateway_Event_Stripe extends Engine_Payment_Plug
         $viewer = Engine_Api::_()->user()->getViewer();
         
         //payment currency
-        $currentCurrency = Engine_Api::_()->sescontestjoinfees()->getCurrentCurrency();
-        $defaultCurrency = Engine_Api::_()->sescontestjoinfees()->defaultCurrency();
+        $currentCurrency = Engine_Api::_()->payment()->getCurrentCurrency();
+        $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
         $settings = Engine_Api::_()->getApi('settings', 'core');
         $currencyValue = 1;
         if($currentCurrency != $defaultCurrency){

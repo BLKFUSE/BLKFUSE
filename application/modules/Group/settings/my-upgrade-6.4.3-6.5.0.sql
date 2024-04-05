@@ -1,0 +1,3 @@
+UPDATE `engine4_authorization_permissions` SET `params` = 'blockquote, strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr, iframe, table, td, tbody, tr' WHERE `engine4_authorization_permissions`.`type` = 'group' AND `engine4_authorization_permissions`.`name` = 'auth_html';
+
+UPDATE `engine4_authorization_permissions` SET `params` = 'blockquote, strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr, iframe, table, td, tbody, tr' WHERE `engine4_authorization_permissions`.`type` = 'group' AND `engine4_authorization_permissions`.`name` = 'commentHtml';

@@ -19,9 +19,9 @@ class Sescredit_Widget_PurchasePointsController extends Engine_Content_Widget_Ab
     $options = Engine_Api::_()->getDbTable('offers', 'sescredit')->getOffer();
     $multiOptions = $optionArray = array();
     foreach ($options as $option) {
-      $multiOptions[$option->offer_id] = $option->point . " Point in " . Engine_Api::_()->sescredit()->getCurrencyPrice($option->point_value,'','',true);
+      $multiOptions[$option->offer_id] = $option->point . " Point in " . Engine_Api::_()->payment()->getCurrencyPrice($option->point_value);
       $optionArray[$option->offer_id]['point'] = $option->point;
-      $optionArray[$option->offer_id]['value'] = Engine_Api::_()->sescredit()->getCurrencyPrice($option->point_value,'','',true);
+      $optionArray[$option->offer_id]['value'] = Engine_Api::_()->payment()->getCurrencyPrice($option->point_value);
     }
     if (engine_count($options) < 1)
       $form->sescredit_site_offers->setDescription("No Offers Available.  ");
@@ -33,6 +33,8 @@ class Sescredit_Widget_PurchasePointsController extends Engine_Content_Widget_Ab
 
     $gatewayPlugins = array();
     foreach ($gateways as $gateway) {
+      if($gateway->plugin == "Payment_Plugin_Gateway_Stripe")
+        continue;
       $gatewayPlugins[] = array(
           'gateway' => $gateway,
           'plugin' => $gateway->getGateway(),

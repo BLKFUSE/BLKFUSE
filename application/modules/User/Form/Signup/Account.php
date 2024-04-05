@@ -81,18 +81,22 @@ class User_Form_Signup_Account extends Engine_Form_Email
     //}
 
     // Element: code
-    if( $settings->getSetting('user.signup.inviteonly') > 0 ) {
+    if( $settings->getSetting('invite.enable', 1) &&  $settings->getSetting('invite.signupenable', 0)) {
       $codeValidator = new Engine_Validate_Callback(array($this, 'checkInviteCode'), $emailElement);
       $codeValidator->setMessage("This invite code is invalid or does not match the selected email address");
       $this->addElement('Text', 'code', array(
-        'label' => 'Invite Code',
-        'required' => true
+        'label' => $settings->getSetting('invite.signupenable', 0) == 2 ? 'Invite Code (Optional)' : "Invite Code",
+        'required' => $settings->getSetting('invite.signupenable', 0) == 1 ? true : false,
       ));
       $this->code->addValidator($codeValidator);
 
       if( !empty($inviteSession->invite_code) ) {
         $this->code->setValue($inviteSession->invite_code);
       }
+      
+      $invitereferralSession = new Zend_Session_Namespace('invite_referral_signup');
+      if(!empty($invitereferralSession->referral_code))
+        $this->code->setValue($invitereferralSession->referral_code);
     }
 
     if( $settings->getSetting('user.signup.random', 0) == 0  && empty($_SESSION['twitter_signup'])) {
@@ -379,23 +383,28 @@ class User_Form_Signup_Account extends Engine_Form_Email
 
     if( empty($_SESSION['facebook_signup']) ){
       // Init facebook login link
-//      if( 'none' != $settings->getSetting('core_facebook_enable', 'none')
-//          && $settings->core_facebook_secret ) {
-//        $this->addElement('Dummy', 'facebook', array(
-//          'content' => User_Model_DbTable_Facebook::loginButton(),
-//        ));
-//      }
+      if($settings->core_facebook_enable == 'login' && $settings->core_facebook_appid && $settings->core_facebook_secret ) {
+        $this->addElement('Dummy', 'facebook', array(
+          'content' => User_Model_DbTable_Facebook::loginButton(),
+          'ignore' => true,
+        ));
+      }
     }
 
     if( empty($_SESSION['twitter_signup']) ){
       // Init twitter login link
-//      if( 'none' != $settings->getSetting('core_twitter_enable', 'none')
-//          && $settings->core_twitter_secret ) {
-//        $this->addElement('Dummy', 'twitter', array(
-//          'content' => User_Model_DbTable_Twitter::loginButton(),
-//        ));
-//      }
+      if( $settings->core_twitter_enable == 'login' && $settings->core_twitter_key && $settings->core_twitter_secret ) {
+        $this->addElement('Dummy', 'twitter', array(
+          'content' => User_Model_DbTable_Twitter::loginButton(),
+          'ignore' => true,
+        ));
+      }
     }
+
+    if(($settings->core_facebook_enable == 'login' && $settings->core_facebook_appid && $settings->core_facebook_secret) || $settings->core_twitter_enable == 'login' && $settings->core_twitter_key && $settings->core_twitter_secret) {
+      $this->addDisplayGroup(array('facebook', 'twitter'), 'sociallinks');
+    }
+
     // Set default action
     $this->setAction(Zend_Controller_Front::getInstance()->getRouter()->assemble(array(), 'user_signup', true));
   }
@@ -416,7 +425,12 @@ class User_Form_Signup_Account extends Engine_Form_Email
     if( Engine_Api::_()->getApi('settings', 'core')->getSetting('user.signup.checkemail') ) {
       $select->where('recipient LIKE ?', $emailElement->getValue());
     }
-
+    $checkInviteCode = (bool) $select->query()->fetchColumn(0);
+    if(empty($checkInviteCode)) {
+      $referral = Engine_Api::_()->getDbTable('users', 'user')->getUserExist('', $value);
+      if($referral->user_id)
+        return true;
+    }
     return (bool) $select->query()->fetchColumn(0);
   }
   public function regexCheck($value)

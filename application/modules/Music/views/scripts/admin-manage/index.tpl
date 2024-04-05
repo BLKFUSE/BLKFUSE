@@ -10,7 +10,7 @@
  * @author     Steve
  */
 ?>
-
+<?php include APPLICATION_PATH .  '/application/modules/Music/views/scripts/_adminHeader.tpl';?>
 <script type="text/javascript">
 
 function multiDelete()
@@ -26,28 +26,14 @@ function selectAll(obj)
 }
 
 </script>
-
-<h2><?php echo $this->translate("Music Plugin") ?></h2>
-
-
-<?php if( engine_count($this->navigation) ): ?>
-  <div class='tabs'>
-    <?php
-      // Render the menu
-      //->setUlClass()
-      echo $this->navigation()->menu()->setContainer($this->navigation)->render()
-    ?>
-  </div>
-<?php endif; ?>
-
-<br />
-
-<?php
-$settings = Engine_Api::_()->getApi('settings', 'core');
-if( $settings->getSetting('user.support.links', 0) == 1 ) {
-	echo 'More info on the Music Plugin: <a href="https://community.socialengine.com/blogs/597/54/music" target="_blank">See KB article</a>.<br />';
-} 
-?>	
+<p>
+  <?php
+    $settings = Engine_Api::_()->getApi('settings', 'core');
+    if( $settings->getSetting('user.support.links', 0) == 1 ) {
+      echo 'More info on the Music Plugin: <a href="https://community.socialengine.com/blogs/597/54/music" target="_blank">See KB article</a>.';
+    } 
+  ?>	
+</p>
 
 <?php if( engine_count($this->paginator) ): ?>
   <form id='multidelete_form' method="post" action="<?php echo $this->url();?>" onSubmit="return multiDelete()">
@@ -61,6 +47,7 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
         <th><?php echo $this->translate("Songs") ?></th>
         <th><?php echo $this->translate("Plays") ?></th>
         <th><?php echo $this->translate("Date") ?></th>
+        <th><?php echo $this->translate("Approved") ?></th>
         <th><?php echo $this->translate("Options") ?></th>
       </tr>
     </thead>
@@ -70,13 +57,32 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
           <td><input type='checkbox' class='checkbox' name='delete_<?php echo $item->getIdentity(); ?>' value="<?php echo $item->getIdentity(); ?>" /></td>
           <td data-label="ID"><?php echo $item->getIdentity() ?></td>
           <td data-label="<?php echo $this->translate("Title") ?>"><?php echo $item->getTitle() ?></td>
-          <td data-label="<?php echo $this->translate("Owner") ?>"><?php echo $item->getOwner()->getTitle() ?></td>
+          <td data-label="<?php echo $this->translate("Owner") ?>" class="admin_table_name"><span class="_name"><?php echo $item->getOwner()->getTitle() ?></span></td>
           <td data-label="<?php echo $this->translate("Songs") ?>"><?php echo engine_count($item->getSongs()) ?>
           <td data-label="<?php echo $this->translate("Plays") ?>"><?php echo $this->locale()->toNumber($item->play_count) ?></td>
           <td data-label="<?php echo $this->translate("Date") ?>"><?php echo $item->creation_date ?></td>
-          <td class="admin_table_options">
-            <?php echo $this->htmlLink($item->getHref(), 'play') ?>
           
+          <td data-label="<?php echo $this->translate("Approve") ?>">
+            <?php if(!$item->resubmit) { ?>
+              <?php echo "---"; ?>
+            <?php } else { ?>
+              <?php if($item->approved == 1): ?>
+                <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'core', 'controller' => 'admin-approve-content', 'action' => 'approved', 'resource_id' => $item->getIdentity(), 'resource_type' => $item->getType()), $this->htmlImage($this->layout()->staticBaseUrl . 'application/modules/Core/externals/images/admin/check.png', '', array('title'=> $this->translate('Unapprove'))), array('class' => "smoothbox")) ?>
+              <?php else: ?>
+                <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'core', 'controller' => 'admin-approve-content', 'action' => 'approved', 'resource_id' => $item->getIdentity(), 'resource_type' => $item->getType()), $this->htmlImage($this->layout()->staticBaseUrl . 'application/modules/Core/externals/images/admin/uncheck.png', '', array('title'=> $this->translate('Approve'))), array('class' => "smoothbox")) ?>
+              <?php endif; ?>
+            <?php } ?>
+          </td>
+          
+          <td class="admin_table_options">
+            <?php if(!$item->resubmit && empty($item->approved)) { ?>
+              <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'core', 'controller' => 'admin-approve-content', 'action' => 'approved', 'resource_id' => $item->getIdentity(), 'resource_type' => $item->getType()), $this->translate("Approve"),array('class' => 'smoothbox')) ?>
+              |
+              <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'core', 'controller' => 'admin-approve-content', 'action' => 'reject', 'resource_id' => $item->getIdentity(), 'resource_type' => $item->getType()), $this->translate("Reject"),array('class' => 'smoothbox')) ?>
+              |
+            <?php } ?>
+            <?php echo $this->htmlLink($item->getHref(), 'play') ?>
+           |
             <?php echo $this->htmlLink(
                 array('route' => 'default', 'module' => 'music', 'controller' => 'admin-manage', 'action' => 'delete', 'id' => $item->getIdentity()),
                 $this->translate("delete"),

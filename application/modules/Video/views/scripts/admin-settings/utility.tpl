@@ -10,19 +10,7 @@
  * @author     Jung
  */
 ?>
-
-<h2><?php echo $this->translate("Videos Plugin") ?></h2>
-
-<?php if( engine_count($this->navigation) ): ?>
-  <div class='tabs'>
-    <?php
-      // Render the menu
-      //->setUlClass()
-      echo $this->navigation()->menu()->setContainer($this->navigation)->render()
-    ?>
-  </div>
-<?php endif; ?>
-
+<?php include APPLICATION_PATH .  '/application/modules/Video/views/scripts/_adminHeader.tpl';?>
 <p>
   <?php echo $this->translate("This page contains utilities to help configure and troubleshoot the video plugin.") ?>
 </p>

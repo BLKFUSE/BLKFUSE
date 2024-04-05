@@ -89,6 +89,7 @@ class Core_Model_Like extends Core_Model_Item_Abstract
         $likedItem = $this->getResource();
         $poster = $this->getPoster();
         $activityApi = Engine_Api::_()->getDbtable('actions', 'activity');
+        if($likedItem)
         $activityApi->removeActivities($poster, $likedItem, 'like_' . $likedItem->getType());
 
         parent::_postDelete();

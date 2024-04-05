@@ -17,7 +17,7 @@ return array(
       'type' => 'module',
       'name' => 'sescontestjurymember',
       //'sku' => 'sescontestjurymember',
-      'version' => '5.4.0',
+      'version' => '6.5.1',
       'path' => 'application/modules/Sescontestjurymember',
       'title' => '<span style="color:#DDDDDD">SNS - Advanced Contests - Voting by Jury Members Plugin</span>',
       'description' => '<span style="color:#DDDDDD">SNS - Advanced Contests - Voting by Jury Members Plugin</span>',

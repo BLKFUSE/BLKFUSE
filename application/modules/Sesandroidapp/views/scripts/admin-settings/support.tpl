@@ -12,7 +12,8 @@
  */
  
 ?>
-<h2>
+<?php include APPLICATION_PATH .  '/application/modules/Sesandroidapp/views/scripts/dismiss_message.tpl';?>
+<h2 class="page_heading">
   <?php echo $this->translate("Native Android Mobile App") ?>
 </h2>
 <?php if(is_countable($this->navigation) && engine_count($this->navigation) ): ?>
@@ -20,8 +21,6 @@
       <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?>
     </div>
   <?php endif; ?>
-
-
 <div class="sesandroidapp_support_links">
   <a href="javascript:;" target="_blank">
     <img src="application/modules/Sesandroidapp/externals/images/support/faq.png" />

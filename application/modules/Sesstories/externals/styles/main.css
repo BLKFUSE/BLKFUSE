@@ -1,6 +1,10 @@
 
 
 /*All Stories List*/
+.sesstories_allstories_item_loading,
+.sesstories_allstories_item_img{
+	background-color:$theme_list_background_color_alt;
+}
 .sesstories_allstories .owl-nav > div,
 .sesstories_allstories_item_thumb{
 	background-color:$theme_list_background_color;
@@ -23,7 +27,14 @@
 .sesstories_reply_success_msg i{
 	color:$theme_button_background_color;
 }
-
+/*Create Popup*/
+.sesstories_add_story_popup{
+	background-color: $theme_list_background_color_alt;
+}
+.sesstories_add_story_popup_left,
+.sesstories_story_uploader_preview section{
+	background-color: $theme_list_background_color;
+}
 .sesstories_add_bg_images a._selected img{
 	border: 2px solid $theme_button_background_color;
 }

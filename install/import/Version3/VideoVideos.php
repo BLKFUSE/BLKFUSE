@@ -201,8 +201,8 @@ CREATE TABLE IF NOT EXISTS `se_videos` (
 *  `video_id` int(9) unsigned NOT NULL auto_increment,
 *  `video_user_id` int(9) unsigned NOT NULL default '0',
 *  `video_datecreated` int(14) NOT NULL default '0',
-*  `video_title` varchar(255) collate utf8_unicode_ci default NULL,
-*  `video_desc` text collate utf8_unicode_ci,
+*  `video_title` varchar(255) collate utf8mb4_unicode_ci default NULL,
+*  `video_desc` text COLLATE utf8mb4_unicode_ci,
 *  `video_views` smallint(5) unsigned NOT NULL default '0',
 *  `video_cache_rating` float NOT NULL default '0',
 -  `video_cache_rating_weighted` float NOT NULL default '0',
@@ -214,14 +214,14 @@ CREATE TABLE IF NOT EXISTS `se_videos` (
 *  `video_search` tinyint(1) unsigned default '1',
 *  `video_totalcomments` smallint(5) unsigned default '0',
 *  `video_type` tinyint(1) NOT NULL default '0',
-*  `video_youtube_code` varchar(50) collate utf8_unicode_ci default NULL,
+*  `video_youtube_code` varchar(50) collate utf8mb4_unicode_ci default NULL,
 *  `video_dateupdated` int(14) NOT NULL default '0',
 *  `video_uploaded` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`video_id`),
   KEY `video_cache_rating` (`video_cache_rating`),
   KEY `video_views` (`video_views`),
   FULLTEXT KEY `title_and_text` (`video_title`,`video_desc`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -231,7 +231,7 @@ CREATE TABLE IF NOT EXISTS `engine4_video_videos` (
 *  `title` varchar(100) NOT NULL,
 *  `description` text NOT NULL,
 *  `search` tinyint(1) NOT NULL default '1',
-*  `owner_type` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+*  `owner_type` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
 *  `owner_id` int(11) NOT NULL,
 *  `creation_date` datetime NOT NULL,
 *  `modified_date` datetime NOT NULL,
@@ -250,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `engine4_video_videos` (
   KEY `search` (`search`),
   KEY `creation_date` (`creation_date`),
   KEY `view_count` (`creation_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
  *
  */
 
@@ -266,6 +266,6 @@ CREATE TABLE IF NOT EXISTS `engine4_video_categories` (
   `user_id` int(11) unsigned NOT NULL,
   `category_name` varchar(128) NOT NULL,
   PRIMARY KEY  (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
  *
  */

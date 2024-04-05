@@ -89,6 +89,7 @@
           <div class="music_browse_info_desc">
             <?php echo $playlist->description ?>
           </div>
+          <?php echo $this->partial('_approved_tip.tpl', 'core', array('item' => $playlist)); ?>
           <?php echo $this->partial('_Player.tpl', array('playlist' => $playlist, 'hideStats' => true)) ?>
         </div>
       </li>

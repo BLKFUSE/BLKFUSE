@@ -10,6 +10,7 @@
 
 
 INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
+("core_admin_main_plugins_elpis", "elpis", "Elpis Theme", "", '{"route":"admin_default","module":"elpis","controller":"settings"}', "core_admin_main_plugins", "", 999),
 ("core_admin_main_elpis", "elpis", "Elpis Theme", "", '{"route":"admin_default","module":"elpis","controller":"settings"}', "core_admin_main", "", 999),
 ("elpis_admin_main_settings", "elpis", "Global Settings", "", '{"route":"admin_default","module":"elpis","controller":"settings"}', "elpis_admin_main", "", 1),
 ("elpis_admin_main_styling", "elpis", "Color Schemes", "", '{"route":"admin_default","module":"elpis","controller":"settings", "action":"styling"}', "elpis_admin_main", "", 2),
@@ -25,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `engine4_elpis_customthemes` (
   `default` TINYINT(1) NOT NULL DEFAULT "0" ,
   PRIMARY KEY (`customtheme_id`),
   UNIQUE KEY `UNIQUEKEY` (`column_key`,`theme_id`,`default`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
 
 INSERT IGNORE INTO `engine4_elpis_customthemes` (`name`, `value`, `column_key`, `theme_id`, `default`) VALUES

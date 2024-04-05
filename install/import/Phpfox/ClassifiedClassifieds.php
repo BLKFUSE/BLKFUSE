@@ -230,8 +230,8 @@ CREATE TABLE IF NOT EXISTS `phpfox_marketplace_image` (
 /*
 CREATE TABLE IF NOT EXISTS `engine4_classified_classifieds` (
   `classified_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `body` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner_id` int(11) unsigned NOT NULL,
   `category_id` int(11) unsigned NOT NULL,
   `photo_id` int(10) unsigned NOT NULL DEFAULT '0',
@@ -244,15 +244,15 @@ CREATE TABLE IF NOT EXISTS `engine4_classified_classifieds` (
   PRIMARY KEY (`classified_id`),
   KEY `owner_id` (`owner_id`),
   KEY `search` (`search`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */
 
 /*
  CREATE TABLE IF NOT EXISTS `engine4_classified_albums` (
   `album_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `classified_id` int(11) unsigned NOT NULL,
-  `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `description` mediumtext COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `creation_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL,
   `search` tinyint(1) NOT NULL DEFAULT '1',
@@ -262,7 +262,7 @@ CREATE TABLE IF NOT EXISTS `engine4_classified_classifieds` (
   `collectible_count` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`album_id`),
   KEY `classified_id` (`classified_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */
 
 /*
@@ -271,8 +271,8 @@ CREATE TABLE IF NOT EXISTS `engine4_classified_classifieds` (
   `album_id` int(11) unsigned NOT NULL,
   `classified_id` int(11) unsigned NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
-  `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `collection_id` int(11) unsigned NOT NULL,
   `file_id` int(11) unsigned NOT NULL,
   `creation_date` datetime NOT NULL,
@@ -281,5 +281,5 @@ CREATE TABLE IF NOT EXISTS `engine4_classified_classifieds` (
   KEY `album_id` (`album_id`),
   KEY `classified_id` (`classified_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */

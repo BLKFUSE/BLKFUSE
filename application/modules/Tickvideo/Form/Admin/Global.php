@@ -39,7 +39,7 @@ class Tickvideo_Form_Admin_Global extends Engine_Form {
       $this->addElement('Radio', 'tickvideo_allow_video', array(
         'label' => 'Do you want to allow to show tickvideo inside video module.?',
         // 'description' => 'Do you want to make a unauthorized videos searchable? (If set to no, videos that are not authorized for the current user will not be displayed in the video search results and widgets.)',
-        'value' => Engine_Api::_()->getApi('settings', 'core')->getSetting('tickvideo_allow_video', 0),
+        'value' => Engine_Api::_()->getApi('settings', 'core')->getSetting('tickvideo.allow.video', 0),
         'multiOptions' => array(
           '1' => 'Yes',
           '0' => 'No',
@@ -53,13 +53,18 @@ class Tickvideo_Form_Admin_Global extends Engine_Form {
           'ignore' => true
       ));
     } else {
-
-      //Add submit button
-      $this->addElement('Button', 'submit', array(
+      $enabledSesbasic = Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesbasic');
+      $fields = array(
           'label' => 'Activate This Plugin',
           'type' => 'submit',
           'ignore' => true
-      ));
+      );
+      if(!$enabledSesbasic){
+        $fields['disable'] = true;
+        $fields['title'] = 'To Activate this plugin, please first install all dependent plugins as show in the tips above.';
+      }
+      //Add submit button
+      $this->addElement('Button', 'submit',$fields);
     }
 
   }

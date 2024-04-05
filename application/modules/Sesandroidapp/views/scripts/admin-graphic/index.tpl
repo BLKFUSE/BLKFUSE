@@ -13,10 +13,10 @@
  
 ?>
 <?php include APPLICATION_PATH .  '/application/modules/Sesandroidapp/views/scripts/dismiss_message.tpl';?>
-<h2>
+<h2 class="page_heading">
   <?php echo $this->translate("Native Android Mobile App") ?>
 </h2>
-<?php if(is_countable($this->navigation) && engine_count($this->navigation) ): ?>
+<?php if( engine_count($this->navigation) ): ?>
   <div class='tabs'>
     <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render() ?>
   </div>
@@ -37,7 +37,7 @@ function selectAll(obj)
 
 
   
-<?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
+<?php if( engine_count($this->paginator) ): ?>
   <form id='multidelete_form' method="post" action="<?php echo $this->url();?>" onSubmit="return multiDelete()"> 
   <?php endif; ?>
   <div>
@@ -50,7 +50,7 @@ function selectAll(obj)
 
 </div>
         </div>
-        <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
+        <?php if( engine_count($this->paginator) ): ?>
   <div class="sesandroidapp_search_result">
     <?php echo $this->translate(array('%s graphic found.', '%s graphics found.', $this->paginator->getTotalItemCount()), $this->locale()->toNumber($this->paginator->getTotalItemCount())) ?>
   </div><?php endif; ?>

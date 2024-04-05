@@ -2,12 +2,12 @@
   'package' => array(
     'type' => 'library',
     'name' => 'zend',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 10150 $',
     'path' => 'application/libraries/Zend',
     'repository' => 'socialengine.com',
     'title' => 'Zend Framework',
-    'author' => 'Webligo Developments',
+    'author' => 'SocialEngine Core',
     'directories' => array(
       'application/libraries/Zend',
     )

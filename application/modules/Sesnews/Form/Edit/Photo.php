@@ -47,9 +47,16 @@ class Sesnews_Form_Edit_Photo extends Engine_Form {
       'validators' => array(
 	//array('Count', false, 1),
 	// array('Size', false, 612000),
-	array('Extension', false, 'jpg,jpeg,png,gif'),
+	array('Extension', false, 'jpg,jpeg,png,gif,webp'),
       ),
       //'onchange'=>'javascript:uploadSignupPhoto();'
+      'data-function' => 'uploadSignupPhoto',
+    ));
+    
+    $this->addElement('Hidden', 'coordinates', array(
+      'filters' => array(
+        'HtmlEntities',
+      )
     ));
 
     $this->addElement('Button', 'done', array(

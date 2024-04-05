@@ -19,7 +19,6 @@ function multiDelete()
 {
   return confirm("<?php echo $this->translate('Are you sure you want to delete the selected thought entries?');?>");
 }
-
 function selectAll()
 {
   var i;
@@ -37,13 +36,9 @@ function selectAll()
 <p>
   <?php echo $this->translate("This page lists all of the thoughts your users have created. You can use this page to monitor these thoughts and delete offensive material if necessary. Entering criteria into the filter fields will help you find specific thought. Leaving the filter fields blank will show all the thoughts on your social network. ") ?>
 </p>
-<br />
 <div class='admin_search sesbasic_search_form'>
   <?php echo $this->formFilter->render($this) ?>
 </div>
-<br />
-<br />
-
 <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
 <div class="sesbasic_search_reasult">
   <?php echo $this->translate(array('%s thought found.', '%s thoughts found.', $this->paginator->getTotalItemCount()), $this->locale()->toNumber($this->paginator->getTotalItemCount())) ?>
@@ -107,19 +102,13 @@ function selectAll()
     <?php endforeach; ?>
   </tbody>
 </table>
-
-<br />
-
 <div class='buttons'>
   <button type='submit'><?php echo $this->translate("Delete Selected") ?></button>
 </div>
 </form>
-
-<br/>
 <div>
   <?php echo $this->paginationControl($this->paginator); ?>
 </div>
-
 <?php else: ?>
   <div class="tip">
     <span>
@@ -127,8 +116,6 @@ function selectAll()
     </span>
   </div>
 <?php endif; ?>
-
-
 <script>
  function showSubCategory(cat_id,selectedId) {
 		var selected;

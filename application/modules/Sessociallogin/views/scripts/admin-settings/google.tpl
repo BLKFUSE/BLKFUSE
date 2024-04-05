@@ -21,32 +21,20 @@
  * @author     SocialEngineSolutions
 
  */
-
-
-
 ?>
-
 <?php include APPLICATION_PATH .  '/application/modules/Sessociallogin/views/scripts/dismiss_message.tpl'; ?>
 
 <div class="settings sesbasic_admin_form sesact_global_setting">
-
   <div class='settings'>
-
-    <?php echo $this->form->render($this); ?>
-
+   <?php echo $this->form->render($this); ?>
   </div>
 
 </div>
-
-
-
 <?php $google_enable = Engine_Api::_()->getApi('settings', 'core')->getSetting('sessociallogin.google.enable', 0);?>
 
 <?php $google_quick = Engine_Api::_()->getApi('settings', 'core')->getSetting('sessociallogin.google.quick.signup', 0);?>
 
 <script>
-
-
 
   scriptJquery(document).ready(function() {
 
@@ -55,26 +43,23 @@
     //showsignupoption('<?php echo $google_quick ?>', '');
 
   });
-
-
-
   function showoption(value, params) {
 
 
 
     if(value == 1) {
 
-      document.getElementById('sessociallogin_google_quick_signup-wrapper').style.display = 'block';
+      document.getElementById('sessociallogin_google_quick_signup-wrapper').style.display = 'flex';
 
       if(params == 'form') {
 
         if('<?php echo $google_quick ?>' == 1) {
 
-          document.getElementById('sessociallogin_google_profile_type-wrapper').style.display = 'block';
+          document.getElementById('sessociallogin_google_profile_type-wrapper').style.display = 'flex';
 
-          document.getElementById('sessociallogin_google_member_level-wrapper').style.display = 'block';
+          document.getElementById('sessociallogin_google_member_level-wrapper').style.display = 'flex';
 
-          document.getElementById('sessociallogin_google_redirect_user-wrapper').style.display = 'block';
+          document.getElementById('sessociallogin_google_redirect_user-wrapper').style.display = 'flex';
 
         } else {
 
@@ -130,11 +115,11 @@
 
     if(value == 1) {
 
-      document.getElementById('sessociallogin_google_profile_type-wrapper').style.display = 'block';
+      document.getElementById('sessociallogin_google_profile_type-wrapper').style.display = 'flex';
 
-      document.getElementById('sessociallogin_google_member_level-wrapper').style.display = 'block';
+      document.getElementById('sessociallogin_google_member_level-wrapper').style.display = 'flex';
 
-      document.getElementById('sessociallogin_google_redirect_user-wrapper').style.display = 'block';
+      document.getElementById('sessociallogin_google_redirect_user-wrapper').style.display = 'flex';
 
     } else {
 

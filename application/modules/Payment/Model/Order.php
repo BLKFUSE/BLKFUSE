@@ -76,10 +76,7 @@ class Payment_Model_Order extends Core_Model_Item_Abstract
     return $this->_source;
   }
 
-
-
   // Events
-
   public function onCancel()
   {
     if( $this->state == 'pending' ) {

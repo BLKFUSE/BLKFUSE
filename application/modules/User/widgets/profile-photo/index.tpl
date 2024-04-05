@@ -10,11 +10,44 @@
  * @author     John
  */
 ?>
-
-<div id='profile_photo'>
-  <?php if($this->subject()->photo_id) { ?>
-    <?php echo $this->itemPhoto($this->subject()) ?>
-  <?php } else { ?>
-    <?php echo $this->itemBackgroundPhoto($this->subject()) ?>
+<?php 
+  $coverphoto = Engine_Api::_()->authorization()->getPermission($this->subject()->level_id, 'user', 'coverphoto');
+  $coverphoto = $coverphoto ? Engine_Api::_()->core()->getFileUrl($coverphoto) : '';
+?>
+<div class="profile_photos_cover_section">
+  <div class="profile_photos_cover_photo">
+    <?php if(!empty($this->photo)) { ?>
+      <img src="<?php echo $this->photo->getPhotoUrl('thumb.cover'); ?>" alt="profile img">
+    <?php } else if(!empty($coverphoto)) { ?>
+      <img src="<?php echo $coverphoto; ?>" alt="profile img">
+    <?php } ?>
+  </div>
+  <div class="profile_photos_cover_photo_inner">
+    <div class="profile_photo">
+      <?php echo $this->htmlLink($this->subject()->getHref(), $this->itemBackgroundPhoto($this->subject(), 'thumb.profile')) ?>
+    </div>
+    <div class="profile_photo_main_content">
+      <?php if($this->subject()) { ?>
+        <h4>
+          <a href="<?php echo $this->subject()->getHref(); ?>"><?php echo $this->subject()->getTitle() ?></a>
+        </h4>
+      <?php } ?>
+      <span class="username"><?php echo '@'.$this->subject()->username;?></span>
+    </div>
+  </div>
+  <?php if($this->friends->getTotalItemCount() > 0) { ?>
+    <div class="profile_cover_user_friend_main">
+      <h6><?php echo $this->translate("Recent Friends"); ?></h6>
+      <ul class="profile_cover_user_friends">
+        <?php foreach( $this->friends as $membership ) { ?>
+          <?php if( !isset($this->friendUsers[$membership->resource_id]) ) continue;
+            $member = $this->friendUsers[$membership->resource_id];
+          ?>
+          <li>
+            <?php echo $this->htmlLink($member->getHref(), $this->itemBackgroundPhoto($member, 'thumb.icon')) ?>
+          </li>
+        <?php } ?>
+      </ul>
+    </div>
   <?php } ?>
 </div>

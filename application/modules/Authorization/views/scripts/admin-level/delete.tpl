@@ -10,6 +10,11 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_manage", 'parentMenuItemName' => 'authorization_admin_main_manage', 'lastMenuItemName' => 'Delete Level')); ?>
 <div class="settings">
     <?php echo $this->form->render($this) ?>
 </div>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_manage').parent().addClass('active');
+  scriptJquery('.core_admin_main_manage_levels').addClass('active');
+</script>

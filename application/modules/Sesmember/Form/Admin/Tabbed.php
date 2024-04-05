@@ -66,7 +66,7 @@ class Sesmember_Form_Admin_Tabbed extends Engine_Form {
             'likeButton' => 'Like Button',
             'likemainButton' => 'Main Like Button',
             'friendButton' => 'Friend Button',
-            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
             'like' => 'Likes Count (Not Supported in Grid View)',
             'location' => 'Location',
             'rating' => 'Ratings star',

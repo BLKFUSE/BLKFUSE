@@ -34,15 +34,16 @@ class Core_Widget_SearchMiniController extends Engine_Content_Widget_Abstract
         empty($headernonloggedinoptions) ? $this->setNoRender() : ((!engine_in_array('search', $headernonloggedinoptions)) ? $this->setNoRender() : '');
     }
     
-//     $request = Zend_Controller_Front::getInstance()->getRequest();
-//     $controllerName = $request->getControllerName();
-//     $actionName = $request->getActionName();
-//     if($controllerName == 'signup') {
-//       return $this->setNoRender();
-//     } else if($actionName == 'login') {
-//       return $this->setNoRender();
-//     }
-    
+    if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('prism')) {
+      $viewer_id = Engine_Api::_()->user()->getViewer()->getIdentity();
+      $headerloggedinoptions = unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('prism.headerloggedinoptions', 'a:4:{i:0;s:6:"search";i:1;s:8:"miniMenu";i:2;s:8:"mainMenu";i:3;s:4:"logo";}'));
+      $headernonloggedinoptions = unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('prism.headernonloggedinoptions', 'a:4:{i:0;s:6:"search";i:1;s:8:"miniMenu";i:2;s:8:"mainMenu";i:3;s:4:"logo";}'));
+      if(!empty($viewer_id))
+        (empty($headerloggedinoptions) ? $this->setNoRender() : ((!engine_in_array('search', $headerloggedinoptions)) ? $this->setNoRender() : ''));
+      else 
+        (empty($headernonloggedinoptions) ? $this->setNoRender() : ((!engine_in_array('search', $headernonloggedinoptions)) ? $this->setNoRender() : ''));
+    }
+
     $requireCheck = Engine_Api::_()->getApi('settings', 'core')->core_general_search;
     if( !$requireCheck && !Zend_Controller_Action_HelperBroker::getStaticHelper('RequireUser')->checkRequire() ) {
       $this->setNoRender();

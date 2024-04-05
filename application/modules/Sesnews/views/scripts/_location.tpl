@@ -40,7 +40,7 @@ $optionsenableglotion = unserialize(Engine_Api::_()->getApi('settings', 'core')-
       <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?>
         <div id="sesnews_location_map_data" class="sesnews_create_map_container sesbm" style="display:none;">
           <div id="sesnews_default_map" class="sesnews_create_blank_map centerT" style="display:none">
-            <i class="fa fa-map-marker sesbasic_text_light"></i>
+            <i class="sesbasic_icon_map sesbasic_text_light"></i>
             <span class="sesbasic_text_light">No Map</span>
           </div>
           <div id="sesnews_location_map" class="sesnews_create_map" style="display:none"></div>
@@ -81,7 +81,7 @@ $optionsenableglotion = unserialize(Engine_Api::_()->getApi('settings', 'core')-
         </div>
       </div>
       <div id="location_options" class="clear _links">
-        <a id="sesnews_enter_address" href="javascript:;" class="form-link" style="display:none;"><i class="fa fa-map-marker"></i><?php echo $this->translate("Enter Address"); ?></a>
+        <a id="sesnews_enter_address" href="javascript:;" class="form-link" style="display:none;"><i class="sesbasic_icon_map"></i><?php echo $this->translate("Enter Address"); ?></a>
         <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?>
           <a id="sesnews_reset_location" style="display:none" href="javascript:;" class="form-link"><i class="fa fa-redo-alt"></i><?php echo $this->translate("Reset Location"); ?></a>
         <?php } ?>

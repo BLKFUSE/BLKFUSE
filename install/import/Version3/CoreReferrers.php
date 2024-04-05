@@ -35,10 +35,10 @@ class Install_Import_Version3_CoreReferrers extends Install_Import_Version3_Abst
 CREATE TABLE IF NOT EXISTS `se_statrefs` (
 -  `statref_id` int(9) NOT NULL auto_increment,
 *  `statref_hits` int(9) NOT NULL default '0',
-*  `statref_url` varchar(255) collate utf8_unicode_ci NOT NULL default '',
+*  `statref_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL default '',
   PRIMARY KEY  (`statref_id`),
   UNIQUE KEY `statref_url` (`statref_url`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -50,6 +50,6 @@ CREATE TABLE IF NOT EXISTS `engine4_core_referrers` (
 *  `value` int(11) unsigned NOT NULL,
   PRIMARY KEY  (`host`,`path`,`query`),
   KEY `value` (`value`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

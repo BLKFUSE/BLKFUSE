@@ -75,7 +75,7 @@
   "(mp)" => "mobile.png",
   "(brb)" => "brb.png",
   "(st)" => "rain.png",
-  "<:o)" => "party.png",
+  ":o)" => "party.png",
   "8-)" => "eyeroll.png",
   "|-)" => "yawn.png"
 );

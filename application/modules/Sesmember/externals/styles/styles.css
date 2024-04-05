@@ -193,8 +193,8 @@
 	line-height:normal;
 }
 .sesmember_list_stats.sesmember_list_add_btn > span {
-	float: left;
-	line-height: normal;
+	float:left;
+	line-height:normal;
 }
 [dir="rtl"] .sesmember_list_stats > span{
   float:right;
@@ -237,7 +237,7 @@
 	margin-right:0;
 }
 .sesbasic_tooltip_photo_btns a{
-	display: inline-flex Im !important;
+	display:inline-flex Im !important;
 }
 .sesmember_list_info span > i{
 	margin-right:5px;
@@ -340,13 +340,18 @@
 }
 .sesmember_member_grid .sesmember_mutual_friends {
 	position:absolute;
-	margin-top:-70px;
+	top:15px;
+	left:20px;
+}
+[dir="rtl"] .sesmember_member_grid .sesmember_mutual_friends{
+	left:inherit;
+	right:20px;
 }
 .sesmember_member_grid .sesmember_list_add_btn span > a{
 	padding:8px 10px;
 	border-radius:4px;
 	margin:0 4px;
-	min-width:110px;
+	min-width:100px;
 	text-overflow:ellipsis;
 	white-space:nowrap;
 	overflow:hidden;
@@ -380,6 +385,14 @@
   right:3px;
 	top:-2px;
 }
+.sesmember_member_grid .sesmember_member_grid_info{
+	clear:both;
+	padding:15px;
+	position:relative;
+}
+.sesmember_member_grid .sesmember_member_grid_info *{
+	text-align:center;
+}
 .sesmember_member_grid .sesmember_member_grid_info .sesmember_member_grid_title{
 	font-size:15px;
 	font-weight:bold;
@@ -387,13 +400,6 @@
 }
 .sesmember_member_grid .sesmember_member_grid_info .sesmember_member_grid_title a{
 	color:#fff !important;
-}
-.sesmember_member_grid .sesmember_member_grid_info{
-	clear:both;
-	padding:15px;
-}
-.sesmember_member_grid .sesmember_member_grid_info *{
-	text-align:center;
 }
 .sesmember_member_grid_info .sesmember_member_info_profile_img{
   margin:-50px 0 5px;
@@ -791,7 +797,7 @@
 	float:none;
 }
 .sesmembers_list_view .sesmember_list_stats:first-child:after{
-	display: none;
+	display:none;
 }
 .sesmember_vip_list{
 	position:absolute;
@@ -1276,7 +1282,7 @@
 	padding-left:10px;
 	width:25%;
 	position:relative;
-	text-align: center;
+	text-align:center;
 }
 .sesmember_list_block .sesmember_list_stats:first-child:after {
   display:none;
@@ -1977,14 +1983,17 @@
 /*Featured Photo Block Css End here*/
 
 /*BROWSE SEARCH WIDGET*/
+.sesmember_browse_search_horizontal .field_search_criteria > ul{
+	display:flex;
+	flex-wrap:wrap;
+	align-items:flex-end;
+}
 .sesmember_browse_search_horizontal .field_search_criteria > ul > li{
 	width:20%;
 	padding-right:18px;
-	float:left;
 	margin:0 0 10px !important;
 }
 [dir="rtl"] .sesmember_browse_search_horizontal .field_search_criteria > ul > li{
-	float:right;
 	padding-right:0;
 	padding-left:18px;
 }
@@ -1994,13 +2003,8 @@
 }
 .sesmember_browse_search_horizontal ul > li select,
 .sesmember_browse_search_horizontal ul > li input[type="text"]{
-	padding:4px;
-	height:30px;
 	max-width:100%;
 	width:100%;
-}
-.sesmember_browse_search_horizontal ul > li select{
-	padding:3px 4px;
 }
 .sesmember_browse_search_horizontal ul li.browse-range-wrapper span{
 	float:left;
@@ -2011,6 +2015,7 @@
 }
 .sesmember_browse_search_horizontal ul li.only_member label{
 	overflow:hidden;
+	display:block;
 }
 .sesmember_browse_search_horizontal ul li.only_member input[type=checkbox]{
 	float:left;
@@ -2029,7 +2034,14 @@
 	margin-top:8px;
 }
 .sesmember_browse_search_horizontal [id^='advanced_options_search']{
-	margin-top:0;
+	margin-top:-38px;
+	float:left;
+	margin-left:100px;
+}
+[dir="rtl"] .sesmember_browse_search_horizontal [id^='advanced_options_search']{
+	float:right;
+	margin-right:100px;
+	margin-left:0;
 }
 .sesmember_browse_search [id^='advanced_options_search'] i{
   margin-right:5px;
@@ -2054,6 +2066,7 @@
 .sesmember_browse_search_horizontal .submit_button{
 	clear:both;
 	width:auto !important;
+	flex-basis:100%;
 }
 .sesmember_browse_toprated_search .advanced_search_link{
 	margin-top:10px;
@@ -2100,12 +2113,8 @@
 .sesmember_browse_search_vertical ul li.only_member label{
 	overflow:hidden;
 }
-
-@media only screen and (max-width:480px){
-	.sesmember_browse_search input,
-	.sesmember_browse_search select{
-		width:95% !important;
-	}
+.sesmember_browse_search_horizontal button{
+	padding:10px 15px;
 }
 /*Top Members Search Widget*/
 .sesmember_browse_toprated_search > form:after{
@@ -2873,7 +2882,7 @@
 	width:150px;
 	overflow:hidden;
 }
-.sesmember_review_listing:hover .sesmember_grid_btns{
+.sesmember_review_listing > li:hover .sesmember_grid_btns{
 	opacity:1;
 	top:10px;
 }
@@ -3148,8 +3157,8 @@
 }
 .sesmember_list_stats.sesmember_review_sidebar_list_stat, 
 .sesmember_sidebar_list_info .sesmember_list_stats {
-	display: flex;
-	align-items: center;
+	display:flex;
+	align-items:center;
 }
 [dir="rtl"] .sesmember_review_sidebar_list_stat{
 	float:right;
@@ -4113,7 +4122,7 @@ html[dir="rtl"] .profile_friends_lists li.friend_list_unjoined
   .sesmember_list_block .sesmember_list_stats{margin-bottom:0;width:100%;padding:0;text-align:left;}
   .sesmember_list_block .iscustomfields .sesmember_list_block_info_right{display:none;}
   /*Search Form*/
-	.sesmember_browse_search_horizontal .field_search_criteria > ul > li{width:100%;}
+	.sesmember_browse_search_horizontal .field_search_criteria > ul > li{padding: 0 !important;width:100%;}
 	.sesmember_browse_search input[type=checkbox]{width:auto !important;}
 	.sesmembers_list_view{float:none;width:100% !important;}
 	.sesmembers_list_view .sesmeber_thumb_main_block{height:auto !important;}
@@ -4350,9 +4359,6 @@ html[dir="rtl"] .profile_friends_lists li.friend_list_unjoined
 	html .sesmember_browse_search_horizontal ul li.only_member {
     padding:0;
   }
-	html .sesmember_browse_search_horizontal [id^='advanced_options_search'] {
-    margin-top:10px;
-  }
 	.sesmember_browse_listing .sesbasic_pinboard_list_item_wrap {
     width:100% !important;
   }
@@ -4370,6 +4376,6 @@ html[dir="rtl"] .profile_friends_lists li.friend_list_unjoined
 
 .layout_left .layout_sesmember_review_of_the_day .sesmember_list_stats > span,
 .layout_right .layout_sesmember_review_of_the_day .sesmember_list_stats > span {
-	display: inline-block;
-	vertical-align: middle;
+	display:inline-block;
+	vertical-align:middle;
 }

@@ -309,11 +309,11 @@ class Sescontest_ContestController extends Sesapi_Controller_Action_Standard {
 			if($canFollow)
 				$result['contest']['is_content_follow'] =  $followStatus ? true : false;
 			}
-// 			var_dump($participate);die;
+      
         if (isset($participate['can_join']) && isset($participate['show_button'])) {
             if (Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sescontestjoinfees') && $contest->entry_fees > 0 && Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestjoinfees.allow.entryfees', 1)) {
                
-                $result['contest']['join'] = $this->view->translate('Join Contest in %s', Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($contest->entry_fees));
+                $result['contest']['join'] = $this->view->translate('Join Contest in %s', Engine_Api::_()->payment()->getCurrencyPrice($contest->entry_fees));
             } else {
                
                 $result['contest']['join'] = $this->view->translate('Join Contest');
@@ -1191,7 +1191,7 @@ class Sescontest_ContestController extends Sesapi_Controller_Action_Standard {
                             elseif($package->price && $package->recurrence_type != 'forever')
                                 $result['existingleftpackages'][$counterleft]['payment_type']  = $this->view->translate(ucfirst($package->recurrence_type).'ly');
                             elseif($package->recurrence_type == 'forever')
-                                $result['existingleftpackages'][$counterleft]['payment_type'] =  sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->sescontestpackage()->getCurrencyPrice($package->price,'','',true));
+                                $result['existingleftpackages'][$counterleft]['payment_type'] =  sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->payment()->getCurrencyPrice($package->price,'','',true));
                             else
                                 $result['existingleftpackages'][$counterleft]['payment_type'] =  $this->view->translate('Free');
                     }else{
@@ -1218,7 +1218,7 @@ class Sescontest_ContestController extends Sesapi_Controller_Action_Standard {
                     elseif($package->price && $package->recurrence_type != 'forever')
                         $result['existingleftpackages'][$counterleft]['params'][$paramscounter]['value'] = $this->view->translate(ucfirst($package->recurrence_type).'ly');
                     elseif($package->recurrence_type == 'forever')
-                        $result['existingleftpackages'][$counterleft]['params'][$paramscounter]['value'] = sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->sescontestpackage()->getCurrencyPrice($package->price,'','',true));
+                        $result['existingleftpackages'][$counterleft]['params'][$paramscounter]['value'] = sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->payment()->getCurrencyPrice($package->price,'','',true));
                     else
                         $result['existingleftpackages'][$counterleft]['params'][$paramscounter]['value'] = $this->view->translate('Free');
                     $paramscounter ++;
@@ -1286,7 +1286,7 @@ class Sescontest_ContestController extends Sesapi_Controller_Action_Standard {
                         $result['existingleftpackages'][$counterleft]['subscribe_detail'][$paramscountersuscribe]['value']=  date('d F Y', strtotime($leftpackages->expiration_date));
                         $paramscountersuscribe++;
                     }
-                    $result['existingleftpackages'][$counterleft]['price_type'] = Engine_Api::_()->sescontestpackage()->getCurrencyPrice($package->price,'','',true);
+                    $result['existingleftpackages'][$counterleft]['price_type'] = Engine_Api::_()->payment()->getCurrencyPrice($package->price,'','',true);
                     $counterleft++;
             }
         }
@@ -1304,7 +1304,7 @@ class Sescontest_ContestController extends Sesapi_Controller_Action_Standard {
                     elseif($packages->price && $packages->recurrence_type != 'forever')
                         $result['packages'][$counter]['payment_type']  = $this->view->translate(ucfirst($packages->recurrence_type).'ly');
                     elseif($packages->recurrence_type == 'forever')
-                        $result['packages'][$counter]['payment_type'] =  sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->sescontestpackage()->getCurrencyPrice($packages->price,'','',true));
+                        $result['packages'][$counter]['payment_type'] =  sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->payment()->getCurrencyPrice($packages->price,'','',true));
                     else
                         $result['packages'][$counter]['payment_type'] =  $this->view->translate('Free');
                 }else{
@@ -1331,7 +1331,7 @@ class Sescontest_ContestController extends Sesapi_Controller_Action_Standard {
                 elseif($packages->price && $packages->recurrence_type != 'forever')
                     $result['packages'][$counter]['params'][$paramscounter]['value'] = $this->view->translate(ucfirst($packages->recurrence_type).'ly');
                 elseif($packages->recurrence_type == 'forever')
-                    $result['packages'][$counter]['params'][$paramscounter]['value'] = sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->sescontestpackage()->getCurrencyPrice($package->price,'','',true));
+                    $result['packages'][$counter]['params'][$paramscounter]['value'] = sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->payment()->getCurrencyPrice($package->price,'','',true));
                 else
                     $result['packages'][$counter]['params'][$paramscounter]['value'] = $this->view->translate('Free');
                 $paramscounter ++;
@@ -1387,7 +1387,7 @@ class Sescontest_ContestController extends Sesapi_Controller_Action_Standard {
                 $result['packages'][$counter]['params'][$paramscounter]['label'] = $this->view->translate('Contests Count');
                 $result['packages'][$counter]['params'][$paramscounter]['value'] = $packages->item_count;
                 $paramscounter ++;
-                $result['packages'][$counter]['price_type'] = Engine_Api::_()->sescontestpackage()->getCurrencyPrice($packages->price,'','',true);
+                $result['packages'][$counter]['price_type'] = Engine_Api::_()->payment()->getCurrencyPrice($packages->price,'','',true);
                 $counter++;
             }
         }
@@ -1402,7 +1402,7 @@ class Sescontest_ContestController extends Sesapi_Controller_Action_Standard {
         $existingleftpackages = Engine_Api::_()->getDbTable('orderspackages', 'sescontestpackage')->getLeftPackages(array('owner_id' => $viewer->getIdentity()));
         $information = array('description' => 'Package Description', 'featured' => 'Featured', 'sponsored' => 'Sponsored', 'verified' => 'Verified', 'hot' => 'Hot', 'custom_fields' => 'Custom Fields');
         $showinfo = Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestpackage.package.info', array_keys($information));
-        $currentCurrency =  Engine_Api::_()->sescontestpackage()->getCurrentCurrency();
+        $currentCurrency =  Engine_Api::_()->payment()->getCurrentCurrency();
         $result = array();
         $counterleft =0;
         if(engine_count($existingleftpackages)){
@@ -1420,7 +1420,7 @@ class Sescontest_ContestController extends Sesapi_Controller_Action_Standard {
                     elseif($package->price && $package->recurrence_type != 'forever')
                         $result['existingleftpackages'][$counterleft]['payment_type']  = $this->view->translate(ucfirst($package->recurrence_type).'ly');
                     elseif($package->recurrence_type == 'forever')
-                        $result['existingleftpackages'][$counterleft]['payment_type'] =  sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->sescontestpackage()->getCurrencyPrice($package->price,'','',true));
+                        $result['existingleftpackages'][$counterleft]['payment_type'] =  sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->payment()->getCurrencyPrice($package->price,'','',true));
                     else
                         $result['existingleftpackages'][$counterleft]['payment_type'] =  $this->view->translate('Free');
                 }else{
@@ -1433,7 +1433,7 @@ class Sescontest_ContestController extends Sesapi_Controller_Action_Standard {
                 elseif($package->price && $package->recurrence_type != 'forever')
                     $result['existingleftpackages'][$counterleft]['params'][$paramscounter]['value'] = $this->view->translate(ucfirst($package->recurrence_type).'ly');
                 elseif($package->recurrence_type == 'forever')
-                    $result['existingleftpackages'][$counterleft]['params'][$paramscounter]['value'] = sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->sescontestpackage()->getCurrencyPrice($package->price,'','',true));
+                    $result['existingleftpackages'][$counterleft]['params'][$paramscounter]['value'] = sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->payment()->getCurrencyPrice($package->price,'','',true));
                 else
                     $result['existingleftpackages'][$counterleft]['params'][$paramscounter]['value'] = $this->view->translate('Free');
                 $paramscounter ++;
@@ -1500,7 +1500,7 @@ class Sescontest_ContestController extends Sesapi_Controller_Action_Standard {
                     $result['existingleftpackages'][$counterleft]['subscribe_detail'][$paramscountersuscribe]['value']=  date('d F Y', strtotime($packageleft->expiration_date));
                     $paramscountersuscribe++;
                 }
-                $result['existingleftpackages'][$counterleft]['price_type'] = Engine_Api::_()->sescontestpackage()->getCurrencyPrice($package->price,'','',true);
+                $result['existingleftpackages'][$counterleft]['price_type'] = Engine_Api::_()->payment()->getCurrencyPrice($package->price,'','',true);
                 $counterleft++;
             }
         }else{

@@ -14,13 +14,14 @@ return array(
   'package' => array(
     'type' => 'module',
     'name' => 'payment',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 10171 $',
     'path' => 'application/modules/Payment',
     'repository' => 'socialengine.com',
     'title' => 'Payment',
     'description' => 'Payment',
-    'author' => 'Webligo Developments',
+    'author' => 'SocialEngine Core',
+    'thumb' => 'application/modules/Core/externals/images/thumb.png',
     'dependencies' => array(
       array(
         'type' => 'module',
@@ -105,6 +106,9 @@ return array(
     'payment_package',
     'payment_subscription',
     'payment_transaction',
+    'payment_verification',
+    'payment_verificationgateway',
+    'payment_currency',
   ),
   // Routes --------------------------------------------------------------------
 );

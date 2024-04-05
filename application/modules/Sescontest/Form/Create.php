@@ -74,31 +74,11 @@ class Sescontest_Form_Create extends Engine_Form {
       $params = json_decode($package->params, true);
     }
 
-    // Title
     //UPLOAD PHOTO URL
-    $upload_url = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'sesbasic', 'controller' => 'index', 'action' => "upload-image"), 'default', true);
-
-    $allowed_html = 'strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr';
-
     $editorOptions = array(
-        'upload_url' => $upload_url,
-        'html' => (bool) $allowed_html,
+      'uploadUrl' => Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'index', 'action' => 'upload-photo'), 'default', true),
     );
 
-    if (!empty($upload_url)) {
-      $editorOptions['editor_selector'] = 'tinymce';
-      $editorOptions['mode'] = 'specific_textareas';
-      $editorOptions['plugins'] = array(
-          'table', 'fullscreen', 'media', 'preview', 'paste',
-          'code', 'image', 'textcolor', 'jbimages', 'link'
-      );
-
-      $editorOptions['toolbar1'] = array(
-          'undo', 'redo', 'removeformat', 'pastetext', '|', 'code',
-          'media', 'image', 'jbimages', 'link', 'fullscreen',
-          'preview'
-      );
-    }
     $this->addElement('Text', 'title', array(
         'label' => 'Contest Title',
         'autocomplete' => 'off',
@@ -264,7 +244,6 @@ class Sescontest_Form_Create extends Engine_Form {
             'label' => 'Contest Description',
             'allowEmpty' => $allowEmpty,
             'required' => $required,
-            'class' => 'tinymce',
             'editorOptions' => $editorOptions,
         ));
       }
@@ -808,7 +787,6 @@ class Sescontest_Form_Create extends Engine_Form {
       $this->addElement('TinyMce', 'award', array(
           'label' => '1st Prize Award',
           'description' => '',
-          'class' => 'tinymce',
           'editorOptions' => $editorOptions,
       ));
     }
@@ -833,7 +811,6 @@ class Sescontest_Form_Create extends Engine_Form {
             'label' => 'Rules',
             'allowEmpty' => $allowEmpty,
             'required' => $required,
-            'class' => 'tinymce',
             'editorOptions' => $editorOptions,
         ));
       } else {

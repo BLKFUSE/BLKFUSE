@@ -60,7 +60,7 @@ class Payment_Plugin_Gateway_PayPal extends Engine_Payment_Plugin_Abstract
       $gateway = new $class(array(
         'config' => (array) $this->_gatewayInfo->config,
         'testMode' => $this->_gatewayInfo->test_mode,
-        'currency' => Engine_Api::_()->getApi('settings', 'core')->getSetting('payment.currency', 'USD'),
+        'currency' => Engine_Api::_()->payment()->getCurrentCurrency(),
       ));
       if( !($gateway instanceof Engine_Payment_Gateway) ) {
         throw new Engine_Exception('Plugin class not instance of Engine_Payment_Gateway');
@@ -128,20 +128,29 @@ class Payment_Plugin_Gateway_PayPal extends Engine_Payment_Plugin_Abstract
       // PayPal requires that DESC be single-byte characters
       $desc = @iconv("UTF-8", "ISO-8859-1//TRANSLIT", $desc);
     }
+    
+    $currentCurrency = Engine_Api::_()->payment()->getCurrentCurrency();
+    $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
+    $currencyChangeRate = 1;
+    if ($currentCurrency != $defaultCurrency) {
+      $currencyData = Engine_Api::_()->getDbTable('currencies', 'payment')->getCurrency($currentCurrency);
+      $currencyChangeRate = $currencyData->change_rate;
+    }
+    $price = @round(($package->price * $currencyChangeRate), 2);
 
     // This is a one-time fee
     if( $package->isOneTime() ) {
       $params['driverSpecificParams']['PayPal'] = array(
-        'AMT' => $package->price,
+        'AMT' => $price,
         'DESC' => $desc,
         'CUSTOM' => $subscription->subscription_id,
         'INVNUM' => $params['vendor_order_id'],
-        'ITEMAMT' => $package->price,
+        'ITEMAMT' => $price,
         'ITEMS' => array(
           array(
             'NAME' => $package->title,
             'DESC' => $desc,
-            'AMT' => $package->price,
+            'AMT' => $price,
             'NUMBER' => $subscription->subscription_id,
             'QTY' => 1,
           ),
@@ -194,6 +203,19 @@ class Payment_Plugin_Gateway_PayPal extends Engine_Payment_Plugin_Abstract
     $user = $order->getUser();
     $subscription = $order->getSource();
     $package = $subscription->getPackage();
+
+    //Change rate according to default currency and selected currency by member
+    $session = new Zend_Session_Namespace('Payment_Subscription');
+    $current_currency = $session->current_currency;
+    $currencyChangeRate = $session->change_rate;
+    if (empty($currencyChangeRate))
+      $currencyChangeRate = 1;
+    $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
+    if ($current_currency != $defaultCurrency) {
+      $currencyData = Engine_Api::_()->getDbTable('currencies', 'payment')->getCurrency($current_currency);
+      $currencyChangeRate = $currencyData->change_rate;
+    }
+    $price = @round(($package->price * $currencyChangeRate), 2);
 
     // Check subscription state
     if($subscription->status == 'trial') {
@@ -314,10 +336,12 @@ class Payment_Plugin_Gateway_PayPal extends Engine_Payment_Plugin_Abstract
         'type' => 'payment',
         'state' => $paymentStatus,
         'gateway_transaction_id' => $rdata['PAYMENTINFO'][0]['TRANSACTIONID'],
-        'amount' => $rdata['AMT'], // @todo use this or gross (-fee)?
-        'currency' => $rdata['PAYMENTINFO'][0]['CURRENCYCODE'],
+        'amount' => $package->price, //$rdata['AMT'], // @todo use this or gross (-fee)?
+        'currency' => Engine_Api::_()->payment()->defaultCurrency(), //$rdata['PAYMENTINFO'][0]['CURRENCYCODE'], //this is default currency set by admin
+        'change_rate' => $currencyChangeRate, //currency change rate according to default currency
+        'current_currency' => $rdata['PAYMENTINFO'][0]['CURRENCYCODE'], //currency which is user paid
       ));
-
+      
       // Get benefit setting
       $giveBenefit = Engine_Api::_()->getDbtable('transactions', 'payment')
           ->getBenefitStatus($user);
@@ -431,7 +455,7 @@ class Payment_Plugin_Gateway_PayPal extends Engine_Payment_Plugin_Abstract
         'BILLINGPERIOD' => ucfirst($package->recurrence_type),
         'BILLINGFREQUENCY' => $package->recurrence,
         'INITAMT' => 0,
-        'AMT' => $package->price,
+        'AMT' => $price, //$package->price,
         'CURRENCYCODE' => $this->getGateway()->getCurrency(),
       );
 
@@ -699,8 +723,10 @@ class Payment_Plugin_Gateway_PayPal extends Engine_Payment_Plugin_Abstract
 
         // Profile was cancelled
         case 'recurring_payment_profile_cancel':
-          $this->active = false; // Need to do this to prevent immediate downgrade & clearing the user's session
-          $subscription->onCancel();
+          //$this->active = false; // Need to do this to prevent immediate downgrade & clearing the user's session
+          if(strtotime($subscription->expiration_date) <= time()) {
+            $subscription->onCancel();
+          }
           // send notification
           if( $subscription->didStatusChange() ) {
             Engine_Api::_()->getApi('mail', 'core')->sendSystem($user, 'payment_subscription_cancelled', array(
@@ -1107,7 +1133,16 @@ class Payment_Plugin_Gateway_PayPal extends Engine_Payment_Plugin_Abstract
       }
       // Get currency
       if( !empty($rawData['mc_currency']) ) {
-        $transactionData['currency'] = $rawData['mc_currency'];
+        $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
+        $currencyChangeRate = 1;
+        if ($rawData['mc_currency'] != $defaultCurrency) {
+          $currencyData = Engine_Api::_()->getDbTable('currencies', 'payment')->getCurrency($rawData['mc_currency']);
+          $currencyChangeRate = $currencyData->change_rate;
+        }
+
+        $transactionData['currency'] = $defaultCurrency; // $rawData['mc_currency'];
+        $transactionData['current_currency'] = $rawData['mc_currency'];
+        $transactionData['change_rate'] = $currencyChangeRate;
       }
       // Get order/user
       if( $order ) {

@@ -37,7 +37,7 @@
 <script type="application/javascript">
 function getFavData(value,title){
 	if(value){
-		url = en4.core.staticBaseUrl+'sesvideo/index/favourite-item/item_id/'+value+'/title/'+title+'/item_type/<?php echo $this->subject()->getType(); ?>';
+		url = en4.core.baseUrl+'sesvideo/index/favourite-item/item_id/'+value+'/title/'+title+'/item_type/<?php echo $this->subject()->getType(); ?>';
 		openURLinSmoothBox(url);	
 		return;
 	}

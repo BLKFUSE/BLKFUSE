@@ -39,4 +39,5 @@
     });
   });
 </script>
+<?php echo $this->partial('_approved_tip.tpl', 'core', array('item' => $this->subject())); ?>
 <?php echo $this->form->render($this) ?>

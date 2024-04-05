@@ -68,7 +68,7 @@ if ($this->getRequest()->isPost()) {
       `order` int(11) NOT NULL DEFAULT  "0",
       `status` tinyint(1) NOT NULL DEFAULT  "1",
       PRIMARY KEY (`category_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
       $db->query('DROP TABLE IF EXISTS `engine4_tickvideo_musics`;');
       $db->query('CREATE TABLE `engine4_tickvideo_musics` (
       `music_id` int(11) unsigned NOT NULL auto_increment,
@@ -84,7 +84,7 @@ if ($this->getRequest()->isPost()) {
       `modified_date` datetime NOT NULL,
       PRIMARY KEY (`music_id`),
       KEY `category_id` (`category_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
       $db->query('DROP TABLE IF EXISTS `engine4_tickvideo_favourites`;');
       $db->query('CREATE TABLE `engine4_tickvideo_favourites` (
       `favourite_id` int(11) UNSIGNED NOT NULL auto_increment,
@@ -92,7 +92,7 @@ if ($this->getRequest()->isPost()) {
       `resource_type` varchar (55) NOT NULL,
       `resource_id` int(11) NOT NULL,
       PRIMARY KEY (`favourite_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
 			$table_exist_video = $db->query('SHOW TABLES LIKE \'engine4_sesvideo_videos\'')->fetch();
 			if (!empty($table_exist_video)) {

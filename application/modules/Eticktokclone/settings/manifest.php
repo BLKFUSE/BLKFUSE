@@ -21,13 +21,14 @@ return array (
       array(
         'type' => 'module',
         'name' => 'core',
-        'minVersion' => '6.2.0',
+        'minVersion' => '6.5.1',
       ),
     ),
     'path' => 'application/modules/Eticktokclone',
     'title' => '<span style="color:#DDDDDD">SNS - TikTok Clone</span>',
     'description' => '<span style="color:#DDDDDD">SNS - TikTok Clone</span>',
     'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	'thumb' => 'application/modules/Eticktokclone/externals/images/thumb.png',
     'callback' => array(
         'path' => 'application/modules/Eticktokclone/settings/install.php',
         'class' => 'Eticktokclone_Installer',

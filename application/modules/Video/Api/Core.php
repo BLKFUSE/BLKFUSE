@@ -33,7 +33,8 @@ class Video_Api_Core extends Core_Api_Abstract
     }
 
     public function getVideosSelect($params = array())
-    {
+    {   
+        $viewer = Engine_Api::_()->user()->getViewer();
         $table = Engine_Api::_()->getDbtable('videos', 'video');
         $rName = $table->info('name');
 
@@ -41,9 +42,16 @@ class Video_Api_Core extends Core_Api_Abstract
         $tmName = $tmTable->info('name');
 
         $select = $table->select()
-            ->from($table->info('name'))
-            ->order( !empty($params['orderby']) ? $rName.'.'.$params['orderby'].' DESC' : "$rName.creation_date DESC" );
-
+            ->from($table->info('name'));
+				
+				if(!empty($params['orderby']) && $params['orderby'] == 'atoz') {
+					$select->order($rName .'.title ASC');
+				} else if(!empty($params['orderby']) && $params['orderby'] == 'ztoa') {
+					$select->order($rName .'.title DESC');
+				} else  {
+					$select->order( !empty($params['orderby']) ? $rName.'.'.$params['orderby'].' DESC' : $rName.'.creation_date DESC' );
+				}
+				
         if( !empty($params['user_id']) && is_numeric($params['user_id']) )
         {
             $owner = Engine_Api::_()->getItem('user', $params['user_id']);
@@ -75,6 +83,14 @@ class Video_Api_Core extends Core_Api_Abstract
         {
             $select->where($rName.'.search = ?', $params['search']);
         }
+        
+				if(!isset($params['showvideo']) && empty($params['showvideo'])) {
+					$select->where($rName.'.approved =?', 1);
+					$select->where($rName.'.parent_type IS NULL OR parent_type = ?', 'user');
+				}
+				if(isset($params['actionName']) && $params['actionName'] == 'manage') {
+					$select->where($rName.'.parent_type IS NULL OR parent_type = ?', 'user');
+				}
 
         if( !empty($params['category']) )
         {
@@ -104,7 +120,6 @@ class Video_Api_Core extends Core_Api_Abstract
                 ->where($tmName.'.resource_type = ?', 'video')
                 ->where($tmName.'.tag_id = ?', $params['tag']);
         }
-
 
         $select = Engine_Api::_()->network()->getNetworkSelect($rName, $select);
 
@@ -195,14 +210,15 @@ class Video_Api_Core extends Core_Api_Abstract
             $attachDB->delete(array('type = ?' => $video->getType(), 'id = ?' => $video->getIdentity()));
 
             $action =  $actionsDB->fetchRow($actionsDB->select()->where('action_id = ?', $action_id));
-            $count = $action->params['count'];
-            if( !is_null($count) && ($count > 1) ) {
-                $action->params = array('count' => (integer)$count-1);
-                $action->save();
-            }
-            else {
-                $action->delete();
-            }
+            $action->delete();
+//             $count = $action->params['count'];
+//             if( !is_null($count) && ($count > 1) ) {
+//                 $action->params = array('count' => (integer)$count-1);
+//                 $action->save();
+//             }
+//             else {
+//                 $action->delete();
+//             }
         }
 
         // delete activity feed and its comments/likes

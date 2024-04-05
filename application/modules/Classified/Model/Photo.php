@@ -198,6 +198,11 @@ class Classified_Model_Photo extends Core_Model_Item_Collectible
       if( $file ) {
         $file->remove();
       }
+      $file = Engine_Api::_()->getItemTable('storage_file')->getFile($this->file_id, 'thumb.profile');
+      if( $file ) {
+				Engine_Api::_()->storage()->deleteExternalsFiles($file->file_id);
+        $file->remove();
+      }
 
       $album = $this->getCollection();
 

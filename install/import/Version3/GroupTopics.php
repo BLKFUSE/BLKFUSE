@@ -51,14 +51,14 @@ CREATE TABLE IF NOT EXISTS `se_grouptopics` (
 *  `grouptopic_group_id` int(9) NOT NULL default '0',
 *  `grouptopic_creatoruser_id` int(9) NOT NULL default '0',
 *  `grouptopic_date` int(14) NOT NULL default '0',
-*  `grouptopic_subject` varchar(50) collate utf8_unicode_ci NOT NULL default '',
+*  `grouptopic_subject` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL default '',
 *  `grouptopic_views` int(9) NOT NULL default '0',
 *  `grouptopic_sticky` tinyint(1) unsigned NOT NULL default '0',
 *  `grouptopic_closed` tinyint(1) unsigned NOT NULL default '0',
 *  `grouptopic_totalposts` smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (`grouptopic_id`),
   KEY `INDEX` (`grouptopic_group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -80,6 +80,6 @@ CREATE TABLE IF NOT EXISTS `engine4_group_topics` (
   PRIMARY KEY  (`topic_id`),
   KEY `group_id` (`group_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

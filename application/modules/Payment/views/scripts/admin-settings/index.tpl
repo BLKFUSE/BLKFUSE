@@ -10,6 +10,7 @@
  * @author     John Boehr <j@webligo.com>
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_monetization", 'parentMenuItemName' => 'core_admin_main_payment', 'childMenuItemName' => 'core_admin_main_payment_settings')); ?>
 
 <script type="text/javascript">
   var supportedCurrencyIndex;
@@ -47,9 +48,24 @@
     scriptJquery('#currency').on('change', displayCurrencyGateways);
     displayCurrencyGateways();
   });
+
+  scriptJquery('.core_admin_main_monetization').parent().addClass('active');
+  scriptJquery('.core_admin_main_payment').addClass('active');
+  
+  scriptJquery(document).ready(function() {
+    autoUpdateCurrency('<?php echo Engine_Api::_()->getApi('settings', 'core')->getSetting("payment.autoupdate",0); ?>');
+  });
+  
+  function autoUpdateCurrency(value) { 
+    if(value == 1) { 
+      scriptJquery('#currencyapikey-wrapper').show();
+    } else {
+      scriptJquery('#currencyapikey-wrapper').hide();
+    }
+  }
 </script>
-<h2>
-  <?php echo $this->translate("Billing") ?>
+<h2 class="page_heading">
+  <?php echo $this->translate("Billing Settings") ?>
 </h2>	
 <?php if( count($this->navigation) ): ?>
 <div class='tabs'>
@@ -63,3 +79,4 @@
 <div class="settings">
   <?php echo $this->form->render($this) ?>
 </div>
+

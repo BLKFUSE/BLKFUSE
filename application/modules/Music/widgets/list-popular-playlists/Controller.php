@@ -27,8 +27,9 @@ class Music_Widget_ListPopularPlaylistsController extends Engine_Content_Widget_
 
         // Get paginator
         $table = Engine_Api::_()->getItemTable('music_playlist');
-        $select = $music->getItemsSelect($table->select(), $params)
-            ->order($popularType . ' DESC');
+        $select = $music->getItemsSelect($table->select(), $params);
+        $select->where('approved = ?', 1);
+        $select->order($popularType . ' DESC');
 
         $select = Engine_Api::_()->network()->getNetworkSelect($table->info('name'), $select);
 

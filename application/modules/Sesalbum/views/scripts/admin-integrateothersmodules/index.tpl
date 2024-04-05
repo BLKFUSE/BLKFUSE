@@ -1,6 +1,6 @@
 <?php ?>
-
-<h2>
+<?php include APPLICATION_PATH .  '/application/modules/Sesalbum/views/scripts/dismiss_message.tpl';?>
+<h2 class="page_heading">
   <?php echo $this->translate("Advanced Photos & Albums Plugin") ?>
 </h2>
 <div class="sesbasic_nav_btns">
@@ -17,15 +17,11 @@
     <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render() ?>
   </div>
 <?php endif; ?>
-
 <h3 style="margin-bottom:6px;"><?php echo $this->translate("Integrate and Manage Other Plugins"); ?></h3>
-<p>In this page, you can enable the creation of Albums in other plugins. Below you can integrate other plugins with this plugin using “Add New Plugin” button.<br /><br />
+<p>In this page, you can enable the creation of Albums in other plugins. Below you can integrate other plugins with this plugin using “Add New Plugin” button.<br />
 This process is very easy, but still if you face any difficulty, then please contact our support team for Free integration of other plugins from here: <a href="https://socialnetworking.solutions/support/create-new-ticket/" target="_blank">https://socialnetworking.solutions/support/create-new-ticket/</a> .</p>
-<br class="clear" />
-<?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesalbum', 'controller' => 'integrateothersmodules', 'action' => 'addmodule'), $this->translate("Add New Plugin"), array('class'=>'buttonlink sesbasic_icon_add'));
+<?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesalbum', 'controller' => 'integrateothersmodules', 'action' => 'addmodule'), $this->translate("Add New Plugin"), array('class'=>'buttonlink sesbasic_icon_add sesbasic_btn_space'));
 ?>
-<br /><br />
-
 <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
 <form id='multidelete_form'>
   <table class='admin_table'>

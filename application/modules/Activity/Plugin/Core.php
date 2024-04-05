@@ -368,8 +368,7 @@ class Activity_Plugin_Core
     }
 
     // Registered
-    if( $content == 'everyone' &&
-        Engine_Api::_()->authorization()->context->isAllowed($object, 'registered', 'view') ) {
+    if( $content == 'everyone' && (Engine_Api::_()->authorization()->context->isAllowed($object, 'registered', 'view') || $object->getType() == 'activity_action') ) {
       $event->addResponse(array(
         'type' => 'registered',
         'identity' => 0
@@ -377,8 +376,7 @@ class Activity_Plugin_Core
     }
 
     // Everyone
-    if( $content == 'everyone' &&
-        Engine_Api::_()->authorization()->context->isAllowed($object, 'everyone', 'view') ) {
+    if( $content == 'everyone' && (Engine_Api::_()->authorization()->context->isAllowed($object, 'everyone', 'view') || $object->getType() == 'activity_action') ) {
       $event->addResponse(array(
         'type' => 'everyone',
         'identity' => 0

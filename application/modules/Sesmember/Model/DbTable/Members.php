@@ -39,7 +39,7 @@ class Sesmember_Model_DbTable_Members extends Engine_Db_Table {
     
     $select = $table->select()
             ->setIntegrityCheck(false)
-            ->from($memberTableName,array('user_id', 'like_count', 'comment_count', 'view_count', 'approved', 'verified', 'photo_id', 'coverphoto', 'level_id', 'username', 'displayname','email', 'status', 'enabled', 'creation_date', 'member_count', 'coverphotoparams', 'view_privacy'))
+            ->from($memberTableName,array('user_id', 'like_count', 'comment_count', 'view_count', 'approved', 'verified', 'photo_id', 'coverphoto', 'level_id', 'username', 'displayname','email', 'status', 'enabled', 'creation_date', 'member_count', 'coverphotoparams', 'view_privacy', 'is_verified'))
             ->joinLeft($userinfosTableName, "$userinfosTableName.user_id = $memberTableName.user_id",array('userinfo_id', 'follow_count', 'location', 'rating', 'user_verified', 'cool_count', 'funny_count', 'useful_count', 'featured', 'sponsored', 'vip', 'offtheday', 'starttime', 'endtime', 'adminpicks', 'order'));
             
     if (!empty($params['city'])) {
@@ -392,13 +392,6 @@ class Sesmember_Model_DbTable_Members extends Engine_Db_Table {
       $select->where($memberTableName.'.level_id NOT IN(?)', $params['memberlevels']);
     }
 
-    if(!empty($params["fromBrowse"])){
-        $user = Engine_Api::_()->user()->getViewer();
-        if($user->getIdentity() && $user->level_id != 1)
-            $select->where($memberTableName.'.level_id = ?',$user->level_id);
-    }
-
-
     if (isset($params['limit']) && !empty($params['limit']))
       $select->limit($params['limit']);
     if (!empty($params['limit_data']))
@@ -506,7 +499,7 @@ class Sesmember_Model_DbTable_Members extends Engine_Db_Table {
     
     $tablenameFollow = Engine_Api::_()->getDbTable('follows', 'sesmember')->info('name');
     $select = $table->select()
-                  ->from($memberTableName, array('user_id', 'photo_id', 'displayname', 'email'))
+                  ->from($memberTableName, array('user_id', 'photo_id', 'displayname', 'email', 'is_verified'))
                   ->setIntegrityCheck(false)
                   ->joinLeft($tablenameFollow, $tablenameFollow . '.resource_id = ' . $memberTableName . '.user_id AND ' . $tablenameFollow . '.user_id =  ' . $params['user_id'], null)
                   ->where('follow_id IS NOT NULL')
@@ -523,7 +516,7 @@ class Sesmember_Model_DbTable_Members extends Engine_Db_Table {
     $memberTableName = $table->info('name');
     $tablenameFollow = Engine_Api::_()->getDbTable('follows', 'sesmember')->info('name');
     $select = $table->select()
-                ->from($memberTableName, array('user_id', 'photo_id', 'displayname', 'email'))
+                ->from($memberTableName, array('user_id', 'photo_id', 'displayname', 'email', 'is_verified'))
                 ->setIntegrityCheck(false)
                 ->joinLeft($tablenameFollow, $tablenameFollow . '.user_id = ' . $memberTableName . '.user_id AND ' . $tablenameFollow . '.resource_id =  ' . $params['user_id'], null)
                 ->where('follow_id IS NOT NULL')

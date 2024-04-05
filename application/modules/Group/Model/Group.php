@@ -171,13 +171,16 @@ class Group_Model_Group extends Core_Model_Item_Abstract
         return $this;
     }
 
-    public function getEventsPaginator()
+    public function getEventsPaginator($params = array())
     {
 
         $table = Engine_Api::_()->getDbtable('events', 'event');
         $select = $table->select()->where('parent_type = ?', 'group');
         $select = $select->where('parent_id = ?', $this->getIdentity());
         $select->order('starttime DESC');
+        if($params['user_id'] != $params['owner_id'] && !Engine_Api::_()->user()->getViewer()->isAdmin()) {
+          $select->where('approved = ?', 1);
+        }
         return  Zend_Paginator::factory($select);
 
     }
@@ -186,32 +189,41 @@ class Group_Model_Group extends Core_Model_Item_Abstract
     {
 
         $table = Engine_Api::_()->getDbtable('blogs', 'blog');
-        $select = $table->select()->where('parent_type = ?', 'group')
-        ->where('parent_id = ?', $this->getIdentity());
-        if($params['user_id'] != $params['owner_id']) {
+        $select = $table->select()
+                        ->where('parent_type = ?', 'group')
+                        ->where('parent_id = ?', $this->getIdentity());
+        if($params['user_id'] != $params['owner_id'] && !Engine_Api::_()->user()->getViewer()->isAdmin()) {
           $select->where('draft =?', 0);
+          $select->where('approved = ?', 1);
         }
         return  Zend_Paginator::factory($select);
 
     }
 
-    public function getPollsPaginator()
+    public function getPollsPaginator($params = array())
     {
 
         $table = Engine_Api::_()->getDbtable('polls', 'poll');
-        $select = $table->select()->where('parent_type = ?', 'group')
-        ->where('parent_id = ?', $this->getIdentity());
+        $select = $table->select()
+                      ->where('parent_type = ?', 'group')
+                      ->where('parent_id = ?', $this->getIdentity());
+        if($params['user_id'] != $params['owner_id'] && !Engine_Api::_()->user()->getViewer()->isAdmin()) {
+          $select->where('approved = ?', 1);
+        }
         return  Zend_Paginator::factory($select);
 
     }
 
-    public function getVideosPaginator()
+    public function getVideosPaginator($params = array())
     {
         $table = Engine_Api::_()->getDbtable('videos', 'video');
         $select = $table->select()->where('parent_type = ?', 'group')
         ->where('status = ?', 1)
         //->where('search = ?', 1)
         ->where('parent_id = ?', $this->getIdentity());
+        if($params['user_id'] != $params['owner_id'] && !Engine_Api::_()->user()->getViewer()->isAdmin()) {
+          $select->where('approved = ?', 1);
+        }
         return  Zend_Paginator::factory($select);
     }
 

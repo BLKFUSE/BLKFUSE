@@ -59,12 +59,9 @@ function selectAll()
     <?php endif; ?>
 <h3><?php echo $this->translate("Manage Orders") ?></h3>
 <p><?php echo $this->translate('This page lists all of the orders of fees paid on your website for joining contests. You can use this page to monitor these orders. Entering criteria into the filter fields will help you find specific entry order. Leaving the filter fields blank will show all the orders on your social network.'); ?></p>
-<br />
     <div class='admin_search sesbasic_search_form'>
       <?php echo $this->formFilter->render($this) ?>
     </div>
-    <br />
-
     <?php $counter = $this->paginator->getTotalItemCount(); ?> 
     <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
       <div class="sesbasic_search_reasult">
@@ -86,7 +83,7 @@ function selectAll()
               <th><?php echo $this->translate("Options") ?></th>
             </tr>
           </thead>
-          <?php $defaultCurrency = Engine_Api::_()->sescontestjoinfees()->defaultCurrency(); ?>
+          <?php $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency(); ?>
           <tbody>
             <?php foreach ($this->paginator as $item): ?>
             <tr>
@@ -102,7 +99,7 @@ function selectAll()
               <?php } ?>
               <td class="admin_table_centered"><?php echo $item->gateway_type; ?></td>
               <td class="admin_table_centered"><?php echo $item->currency_symbol ? $item->currency_symbol : '-'; ?></td>
-              <td class="admin_table_centered"><?php echo Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice(round($item->total_amount,2),$defaultCurrency); ?></td>
+              <td class="admin_table_centered"><?php echo Engine_Api::_()->payment()->getCurrencyPrice(round($item->total_amount,2),$defaultCurrency); ?></td>
               <td class="admin_table_centered">
                 <?php echo date('Y-m-d',strtotime($item->creation_date)); ?>
               </td>
@@ -115,7 +112,6 @@ function selectAll()
         </table>
         </div>
       </form>
-      <br/>
       <div>
         <?php echo $this->paginationControl($this->paginator); ?>
       </div>

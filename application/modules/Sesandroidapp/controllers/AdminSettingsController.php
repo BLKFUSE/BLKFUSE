@@ -62,7 +62,7 @@ class Sesandroidapp_AdminSettingsController extends Core_Controller_Action_Admin
     $base = rtrim(substr(basename($fileName), 0, strrpos(basename($fileName), '.')), '.');
     $path = APPLICATION_PATH . DIRECTORY_SEPARATOR . 'temporary';
     $params = array(
-        'parent_type' => 'sesandroidapi_menu',
+        'parent_type' => 'sesapi_menu',
         'parent_id' => $cat_id,
         'user_id' => Engine_Api::_()->user()->getViewer()->getIdentity(),
         'name' => $name,
@@ -83,7 +83,7 @@ class Sesandroidapp_AdminSettingsController extends Core_Controller_Action_Admin
       $normalPath = $path . DIRECTORY_SEPARATOR . $base . '_thumb.' . $extension;
       $image = Engine_Image::factory();
       $image->open($file)
-              ->resize(500, 500)
+              ->resize(400, 400)
               ->write($normalPath)
               ->destroy();
     } else {

@@ -17,7 +17,7 @@ class Elpis_Installer extends Engine_Package_Installer_Module {
       $default_constants = array(
         'theme_color'  => '1',
         'custom_theme_color'  => '1',
-        'theme_widget_radius' => '10',
+        'theme_widget_radius' => '10px',
         'contrast_mode' => 'dark_mode',
         'elpis_header_background_color'  => '#ffffff',
         'elpis_mainmenu_background_color'  => '#ffffff',
@@ -112,7 +112,6 @@ class Elpis_Installer extends Engine_Package_Installer_Module {
 		$db->query('DELETE FROM `engine4_core_content` WHERE `engine4_core_content`.`name` = "core.menu-mini";');
 		$db->query('DELETE FROM `engine4_core_content` WHERE `engine4_core_content`.`name` = "core.menu-logo";');
 		$db->query('DELETE FROM `engine4_core_content` WHERE `engine4_core_content`.`name` = "core.search-mini";');
-		$db->query('DELETE FROM engine4_core_content WHERE `engine4_core_content`.`page_id` = 1 AND `engine4_core_content`.`name` = "serenity.menu-top";');
     $parent_content_id = $db->select()
 		        ->from('engine4_core_content', 'content_id')
 		        ->where('type = ?', 'container')
@@ -185,6 +184,7 @@ class Elpis_Installer extends Engine_Package_Installer_Module {
       $db->query("UPDATE  `engine4_core_modules` SET  `enabled` =  '0' WHERE  `engine4_core_modules`.`name` ='".$themeActive['name']."' LIMIT 1");
       $db->query("UPDATE  `engine4_core_themes` SET  `active` =  '1' WHERE  `engine4_core_themes`.`name` ='elpis' LIMIT 1");
     }
+    $db->query("UPDATE `engine4_core_settings` SET `value` = '0' WHERE `engine4_core_settings`.`name` = 'elpis.changelanding';");
     parent::onEnable();
   }
   

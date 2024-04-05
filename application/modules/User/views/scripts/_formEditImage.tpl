@@ -25,7 +25,6 @@
       <?php echo $this->htmlLink($this->viewer()->getHref(), $this->itemBackgroundPhoto($this->viewer(), 'thumb.profile')) ?>
     <?php } ?>
   </div>
-  <br />
   <?php if($this->viewer()->photo_id) { ?>
     <div id="preview-thumbnail" class="preview-thumbnail">
       <?php echo $this->itemPhoto($this->subject(), 'thumb.icon', "", array('id' => 'previewimage')) ?>
@@ -69,7 +68,7 @@
     }
 
     var lassoCancel = function() {
-      scriptJquery('#preview-thumbnail').html('<img id="previewimage" src="'+orginalThumbSrc+'"/>');
+      scriptJquery('#preview-thumbnail').html('<img id="previewimage" src="'+scriptJquery('#lassoImg').attr("src")+'"/>');
       scriptJquery('#thumbnail-controller').html('<a href="javascript:void(0);" onclick="lassoStart();"><?php echo $this->translate('Edit Profile Photo');?></a>');
       scriptJquery('#coordinates').val("");
       lassoCrop.remove();

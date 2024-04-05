@@ -14,7 +14,7 @@
 class Sesadvancedcomment_Plugin_Core {
   
   public function onRenderLayoutDefault($event, $mode = null) {
-  
+		if( defined('_ENGINE_ADMIN_NEUTER') && _ENGINE_ADMIN_NEUTER ) return;
     if (Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedcomment.pluginactivated')) {
       $view = $event->getPayload();
       if( !($view instanceof Zend_View_Interface) ) {

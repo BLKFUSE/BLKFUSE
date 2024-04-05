@@ -51,7 +51,11 @@ class Sesvideo_Model_DbTable_Recentlyviewitems extends Engine_Db_Table {
 				$watchLaterTable = Engine_Api::_()->getDbTable('watchlaters', 'sesvideo')->info('name');
 				$select = $select->setIntegrityCheck(false);
 				$select = $select->joinLeft($watchLaterTable, '(' . $watchLaterTable . '.video_id = ' . $this->info('name') . '.resource_id AND ' . $watchLaterTable . '.owner_id = ' . $user_id . ')', array('watchlater_id'));
-			}			
+			}
+			
+			if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('tickvideo') && !Engine_Api::_()->getApi('settings', 'core')->getSetting('tickvideo.allow.video', 0)) {
+        $select->where($itemTableName.'.is_tickvideo = ?',0);
+			}
     }
     return Zend_Paginator::factory($select);
   }

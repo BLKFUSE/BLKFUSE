@@ -11,8 +11,9 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_manage", 'childMenuItemName' => 'core_admin_main_manage_networks')); ?>
 
-<h2>
+<h2 class="page_heading">
   <?php echo $this->translate("Manage Networks") ?>
 </h2>
 <p>
@@ -21,16 +22,12 @@
     $this->translate('here')); ?>
   <?php echo $this->translate("NETWORK_VIEWS_SCRIPTS_ADMINMANAGE_INDEX_DESCRIPTION", $link) ?>
 </p>
-<br />
 <?php
 	$settings = Engine_Api::_()->getApi('settings', 'core');
 	if( $settings->getSetting('user.support.links', 0) == 1 ) {
 		echo 'More info: <a href="https://community.socialengine.com/blogs/597/15/networks" target="_blank">See KB article</a>.';
 	} 
 ?>	
-<br />
-<br />
-
 <script type="text/javascript">
   var changeOrder = function(newOrder) {
     var order = scriptJquery('#order').val();
@@ -47,7 +44,7 @@
   }
   var checkAll = function(pel) {
     var state = pel.checked;
-    scriptJquery('input[type=checkbox]').each(function(el){
+    scriptJquery('input[id=actions]').each(function(el){
       scriptJquery(this).prop("checked",state);
     });
   }
@@ -55,20 +52,18 @@
 
 <?php echo $this->formFilter->render($this) ?>
 
-<div>
+<div class="add_network_section">
   <?php echo $this->htmlLink(array('action' => 'create', 'reset' => false), $this->translate('Add Network'), array(
-    'class' => 'buttonlink',
-    'style' => 'background-image: url(' . $this->layout()->staticBaseUrl . 'application/modules/Network/externals/images/admin/add.png);'
+    'class' => 'admin_link_btn',
+    
   )) ?>
 </div>
 
-<br />
 <?php if( engine_count($this->paginator) ): ?>
 <?php echo $this->paginationControl($this->paginator, null, null, array(
     'query' => $this->formValues,
     'pageAsQuery' => true,
   )); ?>
-<br/>
 <form id='delete_selected' method='post' action='<?php echo $this->url(array('action' => 'deleteselected')) ?>'>
 
   <table class='admin_table admin_responsive_table'>
@@ -87,15 +82,15 @@
             <?php echo $this->translate("Network Name") ?>
           </a>
         </th>
-        <th style="width: 1%;">
+        <th >
           <?php echo $this->translate("Related Profile Question") ?>
         </th>
-        <th style="width: 1%;" class="admin_table_centered">
+        <th  style="width: 150px;">
           <a href="javascript:void(0);" onclick="javascript:changeOrder('member_count');">
             <?php echo $this->translate("Members") ?>
           </a>
         </th>
-        <th style="width: 1%;">
+        <th style="width: 150px;">
           <?php echo $this->translate("Options") ?>
         </th>
       </tr>
@@ -115,25 +110,23 @@
         <td data-label="<?php echo $this->translate("Related Profile Question") ?>">
           <?php echo $this->networkField($network, $this->fields) ?>
         </td>
-        <td data-label="<?php echo $this->translate("Members") ?>" class="admin_table_centered">
+        <td data-label="<?php echo $this->translate("Members") ?>">
           <?php $count = $network->getMemberCount();?>
           <?php if($count):?><a class='smoothbox' href='<?php echo $this->url(array('action' => 'members', 'network_id' => $network->network_id));?>'><?php endif;?>
             <?php
-              echo $this->translate(array('%s member', '%s members', $count), $this->locale()->toNumber($count))
+              echo $this->translate(array('%s member', '%s members', $count), $count)
             ?>
           <?php if($count):?></a><?php endif;?>
         </td>
         <td class="admin_table_options">
           <?php echo $this->htmlLink(array('action' => 'edit', 'id' => $network->network_id, 'reset' => false), $this->translate('edit')) ?> 
+          |
           <?php echo $this->htmlLink(array('action' => 'delete', 'id' => $network->network_id, 'reset' => false, 'format' => 'smoothbox'), $this->translate('delete'), array('class' => 'smoothbox')) ?>
         </td>
       </tr>
       <?php endforeach; ?>
     </tbody>
   </table>
-
-  <br/>
-
   <div class='buttons'>
     <button type='submit'>
       <?php echo $this->translate("Delete Selected") ?>

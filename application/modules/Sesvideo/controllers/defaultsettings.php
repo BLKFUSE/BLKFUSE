@@ -1749,7 +1749,7 @@ if (!$page_id) {
       'name' => 'sesvideo.advance-share',
       'parent_content_id' => $right_id,
       'order' => $widgetOrder++,
-      'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare","addThis"],"title":"","nomobile":"0","name":"sesvideo.advance-share"}',
+      'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare"],"title":"","nomobile":"0","name":"sesvideo.advance-share"}',
   ));
   $db->insert('engine4_core_content', array(
       'page_id' => $page_id,
@@ -2348,7 +2348,7 @@ if (empty($info)) {
       'name' => 'sesvideo.video-view-page',
       'parent_content_id' => $middle_id,
       'order' => $widgetOrder++,
-      'params' => '{"advSearchOptions":["likeCount","viewCount","commentCount","favouriteButton","addToPlaylist","watchLater","favouriteCount","rateCount","openVideoLightbox","editVideo","deleteVideo","shareAdvance","reportVideo","peopleLike","favourite","comment","artist"],"autoplay":"0","likelimit_data":"11","favouritelimit_data":"11","advShareOptions":["privateMessage","siteShare","quickShare","addThis","embed"],"title":"","nomobile":"0","name":"sesvideo.video-view-page"}',
+      'params' => '{"advSearchOptions":["likeCount","viewCount","commentCount","favouriteButton","addToPlaylist","watchLater","favouriteCount","rateCount","openVideoLightbox","editVideo","deleteVideo","shareAdvance","reportVideo","peopleLike","favourite","comment","artist"],"autoplay":"0","likelimit_data":"11","favouritelimit_data":"11","advShareOptions":["privateMessage","siteShare","quickShare","embed"],"title":"","nomobile":"0","name":"sesvideo.video-view-page"}',
   ));
 
   // right column
@@ -2465,7 +2465,7 @@ $Comedy = array('0'=>array('Stand Up','stand-up.jpg','stand-up.png',''));
           PRIMARY KEY (`category_id`),
           KEY `category_id` (`category_id`,`category_name`),
           KEY `category_name` (`category_name`)
-          ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+          ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1');
         foreach ($catgoryData as $key => $value) {
           //Upload categories icon
           $db->query("INSERT IGNORE INTO `engine4_sesvideo_categories` (`category_name`,`subcat_id`,`subsubcat_id`,`slug`,`description`) VALUES ( '" . $value[0] . "',0,0,'','".$value[3]."')");
@@ -2643,7 +2643,7 @@ $db->query('INSERT IGNORE INTO `engine4_authorization_permissions`
     "video" as `type`,
     "video_uploadoptn" as `name`,
     5 as `value`,
-    \'["youtube","youtubePlaylist","vimeo","dailymotion","iframely","myComputer"]\' as `params`
+    \'["iframely","myComputer"]\' as `params`
   FROM `engine4_authorization_levels` WHERE `type` NOT IN("public");');
 
 $db->query('INSERT IGNORE INTO `engine4_authorization_permissions`
@@ -2671,7 +2671,7 @@ $table_exist_video = $db->query('SHOW TABLES LIKE \'engine4_sesvideo_videos\'')-
 if (!empty($table_exist_video)) {
 	$code = $db->query('SHOW COLUMNS FROM engine4_sesvideo_videos LIKE \'code\'')->fetch();
 	if (empty($code)) {
-		$db->query('ALTER TABLE `engine4_sesvideo_videos` CHANGE  `code`  `code` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ;');
+		$db->query('ALTER TABLE `engine4_sesvideo_videos` CHANGE  `code`  `code` TEXT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL ;');
 	}
 }
 
@@ -2706,7 +2706,7 @@ $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesvideo_integrateothermodules` 
   PRIMARY KEY (`integrateothermodule_id`),
   UNIQUE KEY `content_type` (`content_type`,`content_id`),
   KEY `module_name` (`module_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
 $db->query("UPDATE engine4_authorization_permissions SET name = 'addplayl_video' WHERE name = 'addplayl_video'");
 $db->query("UPDATE engine4_authorization_permissions SET name = 'video_approvety' WHERE name = 'video_approve_type'");
@@ -2779,4 +2779,27 @@ $db->query('INSERT IGNORE INTO `engine4_authorization_permissions`
 $db->query('UPDATE `engine4_core_menuitems` SET `label` = "Channel Photo ML Settings" WHERE `engine4_core_menuitems`.`name` = "sesvideo_admin_main_level_chanelphoto";');
 $db->query('UPDATE `engine4_sesvideo_categories` SET `member_levels` = "1,2,3,4";');
 
-$db->query('ALTER TABLE `engine4_sesvideo_videos` ADD `package_id` INT(11) NOT NULL DEFAULT "0";');
+
+$table_exist_video = $db->query('SHOW TABLES LIKE \'engine4_sesvideo_videos\'')->fetch();
+if (!empty($table_exist_video)) {
+	$song_id = $db->query('SHOW COLUMNS FROM engine4_sesvideo_videos LIKE \'song_id\'')->fetch();
+	if (empty($song_id)) {
+		$db->query('ALTER TABLE `engine4_sesvideo_videos` ADD `song_id` INT(11) UNSIGNED NOT NULL DEFAULT "0";');
+	}
+	$package_id = $db->query('SHOW COLUMNS FROM engine4_sesvideo_videos LIKE \'package_id\'')->fetch();
+	if (empty($package_id)) {
+		$db->query('ALTER TABLE `engine4_sesvideo_videos` ADD `package_id` INT(11) NOT NULL DEFAULT "0";');
+	}
+	$is_tickvideo = $db->query('SHOW COLUMNS FROM engine4_sesvideo_videos LIKE \'is_tickvideo\'')->fetch();
+	if (empty($is_tickvideo)) {
+		$db->query('ALTER TABLE `engine4_sesvideo_videos` ADD `is_tickvideo` TINYINT NOT NULL DEFAULT "0";');
+	}
+}
+
+$table_exist_chanels = $db->query('SHOW TABLES LIKE \'engine4_sesvideo_chanels\'')->fetch();
+if (!empty($table_exist_chanels)) {
+	$is_default = $db->query('SHOW COLUMNS FROM engine4_sesvideo_chanels LIKE \'is_default\'')->fetch();
+	if (empty($is_default)) {
+		$db->query('ALTER TABLE `engine4_sesvideo_chanels` ADD `is_default` tinyint(1) NOT NULL DEFAULT "0";');
+	}
+}

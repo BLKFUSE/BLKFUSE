@@ -13,13 +13,14 @@ return array(
   'package' => array(
     'type' => 'module',
     'name' => 'network',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 10271 $',
     'path' => 'application/modules/Network',
     'repository' => 'socialengine.com',
     'title' => 'Networks',
     'description' => 'Networks',
-    'author' => 'Webligo Developments',
+    'author' => 'SocialEngine Core',
+    'thumb' => 'application/modules/Core/externals/images/thumb.png',
     'dependencies' => array(
       array(
         'type' => 'module',

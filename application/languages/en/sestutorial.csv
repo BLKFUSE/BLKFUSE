@@ -90,7 +90,7 @@
 
 
 #SESTutorial_ASKANSWER_EMAIL
-"_EMAIL_SESTUTORIAL_ASKANSWER_EMAIL_TITLE";"Multi - Use Tutorials Plugin - Answer to Your Question"
+"_EMAIL_SESTUTORIAL_ASKANSWER_EMAIL_TITLE";"Answer to Your Question"
 "_EMAIL_SESTUTORIAL_ASKANSWER_EMAIL_DESCRIPTION";"This is the email that goes to a non site user in reply of his question."
 "_EMAIL_SESTUTORIAL_ASKANSWER_EMAIL_SUBJECT";"[site_title]: Answer to your Query"
 "_EMAIL_SESTUTORIAL_ASKANSWER_EMAIL_BODY";"[header]
@@ -106,7 +106,7 @@ Answer to Your question: [questionreply]
 
 
 #SESTutorial_ASKQUESTION_EMAIL
-"_EMAIL_SESTUTORIAL_ASKQUESTION_EMAIL_TITLE";"Multi - Use Tutorials Plugin - Someone asked a question"
+"_EMAIL_SESTUTORIAL_ASKQUESTION_EMAIL_TITLE";"Someone asked a question"
 "_EMAIL_SESTUTORIAL_ASKQUESTION_EMAIL_DESCRIPTION";"This is the email that goes to a site admin when someone asked a question."
 "_EMAIL_SESTUTORIAL_ASKQUESTION_EMAIL_SUBJECT";"Someone asked a question"
 "_EMAIL_SESTUTORIAL_ASKQUESTION_EMAIL_BODY";"[header]

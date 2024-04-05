@@ -2,7 +2,7 @@
 <?php 
 $information = array('description' => 'Package Description', 'featured' => 'Featured', 'sponsored' => 'Sponsored', 'verified' => 'Verified', 'hot' => 'Hot', 'custom_fields' => 'Custom Fields');
 $showinfo = Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestpackage.package.info', array_keys($information)); ?>
-<?php $currentCurrency =  Engine_Api::_()->sescontestpackage()->getCurrentCurrency(); ?>
+<?php $currentCurrency =  Engine_Api::_()->payment()->getCurrentCurrency(); ?>
 <?php if(engine_count($this->existingleftpackages)){ ?>
 	<div class="sescontest_packages_main sesbasic_clearfix sesbasic_bxs">
   	<div class="sescontest_packages_main_header">

@@ -35,7 +35,7 @@ hashSign = '#';
   function changeCustomThemeColor(value) {
 
     if(value > 13) {
-      var URL = en4.core.staticBaseUrl+'sesdating/admin-settings/getcustomthemecolors/';
+      var URL = en4.core.baseUrl+'sesdating/admin-settings/getcustomthemecolors/';
       (scriptJquery.ajax({
           method: 'post',
           url: URL ,
@@ -91,9 +91,9 @@ hashSign = '#';
 	  } else if(custom == '' && value == 5) {
 	    
 	    if(document.getElementById('custom_theme_color-wrapper'))
-				document.getElementById('custom_theme_color-wrapper').style.display = 'block';
+				document.getElementById('custom_theme_color-wrapper').style.display = 'flex';
       if(document.getElementById('custom_themes'))
-				document.getElementById('custom_themes').style.display = 'block';
+				document.getElementById('custom_themes').style.display = 'flex';
       <?php if($this->customtheme_id): ?>
         //value = '<?php echo $this->customtheme_id; ?>';
         changeCustomThemeColor('<?php echo $this->customtheme_id; ?>');
@@ -103,29 +103,29 @@ hashSign = '#';
 		 // changeCustomThemeColor(5);
 	  } else if(custom == 'custom') {
 		  if(document.getElementById('common_settings-wrapper'))
-				document.getElementById('common_settings-wrapper').style.display = 'block';
+				document.getElementById('common_settings-wrapper').style.display = 'flex';
 		  if(document.getElementById('header_settings-wrapper'))
-				document.getElementById('header_settings-wrapper').style.display = 'block';
+				document.getElementById('header_settings-wrapper').style.display = 'flex';
 	    if(document.getElementById('footer_settings-wrapper'))
-				document.getElementById('footer_settings-wrapper').style.display = 'block';
+				document.getElementById('footer_settings-wrapper').style.display = 'flex';
 			if(document.getElementById('body_settings-wrapper'))
-				document.getElementById('body_settings-wrapper').style.display = 'block';
+				document.getElementById('body_settings-wrapper').style.display = 'flex';
 		  if(document.getElementById('general_settings_group'))
-			  document.getElementById('general_settings_group').style.display = 'block';
+			  document.getElementById('general_settings_group').style.display = 'flex';
 			if(document.getElementById('header_settings_group'))
-			  document.getElementById('header_settings_group').style.display = 'block';
+			  document.getElementById('header_settings_group').style.display = 'flex';
 			if(document.getElementById('footer_settings_group'))
-			  document.getElementById('footer_settings_group').style.display = 'block';
+			  document.getElementById('footer_settings_group').style.display = 'flex';
 			if(document.getElementById('body_settings_group'))
-			  document.getElementById('body_settings_group').style.display = 'block';
+			  document.getElementById('body_settings_group').style.display = 'flex';
 			  
       if(document.getElementById('custom_theme_color').value > 13) {
         if(document.getElementById('submit'))
           document.getElementById('submit').style.display = 'inline-block';
         if(document.getElementById('edit_custom_themes'))
-          document.getElementById('edit_custom_themes').style.display = 'block';
+          document.getElementById('edit_custom_themes').style.display = 'flex';
         if(document.getElementById('delete_custom_themes'))
-          document.getElementById('delete_custom_themes').style.display = 'block';
+          document.getElementById('delete_custom_themes').style.display = 'flex';
 
         <?php if(empty($this->customtheme_id)): ?>
           history.pushState(null, null, 'admin/sesdating/settings/styling/customtheme_id/'+document.getElementById('custom_theme_color').value);
@@ -139,7 +139,7 @@ hashSign = '#';
           var activatedTheme = '<?php echo $this->activatedTheme; ?>';
           if(activatedTheme == document.getElementById('custom_theme_color').value) {
             document.getElementById('delete_custom_themes').style.display = 'none';
-            document.getElementById('deletedisabled_custom_themes').style.display = 'block';
+            document.getElementById('deletedisabled_custom_themes').style.display = 'flex';
           } else {
             if(document.getElementById('deletedisabled_custom_themes'))
               document.getElementById('deletedisabled_custom_themes').style.display = 'none';

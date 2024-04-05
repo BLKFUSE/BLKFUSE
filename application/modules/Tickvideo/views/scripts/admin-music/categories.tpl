@@ -13,8 +13,6 @@
  
 ?>
 <?php include APPLICATION_PATH .  '/application/modules/Tickvideo/views/scripts/dismiss_message.tpl';?>
-
-
 <script type="text/javascript">
     function multiDelete()
     {
@@ -34,7 +32,6 @@ function selectAll()
 <p>
     Here, you can add Categories for Music you want to use while the creation of Video by using the "Create New Category" button below. You can add as many music as you want in the Music Categories and also can edit and delete them as per your choice.
 </p>
-<br class="clear" />
 <div class="sesbasic_search_reasult">
 
     <?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'tickvideo', 'controller' => 'music', 'action' => 'create-category'), $this->translate("Create New Category"), array('class'=>'smoothbox sesbasic_icon_add buttonlink')) ?>
@@ -79,13 +76,9 @@ function selectAll()
     <div>
         <?php echo $this->paginationControl($this->paginator,null,null); ?>
     </div>
-
-    <br />
-    <br />
     <div class='buttons'>
         <button type='submit'><?php echo $this->translate("Delete Selected") ?></button>
     </div>
-    <br />
 </form>
 <?php else: ?>
 <div class="tip">

@@ -1,0 +1,148 @@
+{
+  "type": "theme",
+  "name": "elpis",
+  "version": "6.5.1",
+  "revision": "10113",
+  "path": "application\/themes\/elpis",
+  "repository": null,
+  "sku": null,
+  "date": "Wed, 20 Mar 2024 11:36:58 +0000",
+  "title": "Elpis",
+  "description": "Elpis",
+  "thumb": "theme.jpg",
+  "developer": null,
+  "authors": [
+    "SocialEngine Core"
+  ],
+  "meta": {
+    "date": "Wed, 20 Mar 2024 11:36:58 +0000",
+    "title": "Elpis",
+    "description": "Elpis",
+    "developer": null,
+    "authors": [
+      "SocialEngine Core"
+    ],
+    "changeLog": null
+  },
+  "actions": [
+    "install",
+    "upgrade",
+    "refresh"
+  ],
+  "callback": {
+    "path": null,
+    "class": "Engine_Package_Installer_Theme",
+    "priority": 100
+  },
+  "dependencies": null,
+  "tests": [
+    
+  ],
+  "permissions": [
+    
+  ],
+  "structure": {
+    "application\/themes\/elpis": {
+      "type": "directory",
+      "path": "application\/themes\/elpis",
+      "structure": [
+        {
+          "path": "theme.css",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 85306,
+          "sha1": "6914b195ded7082c61d58e7f04810a4bab21b054"
+        },
+        {
+          "path": "theme.jpg",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 17525,
+          "sha1": "01cd11cd6976bd385459d294845c8ba5b1a83b2c"
+        },
+        {
+          "path": "manifest.php",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 950,
+          "sha1": "6a5a1cd30e38fa550a8a7ffd65ae1486a24525d8"
+        },
+        {
+          "path": "mobile.css",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 19931,
+          "sha1": "b37bfe35e3cd557b80babfb6d481730ec8206272"
+        },
+        {
+          "path": "images",
+          "dir": true,
+          "file": false,
+          "perms": "0755",
+          "size": 4096,
+          "sha1": null
+        },
+        {
+          "path": "images\/bullet_active.png",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 173,
+          "sha1": "7eab9cf04e67034273d6532fe89a47ae58445e2f"
+        },
+        {
+          "path": "images\/buttonbg.png",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 105,
+          "sha1": "bfbe9d72ee9861006d0538d7a4c9d9c3e0ebc6c4"
+        },
+        {
+          "path": "images\/bullet.png",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 177,
+          "sha1": "88d5bbc5e895b976c41778c8eb37eb456b84908c"
+        },
+        {
+          "path": "images\/topbar_bg.png",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 13285,
+          "sha1": "189deb8f84195b62aa20afb1c9433503cf44534f"
+        },
+        {
+          "path": "images\/topbar_menu_bg.png",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 170,
+          "sha1": "565dda63d0039d02852e14ef58766797f25ee2f7"
+        },
+        {
+          "path": "images\/bullet_hover.png",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 179,
+          "sha1": "932a55bc938965bc94a48ea2a7d540a0e35dccaf"
+        },
+        {
+          "path": "constants.css",
+          "dir": false,
+          "file": true,
+          "perms": "0644",
+          "size": 9341,
+          "sha1": "ba2ec8c8853f9ad341efccbdfd0b4ff6216efc29"
+        }
+      ]
+    }
+  }
+}

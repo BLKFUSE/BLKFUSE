@@ -280,3 +280,28 @@ window.addEventListener('DOMContentLoaded', function() {
 })
 
 })(); // END NAMESPACE
+
+function userWidgetRequestSend(action, data) {
+  var url;
+  if( action == 'confirm' ) {
+    url = en4.core.baseUrl + 'user/friends/confirm';
+  } else if( action == 'reject' ) {
+    url = en4.core.baseUrl + 'user/friends/reject';
+  } else if( action == 'ignore' ) {
+    url = en4.core.baseUrl + 'user/friends/ignore';
+  } else {
+    return false;
+  }
+  (scriptJquery.ajax({
+    dataType: 'json',
+    'url' : url,
+    'data' : data,
+    success : function(responseJSON) {
+      if( !responseJSON.status ) {
+        document.getElementById('notifications_' + data.notification_id).innerHTML = '<div class="request_success">' + responseJSON.error + '</div>';
+      } else {
+        document.getElementById('notifications_' + data.notification_id).innerHTML = '<div class="request_success">' +responseJSON.message+'</div>';
+      }
+    }
+  }));
+}

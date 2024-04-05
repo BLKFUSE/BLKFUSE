@@ -23,12 +23,19 @@ class Engine_Sanity_Test_MysqlServer extends Engine_Sanity_Test_Abstract
     'badAdapter' => 'Unable to check. No database adapter was provided.',
     'tooLowVersion' => 'Requires at least version %min_version%',
     'tooHighVersion' => 'Requires no greater than %max_version%',
+    
+    'tooLowMariaDBVersion' => 'Requires at least MariaDB version %min_mariadb_version%',
+    'tooHighMariaDBVersion' => 'Requires no greater MariaDB than %max_mariadb_version%',
   );
 
   protected $_messageVariables = array(
     'min_version' => '_minVersion',
     'max_version' => '_maxVersion',
     'actual_version' => '_actualVersion',
+    
+    'min_mariadb_version' => '_minMariaDBVersion',
+    'max_mariadb_version' => '_maxMariaDBVersion',
+    'actual_mariadb_version' => '_actualMariaDBVersion',
   );
   
   protected $_adapter;
@@ -38,6 +45,12 @@ class Engine_Sanity_Test_MysqlServer extends Engine_Sanity_Test_Abstract
   protected $_maxVersion;
 
   protected $_actualVersion;
+  
+  protected $_minMariaDBVersion;
+
+  protected $_maxMariaDBVersion;
+
+  protected $_actualMariaDBVersion;
 
   public function setMinVersion($minVersion)
   {
@@ -59,6 +72,29 @@ class Engine_Sanity_Test_MysqlServer extends Engine_Sanity_Test_Abstract
   public function getMaxVersion()
   {
     return $this->_maxVersion;
+  }
+  
+  
+  public function setMinMariaDBVersion($minMariaDBVersion)
+  {
+    $this->_minMariaDBVersion = $minMariaDBVersion;
+    return $this;
+  }
+
+  public function getMinMariaDBVersion()
+  {
+    return $this->_minMariaDBVersion;
+  }
+
+  public function setMaxMariaDBVersion($maxMariaDBVersion)
+  {
+    $this->_maxMariaDBVersion = $maxMariaDBVersion;
+    return $this;
+  }
+
+  public function getMaxMariaDBVersion()
+  {
+    return $this->_maxMariaDBVersion;
   }
 
   public function setAdapter($adapter)
@@ -86,13 +122,16 @@ class Engine_Sanity_Test_MysqlServer extends Engine_Sanity_Test_Abstract
     $adapter = $this->getAdapter();
     $minVersion = $this->getMinVersion();
     $maxVersion = $this->getMaxVersion();
+    
+    $minMariaDBVersion = $this->getMinMariaDBVersion();
+    $maxMariaDBVersion = $this->getMaxMariaDBVersion();
 
     if( !$adapter ) {
       return $this->_error('badAdapter');
     }
 
     try {
-      $this->_actualVersion = $actualVersion = $adapter->getServerVersion();
+      $this->_actualVersion = $actualVersion = $adapter->getClientVersion();
     } catch( Exception $e ) {
       return $this->_error('badAdapter');
     }
@@ -107,6 +146,26 @@ class Engine_Sanity_Test_MysqlServer extends Engine_Sanity_Test_Abstract
 
     if( !empty($maxVersion) && version_compare($actualVersion, $maxVersion, '>') ) {
       $this->_error('tooHighVersion');
+    }
+    
+    if(strpos($adapter->isMariaDb(), 'MariaDB') !== false) {
+      try {
+        $this->_actualMariaDBVersion = $actualMariaDBVersion = $adapter->getServerVersion();
+      } catch( Exception $e ) {
+        return; //$this->_error('badAdapter');
+      }
+
+      if( !$actualMariaDBVersion ) {
+        return $this->_error('badAdapter');
+      }
+
+      if( !empty($minMariaDBVersion) && version_compare($actualMariaDBVersion, $minMariaDBVersion, '<') ) {
+        $this->_error('tooLowMariaDBVersion');
+      }
+
+      if( !empty($maxMariaDBVersion) && version_compare($actualMariaDBVersion, $maxMariaDBVersion, '>') ) {
+        $this->_error('tooHighMariaDBVersion');
+      }
     }
   }
 }

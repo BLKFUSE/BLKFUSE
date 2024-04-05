@@ -48,7 +48,7 @@ $songs    = $playlist->getSongs();
 
 <div class="music_playlist" id="music_playlist_item_<?php echo $playlist->getIdentity() ?>">
   <div class="music_browse_author_photo">
-    <?php echo $this->htmlLink($playlist->getOwner(), $this->itemBackgroundPhoto($playlist->getOwner(), 'thumb.profile') ) ?>
+    <?php echo $this->htmlLink($playlist->getOwner(), $this->itemBackgroundPhoto($playlist->getOwner(), 'thumb.icon') ) ?>
   </div>
 
   <div class="music_playlist_options">

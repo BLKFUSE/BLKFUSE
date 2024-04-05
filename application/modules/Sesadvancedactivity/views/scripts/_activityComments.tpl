@@ -188,7 +188,7 @@
                 <li id="comment-<?php echo $comment->comment_id ?>">
                   <div class="comments_author_photo">
                     <?php echo $this->htmlLink($this->item($comment->poster_type, $comment->poster_id)->getHref(),
-                      $this->itemPhoto($this->item($comment->poster_type, $comment->poster_id), 'thumb.icon', $action->getSubject()->getTitle())
+                      $this->itemPhoto($this->item($comment->poster_type, $comment->poster_id), 'thumb.icon', $action->getSubject()->getTitle(false))
                     ) ?>
                   </div>
                   <div class="comments_info">

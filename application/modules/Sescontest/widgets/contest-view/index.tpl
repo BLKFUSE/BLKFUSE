@@ -140,7 +140,7 @@
         <?php if(isset($this->joinButtonActive) && isset($participate['can_join']) && isset($participate['show_button']) && Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestjoinfees.allow.entryfees', 1)): ?>
         <span><a href="<?php echo $this->url(array('action' => 'create', 'contest_id' => $contest->contest_id),'sescontest_join_contest','true');?>" class="contest_join_btn"><i class="fa fa-sign-in-alt"></i>
           <?php if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sescontestjoinfees') && $contest->entry_fees > 0){ ?>
-            <span><?php echo $this->translate('Join Contest').'<br>'.Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($contest->entry_fees);;?></span></a>
+            <span><?php echo $this->translate('Join Contest').'<br>'.Engine_Api::_()->payment()->getCurrencyPrice($contest->entry_fees);;?></span></a>
           <?php }else{ ?>
             <span><?php echo $this->translate('Join Contest');?></span></a>
           <?php } ?>
@@ -320,7 +320,7 @@
                   <span>
                     <a href="<?php echo $this->url(array('action' => 'create', 'contest_id' => $contest->contest_id),'sescontest_join_contest','true');?>"><i class="fa fa-sign-in-alt"></i>
                     <?php if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sescontestjoinfees') && $contest->entry_fees > 0 && Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestjoinfees.allow.entryfees', 1)){ ?>
-                      <span><?php echo $this->translate('Join Contest').'<span> '. $this->translate("in") .' '.Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($contest->entry_fees);?></span></span></a>
+                      <span><?php echo $this->translate('Join Contest').'<span> '. $this->translate("in") .' '.Engine_Api::_()->payment()->getCurrencyPrice($contest->entry_fees);?></span></span></a>
                     <?php }else{ ?>
                       <span><?php echo $this->translate('Join Contest');?></span></a>
                     <?php } ?>
@@ -709,7 +709,7 @@
 
   });
 <?php endif;?>
-scriptJquery(document).ready(function(e){
-  scriptJquery('#main_tabs').children().eq(0).find('a').trigger('click');
-});
+// scriptJquery(document).ready(function(e){
+//   scriptJquery('#main_tabs').children().eq(0).find('a').trigger('click');
+// });
  </script>

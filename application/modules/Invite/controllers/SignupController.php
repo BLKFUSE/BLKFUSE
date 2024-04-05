@@ -25,10 +25,21 @@ class Invite_SignupController extends Engine_Controller_Action
     if( $viewer && $viewer->getIdentity() ) {
       return $this->_helper->redirector->gotoRoute(array(), 'default', true);
     }
+    
+    //Referral work
+    $referralCode = $this->_getParam('referral_code');
+    if (!empty($referralCode)) {
+      $referral = Engine_Api::_()->getDbTable('users', 'user')->getUserExist('', $referralCode);
+      if ($referral) {
+        $session = new Zend_Session_Namespace('invite_referral_signup');
+        $session->user_id = $referral->user_id;
+        $session->referral_code = $referral->referral_code;
+      }
+    }
 
     // Get invite params
     $session = new Zend_Session_Namespace('invite');
-    $session->invite_code = $this->_getParam('code');
+    $session->invite_code = $this->_getParam('code') ? $this->_getParam('code') : $referralCode;
     $session->invite_email = $this->_getParam('email');
 
     // Check code now if set

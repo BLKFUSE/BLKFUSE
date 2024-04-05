@@ -17,7 +17,7 @@ if(!$this->is_ajax){
   <a href="javascript:;" class="sescontest_report_download" data-rel="excel"><i class="fa fa-download sesbasic_text_light"></i><?php echo $this->translate("Download Report in Excel"); ?></a>
 </div>
 <?php if( isset($this->eventSaleData) && engine_count($this->eventSaleData) > 0): ?>
-<?php $defaultCurrency = Engine_Api::_()->sescontestjoinfees()->defaultCurrency(); ?>
+<?php $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency(); ?>
 <div class="sesbasic_dashboard_table sesbasic_bxs">
   <form method="post" >
     <table>
@@ -37,7 +37,7 @@ if(!$this->is_ajax){
           <td class="centerT"><?php echo $counter; ?></td>
           <td><?php echo Engine_Api::_()->sescontestjoinfees()->dateFormat($item->creation_date); ?></td> 
           <td class="centerT"><?php echo $item->total_orders; ?></td>
-          <td><?php echo Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($item->totalAmountSale,$defaultCurrency); ?></td>
+          <td><?php echo Engine_Api::_()->payment()->getCurrencyPrice($item->totalAmountSale,$defaultCurrency); ?></td>
         </tr>
         <?php $counter++;
         			endforeach; ?>

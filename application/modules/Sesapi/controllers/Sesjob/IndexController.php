@@ -73,7 +73,7 @@
  			$params['state'] = $isState;
  		if(!empty(['isShow']))
  			$params['show'] = $isShow;
-
+    if(!empty($isPhoto))
  		$params['has_photo'] = $isPhoto;
 
 
@@ -154,7 +154,7 @@
  		$counter = 0;
  		$result = array();
 		$sesshortcut = Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesshortcut') && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesshortcut.enableshortcut', 1);
-        $canShare = Engine_Api::_()->getApi('settings', 'core')->getSetting('mobile_sesjob_share', 1);
+    $canShare = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesjob.enable.sharing', 1);
 
  		foreach($paginator as $item){
  			$result['jobs'][$counter] = $item->toArray();
@@ -222,7 +222,36 @@
 
  	
  	public function filtersearchJobAction(){
- 		$form = new Sesjob_Form_Search(array('searchTitle' => $this->_getParam('search_title', 'yes'),'browseBy' => $this->_getParam('browse_by', 'yes'),'categoriesSearch' => $this->_getParam('categories', 'yes'),'searchFor'=>$search_for,'FriendsSearch'=>$this->_getParam('friend_show', 'yes'),'defaultSearchtype'=>$default_search_type,'locationSearch' => $location,'kilometerMiles' => $this->_getParam('kilometer_miles', 'yes'),'hasPhoto' => $this->_getParam('has_photo', 'yes'), 'searchcompTitle' => $this->_getParam('searchcomp_title', 'yes'), 'industry' => $this->_getParam('industry', 'yes'), 'employmenttype' => $this->_getParam('employmenttype', 'yes'), 'educationlevel' => $this->_getParam('educationlevel', 'yes')));
+ 	
+    if($this->_getParam('location','yes') == 'yes' && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesjob_enable_location', 1))
+      $location = 'yes';
+    else
+      $location = 'no';
+    
+ 		$form = new Sesjob_Form_Search(array('searchTitle' => $this->_getParam('search_title', 'yes'),'browseBy' => $this->_getParam('browse_by', 'yes'),'categoriesSearch' => $this->_getParam('categories', 'yes'),'searchFor'=>$this-> _getParam('search_for', 'job'),'FriendsSearch'=>$this->_getParam('friend_show', 'yes'),'defaultSearchtype'=>$this-> _getParam('default_search_type', 'mostSPliked'),'locationSearch' => $location,'kilometerMiles' => $this->_getParam('kilometer_miles', 'yes'),'hasPhoto' => $this->_getParam('has_photo', 'yes'), 'searchcompTitle' => $this->_getParam('searchcomp_title', 'yes'), 'industry' => $this->_getParam('industry', 'yes'), 'employmenttype' => $this->_getParam('employmenttype', 'yes'), 'educationlevel' => $this->_getParam('educationlevel', 'yes')));
+ 		
+    if($this->_getParam('browse_by', 'yes') == 'yes'){
+      
+      $filterOptions = (array)$this->_getParam('search_type', array('recentlySPcreated' => 'Recently Created','mostSPviewed' => 'Most Viewed','mostSPliked' => 'Most Liked', 'mostSPcommented' => 'Most Commented','mostSPfavourite' => 'Most Favourite','featured' => 'Featured','sponsored' => 'Sponsored','verified' => 'Verified','mostSPrated'=>'Most Rated','hot' => 'Hot'));
+
+      if(!Engine_Api::_()->getApi('settings', 'core')->getSetting('sesjob.enable.favourite', 1))
+        unset($filterOptions['mostSPfavourite']);
+        
+      $arrayOptions = $filterOptions;
+      $filterOptions = array();
+      foreach ($arrayOptions as $key=>$filterOption) {
+        if(is_numeric($key))
+        $columnValue = $filterOption;
+        else
+        $columnValue = $key;
+				$value = str_replace(array('SP',''), array(' ',' '), $columnValue);
+				$filterOptions[$columnValue] = ucwords($value);
+      }
+      $filterOptions = array(''=>'')+$filterOptions;
+      $form->sort->setMultiOptions($filterOptions);
+      $form->sort->setValue($default_search_type);
+    }
+    
  		if ($this->_getParam('getForm')) {
  			$formFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->generateFormFields($form);
  			$this->generateFormFields($formFields, array('resources_type' => 'sesjob'));
@@ -594,11 +623,11 @@
  	}
 
  	public function categoriesAction(){
- 		$paginator = Engine_Api::_()->getDbtable('jobs', 'sesjob')->getSesjobsPaginator();
- 		$paginator->setItemCountPerPage($this->_getParam('limit', 10));
- 		$paginator->setCurrentPageNumber($this->_getParam('page', 1));
- 		if ($paginator->getCurrentPageNumber() == 1) {
- 			$categories = Engine_Api::_()->getDbtable('categories', 'sesjob')->getCategory(array('column_name' => '*', 'limit' => 100, 'countJobs' => 1));
+ 		// $paginator = Engine_Api::_()->getDbtable('jobs', 'sesjob')->getSesjobsPaginator();
+ 		// $paginator->setItemCountPerPage($this->_getParam('limit', 10));
+ 		// $paginator->setCurrentPageNumber($this->_getParam('page', 1));
+		$categories = Engine_Api::_()->getDbtable('categories', 'sesjob')->getCategory(array('column_name' => '*', 'limit' => 100, 'countJobs' => 1));
+ 		if ($this->_getParam("page") == 1) {
  			$menus = Engine_Api::_()->getApi('menus', 'core')->getNavigation('sesjob_main', array());
  			$category_counter = 0;
  			$menu_counter = 0;
@@ -617,11 +646,11 @@
  			}
  			$result['category'] = $result_category;
  		}
- 		$result['categories'] = $this->getCategory($paginator,$categoryPaginator);
- 		$extraParams['pagging']['total_page'] = $paginator->getPages()->pageCount;
- 		$extraParams['pagging']['total'] = $paginator->getTotalItemCount();
- 		$extraParams['pagging']['current_page'] = $paginator->getCurrentPageNumber();
- 		$extraParams['pagging']['next_page'] = $extraParams['pagging']['current_page'] + 1;
+ 		$result['categories'] = $this->getCategory($categories);
+ 		$extraParams['pagging']['total_page'] = 1;
+ 		$extraParams['pagging']['total'] = count($categories);
+ 		$extraParams['pagging']['current_page'] = 1;
+ 		$extraParams['pagging']['next_page'] = 1 + 1;
  		Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array_merge(array('error' => '0', 'error_message' => '', 'result' => $result), $extraParams));
  	}
 
@@ -684,7 +713,7 @@
  		$result = array();
 
 		$sesshortcut = Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesshortcut') && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesshortcut.enableshortcut', 1);
-        $canShare = Engine_Api::_()->getApi('settings', 'core')->getSetting('mobile_sesjob_share', 1);
+        $canShare = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesjob.enable.sharing', 1);
  		foreach($paginator as $item){
  			$result['companies'][$counter] = $item->toArray();
 
@@ -808,6 +837,7 @@
 			 }
 			 $result['jobs']['shortcut_save'] = $shortMessage;
 		 }
+		 $canShare = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesjob.enable.sharing', 1);
 		 $result['jobs']['can_share'] = $canShare;
 		 $result['jobs']["share"]["imageUrl"] = $this->getBaseUrl(false, $item->getPhotoUrl());
 		 $result['jobs']["share"]["url"] = $this->getBaseUrl(false,$item->getHref());
@@ -881,6 +911,32 @@
 			 }
 			 $result['jobs']['shortcut_save'] = $shortMessage;
 		 }
+		 
+ 		
+    if($item->education_id) { 
+      $educations = explode(',', $item->education_id); 
+      foreach($educations as  $education) { 
+        $education = Engine_Api::_()->getItem('sesjob_education', $education); 
+        $arr[] = $education->education_name; 
+      } 
+      if(engine_count($arr) > 0) {
+        $result['jobs']['education'] = implode(", ",$arr);
+ 			}
+    }
+    
+    if($item->employment_id) { 
+      $employment = Engine_Api::_()->getItem('sesjob_employment', $item->employment_id);
+      $result['jobs']['employment_type'] = $employment->employment_name;
+    }
+    
+    if($item->company_id) { 
+      $company = Engine_Api::_()->getItem('sesjob_company', $item->company_id);
+      if($company->industry_id) {
+        $industry = Engine_Api::_()->getItem('sesjob_industry', $company->industry_id);
+        $result['jobs']['industry'] = $industry->industry_name;
+      }
+    }
+    $canShare = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesjob.enable.sharing', 1);
 		 $result['jobs']['can_share'] = $canShare;
 		 $result['jobs']["share"]["imageUrl"] = $this->getBaseUrl(false, $item->getPhotoUrl());
 		 $result['jobs']["share"]["url"] = $this->getBaseUrl(false,$item->getHref());
@@ -940,7 +996,7 @@
  			$result['button']['label'] = $this->view->translate('Apply For the job');
  			$result['button']['name'] = 'apply';
  		}
-
+ 		
  		$tabcounter = 0;
  		$result['menus'][$tabcounter]['name'] = 'comment';
  		$result['menus'][$tabcounter]['label'] = $this->view->translate('Comments');
@@ -992,7 +1048,7 @@
 				$this->validateFormFields($validateFields);
 
 
-		   if(empty($_FILES['photo']['name'])){
+		   if($_POST['resumetype'] != 'chooseresume' && ($_FILES['photo']['name'])){
 			   Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate("Upload Resume: This is required field."), 'result' => array()));
 		   }
 
@@ -1003,26 +1059,40 @@
 			$db->beginTransaction();
 			try { 
 				$formValues = $form->getValues();
-				// if (!$jobId) { 
-					$applications = $applicationTable->createRow();
-					$formValues['name'] =$formValues['name'];
-					$formValues['email'] =$formValues['email'];
-					$formValues['mobile_number'] =$formValues['mobile_number'];
-					$formValues['location'] = $formValues['location'];
-					$formValues['photo'] = $formValues['file_id'];
-					$formValues['module_name'] = 'sesjob';
-					$formValues['job_id'] = $jobId;
-					$formValues['owner_id'] = $viewerId; 
-					$applications->setFromArray($formValues);
 
-				// } else{ 
-				// 	$applications->name = $formValues['name'];
-				// 	$applications->email = $formValues['email'];
-				// 	$applications->mobile_number = $formValues['mobile_number'];
-				// 	$applications->location = $formValues['location'];
-				// 	$applications->photo = $formValues['file_id'];
-				// }
+        $applications = $applicationTable->createRow();
+        $formValues['name'] =$formValues['name'];
+        $formValues['email'] =$formValues['email'];
+        $formValues['mobile_number'] =$formValues['mobile_number'];
+        $formValues['location'] = $formValues['location'];
+        $formValues['photo'] = $formValues['file_id'];
+        $formValues['module_name'] = 'sesjob';
+        $formValues['job_id'] = $jobId;
+        $formValues['owner_id'] = $viewerId; 
+        $applications->setFromArray($formValues);
 				$applications->save();
+				
+				if(!empty($formValues['resume_id'])) {
+          $applications->resume_id = $formValues['resume_id'];
+          $applications->save();
+				}
+				
+        if(isset($_FILES['photo']) && !empty($_FILES['photo']['name'])) {
+					$file_ext = pathinfo($_FILES['photo']['name']);
+
+					$file_ext = $file_ext['extension'];
+					$storage = Engine_Api::_()->getItemTable('storage_file');
+					$storageObject = $storage->createFile($form->photo, array(
+							'parent_id' => $applications->getIdentity(),
+							'parent_type' => $applications->getType(),
+							'user_id' => Engine_Api::_()->user()->getViewer()->getIdentity() ? Engine_Api::_()->user()->getViewer()->getIdentity() : Engine_Api::_()->getItem('user', 1),
+					));
+					// Remove temporary file
+					//@unlink($file['tmp_name']);
+					$applications->file_id = $storageObject->file_id;
+					$applications->save();
+        }
+				
 				$db->commit();
 
 				Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => array('message' => $this->view->translate('Applied Successfully.'))));
@@ -1333,5 +1403,4 @@
  			Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$e->getMessage()));
  		}
  	}
-
- }
+}

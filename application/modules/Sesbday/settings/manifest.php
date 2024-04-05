@@ -15,12 +15,12 @@
   array (
     'type' => 'module',
     'name' => 'sesbday',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
 	'dependencies' => array(
             array(
                 'type' => 'module',
                 'name' => 'core',
-                'minVersion' => '6.2.0',
+                'minVersion' => '6.5.1',
             ),
         ),
     //'sku' => 'sesbday',
@@ -28,6 +28,7 @@
     'title' => 'SNS - Birthday Plugin',
     'description' => '',
       'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	  'thumb' => 'application/modules/Sesbday/externals/images/thumb.png',
       'callback' => array(
           'path' => 'application/modules/Sesbday/settings/install.php',
           'class' => 'Sesbday_Installer',

@@ -60,7 +60,14 @@ class Sesvideo_Model_DbTable_Videos extends Engine_Db_Table {
       $params['miles'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('seslocation.searchmiles', 50);
     }
 
-
+    if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('tickvideo')){
+      $select = $select->setIntegrityCheck(false);
+      $select->joinLeft("engine4_tickvideo_musics",'engine4_tickvideo_musics.music_id = '.$tableName.'.song_id',array('songtitle'=>'title','songphoto_id'=>'photo_id','songfile_id'=>'file_id','songduration'=>'duration'));
+      
+      if(!Engine_Api::_()->getApi('settings', 'core')->getSetting('tickvideo.allow.video', 0)){
+        $select->where($tableName.'.is_tickvideo = ?',0);
+      }
+    }
     if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) {
       if (isset($params['lat']) && isset($params['miles']) && $params['miles'] != 0 && isset($params['lng']) && $params['lat'] != '' && $params['lng'] != '' && ((isset($params['location']) && $params['location'] != ''))) {
 
@@ -95,7 +102,7 @@ class Sesvideo_Model_DbTable_Videos extends Engine_Db_Table {
       $select = $this->getItemsSelect($params, $select);
     }
 
-    if(!empty($params['location']) && !Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) {
+    if(!empty($params['location']) && empty($params["fromBrowseApi"]) && !Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) {
       $select->where('`' . $tableName . '`.`location` LIKE ?', '%' . $params['location'] . '%');
     }
 
@@ -281,6 +288,8 @@ class Sesvideo_Model_DbTable_Videos extends Engine_Db_Table {
 		$select = $select->order('video_id DESC');
     if (isset($params['limit_data']))
       $select = $select->limit($params['limit_data']);
+
+      
     if ($paginator)
       return Zend_Paginator::factory($select);
     else
@@ -298,7 +307,7 @@ class Sesvideo_Model_DbTable_Videos extends Engine_Db_Table {
     $registeredPrivacy = array('everyone', 'registered');
     $viewer = Engine_Api::_()->user()->getViewer();
     if($viewer->isAdmin()) return $select;
-    if($viewer->getIdentity() && !engine_in_array($viewer->level_id, $this->_excludedLevels) ) {
+    if($viewer->getIdentity() && !engine_in_array($viewer->level_id, @$this->_excludedLevels) ) {
         $viewerId = $viewer->getIdentity();
         $netMembershipTable = Engine_Api::_()->getDbtable('membership', 'network');
         $viewerNetwork = $netMembershipTable->getMembershipsOfIds($viewer);

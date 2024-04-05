@@ -98,5 +98,5 @@ CREATE TABLE IF NOT EXISTS `phpfox_poll_result` (
   PRIMARY KEY (`poll_id`,`user_id`),
   KEY `poll_option_id` (`poll_option_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  */

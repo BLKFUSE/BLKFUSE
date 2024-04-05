@@ -28,12 +28,7 @@
     'CORE_VIEWS_SCRIPTS_ADMINTASKS_PROCESSES_DESCRIPTION' !== ($desc = $this->translate("CORE_VIEWS_SCRIPTS_ADMINTASKS_PROCESSES_DESCRIPTION")) ?
     $desc : '' ) ?>
 </p>
-
 <br />
-
-
-
-
 <div class="admin_table_form">
   <form id="admin-tasks-form" method="post" action="<?php echo $this->url() ?>">
 
@@ -123,3 +118,7 @@
     
   </form>
 </div>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_settings').parent().addClass('active');
+  scriptJquery('.core_admin_main_settings_tasks').addClass('active');
+</script>

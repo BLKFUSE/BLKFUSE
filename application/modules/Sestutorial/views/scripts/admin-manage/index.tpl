@@ -64,22 +64,13 @@ function selectAll()
   });
 
 </script>
-
 <?php include APPLICATION_PATH .  '/application/modules/Sestutorial/views/scripts/dismiss_message.tpl';?>
-
 <h3><?php echo $this->translate("Add & Manage Tutorials") ?></h3>
 <p><?php echo $this->translate('This page lists all the Tutorials you have created. You can use this page to monitor these tutorials and delete offensive material if necessary. Entering criteria into the filter fields will help you find specific tutorial. Leaving the filter fields blank will show all the tutorials on your social network.<br />Below, you can also enable or disable any Tutorial, view their rating and helpful statistics. Use the "Add New Tutorial" link to create and add new Tutorials. <br />To reorder the Tutorials, click on their names and drag them up or down.'); ?></p>
-<br />
-
 <?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sestutorial', 'controller' => 'manage', 'action' => 'create'), $this->translate('Add New Tutorial'), array('class' => 'buttonlink sestutorial_icon_add')); ?>
-
-<br /><br />
-
 <div class='admin_search sestutorial_search_form'>
   <?php echo $this->formFilter->render($this) ?>
 </div>
-<br />
-
 <?php $counter = $this->paginator->getTotalItemCount(); ?> 
 <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
   <div class="sestutorial_search_reasult">
@@ -148,7 +139,7 @@ function selectAll()
               <?php endif; ?>
             </td>
             <td><?php echo $item->creation_date ?></td>
-            <td>
+            <td class="nowrap">
               <?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sestutorial', 'controller' => 'manage', 'action' => 'edit', 'tutorial_id' => $item->tutorial_id), $this->translate("Edit"), array('class' => '')) ?>
               |
               <?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sestutorial', 'controller' => 'manage', 'action' => 'view', 'id' => $item->tutorial_id), $this->translate("View Details"), array('class' => 'smoothbox')) ?>
@@ -162,12 +153,10 @@ function selectAll()
         </tbody>
       </table>
       </div>
-    <br />
     <div class='buttons'>
       <button type='submit'><?php echo $this->translate("Delete Selected") ?></button>
     </div>
   </form>
-  <br/>
   <div>
     <?php echo $this->paginationControl($this->paginator,null,null,$this->urlParams); ?>
   </div>

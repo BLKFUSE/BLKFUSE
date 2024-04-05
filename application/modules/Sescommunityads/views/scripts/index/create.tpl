@@ -36,7 +36,7 @@ var selectedBoostPostId = "<?php echo !empty($this->action_id) ? $this->action_i
 </script>
 <div class="sescmads_create_container sesbasic_bxs">
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sescommunityads/externals/styles/styles.css'); ?>
-<div class="sescommunity_create_cnt sescomm_stp_1" rel="1">
+<div class="sescommunity_create_cnt sescomm_stp_1" rel="1" style="display:none;">
   <?php include('application/modules/Sescommunityads/views/scripts/_adType.tpl'); ?>
 </div>
 <div class="sescommunity_create_cnt" rel="2" style="display:none;">
@@ -71,7 +71,7 @@ var selectedBoostPostId = "<?php echo !empty($this->action_id) ? $this->action_i
           <li class='<?php echo !empty($this->ad) && $this->ad->subtype == "carousel" ? 'active' : ""; ?>'>
             <article>
               <span class="_tick fa fa-check"></span>
-              <input type="radio" class="form-control" <?php echo !empty($this->ad) && $this->ad->subtype == "carousel" ? 'checked' : ""; ?> rel="carousel_div" name="formate_type" id="format-1">
+              <input type="radio" <?php echo !empty($this->ad) && $this->ad->subtype == "carousel" ? 'checked' : ""; ?> rel="carousel_div" name="formate_type" id="format-1">
               <label for="format-1"> <span class="format_img"><img src="application/modules/Sescommunityads/externals/images/carousel.png"></span> <span class="format_name"><?php echo $this->translate('Carousel'); ?></span> </label>              
             </article>
           </li>
@@ -80,7 +80,7 @@ var selectedBoostPostId = "<?php echo !empty($this->action_id) ? $this->action_i
           <li class='<?php echo !empty($this->ad) && $this->ad->subtype == "image" ? 'active' : (empty($this->ad) ? "active" : "" ); ?>'>
             <article>
               <span class="_tick fa fa-check"></span>
-              <input type="radio" class="form-control" <?php echo !empty($this->ad) && $this->ad->subtype == "image" ? 'checked' : (empty($this->ad) ? "checked" : "" ); ?> rel="image_div" name="formate_type" id="format-2">
+              <input type="radio" <?php echo !empty($this->ad) && $this->ad->subtype == "image" ? 'checked' : (empty($this->ad) ? "checked" : "" ); ?> rel="image_div" name="formate_type" id="format-2">
               <label for="format-2"><span class="format_img"><img src="application/modules/Sescommunityads/externals/images/single_image.png"></span> <span class="format_name"><?php echo $this->translate('Single Image'); ?></span> </label>
             </article>
           </li>
@@ -89,7 +89,7 @@ var selectedBoostPostId = "<?php echo !empty($this->action_id) ? $this->action_i
           <li class="<?php echo !empty($this->ad) && $this->ad->subtype == "video" ? 'active' : ""; ?>">
             <article>
               <span class="_tick fa fa-check"></span>
-              <input type="radio" class="form-control" rel="video_div" <?php echo !empty($this->ad) && $this->ad->subtype == "video" ? 'checked' : ""; ?> name="formate_type" id="format-3">
+              <input type="radio" rel="video_div" <?php echo !empty($this->ad) && $this->ad->subtype == "video" ? 'checked' : ""; ?> name="formate_type" id="format-3">
               <label for="format-3"><span class="format_img"><img src="application/modules/Sescommunityads/externals/images/single_video.png"></span> <span class="format_name"><?php echo $this->translate('Single Video'); ?></span></label>
             </article>
           </li>
@@ -105,9 +105,9 @@ var selectedBoostPostId = "<?php echo !empty($this->action_id) ? $this->action_i
 							<article>
 								<span class="_tick fa fa-check"></span>
 								<?php if(!empty($this->widgetid)) { ?>
-                  <input type="radio" class="form-control" rel="banner_div" <?php echo !empty($this->ad) && $this->ad->subtype == "banner" ? 'checked' : (empty($this->ad) ? "checked" : "" ); ?> name="formate_type" id="format-4">
+                  <input type="radio" rel="banner_div" <?php echo !empty($this->ad) && $this->ad->subtype == "banner" ? 'checked' : (empty($this->ad) ? "checked" : "" ); ?> name="formate_type" id="format-4">
 								<?php } else { ?>
-                  <input type="radio" class="form-control" rel="banner_div" <?php echo !empty($this->ad) && $this->ad->subtype == "banner" ? 'checked' : ""; ?> name="formate_type" id="format-4">
+                  <input type="radio" rel="banner_div" <?php echo !empty($this->ad) && $this->ad->subtype == "banner" ? 'checked' : ""; ?> name="formate_type" id="format-4">
 								<?php } ?>
 								<label for="format-4"><span class="format_img"><img src="application/modules/Sescommunityads/externals/images/single_image.png"></span> <span class="format_name"><?php echo $this->translate('Banner Ads'); ?></span></label>
 							</article>
@@ -130,7 +130,7 @@ var selectedBoostPostId = "<?php echo !empty($this->action_id) ? $this->action_i
                 </div>
                 <?php $modules = Engine_Api::_()->getDbTable('modules','sescommunityads')->getEnabledModuleNames(array('enabled'=>1)); ?>
                 <div class="sescmads_create_campaign_element" style="margin-top: 10px;">
-                  <select class="form-control sescommunity_content_text" name="resource_type" id="sescomm_resource_type">
+                  <select class="sescommunity_content_text" name="resource_type" id="sescomm_resource_type">
                     <option value=""><?php echo $this->translate('Select Module Name'); ?></option>
                     <?php foreach($modules as $module){
                       $select = "";
@@ -147,7 +147,7 @@ var selectedBoostPostId = "<?php echo !empty($this->action_id) ? $this->action_i
                   <label class="required"><?php echo $this->translate('Select Content'); ?></label>
                 </div>
                 <div class="sescmads_create_campaign_element" style="margin-top: 10px;">
-                  <select class="form-control sescommunity_content_text" name="resource_id" id="sescomm_resource_id">
+                  <select class="sescommunity_content_text" name="resource_id" id="sescomm_resource_id">
                     
                   </select>
                 </div>
@@ -354,7 +354,7 @@ var selectedBoostPostId = "<?php echo !empty($this->action_id) ? $this->action_i
                   <span></span>
                 </div>
                 <div class="_run_this">
-                  <input type="checkbox" value="1" <?php echo isset($this->ad->enddate) && $this->ad->enddate != "0000-00-00 00:00:00" ? '' : (empty($this->ad) ? '' : "checked"); ?> name="ad_end_date" id="ad_end_date" class="form-control ad_end_date" />
+                  <input type="checkbox" value="1" <?php echo isset($this->ad->enddate) && $this->ad->enddate != "0000-00-00 00:00:00" ? '' : (empty($this->ad) ? '' : "checked"); ?> name="ad_end_date" id="ad_end_date" class="ad_end_date" />
                   <label for="ad_end_date"><?php echo $this->translate('Run this ad till it expires'); ?></label>
                 </div>
               </div>

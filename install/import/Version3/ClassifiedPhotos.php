@@ -86,13 +86,13 @@ CREATE TABLE IF NOT EXISTS `se_classifiedmedia` (
 *  `classifiedmedia_id` int(10) unsigned NOT NULL auto_increment,
 *  `classifiedmedia_classifiedalbum_id` int(10) unsigned NOT NULL default '0',
 *  `classifiedmedia_date` int(11) NOT NULL default '0',
-*  `classifiedmedia_title` varchar(128) collate utf8_unicode_ci default '',
-*  `classifiedmedia_desc` text collate utf8_unicode_ci,
--  `classifiedmedia_ext` varchar(8) collate utf8_unicode_ci NOT NULL default '',
+*  `classifiedmedia_title` varchar(128) collate utf8mb4_unicode_ci default '',
+*  `classifiedmedia_desc` text COLLATE utf8mb4_unicode_ci,
+-  `classifiedmedia_ext` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL default '',
 -  `classifiedmedia_filesize` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`classifiedmedia_id`),
   KEY `INDEX` (`classifiedmedia_classifiedalbum_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -112,6 +112,6 @@ CREATE TABLE `engine4_classified_photos` (
   KEY `album_id` (`album_id`),
   KEY `classified_id` (`classified_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

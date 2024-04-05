@@ -31,5 +31,16 @@ class Core_Widget_AdminMenuMiniController extends Engine_Content_Widget_Abstract
     if( !empty($config['maintenance']['enabled']) && !empty($g['maintenance']['code']) ) {
       $this->view->code = $g['maintenance']['code'];
     }
+    
+    //Languages
+    $this->view->languageNameList = Engine_Api::_()->getApi('languages', 'core')->getLanguages();
+
+    $request = Zend_Controller_Front::getInstance()->getRequest();
+    if ($request->getParam('environment_mode')) {
+      $filename = APPLICATION_PATH . '/application/settings/general.php';
+      #if (!is_writable($filename))
+      echo $request->_getParam('environment_mode');
+      die('ok');
+    }
   }
 }

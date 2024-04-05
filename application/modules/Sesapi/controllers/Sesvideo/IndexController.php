@@ -1242,7 +1242,12 @@ class Sesvideo_IndexController extends Sesapi_Controller_Action_Standard {
       $result['user_info']['user_id'] = $userObj->getIdentity();
       $result['user_info']['user_title'] = $userObj->getTitle();
       $result['user_info']['user_username'] = $userObj->username;
-      
+      if($this->_getParam("from_tickvideo")){
+        $userObj->view_count = $userObj->view_count + 1;
+        $userObj->save();
+      }
+      $result['user_info']['view_count'] =  $userObj->view_count;
+
       $result['user_info']["is_content_follow"] = false;
       if($this->view->viewer()->getIdentity() && $userObj->getIdentity() != $this->view->viewer()->getIdentity()){
           $result['user_info']["follow_enable"] = true;                            
@@ -1428,7 +1433,9 @@ class Sesvideo_IndexController extends Sesapi_Controller_Action_Standard {
       }
       }
 
-      $videos = Engine_Api::_()->getItem('video',!$isRes ? $videos->video_id : $videos->resource_id);                
+      $videos = Engine_Api::_()->getItem('video',!$isRes ? $videos->video_id : $videos->resource_id);       
+      $videos->view_count = $videos->view_count + 1;
+      $videos->save();         
       $video = array_merge($videos->toArray(),$extraParams);
       if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesemoji')) {
         $video["title"] =  Engine_Api::_()->sesemoji()->DecodeEmoji($video["title"]);

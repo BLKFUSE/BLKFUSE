@@ -13,11 +13,11 @@
 
 <div id='global_header_logo'>
   <a href='<?php echo $this->url(array(), 'admin_default', true) ?>'>
-    <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('core.menutype', 'vertical') == 'horizontal') { ?>
-      <?php echo $this->htmlImage($this->layout()->staticBaseUrl . 'application/modules/Core/externals/images/logo.png', $this->translate('SocialEngine Control Panel')) ?>
-    <?php } else{ ?>
+  <?php if(!empty($_COOKIE['adminmode_theme']) && $_COOKIE['adminmode_theme'] == 'dark'):?>
       <?php echo $this->htmlImage($this->layout()->staticBaseUrl . 'application/modules/Core/externals/images/logo-light.png', $this->translate('SocialEngine Control Panel')) ?>
-    <?php } ?>
+    <?php else: ?>
+      <?php echo $this->htmlImage($this->layout()->staticBaseUrl . 'application/modules/Core/externals/images/logo.png', $this->translate('SocialEngine Control Panel')) ?>
+    <?php endif; ?>
   </a>
 </div>
 

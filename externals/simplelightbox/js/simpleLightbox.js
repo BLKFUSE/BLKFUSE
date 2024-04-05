@@ -523,8 +523,8 @@
 
     };
 
-    if (typeof window !== 'undefined' && window.jQuery) {
-        SimpleLightbox.registerAsJqueryPlugin(window.jQuery);
+    if (typeof window !== 'undefined' && scriptJquery) {
+        SimpleLightbox.registerAsJqueryPlugin(scriptJquery);
     }
 
     return SimpleLightbox;

@@ -38,7 +38,8 @@ class Group_Model_DbTable_Photos extends Engine_Db_Table
         $attachDB->delete(array('type = ?' => 'group_photo', 'id = ?' => $photo->photo_id));
 
         $action = $actionsDB->fetchRow($actionsDB->select()->where('action_id = ?', $actionId));
-        $count = $action->params['count'];
+        if(is_array($action->params))
+					$count = $action->params['count'];
         if( !is_null($count) && ($count > 1) ) {
           $action->params = array('count' => (integer) $count - 1);
           $action->save();

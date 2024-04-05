@@ -1194,7 +1194,7 @@ $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesalbum_integrateothersmodules`
   PRIMARY KEY (`integrateothersmodule_id`),
   UNIQUE KEY `content_type` (`content_type`,`content_id`),
   KEY `module_name` (`module_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
 $db->query('UPDATE `engine4_sesalbum_categories` SET `member_levels` = "1,2,3,4" WHERE `engine4_sesalbum_categories`.`subcat_id` = 0 and  `engine4_sesalbum_categories`.`subsubcat_id` = 0;');
 

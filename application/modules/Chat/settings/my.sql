@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `engine4_chat_bans` (
   `expires` int(11) NOT NULL default '0',
   PRIMARY KEY  (`ban_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -40,12 +40,12 @@ CREATE TABLE IF NOT EXISTS `engine4_chat_events` (
   `event_id` bigint(20) NOT NULL auto_increment,
   `user_id` int(11) NOT NULL,
   `date` datetime NOT NULL,
-  `type` varchar(64) collate utf8_unicode_ci NOT NULL,
-  `body` text collate utf8_unicode_ci NOT NULL,
+  `type` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY  (`event_id`),
   KEY `user_id` (`user_id`,`date`),
   KEY `date` (`date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -60,11 +60,11 @@ CREATE TABLE IF NOT EXISTS `engine4_chat_messages` (
   `room_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `system` tinyint(1) NOT NULL default 0,
-  `body` text collate utf8_unicode_ci NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
   PRIMARY KEY  (`message_id`),
   KEY `room_id` (`room_id`, `date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -76,13 +76,13 @@ CREATE TABLE IF NOT EXISTS `engine4_chat_messages` (
 DROP TABLE IF EXISTS `engine4_chat_rooms`;
 CREATE TABLE IF NOT EXISTS `engine4_chat_rooms` (
   `room_id` int(11) NOT NULL auto_increment,
-  `title` varchar(64) collate utf8_unicode_ci default NULL,
+  `title` varchar(64) collate utf8mb4_unicode_ci default NULL,
   `user_count` smallint(6) NOT NULL,
   `modified_date` datetime NOT NULL,
   `public` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`room_id`),
   KEY `public` (`public`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_chat_rooms`
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `engine4_chat_roomusers` (
   PRIMARY KEY  (`room_id`,`user_id`),
   KEY `user_id` (`user_id`),
   KEY `date` (`date`)
-) ENGINE=Memory DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=Memory DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `engine4_chat_users` (
   `event_count` smallint NOT NULL default 0,
   PRIMARY KEY  (`user_id`),
   KEY `date` (`date`)
-) ENGINE=MEMORY DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MEMORY DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `engine4_chat_whispers` (
   `whisper_id` bigint(20) NOT NULL auto_increment,
   `recipient_id` int(11) NOT NULL,
   `sender_id` int(11) NOT NULL,
-  `body` text collate utf8_unicode_ci NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
   `recipient_deleted` tinyint(1) NOT NULL default '0',
   `sender_deleted` tinyint(1) NOT NULL default '0',
@@ -147,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `engine4_chat_whispers` (
   KEY `recipient_id` (`recipient_id`),
   KEY `sender_id` (`sender_id`),
   KEY `recipient_deleted` (`recipient_deleted`, `sender_deleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------

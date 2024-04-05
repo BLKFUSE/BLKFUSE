@@ -22,7 +22,7 @@
     <?php endif; ?>
     <div class='settings sesbasic-form-cont'>
       <h3>Manage Filters</h3>
-      <p>In this page you can manage various filters for displaying feeds on the member home page of your website. Here, in addition to the default filters, you can also create new filter of different modules.To create a new filter click on "Create New Filter" link. You can also enable, disable or edit any module.<br />To reorder the filters, click on their row and drag them up or down.</p><br />
+      <p>In this page you can manage various filters for displaying feeds on the member home page of your website. Here, in addition to the default filters, you can also create new filter of different modules.To create a new filter click on "Create New Filter" link. You can also enable, disable or edit any module.<br />To reorder the filters, click on their row and drag them up or down.</p>
       <div class="sesbasic_search_reasult"><?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesadvancedactivity', 'controller' => 'settings', 'action' => 'create'), $this->translate("Create New Filter"), array('class'=>'buttonlink sesbasic_icon_add smoothbox')); ?>
       </div>
         <div class='clear'>

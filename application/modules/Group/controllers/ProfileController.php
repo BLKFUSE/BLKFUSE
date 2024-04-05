@@ -58,6 +58,12 @@ class Group_ProfileController extends Core_Controller_Action_Standard
         $viewPermission = $subject->authorization()->isAllowed($viewer, 'view');
         if(empty($viewPermission))
             return $this->_forward('requireauth', 'error', 'core');
+            
+        if( !$subject || !$subject->getIdentity() || ((!$subject->approved) && !$subject->isOwner($viewer)) ) {
+					if(!empty($viewer->getIdentity()) && $viewer->isAdmin()) {
+					} else
+            return $this->_forward('requireauth', 'error', 'core');
+        }
         
         // Network check
         $networkPrivacy = Engine_Api::_()->network()->getViewerNetworkPrivacy($subject, 'user_id');

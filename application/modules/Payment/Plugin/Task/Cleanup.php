@@ -22,6 +22,27 @@ class Payment_Plugin_Task_Cleanup extends Core_Plugin_Task_Abstract
   {
     $subscriptionsTable = Engine_Api::_()->getDbtable('subscriptions', 'payment');
 
+    // Get subscriptions that are old and are pending payment
+    $select = $subscriptionsTable->select()
+      ->where('status IN(?)', array('active'))
+      ->where('expiration_date <= ?',date('Y-m-d H:i:s'))
+      ->order('subscription_id ASC')
+      ->limit(50);
+
+    foreach( $subscriptionsTable->fetchAll($select) as $subscription ) {
+      $subscription->onCancel();
+      if ($subscription->didStatusChange()) {
+        $package = $subscription->getPackage();
+        Engine_Api::_()->getApi('mail', 'core')->sendSystem($subscription->getUser(), 'payment_subscription_cancelled', array(
+            'subscription_title' => $package->title,
+            'queue'=>false,
+            'subscription_description' => $package->description,
+            'subscription_terms' => $package->getPackageDescription(),
+            'object_link' => 'http://' . $_SERVER['HTTP_HOST'] .
+            Zend_Controller_Front::getInstance()->getRouter()->assemble(array(), 'user_login', true),
+        ));
+      }
+    }
 
     // Get subscriptions that have expired or have finished their trial period
     // (trial is not yet implemented)
@@ -36,7 +57,7 @@ class Payment_Plugin_Task_Cleanup extends Core_Plugin_Task_Abstract
         $package = $subscription->getPackage();
         // Check if the package has an expiration date
         $expiration = $package->getExpirationDate();
-        if( !$expiration || !$package->hasDuration() || (time() > $package->getAdditionalExpirationDate(strtotime($subscription->expiration_date)))) {
+        if(!$package->isOneTime() && (!$expiration || (time() < $package->getAdditionalExpirationDate(strtotime($subscription->expiration_date))))) {
             continue;
         }
         // It's expired
@@ -67,7 +88,7 @@ class Payment_Plugin_Task_Cleanup extends Core_Plugin_Task_Abstract
         // Check if the package has an expiration date
         //remainder Mail
         $remainderEmail = $package->getReminderDate(strtotime($subscription->expiration_date));
-        if(($remainderEmail < time()) && ($remainderEmail < strtotime($subscription->expiration_date))){
+        if(empty($subscription->email_reminder) && ($remainderEmail < time()) && ($remainderEmail < strtotime($subscription->expiration_date))){
           $viewer = Engine_Api::_()->user()->getViewer();
           $alreadyExist = Engine_Api::_()->getDbtable('notifications', 'activity')->delete(array('type =?' => 'payment_subscription_expiredsoon', "subject_id =?" => $viewer->getIdentity(), "object_type =? " => $subscription->getUser()->getType(), "object_id = ?" => $subscription->getUser()->getIdentity()));
           Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($subscription->getUser(), $viewer, $subscription->getUser(), 'payment_subscription_expiredsoon',array('planName'=>$package->title,'period'=>date('Y-m-d H:i:s',strtotime($subscription->expiration_date))));
@@ -79,33 +100,19 @@ class Payment_Plugin_Task_Cleanup extends Core_Plugin_Task_Abstract
               'object_link' => 'http://' . $_SERVER['HTTP_HOST'] .
               Zend_Controller_Front::getInstance()->getRouter()->assemble(array(), 'user_login', true),
             ));
+            $subscription->email_reminder = 1;
+            $subscription->save();
           //}
         }
       }
     }
-
-    // Get subscriptions that are old and are pending payment
-    $select = $subscriptionsTable->select()
-      ->where('status IN(?)', array('initial', 'pending'))
-      ->where('expiration_date <= ?', new Zend_Db_Expr('DATE_SUB(NOW(), INTERVAL 2 DAY)'))
-      ->order('subscription_id ASC')
-      ->limit(50);
-
-    foreach( $subscriptionsTable->fetchAll($select) as $subscription ) {
-      $subscription->onCancel();
-      if ($subscription->didStatusChange()) {
-        $package = $subscription->getPackage();
-        Engine_Api::_()->getApi('mail', 'core')->sendSystem($subscription->getUser(), 'payment_subscription_cancelled', array(
-            'subscription_title' => $package->title,
-            'queue'=>false,
-            'subscription_description' => $package->description,
-            'subscription_terms' => $package->getPackageDescription(),
-            'object_link' => 'http://' . $_SERVER['HTTP_HOST'] .
-            Zend_Controller_Front::getInstance()->getRouter()->assemble(array(), 'user_login', true),
-        ));
+    
+    //Auto Update Currency using cron
+    if(Engine_Api::_()->getApi('settings', 'core')->getSetting("payment.autoupdate",0)) {
+      Engine_Api::_()->payment()->updateCurrencyValues();
+      if(!empty($_SESSION['apiError'])) {
+        throw new Exception($_SESSION['apiError']);
       }
     }
   }
 }
-
-

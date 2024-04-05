@@ -15,19 +15,19 @@ return array (
   array (
     'type' => 'module',
     'name' => 'sesandroidapp',
-    //'sku' => 'sesiosappse',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'dependencies' => array(
       array(
         'type' => 'module',
         'name' => 'core',
-        'minVersion' => '6.2.0',
+        'minVersion' => '5.0.0',
       ),
     ),
     'path' => 'application/modules/Sesandroidapp',
     'title' => 'SNS - Native Android Mobile App Plugin',
     'description' => 'SNS - Native Android Mobile App Plugin',
     'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	'thumb' => 'application/modules/Sesandroidapp/externals/images/thumb.png',
     'callback' => array(
       'path' => 'application/modules/Sesandroidapp/settings/install.php',
       'class' => 'Sesandroidapp_Installer',

@@ -34,7 +34,7 @@ class Sesadvancedactivity_Installer extends Engine_Package_Installer_Module {
                 `ses_aaf_gif` TINYINT(1) NOT NULL DEFAULT "0",
                 PRIMARY KEY  (`link_id`),
                 UNIQUE( `core_link_id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
 
             $db->query('INSERT IGNORE INTO engine4_sesadvancedactivity_links (`core_link_id`, `ses_aaf_gif`) SELECT `link_id`, `ses_aaf_gif` FROM engine4_core_links as t ON DUPLICATE KEY UPDATE core_link_id=t.link_id, ses_aaf_gif=t.ses_aaf_gif;');
         }
@@ -107,7 +107,7 @@ class Sesadvancedactivity_Installer extends Engine_Package_Installer_Module {
                 `type` TINYINT(1) NOT NULL DEFAULT "1",
                 PRIMARY KEY (`activitylike_id`),
                 UNIQUE( `activity_like_id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;');
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
             $table_exist = $db->query("SHOW TABLES LIKE 'engine4_activity_likes'")->fetch();
             if (!empty($table_exist)) {
@@ -123,7 +123,7 @@ class Sesadvancedactivity_Installer extends Engine_Package_Installer_Module {
                 `type` TINYINT(1) NOT NULL DEFAULT "1",
                 PRIMARY KEY (`corelike_id`),
                 UNIQUE( `core_like_id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;');
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
             $tablecorelike_exist = $db->query("SHOW TABLES LIKE 'engine4_core_likes'")->fetch();
             if (!empty($tablecorelike_exist)) {
@@ -147,7 +147,7 @@ class Sesadvancedactivity_Installer extends Engine_Package_Installer_Module {
             `vote_down_count` int(11) NOT NULL DEFAULT "0",
             PRIMARY KEY (`activitycomment_id`),
             UNIQUE( `activity_comment_id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
             $db->query("INSERT IGNORE INTO engine4_sesadvancedactivity_activitycomments (`activity_comment_id`, `file_id`, `parent_id`, `reply_count`, `preview`, `showpreview`, `vote_up_count`, `vote_down_count`) SELECT `comment_id`, `file_id`, `parent_id`, `reply_count`, `preview`, `showpreview`, `vote_up_count`, `vote_down_count` FROM engine4_activity_comments as t ON DUPLICATE KEY UPDATE activity_comment_id=t.comment_id, file_id=t.file_id, parent_id=t.parent_id, reply_count=t.reply_count, preview=t.preview, showpreview=t.showpreview, vote_up_count=t.vote_up_count, vote_down_count=t.vote_down_count;");
 
@@ -197,7 +197,7 @@ class Sesadvancedactivity_Installer extends Engine_Package_Installer_Module {
             `vote_down_count` int(11) NOT NULL DEFAULT "0",
             PRIMARY KEY (`corecomment_id`),
             UNIQUE( `core_comment_id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
             $db->query("INSERT IGNORE INTO engine4_sesadvancedactivity_corecomments (`core_comment_id`, `file_id`, `parent_id`, `reply_count`, `preview`, `showpreview`, `vote_up_count`, `vote_down_count`) SELECT `comment_id`, `file_id`, `parent_id`, `reply_count`, `preview`, `showpreview`, `vote_up_count`, `vote_down_count` FROM engine4_core_comments as t ON DUPLICATE KEY UPDATE core_comment_id=t.comment_id, file_id=t.file_id, parent_id=t.parent_id, reply_count=t.reply_count, preview=t.preview, showpreview=t.showpreview, vote_up_count=t.vote_up_count, vote_down_count=t.vote_down_count;");
 

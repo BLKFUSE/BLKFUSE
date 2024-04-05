@@ -668,7 +668,6 @@ class User_SignupController extends Sesapi_Controller_Action_Standard
 
     // Remove old key
     unset($_SESSION['TemporaryProfileImg']);
-    unset($_SESSION['TemporaryProfileImgProfile']);
     unset($_SESSION['TemporaryProfileImgSquare']);
     $session = new Zend_Session_Namespace("Sesapi_Form_Signup_Photo");
     // Process
@@ -687,22 +686,10 @@ class User_SignupController extends Sesapi_Controller_Action_Standard
       $iMain = $storage->getFile($session->tmp_file_id);
       $iMain->setFromArray($params);
       $iMain->save();
-      //$iMain->updatePath();
-
-      $iProfile = $storage->getFile($session->tmp_file_id, 'thumb.profile');
-      $iProfile->setFromArray($params);
-      $iProfile->save();
-      //$iProfile->updatePath();
-
-      $iNormal = $storage->getFile($session->tmp_file_id, 'thumb.normal');
-      $iNormal->setFromArray($params);
-      $iNormal->save();
-      //$iNormal->updatePath();
 
       $iSquare = $storage->getFile($session->tmp_file_id, 'thumb.icon');
       $iSquare->setFromArray($params);
       $iSquare->save();
-      //$iSquare->updatePath();
       
       // Update row
       $user->photo_id = $iMain->file_id;
@@ -1125,24 +1112,6 @@ class User_SignupController extends Sesapi_Controller_Action_Standard
         ->write($iMainPath)
         ->destroy();
 
-    // Resize image (profile)
-    $iProfilePath = $path . '/p_' . $name;
-    $image = Engine_Image::factory();
-    $image->open($file)
-        ->autoRotate()
-        ->resize(200, 400)
-        ->write($iProfilePath)
-        ->destroy();
-
-    // Resize image (icon.normal)
-    $iNormalPath = $path . '/n_' . $name;
-    $image = Engine_Image::factory();
-    $image->open($file)
-        ->autoRotate()
-        ->resize(48, 120)
-        ->write($iNormalPath)
-        ->destroy();
-
     // Resize image (icon.square)
     $iSquarePath = $path . '/s_' . $name;
     $image = Engine_Image::factory();
@@ -1159,28 +1128,19 @@ class User_SignupController extends Sesapi_Controller_Action_Standard
     $storage = Engine_Api::_()->getItemTable('storage_file');
 
     // Save/load from session
-    
-      // Save
-      $iMain = $storage->createTemporaryFile($iMainPath);
-      $iProfile = $storage->createTemporaryFile($iProfilePath);
-      $iNormal = $storage->createTemporaryFile($iNormalPath);
-      $iSquare = $storage->createTemporaryFile($iSquarePath);
-
-      $iMain->bridge($iProfile, 'thumb.profile');
-      $iMain->bridge($iNormal, 'thumb.normal');
-      $iMain->bridge($iSquare, 'thumb.icon');
-
-      $session->tmp_file_id = $iMain->file_id;
+		$iMain = $storage->createTemporaryFile($iMainPath);
+		$iSquare = $storage->createTemporaryFile($iSquarePath);
+		
+		$iMain->bridge($iSquare, 'thumb.icon');
+		
+		$session->tmp_file_id = $iMain->file_id;
 
     // Save path to session?
     $_SESSION['TemporaryProfileImg'] = $iMain->map();
-    $_SESSION['TemporaryProfileImgProfile'] = $iProfile->map();
     $_SESSION['TemporaryProfileImgSquare'] = $iSquare->map();
     
     // Remove temp files
-    @unlink($path . '/p_' . $name);
     @unlink($path . '/m_' . $name);
-    @unlink($path . '/n_' . $name);
     @unlink($path . '/s_' . $name);
     return $session->tmp_file_id;
   }

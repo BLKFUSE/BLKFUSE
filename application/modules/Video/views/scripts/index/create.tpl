@@ -206,7 +206,7 @@
     if(category_id && category_id != 0) {
       showSubCategory(category_id, subcat_id);
     } else {
-      if(scriptJquery('#category_id').val()) {
+      if(scriptJquery('#category_id').val() != 0) {
         showSubCategory(scriptJquery('#category_id').val());
       } else {
         if(document.getElementById('subcat_id-wrapper'))

@@ -108,11 +108,11 @@ CREATE TABLE IF NOT EXISTS `se_polls` (
 *  `poll_id` int(10) unsigned NOT NULL auto_increment,
 *  `poll_user_id` int(10) unsigned NOT NULL default '0',
 *  `poll_datecreated` bigint(20) unsigned NOT NULL default '0',
-*  `poll_title` varchar(250) collate utf8_unicode_ci NOT NULL default '',
-*  `poll_desc` text collate utf8_unicode_ci,
-*  `poll_options` text collate utf8_unicode_ci,
-*  `poll_answers` text collate utf8_unicode_ci,
-*  `poll_voted` text collate utf8_unicode_ci,
+*  `poll_title` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+*  `poll_desc` text COLLATE utf8mb4_unicode_ci,
+*  `poll_options` text COLLATE utf8mb4_unicode_ci,
+*  `poll_answers` text COLLATE utf8mb4_unicode_ci,
+*  `poll_voted` text COLLATE utf8mb4_unicode_ci,
 *  `poll_search` tinyint(3) unsigned NOT NULL default '0',
 *  `poll_privacy` smallint(5) unsigned NOT NULL default '0',
 *  `poll_comments` smallint(5) unsigned NOT NULL default '0',
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `se_polls` (
 *  `poll_totalcomments` smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (`poll_id`),
   KEY `INDEX` (`poll_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `engine4_poll_polls` (
   KEY `user_id` (`user_id`),
   KEY `is_closed` (`is_closed`),
   KEY `creation_date` (`creation_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */
 
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `engine4_poll_options` (
   `votes` smallint(4) unsigned NOT NULL,
   PRIMARY KEY  (`poll_option_id`),
   KEY `poll_id` (`poll_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */
 
@@ -168,6 +168,6 @@ CREATE TABLE IF NOT EXISTS `engine4_poll_votes` (
   PRIMARY KEY (`poll_id`,`user_id`),
   KEY `poll_option_id` (`poll_option_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

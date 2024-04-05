@@ -211,12 +211,12 @@ ul.feed .feed_attachment_photo a > img {
 }
 .sesalbum_welcome_html_block p a{
 	color:$theme_button_background_color;
-	border:2px solid $theme_button_border_color;
+	border:2px solid $theme_button_background_color;
 }
 .sesalbum_welcome_html_block p a:hover{
 	background-color:$theme_button_background_color_hover;
 	color:$theme_button_font_color !important;
-	border:2px solid $theme_button_border_color_hover;
+	border:2px solid $theme_button_background_color_hover;
 }
 .sesalbum_album_cover_full .sesalbum_cover_footer_inner{
 	margin:0 auto;

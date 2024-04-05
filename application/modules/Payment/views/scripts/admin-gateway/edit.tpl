@@ -10,7 +10,9 @@
  * @author     John Boehr <j@webligo.com>
  */
 ?>
-<h2>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_monetization", 'parentMenuItemName' => 'core_admin_main_payment', 'childMenuItemName' => 'core_admin_main_payment_gateways')); ?>
+
+<h2 class="page_heading">
   <?php echo $this->translate("Billing") ?>
 </h2>	
 <?php if( count($this->navigation) ): ?>
@@ -25,3 +27,7 @@
 <div class="settings">
   <?php echo $this->form->render($this) ?>
 </div>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_monetization').parent().addClass('active');
+  scriptJquery('.core_admin_main_payment').addClass('active');
+</script>

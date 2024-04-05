@@ -23,7 +23,7 @@ class Sesthought_IndexController extends Core_Controller_Action_Standard
   
     $url = trim(strip_tags($this->_getParam('uri')));
     $ajax = $this->_getParam('ajax', false);
-    $information = $this->handleIframelyInformation($url);
+    $information = Engine_Api::_()->sesbasic()->handleIframelyInformation($url);
     $this->view->ajax = $ajax;
     $this->view->valid = !empty($information['code']);
     $this->view->iframely = $information;
@@ -340,7 +340,7 @@ class Sesthought_IndexController extends Core_Controller_Action_Standard
         }
         
         if($values['video']) {
-          $information = $this->handleIframelyInformation($values['video']);
+          $information = Engine_Api::_()->sesbasic()->handleIframelyInformation($values['video']);
           try{
             $thought->setPhoto($information['thumbnail']);
           }catch(Exception $e){

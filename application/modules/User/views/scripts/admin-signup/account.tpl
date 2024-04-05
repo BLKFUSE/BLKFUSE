@@ -26,4 +26,22 @@
       scriptJquery('#adminemailaddress-wrapper').hide();
     }
   }
+
+  scriptJquery(document).ready(function() {
+    scriptJquery('input[type=radio][name=username]:checked').trigger('change');
+  });
+  
+  function showUserName(value) {
+    if(value == 1) {
+      scriptJquery('#showusername-wrapper').show();
+      scriptJquery('#allowloginusername-wrapper').show();
+    } else {
+      scriptJquery('#showusername-wrapper').hide();
+      scriptJquery('#allowloginusername-wrapper').hide();
+    }
+  }
+</script>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_settings').parent().addClass('active');
+  scriptJquery('.core_admin_main_signup').addClass('active');
 </script>

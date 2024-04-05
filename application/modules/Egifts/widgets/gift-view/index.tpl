@@ -34,7 +34,7 @@
         </div>
         <?php if(isset($this->priceActive)){ ?>
           <div class="egifts_view_top_price">
-            <span class="_price sesbasic_text_hl"><?php echo Engine_Api::_()->egifts()->getCurrencyPrice($item->price); ?></span>
+            <span class="_price sesbasic_text_hl"><?php echo Engine_Api::_()->payment()->getCurrencyPrice($item->price); ?></span>
           </div>
         <?php } ?>
         <div class="egifts_view_top_buttons">

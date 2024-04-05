@@ -16,18 +16,19 @@ $array =  array(
 	array(
 		'type' => 'module',
 		'name' => 'sesapi',
-		'version' => '6.4.0p1',
+		'version' => '6.5.1',
 		'dependencies' => array(
             array(
                 'type' => 'module',
                 'name' => 'core',
-                'minVersion' => '6.2.0',
+                'minVersion' => '6.5.1',
             ),
         ),
 		'path' => 'application/modules/Sesapi',
 		'title' => 'SNS - SocialEngine REST APIs Plugin',
 		'description' => 'SNS - SocialEngine REST APIs Plugin',
 		'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+		'thumb' => 'application/modules/Sesapi/externals/images/thumb.png',
 		'callback' => array(
 			'path' => 'application/modules/Sesapi/settings/install.php',
 			'class' => 'Sesapi_Installer',
@@ -116,7 +117,7 @@ $array =  array(
 				'action' => 'create',
 			),
 		),
-		
+
 		'sesapi_activity' => array(
 			'route' => 'activity/post/index',
 			'defaults' => array(

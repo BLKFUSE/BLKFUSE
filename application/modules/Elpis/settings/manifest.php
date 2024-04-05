@@ -14,7 +14,7 @@ return array (
   array(
     'type' => 'module',
     'name' => 'elpis',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'dependencies' => array(
       array(
         'type' => 'module',
@@ -24,8 +24,9 @@ return array (
     ),
     'path' => 'application/modules/Elpis',
     'title' => 'Elpis Theme',
-    'description' => 'Elpis Theme',
-    'author' => 'WebligoDevelopments',
+    'description' => 'Responsive, modern theme with features to delight you and your members!',
+    'author' => '<a href="https://socialengine.com/" style="text-decoration:underline;" target="_blank">SocialEngine</a>',
+    'thumb' => 'application/modules/Core/externals/images/thumb.png',
     'callback' => array(
         'path' => 'application/modules/Elpis/settings/install.php',
         'class' => 'Elpis_Installer',

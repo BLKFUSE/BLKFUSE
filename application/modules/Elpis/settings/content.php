@@ -10,13 +10,6 @@
  */
 
 return array(
-  array(
-    'title' => 'Accessibility Options',
-    'description' => 'This widget is used to display the option for accessibility in site header.',
-    'category' => 'Elpis',
-    'type' => 'widget',
-    'name' => 'elpis.menu-top',
-  ),
 	array(
 		'title' => 'Landing Page Popular Blog Entries',
 		'description' => 'Displays Popular Blog Entries on the Landing Page.',

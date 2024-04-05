@@ -81,7 +81,7 @@
           </p>
         </div>
       </div>
-      <div class='message_view_info'>
+      <div class='message_view_info rich_content_body'>
         <?php echo $this->getMessageBody($message) ?>
         <?php if( !empty($message->attachment_type) && null !== ($attachment = $this->item($message->attachment_type, $message->attachment_id))): ?>
           <div class="message_attachment">
@@ -124,7 +124,7 @@
         </div>
       </div>
 
-      <div class='message_view_info'>
+      <div class='message_view_info rich_content_body'>
       <?php if( (!$this->blocked && !$this->viewer_blocked) || (engine_count($this->recipients)>1)): ?>
         <?php echo $this->form->setAttrib('id', 'messages_form_reply')->render($this) ?>
       <?php elseif ($this->viewer_blocked):?>
@@ -140,6 +140,13 @@
 
 <script type="text/javascript">
   scriptJquery('.message_view_info').enableLinks();
+
+  // Add parant element to table
+  scriptJquery('.rich_content_body table').each(function() {                            
+    scriptJquery(this).addClass('table');
+    scriptJquery(this).wrap('<div class="table_wrap"></div>');
+  });
+</script>
 </script>
 
 <?php if( !$this->locked ): ?>

@@ -43,7 +43,7 @@ if ($this->getRequest()->isPost()) {
         $db = Zend_Db_Table_Abstract::getDefaultAdapter();
 
         $db->query('INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
-        ("sesdating_admin_main_menus", "sesdating", "Manage Header", "", \'{"route":"admin_default","module":"sesdating","controller":"manage", "action":"header-settings"}\', "sesdating_admin_main", "", 3),
+        ("sesdating_admin_main_menus", "sesdating", "Manage Header", "", \'{"route":"admin_default","icon":"fas fa-heart","module":"sesdating","controller":"manage", "action":"header-settings"}\', "sesdating_admin_main", "", 3),
         ("sesdating_admin_main_menusfooter", "sesdating", "Manage Footer", "", \'{"route":"admin_default","module":"sesdating","controller":"manage", "action":"footer-settings"}\', "sesdating_admin_main", "", 4),
         ("sesdating_admin_main_styling", "sesdating", "Color Schemes", "", \'{"route":"admin_default","module":"sesdating","controller":"settings", "action":"styling"}\', "sesdating_admin_main", "", 5),
         ("sesdating_admin_main_customcss", "sesdating", "Custom CSS", "", \'{"route":"admin_default","module":"sesdating","controller":"custom-theme", "action":"index"}\', "sesdating_admin_main", "", 6),
@@ -62,7 +62,7 @@ if ($this->getRequest()->isPost()) {
             `modified_date` datetime NOT NULL,
             `enabled` TINYINT(1) NOT NULL DEFAULT "1",
             PRIMARY KEY (`banner_id`)
-            ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;'
+            ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;'
         );
 
         $db->query('DROP TABLE IF EXISTS `engine4_sesdating_customthemes`;');
@@ -71,7 +71,7 @@ if ($this->getRequest()->isPost()) {
             `name` VARCHAR(255) NOT NULL,
             `description` text,
             PRIMARY KEY (`customtheme_id`)
-            ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14;
+            ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=14;
         ');
 
         $db->query('DROP TABLE IF EXISTS `engine4_sesdating_slides`;');
@@ -94,7 +94,7 @@ if ($this->getRequest()->isPost()) {
             `modified_date` datetime NOT NULL,
             `enabled` TINYINT(1) NOT NULL DEFAULT "1",
             PRIMARY KEY (`slide_id`)
-            ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+            ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
         ');
 
         $db->query('INSERT IGNORE INTO `engine4_core_menus` (`name`, `type`, `title`, `order`) VALUES

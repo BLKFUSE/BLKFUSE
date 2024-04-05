@@ -22,7 +22,7 @@ class Install_Form_Import_Phpfox extends Engine_Form
 
     $this->setDescription($this->getDescription() . "
 <br />
-<a style='color:red;' href='javascript:void(0);' onclick='(function(e,obj){ styleVal = $(\"fieldset-advanced\").getStyle(\"display\");
+<a style='color:#6045E2;' href='javascript:void(0);' onclick='(function(e,obj){ styleVal = $(\"fieldset-advanced\").getStyle(\"display\");
     $(\"fieldset-advanced\").setStyle(\"display\", (styleVal == \"none\" ? \"\" : \"none\"));
     $(\"advancedOption\").set(\"text\",(styleVal == \"none\" ? \"Hide Advanced Options\" : \"Show Advanced Options\"));
     })(event,this)' id='advancedOption'>

@@ -60,8 +60,8 @@ class Sescontestpackage_Model_Package extends Core_Model_Item_Abstract {
   public function getPackageDescription() {
     $translate = Zend_Registry::get('Zend_Translate');
     $view = Zend_Registry::get('Zend_View');
-    $currency =  Engine_Api::_()->sescontestpackage()->getCurrentCurrency();
-    $priceStr = Engine_Api::_()->sescontestpackage()->getCurrencyPrice($this->price,'','');
+    $currency =  Engine_Api::_()->payment()->getCurrentCurrency();
+    $priceStr = Engine_Api::_()->payment()->getCurrencyPrice($this->price,'','');
 
     // Plan is free
     if ($this->price == 0) {

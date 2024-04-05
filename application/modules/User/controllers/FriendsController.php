@@ -497,19 +497,14 @@ class User_FriendsController extends Core_Controller_Action_User
       }
 
       // Set the request as handled
-      $notification = Engine_Api::_()->getDbtable('notifications', 'activity')
-        ->getNotificationBySubjectAndType($viewer, $user, 'friend_request');
+      $notification = Engine_Api::_()->getDbtable('notifications', 'activity')->getNotificationBySubjectAndType($viewer, $user, 'friend_request');
       if( $notification ) {
-        $notification->mitigated = true;
-        $notification->read = 1;
-        $notification->save();
+        $notification->delete();
       }
-      $notification = Engine_Api::_()->getDbtable('notifications', 'activity')
-          ->getNotificationBySubjectAndType($viewer, $user, 'friend_follow_request');
+      
+      $notification = Engine_Api::_()->getDbtable('notifications', 'activity')->getNotificationBySubjectAndType($viewer, $user, 'friend_follow_request');
       if( $notification ) {
-        $notification->mitigated = true;
-        $notification->read = 1;
-        $notification->save();
+        $notification->delete();
       }
       
       $db->commit();
@@ -537,20 +532,24 @@ class User_FriendsController extends Core_Controller_Action_User
       $this->view->error = Zend_Registry::get('Zend_Translate')->_('No member specified');
       return;
     }
+    
+    $format = $this->_getParam('format', null);
 
     // Make form
     $this->view->form = $form = new User_Form_Friends_Reject(array('user' => $user));
+    
+    if(empty($format)) {
+      if( !$this->getRequest()->isPost() ) {
+        $this->view->status = false;
+        $this->view->error = Zend_Registry::get('Zend_Translate')->_('No action taken');
+        return;
+      }
 
-    if( !$this->getRequest()->isPost() ) {
-      $this->view->status = false;
-      $this->view->error = Zend_Registry::get('Zend_Translate')->_('No action taken');
-      return;
-    }
-
-    if( !$form->isValid($this->getRequest()->getPost()) ) {
-      $this->view->status = false;
-      $this->view->error = Zend_Registry::get('Zend_Translate')->_('Invalid data');
-      return;
+      if( !$form->isValid($this->getRequest()->getPost()) ) {
+        $this->view->status = false;
+        $this->view->error = Zend_Registry::get('Zend_Translate')->_('Invalid data');
+        return;
+      }
     }
 
     // Process
@@ -561,19 +560,13 @@ class User_FriendsController extends Core_Controller_Action_User
       $viewer->membership()->removeMember($user);
 
       // Set the requests as handled
-      $notification = Engine_Api::_()->getDbtable('notifications', 'activity')
-        ->getNotificationBySubjectAndType($viewer, $user, 'friend_request');
+      $notification = Engine_Api::_()->getDbtable('notifications', 'activity')->getNotificationBySubjectAndType($viewer, $user, 'friend_request');
       if( $notification ) {
-        $notification->mitigated = true;
-        $notification->read = 1;
-        $notification->save();
+        $notification->delete();
       }
-      $notification = Engine_Api::_()->getDbtable('notifications', 'activity')
-          ->getNotificationBySubjectAndType($viewer, $user, 'friend_follow_request');
+      $notification = Engine_Api::_()->getDbtable('notifications', 'activity')->getNotificationBySubjectAndType($viewer, $user, 'friend_follow_request');
       if( $notification ) {
-        $notification->mitigated = true;
-        $notification->read = 1;
-        $notification->save();
+        $notification->delete();
       }
 
       $db->commit();
@@ -637,16 +630,12 @@ class User_FriendsController extends Core_Controller_Action_User
       $notification = Engine_Api::_()->getDbtable('notifications', 'activity')
         ->getNotificationBySubjectAndType($user, $viewer, 'friend_request');
       if( $notification ) {
-        $notification->mitigated = true;
-        $notification->read = 1;
-        $notification->save();
+        $notification->delete();
       }
       $notification = Engine_Api::_()->getDbtable('notifications', 'activity')
           ->getNotificationBySubjectAndType($viewer, $user, 'friend_follow_request');
       if( $notification ) {
-        $notification->mitigated = true;
-        $notification->read = 1;
-        $notification->save();
+        $notification->delete();
       }
 
       $db->commit();
@@ -716,6 +705,7 @@ class User_FriendsController extends Core_Controller_Action_User
           'id'    => $friend->getIdentity(),
           'guid'  => $friend->getGuid(),
           'label' => $friend->getIdentity() == $viewer->getIdentity() ? $friend->getTitle() . ' (you)' : $friend->getTitle(),
+          'title' => $friend->getIdentity() == $viewer->getIdentity() ? $friend->getTitle(false) . ' (you)' : $friend->getTitle(false),
           'photo' => $this->view->itemPhoto($friend, 'thumb.icon'),
           'url'   => $friend->getHref(),
         );

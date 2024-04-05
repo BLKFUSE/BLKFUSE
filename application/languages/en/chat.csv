@@ -14,7 +14,7 @@
 "Create Chat Room";"Create Chat Room"
 "Create Room";"Create Room"
 "Changes saved.";"Your changes have been saved."
-"Chat room page description.";""
+"This page lists all the chat rooms created by you.";"This page lists all the chat rooms created by you."
 "Users In Room";"Users In Room"
 "%d chat room";"%d chat room";"%d chat rooms"
 
@@ -42,3 +42,4 @@
 "Introduce Yourself";"Introduce Yourself"
 "%1$s person";"%1$s person";"%1$s people"
 "Toggle Notifications";"Toggle Notifications"
+"Type a message and press enter.";"Type a message and press enter."

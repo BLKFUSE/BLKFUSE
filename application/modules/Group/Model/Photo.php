@@ -23,6 +23,8 @@ class Group_Model_Photo extends Core_Model_Item_Collectible
     protected $_owner_type = 'user';
 
     protected $_collection_type = 'group_album';
+    
+    protected $_searchTriggers = false;
 
     public function getHref($params = array())
     {
@@ -197,6 +199,8 @@ class Group_Model_Photo extends Core_Model_Item_Collectible
         try
         {
             $file = Engine_Api::_()->getApi('storage', 'storage')->get($this->file_id);
+            if( $file ) $file->remove();
+            $file = Engine_Api::_()->getApi('storage', 'storage')->get($this->file_id, 'thumb.profile');
             if( $file ) $file->remove();
             $file = Engine_Api::_()->getApi('storage', 'storage')->get($this->file_id, 'thumb.normal');
             if( $file ) $file->remove();

@@ -20,14 +20,12 @@
       </div>
     <?php endif; ?>
 		<div class="sesbasic-form-cont">
-			<?php $defaultCurrency = Engine_Api::_()->sesbasic()->defaultCurrency(); ?>
+			<?php $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency(); ?>
 			<h3><?php echo $this->translate("Manage Payment Requests") ?></h3>
 			<p><?php echo $this->translate('This page lists all of the payment requests your member have made for cash gifts. You can use this page to monitor these requests and take appropriate action for each. Entering criteria into the filter fields will help you find specific payment request. Leaving the filter fields blank will show all the payment requests on your social network.<br>Below, you can approve / reject a payment request and see payment details.'); ?></p>
-			<br />
 			<div class='admin_search sesbasic_search_form'>
 				<?php echo $this->formFilter->render($this) ?>
 			</div>
-			<br />
 			<?php $counter = $this->paginator->getTotalItemCount(); ?> 
 			<?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
 				<div class="sesbasic_search_reasult">
@@ -56,7 +54,7 @@
 							<tr>
 								<td><?php echo $item->userpayrequest_id; ?></td>
 								<td><?php echo $this->htmlLink($user->getHref(), $this->translate(Engine_Api::_()->sesbasic()->textTruncation($user->getTitle(),16)), array('title' => $user->getTitle(), 'target' => '_blank')); ?></td>
-								<td><?php echo Engine_Api::_()->sesbasic()->getCurrencyPrice($item->requested_amount,$defaultCurrency); ?></td>
+								<td><?php echo Engine_Api::_()->payment()->getCurrencyPrice($item->requested_amount,$defaultCurrency); ?></td>
 								<td><?php echo Engine_Api::_()->sesbasic()->dateFormat($item->creation_date	); ?></td> 
 								<td><?php echo ucfirst($item->state); ?></td>
 								<td>
@@ -73,7 +71,6 @@
 					</table>
 					</div>
 				</form>
-				<br/>
 				<div>
 					<?php echo $this->paginationControl($this->paginator); ?>
 				</div>

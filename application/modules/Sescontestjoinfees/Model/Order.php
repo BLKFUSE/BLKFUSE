@@ -93,8 +93,8 @@ class Sescontestjoinfees_Model_Order extends Core_Model_Item_Collection {
 			$orderAmount = round(($this->total_amount), 2);
 			$total_price = round($this->total_amount,1);
 			//%age wise
-			$currentCurrency = Engine_Api::_()->sescontestjoinfees()->getCurrentCurrency();
-			$defaultCurrency = Engine_Api::_()->sescontestjoinfees()->defaultCurrency();
+			$currentCurrency = Engine_Api::_()->payment()->getCurrentCurrency();
+			$defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
 			$settings = Engine_Api::_()->getApi('settings', 'core');
 			$currencyValue = 1;
 			if($currentCurrency != $defaultCurrency){

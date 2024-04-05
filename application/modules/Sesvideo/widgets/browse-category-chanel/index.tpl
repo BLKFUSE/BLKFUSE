@@ -239,7 +239,7 @@ scriptJquery(document).on('click','.seschanel_slideshow_prev',function(e){
 		var elem = scriptJquery(this).parent().parent().parent().find('.sesvideo_browse_channel_listing_thumbnails').children();
 		var elemLength = elem.length;
 		for(i=0;i<elemLength;i++){
-			if(elem[i].hasClass('thumbnail_active')){
+			if(scriptJquery(elem[i]).hasClass('thumbnail_active')){
 				 activeClassIndex = i;
 				break;	
 			}
@@ -259,7 +259,7 @@ scriptJquery(document).on('click','.seschanel_slideshow_next',function(e){
 	var elem = scriptJquery(this).parent().parent().parent().find('.sesvideo_browse_channel_listing_thumbnails').children();
 	var elemLength = elem.length;
 	for(i=0;i<elemLength;i++){
-		if(elem[i].hasClass('thumbnail_active')){
+		if(scriptJquery(elem[i]).hasClass('thumbnail_active')){
 			 activeClassIndex = i;
 			break;	
 		}
@@ -285,13 +285,13 @@ scriptJquery(document).on('click','.slideshow_chanel_data',function(e){
 	 var elIndex = scriptJquery(this).parent().index();
 	 var totalDiv = scriptJquery(this).parent().parent().find('div');
 	 for(i=0;i<totalDiv.length;i++){
-			 totalDiv[i].removeClass('thumbnail_active');
+			 scriptJquery(totalDiv[i]).removeClass('thumbnail_active');
 	 }
 	 scriptJquery(this).parent().addClass('thumbnail_active');
 	 var containerElem = scriptJquery(this).parent().parent().parent().find('.sesvideo_browse_channel_conatiner').children();
 	 for(i=0;i<containerElem.length;i++){
 	 	if(i != (containerElem.length-1))
-			containerElem[i].hide();
+			scriptJquery(containerElem[i]).hide();
 	 }
 	 scriptJquery(containerElem).get(elIndex).show();
 	if(scriptJquery(containerElem).get(elIndex).hasClass('nodata')){

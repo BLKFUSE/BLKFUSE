@@ -10,6 +10,8 @@
  * @author     Sami
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_manage", 'parentMenuItemName' => 'core_admin_main_manage_announcements', 'lastMenuItemName' => 'Edit Announcement')); ?>
+
 <?php
   $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl."externals/selectize/css/normalize.css");
 $headScript = new Zend_View_Helper_HeadScript();
@@ -31,4 +33,8 @@ $headScript->appendFile($this->layout()->staticBaseUrl.'externals/selectize/js/s
 <script type="application/javascript">
     scriptJquery('select[multiple=multiple]').closest('div').css('overflow',"visible");
     scriptJquery('select[multiple=multiple]').selectize({});
+</script>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_manage').parent().addClass('active');
+  scriptJquery('.core_admin_main_manage_announcements').addClass('active');
 </script>

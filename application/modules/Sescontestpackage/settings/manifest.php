@@ -6,7 +6,7 @@ return array(
         'type' => 'module',
         'name' => 'sescontestpackage',
         //'sku' => 'sescontestpackage',
-        'version' => '5.4.0',
+        'version' => '6.5.1',
         'dependencies' => array(
             array(
                 'type' => 'module',

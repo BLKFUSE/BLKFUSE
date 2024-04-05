@@ -18,7 +18,6 @@
 <p>
 	<?php echo $this->translate('This page lists all of the Widgetize Page in this plugin. From here you can easily go to particular page in "Layout Editor" by clicking on "Get Widgetize Page" and also you can view directly user side page by click on "View Page" link.'); ?>
 </p>
-<br />
 <table class='admin_table'>
   <thead>
     <tr>

@@ -89,12 +89,12 @@ class Install_Import_Ning_UserMigration extends Install_Import_Ning_Abstract
     $sql = <<<EOF
 CREATE TABLE IF NOT EXISTS `engine4_user_migration` (
   `user_id` int(11) unsigned NOT NULL auto_increment,
-  `user_contributor` varchar(50) collate utf8_unicode_ci NULL,
+  `user_contributor` varchar(50) collate utf8mb4_unicode_ci NULL,
   `email` varchar(255) NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY (`user_contributor`),
   UNIQUE KEY (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 EOF;
     $this->getToDb()->query($sql);
 

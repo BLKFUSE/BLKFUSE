@@ -258,16 +258,16 @@ return array(
       'subject' => 'user',
     ),
   ),
-  array(
-    'title' => 'User Settings Menu',
-    'description' => 'Displays a menu in the user settings pages.',
-    'category' => 'User',
-    'type' => 'widget',
-    'name' => 'user.settings-menu',
-    'requirements' => array(
-      'no-subject',
-    ),
-  ),
+//   array(
+//     'title' => 'User Settings Menu',
+//     'description' => 'Displays a menu in the user settings pages.',
+//     'category' => 'User',
+//     'type' => 'widget',
+//     'name' => 'user.settings-menu',
+//     'requirements' => array(
+//       'no-subject',
+//     ),
+//   ),
   array(
     'title' => 'Member Browse Menu',
     'description' => 'Displays a menu in the member browse page.',
@@ -288,4 +288,14 @@ return array(
       'no-subject',
     ),
   ),
+//   array(
+//     'title' => 'User Setting Page Cover Photo',
+//     'description' => 'Displays a user settings page.',
+//     'category' => 'User',
+//     'type' => 'widget',
+//     'name' => 'user.user-setting-cover-photo',
+//     'requirements' => array(
+//       'no-subject',
+//     ),
+//   ),  
 ) ?>

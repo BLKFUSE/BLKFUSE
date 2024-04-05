@@ -46,7 +46,7 @@ class Engine_Iframely
     return array(
 			self::SOCIALENGINE_HOST,
       self::IFRAMELY_HOST,
-      self::OWN_HOST,
+      //self::OWN_HOST,
     );
   }
 }

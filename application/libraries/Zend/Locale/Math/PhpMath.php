@@ -91,8 +91,8 @@ class Zend_Locale_Math_PhpMath extends Zend_Locale_Math
         }
         $op1  = self::normalize($op1);
         $op2  = self::normalize($op2);
-        $result = $op1 - $op2;
-        if (is_infinite($result)  or  (abs($result + $op2 - $op1) > $precision)) {
+        $result = (float) $op1 - (float) $op2;
+        if (is_infinite($result)  or  (abs($result + (float) $op2 - (float) $op1) > $precision)) {
             // require_once 'Zend/Locale/Math/Exception.php';
             throw new Zend_Locale_Math_Exception("subtraction overflow: $op1 - $op2 != $result", $op1, $op2, $result);
         }

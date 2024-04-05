@@ -14,6 +14,17 @@ class Sesalbum_Model_Album extends Core_Model_Item_Abstract implements Countable
   protected $_owner_type = 'user';
   protected $_parent_is_owner = true;
 	protected $_type = 'album';
+	
+  /**
+   * Get a generic media type. Values:
+   * album
+   *
+   * @return string
+   */
+  public function getMediaType() {
+    return 'album';
+  }
+  
 	public function fields()
   {
     return new Engine_ProxyObject($this, Engine_Api::_()->getApi('core', 'fields'));

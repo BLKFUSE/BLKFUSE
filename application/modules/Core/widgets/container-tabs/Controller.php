@@ -57,9 +57,9 @@ class Core_Widget_ContainerTabsController extends Engine_Content_Widget_Abstract
       // Get title and childcount
       $title = $child->getTitle();
       $childCount = null;
-      if(is_string($child) && method_exists($child, 'getWidget') && method_exists($child->getWidget(), 'getChildCount') ) {
-        $childCount = $child->getWidget()->getChildCount();
-      }
+      if((is_string($child) || is_object($child)) && !empty($child) && $child->getWidget() &&  method_exists($child, 'getWidget') && method_exists($child->getWidget(), 'getChildCount') ) {
+				$childCount = $child->getWidget()->getChildCount();
+			}
       if( !$title ) $title = "*";
       // If it does render, add it to the tab list
       if( !$child->getNoRender() ) {

@@ -13,13 +13,14 @@ return array(
     'package' => array(
         'type' => 'module',
         'name' => 'user',
-        'version' => '6.4.0',
+        'version' => '6.5.1',
         'revision' => '$Revision: 10271 $',
         'path' => 'application/modules/User',
         'repository' => 'socialengine.com',
         'title' => 'Members',
         'description' => 'Members',
-        'author' => 'Webligo Developments',
+        'author' => 'SocialEngine Core',
+        'thumb' => 'application/modules/Core/externals/images/thumb.png',
         'dependencies' => array(
             array(
                 'type' => 'module',
@@ -88,10 +89,23 @@ return array(
         'user_list',
         'user_list_item',
         'user_code',
+        'user_verificationrequest',
     ),
     // Routes --------------------------------------------------------------------
     'routes' => array(
         // User - General
+        'user_support' => array(
+            'route' => 'support/:action/*',
+            'defaults' => array(
+                'module' => 'user',
+                'controller' => 'support',
+                'action' => 'index'
+            ),
+            'reqs' => array(
+                'controller' => '\D+',
+                'action' => '\D+',
+            )
+        ),
         'user_extended' => array(
             'route' => 'members/:controller/:action/*',
             'defaults' => array(

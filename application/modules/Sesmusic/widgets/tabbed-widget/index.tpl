@@ -37,7 +37,7 @@ endif; ?>
         <?php foreach($this->defaultOptions as $valueOptions){ ?>
         <?php $value = str_replace('1',' ',$valueOptions); ?>
           <li <?php if($this->defaultOpenTab == $valueOptions){ ?>class="active"<?php } ?> id="sesTabContainer_<?php echo $randonNumber; ?>_<?php echo $valueOptions; ?>">
-            <a href="javascript:;" onclick="changeTabSes_<?php echo $randonNumber; ?>('<?php echo $valueOptions; ?>')"><?php echo $this->translate(ucwords($value)); ?></a>
+            <a href="javascript:;" onclick="changeTabSes_<?php echo $randonNumber; ?>('<?php echo $valueOptions; ?>')"><?php echo $this->translate(ucfirst($value)); ?></a>
           </li>
         <?php } ?>
       </ul>

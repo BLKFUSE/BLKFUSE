@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `engine4_sesmusic_integrateothermodules` (
   PRIMARY KEY (`integrateothermodule_id`),
   UNIQUE KEY `content_type` (`content_type`,`content_id`),
   KEY `module_name` (`module_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
-ALTER TABLE `engine4_sesmusic_albums` CHANGE `resource_type` `resource_type` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL;
+ALTER TABLE `engine4_sesmusic_albums` CHANGE `resource_type` `resource_type` VARCHAR(128) NULL;
 UPDATE `engine4_sesmusic_albums` SET `resource_type` = NULL;

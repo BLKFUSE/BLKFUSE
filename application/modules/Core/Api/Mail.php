@@ -261,6 +261,10 @@ class Core_Api_Mail extends Core_Api_Abstract
 									if(!empty($oneRecipient->disable_email) && $oneRecipient->user_id && $type != "core_lostpassword") {
 										continue;
 									}
+									
+									//If member is not verifed then do not send email
+									if(!engine_in_array($type, array('user_otp', 'core_welcome_password', 'core_welcome', 'core_verification', 'core_verification_password', 'notify_admin_user_signup')) && empty($oneRecipient->verified)) return;
+                  
 									$mailRecipientsTable->insert(array(
 											'mail_id' => $mail_id,
 											'user_id' => $oneRecipient->user_id,
@@ -349,10 +353,13 @@ class Core_Api_Mail extends Core_Api_Abstract
             // Check recipient
             if( $recipient instanceof Core_Model_Item_Abstract ) {
                 $isMember = true;
-
+                
+                //If member is not verifed then do not send email
+                if(!engine_in_array($type, array('user_otp', 'core_welcome_password', 'core_welcome', 'core_verification', 'core_verification_password', 'notify_admin_user_signup')) && empty($recipient->verified)) return;
+                
                 // Detect email and name
                 $recipientEmail = $recipient->email;
-                $recipientName = $recipient->getTitle();
+                $recipientName = $recipient->getTitle(false);
 
                 // Detect language
                 if( !empty($rParams['language']) ) {

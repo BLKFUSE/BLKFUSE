@@ -65,7 +65,7 @@ class Sescommunityads_Plugin_Task_Jobs extends Core_Plugin_Task_Abstract {
        Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($owner, $owner, $ad, 'sescommunityads_adsexpired', array("adsLink" => $link));
        
        //Send email to user
-       Engine_Api::_()->getApi('mail', 'core')->sendSystem($owner->email, 'sescommunityads_adsexpired', array('host' => $_SERVER['HTTP_HOST'], 'queue' => false, 'title' => $ad->title, 'description' => $ad->description, 'ad_link' => $link));
+       Engine_Api::_()->getApi('mail', 'core')->sendSystem($owner->email, 'sescommunityads_adsexpired', array('host' => _ENGINE_SITE_URL, 'queue' => false, 'title' => $ad->title, 'description' => $ad->description, 'ad_link' => $link));
     }
 
   }

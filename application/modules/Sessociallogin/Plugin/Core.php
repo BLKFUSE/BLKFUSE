@@ -18,7 +18,15 @@ class Sessociallogin_Plugin_Core extends Zend_Controller_Plugin_Abstract {
       $action = $request->getActionName();
       $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
       if($module == "user" && $action == "index" && $controller == "admin-signup"){
-        $view->headStyle()->appendStyle('#step_1, #step_3, #step_4{display:none;}');
+				$account = Engine_Api::_()->sesbasic()->getSignupId('User_Plugin_Signup_Account');
+				if($account) 
+					$view->headStyle()->appendStyle('#step_'.$account.'{display:none;}');
+				$field = Engine_Api::_()->sesbasic()->getSignupId('User_Plugin_Signup_Fields');
+				if($field) 
+					$view->headStyle()->appendStyle('#step_'.$field.'{display:none;}');
+				$photo = Engine_Api::_()->sesbasic()->getSignupId('User_Plugin_Signup_Photo');
+				if($photo) 
+					$view->headStyle()->appendStyle('#step_'.$photo.'{display:none;}');
       }
       if($module == "user" && $action == "order" && $controller == "admin-signup"){
           $request->setModuleName('sessociallogin');
@@ -135,6 +143,8 @@ class Sessociallogin_Plugin_Core extends Zend_Controller_Plugin_Abstract {
   }
   
     public function onRenderLayoutDefault($event) {
+        
+        if( defined('_ENGINE_ADMIN_NEUTER') && _ENGINE_ADMIN_NEUTER ) return;
 
         $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
         $viewer = Engine_Api::_()->user()->getViewer();

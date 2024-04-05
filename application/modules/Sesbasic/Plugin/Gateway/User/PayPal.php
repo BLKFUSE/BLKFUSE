@@ -35,9 +35,9 @@ class Sesbasic_Plugin_Gateway_User_PayPal extends Engine_Payment_Plugin_Abstract
     {
 
         if($is_sponsorship == 'sescrowdfunding') {
-            $currency = Engine_Api::_()->sescrowdfunding()->defaultCurrency();
+            $currency = Engine_Api::_()->payment()->defaultCurrency();
         } else {
-            $currency = Engine_Api::_()->sesbasic()->defaultCurrency();
+            $currency = Engine_Api::_()->payment()->defaultCurrency();
         }
 
         if( null === $this->_gateway ) {

@@ -35,29 +35,14 @@
 
 
 ?>
-
-  
-
 <h3><?php echo $this->translate("Social Media Login Statistics") ?></h3>
-
 <p><?php echo $this->translate("Below are the statistics about the login via social media on your website.") ?></p>
-
-<br />  
-
 <?php 
-
-$totalCount = $settings->getSetting('sessociallogin.facebooksignup') + $settings->getSetting('sessociallogin.twittersignup') + $settings->getSetting('sessociallogin.pinterestsignup') + $settings->getSetting('sessociallogin.googlesignup') + $settings->getSetting('sessociallogin.linkedinsignup') + $settings->getSetting('sessociallogin.instagramsignup') + $settings->getSetting('sessociallogin.flickrsignup') + $settings->getSetting('sessociallogin.hotmailsignup') + $settings->getSetting('sessociallogin.vksignup');
-
-
-
+$totalCount = $settings->getSetting('sessociallogin.facebooksignup') + $settings->getSetting('sessociallogin.twittersignup') + $settings->getSetting('sessociallogin.pinterestsignup') + $settings->getSetting('sessociallogin.googlesignup') + $settings->getSetting('sessociallogin.linkedinsignup') + $settings->getSetting('sessociallogin.instagramsignup') + $settings->getSetting('sessociallogin.flickrsignup') + $settings->getSetting('sessociallogin.vksignup');
 ?>
-
 <div style="position:relative;" id="sessociallogin_main_stats">
-
 	<div class="sessociallogin_stats_container">
-
     <div id="sessosh_statscontent" class="sessociallogin_stats_table">
-
     	<div class="sessociallogin_stats_total"><?php echo $this->translate('Total Registrations Count: %s', $totalCount); ?></div>
 
       <div style="border-color:#3B5998;">
@@ -116,14 +101,6 @@ $totalCount = $settings->getSetting('sessociallogin.facebooksignup') + $settings
 
       </div>
 
-      <div style="border-color:#F89839;">
-
-        <span><?php echo "Hotmail" ?></span>
-
-        <span style="color:#F89839;"><?php if($settings->getSetting('sessociallogin.hotmailsignup')) { echo $settings->getSetting('sessociallogin.hotmailsignup'); } else { echo '0'; } ?></span>
-
-      </div>
-
       <div style="border-color:#436eab;">
 
         <span><?php echo "VK" ?></span>
@@ -163,19 +140,9 @@ $totalCount = $settings->getSetting('sessociallogin.facebooksignup') + $settings
 
 
 <script type="text/javascript">
-
-
-
-
-
   google.charts.load("current", {packages:["corechart"]});
-
   google.charts.setOnLoadCallback(drawChart);
-
-  
-
   function drawChart() {
-
     var data = google.visualization.arrayToDataTable([
 
       ['Language', 'Speakers (in millions)'],
@@ -193,8 +160,6 @@ $totalCount = $settings->getSetting('sessociallogin.facebooksignup') + $settings
       ['Instagram', <?php if($settings->getSetting('sessociallogin.instagramsignup')) { echo $settings->getSetting('sessociallogin.instagramsignup'); } else { echo '0'; } ?>],
 
       ['Flickr', <?php if($settings->getSetting('sessociallogin.flickrsignup')) { echo $settings->getSetting('sessociallogin.flickrsignup'); } else { echo '0'; } ?>], 
-
-      ['Hotmail', <?php if($settings->getSetting('sessociallogin.hotmailsignup')) { echo $settings->getSetting('sessociallogin.hotmailsignup'); } else { echo '0'; } ?>],
 
       ['VK', <?php if($settings->getSetting('sessociallogin.vksignup')) { echo $settings->getSetting('sessociallogin.vksignup'); } else { echo '0'; } ?>],
 

@@ -68,7 +68,7 @@ class Egifts_Form_Admin_Payment_Approve extends Engine_Form {
 			'label' => 'Response Message',
     ));
 
-    $givenSymbol = Engine_Api::_()->sesbasic()->getCurrentCurrency();
+    $givenSymbol = Engine_Api::_()->payment()->getCurrentCurrency();
     $gateways = Engine_Api::_()->getDbtable('usergateways', 'egifts')->getUserGateway(array("enabled"=>true,'owner_id'=>$this->getUserId(),'fetchAll'=>true));
     foreach($gateways as $gateway) {
       $gatewayObject = $gateway->getGateway("Egifts_Plugin_Gateway_PayPal");

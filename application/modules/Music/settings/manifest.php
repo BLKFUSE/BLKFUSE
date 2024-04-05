@@ -14,13 +14,14 @@ return array(
   'package' => array(
     'type' => 'module',
     'name' => 'music',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 10267 $',
     'path' => 'application/modules/Music',
     'repository' => 'socialengine.com',
     'title' => 'Music',
-    'description' => 'Music',
-    'author' => 'Webligo Developments',
+    'description' => 'Let your members express themselves with their favorite music!',
+    'author' => '<a href="https://socialengine.com/" style="text-decoration:underline;" target="_blank">SocialEngine</a>',
+    'thumb' => 'application/modules/Music/externals/images/thumb.png',
     'dependencies' => array(
       array(
         'type' => 'module',

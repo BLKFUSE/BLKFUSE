@@ -90,7 +90,7 @@ if ($this->getRequest()->isPost()) {
       ("sesmusic_song_profile_share", "sesmusic", "Share", "Sesmusic_Plugin_Menus", "", "sesmusic_song_profile", "", 6),
       ("sesmusic_song_profile_download", "sesmusic", "Share", "Sesmusic_Plugin_Menus", "", "sesmusic_song_profile", "", 7),
 
-      ("core_main_sesmusic", "sesmusic", "Music", "", \'{"route":"sesmusic_general","action":"home"}\', "core_main", "", 100),
+      ("core_main_sesmusic", "sesmusic", "Music", "", \'{"route":"sesmusic_general","icon":"fas fa-music","action":"home"}\', "core_main", "", 100),
 
       ("sesmusic_main_home", "sesmusic", "Music Home", "", \'{"route":"sesmusic_general","action":"home"}\', "sesmusic_main", "", 1),
 
@@ -145,7 +145,7 @@ if ($this->getRequest()->isPost()) {
       PRIMARY KEY (`album_id`),
       KEY `creation_date` (`creation_date`),
       KEY `owner_id` (`owner_type`,`owner_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
       $db->query('DROP TABLE IF EXISTS `engine4_sesmusic_albumsongs`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesmusic_albumsongs` (
@@ -186,7 +186,7 @@ if ($this->getRequest()->isPost()) {
       PRIMARY KEY (`albumsong_id`),
       KEY `album_id` (`album_id`,`file_id`),
       KEY `play_count` (`play_count`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
       $db->query('DROP TABLE IF EXISTS `engine4_sesmusic_artists`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesmusic_artists` (
@@ -201,7 +201,7 @@ if ($this->getRequest()->isPost()) {
       `starttime` DATE NOT NULL,
       `endtime` DATE NOT NULL,
       PRIMARY KEY (`artist_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
       $db->query('DROP TABLE IF EXISTS `engine4_sesmusic_categories`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesmusic_categories` (
@@ -214,7 +214,7 @@ if ($this->getRequest()->isPost()) {
       PRIMARY KEY (`category_id`),
       KEY `category_id` (`category_id`,`category_name`),
       KEY `category_name` (`category_name`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
 			$db->query('INSERT IGNORE INTO `engine4_sesmusic_categories` (`param`, `category_name`, `subcat_id`, `subsubcat_id`, `cat_icon`) VALUES
 			("song", "Pop", 0, 0, 0),
@@ -252,7 +252,7 @@ if ($this->getRequest()->isPost()) {
       PRIMARY KEY (`playlist_id`),
       KEY `creation_date` (`creation_date`),
       KEY `owner_id` (`owner_type`,`owner_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
       $db->query('DROP TABLE IF EXISTS `engine4_sesmusic_playlistsongs`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesmusic_playlistsongs` (
@@ -264,7 +264,7 @@ if ($this->getRequest()->isPost()) {
       `order` smallint(6) NOT NULL DEFAULT "0",
       PRIMARY KEY (`playlistsong_id`),
       KEY `playlist_id` (`playlist_id`,`file_id`,`albumsong_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
       $db->query('DROP TABLE IF EXISTS `engine4_sesmusic_ratings`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesmusic_ratings` (
@@ -275,7 +275,7 @@ if ($this->getRequest()->isPost()) {
       `rating` tinyint(1) unsigned DEFAULT NULL,
       PRIMARY KEY (`rating_id`),
       UNIQUE KEY `resource_id` (`resource_id`,`resource_type`,`user_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
       $db->query('DROP TABLE IF EXISTS `engine4_sesmusic_favourites`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesmusic_favourites` (
@@ -285,7 +285,7 @@ if ($this->getRequest()->isPost()) {
       `resource_id` int(11) NOT NULL,
       PRIMARY KEY (`favourite_id`),
       KEY (`user_id`,`resource_type`,`resource_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
 			$db->query('DROP TABLE IF EXISTS `engine4_sesmusic_recentlyviewitems`;');
 			$db->query('CREATE TABLE IF NOT EXISTS  `engine4_sesmusic_recentlyviewitems` (
@@ -295,7 +295,7 @@ if ($this->getRequest()->isPost()) {
 			`owner_id` INT NOT NULL ,
 			`creation_date` DATETIME NOT NULL,
 			UNIQUE KEY `uniqueKey` (`resource_id`,`resource_type`, `owner_id`)
-			) ENGINE = MYISAM ;');
+			) ENGINE = InnoDB ;');
 
       $db->query('INSERT IGNORE INTO `engine4_activity_actiontypes` (`type`, `module`, `body`, `enabled`, `displayable`, `attachable`, `commentable`, `shareable`, `is_generated`) VALUES
       ("sesmusic_album_new", "sesmusic", \'{item:$subject} created a new music album {item:$object}:\', "1", "5", "1", "3", "1", 1);');
@@ -367,7 +367,7 @@ if ($this->getRequest()->isPost()) {
           $db->query("ALTER TABLE `engine4_sesmusic_albumsongs` ADD `store_link` VARCHAR( 255 ) NULL;");
         }
       }
-      $db->query('UPDATE  `engine4_core_menuitems` SET  `params` =  \'{"route":"sesmusic_general_home","action":"home"}\' WHERE  `engine4_core_menuitems`.`name` = "core_main_sesmusic";');
+      $db->query('UPDATE  `engine4_core_menuitems` SET  `params` =  \'{"route":"sesmusic_general_home","icon":"fas fa-music","action":"home"}\' WHERE  `engine4_core_menuitems`.`name` = "core_main_sesmusic";');
 
       $db->query('INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES ("sesmusic_admin_main_utility", "sesmusic", "Music Utilities", "", \'{"route":"admin_default","module":"sesmusic","controller":"settings","action":"utility"}\', "sesmusic_admin_main", "", 2);');
 
@@ -387,7 +387,7 @@ if ($this->getRequest()->isPost()) {
       $db->query("UPDATE `engine4_activity_notificationtypes` SET `type` = 'sesmusic_albumsong_rating' WHERE `engine4_activity_notificationtypes`.`type` = 'sesmusic_rated_song';");
 
 
-      $db->query('ALTER TABLE `engine4_sesmusic_albums` CHANGE `resource_type` `resource_type` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL;');
+      $db->query('ALTER TABLE `engine4_sesmusic_albums` CHANGE `resource_type` `resource_type` VARCHAR(128) NULL;');
 
       $db->query('INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES ("sesmusic_admin_main_integrateothermodule", "sesmusic", "Integrate Plugins", "", \'{"route":"admin_default","module":"sesmusic","controller":"integrateothermodule","action":"index"}\', "sesmusic_admin_main", "", 995);');
 
@@ -402,9 +402,9 @@ if ($this->getRequest()->isPost()) {
         PRIMARY KEY (`integrateothermodule_id`),
         UNIQUE KEY `content_type` (`content_type`,`content_id`),
         KEY `module_name` (`module_name`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
-      $db->query('ALTER TABLE `engine4_sesmusic_albums` CHANGE `resource_type` `resource_type` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL;');
+      $db->query('ALTER TABLE `engine4_sesmusic_albums` CHANGE `resource_type` `resource_type` VARCHAR(128) NULL;');
 
       $db->query('UPDATE `engine4_sesmusic_albums` SET `resource_type` = NULL;');
 

@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `se_forums` (
 *  `forum_totalreplies` smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (`forum_id`),
   KEY `INDEX` (`forum_forumcat_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -87,6 +87,6 @@ CREATE TABLE IF NOT EXISTS `engine4_forum_forums` (
   `lastpost_id` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`forum_id`),
   KEY `category_id` (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
  *
  */

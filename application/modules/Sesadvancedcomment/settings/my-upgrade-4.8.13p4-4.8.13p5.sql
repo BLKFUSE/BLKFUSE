@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `engine4_sesadvancedcomment_reactions` (
   `file_id` int(11) NOT NULL DEFAULT "0",
   `enabled` TINYINT(1) NOT NULL DEFAULT "1",
   PRIMARY KEY (`reaction_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
 INSERT IGNORE INTO `engine4_sesadvancedcomment_reactions` (`reaction_id`, `title`, `enabled`, `file_id`) VALUES
 (1, "Like", 1, 0),

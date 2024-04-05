@@ -20,14 +20,14 @@
     <div class="sescmads_format_inner">
       <div class="sescommunityads_select_content">
         <label><?php echo $this->translate('Start Date'); ?></label>
-        <input type="text" class="form-control"/>
+        <input type="text"/>
       </div>
       <div class="sescommunityads_select_content">
         <label><?php echo $this->translate('End Date'); ?></label>
-        <input type="text" class="form-control"/>
+        <input type="text" />
       </div>
       <div class="_run_this">
-         <input type="checkbox" class="form-control" />
+         <input type="checkbox" />
          <label><?php echo $this->translate('Run this ad till it expires'); ?></label>
       </div>
   </div>

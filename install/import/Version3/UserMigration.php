@@ -35,9 +35,9 @@ class Install_Import_Version3_UserMigration extends Install_Import_Version3_Abst
     $sql = <<<EOF
 CREATE TABLE IF NOT EXISTS `engine4_user_migration` (
   `user_id` int(11) unsigned NOT NULL,
-  `user_password` varchar(50) collate utf8_unicode_ci NOT NULL default '',
+  `user_password` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL default '',
   `user_password_method` tinyint(1) NOT NULL default '0',
-  `user_code` varchar(255) collate utf8_unicode_ci NOT NULL default '',
+  `user_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL default '',
   `user_is_admin` tinyint(1) NOT NULL default '0',
   `user_id_original` int(11) unsigned NULL,
   PRIMARY KEY (`user_id`)

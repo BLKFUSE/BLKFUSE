@@ -9,8 +9,6 @@
  * @author     SocialEngineSolutions
  */
 
-INSERT IGNORE INTO `engine4_core_modules` (`name`, `title`, `description`, `version`, `enabled`, `type`) VALUES  ('sesbday', 'SNS - Birthday Plugin', '', '4.10.3', 1, 'extra') ;
-
 INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
 ('core_admin_main_plugins_sesbday', 'sesbday', 'SNS - Birthday Plugin', '', '{"route":"admin_default","module":"sesbday","controller":"settings"}', 'core_admin_main_plugins', '', 999),
 ('sesbday_admin_main_settings', 'sesbday', 'Global Settings', '', '{"route":"admin_default","module":"sesbday","controller":"settings"}', 'sesbday_admin_main', '', 1),
@@ -31,7 +29,7 @@ CREATE TABLE `engine4_sesbday_wishes` (
   `subject_id` int(11) unsigned NOT NULL,
   `creation_date` datetime,
   PRIMARY KEY (`wish_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 INSERT IGNORE INTO `engine4_core_tasks` ( `title`, `module`, `plugin`, `timeout`, `processes`, `semaphore`, `started_last`, `started_count`, `completed_last`, `completed_count`, `failure_last`, `failure_count`, `success_last`, `success_count`) VALUES
 ( 'SNS - Birthday Plugin - Birthday Wish', 'sesbday', 'Sesbday_Plugin_Task_Jobs',86400, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -48,8 +46,7 @@ CREATE TABLE `engine4_sesbday_birthdayemailsends` (
   `creation_date` date NOT NULL,
   PRIMARY KEY (`birthdayemailsend_id`),
   KEY `uniqueKey` (`creation_date`,`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 INSERT IGNORE INTO `engine4_activity_notificationtypes` (`type`, `module`, `body`, `is_request`, `handler`, `default`) VALUES
-      ("sesbday_birthday", "sesbday", '{item:$subject} wish you {var:$actionLink}.', 0, "", 1),
-	   ("sesbday_tobirthday", "sesbday", 'Today {item:$object} Birthday.', 0, "", 1);
+("sesbday_birthday", "sesbday", '{item:$subject} wish you {var:$actionLink}.', 0, "", 1);

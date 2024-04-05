@@ -408,8 +408,8 @@
 "Yes, allow members to comment on albums.";"Yes, allow members to comment on albums."
 "No, do not allow members to comment on photo albums.";"No, do not allow members to comment on photo albums."
 "Profile Albums";"Profile Albums"
-"Album Main Navigation Menu";"Advanced Photos - Album Main Navigation Menu"
-"Album Quick Navigation Menu";"Advanced Photos - Album Quick Navigation Menu"
+"Album Main Navigation Menu";"Album Main Navigation Menu"
+"Album Quick Navigation Menu";"Album Quick Navigation Menu"
 "Posted by %1$s in the album %2$s";"Posted by %1$s in the album %2$s"
 "Popular Albums";"Popular Albums"
 "Popular Photos";"Popular Photos"
@@ -437,13 +437,13 @@
 "_ACTIVITY_ACTIONTYPE_COMMENT_ALBUM";"When someone comments on your albums" 
 "_ACTIVITY_ACTIONTYPE_COMMENT_ALBUM_PHOTO";"When someone comments on your photos"
 
-"ADMIN_ACTIVITY_TYPE_SESALBUM_ALBUM_RATING";"Advanced Photos - When a user rates another user's album."
-"ADMIN_ACTIVITY_TYPE_SESALBUM_ALBUM_FAVOURITE";"Advanced Photos - When a user mark another user's album as favourite."
-"ADMIN_ACTIVITY_TYPE_SESALBUM_PHOTO_FAVOURITE";"Advanced Photos - When a user mark another user's photo as favourite."
-"ADMIN_ACTIVITY_TYPE_SESALBUM_PHOTO_RATING";"Advanced Photos - When a user rates another user's photo."
-"ADMIN_ACTIVITY_TYPE_ALBUM_PHOTO_NEW";"Advanced Photos - When a user (subject) uploads a new photo to an album (object)."
-"ADMIN_ACTIVITY_TYPE_COMMENT_ALBUM";"Advanced Photos - When a user (subject) comments on another user's (object) album."
-"ADMIN_ACTIVITY_TYPE_COMMENT_ALBUM_PHOTO";"Advanced Photos - When a user (subject) comments on another user's (object) photos."
+"ADMIN_ACTIVITY_TYPE_SESALBUM_ALBUM_RATING";"When a user rates another user's album."
+"ADMIN_ACTIVITY_TYPE_SESALBUM_ALBUM_FAVOURITE";"When a user mark another user's album as favourite."
+"ADMIN_ACTIVITY_TYPE_SESALBUM_PHOTO_FAVOURITE";"When a user mark another user's photo as favourite."
+"ADMIN_ACTIVITY_TYPE_SESALBUM_PHOTO_RATING";"When a user rates another user's photo."
+"ADMIN_ACTIVITY_TYPE_ALBUM_PHOTO_NEW";"When a user (subject) uploads a new photo to an album (object)."
+"ADMIN_ACTIVITY_TYPE_COMMENT_ALBUM";"When a user (subject) comments on another user's (object) album."
+"ADMIN_ACTIVITY_TYPE_COMMENT_ALBUM_PHOTO";"When a user (subject) comments on another user's (object) photos."
 
 
 #notification
@@ -466,7 +466,7 @@
 # mail templates
 
 # notify_sesalbum_photo_favourite
-"_EMAIL_NOTIFY_SESALBUM_PHOTO_FAVOURITE_TITLE";"Advanced Photos - Photo added as Favourite"
+"_EMAIL_NOTIFY_SESALBUM_PHOTO_FAVOURITE_TITLE";"Photo added as Favourite"
 "_EMAIL_NOTIFY_SESALBUM_PHOTO_FAVOURITE_DESCRIPTION";"This email is sent to the owner of the photo when someone add their photo as Favourite"
 "_EMAIL_NOTIFY_SESALBUM_PHOTO_FAVOURITE_SUBJECT";"Your photo has been added as Favourite"
 "_EMAIL_NOTIFY_SESALBUM_PHOTO_FAVOURITE_BODY";"[header]
@@ -478,7 +478,7 @@ http://[host][object_link]
 [footer]"
 
 # notify_sesalbum_album_favourite
-"_EMAIL_NOTIFY_SESALBUM_ALBUM_FAVOURITE_TITLE";"Advanced Photos - Album added as Favourite"
+"_EMAIL_NOTIFY_SESALBUM_ALBUM_FAVOURITE_TITLE";"Album added as Favourite"
 "_EMAIL_NOTIFY_SESALBUM_ALBUM_FAVOURITE_DESCRIPTION";"This email is sent to the owner of the album when someone add their album as Favourite"
 "_EMAIL_NOTIFY_SESALBUM_ALBUM_FAVOURITE_SUBJECT";"Your album has been added as Favourite"
 "_EMAIL_NOTIFY_SESALBUM_ALBUM_FAVOURITE_BODY";"[header]
@@ -490,7 +490,7 @@ http://[host][object_link]
 [footer]"
 
 # notify_sesalbum_albumrated
-"_EMAIL_NOTIFY_SESALBUM_ALBUMRATED_TITLE";"Advanced Photos - Album Rated"
+"_EMAIL_NOTIFY_SESALBUM_ALBUMRATED_TITLE";"Album Rated"
 "_EMAIL_NOTIFY_SESALBUM_ALBUMRATED_DESCRIPTION";"This email is sent to the owner of the album when someone Rate their album"
 "_EMAIL_NOTIFY_SESALBUM_ALBUMRATED_SUBJECT";"Your album has been Rated"
 "_EMAIL_NOTIFY_SESALBUM_ALBUMRATED_BODY";"[header]
@@ -502,7 +502,7 @@ http://[host][object_link]
 [footer]"
 
 # notify_sesalbum_album_rating
-"_EMAIL_NOTIFY_SESALBUM_ALBUM_RATING_TITLE";"Advanced Photos - Photo Rated"
+"_EMAIL_NOTIFY_SESALBUM_ALBUM_RATING_TITLE";"Photo Rated"
 "_EMAIL_NOTIFY_SESALBUM_ALBUM_RATING_DESCRIPTION";"This email is sent to the owner of the photo when someone Rate their photo"
 "_EMAIL_NOTIFY_SESALBUM_ALBUM_RATING_SUBJECT";"Your photo has been Rated"
 "_EMAIL_NOTIFY_SESALBUM_ALBUM_RATING_BODY";"[header]
@@ -528,7 +528,7 @@ http://[host][object_link]
 "{item:$subject} sent you feeback on {item:$object:photo}.";"{item:$subject} sent you feeback on {item:$object:photo}."
 
 
-"_EMAIL_NOTIFY_SESALBUM_PHOTO_FAVOURITE_TITLE";"Advanced Photos - When your photo gets favorited."
+"_EMAIL_NOTIFY_SESALBUM_PHOTO_FAVOURITE_TITLE";"When your photo gets favorited."
 "_EMAIL_NOTIFY_SESALBUM_PHOTO_FAVOURITE_DESCRIPTION";"This email will be sent to the photo owner when his album gets favorited."
 "_EMAIL_NOTIFY_SESALBUM_PHOTO_FAVOURITE_SUBJECT";"Photo has been favorited."
 "_EMAIL_NOTIFY_SESALBUM_PHOTO_FAVOURITE_BODY";"[header]
@@ -542,7 +542,7 @@ http://[host][object_link]
 
 
 
-"_EMAIL_NOTIFY_SESALBUM_ALBUM_FAVOURITE_TITLE";"Advanced Photos - When your Album gets favorited."
+"_EMAIL_NOTIFY_SESALBUM_ALBUM_FAVOURITE_TITLE";"When your Album gets favorited."
 "_EMAIL_NOTIFY_SESALBUM_ALBUM_FAVOURITE_DESCRIPTION";"This email will be sent to the album owner when his album gets favorited."
 "_EMAIL_NOTIFY_SESALBUM_ALBUM_FAVOURITE_SUBJECT";"Album has been favorited."
 "_EMAIL_NOTIFY_SESALBUM_ALBUM_FAVOURITE_BODY";"[header]
@@ -555,7 +555,7 @@ http://[host][object_link]
 
 
 
-"_EMAIL_NOTIFY_SESALBUM_ALBUM_RATING_TITLE";"Advanced Photos - When rating is given on Album."
+"_EMAIL_NOTIFY_SESALBUM_ALBUM_RATING_TITLE";"When rating is given on Album."
 "_EMAIL_NOTIFY_SESALBUM_ALBUM_RATING_DESCRIPTION";"This email will be sent to the album owner when someone rated it."
 "_EMAIL_NOTIFY_SESALBUM_ALBUM_RATING_SUBJECT";"Album has been rated."
 "_EMAIL_NOTIFY_SESALBUM_ALBUM_RATING_BODY";"[header]

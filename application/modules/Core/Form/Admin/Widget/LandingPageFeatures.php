@@ -1,5 +1,22 @@
 <?php
 
+/**
+ * SocialEngine
+ *
+ * @category   Application_Core
+ * @package    Core
+ * @copyright  Copyright 2006-2020 Webligo Developments
+ * @license    http://www.socialengine.com/license/
+ * @author     Jung
+ */
+
+/**
+ * @category   Application_Core
+ * @package    Core
+ * @copyright  Copyright 2006-2020 Webligo Developments
+ * @license    http://www.socialengine.com/license/
+ */
+
 class Core_Form_Admin_Widget_LandingPageFeatures extends Engine_Form {
 
   public function init() {

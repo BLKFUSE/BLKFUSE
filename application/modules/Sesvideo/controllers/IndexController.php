@@ -1357,6 +1357,18 @@ class Sesvideo_IndexController extends Core_Controller_Action_Standard {
     // Process
     
     $values = $form->getValues();
+    // if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesemoji')) {
+    //   $bodyEmojis = explode(' ', $values['title']);
+    //   foreach($bodyEmojis as $bodyEmoji) {
+    //     $emojisCode = Engine_Api::_()->sesemoji()->EncodeEmoji($bodyEmoji);
+    //     $values['title'] = str_replace($bodyEmoji,$emojisCode,$body);
+    //   }
+    //   $bodyEmojis = explode(' ', $values['description']);
+    //   foreach($bodyEmojis as $bodyEmoji) {
+    //     $emojisCode = Engine_Api::_()->sesemoji()->EncodeEmoji($bodyEmoji);
+    //     $values['description'] = str_replace($bodyEmoji,$emojisCode,$body);
+    //   }
+    // }
 		$values['parent_id'] = $parent_id = $this->_getParam('parent_id', NULL);
     $values['parent_type'] = $parent_type = $this->_getParam('parent_type', NULL);
 		if( !empty($values['parent_id']) &&  !empty($values['parent_type']))
@@ -1444,7 +1456,7 @@ class Sesvideo_IndexController extends Core_Controller_Action_Standard {
             // else
               $urlvalue = $values['url'];
            
-            $information = $this->handleIframelyInformation($urlvalue);
+            $information = Engine_Api::_()->sesbasic()->handleIframelyInformation($urlvalue);
             if (empty($information)) {
                 $form->addError('We could not find a video there - please check the URL and try again.');
             }
@@ -2310,7 +2322,7 @@ class Sesvideo_IndexController extends Core_Controller_Action_Standard {
     $video_type = $this->_getParam('type');
     $composer_type = $this->_getParam('c_type', 'wall');
 
-    $information = $this->handleIframelyInformation($video_url);
+    $information = Engine_Api::_()->sesbasic()->handleIframelyInformation($video_url);
     if (empty($information)) {
         $this->view->message = Zend_Registry::get('Zend_Translate')->_('We could not find a video there - please check the URL and try again.');
         return;
@@ -2372,7 +2384,7 @@ class Sesvideo_IndexController extends Core_Controller_Action_Standard {
       $db->beginTransaction();
       try {
         if(!$video_type != 16){
-          $information = $this->handleIframelyInformation($video_url);
+          $information = Engine_Api::_()->sesbasic()->handleIframelyInformation($video_url);
           // create video
           $table = Engine_Api::_()->getDbtable('videos', 'sesvideo');
           $video = $table->createRow();
@@ -2562,15 +2574,22 @@ class Sesvideo_IndexController extends Core_Controller_Action_Standard {
     if ($iframelyDisallowHost && engine_in_array($uriHost, $iframelyDisallowHost)) {
         return;
     }
+
     if(Engine_Api::_()->getApi('settings', 'core')->getSetting('video.youtube.apikey') && engine_in_array($uriHost, array('youtube.com','www.youtube.com','youtube', 'youtu.be'))){
-        return $this->YoutubeVideoInfomation($uri);
+      return $this->YoutubeVideoInfo($uri);
     } else {
-        $config = Engine_Api::_()->getApi('settings', 'core')->core_iframely;
-        $iframely = Engine_Iframely::factory($config)->get($uri);
+      $config = Engine_Api::_()->getApi('settings', 'core')->core_iframely;
+      $iframely = Engine_Iframely::factory($config)->get($uri, 'video');
     }
-    if (!engine_in_array('player', array_keys($iframely['links']))) {
-        return;
+    
+    if (!engine_in_array('player', array_keys($iframely['links'])))
+      return;
+
+    if (engine_in_array('player', array_keys($iframely['links']))) {
+        if(empty($iframely['links']['player']))
+          return;
     }
+
     $information = array('thumbnail' => '', 'title' => '', 'description' => '', 'duration' => '');
     if (!empty($iframely['links']['thumbnail'])) {
         $information['thumbnail'] = $iframely['links']['thumbnail'][0]['href'];
@@ -2647,7 +2666,7 @@ class Sesvideo_IndexController extends Core_Controller_Action_Standard {
       $valid = $this->checkFromUrl($code);
     }else{
       $url = trim(strip_tags($uri));
-      $information = $this->handleIframelyInformation($url);
+      $information = Engine_Api::_()->sesbasic()->handleIframelyInformation($url);
       $valid = !empty($information['code']);
       $this->view->iframely = $information;
     }

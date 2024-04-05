@@ -15,7 +15,7 @@
 <?php include APPLICATION_PATH .  '/application/modules/Sesadvancedcomment/views/scripts/_jsFiles.tpl'; ?>
 <style>
 .feed_item_date ul{width:100%;}
-.sespage_switcher_active{background-color:red;}
+.sesbusiness_switcher_active{background-color:red;}
 </style>
 <?php 
 $action = $this->action;
@@ -47,7 +47,7 @@ if(!$action || !$this->viewer()->getIdentity()) return; ?>
         }
       }
 ?>
-<li class="sespage_switcher_cnt sesact_owner_selector sesact_owner_selector_c">
+<li class="sesbusiness_switcher_cnt sesact_owner_selector sesact_owner_selector_c">
   <a href="javascript:;" class="sesbusiness_feed_change_option_a _st" data-subject="<?php echo !empty($isPageSubject) ? $isPageSubject->getGuid() : $this->viewer()->getGuid(); ?>" data-actionid="<?php echo $action->getIdentity(); ?>" data-rel="<?php echo $isPageSubject->getGuid(); ?>" data-src="<?php echo $isPageSubject->getPhotoUrl(); ?>">
     <img class="sesbusiness_elem_cnt" src="<?php echo $isPageSubject->getPhotoUrl(); ?>" />
     <i class="fa fa-caret-down sespage_elem_cnt"></i>

@@ -586,7 +586,7 @@ scriptJquery(document).click(function(event){
                     <?php if(isset($this->by)) { ?>
                       <span class="sesalbum_list_grid_owner">
                         <?php echo $this->translate('By');?>
-                        <?php echo $this->htmlLink($photo->getOwner()->getHref(), $photo->getOwner()->getTitle(), array('class' => 'thumbs_author')) ?>
+                        <?php echo $this->htmlLink($photo->getOwner()->getHref(), $photo->getOwner()->getTitle(false), array('class' => 'thumbs_author')) ?>
                       </span>
                     <?php }?>
                     <?php if(isset($this->rating) && $ratingShow) { ?>
@@ -713,7 +713,7 @@ scriptJquery(document).click(function(event){
                     <?php if(isset($this->by)) { ?>
                       <span class="sesalbum_list_grid_owner">
                         <?php echo $this->translate('By');?>
-                        <?php echo $this->htmlLink($photo->getOwner()->getHref(), $photo->getOwner()->getTitle(), array('class' => 'thumbs_author')) ?>
+                        <?php echo $this->htmlLink($photo->getOwner()->getHref(), $photo->getOwner()->getTitle(false), array('class' => 'thumbs_author')) ?>
                       </span>
                     <?php }?>
                    	<?php if(isset($this->rating) && $ratingShow) { ?>
@@ -791,7 +791,7 @@ scriptJquery(document).click(function(event){
               <?php foreach( $this->paginatorLike as $item ): ?>
                 <li>
                   <?php $user = Engine_Api::_()->getItem('user',$item->poster_id) ?>
-                  <?php echo $this->htmlLink($user->getHref(), $this->itemPhoto($user, 'thumb.icon'),array('title'=>$user->getTitle())); ?>
+                  <?php echo $this->htmlLink($user->getHref(), $this->itemPhoto($user, 'thumb.icon'),array('title'=>$user->getTitle(false))); ?>
                 </li>
               <?php endforeach; ?>
               <?php if($this->paginatorLike->getTotalItemCount() > $this->data_showLike){ ?>
@@ -812,7 +812,7 @@ scriptJquery(document).click(function(event){
             	<?php foreach( $this->paginatorFav as $item ): ?>
               	<li>
                 	<?php $user = Engine_Api::_()->getItem('user',$item->user_id) ?>
-                	<?php echo $this->htmlLink($user->getHref(), $this->itemPhoto($user, 'thumb.icon'),array('title'=>$user->getTitle())); ?>
+                	<?php echo $this->htmlLink($user->getHref(), $this->itemPhoto($user, 'thumb.icon'),array('title'=>$user->getTitle(false))); ?>
               	</li>
             	<?php endforeach; ?>
               <?php if($this->paginatorFav->getTotalItemCount() > $this->data_showFav){ ?>
@@ -833,7 +833,7 @@ scriptJquery(document).click(function(event){
               <?php foreach( $this->paginatorTaggedUser as $item ): ?>
                 <li>
                   <?php $user = Engine_Api::_()->getItem('user',$item->tag_id) ?>
-                  <?php echo $this->htmlLink($user->getHref(), $this->itemPhoto($user, 'thumb.icon'),array('title'=>$user->getTitle())); ?>
+                  <?php echo $this->htmlLink($user->getHref(), $this->itemPhoto($user, 'thumb.icon'),array('title'=>$user->getTitle(false))); ?>
                 </li>
                 <?php endforeach; ?>
                 <?php if($this->paginatorTaggedUser->getTotalItemCount() > $this->data_showTagged){ ?>
@@ -850,7 +850,7 @@ scriptJquery(document).click(function(event){
           <!-- RECENT  ALBUM OF USER-->
           <div>
             <?php $userName = Engine_Api::_()->getItem('user',$this->album->owner_id) ?>
-            <h3><?php echo (str_replace('[USER_NAME]',$userName->getTitle(),$this->translate($defaultOptions))); ?></h3>
+            <h3><?php echo (str_replace('[USER_NAME]',$userName->getTitle(false),$this->translate($defaultOptions))); ?></h3>
             <ul class="sesalbum_user_listing sesbasic_clearfix clear">
               <?php foreach( $this->paginatorRecentAlbum as $item ): ?>
                 <li>
@@ -934,7 +934,7 @@ scriptJquery(document).click(function(event){
 	 </div>
   <?php } ?>
   <?php if(!$this->is_ajax && !$this->is_related){ ?>
-   <div class="clear sesbasic_clearfix album-related" style="display:<?php echo ($this->relatedAlbumsPaginator->getTotalItemCount() != 0 && $this->paginator->getTotalItemCount() == 0) ? 'block' : "none" ;  ?>">
+   <div class="clear sesbasic_clearfix album-related sesalbum_view_related_albums" style="display:<?php echo ($this->relatedAlbumsPaginator->getTotalItemCount() != 0 && $this->paginator->getTotalItemCount() == 0) ? 'block' : "none" ;  ?>">
    		<div class="clearfix">
     <?php if($this->canEdit){ ?>
     <div class="sesalbum_album_view_option clear sesbasic_clearfix">
@@ -1018,7 +1018,7 @@ scriptJquery(document).click(function(event){
                 <?php if(isset($this->byRelated)) { ?>
                   <span class="sesalbum_list_grid_owner">
                     <?php echo $this->translate('By');?>
-                   <?php echo $this->htmlLink($albumRelated->getOwner()->getHref(), $albumRelated->getOwner()->getTitle(), array('class' => 'thumbs_author')) ?>
+                   <?php echo $this->htmlLink($albumRelated->getOwner()->getHref(), $albumRelated->getOwner()->getTitle(false), array('class' => 'thumbs_author')) ?>
                   </span>
                 <?php }?>
                 <?php if(isset($this->ratingRelated) && $ratingShowAlbum) { ?>
@@ -1133,7 +1133,7 @@ scriptJquery('<div class="sesalbum_photo_update_popup sesbasic_bxs" id="sesalbum
 var canPaginatePageNumber = 1;
 function existingPhotosGet(){
 	scriptJquery('#sesalbum_profile_existing_img').show();
-	var URL = en4.core.staticBaseUrl+'albums/index/existing-photos/';
+	var URL = en4.core.baseUrl+'albums/index/existing-photos/';
 	(scriptJquery.ajax({
       dataType: 'html',
       method: 'post',
@@ -1169,7 +1169,7 @@ scriptJquery(document).on('click','a[id^="sesalbum_profile_upload_existing_photo
 		return;
 	scriptJquery('.sesalbum_cover_container').append('<div id="sesalbum_cover_loading" class="sesbasic_loading_cont_overlay"></div>');
 	hideProfilePhotoUpload();
-	var URL = en4.core.staticBaseUrl+'albums/index/upload-existingcover/';
+	var URL = en4.core.baseUrl+'albums/index/upload-existingcover/';
 	(scriptJquery.ajax({
     dataType: 'json',
       method: 'post',
@@ -1201,7 +1201,7 @@ scriptJquery(document).on('click','a[id^="sesalbum_existing_album_see_more_"]',f
 		scriptJquery('#sesalbum_existing_album_see_more_page_'+id).remove();
 		return;
 	}
-	var URL = en4.core.staticBaseUrl+'albums/index/existing-albumphotos/';
+	var URL = en4.core.baseUrl+'albums/index/existing-albumphotos/';
 	(scriptJquery.ajax({
       dataType: 'html',
       method: 'post',
@@ -1253,7 +1253,7 @@ function take_snapshot() {
 		scriptJquery('#sesalbum_popup_cam_upload').hide();
 		// upload results
 		scriptJquery('.sesalbum_cover_container').append('<div id="sesalbum_cover_loading" class="sesbasic_loading_cont_overlay"></div>');
-		 Webcam.upload( data_uri, en4.core.staticBaseUrl+'albums/index/upload-cover/album_id/<?php echo $this->album_id ?>' , function(code, text) {
+		 Webcam.upload( data_uri, en4.core.baseUrl+'albums/index/upload-cover/album_id/<?php echo $this->album_id ?>' , function(code, text) {
 				response = scriptJquery.parseJSON(text);
 				scriptJquery('#sesalbum_cover_loading').remove();
 				scriptJquery('.sesalbum_cover_image').css('background-image', 'url(' + response.file + ')');
@@ -1281,7 +1281,7 @@ scriptJquery(document).on('click','#coverChangeSesalbum',function(){
 function uploadCoverArt(input){
 	 var url = input.value;
     var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-    if (input.files && input.files[0] && (ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif' || ext == 'GIF')){
+    if (input.files && input.files[0] && (ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif' || ext == 'GIF' || ext == "webp")){
 				uploadFileToServer(input.files[0]);
     }else{
 				//Silence
@@ -1292,7 +1292,7 @@ scriptJquery('#coverRemoveSesalbum').click(function(){
 		scriptJquery('.sesalbum_cover_image').css('background-image', 'url()');
 		scriptJquery('#sesalbum_cover_default').show();
 		var album_id = '<?php echo $this->album->album_id; ?>';
-		uploadURL = en4.core.staticBaseUrl+'albums/index/remove-cover/album_id/'+album_id;
+		uploadURL = en4.core.baseUrl+'albums/index/remove-cover/album_id/'+album_id;
 		var jqXHR=scriptJquery.ajax({
 			url: uploadURL,
 			type: "POST",
@@ -1321,7 +1321,7 @@ scriptJquery('#saveCoverPosition').click(function(){
 	scriptJquery('.sesalbum_cover_fade').css('display','block');
 	scriptJquery('.sesalbum_cover_inner').css('display','block');
 	scriptJquery('#sesalbum-pos-btn').css('display','none');
-	var URL = en4.core.staticBaseUrl+'albums/index/change-position/album_id/'+album_id;
+	var URL = en4.core.baseUrl+'albums/index/change-position/album_id/'+album_id;
 	(scriptJquery.ajax({
     dataType: 'html',
 		method: 'post',
@@ -1341,7 +1341,7 @@ function uploadFileToServer(files){
 	var formData = new FormData();
 	formData.append('Filedata', files);
 	var album_id = '<?php echo $this->album->album_id; ?>';
-	uploadURL = en4.core.staticBaseUrl+'albums/index/upload-cover/album_id/'+album_id;
+	uploadURL = en4.core.baseUrl+'albums/index/upload-cover/album_id/'+album_id;
 	var jqXHR=scriptJquery.ajax({
     dataType: 'json',
     url: uploadURL,
@@ -1367,21 +1367,21 @@ function getRelatedAlbumsData(){
 }
 function getLikeData(value,title){
 	if(value){
-		url = en4.core.staticBaseUrl+'albums/index/like-album/album_id/'+value+'/title/'+title;
+		url = en4.core.baseUrl+'albums/index/like-album/album_id/'+value+'/title/'+title;
 		openURLinSmoothBox(url);	
 		return;
 	}
 }
 function getTaggedData(value,title){
 	if(value){
-		url = en4.core.staticBaseUrl+'albums/index/tagged-album/album_id/'+value+'/title/'+title;
+		url = en4.core.baseUrl+'albums/index/tagged-album/album_id/'+value+'/title/'+title;
 		openURLinSmoothBox(url);	
 		return;
 	}
 }
 function getFavouriteData(value,title){
 	if(value){
-		url = en4.core.staticBaseUrl+'albums/index/fav-album/album_id/'+value+'/title/'+title;
+		url = en4.core.baseUrl+'albums/index/fav-album/album_id/'+value+'/title/'+title;
 		openURLinSmoothBox(url);	
 		return;
 	}
@@ -1389,7 +1389,7 @@ function getFavouriteData(value,title){
 <?php if($this->loadOptionData == 'auto_load'){ ?>
 		scriptJquery(document).ready(function() {
 		 scriptJquery(window).scroll( function() {
-			 if(!$('loading_image_<?php echo $randonNumber; ?>'))
+			 if(!document.getElementById('loading_image_<?php echo $randonNumber; ?>'))
 			 	return false;
 			  var heightOfContentDiv_<?php echo $randonNumber; ?> = scriptJquery('#scrollHeightDivSes_<?php echo $randonNumber; ?>').offset().top;
         var fromtop_<?php echo $randonNumber; ?> = scriptJquery(this).scrollTop();
@@ -1402,7 +1402,7 @@ function getFavouriteData(value,title){
 <?php if($this->loadOptionDataRelated == 'auto_load'){ ?>
 		scriptJquery(document).ready(function() {
 		 scriptJquery(window).scroll( function() {
-			 if(!$('loading_image_related_<?php echo $randonNumber; ?>'))
+			 if(!document.getElementById('loading_image_related_<?php echo $randonNumber; ?>'))
 			 	return false;
 			  var heightOfContentDivRelated_<?php echo $randonNumber; ?> = scriptJquery('#sesalbum_related_<?php echo $randonNumber; ?>').offset().top;
         var fromtop_<?php echo $randonNumber; ?> = scriptJquery(this).scrollTop();
@@ -1477,7 +1477,7 @@ viewMoreHide_<?php echo $randonNumber; ?>();
   }
 	 function viewMore_<?php echo $randonNumber; ?> (){
     document.getElementById('view_more_<?php echo $randonNumber; ?>').style.display = 'none';
-    document.getElementById('loading_image_<?php echo $randonNumber; ?>').style.display = '';    
+    document.getElementById('loading_image_<?php echo $randonNumber; ?>').style.display = '';
     (scriptJquery.ajax({
       dataType: 'html',
       method: 'post',
@@ -1493,10 +1493,12 @@ viewMoreHide_<?php echo $randonNumber; ?>();
       success: function(responseHTML) {
         scriptJquery('#ses-image-view').append(responseHTML);
 				if("<?php echo $this->view_type ; ?>" == 'masonry'){
-							scriptJquery("#ses-image-view").flexImages({rowHeight: <?php echo str_replace('px','',$this->height); ?>});
+          scriptJquery("#ses-image-view").flexImages({rowHeight: <?php echo str_replace('px','',$this->height); ?>});
 				}
+				
+        document.getElementById('loading_image_<?php echo $randonNumber; ?>').style.display = 'none';
 				<?php if(($this->mine || $this->canEdit)){ ?>
-					$$('.sesalbum_photos_flex_view > li').addClass('sortable');
+					scriptJquery('.sesalbum_photos_flex_view > li').addClass('sortable');
 					SortablesInstance = new Sortables($$('.sesalbum_photos_flex_view'), {
 						clone: true,
 						constrain: true,
@@ -1521,9 +1523,8 @@ viewMoreHide_<?php echo $randonNumber; ?>();
 							
 						}
 					});
-					<?php } ?>
-				if($('loading_image_<?php echo $randonNumber; ?>'))
-					document.getElementById('loading_image_<?php echo $randonNumber; ?>').style.display = 'none';
+        <?php } ?>
+				
       }
     }));
     return false;
@@ -1633,7 +1634,7 @@ function paggingNumber<?php echo $randonNumber; ?>PaggingRelated(pageNum){
 				success: function(responseHTML) {
 					scriptJquery ('.overlay_<?php echo $randonNumber ?>PaggingRelated').css('display','none');
 					document.getElementById('sesalbum_related_<?php echo $randonNumber ?>').innerHTML = responseHTML;
-				if($('loading_image_related_<?php echo $randonNumber; ?>'))
+				if(document.getElementById('loading_image_related_<?php echo $randonNumber; ?>'))
 					document.getElementById('loading_image_related_<?php echo $randonNumber; ?>').style.display = 'none';
 			return false;
 				}

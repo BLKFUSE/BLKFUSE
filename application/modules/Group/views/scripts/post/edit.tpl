@@ -10,5 +10,9 @@
  * @author	   John
  */
 ?>
-
-<?php echo $this->form->setAttrib('class', 'global_form_popup')->render($this) ?>
+<div class="layout_middle">
+  <div class="generic_layout_container">
+    <h2><?php echo $this->translate('Edit Post');?></h2>
+    <?php echo $this->form->render($this) ?>
+  </div>
+</div>

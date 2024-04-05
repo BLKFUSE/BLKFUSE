@@ -8,5 +8,5 @@
 ALTER TABLE `engine4_users` ADD `last_login_attempt` DATETIME NULL;
 ALTER TABLE `engine4_users` ADD `login_attempt_count` INT(5) NOT NULL DEFAULT '0';
 
-ALTER TABLE `engine4_users` CHANGE `password` `password` CHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
+ALTER TABLE `engine4_users` CHANGE `password` `password` CHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
 ALTER TABLE `engine4_users` ADD `last_password_reset` DATETIME NULL;

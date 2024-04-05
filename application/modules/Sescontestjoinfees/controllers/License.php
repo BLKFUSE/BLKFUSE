@@ -31,7 +31,7 @@ if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestjoinfees
     PRIMARY KEY (`order_id`),
     KEY `contest_id` (`contest_id`),
     KEY `owner_id` (`owner_id`)
-  ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+  ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
 
   $db->query('DROP TABLE IF EXISTS `engine4_sescontestjoinfees_userpayrequests`;');
   $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescontestjoinfees_userpayrequests` (
@@ -53,7 +53,7 @@ if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestjoinfees
     PRIMARY KEY (`userpayrequest_id`),
     KEY `contest_id` (`contest_id`),
     KEY `owner_id` (`owner_id`)
-  ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+  ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
 
   $db->query('DROP TABLE IF EXISTS `engine4_sescontestjoinfees_remainingpayments`;');
   $db->query('CREATE TABLE `engine4_sescontestjoinfees_remainingpayments` (
@@ -61,7 +61,7 @@ if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestjoinfees
     `contest_id` int(11) UNSIGNED NOT NULL,
     `remaining_payment` float DEFAULT "0",
     PRIMARY KEY (`remainingpayment_id`)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
   $db->query('INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
   ("sescontestjoinfees_admin_main_settingsmemberlevel", "sescontestjoinfees", "Member Level Settings", "", \'{"route":"admin_default","module":"sescontestjoinfees","controller":"settings","action":"level"}\', "sescontestjoinfees_admin_main", "", 2),
@@ -89,14 +89,14 @@ if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestjoinfees
     `usergateway_id` int(11) UNSIGNED NOT NULL auto_increment,
     `contest_id` int(11) UNSIGNED NOT NULL,
     `user_id` int(11) UNSIGNED NOT NULL,
-    `title` varchar(244) COLLATE utf8_unicode_ci NOT NULL,
-    `description` text COLLATE utf8_unicode_ci,
+    `title` varchar(244) COLLATE utf8mb4_unicode_ci NOT NULL,
+    `description` text COLLATE utf8mb4_unicode_ci,
     `enabled` tinyint(1) UNSIGNED NOT NULL DEFAULT "0",
     `plugin` varchar(128) NOT NULL,
     `config` mediumblob,
     `test_mode` tinyint(1) UNSIGNED NOT NULL DEFAULT "0",
     PRIMARY KEY (`usergateway_id`)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
   $db->query('INSERT IGNORE INTO `engine4_activity_notificationtypes` (`type`, `module`, `body`, `is_request`, `handler`, `default`) VALUES
   ("sescontestjoinfees_adminpayaprov", "sescontestjoinfees", \'{item:$subject} apporved your payment request for contest {item:$object}.\', 0, "", 1),

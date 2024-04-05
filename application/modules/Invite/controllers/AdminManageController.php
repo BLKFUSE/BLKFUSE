@@ -20,14 +20,34 @@ class Invite_AdminManageController extends Core_Controller_Action_Admin
 {
   public function indexAction()
   {
+    $this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_manage_invites', array(), 'invite_admin_manage');
+    
     $this->view->formFilter = $formFilter = new Invite_Form_Admin_Manage_Filter();
+    
+    // Process form
+    $values = array();
+    if ($this->getRequest()->isPost()) {
+      foreach ($_POST['selectedItems'] as $value) {
+        $invite = Engine_Api::_()->getItem('invite', (int) $value);
+        if($_POST['delete'] == 'delete') {
+          $invite->delete();
+        }
+      }
+    }
+    
     $page = $this->_getParam('page', 1);
 
     $table = Engine_Api::_()->getDbtable('invites', 'invite');
-    $select = $table->select();
+    $tableName = $table->info('name');
+    
+    $tableUserName = Engine_Api::_()->getDbtable('users', 'user')->info('name');
+    
+    $select = $table->select()
+                  ->setIntegrityCheck(false)
+                  ->from($tableName)
+                  ->join($tableUserName, "$tableName.user_id = $tableUserName.user_id", null);
 
     // Process form
-    $values = array();
     if( $formFilter->isValid($this->_getAllParams()) ) {
       $values = $formFilter->getValues();
     }
@@ -46,13 +66,23 @@ class Invite_AdminManageController extends Core_Controller_Action_Admin
     $this->view->assign($values);
 
     // Set up select info
-    $select->where('new_user_id =?', 0)->order(( !empty($values['order']) ? $values['order'] : 'id' ) . ' ' . ( !empty($values['order_direction']) ? $values['order_direction'] : 'DESC' ));
+    $select
+    //->where('new_user_id =?', 0)
+    ->order(( !empty($values['order']) ? $values['order'] : 'id' ) . ' ' . ( !empty($values['order_direction']) ? $values['order_direction'] : 'DESC' ));
 
     if( !empty($values['recipient']) ) {
-      $select->where('recipient LIKE ?', '%' . $values['recipient'] . '%');
+      $select->where($table.'.recipient LIKE ?', '%' . $values['recipient'] . '%');
     }
+    if( !empty($values['code']) ) {
+      $select->where($table.'.code = ?', $values['code']);
+    }
+    
+    if( isset($values['import_method']) && $values['import_method'] != -1 ) {
+      $select->where($table.'.import_method LIKE ?', '%' . $values['import_method'] . '%');
+    }
+
     if( !empty($values['id']) ) {
-      $select->where('id = ?', (int) $values['id']);
+      $select->where($table.'.id = ?', (int) $values['id']);
     }
 
     // Filter out junk
@@ -67,23 +97,6 @@ class Invite_AdminManageController extends Core_Controller_Action_Admin
     $this->view->viewerId = Engine_Api::_()->user()->getViewer()->getIdentity();
 
     $this->view->openUser = (bool) ( $this->_getParam('open') && $paginator->getTotalItemCount() == 1 );
-  }
-
-  public function multiModifyAction()
-  {
-    if( $this->getRequest()->isPost() ) {
-      $values = $this->getRequest()->getPost();
-      
-      foreach ($values as $key=>$value) {
-        if( $key == 'modify_' . $value ) {
-          $invite = Engine_Api::_()->getItem('invite', (int) $value);
-          if( $values['submit_button'] == 'delete' ) {
-            $invite->delete();
-          }
-        }
-      }
-    }
-    return $this->_helper->redirector->gotoRoute(array('action' => 'index'));
   }
 
   public function deleteAction() {

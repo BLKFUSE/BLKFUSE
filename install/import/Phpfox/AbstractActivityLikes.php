@@ -127,10 +127,10 @@ CREATE TABLE IF NOT EXISTS `phpfox_feed` (
  * CREATE TABLE IF NOT EXISTS `engine4_activity_likes` (
   `like_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `resource_id` int(11) unsigned NOT NULL,
-  `poster_type` varchar(16) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `poster_type` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `poster_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`like_id`),
   KEY `resource_id` (`resource_id`),
   KEY `poster_type` (`poster_type`,`poster_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */

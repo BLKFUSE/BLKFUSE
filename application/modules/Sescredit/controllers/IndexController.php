@@ -248,7 +248,7 @@ class Sescredit_IndexController extends Core_Controller_Action_Standard {
     $sessionCredit->credit_value = $credit_value;
     $sessionCredit->credit_amount = round($purchaseValue,2);
     $sessionCredit->total_amount =  round(($item_amount-$purchaseValueOfPoints),2);
-    echo json_encode(array('status'=>$status,'message'=>$session->error,'purchaseValue'=>Engine_Api::_()->sesbasic()->getCurrencyPrice(round($purchaseValue,2)),'credit_amount'=>round($purchaseValue,2),'value'=>$sessionCredit->value,'item_amount'=>Engine_Api::_()->sesbasic()->getCurrencyPrice(round($item_amount,2)),'total_amount'=>Engine_Api::_()->sesbasic()->getCurrencyPrice(round(($item_amount-$purchaseValueOfPoints),2))));die;
+    echo json_encode(array('status'=>$status,'message'=>$session->error,'purchaseValue'=>Engine_Api::_()->payment()->getCurrencyPrice(round($purchaseValue,2)),'credit_amount'=>round($purchaseValue,2),'value'=>$sessionCredit->value,'item_amount'=>Engine_Api::_()->payment()->getCurrencyPrice(round($item_amount,2)),'total_amount'=>Engine_Api::_()->payment()->getCurrencyPrice(round(($item_amount-$purchaseValueOfPoints),2))));die;
   }
   
 
@@ -310,7 +310,7 @@ class Sescredit_IndexController extends Core_Controller_Action_Standard {
 
 		$thresholdAmount = Engine_Api::_()->authorization()->getPermission($viewer, 'sescredit', 'sescredit_threamt');
 		
-		$defaultCurrency = Engine_Api::_()->sesbasic()->defaultCurrency();
+		$defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
 
 		$this->view->form = $form = new Sescredit_Form_Paymentrequest();
 		$value = array();
@@ -325,7 +325,7 @@ class Sescredit_IndexController extends Core_Controller_Action_Standard {
 		
 		$creditvalue = $credit / Engine_Api::_()->getApi('settings', 'core')->getSetting('sescredit.creditvalue', '1000');
 
-		$value['total_amount'] = Engine_Api::_()->sesbasic()->getCurrencyPrice($creditvalue);
+		$value['total_amount'] = Engine_Api::_()->payment()->getCurrencyPrice($creditvalue);
 
 		if(($value['total_admin_amount'] == "$0.00"))
 			$form->removeElement("total_admin_amount");

@@ -43,9 +43,9 @@
   });
   function showReviewVotes(value){
     if(value == 1){
-      document.getElementById('sesmember_review_first-wrapper').style.display = 'block';		
-      document.getElementById('sesmember_review_second-wrapper').style.display = 'block';		
-      document.getElementById('sesmember_review_third-wrapper').style.display = 'block';
+      document.getElementById('sesmember_review_first-wrapper').style.display = 'flex';		
+      document.getElementById('sesmember_review_second-wrapper').style.display = 'flex';		
+      document.getElementById('sesmember_review_third-wrapper').style.display = 'flex';
     } else{
       document.getElementById('sesmember_review_first-wrapper').style.display = 'none';		
       document.getElementById('sesmember_review_second-wrapper').style.display = 'none';		
@@ -55,7 +55,7 @@
   function showEditor(value) {
     if(value == 1) {
       if(document.getElementById('sesmember_show_tinymce-wrapper'))
-      document.getElementById('sesmember_show_tinymce-wrapper').style.display = 'block';
+      document.getElementById('sesmember_show_tinymce-wrapper').style.display = 'flex';
     } else {
       if(document.getElementById('sesmember_show_tinymce-wrapper'))
       document.getElementById('sesmember_show_tinymce-wrapper').style.display = 'none';
@@ -64,34 +64,34 @@
   function allowReview(value) {
     if(value == 1) {
       if(document.getElementById('sesmember_allow_owner-wrapper'))
-      document.getElementById('sesmember_allow_owner-wrapper').style.display = 'block';
+      document.getElementById('sesmember_allow_owner-wrapper').style.display = 'flex';
       if(document.getElementById('sesmember_show_pros-wrapper'))
-      document.getElementById('sesmember_show_pros-wrapper').style.display = 'block';
+      document.getElementById('sesmember_show_pros-wrapper').style.display = 'flex';
       if(document.getElementById('sesmember_show_cons-wrapper'))
-      document.getElementById('sesmember_show_cons-wrapper').style.display = 'block';
+      document.getElementById('sesmember_show_cons-wrapper').style.display = 'flex';
       if(document.getElementById('sesmember_review_title-wrapper'))
-      document.getElementById('sesmember_review_title-wrapper').style.display = 'block';
+      document.getElementById('sesmember_review_title-wrapper').style.display = 'flex';
       if(document.getElementById('sesmember_review_summary-wrapper'))
-      document.getElementById('sesmember_review_summary-wrapper').style.display = 'block';
+      document.getElementById('sesmember_review_summary-wrapper').style.display = 'flex';
       if(document.getElementById('sesmember_show_tinymce-wrapper'))
-      document.getElementById('sesmember_show_tinymce-wrapper').style.display = 'block';
+      document.getElementById('sesmember_show_tinymce-wrapper').style.display = 'flex';
       if(document.getElementById('sesmember_show_recommended-wrapper'))
-      document.getElementById('sesmember_show_recommended-wrapper').style.display = 'block';
+      document.getElementById('sesmember_show_recommended-wrapper').style.display = 'flex';
       if(document.getElementById('sesmember_allow_share-wrapper'))
-      document.getElementById('sesmember_allow_share-wrapper').style.display = 'block';
+      document.getElementById('sesmember_allow_share-wrapper').style.display = 'flex';
       if(document.getElementById('sesmember_show_report-wrapper'))
-      document.getElementById('sesmember_show_report-wrapper').style.display = 'block';
+      document.getElementById('sesmember_show_report-wrapper').style.display = 'flex';
       showEditor("<?php echo Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.review.summary', 1) ?>");
       if(document.getElementById('sesmember_rating_stars_one-wrapper'))
-      document.getElementById('sesmember_rating_stars_one-wrapper').style.display = 'block';
+      document.getElementById('sesmember_rating_stars_one-wrapper').style.display = 'flex';
       if(document.getElementById('sesmember_rating_stars_two-wrapper'))
-      document.getElementById('sesmember_rating_stars_two-wrapper').style.display = 'block';
+      document.getElementById('sesmember_rating_stars_two-wrapper').style.display = 'flex';
       if(document.getElementById('sesmember_rating_stars_three-wrapper'))
-      document.getElementById('sesmember_rating_stars_three-wrapper').style.display = 'block';
+      document.getElementById('sesmember_rating_stars_three-wrapper').style.display = 'flex';
       if(document.getElementById('sesmember_rating_stars_four-wrapper'))
-      document.getElementById('sesmember_rating_stars_four-wrapper').style.display = 'block';
+      document.getElementById('sesmember_rating_stars_four-wrapper').style.display = 'flex';
       if(document.getElementById('sesmember_rating_stars_five-wrapper'))
-      document.getElementById('sesmember_rating_stars_five-wrapper').style.display = 'block';
+      document.getElementById('sesmember_rating_stars_five-wrapper').style.display = 'flex';
       
     } else {
       if(document.getElementById('sesmember_allow_owner-wrapper'))

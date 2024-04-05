@@ -10,6 +10,9 @@
  * @author     John
  */
 ?>
+
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_manage", 'childMenuItemName' => 'authorization_admin_main_manage')); ?>
+
 <script type="text/javascript">
   en4.core.runonce.add(function(){
     scriptJquery('th.admin_table_short input[type=checkbox]').on('click', function(event){
@@ -57,11 +60,7 @@
     }));
   }
 </script>
-
-<h2>
-  <?php echo $this->translate("Member Levels") ?>
-</h2>
-
+<h2 class="page_heading"> <?php echo $this->translate("Member Levels") ?> </h2>
 <?php if( engine_count($this->navigation) ): ?>
   <div class='tabs'>
     <?php
@@ -71,31 +70,24 @@
     ?>
   </div>
 <?php endif; ?>
-
-
 <p>
   <?php $link = $this->htmlLink(
     array('module' => 'user', 'controller' => 'manage', 'action' => 'index', "route"=>"admin_default"),
     $this->translate("View Members")) ?>
   <?php echo $this->translate("AUTHORIZATION_VIEWS_SCRIPTS_ADMINLEVEL_DESCRIPTION", $link) ?>
 </p>
-<br />
+
 <?php
 	$settings = Engine_Api::_()->getApi('settings', 'core');
 	if( $settings->getSetting('user.support.links', 0) == 1 ) {
 		echo 'More info: <a href="https://community.socialengine.com/blogs/597/14/member-levels" target="_blank">See KB article</a>.';
 	} 
 ?>	
-<br />
 <?php echo $this->formFilter->render($this) ?>
-
-<br />
-
 <div class="admin_results">
   <div>
     <?php echo $this->htmlLink(array('action' => 'create', 'reset' => false), $this->translate('Add Member Level'), array(
-      'class' => 'buttonlink',
-      'style' => 'background-image: url(' . $this->layout()->staticBaseUrl . 'application/modules/Authorization/externals/images/admin/add.png);'
+      'class' => 'admin_link_btn',
     )) ?>
   </div>
   <div>
@@ -107,8 +99,6 @@
   </div>
 </div>
 
-<br />
-
 <table class='admin_table admin_responsive_table'>
   <thead>
     <tr>
@@ -119,10 +109,10 @@
           <?php echo $this->translate("Level Name") ?>
         </a>
       </th>
-      <th style="width: 1%;"><?php echo $this->translate("Members") ?></th>
+      <th style="width: 150px;"><?php echo $this->translate("Members") ?></th>
       <th style="width: 1%;"><?php echo $this->translate("Type") ?></th>
       <th style="width: 1%;" class="admin_table_centered"><?php echo $this->translate("Default Level") ?></th>
-      <th style="width: 1%;"><?php echo $this->translate("Options") ?></th>
+      <th style="width: 150px;"><?php echo $this->translate("Options") ?></th>
     </tr>
 
   </thead>
@@ -131,16 +121,16 @@
       <?php foreach( $this->paginator as $item ): ?>
         <tr>
         <td><input <?php if ($item->flag) echo 'disabled';?> type='checkbox' class='checkbox' value="<?php echo $item->level_id?>"></td>
-          <td  data-label="ID">
+          <td data-label="ID">
             <?php echo $item->level_id ?>
           </td>
-          <td data-label="<?php echo $this->translate("level_id") ?>" class="admin_table_bold">
+          <td data-label="<?php echo $this->translate("Level Name") ?>" class="admin_table_bold">
             <?php echo $this->translate($item->title) ?>
           </td>
           <td data-label="<?php echo $this->translate("Members") ?>" class="nowrap">
             <?php $membershipCount = $item->getMembershipCount(); ?>
             <?php echo $this->htmlLink(array('module' => 'user', 'controller' => 'manage', 'level_id' => $item->level_id, 'reset' => false),
-                          $this->translate(array("%s member", "%s members", $membershipCount), $this->locale()->toNumber($membershipCount))) ?>
+             $this->translate(array("%s member", "%s members", $membershipCount), $this->locale()->toNumber($membershipCount))) ?>
           </td>
           <td data-label="<?php echo $this->translate("Type") ?>">
             <?php echo $this->translate(ucfirst($item->type == 'user' ? 'normal' : $item->type)) ?>
@@ -157,7 +147,7 @@
               <?php echo $this->translate("edit") ?>
             </a>
             <?php if (!$item->flag) :?>
-            
+            |
             <a href='<?php echo $this->url(array('action' => 'delete', 'id' => $item->level_id)) ?>'>
               <?php echo $this->translate("delete") ?>
             </a>
@@ -180,3 +170,7 @@
 <form id='delete_selected' method='post' action='<?php echo $this->url(array('action' =>'deleteselected')) ?>'>
   <input type="hidden" id="ids" name="ids" value=""/>
 </form>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_manage').parent().addClass('active');
+  scriptJquery('.core_admin_main_manage_levels').addClass('active');
+</script>

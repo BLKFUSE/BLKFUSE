@@ -40,9 +40,11 @@ class Video_Widget_ShowAlsoLikedController extends Engine_Content_Widget_Abstrac
         $video = Engine_Api::_()->getApi('core', 'video');
         if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('video.allow.unauthorized', 0)) {
             $select = $video->getItemsSelect($itemTable->select(), $params);
+            $select->where('approved = ?', 1)->where('parent_type = ?', 'user');
         }else{
             $select = Engine_Api::_()->getDbTable('videos','video')->select();
             $select->where('search =?',1);
+            $select->where('approved = ?', 1)->where('parent_type = ?', 'user');
         }
         $select->distinct(true)
             ->from($itemTable)

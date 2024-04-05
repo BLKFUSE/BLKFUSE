@@ -252,13 +252,15 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
         foreach ($menus as $menu) {
 						$classMenu = explode(' ', $menu->class);
             $class = end($classMenu);
-            if ($class != "sesbusiness_main_categories" && $class != "sesbusiness_main_manage_package" && $class != 'sesbusiness_main_browse' && $class != 'sesbusiness_main_featured' && $class != 'sesbusiness_main_featured' && $class != 'sesbusiness_main_verified' && $class != 'sesbusiness_main_sponsored' && $class != 'sesbusiness_main_hot' && $class != 'sesbusiness_main_create' && $class != 'sesbusiness_main_manage' && $class != 'sesbusiness_main_businessalbumbrowse' && 'sesbusinessvideo_main_browsehome' != $class && 'sesbusiness_main_businesspollbrowse' != $class)
+            if ($class != "sesbusiness_main_categories" && $class != "sesbusiness_main_manage_package" && $class != "sesbusiness_main_businessreviews" && $class != 'sesbusiness_main_browse' && $class != 'sesbusiness_main_featured' && $class != 'sesbusiness_main_featured' && $class != 'sesbusiness_main_verified' && $class != 'sesbusiness_main_sponsored' && $class != 'sesbusiness_main_hot' && $class != 'sesbusiness_main_create' && $class != 'sesbusiness_main_manage' && $class != 'sesbusiness_main_businessalbumbrowse' && 'sesbusinessvideo_main_browsehome' != $class && 'sesbusiness_main_businesspollbrowse' != $class)
                 continue;
             if($class == "sesbusiness_main_manage_package" && !($this->checkVersion(2.6,1.7)))
                 continue;
             if($class == "sesbusinessvideo_main_browsehome" && !($this->checkVersion(2.6,1.7)))
                 continue;
             if($class == "sesbusiness_main_businesspollbrowse" && !($this->checkVersion(2.6,1.7)))
+                continue;
+            if($class == "sesbusiness_main_businessreviews" && !($this->checkVersion(3.3,3.4)))
                 continue;
             $result_menu[$menu_counter]['label'] = $this->view->translate($menu->label);
             $result_menu[$menu_counter]['action'] = $class;
@@ -393,7 +395,7 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
             if($hideIdentity)
             $result[$counter]['owner_title'] = $businesses->getOwner()->getTitle();
             $result[$counter]['currency'] = Engine_Api::_()->sesbusiness()->getCurrencySymbol(Engine_Api::_()->sesbusiness()->getCurrentCurrency());
-            $result[$counter]['price'] = Engine_Api::_()->sesapi()->getCurrencyPrice($result[$counter]['price'],'','',true);
+            $result[$counter]['price'] = Engine_Api::_()->payment()->getCurrencyPrice($result[$counter]['price'],'','',true);
             
             if ($businesses->category_id) {
                 $category = Engine_Api::_()->getItem('sesbusiness_category', $businesses->category_id);
@@ -1633,6 +1635,11 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
             $result['menus'][$tabcounter]['name'] = 'poll';
             $result['menus'][$tabcounter]['label'] = $this->view->translate('Polls');
         }
+        if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesbusinessreview') && Engine_Api::_()->getApi('core', 'sesbusinessreview')->allowReviewRating() && Engine_Api::_()->sesapi()->getViewerPrivacy('businessreview', 'view') && (_SESAPI_VERSION_ANDROID >= 3.3 || _SESAPI_VERSION_IOS >= 3.4)){
+            $result['menus'][$tabcounter]['name'] = 'review';
+            $result['menus'][$tabcounter]['label'] = $this->view->translate('Reviews');
+			$tabcounter++;
+        }
         $result['business'] = $businessdata;
         $result = $result;
         return $result;
@@ -2065,7 +2072,7 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
       }
       foreach($paginator as $member){
         $result['notification'][$counterLoop]['user_id'] = $member->getIdentity();
-        $result['notification'][$counterLoop]['title'] = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle()); 
+        $result['notification'][$counterLoop]['title'] = $member->getTitle();//preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle()); 
         if(!empty($member->location))
            $result['notification'][$counterLoop]['location'] =   $member->location;
        //follow
@@ -4411,7 +4418,7 @@ class Sesbusiness_IndexController extends Sesapi_Controller_Action_Standard
 		//Create video
 		$table = Engine_Api::_()->getDbtable('videos', 'sesbusinessvideo');
 		if($values['type'] == 'iframely') {
-			$information = $this->handleIframelyInformation($values['url']);
+			$information = Engine_Api::_()->sesbasic()->handleIframelyInformation($values['url']);
 			if (empty($information)) {
 				$form->addError('We could not find a video there - please check the URL and try again.');
 			}

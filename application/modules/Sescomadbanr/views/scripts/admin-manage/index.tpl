@@ -37,7 +37,6 @@ function selectAll()
 <p>
 	<?php echo $this->translate("This page lists all the Banner Sizes created by you.") ?>	
 </p>
-<br class="clear" />
 <div class="sesbasic_search_reasult">
 	<?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sescomadbanr', 'controller' => 'manage', 'action' => 'create'), $this->translate("Add New Banner Size"), array('class'=>'smoothbox sesbasic_icon_add buttonlink')) ?>
 </div>
@@ -83,12 +82,10 @@ function selectAll()
         <?php endforeach; ?>
       </tbody>
     </table>
-    <br />
     <div class='buttons'>
       <button type='submit'><?php echo $this->translate("Delete Selected") ?></button>
     </div>
   </form>
-  <br />
   <div>
     <?php echo $this->paginationControl($this->paginator); ?>
   </div>

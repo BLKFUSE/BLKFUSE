@@ -331,7 +331,7 @@ if(isset($this->docActive)) {
         <?php endif; ?>      
         <?php if($this->information && engine_in_array('creationDate', $this->information)): ?>
           &nbsp;|&nbsp;
-          <?php echo $this->translate('Created on %s', $album->creation_date); ?>
+          <?php echo $this->translate('Created on %s', $this->timestamp(strtotime($album->creation_date))); ?>
         <?php endif; ?>
       </p>
       <?php if(!empty($this->information) && engine_in_array('category', $this->information) && $album->category_id) :?>
@@ -420,7 +420,7 @@ if(isset($this->docActive)) {
         <?php endif; ?>      
         <?php if($this->information && engine_in_array('creationDate', $this->information)): ?>
           &nbsp;|&nbsp;
-          <?php echo $this->translate('Created on %s', $album->creation_date); ?>
+          <?php echo $this->translate('Created on %s', $this->timestamp(strtotime($album->creation_date))); ?>
         <?php endif; ?>
       </div>
       <?php if(!empty($this->information) && engine_in_array('category', $this->information) && $album->category_id) :?>

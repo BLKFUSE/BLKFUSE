@@ -145,7 +145,7 @@ class Sescontestjoinfees_IndexController extends Core_Controller_Action_Standard
       $params['amount'] = $sessionCredit->total_amount;
     }
     if($gateway->plugin == "Sesadvpmnt_Plugin_Gateway_Stripe") {
-      $params['currency'] = Engine_Api::_()->sescontestjoinfees()->getCurrentCurrency();
+      $params['currency'] = Engine_Api::_()->payment()->getCurrentCurrency();
       $this->view->publishKey = $gateway->config['sesadvpmnt_stripe_publish']; 
       $this->view->session = $plugin->createOrderTransaction($viewer,$order,$contest,$params);
       $this->renderScript('/application/modules/Sesadvpmnt/views/scripts/payment/index.tpl');

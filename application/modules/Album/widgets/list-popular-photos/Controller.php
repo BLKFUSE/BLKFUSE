@@ -37,6 +37,8 @@ class Album_Widget_ListPopularPhotosController extends Engine_Content_Widget_Abs
         $select->from($tableName)
             ->setIntegrityCheck(false)
             ->joinLeft($parentTableName, $parentTableName . '.album_id=' . $tableName . '.album_id', array('view_privacy'))
+            ->where($tableName.'.approved = ?', 1)
+            ->where($parentTableName.'.approved =?',1)
             ->where($parentTableName . '.search = ?', true)
             ->order($popularType . ' DESC');
         $select = Engine_Api::_()->network()->getNetworkSelect($parentTableName, $select);

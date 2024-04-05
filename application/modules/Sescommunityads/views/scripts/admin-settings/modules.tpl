@@ -16,12 +16,8 @@
 
 <h3>Manage Modules</h3>
 <p>You can add modules(plugin) from this section for 'Promote your Content Type' Ad which you want to create on your website. By adding the plugin, you can select any of the below added modules at the time of Ad creation.Simply click on "Add New Plugin" for adding new plugin for the Advertisements.</p>
-<br />
-
 <?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sescommunityads', 'controller' => 'settings', 'action' => 'addmodule'), $this->translate("Add New Plugin"), array('class'=>'buttonlink sesbasic_icon_add'));
 ?>
-<br /><br />
-
 <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
 <form id='multidelete_form'>
   <table class='admin_table' width="100%">
@@ -73,7 +69,6 @@
     </tbody>
   </table>
 </form>
-<br />
 <div>
   <?php echo $this->paginationControl($this->paginator); ?>
 </div>

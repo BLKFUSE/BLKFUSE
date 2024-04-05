@@ -12,7 +12,7 @@
 ?>
 <?php echo $this->doctype()->__toString() ?>
 <?php $locale = $this->locale()->getLocale()->__toString(); $orientation = ($this->layout()->orientation == 'right-to-left' ? 'rtl' : 'ltr'); ?>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $locale ?>" lang="<?php echo $locale ?>" dir="<?php echo $orientation ?>">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $locale ?>" lang="<?php echo $locale ?>" dir="<?php echo $orientation ?>" <?php if(!empty($_COOKIE['adminmode_theme']) && $_COOKIE['adminmode_theme'] == 'dark'): ?> class="dark_mode" <?php endif; ?>>
 <head>
     <base href="<?php echo rtrim('//' . $_SERVER['HTTP_HOST'] . $this->baseUrl(), '/'). '/' ?>" />
     <?php $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0');?>
@@ -68,7 +68,7 @@
         'PREPEND');
     if (APPLICATION_ENV != 'development') {
         $this->headLink()
-            ->prependStylesheet('application/css.php?request=application/modules/Core/externals/styles/admin/main.css');
+            ->prependStylesheet($staticBaseUrl.'application/css.php?request=application/modules/Core/externals/styles/admin/main.css');
     } else {
         $this->headLink()
             ->prependStylesheet(rtrim($this->baseUrl(), '/') . '/application/css.php?request=application/modules/Core/externals/styles/admin/main.css');
@@ -129,16 +129,12 @@
     <?php 
     $this->headScript()
         ->prependFile($staticBaseUrl . 'externals/smoothbox/smoothbox4.js')
+        ->prependFile($staticBaseUrl . 'externals/smoothbox/ajaxsmoothbox.js')
         ->prependFile($staticBaseUrl . 'externals/mdetect/mdetect.js')
         ->prependFile($staticBaseUrl . 'application/modules/User/externals/scripts/core.js')
         ->prependFile($staticBaseUrl . 'application/modules/Core/externals/scripts/core.js')
         ->prependFile($staticBaseUrl . 'externals/bootstrap/js/bootstrap.js');
-    if($request->getControllerName() == 'admin-content') {
-      $this->headScript()->prependFile($staticBaseUrl . 'application/modules/Core/externals/scripts/admin/layoutchoo.js')
-          ->prependFile($staticBaseUrl . 'application/modules/Core/externals/scripts/admin/layout.js')
-          ->prependFile($staticBaseUrl . 'application/modules/Core/externals/scripts/admin/adminlayout.js');
-    }
-    
+
     $this->headScript()->prependFile($staticBaseUrl . 'externals/jQuery/core.js')
         ->prependFile($staticBaseUrl . 'externals/jQuery/jquery-ui.js');
 
@@ -153,7 +149,12 @@
         }
     }
     ?>
+
     <?php echo $this->headScript()->toString()."\n" ?>
+    <?php if($request->getControllerName() == 'admin-content') { ?>
+    <script type="text/javascript" src="<?php echo $staticBaseUrl . 'application/modules/Core/externals/scripts/admin/adminlayout.js' ?>"></script>
+    <script type="text/javascript" src="<?php echo $staticBaseUrl . 'application/modules/Core/externals/scripts/admin/layout.js' ?>"></script>
+    <?php } ?>
     <script type="text/javascript">
       var $ = scriptJquery;
     </script>
@@ -162,10 +163,10 @@
         var changeEnvironmentMode = function(mode, btn) {
             btn = scriptJquery(btn);
             if( btn ) {
-                btn.attr('class', '');
+                // btn.attr('class', '');
             }
-            if(scriptJquery('div.admin_home_environment button') ) {
-                scriptJquery('div.admin_home_environment button').attr('class', 'button_disabled');
+            if(scriptJquery('div.admin_environment #modeloading') ) {
+                scriptJquery('div.admin_environment #modeloading').attr('class', 'loading_enable');
             }
             if(scriptJquery('div.admin_home_environment_description')) {
                 scriptJquery('div.admin_home_environment_description').attr('text', 'Changing mode - please wait...');
@@ -190,40 +191,86 @@
         //]]>
     </script>
 </head>
-<?php $menuType = Engine_Api::_()->getApi('settings', 'core')->getSetting('core.menutype', 'vertical'); ?>
-<body id="global_page_<?php echo $identity ?>" class="menu_<?php echo $menuType; ?>">
-
-<?php if ('development' == APPLICATION_ENV): ?>
-    <div class="development_mode_warning">
-        Your site is currently in development mode (which may decrease performance).
-        When you've finished changing your settings, remember to
-        <a href="javascript:void(0)" onClick="changeEnvironmentMode('production', this);this.blur();">return to production mode</a>.
-    </div>
-<?php endif ?>
+<body id="global_page_<?php echo $identity ?>">
 
 <div class="admin_panel_wrapper">
-<!-- TOP HEADER BAR -->
-<div id='global_header_wrapper'>
-	<div id='global_header'>
-    <?php if($menuType == 'vertical') { ?>
-      <div class="global_header_left">
-        <div class="toggle_cross_button"> <i class="fas fa-times"></i> </div>
-        <?php echo $this->content()->renderWidget('core.admin-menu-logo') ?>
-        <?php echo $this->content()->renderWidget('core.admin-menu-main') ?>
-     </div>
-    <?php } ?>
-	</div>
+  <!-- TOP HEADER BAR -->
+  <div id='global_header'>    
+    <div class="global_header_top">
+      <?php if ('development' == APPLICATION_ENV): ?>
+      <div class="development_mode_warning">
+          Your site is currently in development mode (which may decrease performance).
+          When you've finished changing your settings, remember to
+          <a href="javascript:void(0)" onClick="changeEnvironmentMode('production', this);this.blur();">return to production mode</a>.
+      </div>
+      <?php endif ?> 
+      <div class="global_header_menu_mini">
+        <?php echo $this->content()->renderWidget('core.admin-menu-mini') ?>
+      </div>
+    </div>
+    <div class="global_header_left <?php if ('development' == APPLICATION_ENV): ?> global_header_development <?php endif ?> ">
+      <?php echo $this->content()->renderWidget('core.admin-menu-main') ?>
+      <div class="admin_header_version">
+        <h5>Network Information</h5>
+        <?php 
+        // License info
+          $site = Engine_Api::_()->getApi('settings', 'core')->core_site;
+          // Get the core module version
+          $coreVersion = Engine_Api::_()->getDbtable('modules', 'core')->select()
+          ->from('engine4_core_modules', 'version')
+          ->where('name = ?', 'core')
+          ->query()
+          ->fetchColumn();
+        ?>
+        <ul class="admin_header_version_inner">
+          <li> 
+            <span class="_header_version_title"><?php echo $this->translate('Created') ?></span> 
+            <span><?php echo $this->timestamp($site['creation']) ?></span>
+          </li>
+          <li>
+            <span class="_header_version_title"><?php echo $this->translate('Version') ?></span> 
+            <span><?php echo $coreVersion ?></span> 
+          </li>
+          <?php if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('acppro')) { ?>
+            <?php $countActiveMembers = Engine_Api::_()->getDbTable('users', 'user')->countActiveMembers(); ?>
+            <?php $maxusers = Engine_Api::_()->getApi('settings', 'core')->getSetting('acppro.maxusers', 0); ?>
+            <li>
+              <span class="_header_version_title"><?php echo $this->translate('Active Members') ?></span> 
+              <span><?php echo ($countActiveMembers .' / '.$maxusers);  ?></span> 
+            </li>
+          <?php } ?>
+        </ul>
+      </div>
+    </div>
+  </div>
+   <!-- BEGIN CONTENT -->
+   <div id='global_wrapper'>
+     <div id='global_content'>
+       <?php echo $this->layout()->content ?>
+      </div>
+
+    </div>
 </div>
 
-<!-- BEGIN CONTENT -->
-<div id='global_content_wrapper'>
- <div class="global_header_menu_mini">
-   <?php echo $this->content()->renderWidget('core.admin-menu-mini') ?>
- </div>
- <div id='global_content'>
-   <?php echo $this->layout()->content ?>
-  </div>
-</div>
-  </div>
+  <a class="admin_scroll_top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+    </svg>
+  </a>
+
+  <script>
+    var btn = scriptJquery('.admin_scroll_top');
+    scriptJquery(window).scroll(function() {
+    if (scriptJquery(window).scrollTop() > 300) {
+    btn.addClass('show');
+    } else {
+    btn.removeClass('show');
+    }
+    });
+    btn.on('click', function(e) {
+    e.preventDefault();
+    scriptJquery('html, body').animate({scrollTop:0}, '300');
+    });
+  </script>
  </body>
 </html>

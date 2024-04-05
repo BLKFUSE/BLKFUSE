@@ -31,7 +31,7 @@ if ($this->getRequest()->isPost()) {
         `is_delete` tinyint(1) NOT NULL DEFAULT "0",
         `visibility` tinyint(1) NOT NULL DEFAULT "0",
         `module_name` VARCHAR(45) NULL DEFAULT NULL
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('INSERT IGNORE INTO `engine4_sesapi_menus` (`menu_id`, `label`, `module`, `type`, `status`, `order`, `file_id`, `url`, `class`, `is_delete`, `device`, `visibility`, `module_name`) VALUES
       (1, "Search", "Core", 1, 1, 1, 0, "", "core_main_search", 0, 1, 0, NULL),
@@ -67,7 +67,7 @@ if ($this->getRequest()->isPost()) {
         `revoked` tinyint(1) NOT NULL DEFAULT "0",
         `sessions` INT(11) NOT NULL DEFAULT "1",
         `creation_date` datetime DEFAULT NULL
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('DROP TABLE IF EXISTS `engine4_sesapi_users`;');
       $db->query('CREATE TABLE `engine4_sesapi_users` (
@@ -77,7 +77,7 @@ if ($this->getRequest()->isPost()) {
          `platform` tinyint(1) NOT NULL DEFAULT "1",
         `device_id` tinyint(1) NOT NULL DEFAULT "1",
         `resource_id` int(11) NOT NULL
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       include_once APPLICATION_PATH . "/application/modules/Sesapi/controllers/defaultsettings.php";
 

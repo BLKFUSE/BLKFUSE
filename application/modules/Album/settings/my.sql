@@ -21,7 +21,7 @@ CREATE TABLE `engine4_album_albums` (
   `album_id` int(11) unsigned NOT NULL auto_increment,
   `title` varchar(128) NOT NULL,
   `description` mediumtext NOT NULL,
-  `owner_type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `owner_type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner_id` int(11) unsigned NOT NULL,
   `category_id` int(11) unsigned NOT NULL default '0',
   `creation_date` datetime NOT NULL,
@@ -31,14 +31,14 @@ CREATE TABLE `engine4_album_albums` (
   `comment_count` int(11) unsigned NOT NULL default '0',
   `like_count` int(11) unsigned NOT NULL default '0',
   `search` tinyint(1) NOT NULL default '1',
-  `type` VARCHAR(32) CHARACTER SET latin1 COLLATE latin1_general_ci NULL DEFAULT NULL,
+  `type` VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `view_privacy` VARCHAR(24) NOT NULL default 'everyone',
   `networks` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`album_id`),
   KEY `owner_type` (`owner_type`, `owner_id`),
   KEY `category_id` (`category_id`),
   KEY `search` (`search`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 -- --------------------------------------------------------
 
@@ -53,7 +53,7 @@ CREATE TABLE `engine4_album_categories` (
   `category_name` varchar(128) NOT NULL,
   PRIMARY KEY (`category_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_album_categories`
@@ -93,17 +93,18 @@ CREATE TABLE `engine4_album_photos` (
   `creation_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL,
   `order` int(11) unsigned NOT NULL default '0',
-  `owner_type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `owner_type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner_id` int(11) unsigned NOT NULL,
   `file_id` int(11) unsigned NOT NULL,
   `view_count` int(11) unsigned NOT NULL default '0',
   `comment_count` int(11) unsigned NOT NULL default '0',
   `like_count` int(11) unsigned NOT NULL default '0',
+  `parent_id` INT(11) NOT NULL DEFAULT '0',
+  `parent_type` VARCHAR(64) NULL DEFAULT NULL,
   PRIMARY KEY (`photo_id`),
   KEY `album_id` (`album_id`),
   KEY `owner_type` (`owner_type`, `owner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 -- --------------------------------------------------------
 
@@ -147,12 +148,13 @@ INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`
 
 ('core_admin_main_plugins_album', 'album', 'Photo Albums', '', '{"route":"admin_default","module":"album","controller":"manage","action":"index"}', 'core_admin_main_plugins', '', 999),
 
-('album_admin_main_manage', 'album', 'View Albums', '', '{"route":"admin_default","module":"album","controller":"manage"}', 'album_admin_main', '', 1),
+('album_admin_main_manage', 'album', 'Manage Albums', '', '{"route":"admin_default","module":"album","controller":"manage"}', 'album_admin_main', '', 1),
 ('album_admin_main_settings', 'album', 'Global Settings', '', '{"route":"admin_default","module":"album","controller":"settings"}', 'album_admin_main', '', 2),
 ('album_admin_main_level', 'album', 'Member Level Settings', '', '{"route":"admin_default","module":"album","controller":"level"}', 'album_admin_main', '', 3),
 ('album_admin_main_categories', 'album', 'Categories', '', '{"route":"admin_default","module":"album","controller":"settings", "action":"categories"}', 'album_admin_main', '', 4),
 
-('authorization_admin_level_album', 'album', 'Photo Albums', '', '{"route":"admin_default","module":"album","controller":"level","action":"index"}', 'authorization_admin_level', '', 999);
+('authorization_admin_level_album', 'album', 'Photo Albums', '', '{"route":"admin_default","module":"album","controller":"level","action":"index"}', 'authorization_admin_level', '', 999),
+('album_admin_main_managephotos', 'album', 'Manage Photos', '', '{"route":"admin_default","module":"album","controller":"manage-photos"}', 'album_admin_main', '', 999);
 
 
 -- --------------------------------------------------------
@@ -172,7 +174,7 @@ INSERT INTO `engine4_core_modules` (`name`, `title`, `description`, `version`, `
 --
 
 INSERT IGNORE INTO `engine4_activity_actiontypes` (`type`, `module`, `body`, `enabled`, `displayable`, `attachable`, `commentable`, `shareable`, `editable`, `is_generated`) VALUES
-('album_photo_new', 'album', '{item:$subject} added {var:$count} photo(s) to the album {item:$object}:', 1, 5, 1, 3, 1, 0, 1),
+('album_photo_new', 'album', '{item:$subject} added photo(s) to the album {item:$object}:', 1, 5, 1, 3, 1, 0, 1),
 ('post_self_multi_photo', 'album', '{item:$subject} added {var:$count} {item:$action:new photos}.\r\n{body:$body}', 1, 5, 1, 1, 1, 1, 0),
 ('comment_album', 'album', '{item:$subject} commented on {item:$owner}''s {item:$object:album}.', 1, 1, 1, 3, 3, 0, 0),
 ('comment_album_photo', 'album', '{item:$subject} commented on {item:$owner}''s {item:$object:photo}.', 1, 1, 1, 3, 3, 0, 0),
@@ -417,7 +419,7 @@ CREATE TABLE IF NOT EXISTS `engine4_album_ratings` (
   `type` VARCHAR(16) NOT NULL DEFAULT 'album',
   PRIMARY KEY  (`album_id`,`user_id`, `type`),
   KEY `INDEX` (`album_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 ALTER TABLE `engine4_album_albums` ADD `rating` FLOAT NOT NULL;
 ALTER TABLE `engine4_album_photos` ADD `rating` FLOAT NOT NULL;
 
@@ -432,3 +434,50 @@ INSERT IGNORE INTO `engine4_activity_notificationtypes` (`type`, `module`, `body
 INSERT IGNORE INTO `engine4_core_mailtemplates` (`type`, `module`, `vars`) VALUES ("notify_album_photo_rating", "album", "[host],[email],[recipient_title],[recipient_link],[recipient_photo],[sender_title],[sender_link],[sender_photo],[object_title],[object_link],[object_photo],[object_description]");
 
 
+ALTER TABLE `engine4_album_albums` ADD `approved` TINYINT(1) NOT NULL DEFAULT "1";
+ALTER TABLE `engine4_album_albums` ADD INDEX(`approved`);
+
+ALTER TABLE `engine4_album_albums` ADD `resubmit` TINYINT(1) NOT NULL DEFAULT "0";
+ALTER TABLE `engine4_album_albums` ADD INDEX(`resubmit`);
+
+ALTER TABLE `engine4_album_photos` ADD `approved` TINYINT(1) NOT NULL DEFAULT '1';
+ALTER TABLE `engine4_album_photos` ADD INDEX(`approved`);
+
+ALTER TABLE `engine4_album_photos` ADD `resubmit` TINYINT(1) NOT NULL DEFAULT "0";
+ALTER TABLE `engine4_album_photos` ADD INDEX(`resubmit`);
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+SELECT
+  level_id as `level_id`,
+  'album' as `type`,
+  'approve' as `name`,
+  1 as `value`,
+  NULL as `params`
+FROM `engine4_authorization_levels` WHERE `type` IN('moderator', 'admin');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+SELECT
+  level_id as `level_id`,
+  'album' as `type`,
+  'approve' as `name`,
+  1 as `value`,
+  NULL as `params`
+FROM `engine4_authorization_levels` WHERE `type` IN('user');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+SELECT
+  level_id as `level_id`,
+  'album' as `type`,
+  'photoapprove' as `name`,
+  1 as `value`,
+  NULL as `params`
+FROM `engine4_authorization_levels` WHERE `type` IN('moderator', 'admin');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+SELECT
+  level_id as `level_id`,
+  'album' as `type`,
+  'photoapprove' as `name`,
+  1 as `value`,
+  NULL as `params`
+FROM `engine4_authorization_levels` WHERE `type` IN('user');

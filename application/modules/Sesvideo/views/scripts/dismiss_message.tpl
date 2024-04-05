@@ -12,7 +12,8 @@
  */
 
 ?>
-<h2><?php echo $this->translate("Advanced Videos & Channels Plugin") ?></h2>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenuItemName' => 'core_admin_main_plugins', 'childMenuItemName' => 'core_admin_main_plugins_sesvideo')); ?>
+<h2 class="page_heading"><?php echo $this->translate("Advanced Videos & Channels Plugin") ?></h2>
 <?php if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesbasic'))
 	{
 		include APPLICATION_PATH .  '/application/modules/Sesbasic/views/scripts/_mapKeyTip.tpl'; 

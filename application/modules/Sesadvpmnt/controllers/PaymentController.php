@@ -10,7 +10,7 @@
  * @version    $Id: PaymentController.php  2019-04-25 00:00:00 SocialEngineSolutions $
  * @author     SocialEngineSolutions
  */
-include_once APPLICATION_PATH . "/application/modules/Sesadvpmnt/Api/Stripe/init.php";
+include_once APPLICATION_PATH . "/application/libraries/Engine/Service/Stripe/init.php";
 class Sesadvpmnt_PaymentController extends Core_Controller_Action_Standard
 {
   /**

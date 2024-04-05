@@ -210,7 +210,7 @@ $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jQue
                 </div>
                 </td>
                 <td><?php  echo $category->slug ; ?></td>
-                <td><?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sestutorial', 'controller' => 'categories', 'action' => 'edit-category', 'id' => $category->category_id), $this->translate('Edit'), array()) ?> 
+                <td class="nowrap"><?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sestutorial', 'controller' => 'categories', 'action' => 'edit-category', 'id' => $category->category_id), $this->translate('Edit'), array()) ?> 
                 <?php if($category->category_id != 0){ ?>
                 | <?php echo $this->htmlLink('javascript:void(0);', $this->translate('Delete'), array('class' => 'deleteCat','data-url'=>$category->category_id)); ?>
                 <?php } ?>
@@ -316,24 +316,20 @@ scriptJquery (document).ready(function (e) {
 			var nameFieldRequired = scriptJquery('#tag-name').val();
 			var slugFieldRequired = scriptJquery('#tag-slug').val();
 			if(!nameFieldRequired){
-					scriptJquery('#name-required').css('background-color','#ffebe8');
-					scriptJquery('#tag-name').css('border','1px solid red');
+					scriptJquery('#name-required').addClass('category_field_error');
 					error = true;
 			}else{
-				scriptJquery('#name-required').css('background-color','');
-				scriptJquery('#tag-name').css('border','');
+				scriptJquery('#name-required').removeClass('category_field_error');
 			}
 			if(!slugFieldRequired){
-				scriptJquery('#slug-required').css('background-color','#ffebe8');
-					scriptJquery('#tag-slug').css('border','1px solid red');
+				scriptJquery('#slug-required').addClass('category_field_error');
 					 scriptJquery('html, body').animate({
             scrollTop: scriptJquery('#addcategory').offset().top },
             1000
        		 );
 					error = true;
 			}else{
-				scriptJquery('#slug-required').css('background-color','');
-				scriptJquery('#tag-slug').css('border','');
+				scriptJquery('#slug-required').removeClass('category_field_error');
 			}
 			if(error){
 				scriptJquery('html, body').animate({
@@ -362,8 +358,7 @@ scriptJquery (document).ready(function (e) {
 								data = scriptJquery.parseJSON(data); 
 								if(data.slugError){
 											scriptJquery('#error-msg').html('Unavailable');
-											scriptJquery('#slug-required').css('background-color','#ffebe8');
-											scriptJquery('#tag-slug').css('border','1px solid red');
+											scriptJquery('#slug-required').addClass('category_field_error');
 											 scriptJquery('html, body').animate({
 												scrollTop: scriptJquery('#addcategory').offset().top },
 												1000
@@ -371,8 +366,7 @@ scriptJquery (document).ready(function (e) {
 										return false;
 								}else{
 									scriptJquery('#error-msg').html('');
-									scriptJquery('#slug-required').css('background-color','');
-									scriptJquery('#tag-slug').css('border','');
+									scriptJquery('#slug-required').removeClass('category_field_error');
 								}
                 parent = scriptJquery('#parent').val();
 								if ( parent > 0 && scriptJquery('#categoryid-' + parent ).length > 0 ){ // If the parent exists on this page, insert it below. Else insert it at the top of the list.
@@ -428,7 +422,7 @@ scriptJquery("#deletecategoryselected").click(function(){
 				var selectedCategory = new Array();
         if (n > 0){
             scriptJquery(".checkbox:checked").each(function(){
-								scriptJquery('#categoryid-'+scriptJquery(this).val()).css('background-color','#ffebe8');
+								scriptJquery('#categoryid-'+scriptJquery(this).val()).addClass('category_delete_error');
                 selectedCategory.push(scriptJquery(this).val());
             });
 						var scrollToError = false;
@@ -469,7 +463,7 @@ scriptJquery(document).on('click','.deleteCat',function(){
 	var id = scriptJquery(this).attr('data-url');
 	var confirmDelete = confirm('<?php echo $this->string()->escapeJavascript($this->translate("Are you sure you want to delete the selected category?")) ?>');
 	if(confirmDelete){
-			scriptJquery('#categoryid-'+id).css('background-color','#ffebe8');
+			scriptJquery('#categoryid-'+id).addClass('category_delete_error');
 			var selectedCategory=[id]
 			scriptJquery.post(window.location.href,{data:selectedCategory,selectDeleted:'true'},function(response){
 			response = scriptJquery.parseJSON(response); 

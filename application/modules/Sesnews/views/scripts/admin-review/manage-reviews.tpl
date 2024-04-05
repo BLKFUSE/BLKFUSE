@@ -92,14 +92,14 @@ function selectAll()
 				        <tr>
 				          <td><input type='checkbox' class='checkbox' name='delete_<?php echo $item->review_id;?>' value="<?php echo $item->review_id; ?>" /></td>
 				          <td><?php echo $item->review_id ?></td>
-				          <td><?php echo $this->htmlLink($item->getHref(), $this->translate(Engine_Api::_()->sesbasic()->textTruncation($item->getTitle(),16)), array('title' => $item->getTitle(), 'target' => '_blank')) ?></td>
+				          <td><?php echo $this->htmlLink($item->getHref(), $this->translate($item->getTitle()), array('title' => $item->getTitle(), 'target' => '_blank')) ?></td>
 				          
 				          <td>
 				            <?php $contentItem = Engine_Api::_()->getItem('sesnews_news', $item->news_id); ?>
                     <?php if($contentItem) { ?>
-				            <?php echo $this->htmlLink($contentItem->getHref(), $this->translate(Engine_Api::_()->sesbasic()->textTruncation($contentItem->getTitle(),16)), array('title' => $contentItem->getTitle(), 'target' => '_blank')) ?><?php } ?></td>
+				            <?php echo $this->htmlLink($contentItem->getHref(), $this->translate($contentItem->getTitle()), array('title' => $contentItem->getTitle(), 'target' => '_blank')) ?><?php } ?></td>
 				          
-				          <td><?php echo $this->htmlLink($item->getOwner()->getHref(), $this->translate(Engine_Api::_()->sesbasic()->textTruncation($item->getOwner()->getTitle(),16)), array('title' => $this->translate($item->getOwner()->getTitle()), 'target' => '_blank')) ?></td>
+				          <td><?php echo $this->htmlLink($item->getOwner()->getHref(), $this->translate($item->getOwner()->getTitle()), array('title' => $this->translate($item->getOwner()->getTitle()), 'target' => '_blank')) ?></td>
 									<td class='admin_table_centered'>
 										<?php echo ( $item->featured ? $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesnews', 'controller' => 'review', 'action' => 'featured', 'review_id' => $item->review_id), $this->htmlImage($baseURL . 'application/modules/Sesbasic/externals/images/icons/check.png', '', array('title' => $this->translate('Unmark as Featured'))), array()) : $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesnews', 'controller' => 'review', 'action' => 'featured', 'review_id' => $item->review_id), $this->htmlImage('application/modules/Sesbasic/externals/images/icons/error.png', '', array('title' => $this->translate('Mark Featured')))) ) ?>
 									</td>

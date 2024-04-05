@@ -9,13 +9,12 @@
 <h3><?php echo $this->translate("Manage Packages") ?></h3>
 <p><?php echo $this->translate('This page lists all the packages that you have created for allowing contest creation on your website. A package can be deleted until someone has not created any contest under that package. In a package, only the fields which do not affect a user regarding the usage of the package subscribed like Description, Member Levels, Custom Fields, Highlight & Show in Upgrade, can be edited even after contests creation. If you want to make changes in any other field, then you will have to create a new package by disabling the current package.
 '); ?></p>
-<br />
 <?php if( !empty($this->error) ): ?>
-  <ul class="form-errors"><li><?php echo $this->error ?></li></ul><br />
+  <ul class="form-errors"><li><?php echo $this->error ?></li></ul>
 <?php /*return; */ endif; ?>
 <div class="sesbasic_search_result">
   <?php echo $this->htmlLink(array('action' => 'create', 'reset' => false), $this->translate('Create New Package'), array('class' => 'buttonlink sesbasic_icon_add',)) ?>
-</div><br />
+</div>
 <script type="text/javascript">
   var currentOrder = '<?php echo $this->filterValues['order'] ?>';
   var currentOrderDirection = '<?php echo $this->filterValues['direction'] ?>';
@@ -30,12 +29,11 @@
     scriptJquery('#filter_form').trigger('submit');
   }
 </script>
-<div class='admin_search'><?php echo $this->formFilter->render($this) ?></div><br />
+<div class='admin_search'><?php echo $this->formFilter->render($this) ?></div>
 <div class='sesbasic_search_result'>
   <?php $count = $this->paginator->getTotalItemCount() ?>
   <?php echo $this->translate(array("%s Package Found", "%s Packages   Found", $count), $count) ?>  
 </div>
-<br />
 <?php if( $this->paginator->getTotalItemCount() > 0 ): ?>
    <div class="sesbasic_manage_table">
    <?php $class = ( $this->order == 'package_id' ? 'admin_table_ordering admin_table_direction_' . strtolower($this->direction) : '' ) ?>
@@ -98,7 +96,7 @@
                   <?php echo $item->title ?>
                 </div>
                 <div style="width:10%;">
-                	<?php echo $this->locale()->toNumber($item->price) ? Engine_Api::_()->sescontestpackage()->getCurrencyPrice($item->price,'','',true) : 'FREE' ?>
+                	<?php echo $this->locale()->toNumber($item->price) ? Engine_Api::_()->payment()->getCurrencyPrice($item->price,'','',true) : 'FREE' ?>
                 </div>
                 <div style="width:15%;">
                 	<?php echo $item->getPackageDescription() ?>

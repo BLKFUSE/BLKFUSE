@@ -2447,7 +2447,7 @@ date_default_timezone_set($oldTz);
 		  /* $result[$counter]['description'] = $stores->body; */
           $result[$counter] = $store;
           $result[$counter]['owner_title'] = $stores->getOwner()->getTitle();
-          $result[$counter]['price'] = Engine_Api::_()->sesproduct()->getCurrencyPrice($result[$counter]['price'],'','',true);
+          $result[$counter]['price'] = Engine_Api::_()->payment()->getCurrencyPrice($result[$counter]['price'],'','',true);
 
           $result[$counter]['currency'] = Engine_Api::_()->sesproduct()->getCurrencySymbol(Engine_Api::_()->estore()->getCurrentCurrency());
           if ($stores->category_id) {
@@ -2525,16 +2525,16 @@ date_default_timezone_set($oldTz);
             if($stores->discount && $priceDiscount = Engine_Api::_()->sesproduct()->productDiscountPrice($stores)){
             
               $result[$counter]["price_with_discount"] = $priceDiscount;
-              $result[$counter]['product_price'] = $price = Engine_Api::_()->sesproduct()->getCurrencyPrice($priceDiscount);
+              $result[$counter]['product_price'] = $price = Engine_Api::_()->payment()->getCurrencyPrice($priceDiscount);
               $afterDiscount = Engine_Api::_()->sesproduct()->getCurrencySymbol(Engine_Api::_()->sesproduct()->getCurrentCurrency()) . '<strike>' . $stores->price . '</strike>';
               $result[$counter]['discount_price'] = $afterDiscount;
               if($stores->discount_type == 0) {
                 $result[$counter]['product_price'] = $this->view->translate("%s%s OFF",str_replace('.00','', $stores->percentage_discount_value),"%");
               } else {
-                $result[$counter]['product_price'] = $this->view->translate("%s OFF",Engine_Api::_()->sesproduct()->getCurrencyPrice($stores->fixed_discount_value));
+                $result[$counter]['product_price'] = $this->view->translate("%s OFF",Engine_Api::_()->payment()->getCurrencyPrice($stores->fixed_discount_value));
               }
             } else {
-              $result[$counter]['product_price'] = $price = $stores->price > 0 ? Engine_Api::_()->sesproduct()->getCurrencyPrice($stores->price) : $this->view->translate('FREE');
+              $result[$counter]['product_price'] = $price = $stores->price > 0 ? Engine_Api::_()->payment()->getCurrencyPrice($stores->price) : $this->view->translate('FREE');
             }
 
 //                 if ($shareType) {
@@ -3353,7 +3353,7 @@ date_default_timezone_set($oldTz);
 		$productdata['store_logo'] = $this->getBaseUrl(true,$store->getPhotoUrl('thumb.icon'));
 		$productdata['store_title'] = $store->title;
 
-    $productdata['price'] = Engine_Api::_()->sesproduct()->getCurrencyPrice($productdata['price'],'','',true);
+    $productdata['price'] = Engine_Api::_()->payment()->getCurrencyPrice($productdata['price'],'','',true);
 
     $productdata['currency'] = Engine_Api::_()->sesproduct()->getCurrencySymbol(Engine_Api::_()->estore()->getCurrentCurrency());
 		
@@ -3441,10 +3441,10 @@ date_default_timezone_set($oldTz);
 			if($product->discount_type == 0){ 
 				$productdata["product_price"] = $this->view->translate("%s%s OFF",str_replace('.00','',$product->percentage_discount_value),"%");
 			}else{
-				$productdata["product_price"] = $this->view->translate("%s OFF",Engine_Api::_()->sesproduct()->getCurrencyPrice($product->fixed_discount_value));
+				$productdata["product_price"] = $this->view->translate("%s OFF",Engine_Api::_()->payment()->getCurrencyPrice($product->fixed_discount_value));
 			}
 		}else{
-			$productdata["product_price"] = $product->price > 0 ? Engine_Api::_()->sesproduct()->getCurrencyPrice($product->price) : $this->view->translate('FREE');
+			$productdata["product_price"] = $product->price > 0 ? Engine_Api::_()->payment()->getCurrencyPrice($product->price) : $this->view->translate('FREE');
 		}
 		$paymentGateways = Engine_Api::_()->sesproduct()->checkPaymentGatewayEnable();
 		$paymentMethods = $paymentGateways['methods'];
@@ -3979,7 +3979,7 @@ date_default_timezone_set($oldTz);
       }
       foreach($paginator as $member){
         $result['notification'][$counterLoop]['user_id'] = $member->getIdentity();
-        $result['notification'][$counterLoop]['title'] = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
+        $result['notification'][$counterLoop]['title'] = $member->getTitle();//preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
         if(!empty($member->location))
            $result['notification'][$counterLoop]['location'] =   $member->location;
        //follow
@@ -6128,7 +6128,7 @@ date_default_timezone_set($oldTz);
 		//Create video
 		$table = Engine_Api::_()->getDbtable('videos', 'estorevideo');
 		if($values['type'] == 'iframely') {
-			$information = $this->handleIframelyInformation($values['url']);
+			$information = Engine_Api::_()->sesbasic()->handleIframelyInformation($values['url']);
 			if (empty($information)) {
 				$form->addError('We could not find a video there - please check the URL and try again.');
 			}

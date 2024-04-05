@@ -198,6 +198,20 @@ class User_Plugin_Signup_Account extends Core_Plugin_FormSequence_Abstract
     $this->_registry->user = $user = Engine_Api::_()->getDbtable('users', 'user')->createRow();
     $user->setFromArray($data);
     $user->save();
+    
+    //Username work
+    if(!Engine_Api::_()->getApi('settings', 'core')->getSetting('user.signup.username', 1) && isset($user->email) && '' !== trim($user->email)) {
+      $tmp = explode('@', $user->email);
+      $username = $tmp[0] . rand();
+      $user->username = $username;
+      $user->save();
+    }
+    
+    //Referral code generated
+    if(empty($user->referral_code)) {
+      $user->referral_code = substr(md5(rand(0, 999) . $user->email), 10, 7);
+      $user->save();
+    }
 
     Engine_Api::_()->user()->setViewer($user);
 

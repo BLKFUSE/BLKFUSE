@@ -79,9 +79,6 @@
 .sesmember_browse_toprated_search > form{
 	background:$theme_form_background_color;
 	padding:0 !important;
-  border:1px solid $theme_form_border_color;
-	border-radius:3px;
-	overflow:hidden;
 }
 /*Review Stats*/
 .sesmemeber_review_stat_label,

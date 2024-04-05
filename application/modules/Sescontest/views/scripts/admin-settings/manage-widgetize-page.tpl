@@ -17,7 +17,6 @@
 <p>
 	<?php echo $this->translate('This page lists all the Widgetized Pages of this plugin. From here, you can easily go to particular widgetized page in "Layout Editor" by clicking on "Widgetized Page" link. The user side link of the page can be viewed by clicking on "User Page" link'); ?>
 </p>
-<br />
 <table class='admin_table'>
   <thead>
     <tr>

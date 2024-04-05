@@ -9,6 +9,7 @@
  * @version    $Id: mail.tpl 9747 2012-07-26 02:08:08Z john $
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_manage", 'childMenuItemName' => 'core_admin_message_mail')); ?>
 
 <?php if( $this->form ): ?>
 

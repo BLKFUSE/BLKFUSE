@@ -23,7 +23,7 @@ CREATE TABLE `engine4_music_categories` (
   KEY `user_id` (`user_id`),
   KEY `category_id` (`category_id`, `category_name`),
   KEY `category_name` (`category_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_music_categories`
@@ -55,6 +55,6 @@ CREATE TABLE IF NOT EXISTS `engine4_music_ratings` (
   `rating` tinyint(1) unsigned default NULL,
   PRIMARY KEY  (`playlist_id`,`user_id`),
   KEY `INDEX` (`playlist_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 ALTER TABLE `engine4_music_playlists` ADD `rating` FLOAT NOT NULL;

@@ -16,29 +16,27 @@
  * @copyright  Copyright 2006-2020 Webligo Developments
  * @license    http://www.socialengine.com/license/
  */
-class User_Form_Admin_Facebook extends Engine_Form
-{
-  public function init()
-  {
-    $this
-      ->setTitle('Facebook Integration')
-      ->setDescription('USER_ADMIN_SETTINGS_FACEBOOK_DESCRIPTION')
-      ->setAttrib('enctype', 'multipart/form-data')
-      ->setAction(Zend_Controller_Front::getInstance()->getRouter()->assemble(array()))
-      ->setMethod("POST");
-      ;
+class User_Form_Admin_Facebook extends Engine_Form {
+
+  public function init() {
+  
+    $this->setTitle('Facebook Integration')
+        ->setDescription('USER_ADMIN_SETTINGS_FACEBOOK_DESCRIPTION')
+        ->setAttrib('enctype', 'multipart/form-data')
+        ->setAction(Zend_Controller_Front::getInstance()->getRouter()->assemble(array()))
+        ->setMethod("POST");
 
     $description = $this->getTranslator()->translate('USER_ADMIN_SETTINGS_FACEBOOK_DESCRIPTION');
     $settings = Engine_Api::_()->getApi('settings', 'core');
-	if( $settings->getSetting('user.support.links', 0) == 1 ) {
-	$moreinfo = $this->getTranslator()->translate(
-        '<br>More Info: <a href="https://community.socialengine.com/blogs/597/31/facebook-integration" target="_blank"> KB Article</a>');
-	} else {
-	$moreinfo = $this->getTranslator()->translate(
-        '');
-	}
-	$description = vsprintf($description.$moreinfo, array(
-      'http://www.facebook.com/developers/apps.php',
+    if( $settings->getSetting('user.support.links', 0) == 1 ) {
+    $moreinfo = $this->getTranslator()->translate(
+          '<br>More Info: <a href="https://community.socialengine.com/blogs/597/31/facebook-integration" target="_blank"> KB Article</a>');
+    } else {
+    $moreinfo = $this->getTranslator()->translate(
+          '');
+    }
+    $description = vsprintf($description.$moreinfo, array(
+      'https://developers.facebook.com/apps',
     ));
     $this->setDescription($description);
 
@@ -71,11 +69,11 @@ class User_Form_Admin_Facebook extends Engine_Form
     ));
 
     $this->addElement('Radio', 'enable', array(
-      'label' => 'Integrate Features',
-      'description' => 'What features would you like to integrate?',
+      'label' => 'Enable',
+      'description' => '',
       'multiOptions' => array(
-        'none'  => 'None',
-        'login' => 'Login only',
+        'login' => 'Yes',
+        'none'  => 'No',
       ),
       'value' => 'none'
     ));

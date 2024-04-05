@@ -120,8 +120,8 @@ scriptJquery(document).on("click", '.feed_attachment_album_photo', function (e) 
 //Close image viewer
 scriptJquery(document).on('click','.ses_media_lightbox_overlay, #crossSes, .cross',function (e) {
 	if(scriptJquery('#ses_media_lightbox_container').css('display') != 'none'){
-		scriptJquery('body').css({ 'overflow': 'initial' });
-    scriptJquery('html').css('position','auto').css('overflow','auto');
+		// scriptJquery('body').css({ 'overflow': 'initial' });
+    scriptJquery('html').css('position','initial').css('overflow','initial');
     scriptJquery(window).scrollTop(offsetY);
     if(scriptJquery('.emoji_content').css('display') == 'block')
       scriptJquery('.exit_emoji_btn').click();
@@ -139,12 +139,12 @@ scriptJquery(document).on('click','.ses_media_lightbox_overlay, #crossSes, .cros
 		mediaTags = '';
 		getTagData = '';
     sesCustomPhotoURL = false;
-	}
-	scriptJquery('html').css('position','inherit').css('overflow-y','auto');
-	scriptJquery(window).scrollTop(offsetY);
 
-	scriptJquery('#ses_media_lightbox_container').remove();
-	scriptJquery('#ses_media_lightbox_container_video').remove();
+		// scriptJquery('html').css('position','inherit').css('overflow-y','auto');
+		scriptJquery(window).scrollTop(offsetY);
+	
+		scriptJquery('#ses_media_lightbox_container').remove();
+	}
 });
 //http://johndyer.name/native-fullscreen-javascript-api-plus-jquery-plugin/
 var is_fullscreen = 0;

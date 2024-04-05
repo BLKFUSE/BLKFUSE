@@ -39,9 +39,9 @@
 
 function enablestickers(value){
   if(value == 1){
-    document.getElementById('sesadvancedcomment_stickertitle-wrapper').style.display = 'block';
-    document.getElementById('sesadvancedcomment_stickerdescription-wrapper').style.display = 'block';
-    document.getElementById('sesadvancedcomment_backgroundimage-wrapper').style.display = 'block';
+    document.getElementById('sesadvancedcomment_stickertitle-wrapper').style.display = 'flex';
+    document.getElementById('sesadvancedcomment_stickerdescription-wrapper').style.display = 'flex';
+    document.getElementById('sesadvancedcomment_backgroundimage-wrapper').style.display = 'flex';
   }else{
     document.getElementById('sesadvancedcomment_stickertitle-wrapper').style.display = 'none';
     document.getElementById('sesadvancedcomment_stickerdescription-wrapper').style.display = 'none';
@@ -51,7 +51,7 @@ function enablestickers(value){
 
 function showLanguage(value){
   if(value == 1){
-    document.getElementById('sesadvancedcomment_language-wrapper').style.display = 'block';		
+    document.getElementById('sesadvancedcomment_language-wrapper').style.display = 'flex';		
   }else{
     document.getElementById('sesadvancedcomment_language-wrapper').style.display = 'none';		
   }

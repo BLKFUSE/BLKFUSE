@@ -1,6 +1,6 @@
 <?php ?>
 <?php include APPLICATION_PATH .  '/application/modules/Sesalbum/views/scripts/dismiss_message.tpl';?>
-<h2>
+<h2 class="page_heading">
   <?php echo $this->translate("Advanced Photos & Albums Plugin") ?>
 </h2>
 <div class="sesbasic_nav_btns">

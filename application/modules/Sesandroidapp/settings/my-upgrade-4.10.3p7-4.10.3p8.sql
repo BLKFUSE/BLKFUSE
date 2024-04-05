@@ -17,14 +17,14 @@ INSERT IGNORE INTO `engine4_core_menuitems`(`name`, `module`, `label`, `params`,
 
 CREATE TABLE IF NOT EXISTS `engine4_sesandroidapp_graphics` (
   `graphic_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `title_color` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'FFFFFF',
-  `description_color` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'FFFFFF',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `title_color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'FFFFFF',
+  `description_color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'FFFFFF',
   `background_color` VARCHAR(255) NOT NULL,
   `status` tinyint(1) DEFAULT '1',
   `file_id` int(11) DEFAULT '0',
   `order` int(11) DEFAULT '0',
   `creation_date` datetime DEFAULT NULL,
   PRIMARY KEY (`graphic_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

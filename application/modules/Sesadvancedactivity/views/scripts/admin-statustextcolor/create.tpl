@@ -19,7 +19,7 @@
   $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesadvancedactivity/externals/scripts/animation.js');
 ?>
 <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-<div class='sesbasic_popup_form settings'>
+<div class='settings'>
   <?php echo $this->form->render($this); ?>
 </div>
 <div></div>

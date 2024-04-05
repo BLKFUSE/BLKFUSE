@@ -48,7 +48,7 @@
       <?php endforeach; ?>
       <?php if (engine_count($this->navigation) > $this->max):?>
       <?php $countMenu = 0; ?>
-      <li class="sesbasic_browse_nav_tab_closed sesbasic_browse_nav_pulldown" onclick="moreTabSwitch($(this));"> <a href="javascript:void(0);"><?php echo $this->translate('More +') ?><span></span></a>
+      <li class="sesbasic_browse_nav_tab_closed sesbasic_browse_nav_pulldown"> <a href="javascript:void(0);"><?php echo $this->translate('More +') ?><span></span></a>
         <div class="tab_pulldown_contents_wrapper sesbasic_bxs">
           <div class="tab_pulldown_contents">
             <ul>
@@ -79,10 +79,16 @@
   <?php endif; ?>
 </div>
 <script type="text/javascript">
-  en4.core.runonce.add(function() {
-    var moreTabSwitch = window.moreTabSwitch = function(el) {
-      el.toggleClass('sesbasic_browse_nav_tab_open');
-      el.toggleClass('sesbasic_browse_nav_tab_closed');
+  scriptJquery(document).on('click','.sesbasic_browse_nav_pulldown > a',function(){
+    if(scriptJquery('.sesbasic_browse_nav_pulldown').hasClass('sesbasic_browse_nav_tab_open')){
+      scriptJquery('.sesbasic_browse_nav_pulldown').removeClass('sesbasic_browse_nav_tab_open');
+    }else{
+      scriptJquery('.sesbasic_browse_nav_pulldown').removeClass('sesbasic_browse_nav_tab_open');
+      scriptJquery('.sesbasic_browse_nav_pulldown').addClass('sesbasic_browse_nav_tab_open');
     }
+      return false;
+  });
+  scriptJquery(document).click(function(){
+    scriptJquery('.sesbasic_browse_nav_pulldown').removeClass('sesbasic_browse_nav_tab_open');
   });
 </script>

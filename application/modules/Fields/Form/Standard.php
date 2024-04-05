@@ -218,16 +218,44 @@ class Fields_Form_Standard extends Engine_Form
       if( $field->error ) {
         $element->addErrorMessage($field->error);
       }
+      
+      //Inline css work
+      if( $field->style && $element->getDecorator('HtmlTag2')) {
+        $element->getDecorator('HtmlTag2')->setOption('class', 'form-wrapper '.$field->style);
+      }
 
       if( $field->isHeading() ) {
         $element->removeDecorator('Label')
           ->removeDecorator('HtmlTag')
           ->getDecorator('HtmlTag2')->setOption('class', 'form-wrapper-heading');
       }
-      if( $element->getDecorator('Description') ) {
-        $element->getDecorator('Description')
-          ->setOption('placement', 'append');
+      
+      //Date / Birthdate Profile Field
+      if(in_array($params['type'], array('Birthdate', 'Date'))) {
+        $element->getDecorator('HtmlTag2')->setOption('class', 'form-wrapper birthday_wrapper');
       }
+      
+      //Income Profile Field
+      if( $params['type'] == 'Income' ) {
+        $currencyCode = Engine_Api::_()->payment()->defaultCurrency();
+        $currencyData = Engine_Api::_()->getDbTable('currencies', 'payment')->getCurrency($currencyCode);
+        $currencyName = $currencyData->title;
+        
+        $element->loadDefaultDecorators();
+        $element->getDecorator('Label')
+          ->setOption('optionalSuffix', ' - ' . $currencyCode)
+          ->setOption('requiredSuffix', ' - ' . $currencyCode);
+
+        if( $currencyName && !$element->getDescription() ) {
+          $element->setDescription($currencyName);
+          $element->getDecorator('Description')->setOption('placement', 'APPEND');
+        }
+      }
+      
+//       if( $element->getDecorator('Description') ) {
+//         $element->getDecorator('Description')
+//           ->setOption('placement', 'append');
+//       }
     }
 
     $this->addElement('Button', 'submit', array(

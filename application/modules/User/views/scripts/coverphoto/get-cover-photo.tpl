@@ -105,7 +105,6 @@
       <?php endif; ?>
     </div>
   <?php endif; ?>
-	<div class="clr"></div>
 <?php else : ?>
   <?php $levelId = $this->level_id;?>
   <div class="profile_cover_photo cover_photo_wap b_dark">

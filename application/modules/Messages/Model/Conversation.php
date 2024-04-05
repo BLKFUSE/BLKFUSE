@@ -157,6 +157,11 @@ class Messages_Model_Conversation extends Core_Model_Item_Abstract
       'attachment_id' => ( $attachment ? $attachment->getIdentity() : 0 ),
     ));
     $message->save();
+    
+    //Save editor images
+    if(Engine_Api::_()->getDbtable('permissions', 'authorization')->getAllowed('messages', $user->level_id, 'editor')) {
+      Engine_Api::_()->core()->saveTinyMceImages($message->body, $message);
+    }
 
     // Update sender's outbox
     Engine_Api::_()->getDbtable('recipients', 'messages')->update(array(

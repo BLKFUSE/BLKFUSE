@@ -13,11 +13,8 @@
  
 ?>
 <?php include APPLICATION_PATH .  '/application/modules/Sesmember/views/scripts/dismiss_message.tpl';?>
-
 <h3><?php echo "Manage Browse Page for Profile Types";?></h3>
-
 <p><?php echo "This page lists all of the widgetized pages created by you using this plugin for browsing members based on selected Profile Types. Below, you can create a new page by clicking on “Create Browse Page for Profile Type” link. You can manage below pages by using various links for them in the “Options” section below." ?></p>
-<br />	
 <div>
   <?php 
   $profileTypeFields = Engine_Api::_()->fields()->getFieldsObjectsByAlias('user', 'profile_type');
@@ -38,7 +35,7 @@
           $levelValues[] = $key;
         }
     if($levelOptions){ 
-        echo $this->htmlLink(array('action' => 'create-browse', 'reset' => false), $this->translate("Create New Browse Member Page"),array('class' => 'buttonlink sesbasic_icon_add'));
+        echo $this->htmlLink(array('action' => 'create-browse', 'reset' => false), $this->translate("Create New Browse Member Page"),array('class' => 'buttonlink sesbasic_icon_add sesbasic_btn_space'));
      } else { ?>
       <div class="tip">
     <span>
@@ -46,9 +43,7 @@
     </span>
   </div>
     <?php } ?>
- 
 </div>
-<br />
 
 <?php if( engine_count($this->pages) ): ?>
 <form id='multidelete_form' method="post" action="<?php echo $this->url();?>" onSubmit="return multiDelete()">

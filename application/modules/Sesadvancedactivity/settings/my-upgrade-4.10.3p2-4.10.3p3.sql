@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_details` (
   `sesresource_type` VARCHAR( 45 ) NULL,
   PRIMARY KEY (`detail_id`),
   UNIQUE( `detail_id`, `action_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 INSERT IGNORE INTO engine4_sesadvancedactivity_details (`action_id`, `commentable`, `schedule_time`, `sesapproved`, `reaction_id`) SELECT `action_id`, `commentable`, `schedule_time`, `sesapproved`, `reaction_id` FROM engine4_activity_actions;
 

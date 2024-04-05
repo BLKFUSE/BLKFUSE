@@ -86,9 +86,9 @@ var Coverphoto = function(options) {
       self.buttons.addClass('cover_photo_options');
       self.getButton('save').removeClass('is_hidden');
       self.block.find('.cover_tip_wrap:first').removeClass('is_hidden');
-      if(scriptJquery('.cover_photo_profile_options').length) {
-        scriptJquery('.cover_photo_profile_options').addClass('is_hidden');
-				scriptJquery('.profile_main_photo_wrapper').addClass('is_hidden');
+      if(scriptJquery('.cover_photo_profile_information').length) {
+        scriptJquery('.cover_photo_profile_information').addClass('is_hidden');
+				// scriptJquery('.profile_main_photo_wrapper').addClass('is_hidden');
 				scriptJquery('.profile_cover_photo').addClass('remove_overlay');
       }
       cover.addClass('draggable');
@@ -113,9 +113,9 @@ var Coverphoto = function(options) {
       self.buttons.removeClass('cover_photo_options');
       self.getButton().removeClass('is_hidden');
 
-      if(scriptJquery('.cover_photo_profile_options').length) {
-        scriptJquery('.cover_photo_profile_options').removeClass('is_hidden');
-				scriptJquery('.profile_main_photo_wrapper').removeClass('is_hidden');
+      if(scriptJquery('.cover_photo_profile_information').length) {
+        scriptJquery('.cover_photo_profile_information').removeClass('is_hidden');
+				// scriptJquery('.profile_main_photo_wrapper').removeClass('is_hidden');
 				scriptJquery('.profile_cover_photo').removeClass('remove_overlay');
       }
       self.getCover().removeClass('draggable');
@@ -138,8 +138,8 @@ var Coverphoto = function(options) {
           'position' : self.options.position
         },
         success:function () {
-          if(scriptJquery('.cover_photo_profile_options').length) {
-            scriptJquery('.cover_photo_profile_options').removeClass('is_hidden');
+          if(scriptJquery('.cover_photo_profile_information').length) {
+            scriptJquery('.cover_photo_profile_information').removeClass('is_hidden');
             self.reposition.stop(1);
             scriptJquery('.dragncrop-instruction').remove();
           }

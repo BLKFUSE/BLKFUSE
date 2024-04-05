@@ -16,7 +16,7 @@ if( !('music' in en4) ) {
 }
 
 //soundManager.url = en4.core.staticBaseUrl + 'externals/soundmanager/swf/';
-
+let isPlayingMusicCoreSE = false;
 en4.music.playlistAbstract = function(){
   defualtOptions = {
     mode : 'linear',
@@ -166,15 +166,24 @@ en4.music.playlistAbstract = function(){
         }
       }
     });
-
+    
     // play music
     scriptJquery(".music_player_button_play").on("click",function(event){
+      
+      if(isPlayingMusicCoreSE){
+        return;
+      }
+      isPlayingMusicCoreSE = true;
+     
       event.preventDefault();
       let elm = scriptJquery(this).closest(".music_player").eq(0);
       audio = self.createPlayer(elm);
       if(elm.length && audio){
         audio.playPause();
       }
+      setTimeout(function(){
+        isPlayingMusicCoreSE = false;
+      },1000);
     });
 
     // set volume

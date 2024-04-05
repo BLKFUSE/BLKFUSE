@@ -60,7 +60,7 @@
         }
     });
   });
-  var post_max_size = "<?php echo (int)(ini_get('post_max_size')); ?>";
+
   var uploadedFiles = [];
   var pendingExtraction = [];
   var currentlyUploading = false;
@@ -74,7 +74,7 @@
       //Check upload file size
       var FileSize = obj.files[0].size / 1024 / 1024;
       uploadError = false;
-      var url = obj.get('data-url');
+      var url = scriptJquery(obj).attr('data-url');
       var xhr = new XMLHttpRequest();
       var fd = new FormData();
       uploadedFiles.push(file.name);
@@ -106,7 +106,7 @@
         }
       };
       fd.append('ajax-upload', 'true');
-      fd.append(obj.get('name'), file);
+      fd.append(scriptJquery(obj).attr('name'), file);
       fd.append('format', 'json');
       xhr.send(fd);
     },
@@ -125,17 +125,19 @@
   };
   scriptJquery(document).ready(function() {
     scriptJquery('.file-input').each(function (el) {
-      scriptJquery(document).on('change',function(obj) {
+      scriptJquery(this).on('change',function(obj) {
         currentlyUploading = true;
-        var files = this.files;
-        var total = files.length;
+
+        var files_1 = this.files;
+        console.log(this, files_1);
+        var total = files_1.length;
         var iteration = 0;
         var valid = true;
-        for(var i = 0; i < files.length; i++) {
-          var FileSize = files[i].size / 1024 / 1024;
+        for(var i = 0; i < files_1.length; i++) {
+          var FileSize = files_1[i].size / 1024 / 1024;
           if(FileSize <= post_max_size) {
             iteration++;
-            BaseFileUpload.uploadFile($(el), this.files[i], iteration, total);
+            BaseFileUpload.uploadFile(this, files_1[i], iteration, total);
           }else{
             valid = false;
           }

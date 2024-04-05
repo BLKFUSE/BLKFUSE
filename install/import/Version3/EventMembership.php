@@ -69,12 +69,12 @@ CREATE TABLE IF NOT EXISTS `se_eventmembers` (
 *  `eventmember_status` tinyint(3) unsigned NOT NULL default '0',
 *  `eventmember_approved` tinyint(3) unsigned NOT NULL default '0',
   `eventmember_rank` tinyint(3) unsigned NOT NULL default '0',
-*  `eventmember_title` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+*  `eventmember_title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL default '',
 *  `eventmember_rsvp` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`eventmember_id`),
   KEY `INDEX` (`eventmember_user_id`,`eventmember_event_id`),
   KEY `STATUS` (`eventmember_status`,`eventmember_approved`,`eventmember_rsvp`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -90,6 +90,6 @@ CREATE TABLE IF NOT EXISTS `engine4_event_membership` (
 *  `title` text NULL,
   PRIMARY KEY  (`resource_id`, `user_id`),
   KEY `REVERSE` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

@@ -43,7 +43,8 @@ class Core_AdminMessageController extends Core_Controller_Action_Admin
     $select
       ->from($table->info('name'), 'email')
       ->where('enabled = ?', true)
-        ->where('disable_adminemail = ?', '0'); // Do not email disabled members
+      ->where('verified = ?', true)
+      ->where('disable_adminemail = ?', '0'); // Do not email disabled members
 
     $level_ids = $this->_getParam('target');
     if (is_array($level_ids) && !empty($level_ids)) {

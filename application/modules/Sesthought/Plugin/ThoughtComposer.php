@@ -36,7 +36,7 @@ class Sesthought_Plugin_ThoughtComposer extends Core_Plugin_Abstract
       $thought->save();
       
       if($postData['video']) {
-        $information = $this->handleIframelyInformation($postData['video']);
+        $information = Engine_Api::_()->sesbasic()->handleIframelyInformation($postData['video']);
         try{
           $thought->setPhoto($information['thumbnail']);
         }catch(Exception $e){

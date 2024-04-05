@@ -142,8 +142,8 @@ class Storage_Service_AmazonS3 extends Storage_Service_Abstract
 					'Key'          => $path,
 					'ACL'          => 'public-read',
 					'SourceFile'   => $file,
-					'Cache-Control' => 'max-age=864000, public',
-					'Content-Type' => 'video/mp4',
+					'CacheControl' => 'max-age=864000, public',
+					'ContentType' => 'video/mp4',
 				]);
 			} else {
 				$this->_internalService->putObject([
@@ -151,7 +151,7 @@ class Storage_Service_AmazonS3 extends Storage_Service_Abstract
 					'Key'          => $path,
 					'ACL'          => 'public-read',
 					'SourceFile'   => $file,
-					'Cache-Control' => 'max-age=864000, public',
+					'CacheControl' => 'max-age=864000, public',
 				]);
       }
     } catch (S3Exception $e) {
@@ -201,8 +201,8 @@ class Storage_Service_AmazonS3 extends Storage_Service_Abstract
 					'Key'          => $path,
 					//'ACL'          => 'public-read',
 					'SourceFile'   => $data,
-					'Cache-Control' => 'max-age=864000, public',
-					'Content-Type' => 'video/mp4',
+					'CacheControl' => 'max-age=864000, public',
+					'ContentType' => 'video/mp4',
 				]);
 			} else {
 				$this->_internalService->putObject([
@@ -210,7 +210,7 @@ class Storage_Service_AmazonS3 extends Storage_Service_Abstract
 					'Key'          => $path,
 					//'ACL'          => 'public-read',
 					'SourceFile'   => $data,
-					'Cache-Control' => 'max-age=864000, public',
+					'CacheControl' => 'max-age=864000, public',
 				]);
       }
     } catch (S3Exception $e) {

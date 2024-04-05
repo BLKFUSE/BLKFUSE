@@ -10,6 +10,7 @@
  * @author     Jung
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_monetization", 'parentMenuItemName' => 'core_admin_main_ads', 'childMenuItemName' => 'adcampaign_admin_main_manageads')); ?>
 
 <script type="text/javascript">
   en4.core.runonce.add(function() {
@@ -64,7 +65,7 @@
 
 
 
-<h2>
+<h2 class="page_heading">
   <?php echo $this->translate('Editing Ad Campaign: %1$s', $this->campaign->name) ?>
 </h2>
 
@@ -85,22 +86,11 @@
 <p>
   <?php echo $this->translate("CORE_VIEWS_SCRIPTS_ADMINADS_MANAGEADS_DESCRIPTION") ?>
 </p>
-
-<br />
-
-
-
 <div>
   <?php echo $this->htmlLink(array('action' => 'createad', 'id'=> $this->campaign_id, 'reset' => false),
       $this->translate("Add New Advertisement"), array(
-      'class' => 'buttonlink',
-      'style' => 'background-image: url(' . $this->layout()->staticBaseUrl . 'application/modules/Announcement/externals/images/admin/add.png);')) ?>
+      'class' => 'admin_link_btn')) ?>
 </div>
-
-<br/>
-
-
-
 <div class='admin_results'>
   <div>
     <?php $count = $this->paginator->getTotalItemCount() ?>
@@ -113,13 +103,6 @@
     )); ?>
   </div>
 </div>
-
-<br />
-
-
-
-
-
 <?php if( engine_count($this->paginator) ): ?>
 
   <table class='admin_table admin_responsive_table'>
@@ -165,9 +148,11 @@
           <a class='smoothbox' href='<?php echo $this->url(array('action' => 'editad', 'id' => $item->ad_id)) ?>'>
             <?php echo $this->translate("edit") ?>
           </a> 
+          |
           <a class='smoothbox' href='<?php echo $this->url(array('action' => 'preview', 'id' => $item->ad_id)) ?>'>
             <?php echo $this->translate("preview") ?>
           </a> 
+          |
           <a class='smoothbox' href='<?php echo $this->url(array('action' => 'deletead', 'id' => $item->ad_id)) ?>'>
             <?php echo $this->translate("delete") ?>
           </a>
@@ -184,4 +169,7 @@
   </div>
 
 <?php endif; ?>
-
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_monetization').parent().addClass('active');
+  scriptJquery('.core_admin_main_ads').addClass('active');
+</script>

@@ -42,6 +42,8 @@ class Album_Widget_ListRecentPhotosController extends Engine_Content_Widget_Abst
         $select->from($tableName)
             ->setIntegrityCheck(false)
             ->joinLeft($parentTableName, $parentTableName . '.album_id=' . $tableName . '.album_id', array('view_privacy'))
+            ->where($tableName.'.approved = ?', 1)
+            ->where($parentTableName . '.approved = ?', 1)
             ->where($parentTableName . '.search = ?', true);
         if( $recentType == 'creation' ) {
             // using primary should be much faster, so use that for creation

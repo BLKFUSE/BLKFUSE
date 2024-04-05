@@ -10,10 +10,10 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_settings", 'childMenuItemName' => 'core_admin_main_settings_performance')); ?>
+
 <div class='settings'>
-
   <?php echo $this->form->render($this) ?>
-
 </div>
 <script type="text/javascript">
     scriptJquery(document).ready(function() {
@@ -23,7 +23,7 @@
 
     function showLogSize(value) {
         if(value == 1) {
-            scriptJquery('#logfile_size-wrapper').css("display",'block');
+            scriptJquery('#logfile_size-wrapper').css("display",'flex');
         } else {
             scriptJquery('#logfile_size-wrapper').css("display",'none');
         }

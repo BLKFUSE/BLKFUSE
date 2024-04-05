@@ -111,6 +111,7 @@ class Music_Model_PlaylistSong extends Core_Model_Item_Abstract
                       ->fetchColumn(0);
       if( $count <= 1 ) {
         try {
+					Engine_Api::_()->storage()->deleteExternalsFiles($file->file_id);
           $file->remove();
         } catch( Exception $e ) {
           

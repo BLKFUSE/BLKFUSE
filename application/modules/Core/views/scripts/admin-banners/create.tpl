@@ -10,11 +10,12 @@
 * @author     John
 */
 ?>
-
-<h2>
-    <?php echo $this->translate("Manage Banners") ?>
-</h2>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_layout", 'parentMenuItemName' => 'core_admin_main_layout_banners', 'lastMenuItemName' => 'Create New Banner')); ?>
 
 <div class="settings">
-    <?php echo $this->form->render($this) ?>
+  <?php echo $this->form->render($this) ?>
 </div>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_layout').parent().addClass('active');
+  scriptJquery('.core_admin_main_layout_banners').addClass('active');
+</script>

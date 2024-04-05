@@ -112,8 +112,7 @@ function getPhotoViewPage(photo_id,album_id){
           <span class="sesalbum_welcome_slideshow_gallery_img" style="background-image:url(<?php echo $item->getPhotoUrl(); ?>)"></span>
           <a href="<?php echo $item->getHref(); ?>" class="sesalbum_animation sesalbum_welcome_slideshow_gallery_content">
             <div>
-              <span><?php echo $item->title; ?></span>
-              <!--<p><?php echo $this->translate('by'); ?> <?php echo ' '.$item->getOwner()->getTitle(); ?></p> -->
+              <span><?php echo $this->string()->truncate($item->title, $this->title_truncation); ?></span>
             </div>
           </a>
         </div>

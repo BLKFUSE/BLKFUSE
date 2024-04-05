@@ -87,9 +87,19 @@ class User_AuthController extends Core_Controller_Action_Standard
 
         // Check login creds
         extract($form->getValues()); // $email, $password, $remember
+        
         $user_table = Engine_Api::_()->getDbtable('users', 'user');
+        
+        //login with username
+        $emailField = 'email';
+        if(Engine_Api::_()->getApi('settings', 'core')->getSetting('user.signup.username', 1) && Engine_Api::_()->getApi('settings', 'core')->getSetting('user.signup.allowloginusername', 0)) {
+          if (strpos($email, '@') == false) { 
+            $emailField = 'username';
+          }
+        }
+        
         $user_select = $user_table->select()
-            ->where('email = ?', $email);          // If post exists
+            ->where("`$emailField` = ?", $email);          // If post exists
         $user = $user_table->fetchRow($user_select);
 
         // Get ip address

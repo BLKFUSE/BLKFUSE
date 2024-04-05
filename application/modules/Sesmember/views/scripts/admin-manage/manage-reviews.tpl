@@ -54,12 +54,9 @@
     <div class='clear'>
 <h3><?php echo $this->translate("Manage Reviews"); ?></h3>
 <p><?php echo $this->translate('This page lists all of the reviews your users have created. You can use this page to monitor these reviews and delete offensive material if necessary. Entering criteria into the filter fields will help you find specific review. Leaving the filter fields blank will show all the reviews on your social network. <br /> Below, you can also choose any number of reviews as Reviews of the Day. These reviews will be displyed randomly in the "Review of the Day" widget.'); ?></p>
-<br />
 <div class='admin_search sesbasic_search_form'>
   <?php echo $this->formFilter->render($this) ?>
 </div>
-<br />
-
 <?php $counter = $this->paginator->getTotalItemCount(); ?> 
 <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
   <div class="sesbasic_search_reasult">
@@ -85,11 +82,11 @@
         <tr>
           <td><input type='checkbox' class='checkbox' name='delete_<?php echo $item->review_id;?>' value="<?php echo $item->review_id; ?>" /></td>
           <td><?php echo $item->review_id ?></td>
-          <td><?php echo $this->htmlLink($item->getHref(), $this->translate(Engine_Api::_()->sesbasic()->textTruncation($item->getTitle(),16)), array('title' => $item->getTitle(), 'target' => '_blank')) ?></td>
+          <td><?php echo $this->htmlLink($item->getHref(), $this->translate($item->getTitle()), array('title' => $item->getTitle(), 'target' => '_blank')) ?></td>
           <td>
             <?php $contentItem = Engine_Api::_()->getItem('user', $item->user_id); ?>
-            <?php echo $this->htmlLink($contentItem->getHref(), $this->translate(Engine_Api::_()->sesbasic()->textTruncation($contentItem->getTitle(),16)), array('title' => $contentItem->getTitle(), 'target' => '_blank')) ?></td>
-          <td><?php echo $this->htmlLink($item->getOwner()->getHref(), $this->translate(Engine_Api::_()->sesbasic()->textTruncation($item->getOwner()->getTitle(),16)), array('title' => $this->translate($item->getOwner()->getTitle()), 'target' => '_blank')) ?></td>
+            <?php echo $this->htmlLink($contentItem->getHref(), $this->translate($contentItem->getTitle()), array('title' => $contentItem->getTitle(), 'target' => '_blank')) ?></td>
+          <td><?php echo $this->htmlLink($item->getOwner()->getHref(), $this->translate($item->getOwner()->getTitle()), array('title' => $this->translate($item->getOwner()->getTitle()), 'target' => '_blank')) ?></td>
 	  <td class='admin_table_centered'>
 	  <?php echo ( $item->featured ? $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesmember', 'controller' => 'manage', 'action' => 'featured-review', 'review_id' => $item->review_id), $this->htmlImage($baseURL . 'application/modules/Sesbasic/externals/images/icons/check.png', '', array('title' => $this->translate('Unmark as Featured'))), array()) : $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesmember', 'controller' => 'manage', 'action' => 'featured-review', 'review_id' => $item->review_id), $this->htmlImage('application/modules/Sesbasic/externals/images/icons/error.png', '', array('title' => $this->translate('Mark Featured')))) ) ?>
 	  </td>
@@ -114,12 +111,10 @@
         <?php endforeach; ?>
       </tbody>
     </table>
-    <br />
     <div class='buttons'>
       <button type='submit'><?php echo $this->translate("Delete Selected") ?></button>
     </div>
   </form>
-  <br/>
   <div>
     <?php echo $this->paginationControl($this->paginator); ?>
   </div>

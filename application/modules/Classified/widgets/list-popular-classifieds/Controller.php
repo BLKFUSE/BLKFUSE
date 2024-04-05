@@ -31,6 +31,7 @@ class Classified_Widget_ListPopularClassifiedsController extends Engine_Content_
         }else{
             $select = $table->select()->where('search =?',1);
         }
+        $select->where('approved =?',1);
         $select->order($popularType . ' DESC');
         $select = Engine_Api::_()->network()->getNetworkSelect($table->info('name'), $select);
         if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('classified.allow.unauthorized', 0))

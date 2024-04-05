@@ -18,7 +18,7 @@ class Sesbday_Form_Admin_Settings_Birthday extends Engine_Form {
     $this->setTitle("Member Birthday Email Template")
             ->setDescription('Configure the Email message for birthday wish to members.')
             ->setMethod('post')
-            ->setAttrib('class', 'global_form_box')
+            ->setAttrib('class', 'global_form')
             ->setAttrib('id', 'birthday_main_test_email');
     if (isset($_POST['sesbday_birthday_enable']) && $_POST['sesbday_birthday_enable']) {
       $required = true;
@@ -46,35 +46,15 @@ class Sesbday_Form_Admin_Settings_Birthday extends Engine_Form {
     ));
 
     $this->addElement('Hidden', 'testemailval', array('order' => 878));
+    
     //UPLOAD PHOTO URL
-    $upload_url = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'sesbasic', 'controller' => 'index', 'action' => "upload-image"), 'default', true);
-
-    $allowed_html = 'strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr';
-
     $editorOptions = array(
-			'upload_url' => $upload_url,
-			'html' => (bool) $allowed_html,
+      'uploadUrl' => Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'index', 'action' => 'upload-photo'), 'default', true),
     );
-
-    if (!empty($upload_url)) {
-      $editorOptions['editor_selector'] = 'tinymce';
-      $editorOptions['mode'] = 'specific_textareas';
-      $editorOptions['plugins'] = array(
-          'table', 'fullscreen', 'preview', 'paste',
-          'code', 'textcolor', 'jbimages', 'link'
-      );
-
-      $editorOptions['toolbar1'] = array(
-          'undo', 'redo', 'removeformat', 'pastetext', '|', 'code',
-          'media', 'image', 'jbimages', 'link', 'fullscreen',
-          'preview'
-      );
-    }
 
     $this->addElement('TinyMce', 'sesbday_birthday_content', array(
         'label' => 'Birthday Email Content',
         'editorOptions' => $editorOptions,
-        'class' => 'tinymce',
         'description' => 'Content send in the birthday wish email to the site user.',
         'allowEmpty' => $empty,
         'required' => $required,

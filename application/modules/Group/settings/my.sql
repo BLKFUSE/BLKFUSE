@@ -34,7 +34,7 @@ CREATE TABLE `engine4_group_albums` (
   `collectible_count` int(11) unsigned NOT NULL default '0',
    PRIMARY KEY (`album_id`),
    KEY `group_id` (`group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `engine4_group_categories` (
   `category_id` int(11) unsigned NOT NULL auto_increment,
   `title` varchar(64) NOT NULL,
   PRIMARY KEY  (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_group_categories`
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `engine4_group_listitems` (
   PRIMARY KEY  (`listitem_id`),
   KEY `list_id` (`list_id`),
   KEY `child_id` (`child_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `engine4_group_lists` (
   `child_count` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`list_id`),
   KEY `owner_id` (`owner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `engine4_group_groups` (
   PRIMARY KEY  (`group_id`),
   KEY `user_id` (`user_id`),
   KEY `search` (`search`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -159,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `engine4_group_membership` (
   `notification` TINYINT(1) NOT NULL DEFAULT '1',
   PRIMARY KEY  (`resource_id`, `user_id`),
   KEY `REVERSE` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -188,7 +188,7 @@ CREATE TABLE `engine4_group_photos` (
   KEY `album_id` (`album_id`),
   KEY `group_id` (`group_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -211,7 +211,7 @@ CREATE TABLE IF NOT EXISTS `engine4_group_posts` (
   KEY `topic_id` (`topic_id`),
   KEY `group_id` (`group_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -237,7 +237,7 @@ CREATE TABLE IF NOT EXISTS `engine4_group_topics` (
   PRIMARY KEY  (`topic_id`),
   KEY `group_id` (`group_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -254,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `engine4_group_topicwatches` (
   `watch` tinyint(1) unsigned NOT NULL default '1',
   PRIMARY KEY  (`resource_id`,`topic_id`,`user_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -626,7 +626,7 @@ INSERT IGNORE INTO `engine4_authorization_permissions`
     'group' as `type`,
     'commentHtml' as `name`,
     3 as `value`,
-    'blockquote, strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr, iframe' as `params`
+    'blockquote, strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr, iframe, table, td, tbody, tr' as `params`
   FROM `engine4_authorization_levels` WHERE `type` NOT IN('public');
 
 -- coverphotoupload
@@ -902,7 +902,7 @@ CREATE TABLE IF NOT EXISTS `engine4_group_ratings` (
   `rating` tinyint(1) unsigned default NULL,
   PRIMARY KEY  (`group_id`,`user_id`),
   KEY `INDEX` (`group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 ALTER TABLE `engine4_group_groups` ADD `rating` FLOAT NOT NULL DEFAULT '0';
 
@@ -916,3 +916,29 @@ INSERT IGNORE INTO `engine4_activity_actiontypes` (`type`, `module`,  `body`,  `
 ('group_event_create', 'group', '{item:$subject} created a new event:', '1', '6', '1', '4', '1', 0),
 ('group_poll_new', 'group', '{item:$subject} created a new poll:', '1', '6', '1', '4', '1', 0),
 ('group_blog_new', 'group', '{item:$subject} wrote a new blog entry:', '6', '5', '1', '4', '1', 0);
+
+
+
+ALTER TABLE `engine4_group_groups` ADD `approved` TINYINT(1) NOT NULL DEFAULT "1";
+ALTER TABLE `engine4_group_groups` ADD INDEX(`approved`);
+
+ALTER TABLE `engine4_group_groups` ADD `resubmit` TINYINT(1) NOT NULL DEFAULT "0";
+ALTER TABLE `engine4_group_groups` ADD INDEX(`resubmit`);
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'group' as `type`,
+    'approve' as `name`,
+    1 as `value`,
+    NULL as `params`
+FROM `engine4_authorization_levels` WHERE `type` IN('moderator', 'admin');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'group' as `type`,
+    'approve' as `name`,
+    1 as `value`,
+    NULL as `params`
+FROM `engine4_authorization_levels` WHERE `type` IN('user');

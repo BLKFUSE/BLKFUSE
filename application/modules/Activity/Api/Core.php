@@ -228,6 +228,7 @@ class Activity_Api_Core extends Core_Api_Abstract
     }
 
     public function getSpecialAlbum(User_Model_User $user, $type, $auth_view) {
+    
         if (!engine_in_array($type, array('wall_friend', 'wall_network', 'wall_onlyme'))) {
             throw new Album_Model_Exception('Unknown special album type');
         }
@@ -262,6 +263,55 @@ class Activity_Api_Core extends Core_Api_Abstract
         }
 
         return $album;
+    }
+    
+    public function getSpecialPlaylist(User_Model_User $user, $type, $auth_view)
+    {
+      if (!engine_in_array($type, array('wall_friend', 'wall_network', 'wall_onlyme'))) {
+        throw new Music_Model_Exception('Unknown special album type');
+      }
+      
+      $table = Engine_Api::_()->getDbtable('playlists', 'music');
+      $select = $table->select()
+          ->where('owner_type = ?', $user->getType())
+          ->where('owner_id = ?', $user->getIdentity())
+          ->where('special = ?', $type)
+          ->order('playlist_id ASC')
+          ->limit(1);
+
+      $playlist = $table->fetchRow($select);
+
+      // Create if it doesn't exist yet
+      if( null === $playlist ) {
+        $translate = Zend_Registry::get('Zend_Translate');
+
+        $playlist = $table->createRow();
+        $playlist->owner_type = 'user';
+        $playlist->owner_id = $user->getIdentity();
+        $playlist->special = $type;
+
+        if( $type == 'message' ) {
+          $playlist->title = $translate->_('_MUSIC_MESSAGE_PLAYLIST');
+          $playlist->search = 0;
+        } else {
+          $playlist->title = $translate->_('_MUSIC_DEFAULT_PLAYLIST');
+          $playlist->search = 1;
+        }
+        //approve setting work
+        $playlist->approved = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('music_playlist', $user, 'approve');
+        $playlist->save();
+
+        // Authorizations
+        $auth = Engine_Api::_()->authorization()->context;
+        $roles = array('owner', 'owner_member', 'owner_member_member', 'owner_network', 'registered', 'everyone');
+        $viewMax = array_search($auth_view, $roles);
+        foreach ($roles as $i => $role) {
+            $auth->setAllowed($playlist, $role, 'view', ($i <= $viewMax));
+            $auth->setAllowed($playlist, $role, 'comment', ($i <= $viewMax));
+        }
+      }
+
+      return $playlist;
     }
 
     public function getHashTags($string) {

@@ -51,9 +51,9 @@
     $keywords = $this->layout()->siteinfo['keywords'];
 
     if ($this->subject() && $this->subject()->getIdentity()) {
-        $this->headTitle($this->subject()->getTitle(), Zend_View_Helper_Placeholder_Container_Abstract::PREPEND);
+        $this->headTitle(strip_tags($this->subject()->getTitle()), Zend_View_Helper_Placeholder_Container_Abstract::PREPEND);
 
-        $description = $this->subject()->getDescription() . ' ' . $description;
+        $description = strip_tags($this->subject()->getDescription()) . ' ' . $description;
         // Remove the white space from left and right side
         $keywords = trim($keywords);
         if (!empty($keywords) && (strrpos($keywords, ',') !== (strlen($keywords) - 1))) {
@@ -108,7 +108,7 @@
     foreach ($themes as $theme) {
         if (APPLICATION_ENV != 'development') {
             $this->headLink()
-                ->prependStylesheet('application/css.php?request=application/themes/' . $theme . '/theme.css');
+                ->prependStylesheet($staticBaseUrl . 'application/css.php?request=application/themes/' . $theme . '/theme.css');
         } else {
             $this->headLink()
                 ->prependStylesheet(rtrim($this->baseUrl(), '/') . '/application/css.php?request=application/themes/' . $theme . '/theme.css');
@@ -246,13 +246,17 @@
 
 <?php
     $themeFontSize = !empty($_SESSION['font_theme']) && $_SESSION['font_theme'] ? $_SESSION['font_theme'] : "";
-    $themeModeColor = !empty($_SESSION['mode_theme']) && $_SESSION['mode_theme'] ? $_SESSION['mode_theme'] : "";
     $bodyClass = "";
     if (!$this->viewer()->getIdentity()){
         $bodyClass .= "guest-user";
     }
-    if($themeModeColor){
-        $bodyClass .= " ".$themeModeColor;
+    
+    $contrast_mode = Engine_Api::_()->core()->getContantValueXML('contrast_mode') ? Engine_Api::_()->core()->getContantValueXML('contrast_mode') : 'dark_mode';
+    $themeModeColor = !empty($_SESSION['mode_theme']) && $_SESSION['mode_theme'] ? $_SESSION['mode_theme'] : "";
+    if($contrast_mode == 'dark_mode' && $themeModeColor == 'dark_mode') {
+      $bodyClass .= " ".$themeModeColor;
+    } else if($contrast_mode == 'light_mode' && $themeModeColor == 'light_mode') {
+      $bodyClass .= " ".$themeModeColor;
     }
 
 ?>

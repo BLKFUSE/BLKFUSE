@@ -332,6 +332,44 @@ class Sessociallogin_Plugin_Signup_Fields extends Core_Plugin_FormSequence_Abstr
                     // Silence?
                 }
             }
+            if (!empty($_SESSION['hotmail_signup'])) {
+                try {
+                    if (1) {
+                        // Load Linkedin data
+                        $fb_data = array();
+                        $fb_keys = array('first_name', 'last_name', 'birthday', 'birthdate');
+                        $apiInfo = $_SESSION['signup_fields'];
+                        foreach ($fb_keys as $key) {
+                            if (isset($apiInfo[$key])) {
+                                $fb_data[$key] = $apiInfo[$key];
+                            }
+                        }
+                        if (isset($apiInfo['birthday']) && !empty($apiInfo['birthday'])) {
+                            $fb_data['birthdate'] = date("Y-m-d", strtotime($fb_data['birthday']));
+                        }
+
+                        // populate fields, using Facebook data
+                        $struct = $this->_form->getFieldStructure();
+                        foreach ($struct as $fskey => $map) {
+                            $field = $map->getChild();
+                            if ($field->isHeading())
+                                continue;
+
+                            if (isset($field->type) && engine_in_array($field->type, $fb_keys)) {
+                                $el_key = $map->getKey();
+                                $el_val = $fb_data[$field->type];
+                                $el_obj = $this->_form->getElement($el_key);
+                                if ($el_obj instanceof Zend_Form_Element &&
+                                        !$el_obj->getValue()) {
+                                    $el_obj->setValue($el_val);
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception $e) {
+                    // Silence?
+                }
+            }
             if (!empty($_SESSION['telegram_signup'])) {
                 try {
                     if (1) {

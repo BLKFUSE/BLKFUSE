@@ -168,17 +168,35 @@ class Zend_Db_Table_Select extends Zend_Db_Select
      * @param  string $schema The schema name to specify, if any.
      * @return Zend_Db_Table_Select This Zend_Db_Table_Select object.
      */
-    public function from($name, $cols = self::SQL_WILDCARD, $schema = null)
-    {
-        if ($name instanceof Zend_Db_Table_Abstract) {
-            $info = $name->info();
-            $name = $info[Zend_Db_Table_Abstract::NAME];
-            if (isset($info[Zend_Db_Table_Abstract::SCHEMA])) {
-                $schema = $info[Zend_Db_Table_Abstract::SCHEMA];
-            }
+    public function from($name, $cols = self::SQL_WILDCARD, $schema = null) {
+      if ($name instanceof Zend_Db_Table_Abstract) {
+        $info = $name->info();
+        $name = $info[Zend_Db_Table_Abstract::NAME];
+        if (isset($info[Zend_Db_Table_Abstract::SCHEMA])) {
+          $schema = $info[Zend_Db_Table_Abstract::SCHEMA];
         }
+      }
+      
+      //Username Work
+      if (file_exists(APPLICATION_PATH . DS . 'application' . DS . 'settings' . DS . 'general.php')) {
+        $generalConfig = include APPLICATION_PATH . DS . 'application' . DS . 'settings' . DS . 'general.php';
+        if(!empty($generalConfig['username']['enabled'])) {
+          if(is_array($cols) && $name == 'engine4_users') {
+            $value = 'displayname';
+            $replacement = 'username';
+            $cols = array_replace($cols,
+              array_fill_keys(
+                array_keys($cols, $value),
+                $replacement
+              )
+            );
+          } /*else {
+            $cols = str_replace('displayname', 'username', $cols);
+          }*/
+        }
+      }
 
-        return $this->joinInner($name, null, $cols, $schema);
+      return $this->joinInner($name, null, $cols, $schema);
     }
 
     /**

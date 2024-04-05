@@ -787,7 +787,8 @@ class Engine_Api
         // Make body
         $body = file_get_contents(APPLICATION_PATH . '/application/offline.html');
         $body = str_replace('%__ERROR_CODE__%', 'Error code: ' .  self::getErrorCode(), $body);
-        $body = str_replace('%_BASE_URL_%', _ENGINE_SITE_URL, $body);
+        if(defined(_ENGINE_SITE_URL))
+          $body = str_replace('%_BASE_URL_%', _ENGINE_SITE_URL, $body);
 
         // Send firephp headers
         if (APPLICATION_ENV == 'development') {

@@ -209,7 +209,8 @@ class Music_Form_Create extends Engine_Form
         $playlist = null;
         $values   = $this->getValues();
         $translate= Zend_Registry::get('Zend_Translate');
-
+        $viewer = Engine_Api::_()->user()->getViewer();
+        
         if(!empty($values['playlist_id']))
             $playlist = Engine_Api::_()->getItem('music_playlist', $values['playlist_id']);
         else {
@@ -236,9 +237,12 @@ class Music_Form_Create extends Engine_Form
             if( empty($values['auth_comment']) ) {
                 $values['auth_comment'] = 'everyone';
             }
+            
+            //approve setting work
+            $values['approved'] = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('music_playlist', $viewer, 'approve');
 
             $playlist->owner_type    = 'user';
-            $playlist->owner_id      = Engine_Api::_()->user()->getViewer()->getIdentity();
+            $playlist->owner_id      = $viewer->getIdentity();
             $playlist->description   = trim($values['description']);
             $playlist->search        = $values['search'];
             $playlist->view_privacy  = $values['auth_view'];
@@ -268,10 +272,13 @@ class Music_Form_Create extends Engine_Form
             // Only create activity feed item if "search" is checked
             if ($playlist->search) {
                 $activity = Engine_Api::_()->getDbtable('actions', 'activity');
-                $action   = $activity->addActivity(Engine_Api::_()->user()->getViewer(), $playlist, 'music_playlist_new', null, array('count' => engine_count($file_ids), 'privacy' => isset($values['networks'])? $network_privacy : null));
+                $action   = $activity->addActivity($viewer, $playlist, 'music_playlist_new', null, array('count' => engine_count($file_ids), 'privacy' => isset($values['networks'])? $network_privacy : null));
                 if (null !== $action)
                     $activity->attachActivity($action, $playlist);
             }
+            
+            //Start Send Approval Request to Admin
+            Engine_Api::_()->core()->contentApprove($playlist, 'music playlist');
         }
 
 

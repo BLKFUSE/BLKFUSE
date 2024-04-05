@@ -28,6 +28,9 @@ class Eticktokclone_Model_DbTable_Users extends User_Model_DbTable_Users
                   ->where('follow_id IS NOT NULL')
                   ->where('resource_id !=?', $params['user_id'])
                   ->where($memberTableName . '.user_id IS NOT NULL');
+    $select->where($memberTableName.".user_id NOT IN (SELECT CASE blocked_user_id
+        WHEN ".Engine_Api::_()->user()->getViewer()->getIdentity()." THEN user_id ELSE blocked_user_id END as 'owner_id' FROM engine4_eticktokclone_blocks WHERE user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity()." || blocked_user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity().")");
+                  
     return Zend_Paginator::factory($select);
   }
 
@@ -42,6 +45,9 @@ class Eticktokclone_Model_DbTable_Users extends User_Model_DbTable_Users
                 ->where('follow_id IS NOT NULL')
                 ->where($tablenameFollow . '.user_id !=?', $params['user_id'])
                 ->where($memberTableName . '.user_id IS NOT NULL');
+                 $select->where($memberTableName.".user_id NOT IN (SELECT CASE blocked_user_id
+        WHEN ".Engine_Api::_()->user()->getViewer()->getIdentity()." THEN user_id ELSE blocked_user_id END as 'owner_id' FROM engine4_eticktokclone_blocks WHERE user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity()." || blocked_user_id = ".Engine_Api::_()->user()->getViewer()->getIdentity().")");
+          
     return Zend_Paginator::factory($select);
   }
 

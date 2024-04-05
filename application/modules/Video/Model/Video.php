@@ -63,6 +63,10 @@ class Video_Model_Video extends Core_Model_Item_Abstract
     if( $this->type == 'iframely' ) {
       $videoEmbedded = $this->code;
     }
+    
+    if(in_array($this->type, array('YouTube', 'Vimeo', 'Dailymotion'))) {
+			$videoEmbedded = $this->code;
+    }
 
     // if video type is uploaded
     if( $this->type == 'upload' ) {
@@ -99,15 +103,15 @@ class Video_Model_Video extends Core_Model_Item_Abstract
           'class' => 'thumb_video_activity'
         ));
 
-        if( !$mobile ) {
+        // if( !$mobile ) {
           $thumb = '<a id="video_thumb_' . $this->video_id . '" style="" href="javascript:void(0);" onclick="javascript:var myElement = scriptJquery(this);myElement.css(\'display\',\'none\');var next = myElement.next(); next.css(\'display\',\'block\');">
                   <div class="video_thumb_wrapper">' . $videoDuration . $thumb . '</div>
                   </a>';
-        } else {
-          $thumb = '<a id="video_thumb_' . $this->video_id . '" class="video_thumb" href="' . $this->getHref() . '">
-                  <div class="video_thumb_wrapper">' . $videoDuration . $thumb . '</div>
-                  </a>';
-        }
+        // } else {
+        //   $thumb = '<a id="video_thumb_' . $this->video_id . '" class="video_thumb" href="' . $this->getHref() . '">
+        //           <div class="video_thumb_wrapper">' . $videoDuration . $thumb . '</div>
+        //           </a>';
+        // }
       }
 
       // prepare title and description

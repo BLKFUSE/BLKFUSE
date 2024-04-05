@@ -18,6 +18,17 @@
  */
 class Music_Model_Playlist extends Core_Model_Item_Abstract
 {
+
+    /**
+    * Get a generic media type. Values:
+    * page
+    *
+    * @return string
+    */
+    public function getMediaType() {
+      return 'music playlist';
+    }
+    
     // Interfaces
 
     public function getTitle()
@@ -151,6 +162,10 @@ class Music_Model_Playlist extends Core_Model_Item_Abstract
             $playlist_song->title       = preg_replace('/\.(mp3|m4a|aac|mp4)$/i', '', $file->name);
             $playlist_song->order       = engine_count($this->getSongs());
             $playlist_song->save();
+            if($this->approved) {
+              $this->resubmit = 1;
+              $this->save();
+            }
             return $playlist_song;
         }
 

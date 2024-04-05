@@ -53,10 +53,10 @@ CREATE TABLE IF NOT EXISTS `phpfox_blog_category` (
 CREATE TABLE IF NOT EXISTS `engine4_blog_categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
-  `category_name` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `category_name` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`category_id`),
   KEY `user_id` (`user_id`),
   KEY `category_id` (`category_id`,`category_name`),
   KEY `category_name` (`category_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */

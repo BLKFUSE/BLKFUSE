@@ -167,7 +167,7 @@ class Seswishe_IndexController extends Sesapi_Controller_Action_Standard
   }
   public function getIframelyInformationAction($return = false) {
     $url = trim(strip_tags($this->_getParam('video')));
-    $information = $this->handleIframelyInformation($url);
+    $information = Engine_Api::_()->sesbasic()->handleIframelyInformation($url);
     $valid = !empty($information['code']);
     $message = "";
     if(!$valid){
@@ -353,7 +353,7 @@ class Seswishe_IndexController extends Sesapi_Controller_Action_Standard
         ));
         $wishe = $table->createRow();
         if($values['video']) {
-          $information = $this->handleIframelyInformation($values['video']);
+          $information = Engine_Api::_()->sesbasic()->handleIframelyInformation($values['video']);
           $values['code'] = $information['code'];
           try{
             $wishe->setPhoto($information['thumbnail']);

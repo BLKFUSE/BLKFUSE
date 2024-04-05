@@ -23,11 +23,9 @@
     <div class="sesbasic-form-cont">
     <h3><?php echo $this->translate("Payments Made to Gifts Owners") ?></h3>
     <p><?php echo $this->translate('This page lists all of the payments made to the gift owners on your website. You can use this page to monitor these payments made. Entering criteria into the filter fields will help you find specific payment detail. Leaving the filter fields blank will show all the payments made to gift owners on your social network.'); ?></p>
-    <br />
     <div class='admin_search sesbasic_search_form'>
       <?php echo $this->formFilter->render($this) ?>
     </div>
-    <br />
     <?php $counter = $this->paginator->getTotalItemCount(); ?> 
     <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
       <div class="sesbasic_search_reasult">
@@ -71,7 +69,6 @@
         </table>
         </div>
       </form>
-      <br/>
       <div>
         <?php echo $this->paginationControl($this->paginator); ?>
       </div>

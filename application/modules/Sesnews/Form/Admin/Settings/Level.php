@@ -168,13 +168,6 @@ class Sesnews_Form_Admin_Settings_Level extends Authorization_Form_Admin_Level_A
         'value' => 1,
       ));
 
-      // Element: auth_html
-      $this->addElement('Text', 'auth_html', array(
-        'label' => 'HTML in News Entries?',
-        'description' => 'If you want to allow specific HTML tags, you can enter them below (separated by commas). Example: b, img, a, embed, font',
-        'value' => 'strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr'
-      ));
-
       $this->addElement('Radio', 'allow_levels', array(
           'label' => 'Allow to choose "News View Privacy Based on Member Levels"',
           'description' => 'Do you want to allow the members of this level to choose View privacy of their Pages based on Member Levels on your website? If you choose Yes, then users will be able to choose the visibility of their Pages to members of selected member levels only.',

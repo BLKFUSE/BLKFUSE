@@ -39,8 +39,8 @@ if(value == 1) {
   var enableShareval = scriptJquery('input[name=sesadvancedactivity_enablesocialshare]:checked').val();
   var enablesessocialshareval = scriptJquery('input[name=sesadvancedactivity_enablesessocialshare]:checked').val();
   scriptJquery('input[name="sesadvancedactivity_enablesocialshare"]').prop('checked',true);
-  document.getElementById('sesadvancedactivity_enableplusicon-wrapper').style.display = 'block';
-  document.getElementById('sesadvancedactivity_iconlimit-wrapper').style.display = 'block';
+  document.getElementById('sesadvancedactivity_enableplusicon-wrapper').style.display = 'flex';
+  document.getElementById('sesadvancedactivity_iconlimit-wrapper').style.display = 'flex';
 } else {
   document.getElementById('sesadvancedactivity_enableplusicon-wrapper').style.display = 'none';
   document.getElementById('sesadvancedactivity_iconlimit-wrapper').style.display = 'none';

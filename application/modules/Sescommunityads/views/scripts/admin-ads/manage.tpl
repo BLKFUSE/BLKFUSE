@@ -54,13 +54,9 @@ $text = "Below you can also get the short code for ads which you can place in th
 ?>
 <h3><?php echo $this->translate("Manage Ads") ?></h3>
 <p>All the Ads created by your members will get listed here. You can search any Ad by entering the criteria into the searching fields. You can also View, Edit and Delete any Ad from this section if you want. Here you will find all the details for the Ads.<?php echo $text; ?></p>
-<br />
 <div class='admin_search sesbasic_search_form'>
   <?php echo $this->formFilter->render($this); ?>
 </div>
-<br />
-
-<br />
 <?php $counter = $this->paginator->getTotalItemCount(); ?> 
 <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
   <div class="sesbasic_search_reasult">
@@ -90,8 +86,8 @@ $text = "Below you can also get the short code for ads which you can place in th
           <tr>
             <td><input type='checkbox' class='checkbox' name='delete_<?php echo $item->getIdentity();?>' value="<?php echo $item->getIdentity(); ?>" /></td>
             <td><?php echo $item->getIdentity() ?></td>
-            <td><?php echo $this->htmlLink($this->url(array('action' => 'view', 'ad_id' => $item->getIdentity()),'sescommunityads_general',false), $this->translate(Engine_Api::_()->sesbasic()->textTruncation($item->getTitle(),16)), array('title' => $item->getTitle(), 'target' => '_blank')) ?></td>
-            <td><?php echo $this->htmlLink($item->getOwner()->getHref(), $this->translate(Engine_Api::_()->sesbasic()->textTruncation($item->getOwner()->getTitle(),16)), array('title' => $this->translate($item->getOwner()->getTitle()), 'target' => '_blank')) ?></td>
+            <td><?php echo $this->htmlLink($this->url(array('action' => 'view', 'ad_id' => $item->getIdentity()),'sescommunityads_general',false), $this->translate($item->getTitle()), array('title' => $item->getTitle(), 'target' => '_blank')) ?></td>
+            <td><?php echo $this->htmlLink($item->getOwner()->getHref(), $this->translate($item->getOwner()->getTitle()), array('title' => $this->translate($item->getOwner()->getTitle()), 'target' => '_blank')) ?></td>
             <td class="admin_table_centered">
               <?php if($item->is_approved == 1):?>
                 <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'sescommunityads', 'controller' => 'admin-ads', 'action' => 'approved', 'id' => $item->getIdentity()), $this->htmlImage($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/images/icons/check.png', '', array('title'=> $this->translate('Unapprove')))) ?>
@@ -127,7 +123,7 @@ $text = "Below you can also get the short code for ads which you can place in th
               <?php if($package->price < 1):?>
                 <?php echo "FREE";?>
               <?php else:?>
-                <?php $currentCurrency = Engine_Api::_()->sescommunityads()->getCurrentCurrency();?>
+                <?php $currentCurrency = Engine_Api::_()->payment()->getCurrentCurrency();?>
                 <?php echo $package->getPackageDescription();?>
               <?php endif;?>
             </td>
@@ -151,12 +147,10 @@ $text = "Below you can also get the short code for ads which you can place in th
         </tbody>
       </table>
       </div>
-    <br />
     <div class='buttons'>
       <button type='submit'><?php echo $this->translate("Delete Selected") ?></button>
     </div>
   </form>
-  <br/>
   <div>
     <?php echo $this->paginationControl($this->paginator,null,null,$this->urlParams); ?>
   </div>

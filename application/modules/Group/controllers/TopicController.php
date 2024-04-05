@@ -75,6 +75,12 @@ class Group_TopicController extends Core_Controller_Action_Standard
     $this->view->canPostDelete = $topic->canPostDelete(Engine_Api::_()->user()->getViewer());
     $this->view->officerList = $group->getOfficerList();
     
+    if( !$group || !$group->getIdentity() || ((!$group->approved) && !$group->isOwner($viewer)) ) {
+      if(!empty($viewer->getIdentity()) && $viewer->isAdmin()) {
+      } else
+        return $this->_forward('requireauth', 'error', 'core');
+    }
+    
     $this->view->canAdminEdit = Engine_Api::_()->authorization()->isAllowed($group, null, 'edit');
 
     $this->view->canPost = $canPost = $group->authorization()->isAllowed(null,  'topic_create');
@@ -194,6 +200,9 @@ class Group_TopicController extends Core_Controller_Action_Standard
       $post = $postTable->createRow();
       $post->setFromArray($values);
       $post->save();
+      
+      //Save editor images
+      Engine_Api::_()->core()->saveTinyMceImages($values['body'], $post);
 
       // Create topic watch
       $topicWatchesTable->insert(array(
@@ -293,6 +302,9 @@ class Group_TopicController extends Core_Controller_Action_Standard
       $post = $postTable->createRow();
       $post->setFromArray($values);
       $post->save();
+      
+      //Save editor images
+      Engine_Api::_()->core()->saveTinyMceImages($values['body'], $post);
 
       // Watch
       if( false === $isWatching ) {
@@ -504,7 +516,7 @@ class Group_TopicController extends Core_Controller_Action_Standard
       $topic = Engine_Api::_()->core()->getSubject();
       $group = $topic->getParent('group');
       $topic->delete();
-
+      
       $db->commit();
     }
 

@@ -150,4 +150,12 @@ class Fields_Model_DbTable_Options extends Fields_Model_DbTable_Abstract
 
     return $this;
   }
+  
+  public function getOptionValue($params = array()) {
+    return $this->select()
+          ->from($this->info('name'), array('label'))
+          ->where($this->info('name') . '.option_id = ?', $params['option_id'])
+          ->query()
+          ->fetchColumn();
+  }
 }

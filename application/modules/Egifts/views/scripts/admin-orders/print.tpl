@@ -31,12 +31,12 @@
         <tr>
           <td><?php echo $order->giftorder_id; ?></td>
           <td><?php echo $order->gift_title; ?></td>
-          <td><?php echo Engine_Api::_()->egifts()->getCurrencyPrice($order->gift_price); ?></td>
+          <td><?php echo Engine_Api::_()->payment()->getCurrencyPrice($order->gift_price); ?></td>
         </tr>
         <?php endforeach; ?>
 				<tr>
 					<td colspan="2"><strong><?php echo $this->translate('Subtotal'); ?></strong></td>
-					<td><strong><?php echo Engine_Api::_()->egifts()->getCurrencyPrice($this->giftpurchase->total_amount); ?></strong></td>
+					<td><strong><?php echo Engine_Api::_()->payment()->getCurrencyPrice($this->giftpurchase->total_amount); ?></strong></td>
 				</tr>
       </tbody>
     </table>

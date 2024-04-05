@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `se_classifiedcats` (
   `classifiedcat_order` smallint(5) unsigned NOT NULL default '0',
   `classifiedcat_signup` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`classifiedcat_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=2 ;
  *
  */
 
@@ -36,20 +36,20 @@ CREATE TABLE IF NOT EXISTS `se_classifiedfields` (
   `classifiedfield_desc` int(10) unsigned NOT NULL default '0',
   `classifiedfield_error` int(10) unsigned NOT NULL default '0',
   `classifiedfield_type` tinyint(3) unsigned NOT NULL default '0',
-  `classifiedfield_style` varchar(255) collate utf8_unicode_ci default NULL,
+  `classifiedfield_style` varchar(255) collate utf8mb4_unicode_ci default NULL,
   `classifiedfield_maxlength` smallint(5) unsigned NOT NULL default '0',
-  `classifiedfield_link` varchar(255) collate utf8_unicode_ci default NULL,
-  `classifiedfield_options` longtext collate utf8_unicode_ci,
+  `classifiedfield_link` varchar(255) collate utf8mb4_unicode_ci default NULL,
+  `classifiedfield_options` longtext COLLATE utf8mb4_unicode_ci,
   `classifiedfield_required` tinyint(3) unsigned NOT NULL default '0',
-  `classifiedfield_regex` varchar(255) collate utf8_unicode_ci default NULL,
-  `classifiedfield_html` varchar(255) collate utf8_unicode_ci default NULL,
+  `classifiedfield_regex` varchar(255) collate utf8mb4_unicode_ci default NULL,
+  `classifiedfield_html` varchar(255) collate utf8mb4_unicode_ci default NULL,
   `classifiedfield_search` tinyint(3) unsigned NOT NULL default '0',
   `classifiedfield_signup` tinyint(3) unsigned NOT NULL default '0',
   `classifiedfield_display` tinyint(3) unsigned NOT NULL default '0',
   `classifiedfield_special` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`classifiedfield_id`),
   KEY `INDEX` (`classifiedfield_classifiedcat_id`,`classifiedfield_dependency`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -68,7 +68,7 @@ CREATE TABLE `engine4_classified_fields_maps` (
 CREATE TABLE `engine4_classified_fields_meta` (
   `field_id` int(11) NOT NULL auto_increment,
 
-  `type` varchar(24) collate latin1_general_ci NOT NULL,
+  `type` varchar(24) collate utf8mb4_unicode_ci NOT NULL,
   `label` varchar(64) NOT NULL,
   `description` varchar(255) NOT NULL default '',
   `alias` varchar(32) NOT NULL default '',
@@ -85,7 +85,7 @@ CREATE TABLE `engine4_classified_fields_meta` (
   `error` text NULL,
 
   PRIMARY KEY  (`field_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */
 
@@ -97,7 +97,7 @@ CREATE TABLE `engine4_classified_fields_options` (
   `order` smallint(6) NOT NULL default '999',
   PRIMARY KEY  (`option_id`),
   KEY `field_id` (`field_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */
 
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `se_classifiedvalues` (
   `classifiedvalue_classified_id` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`classifiedvalue_id`),
   KEY `INDEX` (`classifiedvalue_classified_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -130,6 +130,6 @@ CREATE TABLE `engine4_classified_fields_values` (
   `index` smallint(3) NOT NULL default '0',
   `value` text NOT NULL,
   PRIMARY KEY  (`item_id`,`field_id`,`index`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

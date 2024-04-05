@@ -10,13 +10,8 @@
  */
 
 ?>
-<h2><?php echo $this->translate('Elpis Theme') ?></h2>
+<?php include APPLICATION_PATH .  '/application/modules/Elpis/views/scripts/_adminHeader.tpl';?>
 
-<?php if( engine_count($this->navigation) ): ?>
-  <div class='tabs'>
-    <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?>
-  </div>
-<?php endif; ?>
 <h2><?php echo $this->translate('Global Settings') ?></h2>
 <p><?php echo $this->translate("These settings affect all members in your community.") ?></p>
 <?php echo 'More info: <a href="https://community.socialengine.com/blogs/597/72/elpis-theme" target="_blank">See KB article</a>'; ?>
@@ -38,4 +33,7 @@
       scriptJquery('#elpis_changelanding-0').prop('checked',false);
     }
   }
+</script>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_elpis').parent().addClass('active');
 </script>

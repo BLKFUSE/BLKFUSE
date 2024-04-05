@@ -9,7 +9,7 @@ Composer.Plugin.Buysell = function(options){
   this.name = 'buysell'
 
   this.options = {
-    title : 'Sell Something',
+    title : en4.core.language.translate("Sell Something"),
     lang : {},
     // Options for the link preview request
     requestOptions : {},

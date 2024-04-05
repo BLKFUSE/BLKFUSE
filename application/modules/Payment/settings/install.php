@@ -16,12 +16,10 @@
  * @copyright  Copyright 2006-2020 Webligo Developments
  * @license    http://www.socialengine.com/license/
  */
-class Payment_Installer extends Engine_Package_Installer_Module
-{
+class Payment_Installer extends Engine_Package_Installer_Module {
 
-
-  public function onInstall()
-  {
+  public function onInstall() {
+  
     $db = $this->getDb();
             // Check for levels column
     try {
@@ -31,7 +29,7 @@ class Payment_Installer extends Engine_Package_Installer_Module
         }
     } catch( Exception $e ) {}
 
-    if($this->_databaseOperationType != 'upgrade'){
+    if($this->_databaseOperationType != 'upgrade') {
         $select = new Zend_Db_Select($db);
         // profile page
         $select

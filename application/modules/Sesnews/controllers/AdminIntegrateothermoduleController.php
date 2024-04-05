@@ -67,10 +67,10 @@ class Sesnews_AdminIntegrateothermoduleController extends Core_Controller_Action
         $row->setFromArray($values);
         $row->save();
 
-        $modulename = $values['module_name'];
-        $dbInsert->query('INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `enabled`, `custom`, `order`) VALUES ("sesnews_main_browsenews_'.$row->getIdentity().'", "sesnews", "Browse News", "", \'{"route":"sesnews_browsenews_'.$row->getIdentity().'","action":"browse-news", "resource_type":"'.$values['content_type'].'"}\', "'.$modulename.'_main", "", 1, 0, 999)');
-
-        $this->createBrowseNewsPage($modulename, $row->getIdentity());
+//         $modulename = $values['module_name'];
+//         $dbInsert->query('INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `enabled`, `custom`, `order`) VALUES ("sesnews_main_browsenews_'.$row->getIdentity().'", "sesnews", "Browse News", "", \'{"route":"sesnews_browsenews_'.$row->getIdentity().'","action":"browse-news", "resource_type":"'.$values['content_type'].'"}\', "'.$modulename.'_main", "", 1, 0, 999)');
+// 
+//         $this->createBrowseNewsPage($modulename, $row->getIdentity());
 
         $db->commit();
       } catch (Exception $e) {
@@ -193,21 +193,21 @@ class Sesnews_AdminIntegrateothermoduleController extends Core_Controller_Action
       $db->beginTransaction();
       try {
 
-        $inttable = Engine_Api::_()->getItem('sesnews_integrateothermodule', $this->_getParam('integrateothermodule_id'));
-        $pageName = "sesnews_index_".$this->_getParam('integrateothermodule_id');
-        if (!empty($pageName)) {
-          $page_id = $db->select()
-                  ->from('engine4_core_pages', 'page_id')
-                  ->where('name = ?', $pageName)
-                  ->limit(1)
-                  ->query()
-                  ->fetchColumn();
-          if($page_id) {
-            Engine_Api::_()->getDbTable('content', 'core')->delete(array('page_id =?' => $page_id));
-            Engine_Api::_()->getDbTable('pages', 'core')->delete(array('page_id =?' => $page_id));
-          }
-        }
-        Engine_Api::_()->getDbtable('menuItems', 'core')->delete(array('name =?' => 'sesnews_main_browsenews_' . $this->_getParam('integrateothermodule_id')));
+//         $inttable = Engine_Api::_()->getItem('sesnews_integrateothermodule', $this->_getParam('integrateothermodule_id'));
+//         $pageName = "sesnews_index_".$this->_getParam('integrateothermodule_id');
+//         if (!empty($pageName)) {
+//           $page_id = $db->select()
+//                   ->from('engine4_core_pages', 'page_id')
+//                   ->where('name = ?', $pageName)
+//                   ->limit(1)
+//                   ->query()
+//                   ->fetchColumn();
+//           if($page_id) {
+//             Engine_Api::_()->getDbTable('content', 'core')->delete(array('page_id =?' => $page_id));
+//             Engine_Api::_()->getDbTable('pages', 'core')->delete(array('page_id =?' => $page_id));
+//           }
+//         }
+//         Engine_Api::_()->getDbtable('menuItems', 'core')->delete(array('name =?' => 'sesnews_main_browsenews_' . $this->_getParam('integrateothermodule_id')));
 
         $integrateothermodule = Engine_Api::_()->getItem('sesnews_integrateothermodule', $this->_getParam('integrateothermodule_id'));
         $integrateothermodule->delete();
@@ -233,7 +233,7 @@ class Sesnews_AdminIntegrateothermoduleController extends Core_Controller_Action
     $content = Engine_Api::_()->getItemTable('sesnews_integrateothermodule')->fetchRow(array('integrateothermodule_id = ?' => $this->_getParam('integrateothermodule_id')));
     try {
 
-      Engine_Api::_()->getDbtable('menuItems', 'core')->update(array('enabled' => !$content->enabled), array('name =?' => 'sesnews_main_browsenews_' . $this->_getParam('integrateothermodule_id')));
+      //Engine_Api::_()->getDbtable('menuItems', 'core')->update(array('enabled' => !$content->enabled), array('name =?' => 'sesnews_main_browsenews_' . $this->_getParam('integrateothermodule_id')));
 
       $content->enabled = !$content->enabled;
       $content->save();

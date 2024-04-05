@@ -736,7 +736,8 @@
                 // Input
                 this.elements.input = scriptJquery.crtEle('textarea', {
                     'id' : 'chat_input_' + identity,
-                    'class' : 'chat_input'
+                    'class' : 'chat_input',
+                    "placeholder":en4.core.language.translate("Type a message and press enter."),
                 }).appendTo(this.elements.inputWrapper);
             }
 
@@ -774,10 +775,12 @@
                 }
 
                 this.elements.input.focus();
-                message = scriptJquery("<div>"+message+"</div>").text();
+                //message = scriptJquery("<div>"+message+"</div>").text();
+                message = scriptJquery("<div>").text(message).html();
             } else {
                 message = this.elements.input.val();
-                message = scriptJquery("<div>"+message+"</div>").text();
+                //message = scriptJquery("<div>"+message+"</div>").text();
+                message = scriptJquery("<div>").text(message).html();
                 this.elements.input.val('');
             }
 
@@ -884,18 +887,24 @@
           // Get el
           var userElId = 'chat_room_' + this.options.identity + '_user_' + data.identity;
           var userEl = scriptJquery("#"+userElId);
+          var icon = ''
           if( parseInt(data.state) >= 1 ) {
               if( !userEl.length ) {
+                
+                if(data.icon) {
+                  icon = '<img data-bs-toggle="tooltip" title="'+en4.core.language.translate(data.verified_tiptext)+'" src="'+data.icon+'" alt="" class="verified_icon">';
+                }
+                
                 if(data.photo) {
                   userEl = scriptJquery.crtEle('li', {
                     'id' : userElId,
-                  }).html('<span class="chat_user_photo"><span class="bg_item_photo bg_thumb_icon bg_item_photo_user" style="background-image:url(' + (data.photo) + ')"></span></span>' + '<span class="chat_user_name"><a href="' + data.href + '" target="_blank">' + data.title + '</a></span>')
+                  }).html('<span class="chat_user_photo"><span class="bg_item_photo bg_thumb_icon bg_item_photo_user" style="background-image:url(' + (data.photo) + ')"></span></span>' + '<span class="chat_user_name"><a href="' + data.href + '" target="_blank">' + data.title + icon + '</a></span>')
                   .appendTo(this.elements.usersList);
                 } else {
                   userEl = scriptJquery.crtEle('li', {
-                    'id' : userElId,
-                  }).html('<span class="chat_user_photo"><span class="bg_item_photo bg_thumb_icon bg_item_photo_user bg_item_nophoto"></span></span>' + '<span class="chat_user_name"><a href="' + data.href + '" target="_blank">' + data.title + '</a></span>')
-                  .appendTo(this.elements.usersList);
+                      'id' : userElId,
+                    }).html('<span class="chat_user_photo"><span class="bg_item_photo bg_thumb_icon bg_item_photo_user bg_item_nophoto"></span></span>' + '<span class="chat_user_name"><a href="' + data.href + '" target="_blank">' + data.title + icon + '</a></span>')
+                    .appendTo(this.elements.usersList);
                 }
 
                 // Add system notice
@@ -969,7 +978,7 @@
           else
           {
               var user = this.users.get(data.user_id);
-
+              var icon = '';
               // Add message
               msgWrpr = scriptJquery.crtEle('li').appendTo(this.elements.messagesList);
 
@@ -984,15 +993,20 @@
                     'class' : 'chat_message_photo',
                 })).html('<a href="' + user.href + '" target="_blank"><span class="bg_item_photo bg_thumb_icon bg_item_photo_user" style="background-image:url('+ user.photo  +')"></span></a>').appendTo(msgWrpr);
               } else {
+                
                 (scriptJquery.crtEle('div', {
                   'class' : 'chat_message_photo',
                 })).html('<a href="' + user.href + '" target="_blank"><span class="bg_item_photo bg_thumb_icon bg_item_photo_user bg_item_nophoto"></span></a>').appendTo(msgWrpr);
               }
-
+              
+              if(user.icon) {
+                icon = '<img data-bs-toggle="tooltip" title="'+en4.core.language.translate(user.verified_tiptext)+'" src="'+user.icon+'" alt="" class="verified_icon">';
+              }
+              
               var tmpMsgEl = (scriptJquery.crtEle('div', {
-                  'class' : 'chat_message_info',
+                'class' : 'chat_message_info',
               })).html('\n\
-                <span class="chat_message_info_author"><a href="' + user.href + '" target="_blank">' + user.title + '</a></span>\n\
+                <span class="chat_message_info_author"><a href="' + user.href + '" target="_blank">' + user.title + icon + '</a></span>\n\
                 <span class="chat_message_info_body">' + body + '</span>\n\
               ');
               tmpMsgEl.appendTo(msgWrpr);
@@ -1245,7 +1259,8 @@
             title : 'Untitled',
             showClose : true,
             showHide : true,
-            hiddenByDefault : true
+            hiddenByDefault : true,
+            icon: '',
         };
 
         handler = false;
@@ -1284,7 +1299,6 @@
         }
 
         render() {
-
             var name = this.options.name;
             var uid = this.options.uid;
 
@@ -1618,12 +1632,17 @@
           var bodyEl = this.getBody();
           var userElId = 'im_user_' + user_id;
           var userEl = scriptJquery("#"+userElId);
-
+          var icon = '';
           if( data.self == 1 ) {
             return;
           }
           if( parseInt(data.state) >= 1 ) {
             if(!userEl.length) {
+              
+              if(data.icon) {
+                icon = '<img data-bs-toggle="tooltip" title="'+en4.core.language.translate(data.verified_tiptext)+'" src="'+data.icon+'" alt="" class="verified_icon">';
+              }
+              
               if(data.photo) {
                 userEl = scriptJquery.crtEle('li', {
                     'id' : userElId,
@@ -1632,7 +1651,7 @@
                   <span class="bg_item_photo bg_thumb_icon bg_item_photo_user" style="background-image:url('+ data.photo  +')"></span>\n\
                 </span>\n\
                 <span class="im_menu_friends_name">\n\
-                  ' + data.title + '\n\
+                  ' + data.title + icon + '\n\
                 </span>\n\
                 ').click(function() {
                     this.handler.open(user_id, true);
@@ -1645,7 +1664,7 @@
                   <span class="bg_item_photo bg_thumb_icon bg_item_photo_user bg_item_nophoto"></span>\n\
                 </span>\n\
                 <span class="im_menu_friends_name">\n\
-                  ' + data.title + '\n\
+                  ' + data.title + icon + '\n\
                 </span>\n\
                 ').click(function() {
                     this.handler.open(user_id, true);
@@ -1721,7 +1740,8 @@
               //this.elements.menuInput.focus();
           } else {
               this.elements.menuInput = scriptJquery.crtEle('textarea', {
-                  'class' : 'im_menu_input im_menu_'  + this.options.name + '_input'
+                  'class' : 'im_menu_input im_menu_'  + this.options.name + '_input',
+                  "placeholder":en4.core.language.translate("Type a message and press enter."),
               }).appendTo(this.elements.menuFooter);
 
               if( this.options.uid ) this.elements.menuInput.attr('id', 'im_menu_' + this.options.uid + '_input');
@@ -1799,10 +1819,12 @@
                 this.elements.menuInput.html('<p><br /></p>');
             }
             this.elements.menuInput.focus();
-            message = scriptJquery("<div>"+message+"</div>").text();
+            //message = scriptJquery("<div>"+message+"</div>").text();
+            message = scriptJquery("<div>").text(message).html();
           } else {
             message = this.elements.menuInput.val();
-            message = scriptJquery("<div>"+message+"</div>").text();
+            message = scriptJquery("<div>").text(message).html();
+            //message = scriptJquery("<div>"+message+"</div>").text();
             this.elements.menuInput.val('');
           }
           message = message.trim();
@@ -1858,6 +1880,14 @@
               return;
           }
           var messageEl;
+          var userTitle = user.title;
+          var icon = '';
+          
+          if(user.icon) {
+            icon = '<img data-bs-toggle="tooltip" title="'+en4.core.language.translate(user.verified_tiptext)+'" src="'+user.icon+'" alt="" class="verified_icon">';
+          }
+          userTitle = userTitle + icon;
+          
           // Process body
           var body = data.body;
           body = ChatHandler_Utility.replaceSmilies(body);
@@ -1884,7 +1914,8 @@
             if( $type(data.whisper_id) ) {
                 messageEl.attr('id', 'chat_whisper_'+data.whisper_id);
             }
-            (scriptJquery.crtEle('span', {'class' : 'im_convo_messages_author'}).html(user.title).appendTo(messageEl));
+
+            (scriptJquery.crtEle('span', {'class' : 'im_convo_messages_author'}).html(userTitle).appendTo(messageEl));
             var tmpMsgEl = (scriptJquery.crtEle('span', {'class' : 'im_convo_messages_body'}).html(body).appendTo(messageEl));
             tmpMsgEl.enableLinks();
 

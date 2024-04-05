@@ -87,13 +87,9 @@ class Classified_Form_Create extends Engine_Form
         }
 
         // Element: description
-        $allowedHtml = Engine_Api::_()->authorization()->getPermission($userLevel, 'classified', 'auth_html');
-        $uploadUrl = "";
+        //$allowedHtml = Engine_Api::_()->authorization()->getPermission($userLevel, 'classified', 'auth_html');
         $viewer = Engine_Api::_()->user()->getViewer();
-        if( $allowedHtml && Engine_Api::_()->authorization()->isAllowed('album', $viewer, 'create') ) {
-            $uploadUrl = Zend_Controller_Front::getInstance()->getRouter()
-                ->assemble(array('controller' => 'index', 'action' => 'upload-photo'), 'classified_general', true);
-        }
+        $uploadUrl = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'index', 'action' => 'upload-photo'), 'default', true);
 
         $this->addElement('TinyMce', 'body', array(
             'label' => 'Description',
@@ -105,11 +101,12 @@ class Classified_Form_Create extends Engine_Form
             ),
             'editorOptions' => array(
                 'uploadUrl' => $uploadUrl,
-                'html' => (bool) $allowedHtml,
+                //'html' => (bool) $allowedHtml,
             ),
             'filters' => array(
-                new Engine_Filter_Censor(),
-                new Engine_Filter_Html(array('AllowedTags'=> $allowedHtml))),
+              new Engine_Filter_Censor(),
+              //new Engine_Filter_Html(array('AllowedTags'=> $allowedHtml))
+            ),
         ));
 
         // Element: upload photo

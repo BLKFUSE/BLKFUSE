@@ -44,8 +44,8 @@ class Sesalbum_Form_Album extends Engine_Form
       ->setAttrib('name', 'albums_create')
       ->setAttrib('enctype','multipart/form-data')
        ->setAttrib('autocomplete','false')
-      ->setAction(Zend_Controller_Front::getInstance()->getRouter()->assemble(array()))
-      ;
+      ->setAction(Zend_Controller_Front::getInstance()->getRouter()->assemble(array()));
+      
     // Init album
     $albumTable = Engine_Api::_()->getItemTable('album');
     $myAlbums = $albumTable->select()
@@ -65,14 +65,19 @@ class Sesalbum_Form_Album extends Engine_Form
     foreach( $myAlbums as $myAlbum ) {
       $albumOptions[$myAlbum['album_id']] = $myAlbum['title'];
     }
-    if($current_count!=0){
-    $this->addElement('Select', 'album', array(
-      'label' => 'Choose Album',
-      'multiOptions' => $albumOptions,
-      'onchange' => "updateTextFields()",
-    ));}else{ $this->addElement('hidden', 'album', array(
-      'value' => $albumOptions,
-    ));};
+    
+    if($current_count != 0) {
+      $this->addElement('Select', 'album', array(
+        'label' => 'Choose Album',
+        'multiOptions' => $albumOptions,
+        'onchange' => "updateTextFields()",
+      ));
+    } else { 
+      $this->addElement('hidden', 'album', array(
+        'value' => $albumOptions,
+      ));
+    }
+    
     // Init name
     $this->addElement('Text', 'title', array(
       'label' => 'Album Title',
@@ -257,6 +262,7 @@ class Sesalbum_Form_Album extends Engine_Form
 		$defaultProfileId = "0_0_" . $this->getDefaultProfileId();
     $customFields = new Sesbasic_Form_Custom_Fields(array(
         'item' => 'album',
+        'isCreation' => true,
         'decorators' => array(
             'FormElements'
     )));
@@ -290,7 +296,7 @@ class Sesalbum_Form_Album extends Engine_Form
 			if(engine_count($packages)) {
 				$packagesArray = array('' => 'Select Package');
 				foreach($packages as $package) {
-					$packagesArray[$package->getIdentity()] = $package->title . ' ('. Engine_Api::_()->epaidcontent()->getCurrencyPrice($package->price, Engine_Api::_()->epaidcontent()->defaultCurrency()) . ')';
+					$packagesArray[$package->getIdentity()] = $package->title . ' ('. Engine_Api::_()->payment()->getCurrencyPrice($package->price, Engine_Api::_()->epaidcontent()->defaultCurrency()) . ')';
 				}
 				$this->addElement('Select', 'package_id', array(
 					'label' => 'Choose Package',

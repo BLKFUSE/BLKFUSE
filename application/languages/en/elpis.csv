@@ -1,13 +1,10 @@
 "Contrast";"Contrast"
 "Default Mode";"Default Mode"
-"Dark Mode";"Dark Mode"
 "Font";"Font"
 "Small Font";"Small Font"
 "Default Font";"Default Font"
 "Large Font";"Large Font"
 "Font";"Font"
-"Light Mode";"Light Mode"
-
 
 "Add New Custom Theme";"Add New Custom Theme"
 "Enter the new custom theme name.";"Enter the new custom theme name."
@@ -95,3 +92,7 @@
 "Add New Custom Theme";"Add New Custom Theme"
 "Edit Custom Theme Name";"Edit Custom Theme Name"
 "Delete Custom Theme";"Delete Custom Theme"
+
+"PAGETITLE-ELPIS-INDEX-ADMIN-SETTINGS";"Elpis Theme Global Settings"
+"PAGETITLE-ELPIS-MANAGE-FONTS-ADMIN-SETTINGS";"Manage Fonts"
+"PAGETITLE-ELPIS-STYLING-ADMIN-SETTINGS";"Manage Color Schemes"

@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenuItemName' => 'core_admin_main_plugins', 'childMenuItemName' => 'core_admin_main_plugins_sesadvancedactivity')); ?>
 <h2>
   <?php echo $this->translate("Advanced Nested Comments with Attachments Plugin") ?>
 </h2>

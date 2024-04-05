@@ -198,6 +198,9 @@
   responsiveClass:true,
 	//autoplaySpeed: <?php echo $allParams['speed']; ?>,
 	//autoplay: autoplay_<?php echo $this->identity; ?>,
+  <?php if($orientation = ($this->layout()->orientation == 'right-to-left')){ ?>
+    rtl:'true',
+  <?php } ?>  
   responsive:{
     0:{
         items:1,

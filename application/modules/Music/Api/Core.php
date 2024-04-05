@@ -87,6 +87,14 @@ class Music_Api_Core extends Core_Api_Abstract
         {
             $select->where('subsubcat_id = ?', $params['subsubcat_id']);
         }
+
+				if(!empty($params['sort']) && $params['sort'] == 'atoz') {
+					$select->order($p_name .'.title ASC');
+				} else if(!empty($params['sort']) && $params['sort'] == 'ztoa') {
+					$select->order($p_name .'.title DESC');
+				} else  {
+					$select->order( !empty($params['sort']) ? $p_name.'.'.$params['sort'].' DESC' : $p_name.'.creation_date DESC' );
+				}
         
         // USER SEARCH
         if( !empty($params['user']) ) {
@@ -125,28 +133,14 @@ class Music_Api_Core extends Core_Api_Abstract
             ;
         }
 
-        // SORT
-        if( !empty($params['sort']) ) {
-          $sort = $params['sort'];
-          if( 'recent' == $sort ) {
-              $select->order('creation_date DESC');
-          } else if( 'popular' == $sort ) {
-              $select->order("$p_name.play_count DESC");
-          } else if( 'rating' == $sort ) {
-              $select->order("$p_name.rating DESC");
-          }
-        }
-        else $select->order('creation_date DESC');
-
         // STRING SEARCH
         if( !empty($params['search']) ) {
-            $select
-                ->where("$p_name.title LIKE ?", "%{$params['search']}%")
-                ->orWhere("$p_name.description LIKE ?", "%{$params['search']}%")
-                ->joinLeft($ps_name, "$p_name.playlist_id = $ps_name.playlist_id", '')
-                ->orWhere("$ps_name.title LIKE ?", "%{$params['search']}%")
-            ;
+          $select->where($p_name.".title LIKE ? OR ".$p_name.".description LIKE ?", '%'.$params['search'].'%');
         }
+        
+        if(!isset($params['showmusic']) && empty($params['showmusic'])) {
+					$select->where($p_name.'.approved =?', 1);
+				}
 
         $select = Engine_Api::_()->network()->getNetworkSelect($p_name, $select);
 

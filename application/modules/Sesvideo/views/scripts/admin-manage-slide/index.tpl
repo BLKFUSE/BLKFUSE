@@ -30,9 +30,9 @@ function selectAll()
 </script>
 <h3><?php echo "Manage HTML5 Video Background"; ?></h3>
 <p>
-	<?php echo $this->translate("This page lists all the HTML5 Video Backgrounds by you. Here, you can also add and manage any number of HTML5 Videos Backgrounds for your website. You can place these background videos anywhere on your website including the Landing Page and any other widgetized page of your choice.<br /><br />You can add and manage any number of Videos or Photos in each HTML5 Video Background. Each video or photo is highly configurable and you can add title, description, extra button to each slide. You can also choose to show Sign In and Sign Up buttons on each slide with signup form to non-logged in users.<br /><br />You can configure background video in the widget “HTML5 Video Background” from the Layout Editor.") ?>	
+	<?php echo $this->translate("This page lists all the HTML5 Video Backgrounds by you. Here, you can also add and manage any number of HTML5 Videos Backgrounds for your website. You can place these background videos anywhere on your website including the Landing Page and any other widgetized page of your choice.<br />You can add and manage any number of Videos or Photos in each HTML5 Video Background. Each video or photo is highly configurable and you can add title, description, extra button to each slide. You can also choose to show Sign In and Sign Up buttons on each slide with signup form to non-logged in users.<br />You can configure background video in the widget “HTML5 Video Background” from the Layout Editor.") ?>	
 </p>
-<br class="clear" />
+
 <div class="sesbasic_search_reasult">
 	<?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesvideo', 'controller' => 'manage-slide', 'action' => 'create-gallery'), $this->translate("Create New HTML5 Video Background"), array('class'=>'smoothbox sesbasic_icon_add buttonlink')) ?>
 </div>
@@ -74,23 +74,14 @@ function selectAll()
       <?php endforeach; ?>
     </tbody>
   </table>
-
-  <br />
-
   <div class='buttons'>
-
     <button type='submit'><?php echo $this->translate("Delete Selected") ?></button>
   </div>
   </form>
-
-  <br />
-
   <div>
     <?php echo $this->paginationControl($this->paginator); ?>
   </div>
-
 <?php else: ?>
-  <br />
   <div class="tip">
     <span>
       <?php echo $this->translate("There are no gallery by you.") ?>

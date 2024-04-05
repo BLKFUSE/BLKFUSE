@@ -25,6 +25,15 @@ class Payment_Model_DbTable_Gateways extends Engine_Db_Table
     protected $_cryptedColumns = array('config');
 
     private static $_cryptKey;
+    
+    public function getGatewayTitle($gateway_id)
+    {
+        return $this->select()
+            ->from($this, 'title')
+            ->where('gateway_id = ?', $gateway_id)
+            ->query()
+            ->fetchColumn();
+    }
 
     public function getEnabledGatewayCount()
     {

@@ -12,28 +12,21 @@
  */
  
 ?>
-
-<?php include APPLICATION_PATH .  '/application/modules/Sesapi/views/scripts/dismiss_message.tpl';?>
-<?php 
-$this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jQuery/jquery-ui.js');
+<?php include APPLICATION_PATH .  '/application/modules/Sesandroidapp/views/scripts/dismiss_message.tpl';?>
+<?php
 $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jQuery/odering.js'); 
 ?>
-<h2>
+<h2 class="page_heading">
   <?php echo $this->translate('Native Android Mobile App'); ?>
 </h2>
+
 <?php if( engine_count($this->navigation)): ?>
   <div class='tabs'> <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?> </div>
 <?php endif; ?>
 <h3>Manage Dashboard Menu Items</h3>
-<br>
-<p>
- Here, you can manage the Android app Dashboard by creating new Menu Items and arrange them in categories. You can create new Categories also and add or arrange menu items under them by simply dragging and dropping them vertically on the page below.<br><br>
-
-You can take various actions like editing, enable / disable, delete on menu items and categories from the here. The default menu items can not be deleted, but can be disabled.<br><br>
-
-Note: Below, you can also add links to any other 3rd party plugin (which is not natively supported with this app) in the menu items and show them in Web View on your website.<br><br>
-
-</p>
+<p>Here, you can manage the Android app Dashboard by creating new Menu Items and arrange them in categories. You can create new Categories also and add or arrange menu items under them by simply dragging and dropping them vertically on the page below.</p>
+<p>You can take various actions like editing, enable / disable, delete on menu items and categories from the here. The default menu items can not be deleted, but can be disabled. </p>
+<p>Note: Below, you can also add links to any other 3rd party plugin (which is not natively supported with this app) in the menu items and show them in Web View on your website.</p>
 <div class="sesandroidapp_search_result"><?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesandroidapp', 'controller' => 'menu', 'action' => 'create'), $this->translate("Add New Menu Item / Category"), array('class'=>'buttonlink sesandroidapp_icon_add smoothbox')); ?>
 
 </div>

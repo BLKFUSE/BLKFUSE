@@ -37,7 +37,10 @@ class Egifts_Plugin_Core extends Zend_Controller_Plugin_Abstract  {
     return $this->onRenderLayoutDefault($event, 'simple');
   }
   public function onRenderLayoutDefault($event) {
-     $settings =  Engine_Api::_()->getApi('settings', 'core');
+    
+    if( defined('_ENGINE_ADMIN_NEUTER') && _ENGINE_ADMIN_NEUTER ) return;
+    
+    $settings =  Engine_Api::_()->getApi('settings', 'core');
     $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
     $viewer = Engine_Api::_()->user()->getViewer();
     $request = Zend_Controller_Front::getInstance()->getRequest();  //echo "<pre>"; print_r($request);die;
@@ -47,13 +50,6 @@ class Egifts_Plugin_Core extends Zend_Controller_Plugin_Abstract  {
     $headScript = new Zend_View_Helper_HeadScript();
     $script = '';
     $headScript->appendFile(Zend_Registry::get('StaticBaseUrl') . 'application/modules/Courses/externals/scripts/core.js');
-    if(Engine_Api::_()->getApi('settings', 'core')->getSetting('course.icon.open.smoothbox', 1) && $moduleName == 'egifts'){
-       
-      $headScript->appendFile(Zend_Registry::get('StaticBaseUrl') . 'application/modules/Sesbasic/externals/scripts/jquery1.11.js');
-      
-      $headScript->appendFile(Zend_Registry::get('StaticBaseUrl') . 'externals/autocompleter/autocomplete.js');
-      $headScript->appendFile(Zend_Registry::get('StaticBaseUrl')  . 'externals/tinymce/tinymce.min.js'); 
-    } 
     $checkWelcomeCourse = $settings->getSetting('egifts.check.welcome', 2);
     $checkWelcomeEnable = $settings->getSetting('egifts.enable.welcome', 1);
     $checkWelcomeCourse = (($checkWelcomeCourse == 1 && $viewer->getIdentity() == 0) ? true : (($checkWelcomeCourse == 0 && $viewer->getIdentity() != 0) ? true : (($checkWelcomeCourse == 2) ? true : false)));
@@ -139,7 +135,7 @@ class Egifts_Plugin_Core extends Zend_Controller_Plugin_Abstract  {
 			});";
 		}
     if(!$settings->getSetting('eclassroom.enable.course', 1)) { 
-      $openPopup = $settings->getSetting('egifts.icon.open.smoothbox', 1);
+      $openPopup = 0;
       $script .= "var isOpenCoursePopup = '" . $openPopup . "';var showAddnewCourseIconShortCut = " . $settings->getSetting('egifts.enable.addegiftshortcut', 1) . ";";
       // Check sesalbum plugin is enabled for lightbox
       if (Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesalbum')) {

@@ -45,9 +45,11 @@ class Sesmember_Bootstrap extends Engine_Application_Bootstrap_Abstract {
   }
 
   protected function _initFrontController() {
-    $this->initActionHelperPath();
-    include APPLICATION_PATH . '/application/modules/Sesmember/controllers/Checklicense.php';
-    Zend_Controller_Action_HelperBroker::addHelper(new Sesmember_Controller_Action_Helper_MemberLocation());
+    if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.pluginactivated')) {
+      $this->initActionHelperPath();
+      include APPLICATION_PATH . '/application/modules/Sesmember/controllers/Checklicense.php';
+      Zend_Controller_Action_HelperBroker::addHelper(new Sesmember_Controller_Action_Helper_MemberLocation());
+    }
   }
 
 }

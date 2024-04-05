@@ -41,9 +41,12 @@ class Group_Widget_ProfileEventsController extends Engine_Content_Widget_Abstrac
 
     // Just remove the title decorator
     $this->getElement()->removeDecorator('Title');
-
+    
+    $params['user_id'] = $viewer->getIdentity();
+    $params['owner_id'] = $group->user_id;
+    
     // Get paginator
-    $this->view->paginator = $paginator = $group->getEventsPaginator();
+    $this->view->paginator = $paginator = $group->getEventsPaginator($params);
 
     //$this->view->canAdd = $canAdd = Engine_Api::_()->authorization()->isAllowed('group', $viewer, 'event_create') && Engine_Api::_()->authorization()->isAllowed('event', null, 'create');
     //$group->authorization()->isAllowed(null,  'event_create')

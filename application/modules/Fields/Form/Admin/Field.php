@@ -70,7 +70,9 @@ class Fields_Form_Admin_Field extends Engine_Form
     // Add Css
     $this->addElement('Text', 'style', array(
       'label' => 'Inline CSS',
+      'description' => "You can provide a CSS class to the question so that you can style specific questions differently. You will need to define this class either in the source code or one of the CSS files editable in the Theme Editor.",
     ));
+    $this->style->getDecorator("Description")->setOption("placement", "append");
 
     // Add error
     $this->addElement('Text', 'error', array(

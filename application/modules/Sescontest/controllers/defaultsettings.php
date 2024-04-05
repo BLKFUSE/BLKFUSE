@@ -2007,7 +2007,7 @@ if (!$pageId) {
       'page_id' => $pageId,
       'parent_content_id' => $leftId,
       'order' => $widgetOrder++,
-      'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare","tellAFriend","addThis"],"title":"","nomobile":"0","name":"sescontest.advance-share"}',
+      'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare","tellAFriend"],"title":"","nomobile":"0","name":"sescontest.advance-share"}',
   ));
   $db->insert('engine4_core_content', array(
       'type' => 'widget',
@@ -2309,7 +2309,7 @@ if (!$pageId) {
       'page_id' => $pageId,
       'parent_content_id' => $rightId,
       'order' => $widgetOrder++,
-      'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare","tellAFriend","addThis"],"title":"","nomobile":"0","name":"sescontest.advance-share"}',
+      'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare","tellAFriend"],"title":"","nomobile":"0","name":"sescontest.advance-share"}',
   ));
   $db->insert('engine4_core_content', array(
       'type' => 'widget',
@@ -2503,7 +2503,7 @@ if (!$pageId) {
       'page_id' => $pageId,
       'parent_content_id' => $leftId,
       'order' => $widgetOrder++,
-      'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare","tellAFriend","addThis"],"title":"","nomobile":"0","name":"sescontest.advance-share"}',
+      'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare","tellAFriend"],"title":"","nomobile":"0","name":"sescontest.advance-share"}',
   ));
   $db->insert('engine4_core_content', array(
       'type' => 'widget',
@@ -2807,7 +2807,7 @@ if (!$pageId) {
       'page_id' => $pageId,
       'parent_content_id' => $rightId,
       'order' => $widgetOrder++,
-      'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare","tellAFriend","addThis"],"title":"","nomobile":"0","name":"sescontest.advance-share"}',
+      'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare","tellAFriend"],"title":"","nomobile":"0","name":"sescontest.advance-share"}',
   ));
   $db->insert('engine4_core_content', array(
       'type' => 'widget',
@@ -2983,7 +2983,7 @@ $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescontest_integrateothermodules
   PRIMARY KEY (`integrateothermodule_id`),
   UNIQUE KEY `content_type` (`content_type`,`content_id`),
   KEY `module_name` (`module_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
 $memberLevelColumn = $db->query('SHOW COLUMNS FROM engine4_sescontest_categories LIKE \'member_levels\'')->fetch();
 if (empty($memberLevelColumn)) {

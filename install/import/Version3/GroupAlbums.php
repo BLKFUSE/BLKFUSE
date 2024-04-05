@@ -41,8 +41,8 @@ CREATE TABLE IF NOT EXISTS `se_groupalbums` (
 *  `groupalbum_group_id` int(10) unsigned NOT NULL default '0',
 *  `groupalbum_datecreated` int(11) NOT NULL default '0',
 *  `groupalbum_dateupdated` int(11) NOT NULL default '0',
-*  `groupalbum_title` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-*  `groupalbum_desc` text collate utf8_unicode_ci,
+*  `groupalbum_title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+*  `groupalbum_desc` text COLLATE utf8mb4_unicode_ci,
 *  `groupalbum_search` tinyint(1) unsigned NOT NULL default '0',
   `groupalbum_privacy` tinyint(3) unsigned NOT NULL default '0',
   `groupalbum_comments` tinyint(3) unsigned NOT NULL default '0',
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `se_groupalbums` (
   `groupalbum_tag` int(2) NOT NULL default '0',
   PRIMARY KEY  (`groupalbum_id`),
   KEY `INDEX` (`groupalbum_group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -72,6 +72,6 @@ CREATE TABLE `engine4_group_albums` (
 *  `collectible_count` int(11) unsigned NOT NULL default '0',
    PRIMARY KEY (`album_id`),
    KEY `group_id` (`group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

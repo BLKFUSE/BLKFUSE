@@ -139,6 +139,18 @@ class Payment_Plugin_Gateway_Bank extends Engine_Payment_Plugin_Abstract
     $user = $order->getUser();
     $subscription = $order->getSource();
     $package = $subscription->getPackage();
+    
+    //Change rate according to default currency and selected currency by member
+    $session = new Zend_Session_Namespace('Payment_Subscription');
+    $current_currency = $session->current_currency;
+    $currencyChangeRate = $session->change_rate;
+    if (empty($currencyChangeRate))
+      $currencyChangeRate = 1;
+    $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
+    if ($current_currency != $defaultCurrency) {
+      $currencyData = Engine_Api::_()->getDbTable('currencies', 'payment')->getCurrency($current_currency);
+      $currencyChangeRate = $currencyData->change_rate;
+    }
 
     // Check subscription state
     if($subscription->status == 'trial') {
@@ -167,8 +179,10 @@ class Payment_Plugin_Gateway_Bank extends Engine_Payment_Plugin_Abstract
       'type' => 'payment',
       'state' => 'pending',
       'gateway_transaction_id' => crc32(microtime() . $order->order_id), // Hack
-      'amount' => $package->price,
-      'currency' => $this->getGateway()->getCurrency(),
+      'amount' => $package->price, // @todo use this or gross (-fee)?
+      'currency' => Engine_Api::_()->payment()->defaultCurrency(), //this is default currency set by admin
+      'change_rate' => $currencyChangeRate, //currency change rate according to default currency
+      'current_currency' => $current_currency, //currency which is user paid
     ));
     $transaction_id = $transactionsTable->getAdapter()->lastInsertId();
     $transaction = Engine_Api::_()->getItem('payment_transaction', $transaction_id);

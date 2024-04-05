@@ -22,7 +22,18 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
   public function init()
   {
     parent::init();
+    
+    //New File System Code
+    $covers = array('' => '');
+    $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png', 'webp')));
+    foreach( $files as $file ) {
+      $covers[$file->storage_path] = $file->name;
+    }
+    $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
+    $fileLink = $view->baseUrl() . '/admin/files/';
 
+    $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
+    
     // My stuff
     $this
         ->setTitle('Member Level Settings')
@@ -44,7 +55,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
 
       // Element: edit
       if( $this->isModerator() ) {
-        $this->addElement('Radio', 'edit', array(
+        $this->addElement('Select', 'edit', array(
           'label' => 'Allow Profile Moderation',
           'required' => true,
           'multiOptions' => array(
@@ -56,7 +67,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       }
 
       // Element: style
-      $this->addElement('Radio', 'style', array(
+      $this->addElement('Select', 'style', array(
         'label' => 'Allow Profile Style',
         'required' => true,
         'multiOptions' => array(
@@ -71,7 +82,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       }
 
       // Element: delete
-      $this->addElement('Radio', 'delete', array(
+      $this->addElement('Select', 'delete', array(
         'label' => 'Allow Account Deletion?',
         'multiOptions' => array(
           2 => 'Yes, allow members in this level to delete other users.',
@@ -87,7 +98,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
 
       // Element: activity
       if( $this->isModerator() ) {
-        $this->addElement('Radio', 'activity', array(
+        $this->addElement('Select', 'activity', array(
           'label' => 'Allow Activity Feed Moderation',
           'required' => true,
           'multiOptions' => array(
@@ -99,7 +110,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       }
 
       // Element: block
-      $this->addElement('Radio', 'block', array(
+      $this->addElement('Select', 'block', array(
         'label' => 'Allow Blocking?',
         'description' => 'USER_FORM_ADMIN_SETTINGS_LEVEL_BLOCK_DESCRIPTION',
         'multiOptions' => array(
@@ -137,7 +148,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       $this->auth_comment->getDecorator('Description')->setOption('placement', 'PREPEND');
 
       // Element: lastLoginShow
-      $this->addElement('Radio', 'lastLoginShow', array(
+      $this->addElement('Select', 'lastLoginShow', array(
         'label' => 'Show Last Login Date?',
         'description' => 'USER_FORM_ADMIN_SETTINGS_LEVEL_LASTLOGINSHOW_DESCRIPTION',
         'multiOptions' => array(
@@ -163,7 +174,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       ));
       $this->lastLoginDate->getDecorator('Description')->setOption('placement', 'PREPEND');
       
-      $this->addElement('Radio', 'showLastLogin', array(
+      $this->addElement('Select', 'showLastLogin', array(
         'label' => 'Show Last Login Date in Member Profile?',
         'description' => 'Do you want to show last login date in member profile?',
         'multiOptions' => array(
@@ -176,7 +187,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
 
       
       // Element: lastUpdateShow
-      $this->addElement('Radio', 'lastUpdateShow', array(
+      $this->addElement('Select', 'lastUpdateShow', array(
         'label' => 'Show Last Update Date?',
         'description' => 'USER_FORM_ADMIN_SETTINGS_LEVEL_LASTUPDATESHOW_DESCRIPTION',
         'multiOptions' => array(
@@ -202,7 +213,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       ));
       $this->lastUpdateDate->getDecorator('Description')->setOption('placement', 'PREPEND');
       
-      $this->addElement('Radio', 'showLastUpdate', array(
+      $this->addElement('Select', 'showLastUpdate', array(
         'label' => 'Show Last Update Date in Member Profile?',
         'description' => 'Do you want to show last update date in member profile?',
         'multiOptions' => array(
@@ -215,7 +226,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
 
       
       // Element: inviteeShow
-      $this->addElement('Radio', 'inviteeShow', array(
+      $this->addElement('Select', 'inviteeShow', array(
         'label' => 'Show Invitee Name?',
         'description' => 'USER_FORM_ADMIN_SETTINGS_LEVEL_INVITEESHOW_DESCRIPTION',
         'multiOptions' => array(
@@ -241,7 +252,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       ));
       $this->inviteeName->getDecorator('Description')->setOption('placement', 'PREPEND');
 
-      $this->addElement('Radio', 'showInvitee', array(
+      $this->addElement('Select', 'showInvitee', array(
         'label' => 'Show Invitee Name in Member Profile?',
         'description' => 'Do you want to show invitee name in member profile?',
         'multiOptions' => array(
@@ -254,7 +265,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       
       
       // Element: profileTypeShow
-      $this->addElement('Radio', 'profileTypeShow', array(
+      $this->addElement('Select', 'profileTypeShow', array(
         'label' => 'Show Profile Type?',
         'description' => 'USER_FORM_ADMIN_SETTINGS_LEVEL_PROFILETYPESHOW_DESCRIPTION',
         'multiOptions' => array(
@@ -280,7 +291,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       ));
       $this->profileType->getDecorator('Description')->setOption('placement', 'PREPEND');
       
-      $this->addElement('Radio', 'showProfileType', array(
+      $this->addElement('Select', 'showProfileType', array(
         'label' => 'Show Profile Type in Member Profile?',
         'description' => 'Do you want to show profile type in member profile?',
         'multiOptions' => array(
@@ -293,7 +304,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       
 
       // Element: memberLevelShow
-      $this->addElement('Radio', 'memberLevelShow', array(
+      $this->addElement('Select', 'memberLevelShow', array(
         'label' => 'Show Member Level?',
         'description' => 'USER_FORM_ADMIN_SETTINGS_LEVEL_MEMBERLEVELSHOW_DESCRIPTION',
         'multiOptions' => array(
@@ -319,7 +330,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       ));
       $this->memberLevel->getDecorator('Description')->setOption('placement', 'PREPEND');
       
-      $this->addElement('Radio', 'showMemberLevel', array(
+      $this->addElement('Select', 'showMemberLevel', array(
         'label' => 'Show Member Level in Member Profile?',
         'description' => 'Do you want to show member level in member profile?',
         'multiOptions' => array(
@@ -332,7 +343,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       
 
       // Element: profileViewsShow
-      $this->addElement('Radio', 'profileViewsShow', array(
+      $this->addElement('Select', 'profileViewsShow', array(
         'label' => 'Show Profile Views?',
         'description' => 'USER_FORM_ADMIN_SETTINGS_LEVEL_PROFILEVIEWSHOW_DESCRIPTION',
         'multiOptions' => array(
@@ -358,7 +369,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       ));
       $this->profileViews->getDecorator('Description')->setOption('placement', 'PREPEND');
       
-      $this->addElement('Radio', 'showProfileViews', array(
+      $this->addElement('Select', 'showProfileViews', array(
         'label' => 'Show Profile View in Member Profile?',
         'description' => 'Do you want to show profile view in member profile?',
         'multiOptions' => array(
@@ -371,7 +382,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       
 
       // Element: joinedDateShow
-      $this->addElement('Radio', 'joinedDateShow', array(
+      $this->addElement('Select', 'joinedDateShow', array(
         'label' => 'Show Joined Date on site?',
         'description' => 'USER_FORM_ADMIN_SETTINGS_LEVEL_JOINEDDATESHOW_DESCRIPTION',
         'multiOptions' => array(
@@ -397,7 +408,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       ));
       $this->joinedDate->getDecorator('Description')->setOption('placement', 'PREPEND');
       
-      $this->addElement('Radio', 'showJoinedDate', array(
+      $this->addElement('Select', 'showJoinedDate', array(
         'label' => 'Show Joined Date in Member Profile?',
         'description' => 'Do you want to show joined date in member profile?',
         'multiOptions' => array(
@@ -410,7 +421,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       
 
       // Element: friendsCountShow
-      $this->addElement('Radio', 'friendsCountShow', array(
+      $this->addElement('Select', 'friendsCountShow', array(
         'label' => 'Show Friends Count?',
         'description' => 'USER_FORM_ADMIN_SETTINGS_LEVEL_FRIENDSCOUNTSHOW_DESCRIPTION',
         'multiOptions' => array(
@@ -436,7 +447,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       ));
       $this->friendsCount->getDecorator('Description')->setOption('placement', 'PREPEND');
       
-      $this->addElement('Radio', 'showFriendsCount', array(
+      $this->addElement('Select', 'showFriendsCount', array(
         'label' => 'Show Friends Count in Member Profile?',
         'description' => 'Do you want to show friends count in member profile?',
         'multiOptions' => array(
@@ -462,7 +473,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       $this->auth_comment->getDecorator('Description')->setOption('placement', 'PREPEND');
 
       // Element: search
-      $this->addElement('Radio', 'search', array(
+      $this->addElement('Select', 'search', array(
         'label' => 'Search Privacy Options',
         'description' => 'USER_FORM_ADMIN_SETTINGS_LEVEL_SEARCH_DESCRIPTION',
         'multiOptions' => array(
@@ -473,7 +484,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       $this->search->getDecorator('Description')->setOption('placement', 'PREPEND');
 
       // Element: status
-      $this->addElement('Radio', 'status', array(
+      $this->addElement('Select', 'status', array(
         'label' => 'Allow status messages?',
         'description' => 'USER_FORM_ADMIN_SETTINGS_LEVEL_STATUS_DESCRIPTION',
         'multiOptions' => array(
@@ -493,7 +504,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       ));
       
       // Element: username
-      $this->addElement('Radio', 'changeemail', array(
+      $this->addElement('Select', 'changeemail', array(
         'label' => 'Allow users to change email?',
         'description' => "Do you want to allow members of this level to change their emails? If you choose 'Yes', then members of this level can change their emails.",
         'multiOptions' => array(
@@ -504,7 +515,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       ));
       $this->changeemail->getDecorator('Description')->setOption('placement', 'PREPEND');
       
-      $this->addElement('Radio', 'emailverify', array(
+      $this->addElement('Select', 'emailverify', array(
         'label' => 'Verify Email Address?',
         'description' => 'Force members to verify their email address before they change their emails? If set to YES, members will be sent an email with a verification link which they must click to change the email.',
         'multiOptions' => array(
@@ -515,7 +526,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       $this->emailverify->getDecorator('Description')->setOption('placement', 'PREPEND');
 
       // Element: username
-      $this->addElement('Radio', 'username', array(
+      $this->addElement('Select', 'username', array(
         'label' => 'Allow username changes?',
         'description' => 'USER_FORM_ADMIN_SETTINGS_LEVEL_USERNAME_DESCRIPTION',
         'multiOptions' => array(
@@ -524,6 +535,29 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
         )
       ));
       $this->username->getDecorator('Description')->setOption('placement', 'PREPEND');
+      
+      // Element: edit profile type
+      $this->addElement('Select', 'editprofiletype', array(
+        'label' => 'Allow Profile Type Change',
+        'description' => 'If set to "yes", members will be able to change their Profile Types when members edit their profiles. Once they choose to change their profile type, the data of their previous profile type will be lost. (Note: This setting will only work if there are more than 1 profile type on your site excluding Admin & Super Admin profile types.)',
+        'multiOptions' => array(
+          1 => 'Yes',
+          0 => 'No'
+        ),
+        'onchange' => 'showProfileMemberLevel(this.value)',
+      ));
+
+      $profileTypeLink = array($view->baseUrl() . '/admin/authorization/level/manage-profile-type-mapping');
+      $description = vsprintf('If set to "yes", then Member Level (mapped with the changed <a href="%s">Profile Type</a>) will also be updated when members change their Profile Types.', $profileTypeLink);
+      $this->addElement('Select', 'editprotylevel', array(
+        'label' => 'Change Member Level on Profile Type Change',
+        'description' => $description,
+        'multiOptions' => array(
+          1 => 'Yes',
+          0 => 'No'
+        ),
+      ));
+      $this->editprotylevel->getDecorator('Description')->setOption('escape', false);
 
       // Element: quota
       $this->addElement('Select', 'quota', array(
@@ -541,7 +575,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       ));
 
       // Element: messages_auth
-      $this->addElement('Radio', 'messages_auth', array(
+      $this->addElement('Select', 'messages_auth', array(
         'label' => 'Allow messaging?',
         'description' => 'USER_FORM_ADMIN_SETTINGS_LEVEL_MESSAGESAUTH_DESCRIPTION',
         'multiOptions' => array(
@@ -553,7 +587,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       $this->messages_auth->getDecorator('Description')->setOption('placement', 'PREPEND');
       
       // Element: messages_editor
-      $this->addElement('Radio', 'messages_editor', array(
+      $this->addElement('Select', 'messages_editor', array(
         'label' => 'Use editor for messaging?',
         'description' => 'USER_FORM_ADMIN_SETTINGS_LEVEL_MESSAGEEDITOR_DESCRIPTION',
         'multiOptions' => array(
@@ -563,7 +597,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       ));
 
       // Element: create
-      $this->addElement('Radio', 'coverphotoupload', [
+      $this->addElement('Select', 'coverphotoupload', [
         'label' => 'Allow Cover Photo Uploads ?',
         'description' => 'Do you want to allow members to upload their cover photos?',
         'multiOptions' => array(
@@ -579,7 +613,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
       foreach( $files as $file ) {
         $covers[$file->storage_path] = $file->name;
       }
-      $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
+      
       $fileLink = $view->baseUrl() . '/admin/files/';
       
       $this->addElement('Select', 'coverphoto', array(
@@ -620,9 +654,23 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
               'owner'       => 'Only Me',
             ),
         ));
+        
+        if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('poke')) {
+          $this->addElement('MultiCheckbox', 'pokeAction', array(
+              'label' => 'Users Poke & Action Options',
+              'description' => 'Your members can choose from any of the options checked below when they decide "Who can Poke & Send Action" to them. If you do not check any options, settings will default to the last saved configuration. If you select only one option, members of this level will not have a choice.',
+              'multiOptions' => array(
+                'registered'  => 'All Registered Members',
+                'owner_network' => 'Network',
+                'network'    => 'Friends & Networks',
+                'member'      => 'My Friends',
+                'owner'       => 'Only Me',
+              ),
+          ));
+        }
 
       if($this->isAdmin() ) {
-        $this->addElement('Radio', 'abuseNotifi', array(
+        $this->addElement('Select', 'abuseNotifi', array(
           'label' => 'Show abuse notification?',
           'description' => 'If set to yes, it will show an in-site notification if something is reported on the site. This notification will send you to the admin panel abuse section to take the actions.',
           'multiOptions' => array(
@@ -633,7 +681,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
         ));
         $this->abuseNotifi->getDecorator('Description')->setOption('placement', 'PREPEND');
 
-        $this->addElement('Radio', 'abuseEmail', array(
+        $this->addElement('Select', 'abuseEmail', array(
           'label' => 'Send emailed abuse notification?',
           'description' => 'If set to yes, this emails a notification for the abuse notification if something is reported on the site.',
           'multiOptions' => array(
@@ -645,7 +693,7 @@ class Authorization_Form_Admin_Level_Edit extends Authorization_Form_Admin_Level
         $this->abuseEmail->getDecorator('Description')->setOption('placement', 'PREPEND');
       }
 
-      $this->addElement('Radio', 'allow_birthday', array(
+      $this->addElement('Select', 'allow_birthday', array(
         'label' => 'Allow birthday privacy setting?',
         'description' => "Do you want to allow the users to choose privacy setting to show for the birthday? If you choose 'Yes', then you can enable members of this level to choose the privacy setting for their birthday.",
         'multiOptions' => array(

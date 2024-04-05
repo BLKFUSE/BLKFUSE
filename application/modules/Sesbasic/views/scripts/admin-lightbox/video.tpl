@@ -12,8 +12,8 @@
  */
  
 ?>
-
-<h2><?php echo $this->translate('SocialNetworking.Solutions (SNS) Basic Required Plugin'); ?></h2>
+<?php include APPLICATION_PATH .  '/application/modules/Sesbasic/views/scripts/dismiss_message.tpl';?>
+<h2 class="page_heading"><?php echo $this->translate('SocialNetworking.Solutions (SNS) Basic Required Plugin'); ?></h2>
 <?php if (engine_count($this->navigation)): ?>
   <div class='tabs'>
     <?php
@@ -61,9 +61,9 @@ if(value == 1) {
   var enablesessocialshareval = scriptJquery('input[name=sesbasic_enablesessocialshare]:checked').val();
   scriptJquery('input[name="sesbasic_enablesocialshare"]').prop('checked',true);
   if(document.getElementById('sesbasic_enableplusicon-wrapper'))
-  document.getElementById('sesbasic_enableplusicon-wrapper').style.display = 'block';
+  document.getElementById('sesbasic_enableplusicon-wrapper').style.display = 'flex';
   if(document.getElementById('sesbasic_iconlimit-wrapper'))
-  document.getElementById('sesbasic_iconlimit-wrapper').style.display = 'block';
+  document.getElementById('sesbasic_iconlimit-wrapper').style.display = 'flex';
 } else {
   if(document.getElementById('sesbasic_enableplusicon-wrapper'))
   document.getElementById('sesbasic_enableplusicon-wrapper').style.display = 'none';

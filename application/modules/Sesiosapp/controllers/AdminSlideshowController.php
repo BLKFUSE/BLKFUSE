@@ -70,7 +70,7 @@ class Sesiosapp_AdminSlideshowController extends Core_Controller_Action_Admin {
               'user_id' => Engine_Api::_()->user()->getViewer()->getIdentity(),
           ));
           // Remove temporary file
-          //@unlink($file['tmp_name']);
+          @unlink($file['tmp_name']);
           $slide->file_id = $filename->file_id;
         }
         if (isset($_FILES['video']['name']) && $_FILES['video']['name'] != '') {
@@ -81,7 +81,7 @@ class Sesiosapp_AdminSlideshowController extends Core_Controller_Action_Admin {
               'user_id' => Engine_Api::_()->user()->getViewer()->getIdentity(),
           ));
           // Remove temporary file
-          //@unlink($file['tmp_name']);
+          @unlink($file['tmp_name']);
           $slide->video_id = $filename->file_id;
         }
         $slide->save();

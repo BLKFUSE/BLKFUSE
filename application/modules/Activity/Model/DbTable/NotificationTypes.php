@@ -53,9 +53,8 @@ class Activity_Model_DbTable_NotificationTypes extends Engine_Db_Table
       // Only get enabled types
       //$this->_notificationTypes = $this->fetchAll();
       $enabledModuleNames = Engine_Api::_()->getDbtable('modules', 'core')->getEnabledModuleNames();
-      $select = $this->select()
-        ->where('module IN(?)', $enabledModuleNames)
-        ;
+      
+      $select = $this->select()->where('module IN(?)', $enabledModuleNames);
 
       // Exclude disabled friend types
       $excludedTypes = array();

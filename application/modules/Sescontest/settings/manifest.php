@@ -30,18 +30,19 @@ return array(
         'type' => 'module',
         'name' => 'sescontest',
         //'sku' => 'sescontest',
-        'version' => '6.4.4',
+        'version' => '6.5.1',
         'dependencies' => array(
             array(
                 'type' => 'module',
                 'name' => 'core',
-                'minVersion' => '6.2.0',
+                'minVersion' => '6.5.1',
             ),
         ),
         'path' => 'application/modules/Sescontest',
         'title' => 'SNS - Advanced Contests Plugin',
         'description' => 'SNS - Advanced Contests Plugin',
         'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+		'thumb' => 'application/modules/Sescontest/externals/images/thumb.png',
         'callback' => array(
             'path' => 'application/modules/Sescontest/settings/install.php',
             'class' => 'Sescontest_Installer',

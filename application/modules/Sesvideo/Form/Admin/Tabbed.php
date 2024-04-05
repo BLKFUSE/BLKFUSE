@@ -58,7 +58,7 @@ class Sesvideo_Form_Admin_Tabbed extends Engine_Form {
 						'location'=>'Location',
             'playlistAdd' => 'Playlist Add Button',
             'likeButton' => 'Like Button',
-            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
             'like' => 'Like Counts',
             'favourite' => 'Favourite Counts',
             'comment' => 'Comment Counts',

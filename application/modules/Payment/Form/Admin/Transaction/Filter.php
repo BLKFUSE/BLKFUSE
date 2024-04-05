@@ -73,7 +73,7 @@ class Payment_Form_Admin_Transaction_Filter extends Engine_Form
     if (!empty($multiOptions)) {
       $multiOptions = array_combine(
         array_values($multiOptions),
-        array_map('ucfirst', array_values($multiOptions))
+        array_map('ucwords', array_values($multiOptions))
       );
       // array_combine() will return false if the array is empty
       if (false === $multiOptions) {

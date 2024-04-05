@@ -18,7 +18,7 @@ if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestjurymemb
     PRIMARY KEY  (`member_id`),
     KEY `user_id` (`user_id`),
     KEY `contest_id` (`contest_id`)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
   $db->query('INSERT IGNORE INTO `engine4_sescontest_dashboards` (`type`, `title`, `enabled`, `main`) VALUES
   ("jury_member", "Manage Jury", "1", "0");');
   $db->query('ALTER TABLE `engine4_sescontest_contests` ADD `audience_type` TINYINT(1) NULL DEFAULT "1";');

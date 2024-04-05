@@ -10,8 +10,14 @@
  * @author     John Boehr <j@webligo.com>
  */
 ?>
-<h2>
-  <?php echo $this->translate("Billing") ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_monetization", 'parentMenuItemName' => 'core_admin_main_membership', 'childMenuItemName' => 'core_admin_main_payment_subscriptions')); ?>
+
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_monetization').parent().addClass('active');
+  scriptJquery('.core_admin_main_membership').addClass('active');
+</script>
+<h2 class="page_heading">
+  <?php echo $this->translate("Membership") ?>
 </h2>	
 <?php if( count($this->navigation) ): ?>
 <div class='tabs'>
@@ -22,32 +28,29 @@
     ?>
 </div>
 <?php endif; ?>
-<h3>
-  <?php echo $this->translate("Manage Subscriptions") ?>
-</h3>
-<p>
-  <?php echo $this->translate("PAYMENT_VIEWS_ADMIN_SUBSCRIPTION_INDEX_DESCRIPTION") ?>
-  <?php
-    $settings = Engine_Api::_()->getApi('settings', 'core');
-    if( $settings->getSetting('user.support.links', 0) == 1 ) {
-      echo 'More info: <a href="https://community.socialengine.com/blogs/597/78/subscriptions" target="_blank">See KB article</a>.';
-    } 
-  ?>	
-</p>
-
-<br />
-
+<div class="admin_common_top_section">  
+  <h3>
+    <?php echo $this->translate("Manage Subscriptions") ?>
+  </h3>
+  <p>
+    <?php echo $this->translate("PAYMENT_VIEWS_ADMIN_SUBSCRIPTION_INDEX_DESCRIPTION") ?>
+  </p>  
+  <p>  
+    <?php
+      $settings = Engine_Api::_()->getApi('settings', 'core');
+      if( $settings->getSetting('user.support.links', 0) == 1 ) {
+        echo 'More info: <a href="https://community.socialengine.com/blogs/597/78/subscriptions" target="_blank">See KB article</a>.';
+      } 
+    ?>	
+  </p>
+</div>  
 <?php if( !empty($this->error) ): ?>
   <ul class="form-errors">
     <li>
       <?php echo $this->error ?>
     </li>
   </ul>
-
-  <br />
 <?php return; endif; ?>
-
-
 <?php if( $this->paginator->getTotalItemCount() > 0 ): ?>
   <script type="text/javascript">
     var currentOrder = '<?php echo $this->filterValues['order'] ?>';
@@ -63,16 +66,10 @@
       $('filter_form').submit();
     }
   </script>
-
   <div class='admin_search'>
     <?php echo $this->formFilter->render($this) ?>
   </div>
-
-  <br />
 <?php endif; ?>
-
-
-
 <div class='admin_results'>
   <div>
     <?php $count = $this->paginator->getTotalItemCount() ?>
@@ -85,10 +82,6 @@
     )); ?>
   </div>
 </div>
-
-<br />
-
-
 <?php if( $this->paginator->getTotalItemCount() > 0 ): ?>
   <table class='admin_table'>
     <thead>
@@ -142,7 +135,7 @@
           <td class='admin_table_bold'>
             <?php echo ( $user ? $user->__toString() : '<i>' . $this->translate('Deleted Member') . '</i>' ) ?>
           </td>
-          <td class='admin_table_centered'>
+          <td class='admin_table_centered admin_payment_package'>
             <?php if( $package ): ?>
               <a href='<?php echo $this->url(array('module' => 'payment', 'controller' => 'package', 'action' => 'edit', 'package_id' => $package->package_id)) ?>'>
                 <?php echo $this->translate($package->title) ?>

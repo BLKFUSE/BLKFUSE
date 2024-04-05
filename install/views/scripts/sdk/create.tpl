@@ -11,13 +11,9 @@
  */
 ?>
 
-<div class="content sdk" id="content2">
-
-
-  <h3>Create a Package</h3>
-
+<div class="sdk" id="content2">
+  <h3><?php echo $this->translate("Create a Package")  ?></h3>
   <div class="settings">
     <?php echo $this->form->render($this) ?>
   </div>
-
 </div>

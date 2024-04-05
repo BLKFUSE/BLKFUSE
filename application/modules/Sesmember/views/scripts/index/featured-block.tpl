@@ -177,7 +177,7 @@
   var canPaginatePageNumber = 1;
   function existingAlbumPhotosGet(){
     scriptJquery('#sesmember_profile_existing_img').show();
-    var URL = en4.core.staticBaseUrl+'sesmember/index/existing-photos/';
+    var URL = en4.core.baseUrl+'sesmember/index/existing-photos/';
     var photoRequest = scriptJquery.ajax({
       dataType: 'html',
       method: 'post',

@@ -28,7 +28,8 @@
   }
   
   function updateFieldValue(element, value) {
-    if( element.prop('tagName').toLowerCase() == 'option' ) {
+  
+    if( (element.prop('tagName') ?? "").toLowerCase() == 'option' ) {
       element = element.parents('select:first');
     } else if(element.attr('type') == 'checkbox' || element.attr('type') == 'radio' ) {
       element.prop('checked', Boolean(value));
@@ -195,9 +196,10 @@
 		if(typeof resets != 'undefined')
 			updateFieldValue(childElement,null);
 		var field_id_child =  childElement.attr('class').match(/field_([\d]+)/i)[1];
+		
 		if(typeof childElement.name != 'undefined' && childElement.name.indexOf('[]') > 0 ) {
 			var checked = scriptJquery('.field_' + field_id_child).is(':checked');
-			if( childElement.type == 'checkbox' ) {
+			if( childElement.prop("type") == 'checkbox' ) {
 				scriptJquery("input[name='"+scriptJquery(childElement).attr('name')+"']").each(function(index, element) {
 					// MultiCheckbox        
 					var checked = scriptJquery(this).is(':checked');
@@ -219,10 +221,10 @@
 									if(!checked && scriptJquery('.parent_'+field_id_child).hasClass('option_'+scriptJquery(this).val())){
 									scriptJquery('.option_'+scriptJquery(this).val()+'.parent_'+fieldId).closest('div').parent().each(function(){
 										scriptJquery(this).css('display','none');
-										updateFieldValue(scriptJquery(this)[0],null);
+										updateFieldValue(scriptJquery(this),null);
 										if(scriptJquery('.parent_'+field_id_child).length){
 											scriptJquery('.parent_'+field_id_child).each(function(){
-												updateFieldsProfileSES(scriptJquery(this)[0],resets);
+												updateFieldsProfileSES(scriptJquery(this),resets);
 											})
 										}else
 											return;
@@ -234,7 +236,7 @@
 						}
 				}
 				});
-			} else if( childElement.get('tag') == 'select' && childElement.multiple ) { // Multiselect
+			} else if( childElement.get('type') == 'select' && childElement.multiple ) { // Multiselect
 					scriptJquery(childElement).find("option").each(function(index, item) {
 					var checked = scriptJquery(item).is(':selected');
 					if(scriptJquery('.parent_'+field_id_child).parent().hasClass('form-wrapper-heading')){
@@ -257,15 +259,15 @@
 										if(!checked && scriptJquery('.parent_'+field_id_child).hasClass('option_'+scriptJquery(this).val())){
 										scriptJquery('.option_'+scriptJquery(this).val()+'.parent_'+fieldId).closest('div').parent().each(function(){
 											scriptJquery(this).css('display','none');
-											updateFieldValue(scriptJquery(this)[0],null);
+											updateFieldValue(scriptJquery(this),null);
 											if(scriptJquery('.parent_'+field_id_child).length){
 												scriptJquery('.parent_'+field_id_child).each(function(){
-													updateFieldsProfileSES(scriptJquery(this)[0],resets);
+													updateFieldsProfileSES(scriptJquery(this),resets);
 												})
 											}else
 												return;
 										})
-										}else if(scriptJquery('.parent_'+field_id_child).hasClass('option_'+scriptJquery(this).val())){
+										} else if(scriptJquery('.parent_'+field_id_child).hasClass('option_'+scriptJquery(this).val())){
 										scriptJquery('.option_'+scriptJquery(this).val()+'.parent_'+fieldId).closest('div').parent().show();
 										}
 									}
@@ -273,7 +275,7 @@
 							}
 				});
 			}
-		} else if( childElement.type == 'radio' ) {
+		} else if( childElement.prop("type") == 'radio' ) {
 			scriptJquery('input[name='+scriptJquery(childElement).attr('name')+']').each(function(index, item){
 			var checked = scriptJquery(item).is(':checked');
 			if(scriptJquery('.parent_'+field_id_child).parent().hasClass('form-wrapper-heading')){
@@ -294,10 +296,10 @@
 								if(!checked && scriptJquery('.parent_'+field_id_child).hasClass('option_'+scriptJquery(this).val())){
 									scriptJquery('.option_'+scriptJquery(this).val()+'.parent_'+fieldId).closest('div').parent().each(function(){
 										scriptJquery(this).css('display','none');
-										updateFieldValue(scriptJquery(this)[0],null);
+										updateFieldValue(scriptJquery(this),null);
 										if(scriptJquery('.parent_'+field_id_child).length){
 											scriptJquery('.parent_'+field_id_child).each(function(){
-												updateFieldsProfileSES(scriptJquery(this)[0],resets);
+												updateFieldsProfileSES(scriptJquery(this),resets);
 											})
 										}else
 											return;
@@ -310,7 +312,7 @@
 						
 				}
 				}); 
-		} else if(childElement.type == 'select-one') {
+		} else if(childElement.prop("type") == 'select-one') {
 			scriptJquery('#'+scriptJquery(childElement).attr('id')+' option').each(function() {
 				
 				var checked = scriptJquery(this).is(':selected');
@@ -335,10 +337,10 @@
 									if(!checked && scriptJquery('.parent_'+field_id_child).hasClass('option_'+scriptJquery(this).val())){
 									scriptJquery('.option_'+scriptJquery(this).val()+'.parent_'+fieldId).closest('div').parent().each(function(){
 										scriptJquery(this).css('display','none');
-										updateFieldValue(scriptJquery(this)[0],null);
+										updateFieldValue(scriptJquery(this),null);
 										if(scriptJquery('.parent_'+field_id_child).length){
 											scriptJquery('.parent_'+field_id_child).each(function(){
-												updateFieldsProfileSES(scriptJquery(this)[0],resets);
+												updateFieldsProfileSES(scriptJquery(this),resets);
 											})
 										} else
 											return;
@@ -352,15 +354,15 @@
 			});
 		} else {
 			if(scriptJquery('.parent_'+field_id_child).parent().hasClass('form-wrapper-heading')){
-				scriptJquery('.parent_'+field_id_child).parent().hide();
+				//scriptJquery('.parent_'+field_id_child).parent().hide();
 			} else {
 				var elemClass =  scriptJquery('.parent_'+field_id_child).attr('class');
 				if(typeof elemClass != 'undefined'){
 					var fieldId = elemClass.match(/field_([\d]+)/i)[1];
 					if(scriptJquery('.parent_'+fieldId).parent().hasClass('form-wrapper-heading')){
-						scriptJquery('.parent_'+fieldId).parent().hide();
+						//scriptJquery('.parent_'+fieldId).parent().hide();
 					}else{
-						updateFieldValue(scriptJquery('.parent_'+fieldId)[0],null);
+						updateFieldValue(scriptJquery('.parent_'+fieldId),null);
 						scriptJquery('.parent_'+fieldId).closest('div').parent().css('display','none');
 					}
 				}

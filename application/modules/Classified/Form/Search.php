@@ -94,7 +94,12 @@ class Classified_Form_Search extends Fields_Form_Search
     
     $orderby = array(
       'creation_date' => 'Most Recent',
+      'modified_date' => 'Recently Updated',
       'view_count' => 'Most Viewed',
+      'like_count' => 'Most Liked',
+      'comment_count' => 'Most Commented',
+      'atoz' => 'A to Z',
+      'ztoa' => 'Z to A',
     );
     if(Engine_Api::_()->getApi('settings', 'core')->getSetting('classified.enable.rating', 1)) {
       $orderby['rating'] = 'Highest Rated';

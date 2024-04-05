@@ -31,13 +31,11 @@ function selectAll()
 
 <h3><?php echo $this->translate("Manage Games") ?></h3>
 <p>This page lists all of the games your users have created. You can use this page to monitor these games & can delete offensive material if necessary. Entering the criteria into the filter fields will help you to find specific games. Leaving the fields blank will show all the photos on your social network.</p>
-<br />
 <?php
 $settings = Engine_Api::_()->getApi('settings', 'core');?>	
 <div class='admin_search sesbasic_search_form'>
   <?php echo $this->formFilter->render($this) ?>
 </div>
-<br />
 <?php $counter = $this->paginator->getTotalItemCount(); ?> 
 <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
   <div class="sesbasic_search_reasult">
@@ -90,14 +88,12 @@ $settings = Engine_Api::_()->getApi('settings', 'core');?>
         <?php endforeach; ?>
     </tbody>
   </table>
-  <br/>
   <div class='buttons'>
     <button type='submit'>
       <?php echo $this->translate('Delete Selected') ?>
     </button>
   </div>
 </form>
-<br />
 <div>
   <?php echo $this->paginationControl($this->paginator); ?>
 </div>

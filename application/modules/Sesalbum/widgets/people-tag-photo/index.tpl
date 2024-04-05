@@ -39,7 +39,7 @@ $this->headScript()->appendFile(Zend_Registry::get('StaticBaseUrl')
 <script type="application/javascript">
 function getTagData(value){
 	if(value){
-		url = en4.core.staticBaseUrl+'albums/index/tag-photo/photo_id/'+value;
+		url = en4.core.baseUrl+'albums/index/tag-photo/photo_id/'+value;
 		openURLinSmoothBox(url);	
 		return;
 	}

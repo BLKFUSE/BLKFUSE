@@ -133,7 +133,7 @@
      </ul>
     <?php if(Engine_Api::_()->user()->getViewer()->getIdentity() != 0){ ?>
      <div class="comment_reply_form" style="display:none;">
-     <template class="owner-info"><?php echo $this->getUserInfo($comment->getOwner()); ?></template>
+     <template class="owner-info"><?php echo $this->getUserInfo($this->item($comment->poster_type, $comment->poster_id)); ?></template>
       <form class="sesadvancedactivity-comment-form-reply advcomment_form" method="post" style="display:none;">
         <div class="comment_usr_img comments_author_photo">
         <?php

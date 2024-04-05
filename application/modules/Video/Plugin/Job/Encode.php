@@ -291,7 +291,7 @@ class Video_Plugin_Job_Encode extends Core_Plugin_Job_Abstract
       $videoCommand .= '-vcodec libx264' . ' '
       . '-acodec aac' . ' '
       . '-strict experimental' . ' '
-      . '-preset veryfast' . ' '
+      . '-preset ultrafast' . ' '
       . '-f mp4' . ' '
       ;
     else

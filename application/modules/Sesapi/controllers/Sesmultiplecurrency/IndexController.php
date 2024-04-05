@@ -20,14 +20,14 @@ class Sesmultiplecurrency_IndexController extends Sesapi_Controller_Action_Stand
         $fullySupportedCurrencies = Engine_Api::_()->sesmultiplecurrency()->getSupportedCurrency();
         $settings = Engine_Api::_()->getApi('settings', 'core');
         $currencies = array();
-        $defaultCurrency = Engine_Api::_()->sesmultiplecurrency()->defaultCurrency();
+        $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
         foreach ($fullySupportedCurrencies as $key => $values) {
             if(!$settings->getSetting('sesmultiplecurrency.'.$key.'active','0') && $key != $defaultCurrency)
                 continue;
             $currencies[$key] = $values;
         }
         $result['enabled_currencies'] = $currencies;
-        $result['default_currency']  = Engine_Api::_()->sesmultiplecurrency()->getCurrentCurrency();
+        $result['default_currency']  = Engine_Api::_()->payment()->getCurrentCurrency();
         Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => "", 'result' => $result));
     } 
     public function changeCurrencyAction(){

@@ -1,10 +1,10 @@
 
 DROP TABLE IF EXISTS `engine4_core_migrations`;
 CREATE TABLE IF NOT EXISTS `engine4_core_migrations` (
-  `package` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `package` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `current` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY (`package`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -17,13 +17,13 @@ DROP TABLE IF EXISTS `engine4_core_serviceproviders`;
 CREATE TABLE IF NOT EXISTS `engine4_core_serviceproviders` (
   `serviceprovider_id` int(10) unsigned NOT NULL auto_increment,
   `title` varchar(128) NOT NULL,
-  `type` varchar(128) character set latin1 collate latin1_general_ci NOT NULL,
-  `name` varchar(128) character set latin1 collate latin1_general_ci NOT NULL,
-  `class` varchar(128) character set latin1 collate latin1_general_ci NOT NULL,
+  `type` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `class` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `enabled` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`serviceprovider_id`),
   UNIQUE KEY `type` (`type`,`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_core_serviceproviders`
@@ -54,14 +54,14 @@ INSERT IGNORE INTO `engine4_core_serviceproviders` (`title`, `type`, `name`, `cl
 DROP TABLE IF EXISTS `engine4_core_services`;
 CREATE TABLE IF NOT EXISTS `engine4_core_services` (
   `service_id` int(10) unsigned NOT NULL auto_increment,
-  `type` varchar(128) character set latin1 collate latin1_general_ci NOT NULL,
-  `name` varchar(128) character set latin1 collate latin1_general_ci NOT NULL,
-  `profile` varchar(128) character set latin1 collate latin1_general_ci NOT NULL default 'default',
+  `type` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `profile` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL default 'default',
   `config` text NOT NULL,
   `enabled` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`service_id`),
   UNIQUE KEY `type` (`type`, `profile`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_core_services`
@@ -78,12 +78,12 @@ DROP TABLE IF EXISTS `engine4_core_servicetypes`;
 CREATE TABLE IF NOT EXISTS `engine4_core_servicetypes` (
   `servicetype_id` int(10) unsigned NOT NULL auto_increment,
   `title` varchar(128) NOT NULL,
-  `type` varchar(128) character set latin1 collate latin1_general_ci NOT NULL,
-  `interface` varchar(128) character set latin1 collate latin1_general_ci default NULL,
+  `type` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `interface` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci default NULL,
   `enabled` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`servicetype_id`),
   UNIQUE KEY `type` (`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_core_servicetypes`

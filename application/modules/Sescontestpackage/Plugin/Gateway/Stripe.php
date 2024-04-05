@@ -10,7 +10,7 @@
  * @version    $Id: Stripe.php  2019-04-25 00:00:00 SocialEngineSolutions $
  * @author     SocialEngineSolutions
  */
-include_once APPLICATION_PATH . "/application/modules/Sesadvpmnt/Api/Stripe/init.php";
+include_once APPLICATION_PATH . "/application/libraries/Engine/Service/Stripe/init.php";
 class Sescontestpackage_Plugin_Gateway_Stripe extends Engine_Payment_Plugin_Abstract
 {
   protected $_gatewayInfo;
@@ -176,7 +176,7 @@ class Sescontestpackage_Plugin_Gateway_Stripe extends Engine_Payment_Plugin_Abst
       $rate = $session->change_rate;
       if (!$rate)
         $rate = 1;
-      $defaultCurrency = Engine_Api::_()->sescontestpackage()->defaultCurrency();
+      $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
       $settings = Engine_Api::_()->getApi('settings', 'core');
       $currencyValue = 1;
       if ($currency != $defaultCurrency)
@@ -345,7 +345,7 @@ class Sescontestpackage_Plugin_Gateway_Stripe extends Engine_Payment_Plugin_Abst
       $rate = $session->change_rate;
       if (!$rate)
         $rate = 1;
-      $defaultCurrency = Engine_Api::_()->sescontestpackage()->defaultCurrency();
+      $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
       $settings = Engine_Api::_()->getApi('settings', 'core');
       $currencyValue = 1;
       if ($currency != $defaultCurrency) {

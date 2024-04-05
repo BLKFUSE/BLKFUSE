@@ -31,8 +31,8 @@ class Engine_Service_Iframely_Host_Socialenginecustom extends Engine_Service_Ifr
 			$this->getHttpClient()->setHeaders('host', $request->getHttpHost());
   }
   
-  public function get($URL) {
-		return $this->getLinkData($URL);
+  public function get($URL, $TYPE = null) {
+		return $this->getLinkData($URL, $TYPE);
   }
   
 	public function geLinkContents($URL) {
@@ -51,7 +51,7 @@ class Engine_Service_Iframely_Host_Socialenginecustom extends Engine_Service_Ifr
 		return $data;
 	}
 	
-	public function getLinkData($uri) {
+	public function getLinkData($uri, $TYPE = null) {
 	
 		$doc = new DOMDocument("1.0", 'utf-8');
 		$html = $this->geLinkContents($uri);
@@ -144,6 +144,10 @@ class Engine_Service_Iframely_Host_Socialenginecustom extends Engine_Service_Ifr
 				$information['meta']['duration'] = $iVimeoDuration;
 			}
 		}
+		if($TYPE == 'video' && empty($iframely['og:video:url'])) {
+      $information['links']['player'] = false;
+      return $information;
+    } 
 		//Get OG Embed URL
 		$embedUrl = !empty($iframely['og:video:url']) ? $iframely['og:video:url'] : $uri;
 		$information['html'] = '<iframe width="480" height="270" src="'.$embedUrl.'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';

@@ -160,6 +160,8 @@ class Album_AlbumController extends Core_Controller_Action_Standard
     public function viewAction()
     {
         $settings = Engine_Api::_()->getApi('settings', 'core');
+        $viewer = Engine_Api::_()->user()->getViewer();
+        
         if (!$this->_helper->requireSubject('album')->isValid()) {
             return;
         }
@@ -167,6 +169,12 @@ class Album_AlbumController extends Core_Controller_Action_Standard
         $this->view->album = $album = Engine_Api::_()->core()->getSubject();
         if (!$this->_helper->requireAuth()->setAuthParams($album, null, 'view')->isValid()) {
             return;
+        }
+        
+        if( !$album || !$album->getIdentity() || ((!$album->approved) && !$album->isOwner($viewer)) ) {
+					if(!empty($viewer->getIdentity()) && $viewer->isAdmin()) {
+					} else
+            return $this->_helper->requireSubject->forward();
         }
 
         // Network check
@@ -176,7 +184,6 @@ class Album_AlbumController extends Core_Controller_Action_Standard
 
         // Prepare params
         $this->view->page = $page = $this->_getParam('page');
-        $viewer = Engine_Api::_()->user()->getViewer();
 
         $sorting = 'ASC';
         if(Engine_Api::_()->getApi('settings', 'core')->getSetting('album.defaultsearch', 0) == 1){
@@ -195,7 +202,8 @@ class Album_AlbumController extends Core_Controller_Action_Standard
         $this->view->paginator = $paginator = $photoTable->getPhotoPaginator([
             'album' => $album,
             'albumvieworder' => $sorting,
-            'showprivatephoto' => $showprivatephoto
+            'showprivatephoto' => $showprivatephoto,
+            'action' => 'browsephoto',
         ]);
         $paginator->setItemCountPerPage($settings->getSetting('photo_page', 12));
         $paginator->setCurrentPageNumber($page);
@@ -530,6 +538,12 @@ class Album_AlbumController extends Core_Controller_Action_Standard
                 'owner_id' => Engine_Api::_()->user()->getViewer()->getIdentity()
             ]);
             $photo->save();
+            if ($album->approved) {
+              $photo->resubmit = 1;
+              $photo->save();
+            }
+            $photo->approved = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('album', $viewer, 'photoapprove');
+            $photo->save();
             $photo->setPhoto($_FILES['Filedata']);
 
             if ($type == 'message') {
@@ -546,6 +560,10 @@ class Album_AlbumController extends Core_Controller_Action_Standard
 
             if (!$album->photo_id) {
                 $album->photo_id = $photo->getIdentity();
+                $album->save();
+            }
+            if ($album->approved) {
+                $album->resubmit = 1;
                 $album->save();
             }
 

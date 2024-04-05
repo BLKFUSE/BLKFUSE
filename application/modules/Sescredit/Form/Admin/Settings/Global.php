@@ -53,7 +53,7 @@ class Sescredit_Form_Admin_Settings_Global extends Engine_Form {
           'required' => true,
           'value' => $settings->getSetting('sescredit.text.plural', 'credits'),
       ));
-      $price = Engine_Api::_()->sescredit()->getCurrencyPrice('1', '', '', true);
+      $price = Engine_Api::_()->payment()->getCurrencyPrice('1', '', '', true);
       $this->addElement('Text', 'sescredit_creditvalue', array(
           'label' => 'Credit Points Value in USD',
           'description' => "Enter the value of credit points in USD for $price? (For example. $price = 1000 points)",
@@ -101,12 +101,18 @@ class Sescredit_Form_Admin_Settings_Global extends Engine_Form {
           'ignore' => true
       ));
     } else {
-      //Add submit button
-      $this->addElement('Button', 'submit', array(
+      $enabledSesbasic = Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesbasic');
+      $fields = array(
           'label' => 'Activate This Plugin',
           'type' => 'submit',
           'ignore' => true
-      ));
+      );
+      if(!$enabledSesbasic){
+        $fields['disable'] = true;
+        $fields['title'] = 'To Activate this plugin, please first install all dependent plugins as show in the tips above.';
+      }
+      //Add submit button
+      $this->addElement('Button', 'submit',$fields);
     }
   }
 

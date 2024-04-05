@@ -22,30 +22,10 @@ class Sesadvancedactivity_Form_Admin_Settings_Notification extends Engine_Form
 		$view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
 		
     //UPLOAD PHOTO URL
-      $upload_url = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'sesbasic', 'controller' => 'index', 'action' => "upload-image"), 'default', true);
+    $editorOptions = array(
+      'uploadUrl' => Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'index', 'action' => 'upload-photo'), 'default', true),
+    );
 
-      $allowed_html = 'strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr';
-
-      $editorOptions = array(
-          'upload_url' => $upload_url,
-          'html' => (bool) $allowed_html,
-      );
-
-      if (!empty($upload_url)) {
-				$editorOptions['editor_selector'] = 'tinymce';
-				$editorOptions['mode'] = 'specific_textareas';
-        $editorOptions['plugins'] = array(
-            'table', 'fullscreen', 'media', 'preview', 'paste',
-            'code', 'image', 'textcolor', 'jbimages', 'link'
-        );
-
-        $editorOptions['toolbar1'] = array(
-            'undo', 'redo', 'removeformat', 'pastetext', '|', 'code',
-            'media', 'image', 'jbimages', 'link', 'fullscreen',
-            'preview'
-        );
-      }
-    
     $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
     $baseURL = $protocol.$_SERVER['HTTP_HOST'];
     $baseURLStatic = $baseURL.$view->layout()->staticBaseUrl;;
@@ -72,7 +52,6 @@ class Sesadvancedactivity_Form_Admin_Settings_Notification extends Engine_Form
     $this->addElement('TinyMce', 'sesadvancedactivity_notificationdaytext', array(
       'label' => 'Greeting Message',
       'description' => 'Configure the notification for greeting "Good Morning",  "Good Afternoon" or "Good Evening" for the day.',
-      'class'=>'tinymce',
       'allowEmpty'=>false,
       'required'=>true,
 		  'editorOptions' => $editorOptions,
@@ -112,23 +91,12 @@ class Sesadvancedactivity_Form_Admin_Settings_Notification extends Engine_Form
     $this->addElement('TinyMce', 'sesadvancedactivity_notificationbirthdaytext', array(
       'label' => 'Birthday Wish Message',
       'description' => 'Configure the message for birthday wish to members.',
-      'class'=>'tinymce',
       'allowEmpty'=>false,
       'required'=>true,
 		  'editorOptions' => $editorOptions,
       'value' => $settings->getSetting('sesadvancedactivity.notificationbirthdaytext', $design),
     ));
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+  
     $this->addElement('Radio', 'sesadvancedactivity_friendnotificationbirthday', array(
       'label' => 'Friend’s Birthday Reminder Notification',
       'description' => 'Do you want to show members this notification on the birthday of their friends?',
@@ -143,7 +111,6 @@ class Sesadvancedactivity_Form_Admin_Settings_Notification extends Engine_Form
     $this->addElement('TinyMce', 'sesadvancedactivity_friendnotificationbirthdaytext', array(
       'label' => 'Birthday Notification Message',
       'description' => 'Configure the notification for friend’s birthday reminder.',
-      'class'=>'tinymce',
       'allowEmpty'=>false,
       'required'=>true,
 		  'editorOptions' => $editorOptions,

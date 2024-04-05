@@ -65,10 +65,10 @@ class Install_Import_Phpfox_UserFbConnect extends Install_Import_Phpfox_Abstract
  * CREATE TABLE IF NOT EXISTS `engine4_user_facebook` (
   `user_id` int(11) unsigned NOT NULL,
   `facebook_uid` bigint(20) unsigned NOT NULL,
-  `access_token` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `access_token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `expires` bigint(20) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `facebook_uid` (`facebook_uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  */

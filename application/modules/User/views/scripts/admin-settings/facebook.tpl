@@ -10,7 +10,9 @@
  * @author     John Boehr <j@webligo.com>
  */
 ?>
-<h2><?php echo $this->translate('Social Menus') ?></h2>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_settings", 'parentMenuItemName' => 'core_admin_main_socialmenus', 'childMenuItemName' => 'core_admin_main_facebook')); ?>
+
+<h2 class="page_heading"><?php echo $this->translate('Social Menus') ?></h2>
 <?php if( count($this->navigation) ): ?>
   <div class='tabs'>
     <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?>

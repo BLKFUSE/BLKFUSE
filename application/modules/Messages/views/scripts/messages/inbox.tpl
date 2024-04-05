@@ -12,9 +12,9 @@
 ?>
 
 <div>
-  <b><?php echo $this->translate(array('You have %1$s new message, %2$s total', 'You have %1$s new messages, %2$s total', $this->unread),
+  <p><?php echo $this->translate(array('You have %1$s new message, %2$s total', 'You have %1$s new messages, %2$s total', $this->unread),
                               $this->locale()->toNumber($this->unread),
-                              $this->locale()->toNumber($this->paginator->getTotalItemCount())) ?></b>
+                              $this->locale()->toNumber($this->paginator->getTotalItemCount())) ?></p>
   <?php if( engine_count($this->paginator) ): ?>
     <a href="javascript:void(0)" id="checkall"><?php echo $this->translate('Check All') ?></a>
   <?php endif; ?>

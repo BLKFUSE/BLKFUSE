@@ -408,7 +408,7 @@ class Classified_IndexController extends Sesapi_Controller_Action_Standard {
     $givenSymbol = $settings->getSetting('payment.currency', 'USD');
     if($price) {
       if(!empty($_SESSION['ses_multiple_currency']['multipleCurrencyPluginActivated'])){
-        $classified_content['price'] = Engine_Api::_()->sesmultiplecurrency()->getCurrencyPrice($price, Engine_Api::_()->sesmultiplecurrency()->getCurrentCurrency(),'',false);
+        $classified_content['price'] = Engine_Api::_()->payment()->getCurrencyPrice($price, Engine_Api::_()->sesmultiplecurrency()->getCurrentCurrency(),'',false);
       }else{
           $classified_content['price'] = Zend_Registry::get('Zend_View')->locale()->toCurrency($price, $givenSymbol, array());
       }
@@ -497,6 +497,24 @@ class Classified_IndexController extends Sesapi_Controller_Action_Standard {
         "type" => $classified->getType(),
         "id" => $classified->getIdentity()
     );
+
+		//Classified multiple photo work
+		$album = $classified->getSingletonAlbum();
+		$photoPaginator = $album->getCollectiblesPaginator();
+		$photoPaginator->setCurrentPageNumber(1);
+		$photoPaginator->setItemCountPerPage(100);
+		$photoCounter = 0;
+		if(engine_count($photoPaginator)){
+			foreach($photoPaginator as $photo){
+				$file = Engine_Api::_()->getItem('storage_file',$photo->file_id);
+				$result['images'][$photoCounter]['image_type'] = 'extra';
+				if($photo->file_id == $classified->photo_id){
+					$result['images'][$photoCounter]['image_type'] = 'main';
+				}
+				$result['images'][$photoCounter]['image_url'] = $this->getBaseUrl(true,$file->map());
+				$photoCounter++;
+			}
+		}
     
     if(is_null($result['classified']["share"]["title"]))
       unset($result['classified']["share"]["title"]);

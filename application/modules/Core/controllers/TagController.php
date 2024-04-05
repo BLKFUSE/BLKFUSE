@@ -84,6 +84,7 @@ class Core_TagController extends Core_Controller_Action_Standard
       if( $action ) $action->attach($subject);
 
       // Add notification
+      
       $type_name = $this->view->translate(str_replace('_', ' ', $subject->getShortType()));
       Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification(
         $tag,
@@ -92,7 +93,7 @@ class Core_TagController extends Core_Controller_Action_Standard
         'tagged',
         array(
           'object_type_name' => is_array($type_name) ? $type_name[0] : $type_name,
-          'label'            => $type_name,
+          'label'            => is_array($type_name) ? $type_name[0] : $type_name,
         )
       );
     }

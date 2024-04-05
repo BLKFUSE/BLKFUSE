@@ -32,9 +32,13 @@ class Core_AdminSettingsController extends Core_Controller_Action_Admin
 
         // Populate form
         $form->populate(Engine_Api::_()->getApi('settings', 'core')->getFlatSetting('core_general', array()));
+        
         if (_ENGINE_ADMIN_NEUTER) {
-            return;
+          $form->staticBaseUrl->setValue("**********");
+          $form->analytics->setValue("**********");
+          return;
         }
+
         $form->populate(array(
             'maintenance_mode' => !empty($generalConfig['maintenance']['enabled']),
             'maintenance_code' => (!empty($generalConfig['maintenance']['code']) ? $generalConfig['maintenance']['code'] : $this->_createRandomPassword(5)),
@@ -43,6 +47,8 @@ class Core_AdminSettingsController extends Core_Controller_Action_Admin
             'site_favicon' => Engine_Api::_()->getApi('settings', 'core')->getSetting('core.site.favicon'),
             'sell_info'=>Engine_Api::_()->getApi('settings', 'core')->getSetting('core.sell.info',1)
         ));
+        
+
 
         // Check post/valid
         if (!$this->getRequest()->isPost()) {
@@ -101,6 +107,10 @@ class Core_AdminSettingsController extends Core_Controller_Action_Admin
         if ($generalConfig['maintenance']['enabled']) {
             setcookie('en4_maint_code', $generalConfig['maintenance']['code'], array ('expires' => time() + (60 * 60 * 24 * 365), 'path' => $this->view->baseUrl(),'samesite' => 'Lax'));
         }
+        
+        //Save Cdn 
+        $generalConfig['cdn']['enabled'] = !empty($values['staticBaseUrl']) ? 1 : 0; 
+        $generalConfig['cdn']['url'] = $values['staticBaseUrl'];
 
         if ((is_file($global_settings_file) && is_writable($global_settings_file)) ||
             (is_dir(dirname($global_settings_file)) && is_writable(dirname($global_settings_file)))) {
@@ -311,8 +321,8 @@ class Core_AdminSettingsController extends Core_Controller_Action_Admin
                 'frontend' => array(
                     'core' => array(
                         'automatic_serialization' => true,
-                        'cache_id_prefix' => 'Engine4_',
-                        'lifetime' => '300',
+                        'cache_id_prefix' => 'Engine4_'.rand().'_',
+                        'lifetime' => '86400',
                         'caching' => true,
                         'gzip' => 1,
                     ),
@@ -631,4 +641,171 @@ class Core_AdminSettingsController extends Core_Controller_Action_Admin
         $this->_helper->redirector->gotoRoute(array());
       }
     }
+
+  public function editorAction() {
+
+      // Get level id
+      if (null !== ($id = $this->_getParam('id'))) {
+        $level = Engine_Api::_()->getItem('authorization_level', $id);
+      } else {
+        $level = Engine_Api::_()->getItemTable('authorization_level')->getDefaultLevel();
+      }
+      
+      if (!$level instanceof Authorization_Model_Level) {
+        throw new Engine_Exception('missing level');
+      }
+      
+      $this->view->level_id = $level_id = $id = $level->level_id;
+      
+      // Make form
+      $this->view->form = $form = new Core_Form_Admin_Settings_Editor(array(
+          'public' => ( engine_in_array($level->type, array('public')) ),
+          'moderator' => ( engine_in_array($level->type, array('admin', 'moderator')) ),
+      ));
+      
+      $form->level_id->setValue($level_id);
+      $this->view->permissionTable = $permissionsTable = Engine_Api::_()->getDbtable('permissions', 'authorization');
+      $valuesForm = $permissionsTable->getAllowed('user', $level_id, array_keys($form->getValues()));
+  
+      $form->populate($valuesForm);
+      $form->level_id->setValue($id);
+      if (!$this->getRequest()->isPost()) {
+        return;
+      }
+      // Check validitiy
+      if (!$form->isValid($this->getRequest()->getPost())) {
+        return;
+      }
+      
+      // Process
+      $values = $form->getValues();
+  
+      $db = $permissionsTable->getAdapter();
+      $db->beginTransaction();
+      try {
+        $nonBooleanSettings = $form->nonBooleanFields();
+        $permissionsTable->setAllowed('user', $level_id, $values, '', $nonBooleanSettings);
+  
+        $db->commit();
+      } catch (Exception $e) {
+        $db->rollBack();
+        throw $e;
+      }
+      $form->addNotice('Your changes have been saved.');
+    }
+    
+  public function verificationAction() {
+  
+    // Get navigation
+    $this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_manage_verification', array(), 'core_admin_main_settings_verification');
+    
+    // Get level id
+    if (null !== ($id = $this->_getParam('id'))) {
+      $level = Engine_Api::_()->getItem('authorization_level', $id);
+    } else {
+      $level = Engine_Api::_()->getItemTable('authorization_level')->getDefaultLevel();
+    }
+    
+    if (!$level instanceof Authorization_Model_Level) {
+      throw new Engine_Exception('missing level');
+    }
+    
+    $this->view->level_id = $level_id = $id = $level->level_id;
+    $this->view->popup = $_SESSION['popup'];
+    unset($_SESSION['popup']);
+    // Make form
+    $this->view->form = $form = new Core_Form_Admin_Settings_Verification(array(
+        'public' => ( engine_in_array($level->type, array('public')) ),
+        'moderator' => ( engine_in_array($level->type, array('admin', 'moderator')) ),
+    ));
+    
+    $form->level_id->setValue($level_id);
+    $this->view->permissionTable = $permissionsTable = Engine_Api::_()->getDbtable('permissions', 'authorization');
+    $valuesForm = $permissionsTable->getAllowed('user', $level_id, array_keys($form->getValues()));
+    
+    // Get supported billing cycles
+    $gateways = array();
+    $supportedBillingCycles = array();
+    $partiallySupportedBillingCycles = array();
+    $fullySupportedBillingCycles = null;
+    $gatewaysTable = Engine_Api::_()->getDbtable('gateways', 'payment');
+    foreach( $gatewaysTable->fetchAll(/*array('enabled = ?' => 1)*/) as $gateway ) {
+      $gateways[$gateway->gateway_id] = $gateway;
+      $supportedBillingCycles[$gateway->gateway_id] = $gateway->getGateway()->getSupportedBillingCycles();
+      $partiallySupportedBillingCycles = array_merge($partiallySupportedBillingCycles, $supportedBillingCycles[$gateway->gateway_id]);
+      if( null === $fullySupportedBillingCycles ) {
+        $fullySupportedBillingCycles = $supportedBillingCycles[$gateway->gateway_id];
+      } else {
+        $fullySupportedBillingCycles = array_intersect($fullySupportedBillingCycles, $supportedBillingCycles[$gateway->gateway_id]);
+      }
+    }
+    $partiallySupportedBillingCycles = array_diff($partiallySupportedBillingCycles, $fullySupportedBillingCycles);
+
+    $multiOptions = /* array(
+      'Fully Supported' =>*/ array_combine(array_map('strtolower', $fullySupportedBillingCycles), $fullySupportedBillingCycles)/*,
+      'Partially Supported' => array_combine(array_map('strtolower', $partiallySupportedBillingCycles), $partiallySupportedBillingCycles),
+    )*/;
+    $form->getElement('recurrence')
+      ->setMultiOptions($multiOptions)
+      //->setDescription('-')
+      ;
+    $form->getElement('recurrence')->options/*['Fully Supported']*/['forever'] = 'One-time';
+
+    $form->populate($valuesForm);
+    $form->level_id->setValue($id);
+    if (!$this->getRequest()->isPost()) {
+      return;
+    }
+    // Check validitiy
+    if (!$form->isValid($this->getRequest()->getPost())) {
+      return;
+    }
+    
+    // Process
+    $values = $form->getValues();
+
+    $db = $permissionsTable->getAdapter();
+    $db->beginTransaction();
+    try {
+      $nonBooleanSettings = $form->nonBooleanFields();
+      $permissionsTable->setAllowed('user', $level_id, $values, '', $nonBooleanSettings);
+
+      $db->commit();
+    } catch (Exception $e) {
+      $db->rollBack();
+      throw $e;
+    }
+
+    if($values['verified'] == 1 && $values['verified'] != $valuesForm['verified']) {
+      $_SESSION['popup'] = true;
+      return $this->_helper->redirector->gotoRoute();
+    } else {
+      $form->addNotice('Your changes have been saved.');
+    }
+  }
+  
+  public function autoverifyExistingMembersAction() {
+  
+    $this->_helper->layout->setLayout('admin-simple');
+    if (!$this->getRequest()->isPost()) {
+      $this->view->member_level_id = $levelId =  $this->_getParam('level_id', null);
+    }
+    
+    if ($this->getRequest()->isPost()) {
+      $level_id = $this->_getParam('level_id');
+      if(!empty($level_id)) {
+        $db = Zend_Db_Table_Abstract::getDefaultAdapter();
+        try {
+          $db->query("UPDATE `engine4_users` SET `is_verified` = '1' WHERE `engine4_users`.`level_id` = '".$level_id."';");
+        } catch (Exception $ex) {
+          throw $ex;
+        }
+      }
+      $this->_forward('success', 'utility', 'core', array(
+        'smoothboxClose' => true,
+        'parentRefresh'=> true,
+        'messages' => Array(Zend_Registry::get('Zend_Translate')->_("Existing users have been successfully verified."))
+      ));
+    }
+  }
 }

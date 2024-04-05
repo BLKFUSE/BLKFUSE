@@ -24,7 +24,7 @@
 $information = array('description'=>'Package Description','featured'=>'Featured','sponsored'=>'Sponsored','verified'=>'Verified','location'=>'Location','modules'=>'Modules','editor'=>'Rich Editor','custom_fields'=>'Custom Fields','newscount'=>'News Count');
 $showinfo = array('description','featured','sponsored','verified','location','modules','editor','custom_fields','newscount');//Engine_Api::_()->getApi('settings', 'core')->getSetting('sesnewspackage.package.information', array_keys($information));
  ?>
-<?php $currentCurrency =  Engine_Api::_()->sesnews()->getCurrentCurrency(); ?>
+<?php $currentCurrency =  Engine_Api::_()->payment()->getCurrentCurrency(); ?>
 <?php if($this->currentPackage){ 
 	$package = Engine_Api::_()->getItem('sesnewspackage_package',$this->currentPackage->package_id);
   if($package){
@@ -69,7 +69,7 @@ $showinfo = array('description','featured','sponsored','verified','location','mo
   	<ul class="package_catogery_listing">
     <?php 
             $enableModules = json_decode($package->params,true);
-            $curruncySymbol = str_replace('.','',preg_replace('/\d+/u', '', Engine_Api::_()->sesnews()->getCurrencyPrice($package->price)));
+            $curruncySymbol = str_replace('.','',preg_replace('/\d+/u', '', Engine_Api::_()->payment()->getCurrencyPrice($package->price)));
      ?>
     	<li class="<?php ($package->highlight) ? 'active' : '' ?>">
       	<div class="package-ditals_news">
@@ -80,7 +80,7 @@ $showinfo = array('description','featured','sponsored','verified','location','mo
             </div>
             <div class="amount">
             	<?php if($package->price > 0){ ?>
-            		<span><?php echo $curruncySymbol; ?></span><?php echo Engine_Api::_()->sesnews()->getCurrencyPrice($package->price,'','',true); ?><br />
+            		<span><?php echo $curruncySymbol; ?></span><?php echo Engine_Api::_()->payment()->getCurrencyPrice($package->price,'','',true); ?><br />
                 <small><?php echo $package->getPackageDescription(); ?></small>
               <?php }else{ ?>
               	<span><?php echo $this->translate("FREE"); ?></span><br />
@@ -182,7 +182,7 @@ $showinfo = array('description','featured','sponsored','verified','location','mo
   	<ul class="package_catogery_listing">
     <?php foreach($this->upgradepackage as $package)	{
             $enableModules = json_decode($package->params,true);
-            $curruncySymbol = str_replace('.','',preg_replace('/\d+/u', '', Engine_Api::_()->sesnews()->getCurrencyPrice($package->price)));
+            $curruncySymbol = str_replace('.','',preg_replace('/\d+/u', '', Engine_Api::_()->payment()->getCurrencyPrice($package->price)));
      ?>
     	<li class="<?php echo ($package->highlight) ? 'active' : '' ?>">
       	<div class="package-ditals_news">
@@ -193,7 +193,7 @@ $showinfo = array('description','featured','sponsored','verified','location','mo
             </div>
             <div class="amount">
             	<?php if(!$package->isFree()){ ?>
-            		<span><?php echo $curruncySymbol; ?></span><?php echo Engine_Api::_()->sesnews()->getCurrencyPrice($package->price,'','',true); ?><br />
+            		<span><?php echo $curruncySymbol; ?></span><?php echo Engine_Api::_()->payment()->getCurrencyPrice($package->price,'','',true); ?><br />
                 <small><?php echo $package->getPackageDescription(); ?></small>
               <?php }else{ ?>
               	<span><?php echo $this->translate("FREE"); ?></span><br />

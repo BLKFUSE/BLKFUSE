@@ -228,4 +228,25 @@ class User_IndexController extends Core_Controller_Action_Standard
 
     return true;
   }
+
+  public function getusersAction() {
+
+    $sesdata = array();
+    $users_table = Engine_Api::_()->getDbtable('users', 'user');
+    $select = $users_table->select()
+                    ->where('user_id != ?', Engine_Api::_()->user()->getViewer()->getIdentity())
+                    ->where('displayname LIKE ? ', '%' . $this->_getParam('text') . '%')
+                    ->order('displayname ASC')->limit('40');
+    $users = $users_table->fetchAll($select);
+
+    foreach ($users as $user) {
+      $user_icon_photo = $this->view->itemPhoto($user, 'thumb.icon');
+      $sesdata[] = array(
+          'id' => $user->user_id,
+          'label' => $user->getTitle(),
+          'photo' => $user_icon_photo
+      );
+    }
+    return $this->_helper->json($sesdata);
+  }
 }

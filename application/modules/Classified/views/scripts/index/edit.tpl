@@ -117,9 +117,10 @@ if($recaptchaVersionSettings == 0  && $spamSettings['recaptchaprivatev3'] && $sp
      </div>
   </div>
 </div>
+<?php echo $this->partial('_approved_tip.tpl', 'core', array('item' => $this->subject())); ?>
 <div class="layout_middle">
   <div class="generic_layout_container">
-<form action="<?php echo $this->escape($this->form->getAction()) ?>" method="<?php echo $this->escape($this->form->getMethod()) ?>" class="global_form classifieds_browse_filters">
+<form action="<?php echo $this->escape($this->form->getAction()) ?>" enctype="multipart/form-data" method="<?php echo $this->escape($this->form->getMethod()) ?>" class="global_form classifieds_browse_filters">
   <div>
     <div>
       <h3>
@@ -134,6 +135,7 @@ if($recaptchaVersionSettings == 0  && $spamSettings['recaptchaprivatev3'] && $sp
         <?php if($this->form->subcat_id) echo $this->form->subcat_id; ?>
         <?php if($this->form->subsubcat_id) echo $this->form->subsubcat_id; ?>
         <?php echo $this->form->body; ?>
+        <?php echo $this->form->photo; ?>
         <?php echo $this->form->getSubForm('fields'); ?>
         <?php if($this->form->networks) echo $this->form->networks; ?>
         <?php if($this->form->auth_view) echo $this->form->auth_view; ?>

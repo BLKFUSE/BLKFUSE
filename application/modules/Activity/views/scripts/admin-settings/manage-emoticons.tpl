@@ -10,6 +10,8 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_manage", 'childMenuItemName' => 'core_admin_main_settings_emoticons')); ?>
+
 <div class="settings">
   <?php if ($this->hasPermission): ?>
     <p>Click <a class='smoothbox' href='<?php echo $this->url(array('action' => 'add-emoticon'));?>'>
@@ -22,7 +24,6 @@
       </span>
     </div>
   <?php endif;?>
-  <br/>
   <table class='admin_table admin_responsive_table'>
     <thead>
       <tr>
@@ -46,7 +47,7 @@
                 <a class='smoothbox' href='<?php echo $this->url(array('action' => 'edit-emoticon', 'symbol' => $symbol));?>'>
                   <?php echo $this->translate("edit") ?>
                 </a>
-               
+               |
               <?php endif;?>
               <a class='smoothbox' href='<?php echo $this->url(array('action' => 'delete-emoticon', 'symbol' => $symbol));?>'>
                 <?php echo $this->translate("delete") ?>

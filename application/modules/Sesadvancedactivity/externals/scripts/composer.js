@@ -250,7 +250,7 @@ Composer = function(element, options){
         'class' : 'composer_schedulepost_toggle sesadv_tooltip',
         'href'  : 'javascript:void(0);',
         'id' : 'sesadvancedactivity_shedulepost',
-        'title' : this._lang('Schedule Post'),
+        'title' : en4.core.language.translate("Schedule Post"),
       });
       this.elements.schedule.appendTo(scriptJquery('#compose-menu'));
     }
@@ -738,8 +738,8 @@ this.name = 'interface';
     Object.entries(this.elements).forEach(function([key,element]) {
       if(!this.persistentElements.includes(key)) {
         //console.log(element,"element");
-        // if(scriptJquery(element).length)
-        //   scriptJquery(element).remove();
+        if(scriptJquery(element).length)
+          scriptJquery(element).remove();
         this.elements.erase(key);
       }
     }.bind(this));
@@ -764,7 +764,7 @@ this.name = 'interface';
       scriptJquery('#activity-form').removeClass('feed_background_image');
       scriptJquery('#feedbg_main_continer').css('display','none');
       scriptJquery('#hideshowfeedbgcont').css('display','none');
-      scriptJquery('#feedbg_content').css('display','none');
+      // scriptJquery('#feedbg_content').css('display','none');
     }
     //Feed Background image work
 
@@ -839,7 +839,7 @@ this.name = 'interface';
     //Feed Background Image Work
     if(document.getElementById('feedbgid')) {
       document.getElementById('hideshowfeedbgcont').style.display = 'block';
-      scriptJquery('#feedbg_content').css('display','block');
+      // scriptJquery('#feedbg_content').css('display','block');
       scriptJquery('#feedbg_main_continer').css('display','block');
     }
     scriptJquery('#compose-menu').next().html('');
@@ -1160,8 +1160,10 @@ scriptJquery(document).on('click',function(e){
     scriptJquery(".sesact_post_media_options").children().eq(3).hide();
 
     // Feed bg work
-    if(document.getElementById('feedbg_main_continer'))
+    var activatedPlugin = composeInstance.getActivePlugin();
+    if(document.getElementById('feedbg_main_continer') && !activatedPlugin)
       scriptJquery('#feedbg_main_continer').css('display','block');
+    
     if(activityBodyHeight){
       scriptJquery('#activity_body').height(activityBodyHeight);
     }

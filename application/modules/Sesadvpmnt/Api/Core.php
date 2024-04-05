@@ -65,8 +65,8 @@ class Sesadvpmnt_Api_Core extends Core_Api_Abstract
           'not been charged. If this is not correct, please try again later.');
     }
 		//payment currency
-		$currentCurrency = Engine_Api::_()->sesevent()->getCurrentCurrency();
-		$defaultCurrency = Engine_Api::_()->sesevent()->defaultCurrency();
+		$currentCurrency = Engine_Api::_()->payment()->getCurrentCurrency();
+		$defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
 		$settings = Engine_Api::_()->getApi('settings', 'core');
 		$currencyValue = 1;
 		if($currentCurrency != $defaultCurrency){
@@ -175,19 +175,19 @@ class Sesadvpmnt_Api_Core extends Core_Api_Abstract
 					  $total_price_t = @round($tickets->price,2);
 				  }
 				  if($eventOrder->total_service_tax > 0){
-				    $service_tax_t = Engine_Api::_()->sesevent()->getCurrencyPrice(@round($eventOrder->total_service_tax,2), $eventOrder->currency_symbol, $eventOrder->change_rate);
+				    $service_tax_t = Engine_Api::_()->payment()->getCurrencyPrice(@round($eventOrder->total_service_tax,2), $eventOrder->currency_symbol, $eventOrder->change_rate);
 				  } else { 
 					  $service_tax_t = "-";
 				  }
 				  if($eventOrder->total_entertainment_tax){
-				    $entertainment_tax_t = Engine_Api::_()->sesevent()->getCurrencyPrice(@round($eventOrder->total_entertainment_tax,2), $eventOrder->currency_symbol, $eventOrder->change_rate);
+				    $entertainment_tax_t = Engine_Api::_()->payment()->getCurrencyPrice(@round($eventOrder->total_entertainment_tax,2), $eventOrder->currency_symbol, $eventOrder->change_rate);
 				  } else { 
 					  $entertainment_tax_t = "-";
 				  }
 					if($totalAmount <= 0) {
 						$grandTottal = 'FREE';
 					} else {
-					  $grandTottal = Engine_Api::_()->sesevent()->getCurrencyPrice($totalAmount, $eventOrder->currency_symbol, $eventOrder->change_rate);
+					  $grandTottal = Engine_Api::_()->payment()->getCurrencyPrice($totalAmount, $eventOrder->currency_symbol, $eventOrder->change_rate);
 				  }
 				  $orderTicketsDetails = Engine_Api::_()->getDbtable('orderTickets', 'sesevent')->getOrderTicketDetails(array('order_id' => $orderTicket->order_id));
 				  if($eventOrder->ragistration_number) {
@@ -206,7 +206,7 @@ class Sesadvpmnt_Api_Core extends Core_Api_Abstract
             if($orderTiDetails->price <= 0){
 	            $ticketDetails .= 'FREE';
             } else {
-              $ticketDetails.= Engine_Api::_()->sesevent()->getCurrencyPrice($orderTiDetails->price,$eventOrder->currency_symbol,$eventOrder->change_rate); 
+              $ticketDetails.= Engine_Api::_()->payment()->getCurrencyPrice($orderTiDetails->price,$eventOrder->currency_symbol,$eventOrder->change_rate); 
             }
             $ticketDetails .= '<br />';
             if($orderTiDetails->service_tax > 0) {
@@ -224,19 +224,19 @@ class Sesadvpmnt_Api_Core extends Core_Api_Abstract
 		          $ticketDetails .= 'FREE';
 	          } else {
 	            $ticketDetails .= '<td align="right">';
-		          $ticketDetails .= Engine_Api::_()->sesevent()->getCurrencyPrice(round($price*$orderTiDetails->quantity,2),$eventOrder->currency_symbol,$eventOrder->change_rate);
+		          $ticketDetails .= Engine_Api::_()->payment()->getCurrencyPrice(round($price*$orderTiDetails->quantity,2),$eventOrder->currency_symbol,$eventOrder->change_rate);
 		          $ticketDetails .= '<br />';
 	          }
 	          if($orderTiDetails->service_tax > 0) {
 		          $serviceTax = round(($price *($orderTiDetails->service_tax/100) )*$orderTiDetails->quantity,2); 
 		          $ticketDetails .= 'Service Tax:';
-		          $ticketDetails .= Engine_Api::_()->sesevent()->getCurrencyPrice(@round($serviceTax,2),$eventOrder->currency_symbol,$eventOrder->change_rate);
+		          $ticketDetails .= Engine_Api::_()->payment()->getCurrencyPrice(@round($serviceTax,2),$eventOrder->currency_symbol,$eventOrder->change_rate);
 		          $ticketDetails .= '<br />';
 		        }
 		        if($orderTiDetails->entertainment_tax > 0) { 
 			        $entertainmentTax = round(($price *($orderTiDetails->entertainment_tax/100) ) * $orderTiDetails->quantity,2);
 			        $ticketDetails .= 'Entertainment Tax:';
-			        $ticketDetails .= Engine_Api::_()->sesevent()->getCurrencyPrice(@round($entertainmentTax,2),$eventOrder->currency_symbol,$eventOrder->change_rate);
+			        $ticketDetails .= Engine_Api::_()->payment()->getCurrencyPrice(@round($entertainmentTax,2),$eventOrder->currency_symbol,$eventOrder->change_rate);
 			      }
 			      $ticketDetails .= '</td>';
 						$ticketDetails .= '</tr>';
@@ -247,14 +247,14 @@ class Sesadvpmnt_Api_Core extends Core_Api_Abstract
 		      if($totalAmount <= 0) {
 		      $totalAmounts .= 'FREE';
 		      } else {
-			      $totalAmounts .= Engine_Api::_()->sesevent()->getCurrencyPrice(@round($totalAmount,2),$orderTicket->currency_symbol, $orderTicket->change_rate);
+			      $totalAmounts .= Engine_Api::_()->payment()->getCurrencyPrice(@round($totalAmount,2),$orderTicket->currency_symbol, $orderTicket->change_rate);
 		      }
 		      $totalAmounts .= ']';
 		      $sub_total = '';
 		      if($orderTicket->total_amount <= 0) {
 			      $sub_total .= 'FREE';
 		      } else {
-			      $sub_total .= Engine_Api::_()->sesevent()->getCurrencyPrice(@round($orderTicket->total_amount,2), $orderTicket->currency_symbol, $orderTicket->change_rate);
+			      $sub_total .= Engine_Api::_()->payment()->getCurrencyPrice(@round($orderTicket->total_amount,2), $orderTicket->currency_symbol, $orderTicket->change_rate);
 		      }
 		      
 			    $body .= '<table style="background-color:#f9f9f9;border:#ececec solid 1px;width:100%;"><tr><td><div style="margin:0 auto;width:600px;font:normal 13px Arial,Helvetica,sans-serif;padding:20px;"><div style="margin-bottom:10px;overflow:hidden;"><div style="float:left;"><b>Order Id: #' . $orderTicket->order_id . '</b></div><div style="float:right;"><b>'.$totalAmounts.'</b></div></div><table style="background-color:#fff;border:#ececec solid 1px;margin-bottom:20px;" cellpadding="0" cellspacing="0" width="100%"><tr valign="top" style="width:50%;"><td><div style="border-bottom:#ececec solid 1px;padding:20px;"><b style="display:block;margin-bottom:5px;">Ordered For</b><span style="display:block;margin-bottom:5px;"><a href="'.( isset($_SERVER["HTTPS"]) && (strtolower($_SERVER["HTTPS"]) == 'on') ? "https://" : "http://") . $_SERVER['HTTP_HOST'] .$event->getHref().'" style="color:#39F;text-decoration:none;">'.$event->getTitle().'</a></span><span style="display:block;margin-bottom:5px;">'.$event->starttime.' - '.$event->endtime.'</span></div><div style="padding:20px;border-bottom:#ececec solid 1px;"> <b style="display:block;margin-bottom:5px;">Ordered By</b><span style="display:block;margin-bottom:5px;"><a href="'.( isset($_SERVER["HTTPS"]) && (strtolower($_SERVER["HTTPS"]) == 'on') ? "https://" : "http://") . $_SERVER['HTTP_HOST'] .$orderTicket->getOwner()->getHref().'" style="color:#39F;text-decoration:none;">'.$orderTicket->fname.'</a></span><span style="display:block;margin-bottom:5px;">'.$orderTicket->email.'</span></div><div style="padding:20px;"><b style="display:block;margin-bottom:5px;">Payment Information</b><span style="display:block;margin-bottom:5px;">Payment Method: '.$orderTicket->gateway_type.'</span></div></td><td style="border-left:#ececec solid 1px;width:50%;"><div style="padding:20px;"><b style="display:block;margin-bottom:5px;">Order Information</b><span style="display:block;margin-bottom:5px;">Ordered Date: '.$orderTicket->creation_date.'</span>';

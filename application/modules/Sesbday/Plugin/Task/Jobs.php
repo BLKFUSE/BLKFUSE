@@ -76,19 +76,5 @@ class Sesbday_Plugin_Task_Jobs extends Core_Plugin_Task_Abstract {
       Engine_Api::_()->getApi('mail', 'core')->sendSystem($users->email, 'sesbday_birthday_email', array('host' => $_SERVER['HTTP_HOST'], 'birthday_content' => $description, 'birthday_subject' => $subject, 'queue' => false, 'recipient_title' => $users->getTitle()));
       $db->query("INSERT INTO `engine4_sesbday_birthdayemailsends` (`user_id`, `creation_date`) VALUES(" . $users->getIdentity() . ",'" . date('Y-m-d') . "')");
     }
-	
-	//for send the notification to friend 
-	$toBirthday = Engine_Api::_()->sesbday()->getFriendBirthday(date('Y-m-d'),5);
-	foreach($toBirthday['data'] as $object)
-	{
-		$friends = $object->membership()->getMembershipsOfIds();
-		foreach($friends as $friend)
-		{
-			$subject = Engine_Api::_()->getItem('user',$friend);
-			Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($subject,$object
-			,$object,'sesbday_tobirthday');
-		}
-	}
   }
-
 }

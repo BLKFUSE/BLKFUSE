@@ -51,6 +51,6 @@ class Install_Import_Phpfox_UserListItems extends Install_Import_Phpfox_Abstract
   PRIMARY KEY (`listitem_id`),
   KEY `list_id` (`list_id`),
   KEY `child_id` (`child_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
 
  */

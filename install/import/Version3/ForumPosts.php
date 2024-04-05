@@ -59,13 +59,13 @@ CREATE TABLE IF NOT EXISTS `se_forumposts` (
 *  `forumpost_forumtopic_id` int(9) NOT NULL default '0',
 *  `forumpost_authoruser_id` int(9) NOT NULL default '0',
 *  `forumpost_date` int(14) NOT NULL default '0',
-  `forumpost_excerpt` varchar(100) collate utf8_unicode_ci NOT NULL default '',
-*  `forumpost_body` text collate utf8_unicode_ci,
+  `forumpost_excerpt` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+*  `forumpost_body` text COLLATE utf8mb4_unicode_ci,
   `forumpost_forummedia_id` int(9) NOT NULL default '0',
   `forumpost_deleted` int(1) NOT NULL default '0',
   PRIMARY KEY  (`forumpost_id`),
   KEY `INDEX` (`forumpost_forumtopic_id`,`forumpost_authoruser_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `engine4_forum_posts` (
   PRIMARY KEY  (`post_id`),
   KEY `topic_id` (`topic_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
  *
  */
 
@@ -98,10 +98,10 @@ CREATE TABLE IF NOT EXISTS `engine4_forum_posts` (
 CREATE TABLE IF NOT EXISTS `se_forummedia` (
   `forummedia_id` int(10) unsigned NOT NULL auto_increment,
   `forummedia_forumtopic_id` int(10) unsigned NOT NULL default '0',
-  `forummedia_ext` varchar(8) collate utf8_unicode_ci NOT NULL default '',
+  `forummedia_ext` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL default '',
   `forummedia_filesize` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`forummedia_id`),
   KEY `INDEX` (`forummedia_forumtopic_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */

@@ -76,7 +76,7 @@
 }
 .sesfeedbg_packs_list .sesfeedbg_packs_item{
 	box-sizing:border-box;
-	background-color:#f8f8f8;
+	background-color:var(--theme-box-background-alt-color);
 	border-radius:5px;
 	padding:10px;
 	position:relative;
@@ -148,12 +148,4 @@
 	background:#bdbdbd;
 	border-color:#bdbdbd;
 	cursor:not-allowed;
-}
-.sesact_global_setting .settings > form > div > div > h3{
-  background-color: transparent;
-	margin: 0;
-	font-size:1.375rem;
-	padding: 0px;
-	font-weight: 600;
-	color: inherit;
 }

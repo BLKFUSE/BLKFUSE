@@ -44,8 +44,8 @@ CREATE TABLE IF NOT EXISTS `se_albums` (
 *  `album_user_id` int(10) unsigned NOT NULL default '0',
 *  `album_datecreated` int(14) NOT NULL default '0',
 *  `album_dateupdated` int(14) NOT NULL default '0',
-*  `album_title` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-*  `album_desc` text collate utf8_unicode_ci,
+*  `album_title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+*  `album_desc` text COLLATE utf8mb4_unicode_ci,
 *  `album_search` tinyint(1) unsigned NOT NULL default '0',
 *  `album_privacy` tinyint(2) unsigned NOT NULL default '0',
 *  `album_comments` tinyint(2) unsigned NOT NULL default '0',
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `se_albums` (
   `album_tag` int(2) NOT NULL default '0',
   PRIMARY KEY  (`album_id`),
   KEY `INDEX` (`album_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -66,7 +66,7 @@ CREATE TABLE `engine4_album_albums` (
 *  `album_id` int(11) unsigned NOT NULL auto_increment,
 *  `title` varchar(128) NOT NULL,
 *  `description` mediumtext NOT NULL,
-*  `owner_type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+*  `owner_type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
 *  `owner_id` int(11) unsigned NOT NULL,
 -  `category_id` int(11) unsigned NOT NULL default '0',
 *  `creation_date` datetime NOT NULL,
@@ -79,7 +79,7 @@ CREATE TABLE `engine4_album_albums` (
   PRIMARY KEY (`album_id`),
   KEY `owner_type` (`owner_type`, `owner_id`),
   KEY `search` (`search`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */
 
@@ -94,10 +94,10 @@ CREATE TABLE `engine4_album_albums` (
 CREATE TABLE IF NOT EXISTS `se_albumstyles` (
   `albumstyle_id` int(9) NOT NULL auto_increment,
   `albumstyle_user_id` int(9) NOT NULL default '0',
-  `albumstyle_css` text collate utf8_unicode_ci,
+  `albumstyle_css` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY  (`albumstyle_id`),
   KEY `INDEX` (`albumstyle_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -119,10 +119,10 @@ CREATE TABLE IF NOT EXISTS `se_mediatags` (
   `mediatag_y` int(11) NOT NULL default '0',
   `mediatag_height` smallint(5) unsigned NOT NULL default '0',
   `mediatag_width` smallint(5) unsigned NOT NULL default '0',
-  `mediatag_text` varchar(255) collate utf8_unicode_ci NOT NULL default '',
+  `mediatag_text` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL default '',
   `mediatag_date` int(14) NOT NULL default '0',
   PRIMARY KEY  (`mediatag_id`),
   KEY `INDEX` (`mediatag_media_id`,`mediatag_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */

@@ -132,4 +132,12 @@ class Core_Model_DbTable_Pages extends Engine_Db_Table implements Engine_Content
 
     return $this;
   }
+  
+  public function getWidgetizePage($params = array()) {
+
+    $select = $this->select()
+            ->from($this->info('name'), array('page_id', 'displayname'))
+            ->where('name LIKE (?)', '%'.$params['name'].'%');
+    return $this->fetchAll($select);
+  }
 }

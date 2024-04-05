@@ -156,9 +156,9 @@ CREATE TABLE IF NOT EXISTS `phpfox_blog_text` (
 /*
 CREATE TABLE IF NOT EXISTS `engine4_blog_blogs` (
   `blog_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `body` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `owner_type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner_type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner_id` int(11) unsigned NOT NULL,
   `category_id` int(11) unsigned NOT NULL DEFAULT '0',
   `creation_date` datetime NOT NULL,
@@ -172,5 +172,5 @@ CREATE TABLE IF NOT EXISTS `engine4_blog_blogs` (
   KEY `search` (`search`,`creation_date`),
   KEY `owner_id` (`owner_id`,`draft`),
   KEY `draft` (`draft`,`search`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */

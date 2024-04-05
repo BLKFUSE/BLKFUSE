@@ -86,7 +86,7 @@ class Sescontestjoinfees_Plugin_Gateway_Event_Cashfree extends Engine_Payment_Pl
     */
 	public function createSubscriptionTransaction(User_Model_User $user, Zend_Db_Table_Row_Abstract $user_order, Payment_Model_Package $package, array $params = array()){}
   public function createOrderTransaction($order,$event,array $params = array()) { 
-    $params['currency'] = Engine_Api::_()->sescontestjoinfees()->defaultCurrency();   
+    $params['currency'] = Engine_Api::_()->payment()->defaultCurrency();   
     $secretKey = $this->_gatewayInfo->config['ecashfree_secretkey'];
     $params['appId'] = $this->_gatewayInfo->config['ecashfree_appid'];
     $params['orderAmount'] = round($order->release_amount, 2);
@@ -117,8 +117,8 @@ class Sescontestjoinfees_Plugin_Gateway_Event_Cashfree extends Engine_Payment_Pl
     $viewer = Engine_Api::_()->user()->getViewer();
     
     //payment currency
-    $currentCurrency = Engine_Api::_()->sescontestjoinfees()->getCurrentCurrency();
-    $defaultCurrency = Engine_Api::_()->sescontestjoinfees()->defaultCurrency();
+    $currentCurrency = Engine_Api::_()->payment()->getCurrentCurrency();
+    $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
     $settings = Engine_Api::_()->getApi('settings', 'core');
     $currencyValue = 1;
     if($currentCurrency != $defaultCurrency){

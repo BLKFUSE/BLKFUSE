@@ -15,18 +15,19 @@ return array(
         'type' => 'module',
         'name' => 'sesmusic',
         //'sku' => 'sesmusic',
-        'version' => '6.4.0',
+        'version' => '6.5.1',
         'dependencies' => array(
             array(
                 'type' => 'module',
                 'name' => 'core',
-                'minVersion' => '6.2.0',
+                'minVersion' => '6.5.1',
             ),
         ),
         'path' => 'application/modules/Sesmusic',
         'title' => 'SNS - Professional Music Plugin',
         'description' => 'SNS - Professional Music Plugin',
         'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+		'thumb' => 'application/modules/Sesmusic/externals/images/thumb.png',
         'actions' => array(
             'install',
             'upgrade',

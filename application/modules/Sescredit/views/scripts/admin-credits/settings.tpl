@@ -13,8 +13,7 @@
  
  ?>
 <?php include APPLICATION_PATH .  '/application/modules/Sescredit/views/scripts/dismiss_message.tpl';?>
-<?php 
-$this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jQuery/jquery-ui.js');
+<?php
 $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jQuery/odering.js'); 
 ?>
 <h3>Module Name & Feed Display Settings</h3>

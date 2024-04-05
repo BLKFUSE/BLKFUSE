@@ -169,10 +169,11 @@ if ($type == 1) {
   <?php } ?>
   <script type="text/javascript">
  var page<?php echo $randonNumber; ?> = '<?php echo $this->page + 1; ?>';
-scriptJquery(document).ready(function() {
-  viewMoreHide_<?php echo $randonNumber; ?>();
-})
-viewMoreHide_<?php echo $randonNumber; ?>();
+
+
+en4.core.runonce.add(function () {
+	viewMoreHide_<?php echo $randonNumber; ?>();
+});
 function viewMoreHide_<?php echo $randonNumber; ?>() {
     if (document.getElementById('view_more_<?php echo $randonNumber; ?>'))
       document.getElementById('view_more_<?php echo $randonNumber; ?>').style.display = "<?php echo ($this->paginator->count() == 0 ? 'none' : ($this->paginator->count() == $this->paginator->getCurrentPageNumber() ? 'none' : '' )) ?>";
@@ -191,7 +192,8 @@ function viewMoreHide_<?php echo $randonNumber; ?>() {
         format: 'html',
         randonNumber:"<?php echo $randonNumber; ?>",
         page: page<?php echo $randonNumber; ?>,
-				is_ajax : 1
+				is_ajax : 1,
+				limit_data: '<?php echo $this->limit_data; ?>',
       },
       success: function(responseHTML) {
         if(document.getElementById('loading_image_<?php echo $randonNumber; ?>'))

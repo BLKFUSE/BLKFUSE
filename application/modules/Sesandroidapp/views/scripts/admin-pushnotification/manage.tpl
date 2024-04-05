@@ -12,8 +12,8 @@
  */
  
 ?>
-<?php include APPLICATION_PATH .  '/application/modules/Sesapi/views/scripts/dismiss_message.tpl';?>
-<h2>
+<?php include APPLICATION_PATH .  '/application/modules/Sesandroidapp/views/scripts/dismiss_message.tpl';?>
+<h2 class="page_heading">
   <?php echo $this->translate('Native Android Mobile App'); ?>
 </h2>
 <?php if( engine_count($this->navigation)): ?>
@@ -23,7 +23,7 @@
   <div class='tabs'> <?php echo $this->navigation()->menu()->setContainer($this->subnavigation)->render(); ?> </div>
 <?php endif; ?>
 <h3><?php echo $this->translate('Manage & Send Push Notifications'); ?></h3>
-<p><?php echo $this->translate('Here you can configure the push notification message and send to all subscribers of your choice. You can send new push notification by using the “Send Push Notification” link below.'); ?></p><br>
+<p><?php echo $this->translate('Here you can configure the push notification message and send to all subscribers of your choice. You can send new push notification by using the “Send Push Notification” link below.'); ?></p>
 <div class="sesandroidapp_search_result">
   <?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesandroidapp', 'controller' => 'pushnotification', 'action' => 'create'), $this->translate("Send Push Notifications"), array('class'=>'buttonlink sesandroidapp_icon_add smoothbox')); ?>
 </div>

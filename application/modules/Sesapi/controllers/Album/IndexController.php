@@ -72,17 +72,6 @@ class Album_IndexController extends Sesapi_Controller_Action_Standard {
 
     $settings = Engine_Api::_()->getApi('settings', 'core');
 
-    // Get params
-    switch($this->_getParam('sort', 'recent')) {
-      case 'popular':
-        $order = 'view_count';
-        break;
-      case 'recent':
-      default:
-        $order = 'modified_date';
-        break;
-    }
-
     $userId = $this->_getParam('user_id');
     $this->view->excludedLevels = $excludedLevels = array(1, 2, 3);   // level_id of Superadmin,Admin & Moderator
     $registeredPrivacy = array('everyone', 'registered');
@@ -106,19 +95,16 @@ class Album_IndexController extends Sesapi_Controller_Action_Standard {
 
     // Prepare data
     $table = Engine_Api::_()->getItemTable('album');
-    if( !engine_in_array($order, $table->info('cols')) ) {
-      $order = 'modified_date';
-    }
 
     $select = $table->select();
 
     if( !$viewer->getIdentity() ) {
       $select->where("view_privacy = ?", 'everyone');
     } elseif( $userId ) {
-      $owner = Engine_Api::_()->getItem('user', $userId);
-      if( $owner ) {
-        $select = $table->getAlbumSelect(array('owner' => $owner));
-      }
+//       $owner = Engine_Api::_()->getItem('user', $userId);
+//       if( $owner ) {
+//         $select = $table->getAlbumSelect(array('owner' => $owner));
+//       }
     } elseif( !engine_in_array($viewer->level_id, $excludedLevels) ) {
       $select->Where("owner_id = ?", $viewerId)
         ->orwhere("view_privacy IN (?)", $registeredPrivacy);
@@ -137,9 +123,30 @@ class Album_IndexController extends Sesapi_Controller_Action_Standard {
       $select ->where(implode(' ',$subquery));
     }
 
-    $select->where("search = 1")
-      ->order($order . ' DESC');
-    if ($this->_getParam('category_id')) $select->where("category_id = ?", $this->_getParam('category_id'));
+    $select->where("search = 1");
+    
+    $sort = $this->_getParam('sort', 'creation_date');
+    if(!empty($sort) && $sort == 'atoz') {
+      $select->order('title ASC');
+    } else if(!empty($sort) && $sort == 'ztoa') {
+      $select->order('title DESC');
+    } else  {
+      $select->order( !empty($sort) ? $sort.' DESC' : 'creation_date DESC' );
+    }
+
+    if( $this->_getParam('category_id') )
+    {
+        $select->where('category_id = ?', $this->_getParam('category_id'));
+    }
+
+    if( $this->_getParam('subcat_id') )
+    {
+        $select->where('subcat_id = ?', $this->_getParam('subcat_id'));
+    }
+    if( $this->_getParam('subsubcat_id') )
+    {
+        $select->where('subsubcat_id = ?', $this->_getParam('subsubcat_id'));
+    }
 
     if ($this->_getParam('search', false)) {
       $select->where('title LIKE ? OR description LIKE ?', '%'.$this->_getParam('search').'%');
@@ -195,15 +202,6 @@ class Album_IndexController extends Sesapi_Controller_Action_Standard {
       $this->view->search = $params['search'];
     }
 
-    switch($this->_getParam('sort', 'recent')) {
-      case 'popular':
-        $order = 'view_count';
-        break;
-      case 'recent':
-      default:
-        $order = 'modified_date';
-        break;
-    }
     $excludedLevels = array(1, 2, 3);   // level_id of Superadmin,Admin & Moderator
     $registeredPrivacy = array('everyone', 'registered');
     $this->view->viewer = $viewer = Engine_Api::_()->user()->getViewer();
@@ -254,6 +252,8 @@ class Album_IndexController extends Sesapi_Controller_Action_Standard {
     foreach ($albums as $album) {
       $albumIds[] = $album->album_id;
     }
+    
+    $order = $this->_getParam('sort', 'creation_date');
 
     $photoTable = Engine_Api::_()->getItemTable('album_photo');
     $this->view->paginator = $paginator = $photoTable->getPhotoPaginator(array_merge(
@@ -421,7 +421,7 @@ class Album_IndexController extends Sesapi_Controller_Action_Standard {
 
     // Get form
     $form = new Album_Form_Album();
-    $form->removeElement('album');
+    //$form->removeElement('album');
     $form->addElement('File', 'file', array(
       'label' => 'Main Photo',
       'description' => '',
@@ -519,7 +519,11 @@ class Album_IndexController extends Sesapi_Controller_Action_Standard {
     $db = $photo->getTable()->getAdapter();
     $db->beginTransaction();
     try {
-      $photo->delete();
+      if($resource_type == 'group_photo') {
+        Engine_Api::_()->getDbtable('photos', 'group')->deletePhoto($photo);
+      } else {
+        $photo->delete();
+      }
       $db->commit();
     } catch (Exception $e) {
       $db->rollBack();

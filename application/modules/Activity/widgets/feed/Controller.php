@@ -53,7 +53,7 @@ class Activity_Widget_FeedController extends Engine_Content_Widget_Abstract
     $this->view->viewAllComments  = $request->getParam('viewAllComments', $request->getParam('show_comments', false));
     $this->view->getUpdate        = $request->getParam('getUpdate');
     $this->view->checkUpdate      = $request->getParam('checkUpdate');
-    $this->view->action_id        = (int) $request->getParam('action_id');
+    $this->view->action_id        = $this->_getParam('action_id',(int) $request->getParam('action_id'));
     $this->view->post_failed      = (int) $request->getParam('pf');
     $this->view->viewMaxPhoto      = (int) $this->_getParam('max_photo', 9);
     $this->view->hashtagEnabled = false;
@@ -113,117 +113,142 @@ class Activity_Widget_FeedController extends Engine_Content_Widget_Abstract
     $similarActivities = array();
 
     $activityCount = 0;
-    do {
-      // Get current batch
-      $actions = null;
+    $this->view->fetchFeed = $fetchFeed = $request->isPost();
+    if($fetchFeed){
+      do {
+        // Get current batch
+        $actions = null;
 
-      // Where the Activity Feed is Fetched
-      if( !empty($subject) ) {
-        $actions = $actionTable->getActivity($viewer, $tmpConfig, $subject);
-      } else {
-        $actions = $actionTable->getActivity($viewer, $tmpConfig);
-      }
-      $selectCount++;
+        // Where the Activity Feed is Fetched
+        if( !empty($subject) ) {
+          $actions = $actionTable->getActivity($viewer, $tmpConfig, $subject);
+        } else {
+          $actions = $actionTable->getActivity($viewer, $tmpConfig);
+        }
+        $selectCount++;
 
-        // Are we at the end?
-      if( !$actions || engine_count($actions) < $length || engine_count($actions) <= 0 ) {
-        $endOfFeed = true;
-      }
+          // Are we at the end?
+        if( !$actions || engine_count($actions) < $length || engine_count($actions) <= 0 ) {
+          $endOfFeed = true;
+        }
 
-      // Pre-process
-      if( $actions && engine_count($actions) > 0 ) {
-        foreach( $actions as $action ) {
-          // get next id
-          if( null === $nextid || $action->action_id <= $nextid ) {
-            $nextid = $action->action_id - 1;
-          }
-          // get first id
-          if( null === $firstid || $action->action_id > $firstid ) {
-            $firstid = $action->action_id;
-          }
-          // skip disabled actions
-          if( !$action->getTypeInfo() || !$action->getTypeInfo()->enabled ) continue;
-          // skip items with missing items
-          if( !$action->getSubject() || !$action->getSubject()->getIdentity() ) continue;
-          if( !$action->getObject() || !$action->getObject()->getIdentity() ) continue;
-          
-          //View Permission
-          if($action->getObject()) {
-            $object = $action->getObject();
-            if(!empty($action->attachment_count) && $action->getFirstAttachment()) {
-              $object = $action->getFirstAttachment()->item;
+        // Pre-process
+        if( $actions && engine_count($actions) > 0 ) {
+          foreach( $actions as $action ) {
+            // get next id
+            if( null === $nextid || $action->action_id <= $nextid ) {
+              $nextid = $action->action_id - 1;
             }
-            $viewPermission = $object->authorization()->isAllowed($viewer, 'view');
+            // get first id
+            if( null === $firstid || $action->action_id > $firstid ) {
+              $firstid = $action->action_id;
+            }
+            // skip disabled actions
+            if( !$action->getTypeInfo() || !$action->getTypeInfo()->enabled ) continue;
+            // skip items with missing items
+            if( !$action->getSubject() || !$action->getSubject()->getIdentity() ) continue;
+            if( !$action->getObject() || !$action->getObject()->getIdentity() ) continue;
             
-            if($object->getType() == 'group') {
-              if(!$viewPermission && !Engine_Api::_()->network()->getViewerNetworkPrivacy($object, 'user_id')) continue;
-            } else {
+            //View Permission
+            if($action->getObject()) {
+              $object = $action->getObject();
+              if(!empty($action->attachment_count) && $action->getFirstAttachment() && $action->getFirstAttachment()->item->getType() != 'storage_file') {
+                $object = $action->getFirstAttachment()->item;
+              }
+
+              //Check object is approved
+              if(isset($object->approved) && empty($object->approved)) continue;
+              if($object->getType() == 'album_photo') {
+                $objectParent = $object->getParent();
+                if(isset($objectParent->approved) && empty($objectParent->approved)) continue;
+              } else if($object->getType() == 'music_playlist_song') {
+                $objectParent = $object->getParent();
+                if(isset($objectParent->approved) && empty($objectParent->approved)) continue;
+              } else if($object->getType() == 'activity_action') {
+                $tmpConfig['action_id'] = $object->action_id;
+                $actionsTemp = $actionTable->getActivity($viewer, $tmpConfig);
+                if(!$actionsTemp) continue;
+              }
+              
+              if(@$objectParent) {
+                $viewPermission = $objectParent->authorization()->isAllowed($viewer, 'view');
+              } else {
+                $viewPermission = $object->authorization()->isAllowed($viewer, 'view');
+              }
               if(!$viewPermission) continue;
+              
+              if(isset($object->networks) && !empty($object->networks)) {
+                if(isset($object->user_id)) 
+                  $userId = 'user_id';
+                else
+                  $userId = 'owner_id';
+                if(!Engine_Api::_()->network()->getViewerNetworkPrivacy($object, $userId)) continue;
+              }
             }
-          }
-          // track/remove users who do too much (but only in the main feed)
-          $actionObject = $action->getObject();
-          if( empty($subject) ) {
-            $actionSubject = $action->getSubject();
-            if( !isset($itemActionCounts[$actionSubject->getGuid()]) ) {
-              $itemActionCounts[$actionSubject->getGuid()] = 1;
-            } elseif( $itemActionCounts[$actionSubject->getGuid()] >= $itemActionLimit ) {
-              continue;
-            } else {
-              $itemActionCounts[$actionSubject->getGuid()]++;
+            
+            // track/remove users who do too much (but only in the main feed)
+            $actionObject = $action->getObject();
+            if( empty($subject) ) {
+              $actionSubject = $action->getSubject();
+              if( !isset($itemActionCounts[$actionSubject->getGuid()]) ) {
+                $itemActionCounts[$actionSubject->getGuid()] = 1;
+              } elseif( $itemActionCounts[$actionSubject->getGuid()] >= $itemActionLimit ) {
+                continue;
+              } else {
+                $itemActionCounts[$actionSubject->getGuid()]++;
+              }
             }
-          }
 
-          if( $this->isBlocked($action) ) {
-            continue;
-          }
-
-          // remove duplicate friend requests
-          if( $action->type == 'friends' ) {
-            $id = $action->subject_id . '_' . $action->object_id;
-            $rev_id = $action->object_id . '_' . $action->subject_id;
-            if( engine_in_array($id, $friendRequests) || engine_in_array($rev_id, $friendRequests) ) {
-              continue;
-            } else {
-              $friendRequests[] = $id;
-              $friendRequests[] = $rev_id;
-            }
-          }
-
-          // remove items with disabled module attachments
-          try {
-            $attachments = $action->getAttachments();
-          } catch( Exception $e ) {
-            // if a module is disabled, getAttachments() will throw an Engine_Api_Exception; catch and continue
-            continue;
-          }
-            $similarFeedType = $action->type . '_' . $actionObject->getGuid();
-            if( $action->canMakeSimilar() ) {
-              $similarActivities[$similarFeedType][] = $action;
-            }
-            if( isset($similarActivities[$similarFeedType]) && engine_count($similarActivities[$similarFeedType]) > 1 ) {
+            if( $this->isBlocked($action) ) {
               continue;
             }
-          // add to list
-          if( $activityCount < $length ) {
-            $activity[] = $action;
-            $activityCount = engine_count($activity);
-            if( $activityCount == $length ) {
-              break;
+
+            // remove duplicate friend requests
+            if( $action->type == 'friends' ) {
+              $id = $action->subject_id . '_' . $action->object_id;
+              $rev_id = $action->object_id . '_' . $action->subject_id;
+              if( engine_in_array($id, $friendRequests) || engine_in_array($rev_id, $friendRequests) ) {
+                continue;
+              } else {
+                $friendRequests[] = $id;
+                $friendRequests[] = $rev_id;
+              }
+            }
+
+            // remove items with disabled module attachments
+            try {
+              $attachments = $action->getAttachments();
+            } catch( Exception $e ) {
+              // if a module is disabled, getAttachments() will throw an Engine_Api_Exception; catch and continue
+              continue;
+            }
+              $similarFeedType = $action->type . '_' . $actionObject->getGuid();
+              if( $action->canMakeSimilar() ) {
+                $similarActivities[$similarFeedType][] = $action;
+              }
+              if( isset($similarActivities[$similarFeedType]) && engine_count($similarActivities[$similarFeedType]) > 1 ) {
+                continue;
+              }
+            // add to list
+            if( $activityCount < $length ) {
+              $activity[] = $action;
+              $activityCount = engine_count($activity);
+              if( $activityCount == $length ) {
+                break;
+              }
             }
           }
         }
-      }
 
-      // Set next tmp max_id
-      if( $nextid ) {
-        $tmpConfig['max_id'] = $nextid;
-      }
-      if( !empty($tmpConfig['action_id']) ) {
-        $actions = array();
-      }
-    } while( $activityCount < $length && $selectCount <= 6 && !$endOfFeed );
-
+        // Set next tmp max_id
+        if( $nextid ) {
+          $tmpConfig['max_id'] = $nextid;
+        }
+        if( !empty($tmpConfig['action_id']) ) {
+          $actions = array();
+        }
+      } while( $activityCount < $length && $selectCount <= 6 && !$endOfFeed );
+    }
     $this->view->activity = $activity;
     $this->view->activityCount = $activityCount;
     $this->view->similarActivities = $similarActivities;

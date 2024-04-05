@@ -85,6 +85,17 @@ class Group_Form_Admin_Settings_Level extends Authorization_Form_Admin_Level_Abs
             if( !$this->isModerator() ) {
                 unset($this->delete->options[2]);
             }
+            
+						//Element: approve
+						$this->addElement('Radio', 'approve', array(
+							'description' => 'Do you want groups created by members of this level to be auto-approved?',
+							'label' => 'Auto Approve Groups',
+							'multiOptions' => array(
+								1 => 'Yes, auto-approve groups.',
+								0 => 'No, do not auto-approve groups.'
+							),
+							'value' => 1,
+						));
 
             // Element: comment
             $this->addElement('Radio', 'comment', array(
@@ -485,10 +496,10 @@ class Group_Form_Admin_Settings_Level extends Authorization_Form_Admin_Level_Abs
             ));
         }
         // Element: commentHtml
-        $this->addElement('Text', 'commentHtml', array(
-            'label' => 'Allow HTML in posts?',
-            'description' => 'GROUP_FORM_ADMIN_LEVEL_CONTENTHTML_DESCRIPTION',
-            'order' => 999
-        ));
+//         $this->addElement('Text', 'commentHtml', array(
+//             'label' => 'Allow HTML in posts?',
+//             'description' => 'GROUP_FORM_ADMIN_LEVEL_CONTENTHTML_DESCRIPTION',
+//             'order' => 999
+//         ));
     }
 }

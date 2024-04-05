@@ -11,7 +11,7 @@
  * @author     SocialEngineSolutions
  */
 
-include_once APPLICATION_PATH . "/application/modules/Sesadvpmnt/Api/Stripe/init.php";
+ include_once APPLICATION_PATH . "/application/libraries/Engine/Service/Stripe/init.php";
 class Sesadvpmnt_IpnController extends Core_Controller_Action_Standard
 {
   public function __call($method, array $arguments)

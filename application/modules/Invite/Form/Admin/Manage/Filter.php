@@ -31,13 +31,42 @@ class Invite_Form_Admin_Manage_Filter extends Engine_Form {
         'class' => 'global_form_box',
       ))
       ->setMethod('GET');
+      
+    $ID = new Zend_Form_Element_Text('id');
+    $ID->setLabel('ID')
+      ->clearDecorators()
+      ->addDecorator('ViewHelper')
+      ->addDecorator('Label', array('tag' => null, 'placement' => 'PREPEND'))
+      ->addDecorator('HtmlTag', array('tag' => 'div'));
 
     $recipient = new Zend_Form_Element_Text('recipient');
-    $recipient->setLabel('Email')
+    $recipient->setLabel('Recipient Email')
           ->clearDecorators()
           ->addDecorator('ViewHelper')
           ->addDecorator('Label', array('tag' => null, 'placement' => 'PREPEND'))
           ->addDecorator('HtmlTag', array('tag' => 'div'));
+
+    $code = new Zend_Form_Element_Text('code');
+    $code->setLabel('Invite Code')
+          ->clearDecorators()
+          ->addDecorator('ViewHelper')
+          ->addDecorator('Label', array('tag' => null, 'placement' => 'PREPEND'))
+          ->addDecorator('HtmlTag', array('tag' => 'div'));
+          
+    $import_method = new Zend_Form_Element_Select('import_method');
+    $import_method
+      ->setLabel('Invitation Method')
+      ->clearDecorators()
+      ->addDecorator('ViewHelper')
+      ->addDecorator('Label', array('tag' => null, 'placement' => 'PREPEND'))
+      ->addDecorator('HtmlTag', array('tag' => 'div'))
+      ->setMultiOptions(array(
+        '-1' => '',
+        'csv' => 'CSV',
+        'invite' => 'Invite',
+        'referral' => 'Referral',
+      ))
+      ->setValue('-1');
 
     $submit = new Zend_Form_Element_Button('search', array('type' => 'submit'));
     $submit->setLabel('Search')
@@ -52,7 +81,10 @@ class Invite_Form_Admin_Manage_Filter extends Engine_Form {
 
     
     $this->addElements(array(
+      $ID,
       $recipient,
+      $code,
+      $import_method,
       $submit,
     ));
 

@@ -400,7 +400,10 @@ class Core_CommentController extends Core_Controller_Action_Standard
     }
 
     public function getLikesAction()
-    {
+    {		
+				if ('json' != $this->_getParam('format', null)) {
+					 return $this->_forward('notfound', 'error', 'core');
+				}
         $viewer = Engine_Api::_()->user()->getViewer();
         $subject = Engine_Api::_()->core()->getSubject();
 

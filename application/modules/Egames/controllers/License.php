@@ -91,15 +91,15 @@ if ($this->getRequest()->isPost()) {
         PRIMARY KEY (`category_id`),
         KEY `category_id` (`category_id`,`category_name`),
         KEY `category_name` (`category_name`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
       
       $db->query('DROP TABLE IF EXISTS `engine4_egames_games`;');
       $db->query('CREATE TABLE `engine4_egames_games` (
         `game_id` int(11) unsigned NOT NULL auto_increment,
         `owner_id` int(11) NOT NULL,
-        `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-        `description` text COLLATE utf8_unicode_ci NULL,
-        `url` text COLLATE utf8_unicode_ci NOT NULL,
+        `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `description` text COLLATE utf8mb4_unicode_ci NULL,
+        `url` text COLLATE utf8mb4_unicode_ci NOT NULL,
         `category_id` int(11) NOT NULL DEFAULT "0",
         `subcat_id` int(11) NOT NULL DEFAULT "0",
         `subsubcat_id` int(11) NOT NULL DEFAULT "0",
@@ -117,7 +117,7 @@ if ($this->getRequest()->isPost()) {
         KEY `search` (`search`),
         KEY `creation_date` (`creation_date`),
         KEY `view_count` (`view_count`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
       include_once APPLICATION_PATH . "/application/modules/Egames/controllers/defaultsettings.php";
 

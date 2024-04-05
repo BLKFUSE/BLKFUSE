@@ -97,7 +97,7 @@ if ($this->getRequest()->isPost()) {
         `modified_date` datetime NOT NULL,
         PRIMARY KEY (`tutorial_id`),
         KEY `user_id` (`user_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
 
       $db->query('DROP TABLE IF EXISTS `engine4_sestutorial_askquestions`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sestutorial_askquestions` (
@@ -114,7 +114,7 @@ if ($this->getRequest()->isPost()) {
         `reply` TINYINT(1) NULL DEFAULT "0",
         PRIMARY KEY (`askquestion_id`),
         KEY `user_id` (`user_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
 
       $db->query('DROP TABLE IF EXISTS `engine4_sestutorial_categories` ;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sestutorial_categories` (
@@ -135,7 +135,7 @@ if ($this->getRequest()->isPost()) {
         PRIMARY KEY (`category_id`),
         KEY `category_id` (`category_id`,`category_name`),
         KEY `category_name` (`category_name`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
 
       $db->query('DROP TABLE IF EXISTS `engine4_sestutorial_tutorial_fields_maps`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sestutorial_tutorial_fields_maps` (
@@ -144,7 +144,7 @@ if ($this->getRequest()->isPost()) {
         `child_id` int(11) NOT NULL,
         `order` smallint(6) NOT NULL,
         PRIMARY KEY (`field_id`,`option_id`,`child_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('INSERT IGNORE INTO `engine4_sestutorial_tutorial_fields_maps` (`field_id`, `option_id`, `child_id`, `order`) VALUES (0, 0, 1, 1);');
 
@@ -162,12 +162,12 @@ if ($this->getRequest()->isPost()) {
         `show` tinyint(1) unsigned DEFAULT "0",
         `order` smallint(3) unsigned NOT NULL DEFAULT "999",
         `config` text NOT NULL,
-        `validators` text COLLATE utf8_unicode_ci,
-        `filters` text COLLATE utf8_unicode_ci,
-        `style` text COLLATE utf8_unicode_ci,
-        `error` text COLLATE utf8_unicode_ci,
+        `validators` text COLLATE utf8mb4_unicode_ci,
+        `filters` text COLLATE utf8mb4_unicode_ci,
+        `style` text COLLATE utf8mb4_unicode_ci,
+        `error` text COLLATE utf8mb4_unicode_ci,
         PRIMARY KEY (`field_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
       $db->query('INSERT IGNORE INTO `engine4_sestutorial_tutorial_fields_meta` (`field_id`, `type`, `label`, `description`, `alias`, `required`, `display`, `publish`, `search`, `show`, `order`, `config`, `validators`, `filters`, `style`, `error`) VALUES (1, "profile_type", "Profile Type", "", "profile_type", 1, 0, 0, 2, 0, 999, "", NULL, NULL, NULL, NULL);');
 
@@ -180,7 +180,7 @@ if ($this->getRequest()->isPost()) {
         `type` tinyint(1) NOT NULL DEFAULT "0",
         PRIMARY KEY (`option_id`),
         KEY `field_id` (`field_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
       $db->query('INSERT IGNORE INTO `engine4_sestutorial_tutorial_fields_options` (`option_id`, `field_id`, `label`, `order`) VALUES (1, 1, "Rock Band", 0);');
 
       $db->query('DROP TABLE IF EXISTS `engine4_sestutorial_tutorial_fields_search`;');
@@ -189,7 +189,7 @@ if ($this->getRequest()->isPost()) {
         `profile_type` smallint(11) unsigned DEFAULT NULL,
         PRIMARY KEY (`item_id`),
         KEY `profile_type` (`profile_type`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('DROP TABLE IF EXISTS `engine4_sestutorial_tutorial_fields_values`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sestutorial_tutorial_fields_values` (
@@ -198,7 +198,7 @@ if ($this->getRequest()->isPost()) {
         `index` smallint(3) NOT NULL DEFAULT "0",
         `value` text NOT NULL,
         PRIMARY KEY (`item_id`,`field_id`,`index`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('DROP TABLE IF EXISTS `engine4_sestutorial_ratings`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sestutorial_ratings` (
@@ -207,7 +207,7 @@ if ($this->getRequest()->isPost()) {
         `rating` tinyint(1) unsigned default NULL,
         PRIMARY KEY  (`tutorial_id`,`user_id`),
         KEY `INDEX` (`tutorial_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
 
       $db->query('DROP TABLE IF EXISTS `engine4_sestutorial_helptutorials`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sestutorial_helptutorials` (
@@ -220,7 +220,7 @@ if ($this->getRequest()->isPost()) {
         `modified_date` datetime NOT NULL,
         PRIMARY KEY (`helptutorial_id`),
         UNIQUE KEY `tutorial_id` (`tutorial_id`,`user_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
       $cols = $db->describeTable('engine4_authorization_permissions');
       if($cols['type']['LENGTH'] < 32){
          $db->query('ALTER TABLE `engine4_authorization_permissions` CHANGE `type` `type` VARCHAR(32) NOT NULL;');

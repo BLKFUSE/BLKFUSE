@@ -24,12 +24,6 @@
         <img src="<?php echo Engine_Api::_()->storage()->get($emoji->photo_id, '')->getPhotoUrl(); ?>" alt="" />
       </a>
     </li>  
-    <?php } else { ?>
-      <div class="tip">
-        <span>
-          <?php echo $this->translate("No stickers in this category."); ?>
-        </span>
-      </div>
     <?php } ?>
   <?php 
   } ?>

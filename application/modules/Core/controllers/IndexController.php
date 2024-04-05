@@ -116,4 +116,150 @@ class Core_IndexController extends Core_Controller_Action_Standard {
     }
 
   }
+  
+  public function showprivatemessageAction() {
+  
+    $showcontent = $this->_getParam('showcontent', 0);
+    $value = $this->_getParam('value');
+    $showcontent = (int)($showcontent === 'true');
+
+    Engine_Api::_()->getApi('settings', 'core')->setSetting('core.privatemessage', $showcontent);
+    $contentval = Engine_Api::_()->getApi('settings', 'core')->getSetting('core.privatemessage');
+    
+    if($contentval == 1) {
+      echo json_encode(array('status' => 'true', 'error' => '', 'value' => 1));die;
+    } else {
+      echo json_encode(array('status' => 'false', 'error' => '', 'value' => 1));die;
+    }
+
+  }
+  
+  public function uploadPhotoAction() {
+
+    $viewer = Engine_Api::_()->user()->getViewer();
+
+    $this->_helper->layout->disableLayout();
+
+    if( !$this->_helper->requireUser()->checkRequire() ) {
+      $this->view->status = false;
+      $this->view->error = Zend_Registry::get('Zend_Translate')->_('Max file size limit exceeded (probably).');
+      return;
+    }
+
+    if(!$this->getRequest()->isPost()) {
+      $this->view->status = false;
+      $this->view->error = Zend_Registry::get('Zend_Translate')->_('Invalid request method');
+      return;
+    }
+    
+    if(!isset($_FILES['userfile']) || !is_uploaded_file($_FILES['userfile']['tmp_name'])) {
+      $this->view->status = false;
+      $this->view->error = Zend_Registry::get('Zend_Translate')->_('Invalid Upload');
+      return;
+    }
+    
+    $info = $_FILES['userfile'];
+    $storage = Engine_Api::_()->getItemTable('storage_file');
+    
+    $db = Engine_Db_Table::getDefaultAdapter();
+    $db->beginTransaction();
+    try {
+      if(!empty($info['name'])) {
+        $storageObject = $storage->createFile($info, array(
+          'parent_id' => $viewer->getIdentity(),
+          'parent_type' => 'core_wysiwygphotos',
+          'user_id' => $viewer->getIdentity(),
+        ));
+        // Remove temporary file
+        @unlink($info['tmp_name']);
+      }
+      $db->commit();
+      echo json_encode(array('location' => $storageObject->map()));die;
+    } catch( Exception $e ) {
+      $db->rollBack();
+      $this->view->status = false;
+      $this->view->error = Zend_Registry::get('Zend_Translate')->_('An error occurred.');
+      throw $e;
+      return;
+    }
+  }
+
+  public function subcategoryAction() {
+
+    $category_id = $this->_getParam('category_id', null);
+    $CategoryType = $this->_getParam('type', null);
+    $selected = $this->_getParam('selected', null);
+    if ($category_id) {
+      $categoryTable = Engine_Api::_()->getDbtable('categories', 'core');
+      $category_select = $categoryTable->select()
+                                      ->from($categoryTable->info('name'))
+                                      ->where('subcat_id = ?', $category_id);
+      $subcategory = $categoryTable->fetchAll($category_select);
+      $count_subcat = engine_count($subcategory->toarray());
+
+      $data = '';
+      if ($subcategory && $count_subcat) {
+        if ($CategoryType == 'search') {
+          $data .= '<option value="0">' . Zend_Registry::get('Zend_Translate')->_("Choose 2nd Level Category") . '</option>';
+          foreach ($subcategory as $category) {
+            $data .= '<option ' . ($selected == $category['category_id'] ? 'selected = "selected"' : '') . ' value="' . $category["category_id"] . '" >' . Zend_Registry::get('Zend_Translate')->_($category["category_name"]) . '</option>';
+          }
+        } else {
+          $data .= '<option value=""></option>';
+          foreach ($subcategory as $category) {
+            $data .= '<option ' . ($selected == $category['category_id'] ? 'selected = "selected"' : '') . ' value="' . $category["category_id"] . '" >' . Zend_Registry::get('Zend_Translate')->_($category["category_name"]) . '</option>';
+          }
+
+        }
+      }
+    } else
+      $data = '';
+    echo $data;die;
+  }
+
+  public function subsubcategoryAction() {
+
+    $category_id = $this->_getParam('subcategory_id', null);
+    $CategoryType = $this->_getParam('type', null);
+    $selected = $this->_getParam('selected', null);
+    if ($category_id) {
+      $categoryTable = Engine_Api::_()->getDbtable('categories', 'core');
+      $category_select = $categoryTable->select()
+        ->from($categoryTable->info('name'))
+        ->where('subsubcat_id = ?', $category_id);
+      $subcategory = $categoryTable->fetchAll($category_select);
+      $count_subcat = engine_count($subcategory->toarray());
+
+      $data = '';
+      if ($subcategory && $count_subcat) {
+        $data .= '<option value=""></option>';
+        foreach ($subcategory as $category) {
+          $data .= '<option ' . ($selected == $category['category_id'] ? 'selected = "selected"' : '') . ' value="' . $category["category_id"] . '">' . Zend_Registry::get('Zend_Translate')->_($category["category_name"]) . '</option>';
+        }
+
+      }
+    } else
+      $data = '';
+    echo $data;
+    die;
+  }
+  
+  function fontAction() {
+    if(!engine_count($_POST)){
+      echo false;die;
+    }
+    $font = $this->_getParam('size','');
+    $_SESSION['font_theme'] = $font;
+    echo true;die;
+  }
+  
+  function modeAction() {
+    if(!engine_count($_POST)){
+      echo false;die;
+    }
+    $mode = $this->_getParam('mode','');
+    $theme = $this->_getParam('theme','elpis');
+    $_SESSION['mode_theme'] = $mode;
+    echo true;die;
+  }
 }

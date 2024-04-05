@@ -223,9 +223,6 @@ You can also drag and drop menu items below to reorder them.</p><br />
   <?php echo $this->htmlLink(array('reset' => false, 'action' => 'sink-menu', 'name' => @$this->selectedMenu->name), $this->translate('Sink Menu'), array('class' => 'buttonlink sesbasic_icon_sink smoothbox')) ?>
 </div>
 
-<br />
-<br />
-
 <ul class="admin_menus_items" id='menu_list'>
   <?php foreach( $this->menuItems as $menuItem ): ?>
     <li class="admin_menus_item<?php if( isset($menuItem->enabled) && !$menuItem->enabled ) echo ' disabled' ?>" id="admin_menus_item_<?php echo $menuItem->name ?>">

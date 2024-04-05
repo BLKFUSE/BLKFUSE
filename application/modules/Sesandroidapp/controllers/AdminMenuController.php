@@ -73,18 +73,18 @@ class Sesandroidapp_AdminMenuController extends Core_Controller_Action_Admin {
   }
      
  }
- public function setPhoto($form,$item){
-    $storage = Engine_Api::_()->getItemTable('storage_file');
-    $filename = $storage->createFile($form->file, array(
-        'parent_id' => $item->getIdentity(),
-        'parent_type' => 'sesapi_menu',
-        'user_id' => Engine_Api::_()->user()->getViewer()->getIdentity(),
-    ));
-    $item->file_id = $filename->file_id;
-    $item->save();
-    return $filename->file_id;    
- }
-
+  public function setPhoto($form,$item){
+      $storage = Engine_Api::_()->getItemTable('storage_file');
+      $filename = $storage->createFile($form->file, array(
+          'parent_id' => $item->getIdentity(),
+          'parent_type' => 'sesapi_menu',
+          'user_id' => Engine_Api::_()->user()->getViewer()->getIdentity(),
+      ));
+      $item->file_id = $filename->file_id;
+      $item->save();
+      return $filename->file_id;    
+  }
+ 
   public function orderAction() {
     $table = Engine_Api::_()->getDbTable('menus', 'sesapi');
     $results = $table->fetchAll($table->select()->where('device =?',2));
@@ -96,7 +96,7 @@ class Sesandroidapp_AdminMenuController extends Core_Controller_Action_Admin {
     }
     return;
   }
-
+  
  public function statusAction(){
     $id = $this->_getParam('id');
     if (!empty($id)) {

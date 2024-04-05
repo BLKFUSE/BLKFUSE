@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `se_videoratings` (
 *  `videorating_rating` tinyint(1) unsigned default NULL,
   PRIMARY KEY  (`videorating_video_id`,`videorating_user_id`),
   KEY `INDEX` (`videorating_video_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  *
  */
 
@@ -36,6 +36,6 @@ CREATE TABLE IF NOT EXISTS `engine4_video_ratings` (
 *  `rating` tinyint(1) unsigned default NULL,
   PRIMARY KEY  (`video_id`,`user_id`),
   KEY `INDEX` (`video_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
  *
  */

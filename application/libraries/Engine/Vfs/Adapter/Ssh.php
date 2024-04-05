@@ -383,8 +383,10 @@ class Engine_Vfs_Adapter_Ssh extends Engine_Vfs_Adapter_RemoteAbstract
     $path = $this->path($path);
 
     // @todo implement nb?
-    $return = @ssh2_scp_recv($this->getResource(), $path, $local);
-    
+    // $return = @ssh2_scp_recv($this->getResource(), $path, $local);
+    $content = $this->getContents($path);
+    $return = file_put_contents($local, $content,'0644');
+
     // Error
     if( !$return ) {
       throw new Engine_Vfs_Adapter_Exception(sprintf('Unable to get "%s" to "%s"', $path, $local));
@@ -453,7 +455,8 @@ class Engine_Vfs_Adapter_Ssh extends Engine_Vfs_Adapter_RemoteAbstract
     }
 
     // @todo implement nb?
-    $return = @ssh2_scp_send($this->getResource(), $local, $path, $this->getUmask(0666));
+    $return = $this->putContents($path,file_get_contents($local));
+    //@ssh2_scp_send($this->getResource(), $local, $path, $this->getUmask(0666));
     
     // Error
     if( !$return ) {
@@ -490,7 +493,7 @@ class Engine_Vfs_Adapter_Ssh extends Engine_Vfs_Adapter_RemoteAbstract
     $return = @ssh2_sftp_unlink($this->getSftpResource(), $path);
 
     if( !$return ) {
-      throw new Engine_Vfs_Adapter_Exception(sprintf('Unable to unlink "%s"', $path));
+      // throw new Engine_Vfs_Adapter_Exception(sprintf('Unable to unlink "%s"', $path));
     }
 
     return true;

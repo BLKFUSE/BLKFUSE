@@ -49,12 +49,12 @@ CREATE TABLE IF NOT EXISTS `se_blogentries` (
   `blogentry_blogentrycat_id` int(10) unsigned NOT NULL default '0',
 *  `blogentry_date` bigint(20) NOT NULL default '0',
 *  `blogentry_views` int(10) unsigned NOT NULL default '0',
-*  `blogentry_title` varchar(128) collate utf8_unicode_ci NOT NULL default '',
-*  `blogentry_body` longtext collate utf8_unicode_ci,
+*  `blogentry_title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+*  `blogentry_body` longtext COLLATE utf8mb4_unicode_ci,
 *  `blogentry_search` tinyint(3) unsigned NOT NULL default '0',
 *  `blogentry_privacy` tinyint(3) unsigned NOT NULL default '0',
 *  `blogentry_comments` tinyint(3) unsigned NOT NULL default '0',
-  `blogentry_trackbacks` text collate utf8_unicode_ci,
+  `blogentry_trackbacks` text COLLATE utf8mb4_unicode_ci,
 *  `blogentry_totalcomments` smallint(5) unsigned NOT NULL default '0',
   `blogentry_totaltrackbacks` smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (`blogentry_id`),
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `se_blogentries` (
   KEY `LISTBYCAT` (`blogentry_user_id`,`blogentry_blogentrycat_id`,`blogentry_privacy`,`blogentry_date`),
   KEY `blogentry_date` (`blogentry_date`),
   FULLTEXT KEY `SEARCH` (`blogentry_title`,`blogentry_body`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -72,7 +72,7 @@ CREATE TABLE `engine4_blog_blogs` (
 *  `blog_id` int(11) unsigned NOT NULL auto_increment,
 *  `title` varchar(128) NOT NULL,
 *  `body` longtext NOT NULL,
-*  `owner_type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+*  `owner_type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
 *  `owner_id` int(11) unsigned NOT NULL,
   `category_id` int(11) unsigned NOT NULL default '0',
 *  `creation_date` datetime NOT NULL,
@@ -84,7 +84,7 @@ CREATE TABLE `engine4_blog_blogs` (
   PRIMARY KEY (`blog_id`),
   KEY `owner_type` (`owner_type`, `owner_id`),
   KEY `search` (`search`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */
 
@@ -108,14 +108,14 @@ CREATE TABLE `engine4_blog_blogs` (
 CREATE TABLE IF NOT EXISTS `se_blogpings` (
   `blogping_id` int(10) unsigned NOT NULL auto_increment,
   `blogping_blogentry_id` int(10) unsigned NOT NULL default '0',
-  `blogping_target_url` text collate utf8_unicode_ci,
-  `blogping_source_url` text collate utf8_unicode_ci,
+  `blogping_target_url` text COLLATE utf8mb4_unicode_ci,
+  `blogping_source_url` text COLLATE utf8mb4_unicode_ci,
   `blogping_status` tinyint(3) unsigned NOT NULL default '0',
   `blogping_type` tinyint(3) unsigned NOT NULL default '0',
-  `blogping_ip` varchar(16) collate utf8_unicode_ci NOT NULL default '',
+  `blogping_ip` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL default '',
   PRIMARY KEY  (`blogping_id`),
   KEY `INDEX` (`blogping_status`,`blogping_type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -124,10 +124,10 @@ CREATE TABLE IF NOT EXISTS `se_blogpings` (
 CREATE TABLE IF NOT EXISTS `se_blogstyles` (
   `blogstyle_id` int(10) unsigned NOT NULL auto_increment,
   `blogstyle_user_id` int(10) unsigned NOT NULL default '0',
-  `blogstyle_css` text collate utf8_unicode_ci,
+  `blogstyle_css` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY  (`blogstyle_id`),
   KEY `INDEX` (`blogstyle_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `se_blogsubscriptions` (
   `blogsubscription_date` bigint(20) NOT NULL default '0',
   PRIMARY KEY  (`blogsubscription_id`),
   UNIQUE KEY `INDEX` (`blogsubscription_user_id`,`blogsubscription_owner_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -149,15 +149,15 @@ CREATE TABLE IF NOT EXISTS `se_blogsubscriptions` (
 CREATE TABLE IF NOT EXISTS `se_blogtrackbacks` (
   `blogtrackback_id` int(10) unsigned NOT NULL auto_increment,
   `blogtrackback_blogentry_id` int(10) unsigned NOT NULL default '0',
-  `blogtrackback_name` varchar(255) collate utf8_unicode_ci NOT NULL default '',
-  `blogtrackback_title` varchar(255) collate utf8_unicode_ci NOT NULL default '',
-  `blogtrackback_excerpt` text collate utf8_unicode_ci,
-  `blogtrackback_excerpthash` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `blogtrackback_url` text collate utf8_unicode_ci,
-  `blogtrackback_ip` varchar(16) collate utf8_unicode_ci NOT NULL default '',
+  `blogtrackback_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+  `blogtrackback_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+  `blogtrackback_excerpt` text COLLATE utf8mb4_unicode_ci,
+  `blogtrackback_excerpthash` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+  `blogtrackback_url` text COLLATE utf8mb4_unicode_ci,
+  `blogtrackback_ip` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL default '',
   `blogtrackback_date` bigint(20) NOT NULL default '0',
   PRIMARY KEY  (`blogtrackback_id`),
   KEY `INDEX` (`blogtrackback_blogentry_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */

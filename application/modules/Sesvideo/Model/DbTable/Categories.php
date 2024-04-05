@@ -146,7 +146,7 @@ class Sesvideo_Model_DbTable_Categories extends Engine_Db_Table {
 					$category_select->where($videoTable.'.adult = ?',0);
 			}
       $category_select = $category_select->setIntegrityCheck(false);
-      if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('tickvideo')){
+      if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('tickvideo') && !Engine_Api::_()->getApi('settings', 'core')->getSetting('tickvideo_allow_video', 0)){
         $category_select->where($videoTable.'.is_tickvideo = ?',0);
       }
       $category_select = $category_select->joinLeft($videoTable, "$videoTable.category_id=$tableName.category_id AND $videoTable.status=1", array("total_videos_categories" => "COUNT($videoTable.video_id)"));
@@ -171,7 +171,8 @@ class Sesvideo_Model_DbTable_Categories extends Engine_Db_Table {
 				if(!$this->getAllowAdultContentView()){
 					$category_select->where($videoTable.'.adult = ?',0);
 			}
-      if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('tickvideo')){
+
+      if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('tickvideo') && !Engine_Api::_()->getApi('settings', 'core')->getSetting('tickvideo_allow_video', 0)){
         $category_select->where($videoTable.'.is_tickvideo = ?',0);
       }
 				$category_select = $category_select->setIntegrityCheck(false);

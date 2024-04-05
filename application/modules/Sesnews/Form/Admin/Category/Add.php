@@ -84,7 +84,7 @@ class Sesnews_Form_Admin_Category_Add extends Engine_Form {
         'label' => 'Upload Icon',
         'description' => 'Upload an icon. (The Recommended dimensions of the icon: 40px * 40px.]'
     ));
-    $this->cat_icon->addValidator('Extension', false, 'jpg,jpeg,png,gif,PNG,GIF,JPG,JPEG');
+    $this->cat_icon->addValidator('Extension', false, 'jpg,jpeg,png,gif,webp');
 
     if (isset($category) && $category->cat_icon) {
       $img_path = Engine_Api::_()->storage()->get($category->cat_icon, '')->getPhotoUrl();
@@ -108,7 +108,7 @@ class Sesnews_Form_Admin_Category_Add extends Engine_Form {
         'label' => 'Thumbnail',
         'description' => 'Upload a thumbnail. (The Recommended dimensions of the thumbnail: 500px * 300px.]'
     ));
-    $this->cat_icon->addValidator('Extension', false, 'jpg,jpeg,png,gif,PNG,GIF,JPG,JPEG');
+    $this->cat_icon->addValidator('Extension', false, 'jpg,jpeg,png,gif,webp');
 
     if (isset($category) && $category->thumbnail) {
       $img_path = Engine_Api::_()->storage()->get($category->thumbnail, '')->getPhotoUrl();

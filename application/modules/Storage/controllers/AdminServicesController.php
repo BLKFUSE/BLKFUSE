@@ -139,6 +139,8 @@ class Storage_AdminServicesController extends Core_Controller_Action_Admin
 
     $form->populate($service->toArray());
     if( !empty($config) ) {
+			$secretKey = $config['secretKey'];
+			unset($config['secretKey']);
       $form->populate($config);
     }
 
@@ -146,6 +148,11 @@ class Storage_AdminServicesController extends Core_Controller_Action_Admin
     if( !$this->getRequest()->isPost() ) {
       return;
     }
+
+    if(!empty($secretKey) && empty($_POST['secretKey'])) {
+			$form->getElement('secretKey')->setRequired(false);
+			$form->getElement('secretKey')->setAllowEmpty(true);
+		}
     if( !$form->isValid($this->getRequest()->getPost()) ) {
       return;
     }
@@ -154,6 +161,9 @@ class Storage_AdminServicesController extends Core_Controller_Action_Admin
     // Process
     $values = $form->getValues();
     $values = $this->_expandParams($values);
+    
+    if(empty($_POST['secretKey']))
+			$values['secretKey'] = $secretKey;
 
     $db = $serviceTable->getAdapter();
     $db->beginTransaction();

@@ -69,8 +69,8 @@ class Sescontestjoinfees_Plugin_Gateway_Paytm extends Engine_Payment_Plugin_Abst
       // PayPal requires that DESC be single-byte characters
       $description = @iconv("UTF-8", "ISO-8859-1//TRANSLIT", $description);
     }
-		$currentCurrency = Engine_Api::_()->sescontestjoinfees()->getCurrentCurrency();
-		$defaultCurrency = Engine_Api::_()->sescontestjoinfees()->defaultCurrency();
+		$currentCurrency = Engine_Api::_()->payment()->getCurrentCurrency();
+		$defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
 		$settings = Engine_Api::_()->getApi('settings', 'core');
 		$currencyValue = 1;
 		if($currentCurrency != $defaultCurrency){
@@ -78,7 +78,7 @@ class Sescontestjoinfees_Plugin_Gateway_Paytm extends Engine_Payment_Plugin_Abst
 		}
 			
     $price = $priceTotal = @round($params['amount']*$currencyValue,2);
-    $order->currency_symbol = Engine_Api::_()->sescontestjoinfees()->getCurrentCurrency();
+    $order->currency_symbol = Engine_Api::_()->payment()->getCurrentCurrency();
 		$order->total_amount = @round($price/$currencyValue,2);
 		$order->change_rate = $currencyValue;
 		$order->creation_date	= date('Y-m-d H:i:s');
@@ -131,8 +131,8 @@ class Sescontestjoinfees_Plugin_Gateway_Paytm extends Engine_Payment_Plugin_Abst
           'not been charged. If this is not correct, please try again later.');
     }
 		//payment currency
-		$currentCurrency = Engine_Api::_()->sescontestjoinfees()->getCurrentCurrency();
-		$defaultCurrency = Engine_Api::_()->sescontestjoinfees()->defaultCurrency();
+		$currentCurrency = Engine_Api::_()->payment()->getCurrentCurrency();
+		$defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
 		$settings = Engine_Api::_()->getApi('settings', 'core');
 		$currencyValue = 1;
 		if($currentCurrency != $defaultCurrency){
@@ -240,7 +240,7 @@ class Sescontestjoinfees_Plugin_Gateway_Paytm extends Engine_Payment_Plugin_Abst
           $totalAmounts = '[';
 		      $totalAmounts .= 'Total:';
           $totalAmount = @round($orderTicket->total_amount,2);
-          $totalAmounts .= Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice(@round($totalAmount,2),$orderTicket->currency_symbol, $orderTicket->change_rate);
+          $totalAmounts .= Engine_Api::_()->payment()->getCurrencyPrice(@round($totalAmount,2),$orderTicket->currency_symbol, $orderTicket->change_rate);
           $totalAmounts .= ']';
           $body .= '<table style="background-color:#f9f9f9;border:#ececec solid 1px;width:100%;"><tr><td><div style="margin:0 auto;width:600px;font:normal 13px Arial,Helvetica,sans-serif;padding:20px;"><div style="margin-bottom:10px;overflow:hidden;"><div style="float:left;"><b>Order Id: #' . $orderTicket->order_id . '</b></div><div style="float:right;"><b>'.$totalAmounts.'</b></div></div><table style="background-color:#fff;border:#ececec solid 1px;margin-bottom:20px;" cellpadding="0" cellspacing="0" width="100%"><tr valign="top" style="width:50%;"><td><div style="border-bottom:#ececec solid 1px;padding:20px;"><b style="display:block;margin-bottom:5px;">Ordered For</b><span style="display:block;margin-bottom:5px;"><a href="'.( isset($_SERVER["HTTPS"]) && (strtolower($_SERVER["HTTPS"]) == 'on') ? "https://" : "http://") . $_SERVER['HTTP_HOST'] .$contest->getHref().'" style="color:#39F;text-decoration:none;">'.$contest->getTitle().'</a></span><span style="display:block;margin-bottom:5px;">'.$contest->starttime.' - '.$contest->endtime.'</span></div><div style="padding:20px;border-bottom:#ececec solid 1px;"> <b style="display:block;margin-bottom:5px;">Ordered By</b><span style="display:block;margin-bottom:5px;"><a href="'.( isset($_SERVER["HTTPS"]) && (strtolower($_SERVER["HTTPS"]) == 'on') ? "https://" : "http://") . $_SERVER['HTTP_HOST'] .$orderTicket->getOwner()->getHref().'" style="color:#39F;text-decoration:none;">'.$orderTicket->getOwner()->getTitle().'</a></span><span style="display:block;margin-bottom:5px;">'.$orderTicket->getOwner()->email.'</span></div><div style="padding:20px;"><b style="display:block;margin-bottom:5px;">Payment Information</b><span style="display:block;margin-bottom:5px;">Payment Method: '.$orderTicket->gateway_type.'</span></div></td><td style="border-left:#ececec solid 1px;width:50%;"><div style="padding:20px;"><b style="display:block;margin-bottom:5px;">Order Information</b><span style="display:block;margin-bottom:5px;">Ordered Date: '.$orderTicket->creation_date.'</span>';			   
 			    $body .= '</div>';

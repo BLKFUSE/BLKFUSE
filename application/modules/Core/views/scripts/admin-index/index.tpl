@@ -10,41 +10,56 @@
  * @author     John
  */
 ?>
+<?php $flushData = Engine_Api::_()->getDbTable('files', 'storage')->getFlushPhotoData(array('count' => 1)); ?>
 <?php $menuType = Engine_Api::_()->getApi('settings', 'core')->getSetting('core.menutype', 'vertical'); ?> 
 <div class="admin_home_wrapper">
-  <div class="admin_home_right">
-     <div class="admin_menu_setting">
-      <div class="admin_menu_setting_inner">
-        <div class="admin_menu_setting_inner_right">
-          <h3><?php echo $this->translate("Menu Type "); ?><i class="fas fa-angle-double-right"></i></h3>
-          <ul>
-            <li>
-              <input onclick="menuType('horizontal')" name="menutype" type="radio" id="f-option" name="selector" value="horizontal" <?php if($menuType == 'horizontal') { ?> checked ="checked" <?php } ?> >
-              <label for="f-option"><?php echo $this->translate("Horizontal"); ?></label>
-              <div class="check"></div>
-            </li>
-            <li>
-              <input onclick="menuType('vertical')" name="menutype" type="radio" id="s-option" name="selector" value="vertical" <?php if($menuType == 'vertical') { ?> checked ="checked" <?php } ?>>
-              <label for="s-option"><?php echo $this->translate("Vertical"); ?></label>
-              <div class="check"><div class="inside"></div>
-            </div>
-            </li>
-          </ul>
+  <div class="admin_home_top">
+    <?php echo $this->content()->renderWidget('core.admin-notification') ?>
+    <?php if($flushData > 0) { ?>
+      <ul class="admin_home_dashboard_messages">
+        <li class="notification-warning priority-error">
+          <?php echo $this->translate("You have %s unmapped photos from TinyMCE Editor.", $flushData); ?>
+          <?php echo $this->htmlLink(array('module' => 'core', 'controller' => 'index', 'action' => 'flush-photo'), $this->translate('Click here'), array('class' => 'smoothbox')); ?><?php echo $this->translate(' to remove them from the storage of your site.'); ?>
+        </li>
+      </ul>
+    <?php } ?>
+    <?php echo $this->content()->renderWidget('core.admin-statistics') ?>
+    <?php // echo $this->content()->renderWidget('core.admin-environment') ?>
+    <div class="admin_home_dashboard">
+      <div class="row">
+        <div class="col-md-8">
+          <?php echo $this->content()->renderWidget('core.admin-chart') ?>
+        </div>
+        <div class="col-md-4">
+          <?php echo $this->content()->renderWidget('core.admin-recent-activity') ?>
+        </div>
+        <div class="col-md-4">
+          <?php echo $this->content()->renderWidget('core.admin-notes') ?>
+        </div>
+        <div class="col-md-4">
+          <?php echo $this->content()->renderWidget('core.admin-private-comment') ?>
+        </div>
+        <div class="col-md-4 ">
+          <div class="new_update_checkbox">
+            <?php echo $this->content()->renderWidget('core.admin-content-show') ?>
+            <?php //if(Engine_Api::_()->getApi('settings', 'core')->getSetting('core.newsupdates')) { ?>
+              <?php echo $this->content()->renderWidget('core.admin-news') ?>
+            <?php //} ?>
+          </div>
+        </div> 
+        <div class="col-md-4">
+          <?php echo $this->content()->renderWidget('core.admin-quick-start') ?>
+        </div>
+        <div class="col-md-4">
+          <?php echo $this->content()->renderWidget('core.admin-quick-link') ?>
+        </div>  
+        <div class="col-md-4">
+          <?php echo $this->content()->renderWidget('core.admin-plugin-statistics') ?>
         </div>
       </div>
-     </div>
-    <?php echo $this->content()->renderWidget('core.admin-statistics') ?>
-    <?php echo $this->content()->renderWidget('core.admin-environment') ?>
+    </div>
   </div>
-  <div class="admin_home_middle">
-    <?php echo $this->content()->renderWidget('core.admin-dashboard') ?>
-    <?php echo $this->content()->renderWidget('core.admin-content-show') ?>
-    <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('core.newsupdates')) { ?>
-      <?php echo $this->content()->renderWidget('core.admin-news') ?>
-    <?php } ?>
-  </div>
-</div>
-<script>
+<script type="text/javascript">
   function menuType(value) {
     var checkBox = document.getElementById("newsupdates");
     (scriptJquery.ajax({
@@ -62,4 +77,7 @@
     }));
     return false;
   }
+</script>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_home').parent().addClass('active');
 </script>

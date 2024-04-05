@@ -236,12 +236,18 @@ class Sesandroidapp_Form_Admin_Global extends Engine_Form {
       ));
 
     } else {
+      $enabledSesbasic = Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesbasic');
+      $fields = array(
+          'label' => 'Activate This Plugin',
+          'type' => 'submit',
+          'ignore' => true
+      );
+      if(!$enabledSesbasic){
+        $fields['disable'] = true;
+        $fields['title'] = 'To Activate this plugin, please first install all dependent plugins as show in the tips above.';
+      }
       //Add submit button
-      $this->addElement('Button', 'submit', array(
-        'label' => 'Activate This Plugin',
-        'type' => 'submit',
-        'ignore' => true
-      ));
+      $this->addElement('Button', 'submit',$fields);
     }
   }
 }

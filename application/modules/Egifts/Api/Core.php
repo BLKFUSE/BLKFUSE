@@ -22,7 +22,7 @@ class Egifts_Api_Core extends Core_Api_Abstract
       $precisionValue = $settings->getSetting('sesmultiplecurrency.precision', 2);
       $defaultParams['precision'] = $precisionValue;
       if (!empty($_SESSION['ses_multiple_currency']['multipleCurrencyPluginActivated'])) {
-        return Engine_Api::_()->sesmultiplecurrency()->getCurrencyPrice($price, $givenSymbol, $change_rate);
+        return Engine_Api::_()->payment()->getCurrencyPrice($price, $givenSymbol, $change_rate);
       } else {
         $givenSymbol = $settings->getSetting('payment.currency', 'USD');
         return Zend_Registry::get('Zend_View')->locale()->toCurrency($price, $givenSymbol, $defaultParams);

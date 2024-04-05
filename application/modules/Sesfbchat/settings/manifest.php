@@ -17,18 +17,19 @@ return array (
     'type' => 'module',
     'name' => 'sesfbchat',
 	//'sku'=>'sesfbchat',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'dependencies' => array(
             array(
                 'type' => 'module',
                 'name' => 'core',
-                'minVersion' => '6.2.0',
+                'minVersion' => '6.5.1',
             ),
         ),
     'path' => 'application/modules/Sesfbchat',
     'title' => 'SNS - FB Messager Customer Live Chat Plugin',
     'description' => 'FB Messager Customer Live Chat Plugin.',
     'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	'thumb' => 'application/modules/Sesfbchat/externals/images/thumb.png',
     'callback' =>
     array (
       'class' => 'Sesfbchat_Installer',

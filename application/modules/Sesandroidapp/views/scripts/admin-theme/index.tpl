@@ -21,7 +21,7 @@ hashSign = '#';
 isColorFieldRequired = false;
 </script>
 <?php include APPLICATION_PATH .  '/application/modules/Sesandroidapp/views/scripts/dismiss_message.tpl';?>
-<h2>
+<h2 class="page_heading">
   <?php echo $this->translate("Native Android Mobile App") ?>
 </h2>
 <?php if(is_countable($this->navigation) && engine_count($this->navigation) ): ?>
@@ -60,7 +60,7 @@ isColorFieldRequired = false;
       changeThemeColor(scriptJquery("input[name='theme_color']:checked").val());
       if(scriptJquery("input[name='theme_color']:checked").val() == 5)
         scriptJquery('.sesandroidapp_loading_cont_overlay').show();
-      var URL = en4.core.staticBaseUrl+'sesandroidapp/admin-theme/getcustomthemecolors/';
+      var URL = en4.core.baseUrl+'sesandroidapp/admin-theme/getcustomthemecolors/';
       (scriptJquery.ajax({
           method: 'post',
           url: URL ,

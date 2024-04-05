@@ -37,7 +37,7 @@ class Sesmember_Form_Admin_Manage_EditprofilePhoto extends Engine_Form {
     $this->addElement('File', 'photo', array(
         'label' => 'Photo',
     ));
-    $this->photo->addValidator('Extension', false, 'jpg,jpeg,png,gif,PNG,GIF,JPG,JPEG');
+    $this->photo->addValidator('Extension', false, 'jpg,jpeg,png,gif,webp');
 
     $this->addElement('Button', 'submit', array(
         'label' => 'Add',

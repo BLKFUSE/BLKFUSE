@@ -27,12 +27,12 @@ CREATE TABLE IF NOT EXISTS `se_pms` (
 *  `pm_authoruser_id` int(9) NOT NULL default '0',
 *  `pm_pmconvo_id` int(9) NOT NULL default '0',
 *  `pm_date` int(14) NOT NULL default '0',
-*  `pm_body` text collate utf8_unicode_ci,
+*  `pm_body` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY  (`pm_id`),
   KEY `pm_pmconvo_id` (`pm_pmconvo_id`),
   KEY `list_subquery` (`pm_pmconvo_id`,`pm_authoruser_id`,`pm_id`),
   FULLTEXT KEY `SEARCH` (`pm_body`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  * 
  */
 
@@ -44,10 +44,10 @@ CREATE TABLE `engine4_messages_messages` (
   `title` varchar(255) NOT NULL,
 *  `body` text NOT NULL,
 *  `date` datetime NOT NULL,
-  `attachment_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci default '',
+  `attachment_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci default '',
   `attachment_id` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`message_id`),
   UNIQUE KEY `CONVERSATIONS` (`conversation_id`,`message_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  * 
  */

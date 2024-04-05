@@ -183,7 +183,7 @@ class Elivestreaming_NotificationController extends Core_Controller_Action_Stand
         }
       }
     }
-        Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => $result),0,true);
+    Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => $result),0,true);
 
   }
 }

@@ -30,7 +30,7 @@
 <script type="application/javascript">
 function getLikeData(value){
 	if(value){
-		url = en4.core.staticBaseUrl+'albums/index/like-album/album_id/'+value;
+		url = en4.core.baseUrl+'albums/index/like-album/album_id/'+value;
 		openURLinSmoothBox(url);	
 		return;
 	}

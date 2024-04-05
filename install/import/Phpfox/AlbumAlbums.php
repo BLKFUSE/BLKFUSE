@@ -132,9 +132,9 @@ class Install_Import_Phpfox_AlbumAlbums extends Install_Import_Phpfox_Abstract
 /*
 CREATE TABLE IF NOT EXISTS `engine4_album_albums` (
   `album_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `description` mediumtext COLLATE utf8_unicode_ci NOT NULL,
-  `owner_type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner_type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner_id` int(11) unsigned NOT NULL,
   `category_id` int(11) unsigned NOT NULL DEFAULT '0',
   `creation_date` datetime NOT NULL,
@@ -143,10 +143,10 @@ CREATE TABLE IF NOT EXISTS `engine4_album_albums` (
   `view_count` int(11) unsigned NOT NULL DEFAULT '0',
   `comment_count` int(11) unsigned NOT NULL DEFAULT '0',
   `search` tinyint(1) NOT NULL DEFAULT '1',
-  `type` varchar(64) CHARACTER SET latin1 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type` varchar(64) CHARACTER SET latin1 collate utf8mb4_unicode_ci default NULL,
   PRIMARY KEY (`album_id`),
   KEY `owner_type` (`owner_type`,`owner_id`),
   KEY `category_id` (`category_id`),
   KEY `search` (`search`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */

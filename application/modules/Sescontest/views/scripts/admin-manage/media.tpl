@@ -14,9 +14,8 @@
 ?>
 <?php include APPLICATION_PATH .  '/application/modules/Sescontest/views/scripts/dismiss_message.tpl';?>
 <h3><?php echo $this->translate("Manage Media Types") ?></h3>
-<p><?php echo $this->translate('This page shows all the 4 media types supported for the contests on your website. You can enable / disable any media type and users on your website can choose to create contests in the enabled media types only.<br />You can also add Banner images to media types which will appear in the "Media Type Banner" widget placed on the Media Type View page of this plugin.<br /><br /><div class="tip"><span>Note: Please keep at least one media type enabled, as if you disable all the media types then contests will get created without any media type and the participated entries will be blank without any content.</span></div>
+<p><?php echo $this->translate('This page shows all the 4 media types supported for the contests on your website. You can enable / disable any media type and users on your website can choose to create contests in the enabled media types only.<br />You can also add Banner images to media types which will appear in the "Media Type Banner" widget placed on the Media Type View page of this plugin.<br /><div class="tip"><span>Note: Please keep at least one media type enabled, as if you disable all the media types then contests will get created without any media type and the participated entries will be blank without any content.</span></div>
 '); ?></p>
-<br />
 <div class="sescontest_manage_media">
   <ul class='admin_table'>
     <?php foreach ($this->mediaTypes as $mediaType): ?>

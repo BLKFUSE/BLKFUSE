@@ -35,6 +35,7 @@ class Album_Widget_ListRecentAlbumsController extends Engine_Content_Widget_Abst
             $select = $table->getItemsSelect($params);
         else
             $select = $table->select()->where('search = ?',1);
+        $select->where('approved =?',1);
         if( $recentType == 'creation' ) {
             // using primary should be much faster, so use that for creation
             $select->order('album_id DESC');

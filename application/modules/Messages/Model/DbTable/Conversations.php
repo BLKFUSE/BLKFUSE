@@ -162,6 +162,11 @@ class Messages_Model_DbTable_Conversations extends Engine_Db_Table
       'attachment_id' => ( $attachment ? $attachment->getIdentity() : 0 ),
     ));
     $message->save();
+
+    //Save editor images
+    if(Engine_Api::_()->getDbtable('permissions', 'authorization')->getAllowed('messages', $user->level_id, 'editor')) {
+      Engine_Api::_()->core()->saveTinyMceImages($message->body, $message);
+    }
     
     // Create sender outbox
     Engine_Api::_()->getDbtable('recipients', 'messages')->insert(array(

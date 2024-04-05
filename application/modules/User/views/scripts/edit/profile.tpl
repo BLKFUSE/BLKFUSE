@@ -10,53 +10,44 @@
  * @author     John
  */
 ?>
-
-<div class="layout_middle">
-   <div class="generic_layout_container">
-      <div class="headline">
-         <h2>
-            <?php if ($this->viewer->isSelf($this->user)):?>
-            <?php echo $this->translate('Edit My Profile');?>
-            <?php else:?>
-            <?php echo $this->translate('%1$s\'s Profile', $this->htmlLink($this->user->getHref(), $this->user->getTitle()));?>
-            <?php endif;?>
-         </h2>
-         <div class="tabs">
-            <?php
-      // Render the menu
-      echo $this->navigation()
-        ->menu()
-        ->setContainer($this->navigation)
-        ->render();
-    ?>
-         </div>
-      </div>
-      <?php
-  /* Include the common user-end field switching javascript */
-  echo $this->partial('_jsSwitch.tpl', 'fields', array(
-      'topLevelId' => (int) @$this->topLevelId,
-      'topLevelValue' => (int) @$this->topLevelValue
-    ));
-?>
-      <?php
-  $this->headTranslate(array(
-    'Everyone', 'All Members', 'Friends', 'Only Me',
-  ));
-?>
-      <script type="text/javascript">
-  scriptJquery(document).ready(function() {
-    en4.user.buildFieldPrivacySelector(
-      scriptJquery('.global_form *[data-field-id]'),
-      JSON.parse('<?php echo $this->privacyExemptFields ?>')
-    );
-  });
-</script> 
-   </div>
+<div class="generic_layout_container layout_top">
+  <div class="generic_layout_container layout_middle">
+    <?php echo $this->content()->renderWidget('user.user-setting-cover-photo'); ?>
+  </div>
 </div>
-<div class="layout_middle">
-   <div class="generic_layout_container"> 
-     <div class="user_profile_edit">
-       <?php echo $this->form->render($this) ?> 
-     </div>
-   </div>
+<div class="generic_layout_container layout_main user_setting_main_page_main">
+  <div class="generic_layout_container layout_left">
+    <div class="theiaStickySidebar">
+      <?php echo $this->content()->renderWidget('user.settings-menu'); ?>
+    </div>
+  </div>
+  <div class="generic_layout_container layout_middle user_setting_main_middle">
+    <div class="theiaStickySidebar">
+      <?php
+        /* Include the common user-end field switching javascript */
+        echo $this->partial('_jsSwitch.tpl', 'fields', array(
+          'topLevelId' => (int) @$this->topLevelId,
+          'topLevelValue' => (int) @$this->topLevelValue
+        ));
+
+        $this->headTranslate(array(
+          'Everyone', 'All Members', 'Friends', 'Only Me',
+        ));
+      ?>
+      <script type="text/javascript">
+        scriptJquery(document).ready(function() {
+          en4.user.buildFieldPrivacySelector(
+            scriptJquery('.global_form *[data-field-id]'),
+            JSON.parse('<?php echo $this->privacyExemptFields ?>')
+          );
+        });
+      </script> 
+      <div class="user_profile_edit user_setting_global_form">
+        <?php if(!empty($this->editProfileType) && Engine_Api::_()->authorization()->getPermission($this->user, 'user', 'editprofiletype')) { ?>
+          <div class="user_edit_profiletype_link"><a href="<?php echo $this->url(array('controller' => 'edit', 'action' => 'edit-profile-type', 'id' => $this->user->getIdentity()), 'user_extended', true); ?>" class="smoothbox"><i class="fas fa-user-edit"></i><span><?php echo $this->translate("Edit Profile Type"); ?></span></a></div>
+        <?php } ?>
+        <?php echo $this->form->render($this) ?> 
+      </div>
+    </div>
+  </div>
 </div>

@@ -27,8 +27,10 @@ class Elpis_Widget_LandingPageBlogsController extends Engine_Content_Widget_Abst
     // Get paginator
     $table = Engine_Api::_()->getItemTable('blog');
     $select = $table->getItemsSelect($params);
-    $select->where('draft = ?', 0)
-        ->order($popularCol . ' DESC');
+    $select->where('approved = ?', 1)
+            ->where('parent_type = ?', 'user')
+            ->where('draft = ?', 0)
+            ->order($popularCol . ' DESC');
 
     $select = Engine_Api::_()->network()->getNetworkSelect($table->info('name'), $select);
     if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('event.allow.unauthorized', 0))

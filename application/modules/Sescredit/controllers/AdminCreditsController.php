@@ -38,7 +38,7 @@ class Sescredit_AdminCreditsController extends Core_Controller_Action_Admin {
     foreach ($languageList as $localeCode) {
       $column = $db->query("SHOW COLUMNS FROM engine4_sescredit_values LIKE '$localeCode'")->fetch();
       if (empty($column)) {
-        $db->query("ALTER TABLE `engine4_sescredit_values` ADD $localeCode TEXT CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL AFTER `deduction`");
+        $db->query("ALTER TABLE `engine4_sescredit_values` ADD $localeCode TEXT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL AFTER `deduction`");
       }
       $languageNameList[$localeCode] = Engine_String::ucfirst(Zend_Locale::getTranslation($localeCode, 'language', $localeCode));
       if (empty($languageNameList[$localeCode])) {

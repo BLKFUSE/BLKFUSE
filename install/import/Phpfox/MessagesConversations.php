@@ -82,5 +82,5 @@ class Install_Import_Phpfox_MessagesConversations extends Install_Import_Phpfox_
   `blocked_user_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`user_id`,`blocked_user_id`),
   KEY `REVERSE` (`blocked_user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  */

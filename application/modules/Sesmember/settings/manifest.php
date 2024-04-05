@@ -16,18 +16,19 @@ return array(
       'type' => 'module',
       'name' => 'sesmember',
       //'sku' => 'sesmember',
-      'version' => '6.4.0',
+      'version' => '6.5.1',
       'dependencies' => array(
           array(
               'type' => 'module',
               'name' => 'core',
-              'minVersion' => '6.2.0',
+              'minVersion' => '6.5.1',
           ),
       ),
       'path' => 'application/modules/Sesmember',
       'title' => 'SNS - Ultimate Members Plugin',
       'description' => 'SNS - Ultimate Members Plugin',
       'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	  'thumb' => 'application/modules/Sesmember/externals/images/thumb.png',
       'callback' => array(
           'path' => 'application/modules/Sesmember/settings/install.php',
           'class' => 'Sesmember_Installer',

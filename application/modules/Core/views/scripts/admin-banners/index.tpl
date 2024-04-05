@@ -10,27 +10,25 @@
 * @author     John
 */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_layout", 'childMenuItemName' => 'core_admin_main_layout_banners')); ?>
 
-<h2>
-    <?php echo $this->translate("Manage Banners") ?>
-</h2>
-<p>
+<div class="admin_common_top_section">
+  <h2 class="page_heading"><?php echo $this->translate("Manage Banners") ?></h2>
+  <p>
     <?php echo $this->translate("CORE_VIEWS_SCRIPTS_ADMINBANNERS_INDEX_DESCRIPTION") ?>
     <?php
     $settings = Engine_Api::_()->getApi('settings', 'core');
     if( $settings->getSetting('user.support.links', 0) == 1 ) : ?>
-      <br> More Info: <a href="https://community.socialengine.com/blogs/597/67/banner-manager" target="_blank">KB Article</a>
+        <br> More Info: <a href="https://community.socialengine.com/blogs/597/67/banner-manager" target="_blank">KB Article</a>
     <?php endif; ?>
-</p>
-<br />
+  </p>
+</div>  
 <div>
     <?php echo $this->htmlLink(array('action' => 'create', 'reset' => false),
     $this->translate("Create New Banner"), array(
-    'class' => 'buttonlink',
-    'style' => 'background-image: url(' . $this->layout()->staticBaseUrl . 'application/modules/Announcement/externals/images/admin/add.png);')) ?>
+    'class' => 'admin_link_btn',
+    )) ?>
 </div>
-
-<br/>
 <div class='admin_results'>
    <div>
     <?php $count = $this->paginator->getTotalItemCount() ?>
@@ -40,8 +38,6 @@
     <?php echo $this->paginationControl($this->paginator); ?>
   </div>
 </div>
-
-<br />
 <?php if( engine_count($this->paginator) ): ?>
 <table class='admin_table admin_responsive_table'>
     <thead>
@@ -55,7 +51,7 @@
             <th>
                 <?php echo $this->translate("CTA Label") ?>
             </th>
-            <th style="width: 1%;">
+            <th style="width: 150px;">
                 <?php echo $this->translate("Options") ?>
             </th>
         </tr>
@@ -70,12 +66,14 @@
                 <a href='<?php echo $this->url(array('action' => 'edit', 'id' => $item->banner_id)) ?>'>
                    <?php echo $this->translate("edit") ?>
                 </a> 
+                |
                 <a class='smoothbox' href='<?php echo $this->url(array('action' => 'preview', 'id' => $item->banner_id)) ?>'>
                    <?php echo $this->translate("preview") ?>
                 </a>
                 <?php if($item->custom): ?>
-                
+                |
                 <a class='smoothbox' href='<?php echo $this->url(array('action' => 'delete', 'id' => $item->banner_id)) ?>'>
+            
                    <?php echo $this->translate("delete") ?>
                 </a>
                 <?php endif; ?>
@@ -91,3 +89,7 @@
     <span><?php echo $this->translate("There are no banners created.") ?></span>
 </div>
 <?php endif; ?>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_layout').parent().addClass('active');
+  scriptJquery('.core_admin_main_layout_banners').addClass('active');
+</script>

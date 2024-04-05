@@ -33,9 +33,23 @@ class Chat_Model_Whisper extends Engine_Db_Table_Row
     $viewer = Engine_Api::_()->user()->getViewer();
     if( $viewer->getIdentity() ) {
       if( $viewer->getIdentity() == $this->sender_id ) {
+        $recipient = Engine_Api::_()->getItem('user', $this->recipient_id);
+
+        $verified_tiptext = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $recipient, 'verified_tiptext');
+        $verified_tiptext = !empty($verified_tiptext) ? $verified_tiptext : 'Verified';
+
         $return['user_id'] = $this->recipient_id;
+        $return['icon'] = $recipient->verifiedIcon();
+        $return['verified_tiptext'] = $verified_tiptext;
       } else if( $viewer->getIdentity() == $this->recipient_id ) {
+        $sender = Engine_Api::_()->getItem('user', $this->sender_id);
+        
+        $verified_tiptext = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $sender, 'verified_tiptext');
+        $verified_tiptext = !empty($verified_tiptext) ? $verified_tiptext : 'Verified';
+
         $return['user_id'] = $this->sender_id;
+        $return['icon'] = $sender->verifiedIcon();
+        $return['verified_tiptext'] = $verified_tiptext;
       }
     }
 

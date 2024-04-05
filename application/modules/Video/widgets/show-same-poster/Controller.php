@@ -42,10 +42,10 @@ class Video_Widget_ShowSamePosterController extends Engine_Content_Widget_Abstra
             $select = $itemTable->select();
             $select->where('search =?',1);
         }
+        $select->where('approved = ?', 1)->where('parent_type = ?', 'user');
         $select->where('owner_id = ?', $subject->owner_id)
             ->where('video_id != ?', $subject->getIdentity())
-            ->where('status = ?', 1)
-        ;
+            ->where('status = ?', 1);
 
         $select = Engine_Api::_()->network()->getNetworkSelect($itemTable->info('name'), $select);
         if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('video.allow.unauthorized', 0)) {

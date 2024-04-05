@@ -1,3 +1,6 @@
 .create_room_popup button {
    margin-top:15px;
 }
+body#global_page_chat-admin-manage-create .create_room_popup .form-wrapper {
+ margin-bottom: 15px;
+}

@@ -24,7 +24,7 @@ class User_Model_User extends Core_Model_Item_Abstract
    *
    * @return string
    */
-  public function getTitle()
+  public function getTitle($is_show = true)
   {
     // This will cause various problems
     //$viewer = Engine_Api::_()->user()->getViewer();
@@ -33,16 +33,33 @@ class User_Model_User extends Core_Model_Item_Abstract
     //  $translate = Zend_Registry::get('Zend_Translate');
     //  return $translate->translate('You');
     //}
-    if( isset($this->displayname) && '' !== trim($this->displayname) ) {
-      return $this->displayname;
-    } else if( isset($this->username) && '' !== trim($this->username) ) {
-      return $this->username;
-    } else if( isset($this->email) && '' !== trim($this->email) ) {
-      $tmp = explode('@', $this->email);
-      return $tmp[0];
+    
+    if(Engine_Api::_()->getApi('settings', 'core')->getSetting('user.signup.username', 1) && Engine_Api::_()->getApi('settings', 'core')->getSetting('user.signup.showusername', 0) && isset($this->username) && '' !== trim($this->username)) { 
+      $title = $this->username;
     } else {
-      return "<i>" . Zend_Registry::get('Zend_Translate')->_("Deleted Member") . "</i>";
+      if( isset($this->displayname) && '' !== trim($this->displayname) ) {
+        $title = $this->displayname;
+      } else if( isset($this->username) && '' !== trim($this->username) ) {
+        $title = $this->username;
+      } else if( isset($this->email) && '' !== trim($this->email) ) {
+        $tmp = explode('@', $this->email);
+        $title = $tmp[0];
+      } else {
+        $title = "<i>" . Zend_Registry::get('Zend_Translate')->_("Deleted Member") . "</i>";
+      }
     }
+    
+    if(empty($_GET['restApi']) && !empty($this->is_verified) && $is_show) {
+      $verified_tiptext = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $this, 'verified_tiptext');
+      $verified_tiptext = !empty($verified_tiptext) ? $verified_tiptext : 'Verified';
+      $title = '<span class="user_name">'.$title. '</span><img data-bs-toggle="tooltip" title="'.Zend_Registry::get('Zend_Translate')->_($verified_tiptext).'" src="'.$this->verifiedIcon().'" alt="" class="verified_icon" width="14px">';
+    }
+    
+    return $title;
+  }
+  
+  public function getUsername() {
+    return $this->username;
   }
   
   public function getPhotoUrl($type = null) {
@@ -172,15 +189,6 @@ class User_Model_User extends Core_Model_Item_Abstract
       ->write($mainPath)
       ->destroy();
 
-    // Resize image (profile)
-    $profilePath = $path . DIRECTORY_SEPARATOR . $base . '_p.' . $extension;
-    $image = Engine_Image::factory();
-    $image->open($file)
-      ->autoRotate()
-      ->resize(400, 400)
-      ->write($profilePath)
-      ->destroy();
-
     // Resize image (icon)
     $squarePath = $path . DIRECTORY_SEPARATOR . $base . '_is.' . $extension;
     $image = Engine_Image::factory();
@@ -197,16 +205,43 @@ class User_Model_User extends Core_Model_Item_Abstract
 
     // Store
     $iMain = $filesTable->createFile($mainPath, $params);
-    $iProfile = $filesTable->createFile($profilePath, $params);
     $iSquare = $filesTable->createFile($squarePath, $params);
 
-    $iMain->bridge($iProfile, 'thumb.profile');
     $iMain->bridge($iSquare, 'thumb.icon');
 
     // Remove temp files
     @unlink($mainPath);
-    @unlink($profilePath);
     @unlink($squarePath);
+    
+		//profile photo delete if someone upload new photo.
+		if(!empty($this->photo_id)) {
+			$file = Engine_Api::_()->getItem('storage_file', $this->photo_id);
+			if($file) {
+        $getParentChilds = $file->getChildren($file->getIdentity());
+        foreach ($getParentChilds as $child) {
+          // remove child file.
+          @unlink(APPLICATION_PATH . DIRECTORY_SEPARATOR . $child['storage_path']);
+          // remove child directory.
+          $childPhotoDir = APPLICATION_PATH . DIRECTORY_SEPARATOR . str_replace(basename($child['storage_path']),"",$child['storage_path']);
+          if(@is_dir($childPhotoDir)){
+            @rmdir($childPhotoDir);
+          }
+          // remove child row from db.
+          $child->remove();
+        }
+        // remove parent file.
+        @unlink(APPLICATION_PATH . DIRECTORY_SEPARATOR . $file['storage_path']);
+        // remove directory.
+        $parentPhotoDir = APPLICATION_PATH . DIRECTORY_SEPARATOR . str_replace(basename($file['storage_path']),"",$file['storage_path']);
+        if(@is_dir($parentPhotoDir)){
+          @rmdir($parentPhotoDir);
+        }
+        if ($file) {
+          // remove parent form db.
+          $file->remove();
+        }
+			}
+		}
 
     // Update row
     $this->modified_date = date('Y-m-d H:i:s');
@@ -214,6 +249,100 @@ class User_Model_User extends Core_Model_Item_Abstract
     $this->save();
 
     return $this;
+  }
+  
+  private function setCoverPhoto($photo, $user, $level_id = null)
+  {
+    if ($photo instanceof Zend_Form_Element_File) {
+      $file = $photo->getFileName();
+      $fileName = $file;
+    } else if ($photo instanceof Storage_Model_File) {
+      $file = $photo->temporary();
+      $fileName = $photo->name;
+    } else if ($photo instanceof Core_Model_Item_Abstract && !empty($photo->file_id)) {
+      $tmpRow = Engine_Api::_()->getItem('storage_file', $photo->file_id);
+      $file = $tmpRow->temporary();
+      $fileName = $tmpRow->name;
+    } else if (is_array($photo) && !empty($photo['tmp_name'])) {
+      $file = $photo['tmp_name'];
+      $fileName = $photo['name'];
+    } else if (is_string($photo) && file_exists($photo)) {
+      $file = $photo;
+      $fileName = $photo;
+    } else {
+      throw new User_Model_Exception('invalid argument passed to setPhoto');
+    }
+
+    if (!$fileName) {
+      $fileName = $file;
+    }
+
+    $name = basename($file);
+    $extension = ltrim(strrchr($fileName, '.'), '.');
+    $base = rtrim(substr(basename($fileName), 0, strrpos(basename($fileName), '.')), '.');
+    $path = APPLICATION_PATH . DIRECTORY_SEPARATOR . 'temporary';
+
+    $filesTable = Engine_Api::_()->getDbtable('files', 'storage');
+    // Resize image (main)
+    $mainPath = $path . DIRECTORY_SEPARATOR . $base . '_m.' . $extension;
+    $image = Engine_Image::factory();
+    $image->open($file)
+      ->resize(1600, 1600)
+      ->write($mainPath)
+      ->destroy();
+
+    if (!empty($user)) {
+      $params = array(
+        'parent_type' => $user->getType(),
+        'parent_id' => $user->getIdentity(),
+        'user_id' => $user->getIdentity(),
+        'name' => basename($fileName),
+      );
+
+      try {
+        $iMain = $filesTable->createFile($mainPath, $params);
+				// if user coverphoto column is empty.
+				if(!empty($user['coverphoto'])){
+					$file = Engine_Api::_()->getItem('storage_file', $user['coverphoto']);
+					if($file) {
+						Engine_Api::_()->storage()->deleteExternalsFiles($file->file_id);
+						$file->delete();
+					}
+				}
+        $user->coverphoto = $iMain->file_id;
+        $user->save();
+      } catch (Exception $e) {
+        @unlink($mainPath);
+        if ($e->getCode() == Storage_Model_DbTable_Files::SPACE_LIMIT_REACHED_CODE
+          && Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('album')) {
+          throw new Album_Model_Exception($e->getMessage(), $e->getCode());
+        } else {
+          throw $e;
+        }
+      }
+      @unlink($mainPath);
+      if (!empty($tmpRow)) {
+        $tmpRow->delete();
+      }
+      return $user;
+    } else {
+      try {
+        $iMain = $filesTable->createSystemFile($mainPath);
+        // Remove temp files
+        @unlink($mainPath);
+      } catch (Exception $e) {
+        @unlink($mainPath);
+        if ($e->getCode() == Storage_Model_DbTable_Files::SPACE_LIMIT_REACHED_CODE
+          && Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('album')) {
+          throw new Album_Model_Exception($e->getMessage(), $e->getCode());
+        } else {
+          throw $e;
+        }
+      }
+      Engine_Api::_()->getApi("settings", "core")
+        ->setSetting("usercoverphoto.preview.level.id.$level_id", $iMain->file_id);
+      return $user;
+    }
   }
 
   public function isAllowed($resource, $action = 'view')
@@ -354,6 +483,13 @@ class User_Model_User extends Core_Model_Item_Abstract
     } else {
       $this->password = '';
     }
+    
+    
+    //verified
+    $verified_setting = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $this, 'verified');
+    if(!empty($verified_setting) && $verified_setting == 1) {
+      $this->is_verified = 1;
+    }
 
     // The hook will be called here
     parent::_insert();
@@ -399,6 +535,11 @@ class User_Model_User extends Core_Model_Item_Abstract
     foreach( $comment_options as $role ) {
       $context->setAllowed($this, $role, 'comment', true);
     }
+    
+    //Poke plugin
+    if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('poke')) {
+      $context->setAllowed($this, "member", 'pokeAction', true);
+    }
   }
 
   protected function _update()
@@ -430,7 +571,9 @@ class User_Model_User extends Core_Model_Item_Abstract
         $this->enabled = (bool) $this->approved && $enabled;
       }
     }
+    
 
+    
     // Call parent
     parent::_update();
   }
@@ -697,4 +840,12 @@ class User_Model_User extends Core_Model_Item_Abstract
     parent::_readData($spec);
   }
 
+  public function verifiedIcon() {
+    $icon = '';
+    if(!empty($this->is_verified)) {
+      $verified_icon = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $this, 'verified_icon');
+      $icon = !empty($verified_icon) ? Engine_Api::_()->core()->getFileUrl($verified_icon) :  'application/modules/User/externals/images/verify-icon.png';
+    }
+    return $icon;
+  }
 }

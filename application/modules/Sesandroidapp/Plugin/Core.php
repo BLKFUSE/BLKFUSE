@@ -14,6 +14,7 @@
 class Sesandroidapp_Plugin_Core
 {
   public function onActivityNotificationCreateAfter($event) {
+  if (Engine_Api::_()->getApi('settings', 'core')->getSetting('sesandroidapp.pluginactivated')) {
    $notification = $event->getPayload();
    
    try{
@@ -132,5 +133,6 @@ class Sesandroidapp_Plugin_Core
       $data['description'] = " ";
       $userInfo = $result['notification'];
       $result = Engine_Api::_()->getApi('pushnoti','sesapi')->android($data,$tokens,$userInfo);
+    }
   }
 }

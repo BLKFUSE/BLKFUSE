@@ -85,15 +85,15 @@ CREATE TABLE IF NOT EXISTS `se_media` (
 *  `media_id` int(10) unsigned NOT NULL auto_increment,
 *  `media_album_id` int(10) unsigned NOT NULL default '0',
 *  `media_date` int(14) NOT NULL default '0',
-*  `media_title` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-*  `media_desc` text collate utf8_unicode_ci,
--  `media_ext` varchar(8) collate utf8_unicode_ci NOT NULL default '',
+*  `media_title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+*  `media_desc` text COLLATE utf8mb4_unicode_ci,
+-  `media_ext` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL default '',
 -  `media_filesize` bigint(20) unsigned NOT NULL default '0',
   `media_order` int(1) NOT NULL default '0',
 *  `media_totalcomments` smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (`media_id`),
   KEY `INDEX` (`media_album_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -105,7 +105,7 @@ CREATE TABLE `engine4_album_photos` (
 *  `creation_date` datetime NOT NULL,
 *  `modified_date` datetime NOT NULL,
 *  `collection_id` int(11) unsigned NOT NULL,
-*  `owner_type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+*  `owner_type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
 *  `owner_id` int(11) unsigned NOT NULL,
 *  `file_id` int(11) unsigned NOT NULL,
 -  `view_count` int(11) unsigned NOT NULL default '0',
@@ -113,6 +113,6 @@ CREATE TABLE `engine4_album_photos` (
   PRIMARY KEY (`photo_id`),
   KEY `collection_id` (`collection_id`),
   KEY `owner_type` (`owner_type`, `owner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

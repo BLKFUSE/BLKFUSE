@@ -13,9 +13,10 @@
  
 ?>
 <?php include APPLICATION_PATH .  '/application/modules/Sesapi/views/scripts/dismiss_message.tpl';?>
-<h2>
+<h2 class="page_heading">
   <?php echo $this->translate("SocialEngine REST APIs Plugin") ?>
 </h2>
+
 <div class="sesapi_nav_btns">
   <a href="<?php echo $this->url(array('module' => 'sesapi', 'controller' => 'settings', 'action' => 'help'),'admin_default',true); ?>" target = "_blank" class="help-btn">Help Center</a>
 </div>
@@ -35,8 +36,7 @@
     <i></i>
   </div>
 </div>
-<?php if(!Engine_Api::_()->getApi('settings', 'core')->getSetting('sesapi.pluginactivated',0)){ 
- $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jQuery/jquery.min.js');?>
+<?php if(!Engine_Api::_()->getApi('settings', 'core')->getSetting('sesapi.pluginactivated',0)){ ?>
 	<script type="application/javascript">
   	scriptJquery('.global_form').submit(function(e){
 			scriptJquery('.sesapi_waiting_msg_box').show();
@@ -88,3 +88,10 @@ function openURL(name){
   }  
 }
 </script>
+<style> 
+	button[disabled] { 
+	  background:#bdbdbd; 
+	  border-color:#bdbdbd; 
+	  cursor:not-allowed; 
+  }
+</style>

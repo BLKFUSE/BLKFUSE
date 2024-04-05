@@ -27,11 +27,11 @@ class Install_Import_Version3_BlogCategories extends Install_Import_Version3_Abs
 CREATE TABLE IF NOT EXISTS `se_blogentrycats` (
 *  `blogentrycat_id` int(10) unsigned NOT NULL auto_increment,
 *  `blogentrycat_user_id` int(10) unsigned NOT NULL default '0',
-*  `blogentrycat_title` varchar(128) collate utf8_unicode_ci NOT NULL default '',
+*  `blogentrycat_title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL default '',
 *  `blogentrycat_languagevar_id` int(10) unsigned NOT NULL default '0',
   `blogentrycat_parentcat_id` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`blogentrycat_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -42,6 +42,6 @@ CREATE TABLE `engine4_blog_categories` (
 *  `category_name` varchar(128) NOT NULL,
   PRIMARY KEY (`category_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

@@ -28,7 +28,7 @@ class Sesdating_Plugin_Core extends Zend_Controller_Plugin_Abstract{
    }
   
 	public function onRenderLayoutDefault() {
-	
+    if( defined('_ENGINE_ADMIN_NEUTER') && _ENGINE_ADMIN_NEUTER ) return;
 		$view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
 
     //Theme Responsive Layout work

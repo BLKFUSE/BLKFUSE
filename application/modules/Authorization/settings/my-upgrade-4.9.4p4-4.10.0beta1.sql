@@ -20,4 +20,4 @@ CREATE TABLE IF NOT EXISTS `engine4_authorization_mapprofiletypelevels` (
   `member_level_id` int(11) NOT NULL,
   `member_count` int(11) NOT NULL,
   PRIMARY KEY (`mapprofiletypelevel_id`)
-) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT = 1;
+) ENGINE = InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT = 1;

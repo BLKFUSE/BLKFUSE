@@ -51,11 +51,7 @@ function submitActivityFeedWithAjax(url,sharingPostText,orginalSharingText,formO
   if(elemParent.length){
     formData.append('postingType', elemParent.attr('data-rel'));
   }
-  //business feed work
-  var elemParent = scriptJquery('#sesact_post_box_status').find('.sesbusiness_switcher_cnt').find('.sesbusiness_feed_change_option_a');
-  if(elemParent.length){
-    formData.append('postingType', elemParent.attr('data-rel'));
-  }
+  
   //classroom feed work
   var elemParent = scriptJquery('#sesact_post_box_status').find('.eclassroom_switcher_cnt').find('.eclassroom_feed_change_option_a');
   if(elemParent.length){
@@ -102,7 +98,7 @@ function submitActivityFeedWithAjax(url,sharingPostText,orginalSharingText,formO
               if(parseJson.attachmentType == "pagevideo"){
                 var html = "Your video is currently being processed - you will be notified when it is ready to be viewed.";
               }else{
-                var html = "Your video is currently being processed - you will be notified when it is ready to be viewed. <a href='"+en4.core.staticBaseUrl+videosURLsesvideos+"/manage'>Click here</a> to view uploaded video";
+                var html = "Your video is currently being processed - you will be notified when it is ready to be viewed. <a href='"+en4.core.baseUrl +videosURLsesvideos+"/manage'>Click here</a> to view uploaded video";
               }
               scriptJquery("<div class='schedule_post_cnt sesadv_success_msg'><span>"+html+"</span></div>").insertBefore('.sesadv_noresult_tip');
               setTimeout(function() {scriptJquery('.schedule_post_cnt').remove();}, 30000);

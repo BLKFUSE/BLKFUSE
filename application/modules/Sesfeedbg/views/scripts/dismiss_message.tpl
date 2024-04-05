@@ -12,6 +12,7 @@
  */
  
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenuItemName' => 'core_admin_main_plugins', 'childMenuItemName' => 'core_admin_main_plugins_sesadvancedactivity')); ?>
 <h2><?php echo $this->translate("SESFEEDBG_PLUGIN") ?></h2>
 <div class="sesbasic_nav_btns">
   <a href="https://socialnetworking.solutions/contact-us/" target = "_blank" class="request-btn">Feature Request</a>

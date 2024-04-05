@@ -187,7 +187,7 @@ class Sescommunityads_AdminAdsController extends Core_Controller_Action_Admin {
     if($ad->status == 1) {
 
         $link = '/ads/view/ad_id/'.$ad->sescommunityad_id;
-				$notificationlink = '<a href="' . $link . '">' . $ads->getTitle() . '</a>';
+				$notificationlink = '<a href="' . $link . '">' . $ads->title . '</a>';
         Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($user, $user, $ad, 'sescommunityads_adsapprove', array("adsLink" => $notificationlink));
 
         //Send email to user
@@ -195,7 +195,7 @@ class Sescommunityads_AdminAdsController extends Core_Controller_Action_Admin {
 
     } else if($ad->status == 4) {
         $link = '/ads/view/ad_id/'.$ad->sescommunityad_id;
-        $notificationlink = '<a href="' . $link . '">' . $ads->getTitle() . '</a>';
+        $notificationlink = '<a href="' . $link . '">' . $ads->title . '</a>';
         Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($user, $user, $ad, 'sescommunityads_adsdisapprove', array("adsLink" => $notificationlink));
 
         //Send email to user

@@ -444,13 +444,13 @@ function like_review_data_sesnewsreview(element, functionName, itemType, classTy
 }
 
 function changeSesnewsManifestUrl(type) {
-  window.location.href = en4.core.staticBaseUrl + newsURLsesnews + '/' + type;
+  window.location.href = en4.core.baseUrl + newsURLsesnews + '/' + type;
 }
 
 function chnageSesnewsHrefOfURL(id) {
  var welcomeHomeId = scriptJquery(id).attr('onclick').replace("changeSesnewsManifestUrl('","" );
   welcomeHomeId = welcomeHomeId.replace("');","");
-  scriptJquery(id).attr('href', en4.core.staticBaseUrl + newsURLsesnews + '/' + welcomeHomeId);
+  scriptJquery(id).attr('href', en4.core.baseUrl  + newsURLsesnews + '/' + welcomeHomeId);
 }
 scriptJquery(document).ready(function() {
   var landingPageLink = scriptJquery('.sesnews_landing_link');

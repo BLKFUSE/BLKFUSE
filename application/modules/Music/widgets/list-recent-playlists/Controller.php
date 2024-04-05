@@ -34,7 +34,7 @@ class Music_Widget_ListRecentPlaylistsController extends Engine_Content_Widget_A
         // Get paginator
         $table = Engine_Api::_()->getItemTable('music_playlist');
         $select = $music->getItemsSelect($table->select(), $params);
-
+        $select->where('approved = ?', 1);
         if( $recentType == 'creation' ) {
             $select->order('playlist_id DESC');
         } else {

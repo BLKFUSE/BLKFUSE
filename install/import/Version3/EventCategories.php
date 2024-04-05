@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `se_eventcats` (
   `eventcat_order` smallint(5) unsigned NOT NULL default '0',
   `eventcat_signup` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`eventcat_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=2 ;
  *
  */
 
@@ -34,6 +34,6 @@ CREATE TABLE IF NOT EXISTS `engine4_event_categories` (
 *  `category_id` int(11) unsigned NOT NULL auto_increment,
 *  `title` varchar(64) NOT NULL,
   PRIMARY KEY  (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

@@ -68,7 +68,7 @@ return;
               $getSubject = $itemSubject;
           }
         ?>      
-        <?php echo $this->htmlLink($getSubject->getHref(), $this->itemPhoto($getSubject, 'thumb.profile', $getSubject->getTitle(),array('class'=>'ses_tooltip','data-src'=>$getSubject->getGuid())))?>
+        <?php echo $this->htmlLink($getSubject->getHref(), $this->itemPhoto($getSubject, 'thumb.profile', $getSubject->getTitle(false),array('class'=>'ses_tooltip','data-src'=>$getSubject->getGuid())))?>
       </div>
       <div class="sesact_feed_header_cont sesbasic_clearfix">
         <?php if($this->subject() && $pintotop){ ?>
@@ -153,8 +153,9 @@ return;
                 <?php } ?>
                <?php } ?>
                <?php if($this->viewer()->getIdentity() != $action->getSubject()->getIdentity()){ ?>
-                  <li><a href="javascript:;" class="sesadv_hide_feed" data-name="<?php echo $action->getSubject()->getTitle(); ?>" data-actionid="<?php echo $action->getIdentity(); ?>" data-subjectid="<?php echo $action->subject_id; ?>"><span><?php echo $this->translate("Hide Feed");?></span></a></li>
-                  <li><a href="javascript:;" class="sesadv_hide_feed_all sesadv_hide_feed_all_<?php echo $action->getIdentity(); ?>" data-actionid="<?php echo $action->getIdentity(); ?>" data-name="<?php echo $action->getSubject()->getTitle(); ?>"><span><?php echo $this->translate("Hide all by %s",$action->getSubject()->getTitle());?></span></a></li>
+                  <li><a href="javascript:;" class="sesadv_hide_feed" data-name="<?php echo $action->getSubject()->getTitle(false); ?>" data-actionid="<?php echo $action->getIdentity(); ?>" data-subjectid="<?php echo $action->subject_id; ?>"><span><?php echo $this->translate("Hide Feed");?></span></a></li>
+                  
+                  <li><a href="javascript:;" class="sesadv_hide_feed_all sesadv_hide_feed_all_<?php echo $action->getIdentity(); ?>" data-actionid="<?php echo $action->getIdentity(); ?>" data-name="<?php echo $action->getSubject()->getTitle(false); ?>"><span><?php echo $this->translate("Hide all by %s",$action->getSubject()->getTitle(false));?></span></a></li>
                   <?php 
                   	if(empty($settings))
                     $settings = Engine_Api::_()->getApi('settings', 'core');
@@ -449,7 +450,7 @@ return;
         	<div class="feed_item_map">
             <div class="feed_item_map_overlay" onClick="style.pointerEvents='none'"></div>
             <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?>
-              <iframe class="feed_item_map_map" frameborder="0" allowfullscreen="" src="https://www.google.com/maps/embed/v1/place?q=<?php echo $location->venue; ?>&key=<?php echo $googleKey; ?>" style="border:0"></iframe>
+              <iframe class="feed_item_map_map" frameborder="0" allowfullscreen="" src="https://www.google.com/maps/embed/v1/place?q=<?php echo urlencode($location->venue); ?>&key=<?php echo $googleKey; ?>" style="border:0"></iframe>
           	<?php } ?>
           </div>
         <?php } ?>
@@ -690,7 +691,7 @@ return;
        <div class="sesact_feed_item_buysell_main">
         <div class="sesact_feed_item_buysell">
           <div class="sesact_feed_item_buysell_title"><?php echo $buysell->title; ?></div>
-          <div class="sesact_feed_item_buysell_price"><?php echo Engine_Api::_()->sesadvancedactivity()->getCurrencyPrice($buysell->price,$buysell->currency); ?></div>
+          <div class="sesact_feed_item_buysell_price"><?php echo Engine_Api::_()->payment()->getCurrencyPrice($buysell->price,$buysell->currency); ?></div>
           <?php if($locationBuySell){ ?>
             <div class="sesact_feed_item_buysell_location sesbasic_text_light">
               <span><?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?><a href="<?php echo $this->url(array('resource_id' => $buysell->getIdentity(),'resource_type'=>$buysell->getType(),'action'=>'get-direction'), 'sesbasic_get_direction', true); ?>" onClick="openSmoothBoxInUrl(this.href);return false;"><?php echo $locationBuySell->venue; ?></a><?php } else { ?><?php echo $locationBuySell->venue; ?><?php } ?></span>

@@ -41,7 +41,7 @@ class Sesadvancedactivity_Plugin_Core extends Zend_Controller_Plugin_Abstract {
   }
   
 	public function onRenderLayoutDefault($event, $mode = null) {
-	
+    if( defined('_ENGINE_ADMIN_NEUTER') && _ENGINE_ADMIN_NEUTER ) return;
 		$view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
 		$viewer = Engine_Api::_()->user()->getViewer();
 		$request = Zend_Controller_Front::getInstance()->getRequest();
@@ -58,6 +58,7 @@ class Sesadvancedactivity_Plugin_Core extends Zend_Controller_Plugin_Abstract {
     "var sesadvancedactivitybigtext = ".Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.bigtext',1).";
     var sesAdvancedactivityfonttextsize = ".Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.fonttextsize',18).";
     var sesAdvancedactivitytextlimit = ".Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.textlimit',120).";
+    var sesadvServerLimit = '".ini_get('upload_max_filesize')."';
     ";
     $view->headScript()->appendScript($script);
     if(!Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesadvancedcomment')){

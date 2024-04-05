@@ -14,9 +14,10 @@
 ?>
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesteam/externals/styles/styles.css'); ?>
 <?php $viewer = Engine_Api::_()->user()->getViewer();?>
-
+<?php if(!$this->is_ajax){ ?>  
 <div class="sesteam_temp6_wrap">
-  <div class="sesteam_temp6_list">
+  <div class="sesteam_temp6_list" id="browsemembers_ul<?php echo $randonNumber; ?>">
+<?php } ?>  
     <table>
         <?php foreach( $this->users as $user ): ?>
          <?php $user = Engine_Api::_()->getItem('user', $user->owner_id); ?>
@@ -88,5 +89,7 @@
         </tr>
       <?php endforeach; ?>
     </table>
+<?php if(!$this->is_ajax){ ?>      
   </div>
 </div>
+<?php } ?>

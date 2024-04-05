@@ -520,7 +520,7 @@ return $result;
       }
       //$resource = $item->toArray();
       //$memberInfo = $group->membership()->getMemberInfo($item); 
-      $resource['displayname'] = $item->displayname . (($group->getOwner()->getIdentity() == $item->getIdentity()) ? " (Owner)" : " (Member)");
+      $resource['displayname'] = $item->getTitle() . (($group->getOwner()->getIdentity() == $item->getIdentity()) ? " (Owner)" : " (Member)");
       $resource['user_id'] = $item->user_id;
 
 
@@ -2114,6 +2114,21 @@ return $result;
           'group_id' => $subject->getIdentity(),
           'format' => 'smoothbox',
         ),
+      );
+    }
+   
+    if( $viewer->getIdentity() && $subject->isOwner($viewer) ) {
+    
+      $menu[] = array(
+        'label' => 'Message Members',
+				'class' => 'icon_message',
+				'route' => 'messages_general',
+				'params' => array(
+					'action' => 'compose',
+					'to' => $subject->getIdentity(),
+					'multi' => 'group',
+					'title' => $subject->getTitle(),
+				),
       );
     }
 

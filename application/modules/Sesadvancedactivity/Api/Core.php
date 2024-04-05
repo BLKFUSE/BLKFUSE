@@ -56,7 +56,7 @@ class Sesadvancedactivity_Api_Core extends Core_Api_Abstract
     if(!empty($_SESSION['ses_multiple_currency']['multipleCurrencyPluginActivated'])){
       $currency =  Engine_Api::_()->sesmultiplecurrency()->getSupportedCurrency();
       $currencies = array();
-        $defaultCurrency = Engine_Api::_()->sesmultiplecurrency()->defaultCurrency();
+        $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
         $settings = Engine_Api::_()->getApi('settings', 'core');
       foreach ($currency as $key=>$value){
           if(!$settings->getSetting('sesmultiplecurrency.'.$key.'active','0') && $key != $defaultCurrency)
@@ -91,7 +91,7 @@ class Sesadvancedactivity_Api_Core extends Core_Api_Abstract
     $precisionValue = $settings->getSetting('sesmultiplecurrency.precision', 2);
     $defaultParams['precision'] = $precisionValue;
     if(!empty($_SESSION['ses_multiple_currency']['multipleCurrencyPluginActivated'])){
-      return Engine_Api::_()->sesmultiplecurrency()->getCurrencyPrice($price, $givenSymbol, $change_rate);
+      return Engine_Api::_()->payment()->getCurrencyPrice($price, $givenSymbol, $change_rate);
     }else{
       return Zend_Registry::get('Zend_View')->locale()->toCurrency($price, $givenSymbol, $defaultParams);
     }
@@ -99,14 +99,14 @@ class Sesadvancedactivity_Api_Core extends Core_Api_Abstract
   function getCurrentCurrency(){
     $settings = Engine_Api::_()->getApi('settings', 'core');
     if(!empty($_SESSION['ses_multiple_currency']['multipleCurrencyPluginActivated'])){
-      return Engine_Api::_()->sesmultiplecurrency()->getCurrentCurrency();
+      return Engine_Api::_()->payment()->getCurrentCurrency();
     }else{
       return $settings->getSetting('payment.currency', 'USD');
     }
   }
   function defaultCurrency(){
     if(!empty($_SESSION['ses_multiple_currency']['multipleCurrencyPluginActivated'])){
-      return Engine_Api::_()->sesmultiplecurrency()->defaultCurrency();
+      return Engine_Api::_()->payment()->defaultCurrency();
     }else{
       $settings = Engine_Api::_()->getApi('settings', 'core');
       return $settings->getSetting('payment.currency', 'USD');

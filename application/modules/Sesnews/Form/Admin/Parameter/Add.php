@@ -31,8 +31,8 @@ class Sesnews_Form_Admin_Parameter_Add extends Engine_Form {
 			}
 		}
 	  $this->addElement('Dummy', 'addmore', array('content'=>'
-			<div><input type="text" name="parameters[]" value="" class="reviewparameter"><a href="javascript:;" class="removeAddedElem fa fa-trash">Remove</a></div>
-			<a href="javascript:;" id="addmoreelem" class="fa fa-plus">Add more parameters</a>
+			<div><input type="text" name="parameters[]" value="" class="reviewparameter"><a href="javascript:;" class="removeAddedElem buttonlink sesbasic_icon_delete">Remove</a></div>
+			<a href="javascript:;" id="addmoreelem" class="buttonlink sesbasic_icon_add">Add more parameters</a>
 		'));
       $this->addElement('Hidden', 'deletedIds',array('order'=>999));
     $this->addElement('Button', 'submit', array(

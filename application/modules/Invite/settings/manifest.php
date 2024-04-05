@@ -14,13 +14,14 @@ return array(
   'package' => array(
     'type' => 'module',
     'name' => 'invite',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 10194 $',
     'path' => 'application/modules/Invite',
     'repository' => 'socialengine.com',
     'title' => 'Invite',
     'description' => 'Invite',
-    'author' => 'Webligo Developments',
+    'author' => 'SocialEngine Core',
+    'thumb' => 'application/modules/Core/externals/images/thumb.png',
     'dependencies' => array(
       array(
         'type' => 'module',
@@ -55,7 +56,6 @@ return array(
   ),
   // Items ---------------------------------------------------------------------
   'items' => array(
-    'invite'
+    'invite',
   ),
-  // Routes --------------------------------------------------------------------
 );

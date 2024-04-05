@@ -216,16 +216,16 @@ Composer.Plugin.Tag = function(options){
         select: function(event) { 
           var data = JSON.parse(scriptJquery(this).find('input').val());
           var replaceString = '@' + self.currentText;
-          var newString = '&nbsp;<span class="feed_composer_tag" rel="'+data.guid+'" rev="'+data.label+'" >'+data.label+'</span>&nbsp;';
+          var newString = '&nbsp;<span class="feed_composer_tag" rel="'+data.guid+'" rev="'+data.title+'" >'+data.title+'</span>&nbsp;';
           var content = self.getComposer().getContent();
 
           content = content.replace(replaceString, newString);
           var hiddenTag = self.getComposer().hiddenTagContent.val() + '@userTags:' + data.guid + ':'
-            + data.label + '@';
+            + data.title + '@';
 
           self.getComposer().hiddenTagContent.val(hiddenTag);
           self.getComposer().setContent(content);
-          self.getComposer().setCaretPos(self.caretPosition + 2 - replaceString.length + data.label.length);
+          self.getComposer().setCaretPos(self.caretPosition + 2 - replaceString.length + data.title.length);
           self.choices.remove();
           delete self.choices;
         },

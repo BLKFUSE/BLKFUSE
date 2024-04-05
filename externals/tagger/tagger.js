@@ -285,6 +285,7 @@ var Tagger = function(el,options){
       }
     }
     this.input.autocomplete('search','initial_autocomplete');
+    scriptJquery('.ui-autocomplete').remove();
     return this.suggest;
   }
   this.getTagList = function() {

@@ -23,7 +23,7 @@ class Sessociallogin_Installer extends Engine_Package_Installer_Module {
 
     $db = $this->getDb();
 
-   $db->query("UPDATE  `engine4_user_signup` SET  `enable` =  '0' WHERE  `engine4_user_signup`.`class` ='User_Plugin_Signup_Account';");
+		$db->query("UPDATE  `engine4_user_signup` SET  `enable` =  '0' WHERE  `engine4_user_signup`.`class` ='User_Plugin_Signup_Account';");
     $db->query("UPDATE  `engine4_user_signup` SET  `enable` =  '0' WHERE  `engine4_user_signup`.`class` ='User_Plugin_Signup_Fields';");
     $db->query("UPDATE  `engine4_user_signup` SET  `enable` =  '0' WHERE  `engine4_user_signup`.`class` ='User_Plugin_Signup_Photo';");
 

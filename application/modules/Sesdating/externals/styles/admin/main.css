@@ -1,16 +1,10 @@
 
 
 
-.core_admin_main_plugins_sesdating{
-	border-radius:10px;
-	background-color:#e8288d;
-	color:#fff !important;
-	margin:10px 10px 0;
-	font-size:14px !important;
-	padding:10px !important;
-}
-.core_admin_main_plugins_sesdating:after,
 .core_admin_main_plugins_sesdating:before{
+	content: "\\f5ae" !important;
+}
+.core_admin_main_plugins_sesdating:after{
 	display:none;
 }
 .dating_manangemenu_table{
@@ -160,7 +154,6 @@
 }
 .sesdating_styling_buttons{
 	float:right;
-	margin-top:-35px;
 }
 .sesdating_button{
 	float:left;
@@ -247,13 +240,4 @@
 }
 [id^='global_page_sesdating-admin-'] form div.form-element input[type=text], [id^='global_page_sesdating-admin-']  form div.form-element input[type=password], [id^='global_page_sesdating-admin-'] form div.form-element input[type=email],[id^='global_page_sesdating-admin-'] form div.form-element select{
 	min-width:280px  !important;
-}
-#global_page_sesdating-admin-settings-index .settings > form > div > div > h3 {
-	background-color: transparent;
-	color: unset;
-	padding: 8px 0 10px;
-	margin: 0;
-	font-size: 22px;
-	font-weight: 600;
-	border-radius: 0;
 }

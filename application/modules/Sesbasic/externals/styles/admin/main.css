@@ -97,8 +97,8 @@
 .sesbasic_info_tip{
 	box-shadow:0 4px 5px 0 rgba(0, 0, 0, .14);
 	margin-bottom:20px;
-	background-color:#00cae3;
-	color:#fff;
+	background-color:var(--theme-button-background-color);
+	color:var(--theme-button-font-color);
 	border-radius:3px;
 	position:relative;
 	padding:15px 20px;
@@ -146,23 +146,23 @@ div.event_calendar_container button.event_calendar{
 	margin:5px;
 }
 .sesbasic-admin-navgation ul li a{
-	color:#0dc7f1;
+	color:var(--theme-button-background-color);
 	display:block;
 	font-weight:bold;
 	padding:10px 20px;
 	border-radius:20px;
-	border:1px solid #0dc7f1;
+	border:1px solid var(--theme-button-background-color);
 }
 .sesbasic-admin-navgation ul li a:hover,
 .sesbasic-admin-navgation ul li.active a{
-	background-color:#0dc7f1;
+	background-color:var(--theme-button-background-color);
 	text-decoration:none;
 	color:#fff;
 }
 /*Sub Tabs*/
 .sesbasic-admin-sub-tabs{
-	background-color:#fcfcfc;
-	border-bottom:1px solid #e9e9e9;
+	background-color:var(--theme-box-background-alt-color);
+	border-bottom:1px solid var(--theme-border-color);
 	margin-bottom:15px;
 	padding:10px 15px 0;
 }
@@ -176,30 +176,19 @@ div.event_calendar_container button.event_calendar{
 	margin-right:5px;
 }
 .sesbasic-admin-sub-tabs a{
-	border:1px solid #e9e9e9;
+	background-color: var(--theme-box-background-alt-color);
+	border:1px solid var(--theme-border-color);
+	color: var(--theme-font-headline-color) !important;
 	border-bottom-width:0;
 	border-radius:3px 3px 0 0;
-	box-shadow:0px 1px 3px #fff inset;
-	color:#555;
 	display:block;
 	font-weight:bold;
 	margin:0 5px 0 0;
 	outline:none;
 	padding:8px 10px;
-	text-shadow:1px 1px 1px #fff;
-  background:#f5f5f5;
-  background:-moz-linear-gradient(top, #fafafa 0%, #f5f5f5 100%);
-  background:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #fafafa), color-stop(100%, #f5f5f5));
-  background:-webkit-linear-gradient(top, #fafafa 0%, #f5f5f5 100%);
-  background:-webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#f5f5f5));
-  background:linear-gradient(to bottom, #fafafa 0%,#f5f5f5 100%);
-}
-.sesbasic-admin-sub-tabs a:hover{
-	text-decoration:none;
-  background:#fafafa;
 }
 .sesbasic-admin-sub-tabs li.active a{
-  background:#fff;
+	background-color: var(--theme-box-background-color);
   margin-bottom:-1px;
   padding-top:9px;
   position:relative;
@@ -211,13 +200,13 @@ div.event_calendar_container button.event_calendar{
 }
 /*Faq*/
 .sesbasic_faqs {
-	background-color:#f5f5f5;
+	background-color:var(--theme-box-background-alt-color);
 	overflow:hidden;
 	padding:10px;
 }
 .sesbasic_faqs > ul {
-	background:#fff;
-	border:1px solid #ccc;
+	background:var(--theme-box-background-color);
+	border:1px solid var(--theme-border-color);
 	overflow:hidden;
 	padding:20px;
 }
@@ -237,7 +226,7 @@ div.event_calendar_container button.event_calendar{
 	padding:10px;
 	display:block;
 	border-width:1px;
-	background-color:#f1f1f1;
+	background-color:var(--theme-box-background-alt-color);
 	line-height:20px;
 }
 /*Autosuggest*/
@@ -322,6 +311,13 @@ div.sesbasic_search_form form > div select{
 div .sesbasic_admin_form label.required:after{
 	content:" *";
 	color:#f00;
+	display:inline-block;
+	position:absolute;
+	margin-left:3px;
+}
+[dir="rtl"] div .sesbasic_admin_form label.required:after{
+	margin-left:3px;
+	margin-right:0;
 }
 .sesbasic_form_help_icon{
 	display:inline-block;
@@ -331,8 +327,8 @@ div .sesbasic_admin_form label.required:after{
 	overflow:hidden;
 }
 .sesbasic-form > div{
-	background:#fff;
-	border:1px solid #ccc;
+	background:var(--theme-box-background-color);
+	border:1px solid var(--theme-border-color);
 	overflow:hidden;
 	padding:0px;
 }
@@ -356,23 +352,6 @@ div .sesbasic_admin_form label.required:after{
 	border-width:0;
 	background-color:transparent;
 	padding:0;
-}
-#global_content > h3{
-	border-radius: 0;
-	margin: 0;
-	color: #565757;
-	padding: 8px 0 10px;
-	font-size: 22px;
-	font-weight: 600;
-}
-.sesbasic_admin_form form > div > div > h3{
-  background:transparent !important;
-  border-radius:0 !important;
-  margin:0 !important;
-  color:#565757 !important;
-  padding:8px 0 10px !important;
-  font-size:22px !important;
-  font-weight:600 !important;
 }
 html .settings div.form-element p{
 	max-width:inherit;
@@ -407,17 +386,29 @@ html .settings div.form-element p{
 }
 .sesbasic-categories-add-form input[type="text"], .sesbasic-categories-add-form textarea{width:100%;}
 .sesbasic-categories-add-form textarea{min-height:100px;}
-.sesbasic-categories-add-form select{max-width:100%;}
+.sesbasic-categories-add-form select{max-width:100%;width:100%;}
 .sesbasic-categories-add-form-overlay{
-  background:url(~/application/modules/Sesbasic/externals/images/loading.gif) no-repeat center rgba(255, 255, 255, .5);
+  background:url(~/application/modules/Sesbasic/externals/images/loading.gif) no-repeat center;
+
   position:absolute;
   bottom:0;
   top:0;
   left:0;
   right:0;
 }
+.sesbasic-categories-add-form-overlay::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color:var(--theme-box-background-alt-color);
+  z-index: 0;
+  opacity: .45;
+}
 .sesbasic-categories-listing{
-  background-color:#f5f5f5;
+  background-color:var(--theme-box-background-color);
   float:right;
 	position:relative;
   width:65%
@@ -426,7 +417,7 @@ html .settings div.form-element p{
   max-width:20px;
 }
 .sesbasic-categories-listing span.buttons{
-  margin:5px;
+  margin:10px 5px;
   float:left;
 }
 /*Category Mapping Popup*/
@@ -445,15 +436,15 @@ html .settings div.form-element p{
   margin:0 0 0 20px;
 }
 .sesbasic_nav_btns a{
-	background-color:#208ed3;
+	background-color:var(--theme-button-background-color);
+	color: var(--theme-button-font-color) !important;
 	border-radius:3px;
 	background-position:10px center;
 	background-repeat:no-repeat;
-	color:#fff !important;
 	float:left;
 	font-weight:bold;
 	padding:7px 15px 7px 30px;
-	margin-left:10px;
+	margin:0 8px;
 	position:relative;
 }
 .sesbasic_nav_btns a:before{
@@ -486,13 +477,13 @@ html .settings div.form-element p{
 }
 .sesbasic_view_stats_popup > table{
 	width:100%;
-	display: inline-table;
+	display:inline-table;
 }
-.sesbasic_view_stats_popup > table > tbody > tr:nth-child(2n) {
-  background-color:#f8f8f8;
+.sesbasic_view_stats_popup > table > tbody > tr:nth-child(2n){
+	background-color: var(--theme-box-background-alt-color);
 }
 .sesbasic_view_stats_popup > table > tbody > tr > td{
-	border-top:1px solid #ccc;
+	border-top: 1px solid var(--theme-border-color);
 	padding:5px;
 	font-weight:bold;
 	vertical-align:top;
@@ -572,22 +563,54 @@ html .settings div.form-element p{
 .sesbasic_add_itemoftheday_popup .event_calendar_container{
 	float:none;
 }
+.sesbasic_add_itemoftheday_popup .event_calendar_container input{
+	padding-left: 30px;
+}
+[dir="rtl"] .sesbasic_add_itemoftheday_popup .event_calendar_container input{
+	padding-left:12px;
+	padding-right:30px;
+}
 .sesbasic_add_itemoftheday_popup div.event_calendar_container button.event_calendar{
 	border-radius:0;
 	margin-top:0;
 }
+.sesbasic_popup_form .event_calendar_container input{
+	padding-left:35px !important;
+}
+[dir="rtl"] .sesbasic_popup_form .event_calendar_container input{
+  padding-left:14px !important;
+  padding-right:35px !important;
+}
+.event_calendar_container:before{
+	top:10px !important;
+}
+/*Celender*/
+@media (max-width: 767px) {
+	[id^='global_page_'] table.ui-datepicker-calendar {
+		display: inline-table !important;
+	}
+}
 /*Loading Message*/
 .sesbasic_waiting_msg_box{
-	background-color:rgba(255, 255, 255, 0.8);
 	height:100%;
 	left:0;
 	position:fixed;
 	top:0;
 	width:100%;
 }
+.sesbasic_waiting_msg_box::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--theme-box-background-color);
+	opacity: 0.8;
+}
 .sesbasic_waiting_msg_box_cont{
-	background-color:rgba(255, 255, 255, 0.8);
-	border:5px solid #43bbef;
+	background-color:var(--theme-box-background-color);
+	border:5px solid var(--theme-base-color);
 	box-shadow:0 0 5px rgba(0, 0, 0, 0.5);
 	font-size:20px;
 	font-weight:bold;
@@ -600,6 +623,10 @@ html .settings div.form-element p{
 	top:50%;
 	width:600px;
 	z-index:24;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	flex-direction:column;
 }
 .sesbasic_waiting_msg_box_cont i{
 	background-image:url(~/application/modules/Sesbasic/externals/images/loading.gif);
@@ -620,8 +647,8 @@ html .settings div.form-element p{
   box-sizing:border-box;
 }
 .sesbasic_manage_table_head{
-	background-color:#f5f5f5;
-	border-bottom:1px solid #aaa;
+	background-color:var(--theme-box-background-alt-color);
+	border-bottom:1px solid var(--theme-border-color);
 	display:block;
 	overflow:hidden;
 }
@@ -638,23 +665,20 @@ html .settings div.form-element p{
 	width:100% !important;
 }
 .sesbasic_manage_table_list li{
-	border-bottom:1px solid #eee;
+	border-bottom:1px solid var(--theme-border-color);
 	cursor:move;
 	clear:both;
 	overflow:hidden;
 }
 .sesbasic_manage_table_list li:nth-child(odd){
-	background-color:#fff;
+	background-color:var(--theme-box-background-color);
 }
 .sesbasic_manage_table_list li:nth-child(even) {
-	background-color:#f8f8f8;
+	background-color:var(--theme-box-background-alt-color);;
 }
 .sesbasic_manage_table_list li > div{
 	padding:10px;
-	font-size:.9em;
 	float:left;
-	padding-top:7px;
-	padding-bottom:7px;
 	vertical-align:top;
 	white-space:normal;
 }
@@ -728,15 +752,15 @@ button.sesbasic_import_button:hover{
 	padding:.5em 1em;
 	font-weight:bold;
 	border:none;
-	background-color:#619dbe;
-	border:1px solid #50809b;
-	color:#fff !important;
+	background-color:var(--theme-button-background-color);
+	border:1px solid var(--theme-button-background-color);
+	color:var(--theme-button-font-color) !important;
 	font-family:inherit !important;
 	text-shadow:0px -1px 0px rgba(0, 0, 0, .3);
 	font-family:arial, sans-serif;
 }
 .sesbasic_button:hover{
-	background-color:#7eb6d5;
+	background-color:var(--theme-button-background-color);;
 	text-decoration:none;
 }
 .sesbasic_button:before{
@@ -847,7 +871,7 @@ button.sesbasic_import_button:hover{
 	text-align:justify;
 }
 .sesbasic_support_links a p span._btn{
-	background-color:#0DC7F1;
+	background-color:var(--theme-button-background-color);
 	color:#fff;
 	float:right;
 	padding:3px 10px;
@@ -955,7 +979,7 @@ button.sesbasic_import_button:hover{
 .sesbasic_support_contact_links ul{
 	display:flex;
 	justify-content:center;
-	background-color:#f8f8f8;
+	background-color:var(--theme-box-background-alt-color);
 	padding:20px;
 }
 .sesbasic_support_contact_links ul li{
@@ -1034,8 +1058,54 @@ button.sesbasic_import_button:hover{
 }
 /* Selectize */
 .selectize-control{
-	position: inherit !important;
+	position:inherit !important;
 }
 .selectize-control.multi .selectize-input [data-value]{
-	background: #0075ff;
+	background:#0075ff;
+}
+.selectize-dropdown .create{
+	color:var(--theme-font-headline-color) !important;
+}
+/*Settings Faq Popup*/
+#global_page_core-admin-content-widget #TB_window{
+	width:90% !important;
+	left:5% !important;
+}
+.sesbasic_faq_text{
+	padding:15px;
+}
+.sesbasic_faq_text button#cancel{
+	color:#fff;
+}
+.sesbasic_global_setting button[disabled] {
+	background:#bdbdbd;
+	border-color:#bdbdbd;
+	cursor:not-allowed;
+}
+/*Tabs*/
+.sesbasic_btn_space{
+	margin:10px 0;
+}
+/*Table Css*/
+table.admin_table tbody tr .admin_btn_options{
+  white-space:nowrap;
+}
+
+html .layout_core_admin_menu_main > ul > li > a{
+	text-align:left;
+	align-items:flex-start;
+}
+html [dir="rtl"] .layout_core_admin_menu_main > ul > li > a{
+	text-align:right;
+}
+html .layout_core_admin_menu_main > ul > li > a > i{
+	margin-top:3px;
+}
+.ui-autocomplete > li img.verified_icon{
+	height:14px;
+	width:14px;
+	min-width:14px;
+}
+html.dark_mode .category_delete_error{
+ background-color:#400707 !important;
 }

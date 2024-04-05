@@ -34,16 +34,16 @@ class Sesandroidapp_AdminPushnotificationController extends Core_Controller_Acti
         
         $params = '';
         if($values['criteria'] == 'all'){
-          $tokens = Engine_Api::_()->getDbTable('users','sesapi')->getTokens(array('platform'=>2));
+          $tokens = Engine_Api::_()->getDbTable('users','sesapi')->getTokens(array('platform'=>1));
         }else if($values['criteria'] == 'memberlevel'){
           $params = $level = $values['memberlevel'];
-           $tokens = Engine_Api::_()->getDbTable('users','sesapi')->getTokens(array('level'=>$level,'platform'=>2));
+           $tokens = Engine_Api::_()->getDbTable('users','sesapi')->getTokens(array('level'=>$level,'platform'=>1));
         }else if($values['criteria'] == 'network'){
            $params = $network = $values['network'];
-            $tokens = Engine_Api::_()->getDbTable('users','sesapi')->getTokens(array('network'=>$network,'platform'=>2));
+            $tokens = Engine_Api::_()->getDbTable('users','sesapi')->getTokens(array('network'=>$network,'platform'=>1));
         }else if($values['criteria'] == 'user'){
             $params = $user_ids = $values['toValues'];
-            $tokens = Engine_Api::_()->getDbTable('users','sesapi')->getTokens(array('user_ids'=>$user_ids,'platform'=>2));
+            $tokens = Engine_Api::_()->getDbTable('users','sesapi')->getTokens(array('user_ids'=>$user_ids,'platform'=>1));
         }
         
         $db = Engine_Db_Table::getDefaultAdapter();
@@ -68,7 +68,7 @@ class Sesandroidapp_AdminPushnotificationController extends Core_Controller_Acti
         
         $params = '';
         if($values['criteria'] == 'all'){
-          $tokens = Engine_Api::_()->getDbTable('users','sesapi')->getTokens(array('platform'=>2));
+          $tokens = Engine_Api::_()->getDbTable('users','sesapi')->getTokens(array('platform'=>1));
         }else if($values['criteria'] == 'memberlevel'){
           $params = $level = $values['memberlevel'];
            $tokens = Engine_Api::_()->getDbTable('users','sesapi')->getTokens(array('level'=>$level,'platform'=>2));

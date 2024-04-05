@@ -91,7 +91,7 @@ if($this->canphotoshow == 1) {
       var canPaginatePageNumber = 1;
       function existingPhotosGet(){
         scriptJquery('#sesalbum_profile_existing_img').show();
-        var URL = en4.core.staticBaseUrl+'albums/index/existing-photos/';
+        var URL = en4.core.baseUrl+'albums/index/existing-photos/';
         (scriptJquery.ajax({
             method: 'post',
             'url': URL ,
@@ -126,7 +126,7 @@ if($this->canphotoshow == 1) {
           return;
         scriptJquery('#sesalbum-profile-upload-loading').show();
         hideProfilePhotoUpload();
-        var URL = en4.core.staticBaseUrl+'albums/index/upload-existingphoto/';
+        var URL = en4.core.baseUrl+'albums/index/upload-existingphoto/';
         (scriptJquery.ajax({
             method: 'post',
             'url': URL ,
@@ -156,7 +156,7 @@ if($this->canphotoshow == 1) {
           scriptJquery('#sesalbum_existing_album_see_more_page_'+id).remove();
           return;
         }
-        var URL = en4.core.staticBaseUrl+'albums/index/existing-albumphotos/';
+        var URL = en4.core.baseUrl+'albums/index/existing-albumphotos/';
         (scriptJquery.ajax({
             method: 'post',
             'url': URL ,
@@ -209,7 +209,7 @@ if($this->canphotoshow == 1) {
           }
           return xhrobj;
           },
-          url:  en4.core.staticBaseUrl+'albums/index/edit-profilephoto/',
+          url:  en4.core.baseUrl+'albums/index/edit-profilephoto/',
           type: "POST",
           contentType:false,
           processData: false,
@@ -246,7 +246,7 @@ if($this->canphotoshow == 1) {
           scriptJquery('#sesalbum-profile-upload-loading').show();
           // upload results
           
-          Webcam.upload( data_uri, en4.core.staticBaseUrl+'albums/index/edit-profilephoto/user_id/<?php echo $this->user_id; ?>' , function(code, text) {
+          Webcam.upload( data_uri, en4.core.baseUrl+'albums/index/edit-profilephoto/user_id/<?php echo $this->user_id; ?>' , function(code, text) {
               text = JSON.parse(text);
               if(text.status == 'true'){
                 if(text.src != '')

@@ -7,7 +7,7 @@ Composer.Plugin.Sesadvancedactivitytargetpost = function(options){
   this.__proto__ = new Composer.Plugin.Interface(options);
   this.name = 'targetpost'
   this.options = {
-    title : 'Choose Preferred Audience',
+    title : en4.core.language.translate("Choose Preferred Audience"),
     lang : {
         'Choose Preferred Audience': 'Choose Preferred Audience'
     },

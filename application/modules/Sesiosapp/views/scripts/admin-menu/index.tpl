@@ -13,9 +13,8 @@
  
 ?>
 
-<?php include APPLICATION_PATH .  '/application/modules/Sesapi/views/scripts/dismiss_message.tpl';?>
+<?php include APPLICATION_PATH .  '/application/modules/Sesiosapp/views/scripts/dismiss_message.tpl';?>
 <?php 
-$this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jQuery/jquery-ui.js');
 $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jQuery/odering.js'); 
 ?>
 <h2>
@@ -24,6 +23,7 @@ $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jQue
 <?php if( engine_count($this->navigation)): ?>
   <div class='tabs'> <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?> </div>
 <?php endif; ?>
+
 <h3>Manage Dashboard Menu Items</h3>
 <br>
 <p>

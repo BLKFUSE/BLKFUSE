@@ -92,7 +92,7 @@ class Sesmusic_Form_Create extends Engine_Form {
 				if(engine_count($packages)) {
 					$packagesArray = array('' => 'Select Package');
 					foreach($packages as $package) {
-						$packagesArray[$package->getIdentity()] = $package->title . ' ('. Engine_Api::_()->epaidcontent()->getCurrencyPrice($package->price, Engine_Api::_()->epaidcontent()->defaultCurrency()) . ')';
+						$packagesArray[$package->getIdentity()] = $package->title . ' ('. Engine_Api::_()->payment()->getCurrencyPrice($package->price, Engine_Api::_()->epaidcontent()->defaultCurrency()) . ')';
 					}
 					$this->addElement('Select', 'package_id', array(
 						'label' => 'Choose Package',
@@ -152,6 +152,7 @@ class Sesmusic_Form_Create extends Engine_Form {
 			$customFields = new Sesbasic_Form_Custom_Fields(array(
 				'resourceType' => '',
 				'item' => $itemType,
+        'isCreation' => true,
 				'decorators' => array(
 					'FormElements'
 			)));
@@ -711,7 +712,7 @@ class Sesmusic_Form_Create extends Engine_Form {
       if (isset($values['subsubcat_id']))
         $song->subsubcat_id = $values['subsubcat_id'];
 			if(isset($values['youtube_video']) && !empty($values['youtube_video']) && $values['is_video_found']){
-				$information = $this->handleIframelyInformation($values['youtube_video']);
+				$information = Engine_Api::_()->sesbasic()->handleIframelyInformation($values['youtube_video']);
 				if (!empty($information)) {
           $song->youtube_video = $information['code'];
         }

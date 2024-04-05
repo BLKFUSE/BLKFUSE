@@ -32,13 +32,29 @@ class Core_Api_Search extends Core_Api_Abstract
     $type = $item->getType();
     $id = $item->getIdentity();
     $title = substr(trim($item->getTitle()), 0, 255);
-    $description = substr(trim($item->getDescription()), 0, 255);
+    
+    if(isset($item->description))
+      $description = trim(strip_tags($item->description));
+    else if(isset($item->body))
+      $description = trim(strip_tags($item->body));
+    else 
+      $description = substr(trim(strip_tags($item->getDescription())), 0, 255);
+
     $keywords = substr(trim($item->getKeywords()), 0, 255);
     $hiddenText = substr(trim($item->getHiddenSearchData()), 0, 255);
+    
+    if (method_exists($item, 'getUsername')) {
+      $username = $item->getUsername();
+    }
     
     // Ignore if no title and no description
     if( !$title && !$description )
     {
+      return false;
+    }
+    
+    //If child item then do not enter in search table
+    if(isset($item->parent_type) && isset($item->parent_id) && !empty($item->parent_type) && ($item->parent_type != 'user') && !empty($item->parent_id)) {
       return false;
     }
 
@@ -58,10 +74,15 @@ class Core_Api_Search extends Core_Api_Abstract
       $row->id = $id;
     }
 
+    if(isset($item->approved)) {
+      $row->approved = $item->approved;
+    }
+    
     $row->title = $title;
     $row->description = $description;
     $row->keywords = $keywords;
     $row->hidden = $hiddenText;
+    $row->username = isset($username) && $username ? $username : '';
     $row->save();
   }
 
@@ -88,9 +109,11 @@ class Core_Api_Search extends Core_Api_Abstract
     $table = Engine_Api::_()->getDbtable('search', 'core');
     $db = $table->getAdapter();
     $select = $table->select()
-      ->where(new Zend_Db_Expr($db->quoteInto('MATCH(`title`, `description`, `keywords`, `hidden`) AGAINST (? IN BOOLEAN MODE)', $text)))
-      ->order(new Zend_Db_Expr($db->quoteInto('MATCH(`title`, `description`, `keywords`, `hidden`) AGAINST (?) DESC', $text)));
+      ->where('approved = ?', 1)
+      ->order('search_id DESC');
 
+    $select->where("( title LIKE ? || username LIKE ? || description LIKE ? || keywords LIKE ? || hidden LIKE ?)",'%' . $text . '%');
+    
     // Filter by item types
     $availableTypes = Engine_Api::_()->getItemTypes();
     if( $type && engine_in_array($type, $availableTypes) ) {

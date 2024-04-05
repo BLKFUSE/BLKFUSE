@@ -125,20 +125,6 @@
     <div class="ses_media_lightbox_options_name">
        <div class="pswp__top-bar-albumname"><?php echo $this->translate('In %1$s', $this->htmlLink( $this->chanel->getHref(), $this->string()->truncate($this->chanel->title,Engine_Api::_()->getApi('settings', 'core')->getSetting('sesalbum.title.truncate',35)))); ?> </div>
     </div>
-    <?php if(Engine_Api::_()->user()->getViewer()->getIdentity() != 0){ ?>
-      <div class="ses_media_lightbox_options_btns">
-        <a class="sesbasic_icon_btn sesbasic_icon_msg_btn smoothbox" href="<?php echo $this->url(array('module'=> 'sesalbum', 'controller' => 'index', 'action' => 'message','photo_id' => $this->photo->getIdentity(),'type'=>'chanelphoto' ,'format' => 'smoothbox'),'sesalbum_extended',true); ?>" onclick="openURLinSmoothBox(this.href);return false;"><i class="fa fa-envelope"></i></a>
-        <?php if ($this->photo->authorization()->isAllowed($this->viewer, 'comment')){ ?>
-        <?php $LikeStatus = Engine_Api::_()->sesalbum()->getLikeStatusPhoto($this->photo->chanelphoto_id,'chanelphoto'); ?>
-      <a href="javascript:void(0);" id="sesLightboxLikeUnlikeButton" class="sesbasic_icon_btn sesbasic_icon_btn_count sesbasic_icon_like_btn<?php echo $LikeStatus === true ? ' button_active' : '' ;  ?>"><i class="fa fa-thumbs-up"></i><span id="like_unlike_count"><?php echo $this->photo->like_count; ?></span></a>
-      <?php } ?>
-       </div>
-        <?php } ?>
-    <?php if(Engine_Api::_()->user()->getViewer()->getIdentity() != 0 && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesalbum.add.share',1) == 1){ ?>
-      <div class="ses_media_lightbox_options_btn ses_media_lightbox_share_btn">
-        <a href="javascript:;" class='smoothbox' onclick="openURLinSmoothBox('<?php echo $this->url(array("action" => "share", "type" => "chanelphoto", "photo_id" => $this->photo->getIdentity(),"format" => "smoothbox"), 'sesalbum_general', true); ?>')"><?php echo $this->translate('Share'); ?></a>
-      </div>
-    <?php } ?>
     <div class="ses_media_lightbox_options_btn ses_media_lightbox_more_btn">
       <div class="ses_media_lightbox_options_box">
         <?php if(Engine_Api::_()->user()->getViewer()->getIdentity() != 0 && $this->canDelete){ ?>

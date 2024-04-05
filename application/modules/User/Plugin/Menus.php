@@ -16,14 +16,33 @@
  * @copyright  Copyright 2006-2020 Webligo Developments
  * @license    http://www.socialengine.com/license/
  */
-class User_Plugin_Menus
-{
+class User_Plugin_Menus {
 
-  public function onMenuInitialize_CoreMiniFriends($row) {
+  public function onMenuInitialize_UserSettingsSupport($row)
+  {
     $viewer = Engine_Api::_()->user()->getViewer();
-    if( !$viewer->getIdentity()) return false;
+    if( !$viewer->getIdentity()) 
+      return false;
     
     return true;
+  }
+  
+  public function onMenuInitialize_CoreMinimenuEdit($row) {
+    $viewer = Engine_Api::_()->user()->getViewer();
+    if( $viewer->getIdentity()) {
+      return array(
+        'label' => "Edit Profile",
+        'icon' => 'fas fa-user-edit',
+        'route' => 'user_extended',
+        'params' => array(
+          'controller' => 'edit',
+          'action' => 'profile',
+          'id' => $viewer->getIdentity(),
+        )
+      );
+    }
+
+    return false;
   }
   
   public function canDelete()
@@ -107,7 +126,6 @@ class User_Plugin_Menus
         'uri' => $viewer->getHref(),
       );
     }
-
     return false;
   }
 
@@ -132,11 +150,12 @@ class User_Plugin_Menus
   {
     $viewer = Engine_Api::_()->user()->getViewer();
     if( $viewer->getIdentity() ) {
-      return array(
-        'label' => 'Sign Out',
-        'route' => 'user_logout',
-        'class' => 'no-dloader',
-      );
+      return false;
+//       return array(
+//         'label' => 'Sign Out',
+//         'route' => 'user_logout',
+//         'class' => 'no-dloader',
+//       );
     } else {
       $request = Zend_Controller_Front::getInstance()->getRequest();
       $moduleName = $request->getModuleName();

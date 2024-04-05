@@ -10,12 +10,7 @@
  * @author     John
  */
 ?>
-<h2><?php echo $this->translate("Chat Plugin") ?></h2>
-<?php if( engine_count($this->navigation) ): ?>
-<div class='tabs'>
-  <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?>
-</div>
-<?php endif; ?>
+<?php include APPLICATION_PATH .  '/application/modules/Chat/views/scripts/_adminHeader.tpl';?>
 <script type="text/javascript">
   var fetchLevelSettings = function(level_id) {
     window.location.href = en4.core.baseUrl + 'admin/chat/settings/level/id/' + level_id;

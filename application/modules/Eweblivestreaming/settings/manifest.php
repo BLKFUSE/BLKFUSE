@@ -15,18 +15,19 @@
   array (
     'type' => 'module',
     'name' => 'eweblivestreaming',
-    'version' => '6.4.4p4',
+    'version' => '6.5.1',
     'dependencies' => array(
       array(
         'type' => 'module',
         'name' => 'core',
-        'minVersion' => '6.2.0',
+        'minVersion' => '6.5.1',
       ),
     ),
     'path' => 'application/modules/Eweblivestreaming',
     'title' => 'SNS - Live Streaming in Website',
     'description' => 'SNS - Live Streaming in Website',
      'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	 'thumb' => 'application/modules/Eweblivestreaming/externals/images/thumb.png',
     'callback' =>
     array (
         'path' => 'application/modules/Eweblivestreaming/settings/install.php',

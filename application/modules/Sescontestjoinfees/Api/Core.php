@@ -39,7 +39,7 @@ class Sescontestjoinfees_Api_Core extends Core_Api_Abstract {
     $precisionValue = $settings->getSetting('sesmultiplecurrency.precision', 2);
     $defaultParams['precision'] = $precisionValue;
     if(!empty($_SESSION['ses_multiple_currency']['multipleCurrencyPluginActivated'])){
-      return Engine_Api::_()->sesmultiplecurrency()->getCurrencyPrice($price, $givenSymbol, $change_rate,$returnPrice);
+      return Engine_Api::_()->payment()->getCurrencyPrice($price, $givenSymbol, $change_rate,$returnPrice);
     }else{
 		$givenSymbol = $settings->getSetting('payment.currency', 'USD');
       return Zend_Registry::get('Zend_View')->locale()->toCurrency($price, $givenSymbol, $defaultParams);
@@ -48,14 +48,14 @@ class Sescontestjoinfees_Api_Core extends Core_Api_Abstract {
   function getCurrentCurrency(){
     $settings = Engine_Api::_()->getApi('settings', 'core');
     if(!empty($_SESSION['ses_multiple_currency']['multipleCurrencyPluginActivated'])){
-      return Engine_Api::_()->sesmultiplecurrency()->getCurrentCurrency();
+      return Engine_Api::_()->payment()->getCurrentCurrency();
     }else{
       return $settings->getSetting('payment.currency', 'USD');
     }
   }
   function defaultCurrency(){
     if(!empty($_SESSION['ses_multiple_currency']['multipleCurrencyPluginActivated'])){
-      return Engine_Api::_()->sesmultiplecurrency()->defaultCurrency();
+      return Engine_Api::_()->payment()->defaultCurrency();
     }else{
       $settings = Engine_Api::_()->getApi('settings', 'core');
       return $settings->getSetting('payment.currency', 'USD');

@@ -16,7 +16,7 @@
     var tempNetworks = oldNetworks.split(",");
     for (var i = 0; i < tempNetworks.length; i++) {
       var tempListElement = window.parent.document.getElementById('privacy_list_' + tempNetworks[i] );
-      tempListElement.removeClass('activity_tab_active').addClass('activity_tab_unactive');
+      scriptJquery(tempListElement).removeClass('activity_tab_active').addClass('activity_tab_unactive');
     }
 
     var selectedNetworks = getSelectedNetworks();
@@ -24,13 +24,13 @@
     var label = '';
     for (var i = 0; i < networksArray.length; i++) {
       if (label == '') {
-        label = $('network_list-' + networksArray[i]).getParent('li').getElement('label').innerHTML;
+        label = scriptJquery('#network_list-' + networksArray[i]).parent('li').find('label').html();
       } else {
-        label = label + ", " + $('network_list-' + networksArray[i]).getParent('li').getElement('label').innerHTML;
+        label = label + ", " + scriptJquery('#network_list-' + networksArray[i]).parent('li').find('label').html();
       }
 
       tempListElement = window.parent.document.getElementById('privacy_list_'+ networksArray[i]);
-      tempListElement.addClass('activity_tab_active').removeClass('activity_tab_unactive');
+      scriptJquery(tempListElement).addClass('activity_tab_active').removeClass('activity_tab_unactive');
     }
 
     if (label != '') {
@@ -46,9 +46,9 @@
 
   function getSelectedNetworks() {
     var selectedNets = new Array();
-    $$('.network_list').each(function(el) {
-      if(el.checked){
-        selectedNets.push(el.value);
+    scriptJquery('.network_list').each(function() {
+      if(scriptJquery(this).is(':checked')){
+        selectedNets.push(scriptJquery(this).val());
       }
     });
     return selectedNets.join();

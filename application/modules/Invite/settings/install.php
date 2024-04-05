@@ -16,17 +16,11 @@
  * @copyright  Copyright 2006-2020 Webligo Developments
  * @license    http://www.socialengine.com/license/
  */
-class Invite_Installer extends Engine_Package_Installer_Module
-{
-  public function onInstall()
-  {
-    if( method_exists($this, '_addGenericPage') ) {
-      $this->_addGenericPage('invite_index_index', 'Invite', 'Invite Page', '');
-    } else {
-      $this->_error('Missing _addGenericPage method');
-    }
-    
+class Invite_Installer extends Engine_Package_Installer_Module {
+
+  public function onInstall() {
+
+    $db = $this->getDb();
     parent::onInstall();
   }
 }
- 

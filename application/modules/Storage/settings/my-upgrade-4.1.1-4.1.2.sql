@@ -23,12 +23,12 @@ CREATE TABLE IF NOT EXISTS `engine4_storage_mirrors` (
   `service_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`file_id`,`service_id`),
   KEY `service_id` (`service_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 ALTER TABLE `engine4_storage_files` ADD KEY `service_id` (`service_id`);
 
 ALTER TABLE `engine4_storage_files`
-  CHANGE `parent_type` `parent_type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci default NULL ;
+  CHANGE `parent_type` `parent_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci default NULL ;
 
 /* Fix some incorrect default collations */
-ALTER TABLE `engine4_storage_chunks` DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+ALTER TABLE `engine4_storage_chunks` DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;

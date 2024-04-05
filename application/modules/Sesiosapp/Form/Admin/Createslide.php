@@ -19,7 +19,7 @@ class Sesiosapp_Form_Admin_Createslide extends Engine_Form {
             ->setAttrib('id', 'form-create-slide')
             ->setAttrib('name', 'sesiosapp_create_slide')
             ->setAttrib('enctype', 'multipart/form-data')
-            //->setAttrib('onsubmit', 'return checkValidation();')
+            ->setAttrib('onsubmit', 'return checkValidation();')
             ->setAction(Zend_Controller_Front::getInstance()->getRouter()->assemble(array()));
     $this->setMethod('post');
    $slide_id = Zend_Controller_Front::getInstance()->getRequest()->getParam('slide_id', 0);

@@ -227,6 +227,10 @@ class Group_IndexController extends Core_Controller_Action_Standard
               $values['subcat_id'] = 0;
             if (is_null($values['subsubcat_id']))
               $values['subsubcat_id'] = 0;
+              
+            //approve setting work
+            $values['approved'] = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('group', $viewer, 'approve');
+            
             $group->setFromArray($values);
             $group->save();
 
@@ -279,13 +283,18 @@ class Group_IndexController extends Core_Controller_Action_Standard
 
             // Add auth for invited users
             $auth->setAllowed($group, 'member_requested', 'view', 1);
-
-            // Add action
-            $activityApi = Engine_Api::_()->getDbtable('actions', 'activity');
-            $action = $activityApi->addActivity($viewer, $group, 'group_create', '', array('privacy' => isset($values['networks'])? $network_privacy : null));
-            if( $action ) {
-                $activityApi->attachActivity($action, $group);
-            }
+            
+            //if($values['approved'] == 1) {
+              // Add action
+              $activityApi = Engine_Api::_()->getDbtable('actions', 'activity');
+              $action = $activityApi->addActivity($viewer, $group, 'group_create', '', array('privacy' => isset($values['networks'])? $network_privacy : null));
+              if( $action ) {
+                  $activityApi->attachActivity($action, $group);
+              }
+            //}
+            
+            //Start Send Approval Request to Admin
+            Engine_Api::_()->core()->contentApprove($group, 'group');
 
             // Commit
             $db->commit();
@@ -305,10 +314,7 @@ class Group_IndexController extends Core_Controller_Action_Standard
     public function manageAction()
     {
         // Render
-        $this->_helper->content
-            //->setNoRender()
-            ->setEnabled()
-        ;
+        $this->_helper->content->setEnabled();
 
         // Form
         $this->view->formFilter = $formFilter = new Group_Form_Filter_Manage();
@@ -338,6 +344,13 @@ class Group_IndexController extends Core_Controller_Action_Standard
                 $table->getAdapter()->quoteInto("`{$tName}`.`description` LIKE ?", '%' . $values['text'] . '%')
             );
         }
+        $select->where("
+          CASE
+            WHEN $tName.user_id = {$viewer->getIdentity()} THEN true
+            WHEN $tName.user_id <> {$viewer->getIdentity()} AND approved = 1 THEN true
+            ELSE false 
+          END
+        ");
 
         $this->view->paginator = $paginator = Zend_Paginator::factory($select);
         $paginator->setItemCountPerPage(Engine_Api::_()->getApi('settings', 'core')->getSetting('group_page', 12));

@@ -208,6 +208,17 @@ $view->headScript()->appendScript($analytics_code);
     $script .="var post_max_size = ".Engine_Api::_()->core()->convertPHPSizeToBytes(ini_get('upload_max_filesize')).";";
     $script .="var max_photo_upload_limit = ".Engine_Api::_()->authorization()->getPermission($viewer, 'user', 'maxphotolimit').";";
     $script .="var photo_upload_text = '".$view->translate('Max upload of %s allowed.', Engine_Api::_()->authorization()->getPermission($viewer, 'user', 'maxphotolimit'))."';";
+    
+    //hide email from email setting tab
+		if($viewer->getIdentity()) {
+			if($viewer->level_id != 1) {
+        $script .= 'scriptJquery(document).ready(function() {
+          scriptJquery("#general-userverirequesttosuperadmin").parent().remove();
+          scriptJquery("#payment-paymentmanualverification").parent().remove();
+        });';
+      }
+    }
+    
     $view->headScript()->appendScript($script);
 
     $cssBaseUrl = APPLICATION_ENV == 'development' ? rtrim($view->baseUrl(), '/') . '/' : $view->layout()->staticBaseUrl;

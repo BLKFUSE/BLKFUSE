@@ -10,19 +10,10 @@
  */
 
 ?>
-
+<?php include APPLICATION_PATH .  '/application/modules/Elpis/views/scripts/_adminHeader.tpl';?>
 <?php  
   $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jscolor/jscolor.js');
 ?>
-
-<h2><?php echo $this->translate('Elpis Theme') ?></h2>
-
-<?php if( engine_count($this->navigation) ): ?>
-  <div class='tabs'>
-    <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?>
-  </div>
-<?php endif; ?>
-
 <div class='clear'>
   <div class='settings elpis_color_schemes_form'>
     <?php echo $this->form->render($this); ?>
@@ -159,4 +150,7 @@
       }
     });
 	});
+</script>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_elpis').parent().addClass('active');
 </script>

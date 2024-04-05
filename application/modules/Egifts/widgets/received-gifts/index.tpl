@@ -62,7 +62,7 @@
             <?php } ?>
             <?php if(isset($this->priceActive) && Engine_Api::_()->getApi('settings', 'core')->getSetting('egifts.enable.price', 1)){ ?>
             	<div class="egifts_listing_item_price">
-               	<span class="_price sesbasic_text_hl"><?php echo Engine_Api::_()->egifts()->getCurrencyPrice($item->price); ?></span>
+               	<span class="_price sesbasic_text_hl"><?php echo Engine_Api::_()->payment()->getCurrencyPrice($item->price); ?></span>
             	</div>
             <?php } ?>
             <?php if(isset($this->descriptionActive)): ?>

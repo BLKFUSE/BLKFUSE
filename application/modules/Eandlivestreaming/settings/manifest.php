@@ -15,18 +15,19 @@
   array (
     'type' => 'module',
     'name' => 'eandlivestreaming',
-    'version' => '6.4.4p4',
+    'version' => '6.5.1',
     'dependencies' => array(
       array(
         'type' => 'module',
         'name' => 'core',
-        'minVersion' => '6.2.0',
+        'minVersion' => '6.5.1',
       ),
     ),
     'path' => 'application/modules/Eandlivestreaming',
     'title' => 'SNS - Live Streaming in Android Mobile App',
     'description' => 'SNS - Live Streaming in Android Mobile App',
      'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	 'thumb' => 'application/modules/Eandlivestreaming/externals/images/thumb.png',
     'callback' =>
     array (
         'path' => 'application/modules/Eandlivestreaming/settings/install.php',

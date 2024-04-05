@@ -72,7 +72,7 @@ if ($this->getRequest()->isPost()) {
         `view_privacy` VARCHAR(255) NOT NULL,
         PRIMARY KEY (`story_id`),
         KEY `owner_id` (`owner_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesstories_mutes` (
         `mute_id` int(11) unsigned NOT NULL auto_increment,  
@@ -80,7 +80,7 @@ if ($this->getRequest()->isPost()) {
         `resource_id` int(11) NOT NULL,
         `mute` tinyint(1) NOT NULL DEFAULT "0",
         PRIMARY KEY (`mute_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
       
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesstories_userinfos` (
         `userinfo_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -88,7 +88,7 @@ if ($this->getRequest()->isPost()) {
         `view_privacy` VARCHAR(255) NOT NULL,
         PRIMARY KEY (`userinfo_id`),
         UNIQUE KEY `owner_id` (`owner_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
       
       $db->query('CREATE TABLE IF NOT EXISTS  `engine4_sesstories_recentlyviewitems` (
         `recentlyviewed_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -96,7 +96,7 @@ if ($this->getRequest()->isPost()) {
         `owner_id` INT NOT NULL ,
         `creation_date` DATETIME NOT NULL,
         UNIQUE KEY `uniqueKey` (`resource_id`, `owner_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
       
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesstories_usersettings` (
         `usersetting_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -105,7 +105,7 @@ if ($this->getRequest()->isPost()) {
         `auto_archive` tinyint(1) NOT NULL DEFAULT "1",
         `blocked_friends` varchar(255) NOT NULL,
         UNIQUE KEY `uniqueKey` (`user_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
       
       $db->query('INSERT IGNORE INTO `engine4_core_jobtypes` (`title`, `type`, `module`, `plugin`, `enabled`, `multi`, `priority`) VALUES
       ("Story Encode", "sesstories_encode", "sesstories", "Sesstories_Plugin_Job_Encode", 1, 2, 75);');

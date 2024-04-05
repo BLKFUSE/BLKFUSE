@@ -10,11 +10,11 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_settings", 'parentMenuItemName' => 'core_admin_banning_general', 'childMenuItemName' => 'user_admin_banning_logins')); ?>
 
-<h2>
+<h2 class="page_heading">
   <?php echo $this->translate("Login History") ?>
 </h2>
-
 <?php if( engine_count($this->navigation) ): ?>
   <div class='tabs'>
     <?php
@@ -24,19 +24,13 @@
     ?>
   </div>
 <?php endif; ?>
-
 <p>
   <?php echo $this->translate("USER_VIEWS_SCRIPTS_ADMINLOGINS_INDEX_DESCRIPTION") ?>
 </p>
-
-<br />
-
-
 <?php if( $this->formFilter ): ?>
   <div class='admin_search'>
     <?php echo $this->formFilter->render($this) ?>
   </div>
-
   <script type="text/javascript">
     var currentOrder = '<?php echo $this->order ?>';
     var currentOrderDirection = '<?php echo $this->order_direction ?>';
@@ -51,21 +45,15 @@
       scriptJquery('#filter_form').trigger("submit");
     }
   </script>
-  
-  <br />
 <?php endif ?>
-
 <div>
   <?php echo $this->htmlLink(array(
     'action' => 'clear',
     'reset' => false,
   ), 'Clear History', array(
-    'class' => 'buttonlink smoothbox admin_referrers_clear',
+    'class' => 'smoothbox admin_referrers_btn admin_link_btn',
   )) ?>
 </div>
-
-<br />
-
 <div class='admin_results'>
   <div>
     <?php $count = $this->paginator->getTotalItemCount() ?>
@@ -79,10 +67,6 @@
     )); ?>
   </div>
 </div>
-
-<br />
-
-
 <table class='admin_table admin_responsive_table'>
   <thead>
     <tr>
@@ -170,3 +154,7 @@
     <?php endif; ?>
   </tbody>
 </table>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_settings').parent().addClass('active');
+  scriptJquery('.core_admin_main_settings_spam').addClass('active');
+</script>

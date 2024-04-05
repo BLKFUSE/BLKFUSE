@@ -25,7 +25,7 @@ class Sesdating_Form_Admin_HeaderSettings extends Engine_Form {
     if($sesdating_landingpage) {
       //New File System Code
       $banner_options = array('' => '');
-      $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png')));
+      $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png', 'webp')));
       foreach( $files as $file ) {
         $banner_options[$file->storage_path] = $file->name;
       }
@@ -88,7 +88,7 @@ class Sesdating_Form_Admin_HeaderSettings extends Engine_Form {
 
     $this->addElement('Text', 'sesdating_limit', array(
         'label' => 'Menu Count',
-        'description' => 'Choose number of menu items to be displayed before “More�? dropdown menu occurs?',
+        'description' => 'Choose number of menu items to be displayed before “More�? dropdown menu occurs?',
         'value' => $settings->getSetting('sesdating.limit', 4),
     ));
 

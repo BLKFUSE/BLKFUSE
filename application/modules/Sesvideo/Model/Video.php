@@ -38,7 +38,18 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
     if ($file)
       return $file->map();
   }
-
+  public function getTitle(){
+    if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesemoji')) {
+      return Engine_Api::_()->sesemoji()->DecodeEmoji($this->title);
+    }
+    return $this->title;
+  }
+  public function getDescription(){
+    if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesemoji')) {
+      return Engine_Api::_()->sesemoji()->DecodeEmoji($this->description);
+    }
+    return $this->description;
+  }
   public function fields() {
     return new Engine_ProxyObject($this, Engine_Api::_()->getApi('core', 'fields'));
   }
@@ -138,11 +149,11 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
     if ($this->type == 15) {
       $videoEmbedded = $this->compilePornRabbit($this->video_id, $this->code, $view, $mobile, $map);
     }
-		// if video is url
+    // if video is url
     if ($this->type == 16) {
       $videoEmbedded = $this->compileFromUrl($this->video_id, $this->code, $view, $mobile, $map);
     }
-		// if video is url
+    // if video is url
     // if ($this->type == 17) {
     //   $videoEmbedded = $this->compileEmbedCode($this->video_id, $this->code, $view, $mobile, $map);
     // }
@@ -150,80 +161,80 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
     if ($this->type == 18) {
       $videoEmbedded = $this->compileBreak($this->video_id, $this->code, $view, $mobile, $map);
     }
-		// if video is commedy central
+    // if video is commedy central
     if ($this->type == 20) {
       $videoEmbedded = $this->commedycentral($this->video_id, $this->code, $view, $mobile, $map);
     }
-		// if video is metacafe
+    // if video is metacafe
     if ($this->type == 21) {
       $videoEmbedded = $this->metacafe($this->video_id, $this->code, $view, $mobile, $map);
     }
-		// if video is veehd
+    // if video is veehd
     if ($this->type == 22) {
       $videoEmbedded = $this->veoh($this->video_id, $this->code, $view, $mobile, $map);
     }
-		// if video is veehd
+    // if video is veehd
     if ($this->type == 23) {
       $videoEmbedded = $this->veehd($this->video_id, $this->code, $view, $mobile, $map);
     }
-		// if video is 4shared
+    // if video is 4shared
     if ($this->type == 24) {
       $videoEmbedded = $this->shared4($this->video_id, $this->code, $view, $mobile, $map);
     }
-		// if video is youku
+    // if video is youku
     if ($this->type == 25) {
       $videoEmbedded = $this->youku($this->video_id, $this->code, $view, $mobile, $map);
     }
-		// if video is myspace
+    // if video is myspace
     if ($this->type == 26) {
       $videoEmbedded = $this->myspace($this->video_id, $this->code, $view, $mobile, $map);
     }
-		// if video is stagevu
+    // if video is stagevu
     if ($this->type == 27) {
       $videoEmbedded = $this->stagevu($this->video_id, $this->code, $view, $mobile, $map);
     }
-			// if video is rutube
+      // if video is rutube
     if ($this->type == 28) {
       $videoEmbedded = $this->rutube($this->video_id, $this->code, $view, $mobile, $map);
     }
-		// if video is videobash
+    // if video is videobash
     if ($this->type == 29) {
       $videoEmbedded = $this->videobash($this->video_id, $this->code, $view, $mobile, $map);
     }
-		// if video is spike
+    // if video is spike
     if ($this->type == 30) {
       $videoEmbedded = $this->spike($this->video_id, $this->code, $view, $mobile, $map);
     }
-		// if video is spike
+    // if video is spike
     if ($this->type == 31) {
       $videoEmbedded = $this->clipfish($this->video_id, $this->code, $view, $mobile, $map);
     }
-		// if video is godtube
+    // if video is godtube
     if ($this->type == 32) {
       $videoEmbedded = $this->godtube($this->video_id, $this->code, $view, $mobile, $map);
     }
-		// if video is godtube
+    // if video is godtube
     if ($this->type == 33) {
       $videoEmbedded = $this->nuvid($this->video_id, $this->code, $view, $mobile, $map);
     }
-		// if video is vid2c
+    // if video is vid2c
     if ($this->type == 34) {
       $videoEmbedded = $this->vid2c($this->video_id, $this->code, $view, $mobile, $map);
     }
-		
-		// if video is drtuber
+    
+    // if video is drtuber
     if ($this->type == 35) {
       $videoEmbedded = $this->drtuber($this->video_id, $this->code, $view, $mobile, $map);
     }
-		// if video is porn
+    // if video is porn
     if ($this->type == 100) {
       $videoEmbedded = $this->porn($this->video_id, $this->code, $view, $mobile, $map);
     }
-		// if video is facebook
+    // if video is facebook
     if ($this->type == 105) {
       $videoEmbedded = $this->facebook($this->video_id, $this->code, $view, $mobile, $map);
     }
-			// if video is twitter
+      // if video is twitter
     if ($this->type == 106) {
       $videoEmbedded = $this->twitter($this->video_id, $this->code, $view, $mobile, $map);
     }
@@ -241,19 +252,19 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
 
         $video_duration = "<span class='sesvideo_length'>" . $duration . "</span>";
       }
-			 $watchLater = '';
-			$watchLaterId = Engine_Api::_()->sesvideo()->getWatchLaterId($this->video_id);
-			 if(Engine_Api::_()->user()->getViewer()->getIdentity() != '0' && Engine_Api::_()->getApi('settings', 'core')->getSetting('video.enable.watchlater', 1)){
-					  $watchLaterActive = engine_count($watchLaterId)  ? 'selectedWatchlater' : '';
-						$watchLaterText = engine_count($watchLaterId)  ? Zend_Registry::get('Zend_Translate')->_('Remove from Watch Later')  : Zend_Registry::get('Zend_Translate')->_('Add to Watch Later');
+       $watchLater = '';
+      $watchLaterId = Engine_Api::_()->sesvideo()->getWatchLaterId($this->video_id);
+       if(Engine_Api::_()->user()->getViewer()->getIdentity() != '0' && Engine_Api::_()->getApi('settings', 'core')->getSetting('video.enable.watchlater', 1)){
+            $watchLaterActive = engine_count($watchLaterId)  ? 'selectedWatchlater' : '';
+            $watchLaterText = engine_count($watchLaterId)  ? Zend_Registry::get('Zend_Translate')->_('Remove from Watch Later')  : Zend_Registry::get('Zend_Translate')->_('Add to Watch Later');
            $watchLater =   '<a href="javascript:;" class="sesvideo_watch_later_btn sesvideo_watch_later '.$watchLaterActive.'" title = "'.$watchLaterText.'" data-url="'.$this->video_id.'"></a>';
        }
-			 $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
-			 $urlencode = urlencode(((!empty($_SERVER["HTTPS"]) &&  strtolower($_SERVER["HTTPS"]) == 'on') ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . $this->getHref());
-			  $buttons = '<div class="sesvideo_thumb_btns">';
-			  
-			  $buttons .= $view->partial('_socialShareIcons.tpl','sesbasic',array('resource' => $this, 'param' => 'feed'));
-			  
+       $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
+       $urlencode = urlencode(((!empty($_SERVER["HTTPS"]) &&  strtolower($_SERVER["HTTPS"]) == 'on') ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . $this->getHref());
+        $buttons = '<div class="sesvideo_thumb_btns">';
+        
+        $buttons .= $view->partial('_socialShareIcons.tpl','sesbasic',array('resource' => $this, 'param' => 'feed'));
+        
         if(Engine_Api::_()->user()->getViewer()->getIdentity() != 0 ) {
           $thistype = 'sesvideo_video';
           $getId = 'video_id';
@@ -286,25 +297,28 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         if((float) $getViewerOrder->total_amount < (float) $package->price) {
           $paidContent = '<div class="epaidcontent_attachment"> <div class="epaidcontent_attachment_subscription_box">
           <div class="epaidcontent_attachment_subscription_box_lock"><i class="fas fa-lock"></i></div>
-          <span> Paid Content </span>' . '<a href="'.$view->url(array('action' => 'showpackage', 'package_id' => $this->package_id), 'epaidcontent_general', true).'">'. Zend_Registry::get('Zend_Translate')->_('Subscribe Package '). Engine_Api::_()->epaidcontent()->getCurrencyPrice($package->price, Engine_Api::_()->epaidcontent()->defaultCurrency()) .'</a></div>';
+          <span> Paid Content </span>' . '<a href="'.$view->url(array('action' => 'showpackage', 'package_id' => $this->package_id), 'epaidcontent_general', true).'">'. Zend_Registry::get('Zend_Translate')->_('Subscribe Package '). Engine_Api::_()->payment()->getCurrencyPrice($package->price, Engine_Api::_()->epaidcontent()->defaultCurrency()) .'</a></div>';
         }
       }
       
       // prepare the thumbnail
       $thumb = Zend_Registry::get('Zend_View')->itemPhoto($this, 'thumb.video.activity');
       $thumb = '<a class="sesvideo_thumb_img sesvideo_lightbox_open sesvideo_attachment_thumb_img" href="'.$this->getHref().'" data-url="video"><span style="background-image:url(' . $this->getPhotoUrl() . ');"></span></a><a class="sesvideo_play_btn fa fa-play-circle sesvideo_thumb_img sesvideo_lightbox_open" href="'.$this->getHref().'" data-url="video"><span style="background-image:url(' . $this->getPhotoUrl() . ');display:none"></span></a>'.$video_duration.$watchLater.$buttons;
-      if (!$mobile) {
-        $thumb = '<div class="sesvideo_thumb sesvideo_attachment_thumb sesvideo_play_btn_wrap sesvideo_activity_video sesbasic_bxs" id="video_thumb_' . $this->video_id . '" >' . $thumb  . '</div>';
+      if (!$mobile && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesbasic.enable.lightbox', 1)) {
+        $thumb = '<div class="sesvideo_thumb sesvideo_attachment_thumb sesvideo_play_btn_wrap sesvideo_activity_video sesbasic_bxs" id="video_thumb_' . $this->video_id . '" >' . $thumb  . '<a href="'.$this->getHref().'" data-url="video" class="sesvideo_feed_expend sesvideo_lightbox_open" data-click="openclick"><span style="background-image:url(' . $this->getPhotoUrl() . ');"></span><span >Open in Lightbox</span><i class="fas fa-expand"></i></a></div>';
       } else {
         $thumb = '<div class="sesvideo_thumb sesvideo_attachment_thumb sesvideo_play_btn_wrap sesvideo_activity_video sesbasic_bxs" id="video_thumb_' . $this->video_id . '" href="' . $this->getHref() . '">' . $thumb  . '</div>';
       }
       // prepare title and description
-      $title = "<a href='" . $this->getHref($params) . "'>$this->title</a>";
+      if (!$mobile) {
+        $popuplink ='<a href="'.$this->getHref().'" data-url="video" class="sesvideo_feed_expend sesvideo_lightbox_open" data-click="openclick"><span style="background-image:url(' . $this->getPhotoUrl() . ');"></span><span >Open in Lightbox</span><i class="fas fa-expand"></i></a>';
+      }
+      $title = "<a class='sesvideo_attachment_title' href='" . $this->getHref($params) . "'>$this->title</a>";
       $tmpBody = strip_tags($this->description);
       $description = "<div class='sesvideo_attachment_desc'>" . (Engine_String::strlen($tmpBody) > 255 ? Engine_String::substr($tmpBody, 0, 255) . '...' : $tmpBody) . "</div>";
-    //   $videoEmbedded = $paidContent . $thumb . '<div id="video_object_' . $this->video_id . '" data-rel="'.$this->type.'" class="sesvideo_object"></div><div class="sesvideo_attachment_info">' . $title . $description . '</div>';
-
-      $videoEmbedded = $paidContent.$thumb . '<div id="video_object_' . $this->video_id . '" data-rel="'.$this->type.'" class="sesvideo_object">'.$videoEmbedded.'</div><div class="sesvideo_attachment_info">' . $title . $description . '</div>';
+      
+      $videoEmbedded = $paidContent . $thumb . '<div id="video_object_' . $this->video_id . '" data-rel="'.$this->type.'" class="sesvideo_object">'.$videoEmbedded.'</div><div class="sesvideo_attachment_info">' . $popuplink . $title . $description . '</div>';
+      
       if(Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.sesvideo',1) && Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('epaidcontent')) && Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.allow',1) && isset($this->package_id) && !empty($this->package_id) && $this->owner_id != $viewer->getIdentity()) {
         $package = Engine_Api::_()->getItem('epaidcontent_package', $this->package_id);
         $getViewerOrder = Engine_Api::_()->getDbTable('orders','epaidcontent')->getViewerOrder(array('owner_id' => $viewer->getIdentity(),'package_owner_id' => $package->user_id, 'noCondition' => 1));
@@ -330,29 +344,29 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
     $photo_id = $this->photo_id;
     if (!$photo_id && !$this->is_locked && !$this->adult)
       return $defaultPhoto;
-		$viewer = Engine_Api::_()->user()->getViewer();
-		if(!Engine_Api::_()->getApi('core', 'sesbasic')->checkAdultContent(array('module'=>'video')) && $this->adult && $viewer->getIdentity() != $this->owner_id){
-			 return Engine_Api::_()->sesvideo()->getFileUrl(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesvideo_video_default_adult', 'application/modules/Sesvideo/externals/images/sesvideo_adult.png'));	
-		}
-		$cookieData = isset($_COOKIE['sesvideo_lightbox_value']) ? (array) $_COOKIE['sesvideo_lightbox_value'] : array();
-		
-		$valid = false;
-		if($cookieData && engine_in_array($this->video_id,@explode(',',$cookieData))){
-			$valid = true;
-		}
-		
-		if ($viewer->getIdentity() == 0)
-			$level = Engine_Api::_()->getDbtable('levels', 'authorization')->getPublicLevel()->level_id;
-		else
-			$level = $viewer;
-		$sesprofilelock_enable_module = is_string(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}')) ? unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}')) : Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}');;
+    $viewer = Engine_Api::_()->user()->getViewer();
+    if(!Engine_Api::_()->getApi('core', 'sesbasic')->checkAdultContent(array('module'=>'video')) && $this->adult && $viewer->getIdentity() != $this->owner_id){
+       return Engine_Api::_()->sesvideo()->getFileUrl(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesvideo_video_default_adult', 'application/modules/Sesvideo/externals/images/sesvideo_adult.png')); 
+    }
+    $cookieData = isset($_COOKIE['sesvideo_lightbox_value']) ? (array) $_COOKIE['sesvideo_lightbox_value'] : array();
+    
+    $valid = false;
+    if($cookieData && engine_in_array($this->video_id,@explode(',',$cookieData))){
+      $valid = true;
+    }
+    
+    if ($viewer->getIdentity() == 0)
+      $level = Engine_Api::_()->getDbtable('levels', 'authorization')->getPublicLevel()->level_id;
+    else
+      $level = $viewer;
+    $sesprofilelock_enable_module = is_string(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}')) ? unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}')) : Engine_Api::_()->getApi('settings', 'core')->getSetting('sesprofilelock.enable.modules', 'a:2:{i:0;s:8:"sesvideo";i:1;s:8:"sesalbum";}');;
     if (!$valid && $this->is_locked && Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesprofilelock'))  && engine_in_array('sesvideo',$sesprofilelock_enable_module) && $viewer->getIdentity() != $this->owner_id)
       return Zend_Registry::get('StaticBaseUrl').'application/modules/Sesvideo/externals/images/locked-video.jpg';
     
-// 		if(Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.sesvideo',1) && Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('epaidcontent')) && Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.allow',1) && Engine_Api::_()->epaidcontent()->isViewerPlanActive($this)) {
-// 			return 'application/modules/Epaidcontent/externals/images/paidcontent.png';
-// 		}
-		
+//    if(Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.sesvideo',1) && Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('epaidcontent')) && Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.allow',1) && Engine_Api::_()->epaidcontent()->isViewerPlanActive($this)) {
+//      return 'application/modules/Epaidcontent/externals/images/paidcontent.png';
+//    }
+    
     //Video sell work
     if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesvideosell') && $this->type == 3 && $this->price > 0 && $viewer->getIdentity() != $this->owner_id) {
       $sampleVideo = Engine_Api::_()->getItem('sesvideo_samplevideo', $this->samplevideo_id);
@@ -391,9 +405,9 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
             . '>'
             . '</iframe>';
   }
-	public function twitter($video_id, $code, $view, $mobile = false, $map = false) {
+  public function twitter($video_id, $code, $view, $mobile = false, $map = false) {
     $autoplay = !$mobile && $view;
-		$url = 'http://' . $_SERVER['HTTP_HOST']
+    $url = 'http://' . $_SERVER['HTTP_HOST']
             . Zend_Controller_Front::getInstance()->getRouter()->assemble(array(
                 'module' => 'sesvideo',
                 'controller' => 'video',
@@ -417,8 +431,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-					if(typeof el == "undefined" || !el)
-						return;
+          if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -431,9 +445,9 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
     ';
     return $embedded;
   }
-	public function facebook($video_id, $code, $view, $mobile = false, $map = false) {
+  public function facebook($video_id, $code, $view, $mobile = false, $map = false) {
     $autoplay = !$mobile && $view;
-		$url = 'http://' . $_SERVER['HTTP_HOST']
+    $url = 'http://' . $_SERVER['HTTP_HOST']
             . Zend_Controller_Front::getInstance()->getRouter()->assemble(array(
                 'module' => 'sesvideo',
                 'controller' => 'video',
@@ -457,8 +471,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-					if(typeof el == "undefined" || !el)
-						return;
+          if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -471,7 +485,7 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
     ';
     return $embedded;
   }
-	public function porn($video_id, $code, $view, $mobile = false, $map = false) {
+  public function porn($video_id, $code, $view, $mobile = false, $map = false) {
     $autoplay = !$mobile && $view;
     if ($map)
       return '//www.porn.com/videos/embed/' . $code;
@@ -490,8 +504,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-					if(typeof el == "undefined" || !el)
-						return;
+          if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -504,7 +518,7 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
     ';
     return $embedded;
   }
-	
+  
   public function compileRedTube($video_id, $code, $view, $mobile = false, $map = false) {
     $autoplay = !$mobile && $view;
     if ($map)
@@ -524,8 +538,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-					if(typeof el == "undefined" || !el)
-						return;
+          if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -538,7 +552,7 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
     ';
     return $embedded;
   }
-	public function compileEmbedCode($video_id, $code, $view, $mobile = false, $map = false){
+  public function compileEmbedCode($video_id, $code, $view, $mobile = false, $map = false){
     $autoplay = !$mobile && $view;
     if ($map)
       return $code;
@@ -557,26 +571,26 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
             el.set("height", parentSize.x / aspect);
             var height = parentSize.x / aspect;
-							var width = parentSize.x;
+              var width = parentSize.x;
               if(width == 0){
                  setTimeout(function(){ doResize(); }, 1000); 
               }
-							var marginTop = 0;
-							if(scriptJquery(".sesvideo_view_embed").find("iframe").length){
-								if(scriptJquery(".sesvideo_view_embed").find("iframe").attr("src").indexOf("?") > 0){
-									var urlQuery = "&width="+width+"&height="+parseInt(height-marginTop);
-								}else
-									var urlQuery = "?width="+width+"&height="+parseInt(height-marginTop);
-								var srcAttr = scriptJquery(".sesvideo_view_embed").find("iframe").attr("src")+urlQuery;
+              var marginTop = 0;
+              if(scriptJquery(".sesvideo_view_embed").find("iframe").length){
+                if(scriptJquery(".sesvideo_view_embed").find("iframe").attr("src").indexOf("?") > 0){
+                  var urlQuery = "&width="+width+"&height="+parseInt(height-marginTop);
+                }else
+                  var urlQuery = "?width="+width+"&height="+parseInt(height-marginTop);
+                var srcAttr = scriptJquery(".sesvideo_view_embed").find("iframe").attr("src")+urlQuery;
                 scriptJquery(".sesvideo_view_embed").find("iframe").attr("src",srcAttr);
-							}
+              }
         }
         scriptJquery(window).on("resize", doResize);
         doResize();
@@ -584,8 +598,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
     </script>
     ';
     return $embedded;
-	}
-	public function compileFromUrl($video_id, $code, $view, $mobile = false, $map = false){
+  }
+  public function compileFromUrl($video_id, $code, $view, $mobile = false, $map = false){
     $autoplay = !$mobile && $view;
     if ($map)
       return $code.'?wmode=opaque&' . ($autoplay ? "&autoplay=1" : "");
@@ -604,8 +618,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -618,7 +632,7 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
     ';
     return $embedded;
   
-	}
+  }
   public function compileXvideos($video_id, $code, $view, $mobile = false, $map = false) {
     $autoplay = !$mobile && $view;
     if ($map)
@@ -638,8 +652,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -672,8 +686,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -706,8 +720,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -740,8 +754,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -774,8 +788,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -808,8 +822,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -842,8 +856,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -876,8 +890,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -910,8 +924,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -924,8 +938,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
     ';
     return $embedded;
   }
-		
-		public function rutube	($video_id, $code, $view, $mobile = false, $map = false){
+    
+    public function rutube  ($video_id, $code, $view, $mobile = false, $map = false){
     $autoplay = !$mobile && $view;
     if ($map)
       return '//rutube.ru/play/embed/' . $code;
@@ -944,8 +958,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -956,10 +970,10 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         });
     </script>
     ';
-    return $embedded;		
-	}
-	
-	public function spike	($video_id, $code, $view, $mobile = false, $map = false){
+    return $embedded;   
+  }
+  
+  public function spike ($video_id, $code, $view, $mobile = false, $map = false){
     $autoplay = !$mobile && $view;
     if ($map)
       return '//media.mtvnservices.com/embed/mgid:arc:video:spike.com:' . $code;
@@ -978,8 +992,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -990,9 +1004,9 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         });
     </script>
     ';
-    return $embedded;		
-	}
-	public function vid2c	($video_id, $code, $view, $mobile = false, $map = false){
+    return $embedded;   
+  }
+  public function vid2c ($video_id, $code, $view, $mobile = false, $map = false){
     $autoplay = !$mobile && $view;
     if ($map)
       return '//www.vid2c.com/embed/' . $code;
@@ -1011,8 +1025,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -1023,9 +1037,9 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         });
     </script>
     ';
-    return $embedded;		
-	}
-	public function nuvid	($video_id, $code, $view, $mobile = false, $map = false){
+    return $embedded;   
+  }
+  public function nuvid ($video_id, $code, $view, $mobile = false, $map = false){
     $autoplay = !$mobile && $view;
     if ($map)
       return '//http://www.nuvid.com/embed/' . $code;
@@ -1044,8 +1058,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -1056,9 +1070,9 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         });
     </script>
     ';
-    return $embedded;		
-	}
-	public function clipfish	($video_id, $code, $view, $mobile = false, $map = false){
+    return $embedded;   
+  }
+  public function clipfish  ($video_id, $code, $view, $mobile = false, $map = false){
     $autoplay = !$mobile && $view;
     if ($map)
       return '//www.clipfish.de/embed/' . $code;
@@ -1077,8 +1091,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -1089,10 +1103,10 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         });
     </script>
     ';
-    return $embedded;		
-	}
-	
-	public function godtube	($video_id, $code, $view, $mobile = false, $map = false){
+    return $embedded;   
+  }
+  
+  public function godtube ($video_id, $code, $view, $mobile = false, $map = false){
     $autoplay = !$mobile && $view;
     if ($map)
       return '//www.godtube.com/embed/watch/' . $code;
@@ -1111,8 +1125,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -1123,10 +1137,10 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         });
     </script>
     ';
-    return $embedded;		
-	}
-	
-	 public function videobash	($video_id, $code, $view, $mobile = false, $map = false){
+    return $embedded;   
+  }
+  
+   public function videobash  ($video_id, $code, $view, $mobile = false, $map = false){
     $autoplay = !$mobile && $view;
     if ($map)
       return '//www.videobash.com/embed/' . $code;
@@ -1145,8 +1159,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -1157,10 +1171,10 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         });
     </script>
     ';
-    return $embedded;		
-	}
-	
-	 public function veoh	($video_id, $code, $view, $mobile = false, $map = false){
+    return $embedded;   
+  }
+  
+   public function veoh ($video_id, $code, $view, $mobile = false, $map = false){
     $autoplay = !$mobile && $view;
     if ($map)
       return '//www.veoh.com/embed/' . $code;
@@ -1179,8 +1193,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -1191,10 +1205,10 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         });
     </script>
     ';
-    return $embedded;		
-	}
-	
-	 public function drtuber	($video_id, $code, $view, $mobile = false, $map = false){
+    return $embedded;   
+  }
+  
+   public function drtuber  ($video_id, $code, $view, $mobile = false, $map = false){
     $autoplay = !$mobile && $view;
     if ($map)
       return '//www.drtuber.com/embed/' . $code;
@@ -1213,8 +1227,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -1225,11 +1239,11 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         });
     </script>
     ';
-    return $embedded;		
-	}
-	
-	
-	public function youku($video_id, $code, $view, $mobile = false, $map = false){
+    return $embedded;   
+  }
+  
+  
+  public function youku($video_id, $code, $view, $mobile = false, $map = false){
     $autoplay = !$mobile && $view;
     if ($map)
       return '//player.youku.com/embed/' . $code;
@@ -1248,8 +1262,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -1260,9 +1274,9 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         });
     </script>
     ';
-    return $embedded;		
-	}
-	public function shared4($video_id, $code, $view, $mobile = false, $map = false){
+    return $embedded;   
+  }
+  public function shared4($video_id, $code, $view, $mobile = false, $map = false){
     $autoplay = !$mobile && $view;
     if ($map)
       return '//www.4shared.com/web/embed/file/' . $code;
@@ -1281,8 +1295,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -1293,9 +1307,9 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         });
     </script>
     ';
-    return $embedded;		
-	}
-	public function veehd	($video_id, $code, $view, $mobile = false, $map = false){
+    return $embedded;   
+  }
+  public function veehd ($video_id, $code, $view, $mobile = false, $map = false){
     $autoplay = !$mobile && $view;
     if ($map)
       return '//veehd.com/embed?t=3&v=' . $code;
@@ -1314,8 +1328,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -1326,9 +1340,9 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         });
     </script>
     ';
-    return $embedded;		
-	}
-	public function stagevu($video_id, $code, $view, $mobile = false, $map = false){
+    return $embedded;   
+  }
+  public function stagevu($video_id, $code, $view, $mobile = false, $map = false){
     $autoplay = !$mobile && $view;
     if ($map)
       return '//stagevu.com/embed?uid=' . $code;
@@ -1347,8 +1361,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -1359,9 +1373,9 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         });
     </script>
     ';
-    return $embedded;		
-	}
-	 public function myspace($video_id, $code, $view, $mobile = false, $map = false){
+    return $embedded;   
+  }
+   public function myspace($video_id, $code, $view, $mobile = false, $map = false){
     $autoplay = !$mobile && $view;
     if ($map)
       return '//media.myspace.com/play/video/' . $code;
@@ -1380,8 +1394,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -1392,8 +1406,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         });
     </script>
     ';
-    return $embedded;		
-	}
+    return $embedded;   
+  }
   public function metacafe($video_id, $code, $view, $mobile = false, $map = false){
     $autoplay = !$mobile && $view;
     if ($map)
@@ -1413,8 +1427,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -1425,9 +1439,9 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         });
     </script>
     ';
-    return $embedded;		
-	}
-	public function commedycentral($video_id, $code, $view, $mobile = false, $map = false) {
+    return $embedded;   
+  }
+  public function commedycentral($video_id, $code, $view, $mobile = false, $map = false) {
     $autoplay = !$mobile && $view;
     if ($map)
       return '//media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:' . $code;
@@ -1446,8 +1460,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -1479,8 +1493,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -1513,8 +1527,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -1530,8 +1544,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
 
   public function compileDailymotion($video_id, $code, $view, $mobile = false, $map = false,$autoPlayView = true) {
     $autoplay = !$mobile && $view;
-		if(!$autoPlayView)
-			$autoplay = $autoPlayView;
+    if(!$autoPlayView)
+      $autoplay = $autoPlayView;
     if ($map)
       return '//www.dailymotion.com/embed/video/' . $code;
     $embedded = '
@@ -1542,7 +1556,7 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
             'src="//www.dailymotion.com/embed/video/' . $code . '"
     frameborder="0"
     allowfullscreen=""
-		' . ($autoplay ? "autoplay=1" : "") . '
+    ' . ($autoplay ? "autoplay=1" : "") . '
     >
     </iframe>
     <script type="text/javascript">
@@ -1550,8 +1564,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
         var doResize = function() {
             var aspect = 16 / 9;
             var el = document.id("videoFrame' . $video_id . '");
-						if(typeof el == "undefined" || !el)
-						return;
+            if(typeof el == "undefined" || !el)
+            return;
             var parent = el.getParent();
             var parentSize = parent.getSize();
             el.set("width", parentSize.x);
@@ -1599,8 +1613,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
   }
   public function compileVimeo($video_id, $code, $view, $mobile = false, $map = false,$autoPlayView = true) {
     $autoplay = !$mobile && $view;
-		if(!$autoPlayView)
-			$autoplay = $autoPlayView;
+    if(!$autoPlayView)
+      $autoplay = $autoPlayView;
     if ($map)
       return '//player.vimeo.com/video/' . $code . '?api=1&title=0&amp;byline=0&amp;portrait=0&amp;wmode=opaque' . ($autoplay ? "&amp;autoplay=1" : "");
     $embedded = '
@@ -1618,8 +1632,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
             var doResize = function() {
               var aspect = 16 / 9;
               var el = document.id("videoFrame' . $video_id . '");
-							if(typeof el == "undefined" || !el)
-						return;
+              if(typeof el == "undefined" || !el)
+            return;
               var parent = el.getParent();
               var parentSize = parent.getSize();
               el.set("width", parentSize.x);
@@ -1635,7 +1649,7 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
   
   public function compileHTML5Media($location, $view, $map = false) {
 
-		if ($map)
+    if ($map)
       return $location;
       
     $embedded = "
@@ -1648,8 +1662,8 @@ class Sesvideo_Model_Video extends Core_Model_Item_Abstract {
     if ($map)
       return;
       
-		$flowplayer = Engine_Api::_()->sesbasic()->checkPluginVersion('core', '4.8.10') ? 'externals/flowplayer/flowplayer-3.2.18.swf' : 'externals/flowplayer/flowplayer-3.1.5.swf';
-		  
+    $flowplayer = Engine_Api::_()->sesbasic()->checkPluginVersion('core', '4.8.10') ? 'externals/flowplayer/flowplayer-3.2.18.swf' : 'externals/flowplayer/flowplayer-3.1.5.swf';
+      
     $embedded = "
     <div id='videoFrame" . $this->video_id . "'></div>
     <script type='text/javascript'>

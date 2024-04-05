@@ -14,13 +14,14 @@ return array(
   'package' => array(
     'type' => 'module',
     'name' => 'video',
-    'version' => '6.2.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 10269 $',
     'path' => 'application/modules/Video',
     'repository' => 'socialengine.com',
     'title' => 'Videos',
-    'description' => 'Videos',
-    'author' => 'Webligo Developments',
+    'description' => 'Allow members to share videos from thousands of popular media sites or upload videos from their computers, keeping members engaged and entertained.',
+    'author' => '<a href="https://socialengine.com/" style="text-decoration:underline;" target="_blank">SocialEngine</a>',
+    'thumb' => 'application/modules/Video/externals/images/thumb.png',
     'dependencies' => array(
       array(
         'type' => 'module',

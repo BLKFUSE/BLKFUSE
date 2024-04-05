@@ -17,7 +17,6 @@
 <p>
 	<?php echo $this->translate('This page lists all of the Widgetize Page in this plugin. From here you can easily go to particular page in "Layout Editor" by clicking on "Get Widgetize Page" and also you can view directly user side page by click on "View Page" link.'); ?>
 </p>
-<br />
 <table class='admin_table'>
   <thead>
     <tr>
@@ -39,8 +38,9 @@
       <td>
         <?php $url = $this->url(array('module' => 'core', 'controller' => 'content', 'action' => 'index'), 'admin_default').'?page='.$corePages->page_id;?>
         <a href="<?php echo $url;?>"  target="_blank"><?php echo "Get Widgetize Page";?></a>
-        |
+       
 				<?php if($corePages->name !=  'sesmusic_album_edit' && $corePages->name !='sesmusic_album_view' && $corePages->name != 'sesmusic_song_view' && $corePages->name != 'sesmusic_playlist_view' && $corePages->name != 'sesmusic_artist_view' && $corePages->name != 'sesmusic_album_edit' && $corePages->name != 'sesmusic_index_create' && $corePages->name != 'sesmusic_album_view' && $corePages->name != 'sesmusic_song_view' && $corePages->name != 'sesmusic_playlist_view' && $corePages->name != 'sesmusic_artist_view'): ?>
+         |
 					<?php if($results): ?>
 					<a href="<?php echo $results->getHref(); ?>" target="_blank"><?php echo $this->translate("View Page") ?></a>
 					<?php elseif($executed):?>

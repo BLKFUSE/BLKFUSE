@@ -47,7 +47,7 @@ class Sesmusic_IndexController extends Core_Controller_Action_Standard {
 	public function getIframelyInformationAction(){
 		$url = trim(strip_tags($this->_getParam('uri')));
 		$ajax = $this->_getParam('ajax', false);
-		$information = $this->handleIframelyInformation($url);
+		$information = Engine_Api::_()->sesbasic()->handleIframelyInformation($url);
 		$this->view->ajax = $ajax;
 		$thisvalid = !empty($information['code']);
 		$iframely = $information;

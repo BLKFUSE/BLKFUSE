@@ -10,19 +10,7 @@
  * @author     John
  */
 ?>
-
-<h2><?php echo $this->translate("Chat Plugin") ?></h2>
-
-<?php if( engine_count($this->navigation) ): ?>
-<div class='tabs'>
-    <?php
-    // Render the menu
-    //->setUlClass()
-    echo $this->navigation()->menu()->setContainer($this->navigation)->render()
-    ?>
-</div>
-<?php endif; ?>
-
+<?php include APPLICATION_PATH .  '/application/modules/Chat/views/scripts/_adminHeader.tpl';?>
 <div class='clear'>
   <div class='settings'>
     <?php echo $this->form->render($this); ?>

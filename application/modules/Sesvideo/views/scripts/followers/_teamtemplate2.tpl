@@ -14,9 +14,11 @@
 ?>
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesteam/externals/styles/styles.css'); ?>
 <?php $viewer = Engine_Api::_()->user()->getViewer();?>
-
+<?php if(!$this->is_ajax){ ?>
 <div class="sesteam_temp2_wrap">
-  <div class="sesteam_temp2_list sesbasic_clearfix<?php if ($this->center_block): ?> iscenter<?php endif; ?>">
+  <div class="sesteam_temp2_list sesbasic_clearfix<?php if ($this->center_block): ?> iscenter<?php endif; ?>"
+  id="browsemembers_ul<?php echo $randonNumber; ?>">
+<?php } ?>     
     <?php foreach( $this->users as $user ): ?>
     <?php $user = Engine_Api::_()->getItem('user', $user->owner_id); ?>
       <div class="team_box" style="width:<?php echo $this->width ?>px;">
@@ -127,5 +129,7 @@
         </div>
       </div>
     <?php endforeach; ?>
+<?php if(!$this->is_ajax){ ?>    
   </div>
 </div>
+<?php } ?>  

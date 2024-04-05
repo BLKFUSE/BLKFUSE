@@ -12,11 +12,12 @@
  */
  
 ?>
+<?php include APPLICATION_PATH .  '/application/modules/Sesiosapp/views/scripts/dismiss_message.tpl';?>
 <h2>
   <?php echo $this->translate("Native iOS Mobile App") ?>
 </h2>
-<?php if(is_countable($this->navigation) && engine_count($this->navigation) ): ?>
-  <div class='tabs'>
+<?php if( engine_count($this->navigation) ): ?>
+  <div class='sesiosapp-admin-navgation'>
     <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?>
   </div>
 <?php endif; ?>

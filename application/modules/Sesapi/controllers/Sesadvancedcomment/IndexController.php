@@ -12,23 +12,26 @@
  */
 class Sesadvancedcomment_IndexController extends Sesapi_Controller_Action_Standard
 {
-  public function deleteAction(){
+  public function deleteAction() {
+  
     if( !$this->_helper->requireUser()->isValid() ) 
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>"permission_error", 'result' => ""));
-        
+
     $viewer = Engine_Api::_()->user()->getViewer();
     $activity_moderate = Engine_Api::_()->getDbtable('permissions', 'authorization')->getAllowed('user', $viewer->level_id, 'activity');
     
     
     // Identify if it's an action_id or comment_id being deleted
-    $this->view->comment_id = $comment_id = (int) $this->_getParam('comment_id', null);
-    $this->view->action_id  = $action_id  = (int) $this->_getParam('resource_id', null);
+    $comment_id = (int) $this->_getParam('comment_id', null);
+    $action_id  = (int) $this->_getParam('resource_id', null);
     $resources_type = $this->_getParam('resource_type',false);
     
-    if($resources_type == "sesadvancedactivity_action")
+    if(!$resources_type)
       $action = Engine_Api::_()->getDbtable('actions', 'sesadvancedactivity')->getActionById($action_id);
     else
       $action = Engine_Api::_()->getItem($resources_type,$action_id);
+      
+      
     if (!$action){
       // tell smoothbox to close
       $this->view->message = Zend_Registry::get('Zend_Translate')->_('You cannot delete this item because it has been removed.');
@@ -38,43 +41,69 @@ class Sesadvancedcomment_IndexController extends Sesapi_Controller_Action_Standa
     // Send to view script if not POST
     //if (!$this->getRequest()->isPost())
       //Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$this->view->message, 'result' => ""));
-     
 
-    if ($comment_id){
+    // Both the author and the person being written about get to delete the action_id
+    if (!$comment_id && (
+        $activity_moderate ||
+        ('user' == $action->subject_type && $viewer->getIdentity() == $action->subject_id) || // owner of profile being commented on
+        ('user' == $action->object_type  && $viewer->getIdentity() == $action->object_id)))   // commenter
+    {
+      // Delete action item and all comments/likes
+      $db = Engine_Api::_()->getDbtable('actions', 'sesadvancedactivity')->getAdapter();
+      $db->beginTransaction();
+      try {
+        $action->deleteItem();
+        $db->commit();
+
+        // tell smoothbox to close
+        $this->view->status  = true;
+        $this->view->message = Zend_Registry::get('Zend_Translate')->_('This activity item has been removed.');
+        $this->view->smoothboxClose = true;
+        Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>"", 'result' => $this->view->message));
+      } catch (Exception $e) {
+        $db->rollback();
+        Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$e->getMessage(), 'result' => ""));
+      }
+
+    } elseif ($comment_id){
         $comment = $action->comments()->getComment($comment_id);
+        
         // allow delete if profile/entry owner
         $db = Engine_Api::_()->getDbtable('comments', 'sesadvancedactivity')->getAdapter();
         $db->beginTransaction();
-        if ($type != "sesadvancedactivity_action" || ($activity_moderate ||
+        if ($resources_type || ($activity_moderate ||
            ('user' == $comment->poster_type && $viewer->getIdentity() == $comment->poster_id) ||
            ('user' == $action->object_type  && $viewer->getIdentity() == $action->object_id)))
         {
           try {
-             if($comment->getType() == 'activity_comment') {
-                $activitycomments = Engine_Api::_()->getDbTable('activitycomments', 'sesadvancedactivity')->rowExists($comment->getIdentity());
-              } else if($comment->getType() == 'core_comment') {
-                $activitycomments = Engine_Api::_()->getDbTable('corecomments', 'sesadvancedactivity')->rowExists($comment->getIdentity());
-              }  
+            if(isset($comment) && $comment->getType() == 'activity_comment') {
+              $activitycomments = Engine_Api::_()->getDbTable('activitycomments', 'sesadvancedactivity')->rowExists($comment->getIdentity());
+            } else if(isset($comment) && $comment->getType() == 'core_comment') {
+              $activitycomments = Engine_Api::_()->getDbTable('corecomments', 'sesadvancedactivity')->rowExists($comment->getIdentity());
+            }
+            
             $action->comments()->removeComment($comment_id);
-            
-            $this->view->message = Zend_Registry::get('Zend_Translate')->_('Comment has been deleted');
-            
-           
-             
-            
             if($activitycomments->parent_id){
               $parentCommentType = 'core_comment';
-              if($action->getType() == 'sesadvancedactivity_action'){
+
+              if($action->getType() == 'activity_action'){
                 $commentType = $action->likes(true);
-                if($commentType->getType() == 'sesadvancedactivity_action')
+                if($commentType->getType() == 'activity_action')
                   $parentCommentType = 'activity_comment';
               }
               $parentCommentId = $activitycomments->parent_id;
-              $parentComment = Engine_Api::_()->getItem($parentCommentType,$parentCommentId);
+              if($parentCommentType == 'activity_comment') {
+                $parentComment = Engine_Api::_()->getDbTable('activitycomments', 'sesadvancedactivity')->rowExists($parentCommentId);
+              } else if($parentCommentType == 'core_comment') {
+                  $parentComment = Engine_Api::_()->getDbTable('corecomments', 'sesadvancedactivity')->rowExists($parentCommentId);
+              }
               $parentComment->reply_count = new Zend_Db_Expr('reply_count - 1');
               $parentComment->save();
             }
+            
+            $this->view->message = Zend_Registry::get('Zend_Translate')->_('Comment has been deleted');
             $db->commit();
+
             Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>"", 'result' => $this->view->message));
           } catch (Exception $e) {
             $db->rollback();
@@ -84,7 +113,6 @@ class Sesadvancedcomment_IndexController extends Sesapi_Controller_Action_Standa
           $this->view->message = Zend_Registry::get('Zend_Translate')->_('You do not have the privilege to delete this comment');
          Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$this->view->message, 'result' => ""));
         }
-      
     } else {
       // neither the item owner, nor the item subject.  Denied!
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>"permission_error", 'result' => ""));

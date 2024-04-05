@@ -12,6 +12,7 @@
  */
 
 ?>
+<?php include APPLICATION_PATH .  '/application/modules/Video/views/scripts/_adminHeader.tpl';?>
 <?php 
 $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jQuery/jquery-ui.js');
 $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jQuery/odering.js'); 
@@ -20,16 +21,12 @@ $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/mo
 <script type="application/javascript">
   ajaxurl = en4.core.baseUrl+"admin/video/settings/change-order";
 </script>
-<?php if( engine_count($this->navigation) ): ?>
-<div class='tabs'>
-  <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?>
-</div>
-<?php endif; ?>
+
 <div class='admin-categories-form'>
   <div>
     <div class="admin-form-cont">
       <h3><?php echo $this->translate("Video Categories") ?> </h3>
-      <p class="description"><?php echo $this->translate('VIDEO_VIEWS_SCRIPTS_ADMINSETTINGS_CATEGORIES_DESCRIPTION'); ?></p>
+      <p class="description"><?php echo $this->translate('VIEW_SCRIPTS_ADMINSETTINGS_CATEGORIES_DESCRIPTION'); ?></p>
       <div class="admin-categories-add-form">
         <h4 class="bold"><?php echo $this->translate("Add New Category"); ?></h4>
         <form id="addcategory" method="post" enctype="multipart/form-data">

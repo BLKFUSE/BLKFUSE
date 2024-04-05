@@ -10,18 +10,16 @@ scriptJquery (document).ready(function (e) {
     var error = false;
     var nameFieldRequired = scriptJquery('#tag-name').val();
     if(!nameFieldRequired){
-      scriptJquery('#name-required').css('background-color','#ffebe8');
-      scriptJquery('#tag-name').css('border','1px solid red');
+      scriptJquery('#name-required').addClass('category_field_error');
       error = true;
     }else{
-      scriptJquery('#name-required').css('background-color','');
-      scriptJquery('#tag-name').css('border','');
+      scriptJquery('#name-required').removeClass('category_field_error');
     }
     
     if(error){
       scriptJquery('html, body').animate({
         scrollTop: scriptJquery('#addcategory').position().top },
-                                         1000
+        1000
       );
       return false;
     }
@@ -58,7 +56,7 @@ scriptJquery (document).ready(function (e) {
         }
         scriptJquery('html, body').animate({
           scrollTop: scriptJquery(scrollUpTo).position().top },
-                                            1000
+           1000
         );
         scriptJquery('#addcategory')[0].reset();
       },
@@ -133,7 +131,7 @@ scriptJquery(document).on('click','.deleteCat',function(){
   var id = scriptJquery(this).attr('data-url');
   var confirmDelete = confirm(en4.core.language.translate("Are you sure you want to delete the selected category?"));
   if(confirmDelete){
-    scriptJquery('#categoryid-'+id).css('background-color','#ffebe8');
+    scriptJquery('#categoryid-'+id).addClass('category_delete_error');
     var selectedCategory=[id];
     var scrollToError = false;
     scriptJquery.post(window.location.href,{data:selectedCategory,selectDeleted:'true'},function(response){

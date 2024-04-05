@@ -12,7 +12,7 @@
 }
 .sescontest_manage_media_item{
 	box-sizing:border-box;
-	background-color:#f8f8f8;
+	background-color:var(--theme-box-background-alt-color);
 	border-radius:5px;
 	padding:10px;
 	position:relative;

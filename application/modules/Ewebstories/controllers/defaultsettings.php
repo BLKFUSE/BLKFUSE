@@ -12,6 +12,10 @@
  */
 
 $db = Zend_Db_Table_Abstract::getDefaultAdapter();
+
+// Upload Backgrounds
+$this->uploadBackgrounds();
+
 //Member Home Page
 $page_id = $db->select()
         ->from('engine4_core_pages', 'page_id')

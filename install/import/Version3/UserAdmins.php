@@ -73,19 +73,19 @@ class Install_Import_Version3_UserAdmins extends Install_Import_Version3_Abstrac
 /*
 CREATE TABLE IF NOT EXISTS `se_admins` (
   `admin_id` int(9) NOT NULL auto_increment,
-  `admin_username` varchar(50) collate utf8_unicode_ci NOT NULL default '',
-  `admin_password` varchar(50) collate utf8_unicode_ci NOT NULL default '',
+  `admin_username` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+  `admin_password` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL default '',
   `admin_password_method` tinyint(1) NOT NULL default '0',
-  `admin_code` varchar(16) collate utf8_unicode_ci NOT NULL default '',
-  `admin_name` varchar(50) collate utf8_unicode_ci NOT NULL default '',
-  `admin_email` varchar(70) collate utf8_unicode_ci NOT NULL default '',
+  `admin_code` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+  `admin_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+  `admin_email` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL default '',
   `admin_enabled` tinyint(1) NOT NULL default '1',
   `admin_language_id` smallint(3) NOT NULL default '1',
-  `admin_lostpassword_code` varchar(15) collate utf8_unicode_ci NOT NULL default '',
+  `admin_lostpassword_code` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL default '',
   `admin_lostpassword_time` int(14) NOT NULL default '0',
   PRIMARY KEY  (`admin_id`),
   UNIQUE KEY `UNIQUE` (`admin_username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=2 ;
 
 INSERT INTO `se_admins` (`admin_id`, `admin_username`, `admin_password`, `admin_password_method`, `admin_code`, `admin_name`, `admin_email`, `admin_enabled`, `admin_language_id`, `admin_lostpassword_code`, `admin_lostpassword_time`) VALUES
 (1, 'admin', 'this is an md5', 1, 'this is a salt', 'Administrator', 'email@domain.com', 1, 1, '', 0);

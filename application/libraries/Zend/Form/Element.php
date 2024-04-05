@@ -367,7 +367,10 @@ class Zend_Form_Element implements Zend_Validate_Interface
 
         unset($options['options']);
         unset($options['config']);
-
+        //SE change
+        if($this->getType() == 'Engine_Form_Element_TinyMce') {
+          $options['class'] = 'tinymce_editor';
+        }
         foreach ($options as $key => $value) {
             $method = 'set' . ucfirst($key);
 
@@ -609,7 +612,15 @@ class Zend_Form_Element implements Zend_Validate_Interface
         } else {
             $this->_filterValue($valueFiltered, $valueFiltered);
         }
-
+        
+        //SE Change
+        if(!defined('_ENGINE_ADMIN_PANEL') && ($this->getType() == 'Engine_Form_Element_Text' || $this->getType() == 'Engine_Form_Element_Textarea')) {
+          $StripTags = new Zend_Filter_StripTags();
+          $valueFiltered = $StripTags->filter($valueFiltered);
+          
+          $StripTags = new Engine_Filter_Censor();
+          $valueFiltered = $StripTags->filter($valueFiltered);
+        }
         return $valueFiltered;
     }
 

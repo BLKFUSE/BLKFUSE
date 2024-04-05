@@ -60,12 +60,12 @@ class User_SettingsController extends Core_Controller_Action_User
         
         $param = $this->_getParam('param', 0);
         
-        if(empty($_SESSION['requirepassword'] ) && empty($param)) {
-            // Render
-            $this->_helper->content
-                // ->setNoRender()
-                ->setEnabled();
-        }
+//         if(empty($_SESSION['requirepassword'] ) && empty($param)) {
+//             // Render
+//             $this->_helper->content
+//                 // ->setNoRender()
+//                 ->setEnabled();
+//         }
     }
     
     public function editEmailAction() {
@@ -86,8 +86,9 @@ class User_SettingsController extends Core_Controller_Action_User
         return;
       }
       
-      
+      $this->view->emailError = 0;
       if (!$form->isValid($this->getRequest()->getPost())) {
+        $this->view->emailErrors = 1;
         return;
       }
 
@@ -441,6 +442,12 @@ class User_SettingsController extends Core_Controller_Action_User
         if( engine_count($form->mention->options) <= 1 ) {
             $form->removeElement('mention');
         }
+        
+        if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('poke') && engine_count($form->pokeAction->options) <= 1 ) {
+          $form->removeElement('pokeAction');
+        }
+        
+        
         // Populate form
         $form->populate($user->toArray());
         if(empty($user->birthday_format) && $form->getElement("birthday_format")){
@@ -666,6 +673,10 @@ class User_SettingsController extends Core_Controller_Action_User
                 continue;
             }
             if(!empty($type->default)) {
+              
+              //if any notification is only for admin then not show to other member
+              if(!$viewer->isAdmin() && $type->is_admin) continue;
+
 							if( isset($modules[$type->module]) ) {
 								$category = 'ACTIVITY_CATEGORY_TYPE_' . strtoupper($type->module);
 								$translateCategory = Zend_Registry::get('Zend_Translate')->_($category);
@@ -761,6 +772,9 @@ class User_SettingsController extends Core_Controller_Action_User
                 continue;
             }
             if(!empty($type->default)) {
+              //if any email template is only for admin then not show to other member
+              if(!$viewer->isAdmin() && $type->is_admin) continue;
+              
 							if( isset($modules[$type->module]) ) {
 									$category = 'ACTIVITY_CATEGORY_TYPE_' . strtoupper($type->module);
 									$translateCategory = Zend_Registry::get('Zend_Translate')->_($category);

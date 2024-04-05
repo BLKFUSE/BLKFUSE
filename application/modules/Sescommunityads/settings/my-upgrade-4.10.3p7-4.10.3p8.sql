@@ -1,6 +1,6 @@
-ALTER TABLE `engine4_sescommunityads_ads` CHANGE `title` `title` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `description` `description` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `engine4_sescommunityads_ads` CHANGE `title` `title` VARCHAR(255) DEFAULT NULL, CHANGE `description` `description` TEXT DEFAULT NULL;
 
-ALTER TABLE `engine4_sescommunityads_attachments` CHANGE `title` `title` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `description` `description` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `engine4_sescommunityads_attachments` CHANGE `title` `title` VARCHAR(255) CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL, CHANGE `description` `description` TEXT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
 
 DELETE FROM `engine4_activity_notificationtypes` WHERE `engine4_activity_notificationtypes`.`module` = 'sescommunityads';
 DELETE FROM `engine4_activity_notifications` WHERE `engine4_activity_notifications`.`type` LIKE '%sescommunityads%';

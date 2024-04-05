@@ -1,15 +1,32 @@
 <?php
+
 /**
- * SocialEngine
+ * SocialEngineSolutions
  *
- * @category   Application_Core
- * @package    Payment
- * @copyright  Copyright 2006-2010 Webligo Developments
- * @license    http://www.socialengine.com/license/
- * @version    $Id: process.tpl 9747 2012-07-26 02:08:08Z john $
- * @author     John Boehr <j@webligo.com>
+ * @category   Application_Sesadvpmnt
+ * @package    Sesadvpmnt
+ * @copyright  Copyright 2019-2020 SocialEngineSolutions
+ * @license    http://www.socialenginesolutions.com/license/
+ * @version    $Id: index.tpl  2019-04-25 00:00:00 SocialEngineSolutions $
+ * @author     SocialEngineSolutions
  */
-?>
+ 
+ ?>
+<?php if($this->gateway->getIdentity() != 1) { ?>
+<?php if($this->error): ?>
+	<p><?php echo $this->message; ?></p>
+<?php else: ?>
+	<script src="https://js.stripe.com/v3/"></script>
+	<script>
+	  var stripe = Stripe("<?php echo $this->publishKey; ?>");
+	  stripe.redirectToCheckout({
+	    sessionId: '<?php echo $this->session->id; ?>'
+	  }).then(function (result) {
+	    console.log(result);
+	  });
+	</script>
+<?php endif; } else  { ?>
+
 <script type="text/javascript">
   function jsonToQueryString(json) {
     return '?' + 
@@ -26,3 +43,4 @@
     window.location.href= url +jsonToQueryString(data);
   });
 </script>
+<?php } ?>

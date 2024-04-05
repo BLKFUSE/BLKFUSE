@@ -49,7 +49,7 @@ class Sesmember_Form_Admin_Location extends Engine_Form {
             'followButton' => 'Follow Button',
             'message' => 'Message Button',
             'rating' => 'Rating Stars',
-            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
             'like' => 'Like Count',
             'view' => 'View Count',
             'profileType' => 'Profile Type',

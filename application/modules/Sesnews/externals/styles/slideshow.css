@@ -176,14 +176,14 @@
 	padding:5px;
 	border-radius:50%;
 }
-.sesnews_slideshow_inside_contant .admin_teg a img{
+.sesnews_slideshow_inside_contant .admin_teg a .item_photo_user{
 	width:25px;
 	height:25px;
 	border-radius:50%;
 	float:left;
 	margin-right:5px;
 }
-[dir="rtl"] .sesnews_slideshow_inside_contant .admin_teg a img{
+[dir="rtl"] .sesnews_slideshow_inside_contant .admin_teg a .item_photo_user {
 	float:right;
 	margin-left:5px;
 	margin-right:0;

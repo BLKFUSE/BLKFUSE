@@ -61,7 +61,7 @@
 
   }
 </script>
-<h2><?php echo $this->translate("Editing Ad Campaign") ?></h2>
+<h2 class="page_heading"><?php echo $this->translate("Editing Ad Campaign") ?></h2>
 
 
 <?php if( engine_count($this->navigation) ): ?>

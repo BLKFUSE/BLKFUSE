@@ -45,8 +45,8 @@ function initializeSesVideoMap() {
       anchor: new google.maps.Point(17, 34),
       scaledSize: new google.maps.Size(35, 35)
     }));
-		document.getElementById('lngSes').value = place.geometry.location.lng();
-		document.getElementById('latSes').value = place.geometry.location.lat();
+    document.getElementById('lngSes').value = place.geometry.location.lng();
+    document.getElementById('latSes').value = place.geometry.location.lat();
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
 
@@ -60,15 +60,15 @@ function initializeSesVideoMap() {
     }
     infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
     infowindow.open(map, marker);
-		return false;
+    return false;
   }); 
-	google.maps.event.addDomListener(window, 'load', initializeSesVideoMap);
+  google.maps.event.addDomListener(window, 'load', initializeSesVideoMap);
 }
 function editMarkerOnMapVideoEdit(){
-	geocoder = new google.maps.Geocoder();
-	var address = trim(document.getElementById('locationSes').value);
-	var lat = document.getElementById('latSes').value;
-	var lng = document.getElementById('lngSes').value;
+  geocoder = new google.maps.Geocoder();
+  var address = trim(document.getElementById('locationSes').value);
+  var lat = document.getElementById('latSes').value;
+  var lng = document.getElementById('lngSes').value;
   var latlng = new google.maps.LatLng(lat, lng);
     geocoder.geocode({'address': address}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
@@ -86,10 +86,10 @@ function editMarkerOnMapVideoEdit(){
 
 }
 function editSetMarkerOnMapVideo(){
-	geocoder = new google.maps.Geocoder();
-	var address = trim(document.getElementById('ses_location_data').innerHTML);
-	var lat = document.getElementById('lngSes').value;
-	var lng = document.getElementById('latSes').value;
+  geocoder = new google.maps.Geocoder();
+  var address = trim(document.getElementById('ses_location_data').innerHTML);
+  var lat = document.getElementById('lngSes').value;
+  var lng = document.getElementById('latSes').value;
   var latlng = new google.maps.LatLng(lat, lng);
     geocoder.geocode({'address': address}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
@@ -130,16 +130,16 @@ if(mapLoad){
   });
 }
   google.maps.event.addListener(autocomplete, 'place_changed', function() {
-	
-	if(mapLoad){
+  
+  if(mapLoad){
     infowindow.close();
     marker.setVisible(false);
-	}
+  }
     var place = autocomplete.getPlace();
     if (!place.geometry) {
       return;
     }
-	if(mapLoad){
+  if(mapLoad){
     // If the place has a geometry, then present it on a map.
     if (place.geometry.viewport) {
       map.fitBounds(place.geometry.viewport);
@@ -154,9 +154,9 @@ if(mapLoad){
       anchor: new google.maps.Point(17, 34),
       scaledSize: new google.maps.Size(35, 35)
     }));
-	}
-		document.getElementById('lngSesList').value = place.geometry.location.lng();
-		document.getElementById('latSesList').value = place.geometry.location.lat();
+  }
+    document.getElementById('lngSesList').value = place.geometry.location.lng();
+    document.getElementById('latSesList').value = place.geometry.location.lat();
 if(mapLoad){
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
@@ -170,27 +170,27 @@ if(mapLoad){
       ].join(' ');
     }
   if(mapLoad){
-	  infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+    infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
     infowindow.open(map, marker);
-		return false;
-	}
-	}); 
-	if(mapLoad){
-		google.maps.event.addDomListener(window, 'load', initializeSesVideoMapList);
-	}
+    return false;
+  }
+  }); 
+  if(mapLoad){
+    google.maps.event.addDomListener(window, 'load', initializeSesVideoMapList);
+  }
 }
 
 function editSetMarkerOnMapListVideo(){
-	geocoder = new google.maps.Geocoder();
+  geocoder = new google.maps.Geocoder();
 if(mapLoad){
-	if(document.getElementById('ses_location_data_list'))
-		var address = trim(document.getElementById('ses_location_data_list').innerHTML);
+  if(document.getElementById('ses_location_data_list'))
+    var address = trim(document.getElementById('ses_location_data_list').innerHTML);
 }else{
-	if(document.getElementById('locationSesList'))
-		var address = trim(document.getElementById('locationSesList').innerHTML);	
+  if(document.getElementById('locationSesList'))
+    var address = trim(document.getElementById('locationSesList').innerHTML); 
 }
-	var lat = document.getElementById('lngSesList').value;
-	var lng = document.getElementById('latSesList').value;
+  var lat = document.getElementById('lngSesList').value;
+  var lng = document.getElementById('latSesList').value;
   var latlng = new google.maps.LatLng(lat, lng);
     geocoder.geocode({'address': address}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
@@ -207,26 +207,26 @@ if(mapLoad){
     });
 }
 function openURLinSmoothBox(openURLsmoothbox){
-	Smoothbox.open(openURLsmoothbox);
-	parent.Smoothbox.close;
-	return false;
+  Smoothbox.open(openURLsmoothbox);
+  parent.Smoothbox.close;
+  return false;
 }
 function showTooltip(x, y, contents, className) {
-	if(scriptJquery('.sesbasic_notification').length > 0)
-		scriptJquery('.sesbasic_notification').hide();
-	scriptJquery('<div class="sesbasic_notification '+className+'">' + contents + '</div>').css( {
-		display: 'block',
-	}).appendTo("body").fadeOut(5000,'',function(){
-		scriptJquery(this).remove();	
-	});
+  if(scriptJquery('.sesbasic_notification').length > 0)
+    scriptJquery('.sesbasic_notification').hide();
+  scriptJquery('<div class="sesbasic_notification '+className+'">' + contents + '</div>').css( {
+    display: 'block',
+  }).appendTo("body").fadeOut(5000,'',function(){
+    scriptJquery(this).remove();  
+  });
 }
 scriptJquery(document).on('click','#sesLightboxLikeUnlikeButtonVideo',function(){
-	if(typeof checkRequestmoduleIsVideo != "function")
-		return;
+  if(typeof checkRequestmoduleIsVideo != "function")
+    return;
    
     var dataid = scriptJquery(this).attr('data-id');
     if(!scriptJquery('#sesadvancedcomment_like_action_'+dataid).length){
-		  scriptJquery('#comments .comments_options').find("a:eq(1)").trigger('click');
+      scriptJquery('#comments .comments_options').find("a:eq(1)").trigger('click');
     }else{
       var count = scriptJquery(this).find('#like_unlike_count').html();
       if(scriptJquery('#sesadvancedcomment_like_action_'+dataid).hasClass('sesadvancedcommentlike')){
@@ -237,7 +237,7 @@ scriptJquery(document).on('click','#sesLightboxLikeUnlikeButtonVideo',function()
         scriptJquery(this).removeClass('button_active');
       }
       scriptJquery(this).find('#like_unlike_count').html(count);
-      scriptJquery('#sesadvancedcomment_like_action_'+dataid).trigger('click');	
+      scriptJquery('#sesadvancedcomment_like_action_'+dataid).trigger('click'); 
     }
     return false;
 });
@@ -246,71 +246,91 @@ function trim(str, chr) {
   return str.replace(rgxtrim, '');
 }
 scriptJquery(document).on('click','#openVideoInLightbox',function(){
-	var URL = window.location.href;
-	//URL = URL.replace(videoURLsesvideo,videoURLsesvideo+'/imageviewerdetail')
-	videoURLsesbasic = videoURLsesvideo;
-	if(openVideoInLightBoxsesbasic== 0 ){
-		window.location.href = getImageHref;
-		return true;
-	}
-	moduleName = 'sesvideo';
-	itemType = 'sesvideo_video';
-	var image = scriptJquery('#sesvideo_image_video_url').attr('data-src');
-	getRequestedVideoForImageViewer(image,URL);
+  var URL = window.location.href;
+  //URL = URL.replace(videoURLsesvideo,videoURLsesvideo+'/imageviewerdetail')
+  videoURLsesbasic = videoURLsesvideo;
+  if(openVideoInLightBoxsesbasic== 0 ){
+    if(typeof getImageHref != "undefined")
+		  window.location.href = getImageHref;
+    else
+      window.location.href = scriptJquery(this).attr('href');
+    return true;
+  }
+  moduleName = 'sesvideo';
+  itemType = 'sesvideo_video';
+  var image = scriptJquery('#sesvideo_image_video_url').attr('data-src');
+  getRequestedVideoForImageViewer(image,URL);
+});
+scriptJquery(document).on('click','.openVideoInLightbox',function(e){
+  e.preventDefault();
+  var URL = scriptJquery(this).attr('href');
+  //URL = URL.replace(videoURLsesvideo,videoURLsesvideo+'/imageviewerdetail')
+  videoURLsesbasic = videoURLsesvideo;
+  if(openVideoInLightBoxsesbasic== 0 ){
+    if(typeof getImageHref != "undefined")
+		  window.location.href = getImageHref;
+    else
+      window.location.href = scriptJquery(this).attr('href');
+    return true;
+  }
+  moduleName = 'sesvideo';
+  itemType = 'sesvideo_video';
+  var image = scriptJquery(this).attr('data-image');
+  getRequestedVideoForImageViewer(image,URL);
 });
 scriptJquery(document).on('click','.ses-video-viewer',function(e){
-		e.preventDefault();
+    e.preventDefault();
 });
 function checkRequestmoduleIsVideo(){
-	if(scriptJquery('#ses_media_lightbox_container_video').length > 0)
-		return true;
-	else
-		return false;
+  if(scriptJquery('#ses_media_lightbox_container_video').length > 0)
+    return true;
+  else
+    return false;
 }
 scriptJquery(document).on('click','.sesbasic_form_opn',function(e){
-		 scriptJquery(this).parent().parent().find('form').show();
-		 scriptJquery(this).parent().parent().find('form').focus();
-		 var widget_id = scriptJquery(this).data('rel');
-		 if(widget_id)
-				eval("pinboardLayout_"+widget_id+"()");			
+     scriptJquery(this).parent().parent().find('form').show();
+     scriptJquery(this).parent().parent().find('form').focus();
+     var widget_id = scriptJquery(this).data('rel');
+     if(widget_id)
+        eval("pinboardLayout_"+widget_id+"()");     
 });
 //send quick share link
 function sessendQuickShare(url){
-	if(!url)
-		return;
-	scriptJquery('.sesbasic_popup_slide_close').trigger('click');
-	(scriptJquery.ajax({
+  if(!url)
+    return;
+  scriptJquery('.sesbasic_popup_slide_close').trigger('click');
+  (scriptJquery.ajax({
       dataType: 'html',
       method: 'post',
       'url': url,
       'data': {
         format: 'html',
-				is_ajax : 1
+        is_ajax : 1
       },
       success: function(responseHTML) {
         //keep Silence
-				showTooltip('10','10','<i class="fa fa-envelope"></i><span>'+(en4.core.language.translate("Quick share successfully"))+'</span>','sesbasic_message_notification');
+        showTooltip('10','10','<i class="fa fa-envelope"></i><span>'+(en4.core.language.translate("Quick share successfully"))+'</span>','sesbasic_message_notification');
       }
     }));
 }
 //check embed function exists for message
 function checkFunctionEmbed(){
-	if( typeof flashembed == 'function'){
-		//silence
-	}else{
-		 if(scriptJquery('.sesvideo_attachment_info').length){
-				var href = scriptJquery('.sesvideo_attachment_info').find('a').attr('href');
-				window.location.href = href;
-				return false;
-		 }
-	}
-	return;	
+  if( typeof flashembed == 'function'){
+    //silence
+  }else{
+     if(scriptJquery('.sesvideo_attachment_info').length){
+        var href = scriptJquery('.sesvideo_attachment_info').find('a').attr('href');
+        window.location.href = href;
+        return false;
+     }
+  }
+  return; 
 }
 //open url in smoothbox
 function opensmoothboxurl(openURLsmoothbox){
-	Smoothbox.open(openURLsmoothbox);
-	parent.Smoothbox.close;
-	return false;
+  Smoothbox.open(openURLsmoothbox);
+  parent.Smoothbox.close;
+  return false;
 }
 scriptJquery(document).on('click','.sesvideo_list_option_toggle',function(){
   if(scriptJquery(this).hasClass('open')){
@@ -322,14 +342,14 @@ scriptJquery(document).on('click','.sesvideo_list_option_toggle',function(){
 });
 //add to watch later function ajax.
 scriptJquery(document).on('click','.sesvideo_watch_later',function(){
-		var that = this;
-		if(!scriptJquery(this).attr('data-url'))
-			return;
-		if(scriptJquery(this).hasClass('selectedWatchlater')){
-				scriptJquery(this).removeClass('selectedWatchlater');
-		}else
-				scriptJquery(this).addClass('selectedWatchlater');
-		 (scriptJquery.ajax({
+    var that = this;
+    if(!scriptJquery(this).attr('data-url'))
+      return;
+    if(scriptJquery(this).hasClass('selectedWatchlater')){
+        scriptJquery(this).removeClass('selectedWatchlater');
+    }else
+        scriptJquery(this).addClass('selectedWatchlater');
+     (scriptJquery.ajax({
       dataType: 'html',
       method: 'post',
       'url':  en4.core.baseUrl + 'sesvideo/watchlater/add/',
@@ -339,93 +359,93 @@ scriptJquery(document).on('click','.sesvideo_watch_later',function(){
       },
       success: function(responseHTML) {
         var response =jQuery.parseJSON( responseHTML );
-				if(response.error)
-					alert(en4.core.language.translate('Something went wrong,please try again later'));
-				else{
-					if(response.status == 'delete'){
-						showTooltip('10','10','<i class="far fa-clock"></i><span>'+(en4.core.language.translate("Video removed successfully from watch later"))+'</span>');
-							scriptJquery(that).removeClass('selectedWatchlater');
-					}else{
-						showTooltip('10','10','<i class="far fa-clock"></i><span>'+(en4.core.language.translate("Video successfully added to watch later"))+'</span>','sesbasic_watchlater_notification');
-							scriptJquery(that).addClass('selectedWatchlater');
-					}
-				}
-					return true;
+        if(response.error)
+          alert(en4.core.language.translate('Something went wrong,please try again later'));
+        else{
+          if(response.status == 'delete'){
+            showTooltip('10','10','<i class="far fa-clock"></i><span>'+(en4.core.language.translate("Video removed successfully from watch later"))+'</span>');
+              scriptJquery(that).removeClass('selectedWatchlater');
+          }else{
+            showTooltip('10','10','<i class="far fa-clock"></i><span>'+(en4.core.language.translate("Video successfully added to watch later"))+'</span>','sesbasic_watchlater_notification');
+              scriptJquery(that).addClass('selectedWatchlater');
+          }
+        }
+          return true;
       }
     }));
-		
+    
 });
 //common function for like comment ajax
 function like_favourite_data(element,functionName,itemType,likeNoti,unLikeNoti,className){
-		if(!scriptJquery(element).attr('data-url'))
-			return;
-		if(scriptJquery(element).hasClass('button_active')){
-				scriptJquery(element).removeClass('button_active');
-		}else
-				scriptJquery(element).addClass('button_active');
-		 (scriptJquery.ajax({
+    if(!scriptJquery(element).attr('data-url'))
+      return;
+    if(scriptJquery(element).hasClass('button_active')){
+        scriptJquery(element).removeClass('button_active');
+    }else
+        scriptJquery(element).addClass('button_active');
+     (scriptJquery.ajax({
        dataType: 'html',
       method: 'post',
       'url':  en4.core.baseUrl + 'sesvideo/index/'+functionName,
       'data': {
         format: 'html',
         id: scriptJquery(element).attr('data-url'),
-				type:itemType,
+        type:itemType,
       },
       success: function(responseHTML) {
         var response =jQuery.parseJSON( responseHTML );
-				if(response.error)
-					alert(en4.core.language.translate('Something went wrong,please try again later'));
-				else{
-					scriptJquery(element).find('span').html(response.count);
-					if(response.condition == 'reduced'){
-							scriptJquery(element).removeClass('button_active');
-							showTooltip(10,10,unLikeNoti)
-							return true;
-					}else{
-							scriptJquery(element).addClass('button_active');
-							showTooltip(10,10,likeNoti,className)
-							return false;
-					}
-				}
+        if(response.error)
+          alert(en4.core.language.translate('Something went wrong,please try again later'));
+        else{
+          scriptJquery(element).find('span').html(response.count);
+          if(response.condition == 'reduced'){
+              scriptJquery(element).removeClass('button_active');
+              showTooltip(10,10,unLikeNoti)
+              return true;
+          }else{
+              scriptJquery(element).addClass('button_active');
+              showTooltip(10,10,likeNoti,className)
+              return false;
+          }
+        }
       }
     }));
 }
 scriptJquery(document).on('click','.sesvideo_favourite_sesvideo_video',function(){
-	like_favourite_data(this,'favourite','sesvideo_video','<i class="fa fa-heart"></i><span>'+(en4.core.language.translate("Video added as Favourite successfully"))+'</span>','<i class="fa fa-heart"></i><span>'+(en4.core.language.translate("Video Unfavorited successfully"))+'</span>','sesbasic_favourites_notification');
+  like_favourite_data(this,'favourite','sesvideo_video','<i class="fa fa-heart"></i><span>'+(en4.core.language.translate("Video added as Favourite successfully"))+'</span>','<i class="fa fa-heart"></i><span>'+(en4.core.language.translate("Video Unfavorited successfully"))+'</span>','sesbasic_favourites_notification');
 });
 scriptJquery(document).on('click','.sesvideo_like_sesvideo_video',function(){
-	like_favourite_data(this,'like','sesvideo_video','<i class="fa fa-thumbs-up"></i><span>'+(en4.core.language.translate("Video Liked successfully"))+'</span>','<i class="fa fa-thumbs-up"></i><span>'+(en4.core.language.translate("Video Unliked successfully"))+'</span>','sesbasic_liked_notification');
+  like_favourite_data(this,'like','sesvideo_video','<i class="fa fa-thumbs-up"></i><span>'+(en4.core.language.translate("Video Liked successfully"))+'</span>','<i class="fa fa-thumbs-up"></i><span>'+(en4.core.language.translate("Video Unliked successfully"))+'</span>','sesbasic_liked_notification');
 });
 scriptJquery(document).on('click','.sesvideo_like_sesvideo_playlist',function(){
-	like_favourite_data(this,'like','sesvideo_playlist','<i class="fa fa-thumbs-up"></i><span>'+(en4.core.language.translate("Playlist Liked successfully"))+'</span>','<i class="fa fa-thumbs-up"></i><span>'+(en4.core.language.translate("Playlist Unliked successfully"))+'</span>','sesbasic_liked_notification');
+  like_favourite_data(this,'like','sesvideo_playlist','<i class="fa fa-thumbs-up"></i><span>'+(en4.core.language.translate("Playlist Liked successfully"))+'</span>','<i class="fa fa-thumbs-up"></i><span>'+(en4.core.language.translate("Playlist Unliked successfully"))+'</span>','sesbasic_liked_notification');
 });
 scriptJquery(document).on('click','.sesvideo_favourite_sesvideo_playlist',function(){
-	like_favourite_data(this,'favourite','sesvideo_playlist','<i class="fa fa-heart"></i><span>'+(en4.core.language.translate("Playlist added as Favourite successfully"))+'</span>','<i class="fa fa-heart"></i><span>'+(en4.core.language.translate("Playlist Unfavorited successfully"))+'</span>','sesbasic_favourites_notification');		
+  like_favourite_data(this,'favourite','sesvideo_playlist','<i class="fa fa-heart"></i><span>'+(en4.core.language.translate("Playlist added as Favourite successfully"))+'</span>','<i class="fa fa-heart"></i><span>'+(en4.core.language.translate("Playlist Unfavorited successfully"))+'</span>','sesbasic_favourites_notification');    
 });
 scriptJquery(document).on('click','.sesvideo_favourite_sesvideo_chanel',function(){
-	like_favourite_data(this,'favourite','sesvideo_chanel','<i class="fa fa-heart"></i><span>'+(en4.core.language.translate("Channel added as Favourite successfully"))+'</span>','<i class="fa fa-heart"></i><span>'+(en4.core.language.translate("Channel Unfavorited successfully"))+'</span>','sesbasic_favourites_notification');
+  like_favourite_data(this,'favourite','sesvideo_chanel','<i class="fa fa-heart"></i><span>'+(en4.core.language.translate("Channel added as Favourite successfully"))+'</span>','<i class="fa fa-heart"></i><span>'+(en4.core.language.translate("Channel Unfavorited successfully"))+'</span>','sesbasic_favourites_notification');
 });
 scriptJquery(document).on('click','.sesvideo_like_sesvideo_chanel',function(){
-	like_favourite_data(this,'like','sesvideo_chanel','<i class="fa fa-thumbs-up"></i><span>'+(en4.core.language.translate("Channel Liked successfully"))+'</span>','<i class="fa fa-thumbs-up"></i><span>'+(en4.core.language.translate("Channel Unliked successfully"))+'</span>','sesbasic_liked_notification');
+  like_favourite_data(this,'like','sesvideo_chanel','<i class="fa fa-thumbs-up"></i><span>'+(en4.core.language.translate("Channel Liked successfully"))+'</span>','<i class="fa fa-thumbs-up"></i><span>'+(en4.core.language.translate("Channel Unliked successfully"))+'</span>','sesbasic_liked_notification');
 });
 scriptJquery(document).on('click','.sesvideo_favourite_sesvideo_artist',function(){
-	like_favourite_data(this,'favourite','sesvideo_artist','<i class="fa fa-heart"></i><span>'+(en4.core.language.translate("Artist added as Favourite successfully"))+'</span>','<i class="fa fa-heart"></i><span>'+(en4.core.language.translate("Artist Unfavorited successfully"))+'</span>','sesbasic_favourites_notification');
+  like_favourite_data(this,'favourite','sesvideo_artist','<i class="fa fa-heart"></i><span>'+(en4.core.language.translate("Artist added as Favourite successfully"))+'</span>','<i class="fa fa-heart"></i><span>'+(en4.core.language.translate("Artist Unfavorited successfully"))+'</span>','sesbasic_favourites_notification');
 });
 scriptJquery(document).on('click','.sesvideo_chanel_follow',function(){
-		if(!scriptJquery(this).attr('data-url'))
-			return;
-		if(scriptJquery(this).hasClass('button_active')){
-				scriptJquery(this).removeClass('button_active');
-				if(scriptJquery(this).hasClass('button_chanel'))
-					scriptJquery(this).html(en4.core.language.translate("Follow"));
-		}else{
-				scriptJquery(this).addClass('button_active');
-				if(scriptJquery(this).hasClass('button_chanel'))
-					scriptJquery(this).html(en4.core.language.translate("Un-Follow"));
-		}
-			var that = this;
-		 (scriptJquery.ajax({
+    if(!scriptJquery(this).attr('data-url'))
+      return;
+    if(scriptJquery(this).hasClass('button_active')){
+        scriptJquery(this).removeClass('button_active');
+        if(scriptJquery(this).hasClass('button_chanel'))
+          scriptJquery(this).html(en4.core.language.translate("Follow"));
+    }else{
+        scriptJquery(this).addClass('button_active');
+        if(scriptJquery(this).hasClass('button_chanel'))
+          scriptJquery(this).html(en4.core.language.translate("Un-Follow"));
+    }
+      var that = this;
+     (scriptJquery.ajax({
       dataType: 'html',
       method: 'post',
       'url':  en4.core.baseUrl + "sesvideo/chanel/follow/chanel_id/"+scriptJquery(this).attr('data-url'),
@@ -435,58 +455,68 @@ scriptJquery(document).on('click','.sesvideo_chanel_follow',function(){
       },
       success: function(responseHTML) {
         var response =jQuery.parseJSON( responseHTML );
-				if(response.error)
-					alert(en4.core.language.translate('Something went wrong,please try again later'));
-				else{
-					scriptJquery(that).find('span').html(response.count);
-					if(response.condition == 'reduced'){
-							showTooltip('10','10','<i class="fa fa-check"></i><span>'+(en4.core.language.translate("Channel un-follow successfully"))+'</span>','sesbasic_favourites_notification');
-							scriptJquery(that).removeClass('button_active');
-							if(scriptJquery(that).hasClass('button_chanel'))
-								scriptJquery(that).html(en4.core.language.translate("Follow"));
-					}else{
-							scriptJquery(that).addClass('button_active');
-							showTooltip('10','10','<i class="fa fa-check"></i><span>'+(en4.core.language.translate("Channel follow successfully"))+'</span>','sesbasic_follow_notification');
-							if(scriptJquery(that).hasClass('button_chanel'))
-								scriptJquery(that).html(en4.core.language.translate("Un-Follow"));
-					}
-				}
-					return true;
+        if(response.error)
+          alert(en4.core.language.translate('Something went wrong,please try again later'));
+        else{
+          scriptJquery(that).find('span').html(response.count);
+          if(response.condition == 'reduced'){
+              showTooltip('10','10','<i class="fa fa-check"></i><span>'+(en4.core.language.translate("Channel un-follow successfully"))+'</span>','sesbasic_favourites_notification');
+              scriptJquery(that).removeClass('button_active');
+              if(scriptJquery(that).hasClass('button_chanel'))
+                scriptJquery(that).html(en4.core.language.translate("Follow"));
+          }else{
+              scriptJquery(that).addClass('button_active');
+              showTooltip('10','10','<i class="fa fa-check"></i><span>'+(en4.core.language.translate("Channel follow successfully"))+'</span>','sesbasic_follow_notification');
+              if(scriptJquery(that).hasClass('button_chanel'))
+                scriptJquery(that).html(en4.core.language.translate("Un-Follow"));
+          }
+        }
+          return true;
       }
     }));
 });
 
 
 scriptJquery(document).on("click", '.sesvideo_lightbox_open', function (e) {
-	if( /iPhone|iPad|iPod|BlackBerry|IEMobile/i.test(navigator.userAgent) ) {
-		return true;
-	}
-	e.preventDefault();
-	var imageObject = scriptJquery(this);
+//  if( /iPhone|iPad|iPod|BlackBerry|IEMobile/i.test(navigator.userAgent) ) {
+//    return true;
+//  }
+  e.preventDefault();
+  var imageObject = scriptJquery(this);
   var getImageHref = imageObject.attr('href');
-	videoURLsesbasic = videoURLsesvideo;
-	
-	
-  //check video embed data
-  let parentDiv = scriptJquery(this).closest('.feed_item_attachments');
-  if(parentDiv.length > 0 && parentDiv.find(".sesvideo_object").html().trim() != "") {
-    parentDiv.find(".sesvideo_attachment_thumb").hide();
-    parentDiv.find(".sesvideo_object").show();
-    parentDiv.find(".sesvideo_object").css("width","100%").css("height",'100%');
-    parentDiv.find(".sesvideo_object").find("iframe").css("width","100%").css("height",'400px');
-    parentDiv.find(".sesvideo_object").find("video").css("width","100%").css("height",'400px');
-    return;
+  videoURLsesbasic = videoURLsesvideo;
+  
+  console.log(imageObject.attr('data-click'));
+  
+  if(imageObject.attr('data-click') != 'openclick') {
+    //check video embed data
+    let parentDiv = scriptJquery(this).closest('.feed_item_attachments');
+    if(parentDiv.length > 0 && parentDiv.find(".sesvideo_object").html().trim() != "") {
+      parentDiv.find(".sesvideo_attachment_thumb").hide();
+      parentDiv.find(".sesvideo_object").show();
+      parentDiv.find(".sesvideo_object").css("width","100%").css("height",'100%');
+      parentDiv.find(".sesvideo_object").find("iframe").css("width","100%").css("height",'100%');
+      parentDiv.find(".sesvideo_object").find("video").css("width","100%").css("height",'100%');
+      if(parentDiv.find(".sesvideo_object").find("video").length > 0){
+        parentDiv.find(".sesvideo_object").find("video")[0].play();
+      }
+      return;
+    }
   }
-	
-	if(openVideoInLightBoxsesbasic == 0 ){
-		window.location.href = getImageHref;
-		return true;
-	}
-	moduleName = 'sesvideo';
-	itemType = 'sesvideo_video';
-	var imageSource = imageObject.find('span').css('background-image').replace('url(','').replace(')','').replace('"','').replace('"','');
-	getImageHref = getImageHref.replace(videoURLsesbasic+'/imageviewerdetail',videoURLsesbasic);
-	getRequestedVideoForImageViewer(imageSource,getImageHref);
+  
+  if(openVideoInLightBoxsesbasic == 0 ){
+    if(typeof getImageHref != "undefined")
+    window.location.href = getImageHref;
+  else
+    window.location.href = scriptJquery(this).attr('href');
+    return true;
+  }
+  moduleName = 'sesvideo';
+  itemType = 'sesvideo_video';
+  console.log(imageObject.find('span'));
+  var imageSource = imageObject.find('span').css('background-image').replace('url(','').replace(')','').replace('"','').replace('"','');
+  getImageHref = getImageHref.replace(videoURLsesbasic+'/imageviewerdetail',videoURLsesbasic);
+  getRequestedVideoForImageViewer(imageSource,getImageHref);
 });
 
 var sesvideo_cookie_set_value = [];

@@ -67,11 +67,17 @@ class Music_Form_Search extends Engine_Form
         'multiOptions' => array('0' => '')
       ));
     }
-    
-    $orderby = array(
-      'recent' => 'Most Recent',
-      'popular' => 'Most Popular',
-    );
+
+		$orderby = array(
+			'creation_date' => 'Most Recent',
+			'modified_date' => 'Recently Updated',
+			'view_count' => 'Most Viewed',
+			'like_count' => 'Most Liked',
+			'comment_count' => 'Most Commented',
+			'play_count' => 'Most Popular',
+			'atoz' => 'A to Z',
+			'ztoa' => 'Z to A',
+		);
     if(Engine_Api::_()->getApi('settings', 'core')->getSetting('music.enable.rating', 1)) {
       $orderby['rating'] = 'Highest Rated';
     }

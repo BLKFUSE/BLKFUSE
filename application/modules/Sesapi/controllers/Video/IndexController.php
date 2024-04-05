@@ -468,7 +468,7 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
             $video = Engine_Api::_()->getItem('video', $this->_getParam('id'));
             unset($values['duration']);
         } else {
-            $information = $this->handleIframelyInformation($values['url']);
+            $information = Engine_Api::_()->sesbasic()->handleIframelyInformation($values['url']);
             if (empty($information)) {
               Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$form->addError('We could not find a video there - please check the URL and try again.'), 'result' => array()));
             }
@@ -954,7 +954,7 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
     else if(strpos($video_url,'vimeo') !== false)
       $video_type = 2;
     // extract code    echo '<pre>';print_r($video_url);
-    $checkvideo = $this->handleIframelyInformation($video_url);
+    $checkvideo = Engine_Api::_()->sesbasic()->handleIframelyInformation($video_url);
     // check if code is valid
     // check which API should be used
     /*if (strpos($video_url,'youtube') !== false || strpos($video_url,'youtu.be') !== false) {
@@ -985,7 +985,7 @@ class Video_IndexController extends Sesapi_Controller_Action_Standard {
       try {
         
          
-        $information = $this->handleIframelyInformation($video_url);
+        $information = Engine_Api::_()->sesbasic()->handleIframelyInformation($video_url);
         // create video
         $table = Engine_Api::_()->getItemTable('video');
         $video = $table->createRow();

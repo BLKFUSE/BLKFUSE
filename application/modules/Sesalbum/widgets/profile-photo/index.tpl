@@ -59,7 +59,7 @@ scriptJquery('<div class="sesalbum_photo_update_popup sesbasic_bxs" id="sesalbum
 var canPaginatePageNumber = 1;
 function existingPhotosGet(){
 	scriptJquery('#sesalbum_profile_existing_img').show();
-	var URL = en4.core.staticBaseUrl+'albums/index/existing-photos/';
+	var URL = en4.core.baseUrl+'albums/index/existing-photos/';
 	(scriptJquery.ajax({
       dataType: 'html',
       method: 'post',
@@ -95,7 +95,7 @@ scriptJquery(document).on('click','a[id^="sesalbum_profile_upload_existing_photo
 		return;
 	scriptJquery('#sesalbum-profile-upload-loading').show();
 	hideProfilePhotoUpload();
-	var URL = en4.core.staticBaseUrl+'albums/index/upload-existingphoto/';
+	var URL = en4.core.baseUrl+'albums/index/upload-existingphoto/';
 	(scriptJquery.ajax({
       dataType: 'html',
       method: 'post',
@@ -126,7 +126,7 @@ scriptJquery(document).on('click','a[id^="sesalbum_existing_album_see_more_"]',f
 		scriptJquery('#sesalbum_existing_album_see_more_page_'+id).remove();
 		return;
 	}
-	var URL = en4.core.staticBaseUrl+'albums/index/existing-albumphotos/';
+	var URL = en4.core.baseUrl+'albums/index/existing-albumphotos/';
 	(scriptJquery.ajax({
       dataType: 'html',
       method: 'post',
@@ -159,7 +159,7 @@ scriptJquery(document).on('click','#uploadProfilePhoto',function(){
 function readImageUrlsesalbum(input){
 	var url = input.files[0].name;
 	var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-	if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif' || ext == 'GIF')){
+	if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif' || ext == 'GIF' || ext == "webp")){
 		var formData = new FormData();
 		formData.append('webcam', input.files[0]);
 		formData.append('user_id', '<?php echo $this->user_id; ?>');
@@ -180,7 +180,7 @@ function readImageUrlsesalbum(input){
 		}
 		return xhrobj;
 		},
-    url:  en4.core.staticBaseUrl+'albums/index/edit-profilephoto/',
+    url:  en4.core.baseUrl+'albums/index/edit-profilephoto/',
     type: "POST",
     contentType:false,
     processData: false,
@@ -217,7 +217,7 @@ function take_snapshot() {
 		scriptJquery('#sesalbum-profile-upload-loading').show();
 		// upload results
 		
-		 Webcam.upload( data_uri, en4.core.staticBaseUrl+'albums/index/edit-profilephoto/user_id/<?php echo $this->user_id; ?>' , function(code, text) {
+		 Webcam.upload( data_uri, en4.core.baseUrl+'albums/index/edit-profilephoto/user_id/<?php echo $this->user_id; ?>' , function(code, text) {
 			 	text = JSON.parse(text);
 				if(text.status == 'true'){
 					if(text.src != '')

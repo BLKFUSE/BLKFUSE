@@ -195,7 +195,7 @@ class Sesalbum_Model_DbTable_Categories extends Engine_Db_Table {
 		}
     return $this->fetchAll($category_select);
   }
-		public function order($categoryType = 'category_id',$categoryTypeId){
+		public function order($categoryTypeId, $categoryType = 'category_id'){
 			// Get a list of all corresponding category, by order
 			$table = Engine_Api::_()->getItemTable('sesalbum_category');
 			$currentOrder = $table->select()

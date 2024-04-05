@@ -32,16 +32,14 @@ class Group_Widget_ListRecentGroupsController extends Engine_Content_Widget_Abst
         // Get paginator
         $table = Engine_Api::_()->getItemTable('group');
         $select = $table->getItemsSelect($params);
-
+        $select->where('approved = ?', 1);
         if( $recentType == 'creation' ) {
             // using primary should be much faster, so use that for creation
             $select->order('group_id DESC');
         } else {
             $select->order($recentCol . ' DESC');
         }
-
         $select = Engine_Api::_()->network()->getNetworkSelect($table->info('name'), $select, 'user_id');
-
         $this->view->paginator = $paginator = Zend_Paginator::factory($select);
 
         // Set item count per page and current page number

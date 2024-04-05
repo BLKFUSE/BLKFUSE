@@ -28,7 +28,7 @@ CREATE TABLE `engine4_network_networks` (
   `assignment` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`network_id`),
   KEY `assignment` (`assignment`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_network_networks`
@@ -59,7 +59,7 @@ CREATE TABLE `engine4_network_membership` (
   `resource_approved` tinyint(1) NOT NULL default '0',
   `user_approved` tinyint(1) NOT NULL default '0',
   PRIMARY KEY (`resource_id`, `user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -79,4 +79,14 @@ INSERT IGNORE INTO `engine4_core_jobtypes` (`title`, `type`, `module`, `plugin`,
 --
 
 INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
-('user_settings_network', 'network', 'Networks', '', '{"route":"user_extended", "module":"user", "controller":"settings", "action":"network"}', 'user_settings', '', 5);
+('user_settings_network', 'network', 'Networks', '', '{"route":"user_extended", "module":"user", "controller":"settings", "action":"network", "icon":"fas fa-flag"}', 'user_settings', '', 5);
+
+
+-- --------------------------------------------------------
+
+--
+-- Dumping data for table `engine4_core_modules`
+--
+
+INSERT IGNORE INTO `engine4_core_modules` (`name`, `title`, `description`, `version`, `enabled`, `type`) VALUES
+('network', 'Networks', 'Networks', '6.4.1', 1, 'core');

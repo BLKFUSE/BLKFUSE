@@ -1602,7 +1602,7 @@ class Sesvideo_AdminSettingsController extends Core_Controller_Action_Admin {
       'name' => 'sesvideo.advance-share',
       'parent_content_id' => $right_id,
       'order' => $widgetOrder++,
-      'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare","addThis"],"title":"","nomobile":"0","name":"sesvideo.advance-share"}',
+      'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare"],"title":"","nomobile":"0","name":"sesvideo.advance-share"}',
   ));
   $db->insert('engine4_core_content', array(
       'page_id' => $page_id,
@@ -2574,7 +2574,7 @@ class Sesvideo_AdminSettingsController extends Core_Controller_Action_Admin {
       'name' => 'sesvideo.video-view-page',
       'parent_content_id' => $middle_id,
       'order' => $widgetOrder++,
-      'params' => '{"advSearchOptions":["likeCount","viewCount","commentCount","favouriteButton","addToPlaylist","watchLater","favouriteCount","rateCount","openVideoLightbox","editVideo","deleteVideo","shareAdvance","reportVideo","peopleLike","favourite","comment","artist"],"autoplay":"0","likelimit_data":"11","favouritelimit_data":"11","advShareOptions":["privateMessage","siteShare","quickShare","addThis","embed"],"title":"","nomobile":"0","name":"sesvideo.video-view-page"}',
+      'params' => '{"advSearchOptions":["likeCount","viewCount","commentCount","favouriteButton","addToPlaylist","watchLater","favouriteCount","rateCount","openVideoLightbox","editVideo","deleteVideo","shareAdvance","reportVideo","peopleLike","favourite","comment","artist"],"autoplay":"0","likelimit_data":"11","favouritelimit_data":"11","advShareOptions":["privateMessage","siteShare","quickShare","embed"],"title":"","nomobile":"0","name":"sesvideo.video-view-page"}',
   ));
 
   // right column

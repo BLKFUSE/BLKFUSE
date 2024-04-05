@@ -188,7 +188,7 @@
                   <?php if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('videovod')): ?>
                     <iframe src="<?php echo  $this->baseUrl();  ?>/videovod/Iframe/index?video_id=<?php echo $this->v_id; ?>&smoothbox=1" width="480"  ></iframe>
                   <?php else: ?>
-                    <video id="video" controls preload="auto" width="480" height="386">
+                    <video id="video" controls preload="auto" width="480" height="386" controlsList="nodownload">
                       <source type='video/mp4' src="<?php echo $this->video_location ?>">
                     </video>
                   <?php endif ?>
@@ -268,7 +268,7 @@
       <?php echo $this->htmlLink($videoUserDetails->getHref(), $videoUserDetails->getTitle()); ?>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
     </div>
     <div class="ses_media_lightbox_options_name">
-      <?php echo $this->translate('In %1$s', $this->htmlLink( isset($this->item) ? $this->item->getHref() : $this->video->getHref(),isset($this->item) ? $this->string()->truncate($this->item->title,Engine_Api::_()->getApi('settings', 'core')->getSetting('sesbasic.title.truncate',35)) : $this->string()->truncate($this->video->title,Engine_Api::_()->getApi('settings', 'core')->getSetting('sesbasic.title.truncate',35)))); ?>
+      <?php echo $this->translate('In %1$s', $this->htmlLink( isset($this->item) ? $this->item->getHref() : $this->video->getHref(),isset($this->item) ? $this->string()->truncate($this->item->getTitle(),Engine_Api::_()->getApi('settings', 'core')->getSetting('sesbasic.title.truncate',35)) : $this->string()->truncate($this->video->getTitle(),Engine_Api::_()->getApi('settings', 'core')->getSetting('sesbasic.title.truncate',35)))); ?>
     </div>
     <?php if(Engine_Api::_()->user()->getViewer()->getIdentity() != 0){ ?>
       <div class="ses_media_lightbox_options_btns">     
@@ -276,7 +276,7 @@
         <?php $LikeStatus = Engine_Api::_()->sesvideo()->getLikeStatusVideo($this->video->video_id,'video'); ?>
         <a href="javascript:void(0);" id="sesLightboxLikeUnlikeButtonVideo"  data-id="<?php echo $this->video->video_id; ?>" class="sesbasic_icon_btn sesbasic_icon_btn_count sesbasic_icon_like_btn<?php echo $LikeStatus === true ? ' button_active' : '' ;  ?>"><i class="fa fa-thumbs-up"></i><span id="like_unlike_count"><?php echo $this->video->like_count; ?></span></a>
         <?php } ?>
-        <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesvideo.allowfavv', 1)) { ?>
+        <?php if(empty($this->video->is_tickvideo) && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesvideo.allowfavv', 1)) { ?>
         <?php $favStatus = Engine_Api::_()->getDbtable('favourites', 'sesvideo')->isFavourite(array('resource_type'=>'sesvideo_video','resource_id'=>$this->video->video_id)); ?>
         <a href="javascript:;" id="scriptJquery_favourite" class="sesbasic_icon_btn sesbasic_icon_btn_count sesbasic_icon_fav_btn sesbasic_favourite_sesbasic_video<?php echo ($favStatus)  ? ' button_active' : '' ?>"  data-url="<?php echo $this->video->video_id; ?>"><i class="fa fa-heart"></i><span><?php echo $this->video->favourite_count; ?></span></a>
         <?php } ?>
@@ -337,7 +337,7 @@
          <?php } ?>
       </div>
      <?php  } ?>
-      <?php if(($this->getAllowRating == 0 && $this->allowShowRating == 1 && $this->total_rating_average != 0 ) || ($this->getAllowRating == 1) ){ ?>
+      <?php if(empty($this->video->is_tickvideo) && (($this->getAllowRating == 0 && $this->allowShowRating == 1 && $this->total_rating_average != 0 ) || ($this->getAllowRating == 1)) ){ ?>
         <div id="album_rating" class="sesvideo_rating_star ses_media_lightbox_item_rating" onmouseout="rating_out_viewer();">
           <span id="rate_viewer_1" class="fas fa-star rating_star_big_generic" <?php  if ($this->viewer_id && $this->ratedAgain && $this->allowMine &&  $this->allowRating):?>onclick="rate_viewer(1);"<?php  endif; ?> onmouseover="rating_over_viewer(1);"></span>
           <span id="rate_viewer_2" class="fas fa-star rating_star_big_generic" <?php if ( $this->viewer_id && $this->ratedAgain && $this->allowMine && $this->allowRating):?>onclick="rate_viewer(2);"<?php endif; ?> onmouseover="rating_over_viewer(2);"></span>
@@ -347,7 +347,7 @@
           <span id="rating_text_viewer" class="sesbasic_rating_text"><?php echo $this->translate('click to rate');?></span>
         </div>
       <?php } ?>
-      <?php if($this->viewer()->getIdentity() == $this->video->owner_id){ ?>
+      <?php if($this->viewer()->getIdentity() == $this->video->owner_id && empty($this->video->is_tickvideo)){ ?>
         <div class="ses_media_lightbox_item_edit_link">
           <a id="editDetailsLinkVideo" href="javascript:void(0)" class="sesalbum_button">
             <i class="sesbasic_icon_edit sesbasic_text_light"></i>  
@@ -356,7 +356,7 @@
         </div>
       <?php } ?>
     </div>
-  <?php if($this->canEdit){ ?>
+  <?php if($this->canEdit && empty($this->video->is_tickvideo)){ ?>
     <div class="ses_media_lightbox_edit_form" id="editDetailsFormVideo" style="display:none;">
       <form id="changePhotoDetailsVideo">
         <input  name="title" id="titleSes" type="text" placeholder="<?php echo $this->translate('Title'); ?>" />
@@ -394,7 +394,9 @@
   </div>
 </div>
 <a href="javascript:;" class="cross ses_media_lightbox_close_btn exit_lightbox"><i></i></a>
-<a href="javascript:;" class="ses_media_lightbox_close_btn exit_fullscreen" title="<?php echo $this->translate('Exit Full Screen') ; ?>" onclick="toogle()"></a>
+<a href="javascript:;" class="ses_media_lightbox_close_btn exit_fullscreen" title="<?php echo $this->translate('Exit Full Screen') ; ?>" onclick="toogle()">
+ <i></i>
+</a>
 <script type="application/javascript">
 function sespromptPasswordCheck(){
 	var password = prompt("Enter the password for video '<?php echo $this->video->getTitle(); ?>'");

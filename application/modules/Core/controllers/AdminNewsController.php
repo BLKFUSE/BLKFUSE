@@ -19,7 +19,7 @@ class Core_AdminNewsController extends Core_Controller_Action_Admin
     public function indexAction()
     {
         // Get params
-        $this->view->url = $url = 'https://blog.socialengine.com/feed/';
+        $this->view->url = $url = 'https://socialengine.com/blogs/feed/';
         $this->view->max = $max = $this->_getParam('max', 4);
         $this->view->strip = $strip = $this->_getParam('strip', false);
         $cacheTimeout = 1800;

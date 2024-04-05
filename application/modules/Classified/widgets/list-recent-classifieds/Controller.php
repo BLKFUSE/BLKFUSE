@@ -36,6 +36,7 @@ class Classified_Widget_ListRecentClassifiedsController extends Engine_Content_W
         }else{
             $select = $table->select()->where('search =?',1);
         }
+        $select->where('approved =?',1);
         if( $recentType == 'creation' ) {
             // using primary should be much faster, so use that for creation
             $select->order('classified_id DESC');

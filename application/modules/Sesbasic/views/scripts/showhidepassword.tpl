@@ -18,19 +18,19 @@
 <script>
 function showhidepassword(showhidepassword) {
 	if(showhidepassword == 'show'){
-		if($('show_password'))
-			$('show_password').style.display = 'none';
-		if($('hide_password'))
-			$('hide_password').style.display = 'block';
+		if(document.getElementById('show_password'))
+			document.getElementById('show_password').style.display = 'none';
+		if(document.getElementById('hide_password'))
+			document.getElementById('hide_password').style.display = 'block';
 		if(scriptJquery('#password'))
 			scriptJquery('#password').attr('type', 'text');
 		if(scriptJquery('#showhide_password'))
 			scriptJquery('#showhide_password').addClass('m');
 	} else if(showhidepassword == 'hide') {
-		if($('show_password'))
-			$('show_password').style.display = 'block';
-		if($('hide_password'))
-			$('hide_password').style.display = 'none';
+		if(document.getElementById('show_password'))
+			document.getElementById('show_password').style.display = 'block';
+		if(document.getElementById('hide_password'))
+			document.getElementById('hide_password').style.display = 'none';
 		if(scriptJquery('#password'))
 			scriptJquery('#password').attr('type', 'password');
 		if(scriptJquery('#showhide_password'))

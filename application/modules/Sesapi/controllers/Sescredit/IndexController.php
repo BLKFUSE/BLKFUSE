@@ -791,9 +791,9 @@ class Sescredit_IndexController extends Sesapi_Controller_Action_Standard {
     $options = Engine_Api::_()->getDbTable('offers', 'sescredit')->getOffer();
     $multiOptions = $optionArray = array();
     foreach ($options as $option) {
-      $multiOptions[$option->offer_id] = $option->point . $this->view->translate(" Point in ") . Engine_Api::_()->sescredit()->getCurrencyPrice($option->point_value,'','',true);
+      $multiOptions[$option->offer_id] = $option->point . $this->view->translate(" Point in ") . Engine_Api::_()->payment()->getCurrencyPrice($option->point_value,'','',true);
       $optionArray[$option->offer_id]['point'] = $option->point;
-      $optionArray[$option->offer_id]['value'] = Engine_Api::_()->sescredit()->getCurrencyPrice($option->point_value,'','',true);
+      $optionArray[$option->offer_id]['value'] = Engine_Api::_()->payment()->getCurrencyPrice($option->point_value,'','',true);
     }
     if (engine_count($options) < 1)
       $form->sescredit_site_offers->setDescription("No Offers Available.");

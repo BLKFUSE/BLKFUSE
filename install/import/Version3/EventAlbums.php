@@ -41,8 +41,8 @@ CREATE TABLE IF NOT EXISTS `se_eventalbums` (
 *  `eventalbum_event_id` int(10) unsigned NOT NULL default '0',
 *  `eventalbum_datecreated` int(10) unsigned NOT NULL default '0',
 *  `eventalbum_dateupdated` int(10) unsigned NOT NULL default '0',
-*  `eventalbum_title` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-*  `eventalbum_desc` text collate utf8_unicode_ci,
+*  `eventalbum_title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+*  `eventalbum_desc` text COLLATE utf8mb4_unicode_ci,
 *  `eventalbum_search` tinyint(3) unsigned NOT NULL default '0',
   `eventalbum_privacy` tinyint(3) unsigned NOT NULL default '0',
   `eventalbum_comments` tinyint(3) unsigned NOT NULL default '0',
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `se_eventalbums` (
   `eventalbum_totalspace` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`eventalbum_id`),
   KEY `INDEX` (`eventalbum_event_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -73,6 +73,6 @@ CREATE TABLE `engine4_event_albums` (
    PRIMARY KEY (`album_id`),
    KEY (`event_id`),
    KEY (`search`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

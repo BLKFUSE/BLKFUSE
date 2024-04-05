@@ -10,8 +10,9 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_settings", 'parentMenuItemName' => 'core_admin_main_settings_tasks', 'lastMenuItemName' => 'Job Queue')); ?>
 
-<h2><?php echo $this->translate("Job Queue") ?></h2>
+<h2 class="page_heading"><?php echo $this->translate("Job Queue") ?></h2>
 
 <?php if( engine_count($this->navigation) ): ?>
   <div class='tabs'>
@@ -29,15 +30,10 @@
     $desc : '' ); ?>
 </p>
 
-<br />
-
-
 <?php if( $this->paginator->getTotalItemCount() > 0 || !empty($this->filterValues) ): ?>
   <div class='admin_search'>
     <?php echo $this->formFilter->render($this) ?>
   </div>
-
-  <br />
 
 
   <script type="text/javascript">
@@ -200,3 +196,7 @@
     </form>
   </div>
 <?php endif; ?>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_settings').parent().addClass('active');
+  scriptJquery('.core_admin_main_settings_tasks').addClass('active');
+</script>

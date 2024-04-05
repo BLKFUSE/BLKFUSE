@@ -284,33 +284,10 @@ class Sesnews_Form_Edit extends Engine_Form
 
 		}
 
-    $allowed_html = Engine_Api::_()->authorization()->getPermission($user_level, 'sesnews', 'auth_html');
-    $upload_url = "";
-
-    if(Engine_Api::_()->authorization()->isAllowed('album', $user, 'create')){
-      $upload_url = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'sesbasic', 'controller' => 'index', 'action' => "upload-image"), 'default', true);
-    }
-
+    //UPLOAD PHOTO URL
     $editorOptions = array(
-      'upload_url' => $upload_url,
-      'html' => (bool) $allowed_html,
+      'uploadUrl' => Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'index', 'action' => 'upload-photo'), 'default', true),
     );
-
-    if (!empty($upload_url))
-    {
-      $editorOptions['plugins'] = array(
-        'table', 'fullscreen', 'media', 'preview', 'paste',
-        'code', 'image', 'textcolor', 'jbimages', 'link'
-      );
-      $editorOptions['toolbar1'] = array(
-        'undo', 'redo', 'removeformat', 'pastetext', '|', 'code',
-        'media', 'image', 'jbimages', 'link', 'fullscreen',
-        'preview'
-      );
-      $editorOptions['toolbar2'] = array(
-        'fontselect','fontsizeselect','bold','italic','underline','strikethrough','forecolor','backcolor','|','alignleft','aligncenter','alignright','alignjustify','|','bullist','numlist','|','outdent','indent','blockquote',
-      );
-    }
 
     if((isset($modulesEnable) && array_key_exists('enable_tinymce',$modulesEnable) && $modulesEnable['enable_tinymce']) || empty($modulesEnable)) {
 				$textarea = 'TinyMce';
@@ -330,7 +307,6 @@ class Sesnews_Form_Edit extends Engine_Form
       'label' => 'News Description',
       'required' => $required,
       'allowEmpty' => $allowEmpty,
-      'class'=>'tinymce',
       'editorOptions' => $editorOptions,
     ));
 

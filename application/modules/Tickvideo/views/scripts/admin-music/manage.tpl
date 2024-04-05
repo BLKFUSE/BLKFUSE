@@ -75,7 +75,7 @@ function selectAll()
             </div>
           	<ul class="sesbasic_manage_table_list" id='menu_list' style="width:100%;">
             <?php foreach ($this->paginator as $item) : ?>
-              <li class="item_label" id="slide_<?php echo $item->music_id ?>">
+              <li class="item_label" id="slide_<?php echo $item->music_id ?>" style="cursor:initial;">
                 <div style="width:5%;">
                   <input type='checkbox' class='checkbox' name='delete_<?php echo $item->music_id;?>' value='<?php echo $item->music_id ?>' />
                 </div>

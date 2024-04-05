@@ -338,14 +338,14 @@ class Install_Import_Phpfox_MusicPlaylists extends Install_Import_Phpfox_Abstrac
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_music_playlists` (
   `playlist_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(63) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(63) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `photo_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `owner_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `owner_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner_id` int(11) unsigned NOT NULL,
   `search` tinyint(1) NOT NULL DEFAULT '1',
   `profile` tinyint(1) NOT NULL DEFAULT '0',
-  `special` enum('wall','message') COLLATE utf8_unicode_ci DEFAULT NULL,
+  `special` enum('wall','message') collate utf8mb4_unicode_ci default NULL,
   `creation_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL,
   `view_count` int(11) unsigned NOT NULL DEFAULT '0',
@@ -355,7 +355,7 @@ class Install_Import_Phpfox_MusicPlaylists extends Install_Import_Phpfox_Abstrac
   KEY `creation_date` (`creation_date`),
   KEY `play_count` (`play_count`),
   KEY `owner_id` (`owner_type`,`owner_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */
 
 /*
@@ -363,11 +363,11 @@ class Install_Import_Phpfox_MusicPlaylists extends Install_Import_Phpfox_Abstrac
   `song_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `playlist_id` int(11) unsigned NOT NULL,
   `file_id` int(11) unsigned NOT NULL,
-  `title` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
   `play_count` int(11) unsigned NOT NULL DEFAULT '0',
   `order` smallint(6) NOT NULL DEFAULT '0',
   PRIMARY KEY (`song_id`),
   KEY `playlist_id` (`playlist_id`,`file_id`),
   KEY `play_count` (`play_count`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */

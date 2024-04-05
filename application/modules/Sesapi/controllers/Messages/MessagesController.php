@@ -261,7 +261,7 @@ class Messages_MessagesController extends Sesapi_Controller_Action_Standard {
      
     // Get conversation info
     $conversation = Engine_Api::_()->getItem('messages_conversation', $id);
-    
+    $conversationRecepients = array();
     // Make sure the user is part of the conversation
     if( !$conversation || !$conversation->hasRecipient($viewer) ) 
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$this->view->translate("Invalid Request"), 'result' => array())); 
@@ -283,7 +283,10 @@ class Messages_MessagesController extends Sesapi_Controller_Action_Standard {
       $viewer_blocked = false;
       $viewer_blocker = "";
       $blocker = false;
+      
       foreach($recipients as $recipient){
+        if($viewer->getIdentity() != $recipient->getIdentity())
+                $conversationRecepients[] = $recipient;
         if ($viewer->isBlockedBy($recipient)){
           $blocked = true;
           $blocker = $recipient;
@@ -298,6 +301,7 @@ class Messages_MessagesController extends Sesapi_Controller_Action_Standard {
       $blocker = $blocker;
       $viewer_blocker = $viewer_blocker;
     }
+    
     // Can we reply?
     $locked = $conversation->locked;
     if( !$conversation->locked ) {      
@@ -389,12 +393,14 @@ class Messages_MessagesController extends Sesapi_Controller_Action_Standard {
       
       
     }
+
+
     // Make sure to load the messages after posting :P
       $messages = $conversation->getMessages($viewer);
-      $this->sendMessages($messages,$viewer,$conversation);
+      $this->sendMessages($messages,$viewer,$conversation,$conversationRecepients,$blocked,$viewer_blocked);
     Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$this->view->translate("Invalid Request"), 'result' => array())); 
   }
-  public function sendMessages($messages,$viewer,$conversation){
+  public function sendMessages($messages,$viewer,$conversation,$recipients,$blocked,$viewer_blocked){
     $result = array();
       $counter = 0;
       $coreApi = Engine_Api::_()->sesapi();
@@ -430,21 +436,23 @@ class Messages_MessagesController extends Sesapi_Controller_Action_Standard {
         $counter++;  
       }
       $results['message'] = $result;
-      $locked = 1;
-      $blocked = false;
-      $viewer_blocked = false;
+      $locked = 0;
+      // $blocked = false;
+      // $viewer_blocked = false;
       $messageLocked = "";
       if( !$locked ){
         if( (!$blocked && !$viewer_blocked) || (engine_count($recipients)>1)){
           $locked = 0;  
         }else if($viewer_blocked){
-           $messageLocked = $this->view->translate('You can no longer respond to this message because you have blocked %1$s.', $viewer_blocker->getTitle());
+          $locked = 1;
+          //  $messageLocked = $this->view->translate('You can no longer respond to this message because you have blocked %1$s.', $viewer_blocker->getTitle());
         }else{
-           $messageLocked = $this->view->translate('You can no longer respond to this message because %1$s has blocked you.', $blocker->getTitle());
+          $locked = 1;
+          //  $messageLocked = $this->view->translate('You can no longer respond to this message because %1$s has blocked you.', $blocker->getTitle());
         }
       }
       $results['lock'] = $locked;
-      $results['lock_message'] = $messageLocked;
+      // $results['lock_message'] = $messageLocked;
       $conversation->setAsRead($viewer);
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>"", 'result' => $results));   
   }

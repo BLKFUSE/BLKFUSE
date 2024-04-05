@@ -362,18 +362,18 @@ CREATE TABLE IF NOT EXISTS `phpfox_comment_text` (
 /*
 CREATE TABLE IF NOT EXISTS `engine4_core_comments` (
   `comment_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `resource_type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `resource_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `resource_id` int(11) unsigned NOT NULL,
-  `poster_type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `poster_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `poster_id` int(11) unsigned NOT NULL,
-  `body` text COLLATE utf8_unicode_ci NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `creation_date` datetime NOT NULL,
   `like_count` int(11) unsigned NOT NULL DEFAULT '0',
   `parent_comment_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`comment_id`),
   KEY `resource_type` (`resource_type`,`resource_id`),
   KEY `poster_type` (`poster_type`,`poster_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -381,41 +381,41 @@ CREATE TABLE IF NOT EXISTS `engine4_core_comments` (
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_activity_actions` (
   `action_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `subject_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subject_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `subject_id` int(11) unsigned NOT NULL,
-  `object_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `object_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `object_id` int(11) unsigned NOT NULL,
-  `body` text COLLATE utf8_unicode_ci,
-  `params` text COLLATE utf8_unicode_ci,
+  `body` text COLLATE utf8mb4_unicode_ci,
+  `params` text COLLATE utf8mb4_unicode_ci,
   `date` datetime NOT NULL,
   `attachment_count` smallint(3) unsigned NOT NULL DEFAULT '0',
   `comment_count` mediumint(5) unsigned NOT NULL DEFAULT '0',
   `like_count` mediumint(5) unsigned NOT NULL DEFAULT '0',
-  `privacy` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `privacy` varchar(500) collate utf8mb4_unicode_ci default NULL,
   `commentable` tinyint(1) NOT NULL DEFAULT '1',
   `shareable` tinyint(1) NOT NULL DEFAULT '1',
-  `user_agent` text COLLATE utf8_unicode_ci,
+  `user_agent` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`action_id`),
   KEY `SUBJECT` (`subject_type`,`subject_id`),
   KEY `OBJECT` (`object_type`,`object_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
  */
 
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_activity_stream` (
-  `target_type` varchar(16) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `target_type` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `target_id` int(11) unsigned NOT NULL,
-  `subject_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `subject_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `subject_id` int(11) unsigned NOT NULL,
-  `object_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `object_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `object_id` int(11) unsigned NOT NULL,
-  `type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `action_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`target_type`,`target_id`,`action_id`),
   KEY `SUBJECT` (`subject_type`,`subject_id`,`action_id`),
   KEY `OBJECT` (`object_type`,`object_id`,`action_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  */
 
 /*
@@ -423,52 +423,52 @@ CREATE TABLE IF NOT EXISTS `engine4_core_comments` (
 CREATE TABLE IF NOT EXISTS `engine4_activity_likes` (
   `like_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `resource_id` int(11) unsigned NOT NULL,
-  `poster_type` varchar(16) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `poster_type` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `poster_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`like_id`),
   KEY `resource_id` (`resource_id`),
   KEY `poster_type` (`poster_type`,`poster_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */
 
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_core_likes` (
   `like_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `resource_type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `resource_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `resource_id` int(11) unsigned NOT NULL,
-  `poster_type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `poster_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `poster_id` int(11) unsigned NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`like_id`),
   KEY `resource_type` (`resource_type`,`resource_id`),
   KEY `poster_type` (`poster_type`,`poster_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  */
 
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_activity_attachments` (
   `attachment_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `action_id` int(11) unsigned NOT NULL,
-  `type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `id` int(11) unsigned NOT NULL,
   `mode` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`attachment_id`),
   KEY `action_id` (`action_id`),
   KEY `type_id` (`type`,`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */
 
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_activity_comments` (
   `comment_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `resource_id` int(11) unsigned NOT NULL,
-  `poster_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `poster_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `poster_id` int(11) unsigned NOT NULL,
-  `body` text COLLATE utf8_unicode_ci NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `creation_date` datetime NOT NULL,
   `like_count` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`comment_id`),
   KEY `resource_type` (`resource_id`),
   KEY `poster_type` (`poster_type`,`poster_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */

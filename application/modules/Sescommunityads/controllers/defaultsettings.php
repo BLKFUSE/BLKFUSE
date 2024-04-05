@@ -694,7 +694,7 @@ $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescommunityads_locations` (
 `country` VARCHAR(255) NULL,
 `modified_date` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
  UNIQUE KEY `uniqueKey` (`resource_id`,`resource_type`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
 $db->query("ALTER TABLE `engine4_sescommunityads_transactions` ADD `credit_point` INT(11) NOT NULL DEFAULT '0', ADD `credit_value` FLOAT NOT NULL DEFAULT '0';");
 $db->query("ALTER TABLE `engine4_sescommunityads_transactions` ADD `ordercoupon_id` INT NULL DEFAULT '0';");

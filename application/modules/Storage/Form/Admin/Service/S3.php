@@ -113,34 +113,45 @@ class Storage_Form_Admin_Service_S3 extends Storage_Form_Admin_Service_Generic
     parent::init();
   }
 
-  public function isValid($data)
-  {
-    if (!parent::isValid($data)) {
-      return false;
-    }
-
-    try {
-      // Instantiate the S3 client with your AWS credentials
-      $s3Client = S3Client::factory([
-        'credentials' => array(
-          'key'    => $data['accessKey'],
-          'secret' => $data['secretKey'],
-        ),
-        'region'            => $data['region'],
-        'version'           => 'latest',
-        'signature_version' => 'v4'
-      ]);
-      $s3Client->createBucket(array(
-          'Bucket' => $data['bucket']
-      ));
-    } catch (S3Exception $e) {
-      $this->addError($e->getAwsErrorMessage());
-      return false;
-    } catch (AwsException $e) {
-      $this->addError($e->getAwsErrorMessage());
-      return false;
-    }
-
-    return true;
+  public function isValid($data) {
+  
+		$valid = parent::isValid($data);
+		$secretKey = $data['secretKey'];
+		$serviceIdentity = Zend_Controller_Front::getInstance()->getRequest()->getParam('service_id', 0);
+		if($serviceIdentity && empty($data['secretKey'])) {
+			$serviceTable = Engine_Api::_()->getDbtable('services', 'storage');
+			$service = $serviceTable->find($serviceIdentity)->current();
+			if(!empty($service->config)) {
+				$config = Zend_Json::decode($service->config);
+				$secretKey = $config['secretKey'];
+			}
+		}
+		// Custom valid
+		if( $valid ) {
+			// Check auth
+			try {
+				$testService = new Zend_Service_Amazon_S3($data['accessKey'], $secretKey, $data['region']);
+				$buckets = $testService->getBuckets();
+				if( $buckets === false ) {
+					$this->addError('Please double check your S3 Credentials.');
+					return false;
+				}
+			} catch( Exception $e ) {
+				$this->addError('Please double check your access keys.');
+				return false;
+			}
+			// Check bucket
+			try {
+				if( !in_array($data['bucket'], $buckets) ) {
+					if( !$testService->createBucket($data['bucket'], $data['region']) ) {
+							throw new Exception('Could not create or find bucket');
+					}
+				}
+			} catch( Exception $e ) {
+					$this->addError('Bucket name is already taken and could not be created.');
+					return false;
+			}
+		}
+		return $valid;
   }
 }

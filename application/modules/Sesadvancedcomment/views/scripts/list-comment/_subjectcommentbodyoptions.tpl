@@ -44,7 +44,7 @@
 <ul class="comments_date" id="comments_reply_<?php echo $comment->comment_id; ?>_<?php echo $actionBody->getIdentity(); ?>" style="display:block;">
 
     <?php if( $canComment ): ?>
-            <template class="owner-info"><?php echo $this->getUserInfo($comment->getOwner()); ?></template>
+            <template class="owner-info"><?php echo $this->getUserInfo($this->item($comment->poster_type, $comment->poster_id)); ?></template>
 
     <?php $isLiked = $comment->likes()->isLike($isPageSubject); ?>
     <?php if( $this->viewer()->getIdentity() && $this->canComment ):

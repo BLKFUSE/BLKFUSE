@@ -3,7 +3,7 @@
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sescredit/externals/styles/styles.css'); ?>
  
 <div class="sescredit_payment_request_popup">
-  <?php $defaultCurrency = Engine_Api::_()->sesbasic()->defaultCurrency(); ?>
+  <?php $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency(); ?>
   <h3> <?php echo $this->translate("Payment Details"); ?> </h3>
   <div class="_details">
     <table>
@@ -18,7 +18,7 @@
       </tr>
       <tr>
         <td><?php echo $this->translate('Requested Amount'); ?>:</td>
-        <td><?php echo Engine_Api::_()->sesbasic()->getCurrencyPrice($this->item->requested_amount,$defaultCurrency) ; ?></td>
+        <td><?php echo Engine_Api::_()->payment()->getCurrencyPrice($this->item->requested_amount,$defaultCurrency) ; ?></td>
       </tr>
       <tr>
         <td><?php echo $this->translate('Payment Request Date') ?>:</td>
@@ -30,7 +30,7 @@
       </tr>
       <tr>
         <td><?php echo $this->translate('Released Amount') ?>:</td>
-        <td><?php echo Engine_Api::_()->sesbasic()->getCurrencyPrice($this->item->release_amount,$defaultCurrency); ?></td>
+        <td><?php echo Engine_Api::_()->payment()->getCurrencyPrice($this->item->release_amount,$defaultCurrency); ?></td>
       </tr>
       <tr>
         <td><?php echo $this->translate('Released Date') ?>:</td>

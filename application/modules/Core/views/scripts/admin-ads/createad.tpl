@@ -10,6 +10,8 @@
  * @author     Jung
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_monetization", 'parentMenuItemName' => 'core_admin_main_ads', 'childMenuItemName' => 'adcampaign_admin_main_manageads', 'lastMenuItemName' => 'Create Advertisement')); ?>
+
 <script type="text/javascript">
 //<![CDATA[
 var updateTextFields = function() {
@@ -74,7 +76,7 @@ var preview = function(){
 en4.core.runonce.add(updateTextFields);
 //]]>
 </script>
-<h2><?php echo $this->translate("Editing Ad Campaign: ") ?><?php echo $this->campaign->name;?></h2>
+<h2 class="page_heading"><?php echo $this->translate("Editing Ad Campaign: ") ?><?php echo $this->campaign->name;?></h2>
 
 <?php if( engine_count($this->navigation) ): ?>
   <div class='tabs'>
@@ -89,3 +91,7 @@ en4.core.runonce.add(updateTextFields);
 <div class="settings">
   <?php echo $this->form->render($this) ?>
 </div>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_monetization').parent().addClass('active');
+  scriptJquery('.core_admin_main_ads').addClass('active');
+</script>

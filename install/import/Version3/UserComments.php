@@ -13,9 +13,9 @@ CREATE TABLE IF NOT EXISTS `se_profilecomments` (
   `profilecomment_user_id` int(9) NOT NULL default '0',
   `profilecomment_authoruser_id` int(9) NOT NULL default '0',
   `profilecomment_date` int(14) NOT NULL default '0',
-  `profilecomment_body` text collate utf8_unicode_ci,
+  `profilecomment_body` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY  (`profilecomment_id`),
   KEY `profilecomment_user_id` (`profilecomment_user_id`,`profilecomment_authoruser_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */

@@ -38,7 +38,7 @@ $showinfo = Engine_Api::_()->sescommunityads()->allowedTypes();
 
 ?>
 
-<?php $currentCurrency =  Engine_Api::_()->sescommunityads()->getCurrentCurrency(); ?>
+<?php $currentCurrency =  Engine_Api::_()->payment()->getCurrentCurrency(); ?>
 
 <?php if(engine_count($this->existingleftpackages)){ ?>
 

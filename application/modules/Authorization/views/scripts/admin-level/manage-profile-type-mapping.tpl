@@ -10,6 +10,8 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_manage", 'parentMenuItemName' => 'authorization_admin_main_manage', 'childMenuItemName' => 'authorization_admin_main_level_mapprofiletype')); ?>
+
 <script type="text/javascript">
     var checkAll = function(obj) {
       scriptJquery('.checkbox').each(function(){
@@ -32,7 +34,7 @@
     }
 </script>
 
-<h2>
+<h2 class="page_heading">
   <?php echo $this->translate("Member Levels") ?>
 </h2>
 
@@ -40,22 +42,13 @@
   <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render() ?>
 </div>
 
-<h2>
-  <?php echo $this->translate("Manage Profile Types and Member Levels Mapping") ?>
-</h2>
-
+<h3><?php echo $this->translate("Manage Profile Types and Member Levels Mapping") ?></h3>
 <p>
   <?php echo $this->translate("Below you can map a Profile Type created on your website to any existing Member Level. This will assign a member level to new users based on the profile type chosen by them during signup. While creating these mappings, you can also decide if you want existing users of a profile type to fall under the mapped member level or not.") ?>
 </p>
-
-<br />
-
-<div>
-    <?php echo $this->htmlLink(array('action' => 'map-profile-type', 'reset' => false, 'format' => 'smoothbox'), $this->translate('Create a Mapping'), array('class' => 'buttonlink smoothbox',  'style' => 'background-image: url(application/modules/Network/externals/images/admin/add.png);')) ?>
+<div class="admin_search">
+    <?php echo $this->htmlLink(array('action' => 'map-profile-type', 'reset' => false, 'format' => 'smoothbox'), $this->translate('Create a Mapping'), array('class' => 'admin_link_btn smoothbox',)) ?>
 </div>
-
-<br/>
-
 <?php if(engine_count($this->paginator)): ?>
 <form id='delete_selected' method='post' action='<?php echo $this->url(array('action' => 'delete-selected-mapping')) ?>' onsubmit="return check_selected();">
 
@@ -115,9 +108,6 @@
       <?php endforeach; ?>
     </tbody>
   </table>
-
-  <br/>
-
   <div class='buttons'>
     <button type='submit'>
       <?php echo $this->translate("Delete Selected") ?>
@@ -131,3 +121,7 @@
     </span>
   </div>
 <?php endif ?>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_manage').parent().addClass('active');
+  scriptJquery('.core_admin_main_manage_levels').addClass('active');
+</script>

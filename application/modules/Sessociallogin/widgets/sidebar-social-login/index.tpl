@@ -30,8 +30,8 @@
   <?php $pinterestTable = Engine_Api::_()->getDbtable('pinterest', 'sessociallogin');?>
   <?php $yahooHref = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'sessociallogin', 'controller' => 'auth','action' => 'yahoo'), 'default', true).'?return_url='.$returnUrl;?>
   <?php $yahooTable = Engine_Api::_()->getDbtable('yahoo', 'sessociallogin');?>
-  <?php $hotmailHref = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'sessociallogin', 'controller' => 'auth','action' => 'hotmail'), 'default', true).'?return_url='.$returnUrl;?>
-  <?php $hotmailTable = Engine_Api::_()->getDbtable('hotmail', 'sessociallogin');?>
+  <?php //$hotmailHref = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'sessociallogin', 'controller' => 'auth','action' => 'hotmail'), 'default', true).'?return_url='.$returnUrl;?>
+  <?php //$hotmailTable = Engine_Api::_()->getDbtable('hotmail', 'sessociallogin');?>
    <?php $flickrHref = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'sessociallogin', 'controller' => 'auth','action' => 'flickr'), 'default', true).'?return_url='.$returnUrl;?>
   <?php $flickrTable = Engine_Api::_()->getDbtable('flickr', 'sessociallogin');?>
   
@@ -64,9 +64,11 @@
     <?php if($yahooTable->isConnected()):?>
       <li title="<?php echo $this->translate('Log in with Yahoo');?>" class="sessl_yahoo"><a href="<?php echo $yahooHref;?>"><i></i></a></li>
     <?php endif;?>
-    <?php if($hotmailTable->isConnected()): ?>
-      <li title="<?php echo $this->translate('Log in with Hot Mail');?>" class="sessl_hotmail"><a href="<?php echo $hotmailHref;?>"><i class="fa fa-envelope"></i></a></li>
-    <?php endif;?>
+    
+    <?php //if($hotmailTable->isConnected()): ?>
+      <!--<li title="<?php //echo $this->translate('Log in with Hot Mail');?>" class="sessl_hotmail"><a href="<?php //echo $hotmailHref;?>"><i class="fa fa-envelope"></i></a></li>-->
+    <?php //endif;?>
+    
     <?php if($flickrTable->isConnected()):?>
       <li class="sessl_flickr"><a href="<?php echo $flickrHref;?>"><i class="fab fa-flickr"></i><span><?php echo $this->translate('Log in with Flickr');?></span></a></li>
     <?php endif;?>

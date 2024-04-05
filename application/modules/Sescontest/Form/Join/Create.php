@@ -254,29 +254,12 @@ class Sescontest_Form_Join_Create extends Engine_Form {
         ),
     ));
     if ($contest->contest_type == 1) {
+      
       //UPLOAD PHOTO URL
-      $upload_url = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'sesbasic', 'controller' => 'index', 'action' => "upload-image"), 'default', true);
-
-      $allowed_html = 'strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr';
-
       $editorOptions = array(
-          'upload_url' => $upload_url,
-          'html' => (bool) $allowed_html,
+        'uploadUrl' => Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'index', 'action' => 'upload-photo'), 'default', true),
       );
 
-      if (!empty($upload_url)) {
-        $editorOptions['editor_selector'] = 'tinymce';
-        $editorOptions['mode'] = 'specific_textareas';
-        $editorOptions['plugins'] = array(
-            'table', 'fullscreen', 'media', 'preview', 'paste',
-            'code', 'image', 'textcolor', 'jbimages', 'link'
-        );
-        $editorOptions['toolbar1'] = array(
-            'undo', 'redo', 'removeformat', 'pastetext', '|', 'code',
-            'media', 'image', 'jbimages', 'link', 'fullscreen',
-            'preview'
-        );
-      }
       $textTypeCount = 0;
       $textUploadType = json_decode(Engine_Api::_()->authorization()->getPermission($viewer->level_id, 'participant', 'blog_options'));
       $blogContent = '<div class="sescontest_join_contest_form_sel_btns sesbasic_clearfix sesbm"><ul id="sescontest_create_form_tabs" class="sesbasic_clearfix">';
@@ -303,7 +286,6 @@ class Sescontest_Form_Join_Create extends Engine_Form {
               'description' => 'Write your text here',
               'allowEmpty' => false,
               'required' => true,
-              'class' => 'tinymce',
               'editorOptions' => $editorOptions,
           ));
         } else {

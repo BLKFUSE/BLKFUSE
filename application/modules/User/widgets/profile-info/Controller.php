@@ -50,23 +50,16 @@ class User_Widget_ProfileInfoController extends Engine_Content_Widget_Abstract
     }
 
     $widgetSettings = array("lastLoginDate", "lastUpdateDate", "inviteeName", "profileType", "memberLevel", "profileViews", "joinedDate", "friendsCount");
-    
-    $showWidgetSettings = array("showLastLogin", "showLastUpdate", "showInvitee", "showProfileType", "showMemberLevel", "showProfileViews", "showJoinedDate", "showFriendsCount");
-    
+
     $isAdminAllow = array("lastLoginShow", "lastUpdateShow", "inviteeShow", "profileTypeShow", "memberLevelShow", "profileViewsShow", "joinedDateShow", "friendsCountShow");
     $isAtleastOne = false;
 
     foreach ($widgetSettings as $key => $value) {
-      //if(Engine_Api::_()->authorization()->getPermission($viewer,'user', $isAdminAllow[$key])) {
-        $userSetting = $subject->toArray();
-        if (($subject->authorization()->isAllowed($viewer, $value) || $viewer->isAdmin() || (array_key_exists($value, $userSetting) && $userSetting[$value] == "everyone")) && ($subject->isAllowed('user', $isAdminAllow[$key]) || $viewer->isAdmin())) {
-          $this->view->{$value} = true;
-          $isAtleastOne = true;
-        } 
-//       } else if((Engine_Api::_()->authorization()->getPermission($viewer,'user', $showWidgetSettings[$key]) || $viewer->isAdmin())) {
-//         $this->view->{$value} = true;
-//         $isAtleastOne = true;
-//       }
+      $userSetting = $subject->toArray();
+      if (($subject->authorization()->isAllowed($viewer, $value) || $viewer->isAdmin() || (array_key_exists($value, $userSetting) && $userSetting[$value] == "everyone")) && (Engine_Api::_()->authorization()->getPermission($viewer, 'user', $isAdminAllow[$key]) || $viewer->isAdmin())) {
+        $this->view->{$value} = true;
+        $isAtleastOne = true;
+      }
     }
 
     if (empty($isAtleastOne))

@@ -175,7 +175,7 @@ else if(empty(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglo
       ));
     }*/
     // prepare categories
-    $categories = Engine_Api::_()->getDbtable('categories', 'sesalbum')->getCategoriesAssoc();
+    $categories = Engine_Api::_()->getDbtable('categories', 'sesalbum')->getCategoriesAssoc(array('member_levels' => 1));
     if (engine_count($categories) > 0) {
 			$categories = array(''=>'')+$categories;
       $setting = Engine_Api::_()->getApi('settings', 'core');
@@ -233,6 +233,7 @@ else if(empty(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglo
 		$defaultProfileId = "0_0_" . $this->getDefaultProfileId();
     $customFields = new Sesbasic_Form_Custom_Fields(array(
          'item' => $album,
+         'isCreation' => true,
         'decorators' => array(
             'FormElements'
     )));    

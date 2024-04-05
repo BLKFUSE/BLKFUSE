@@ -153,7 +153,6 @@ class User_Plugin_Signup_Photo extends Core_Plugin_FormSequence_Abstract
 
     // Remove old key
     unset($_SESSION['TemporaryProfileImg']);
-    unset($_SESSION['TemporaryProfileImgProfile']);
     unset($_SESSION['TemporaryProfileImgSquare']);
 
     // Process
@@ -175,16 +174,6 @@ class User_Plugin_Signup_Photo extends Core_Plugin_FormSequence_Abstract
       $iMain->setFromArray($params);
       $iMain->save();
       $iMain->updatePath();
-
-      $iProfile = $storage->getFile($this->getSession()->tmp_file_id, 'thumb.profile');
-      $iProfile->setFromArray($params);
-      $iProfile->save();
-      $iProfile->updatePath();
-
-      $iNormal = $storage->getFile($this->getSession()->tmp_file_id, 'thumb.normal');
-      $iNormal->setFromArray($params);
-      $iNormal->save();
-      $iNormal->updatePath();
 
       $iSquare = $storage->getFile($this->getSession()->tmp_file_id, 'thumb.icon');
       $iSquare->setFromArray($params);
@@ -215,24 +204,6 @@ class User_Plugin_Signup_Photo extends Core_Plugin_FormSequence_Abstract
         ->write($iMainPath)
         ->destroy();
 
-    // Resize image (profile)
-    $iProfilePath = $path . '/p_' . $name;
-    $image = Engine_Image::factory();
-    $image->open($file)
-        ->autoRotate()
-        ->resize(200, 400)
-        ->write($iProfilePath)
-        ->destroy();
-
-    // Resize image (icon.normal)
-    $iNormalPath = $path . '/n_' . $name;
-    $image = Engine_Image::factory();
-    $image->open($file)
-        ->autoRotate()
-        ->resize(48, 120)
-        ->write($iNormalPath)
-        ->destroy();
-
     // Resize image (icon.square)
     $iSquarePath = $path . '/s_' . $name;
     $image = Engine_Image::factory();
@@ -252,12 +223,8 @@ class User_Plugin_Signup_Photo extends Core_Plugin_FormSequence_Abstract
     if( empty($this->getSession()->tmp_file_id) ) {
       // Save
       $iMain = $storage->createTemporaryFile($iMainPath);
-      $iProfile = $storage->createTemporaryFile($iProfilePath);
-      $iNormal = $storage->createTemporaryFile($iNormalPath);
       $iSquare = $storage->createTemporaryFile($iSquarePath);
 
-      $iMain->bridge($iProfile, 'thumb.profile');
-      $iMain->bridge($iNormal, 'thumb.normal');
       $iMain->bridge($iSquare, 'thumb.icon');
 
       $this->getSession()->tmp_file_id = $iMain->file_id;
@@ -266,25 +233,16 @@ class User_Plugin_Signup_Photo extends Core_Plugin_FormSequence_Abstract
       $iMain = $storage->getFile($this->getSession()->tmp_file_id);
       $iMain->store($iMainPath);
       
-      $iProfile = $storage->getFile($this->getSession()->tmp_file_id, 'thumb.profile');
-      $iProfile->store($iProfilePath);
-      
-      $iNormal = $storage->getFile($this->getSession()->tmp_file_id, 'thumb.normal');
-      $iNormal->store($iNormalPath);
-      
       $iSquare = $storage->getFile($this->getSession()->tmp_file_id, 'thumb.icon');
       $iSquare->store($iSquarePath);
     }
 
     // Save path to session?
     $_SESSION['TemporaryProfileImg'] = $iMain->map();
-    $_SESSION['TemporaryProfileImgProfile'] = $iProfile->map();
     $_SESSION['TemporaryProfileImgSquare'] = $iSquare->map();
     
     // Remove temp files
-    @unlink($path . '/p_' . $name);
     @unlink($path . '/m_' . $name);
-    @unlink($path . '/n_' . $name);
     @unlink($path . '/s_' . $name);
   }
 
@@ -292,7 +250,7 @@ class User_Plugin_Signup_Photo extends Core_Plugin_FormSequence_Abstract
   {
     $storage = Engine_Api::_()->storage();
 
-    $iProfile = $storage->get($user->photo_id, 'thumb.profile');
+    $iProfile = $storage->get($user->photo_id);
     $iSquare = $storage->get($user->photo_id, 'thumb.icon');
 
     // Read into tmp file
@@ -311,6 +269,8 @@ class User_Plugin_Signup_Photo extends Core_Plugin_FormSequence_Abstract
     $iSquare->store($iName);
 
     @unlink($iName);
+    @unlink($pName);
+    
   }
   
   protected function _fetchImage($photo_url)

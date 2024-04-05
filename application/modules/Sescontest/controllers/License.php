@@ -57,55 +57,55 @@ if ($this->getRequest()->isPost()) {
       $db->query('CREATE TABLE `engine4_sescontest_contests` (
         `contest_id` int(11) unsigned NOT NULL auto_increment,
         `user_id` int(11) NOT NULL,
-        `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-        `description` text COLLATE utf8_unicode_ci NOT NULL,
-        `resource_type` varchar(100) COLLATE utf8_unicode_ci NULL,
-        `resource_id` INT(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT "0",
-        `custom_url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-        `contest_type` tinytext COLLATE utf8_unicode_ci NOT NULL,
+        `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+        `resource_type` varchar(100) COLLATE utf8mb4_unicode_ci NULL,
+        `resource_id` INT(1) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "0",
+        `custom_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `contest_type` tinytext COLLATE utf8mb4_unicode_ci NOT NULL,
          `conteststyle` tinyint(1) NOT NULL DEFAULT "1",
-        `starttime` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-        `endtime` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-        `joinstarttime` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-        `joinendtime` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-        `votingstarttime` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-        `votingendtime` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-        `resulttime` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+        `starttime` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `endtime` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `joinstarttime` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `joinendtime` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `votingstarttime` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `votingendtime` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `resulttime` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
         `vote_type` tinyint(2) NOT NULL DEFAULT "0",
         `editor_type` tinyint(2) NOT NULL,
         `category_id` int(11) NOT NULL DEFAULT "0",
         `subcat_id` int(11) NOT NULL DEFAULT "0",
         `subsubcat_id` int(11) NOT NULL DEFAULT "0",
-        `timezone` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-        `overview` text COLLATE utf8_unicode_ci,
-        `term_condition` text COLLATE utf8_unicode_ci,
-        `award` text COLLATE utf8_unicode_ci,
-        `award1_message` text COLLATE utf8_unicode_ci,
-        `award2` text COLLATE utf8_unicode_ci,
-        `award2_message` text COLLATE utf8_unicode_ci,
-        `award3` text COLLATE utf8_unicode_ci,
-        `award3_message` text COLLATE utf8_unicode_ci,
-        `award4` text COLLATE utf8_unicode_ci,
-        `award4_message` text COLLATE utf8_unicode_ci,
-        `award5` text COLLATE utf8_unicode_ci,
-        `award5_message` text COLLATE utf8_unicode_ci,
-        `rules` text COLLATE utf8_unicode_ci,
+        `timezone` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `overview` text COLLATE utf8mb4_unicode_ci,
+        `term_condition` text COLLATE utf8mb4_unicode_ci,
+        `award` text COLLATE utf8mb4_unicode_ci,
+        `award1_message` text COLLATE utf8mb4_unicode_ci,
+        `award2` text COLLATE utf8mb4_unicode_ci,
+        `award2_message` text COLLATE utf8mb4_unicode_ci,
+        `award3` text COLLATE utf8mb4_unicode_ci,
+        `award3_message` text COLLATE utf8mb4_unicode_ci,
+        `award4` text COLLATE utf8mb4_unicode_ci,
+        `award4_message` text COLLATE utf8mb4_unicode_ci,
+        `award5` text COLLATE utf8mb4_unicode_ci,
+        `award5_message` text COLLATE utf8mb4_unicode_ci,
+        `rules` text COLLATE utf8mb4_unicode_ci,
         `photo_id` int(11) DEFAULT NULL,
         `cover` int(11) DEFAULT NULL,
-        `cover_position` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
+        `cover_position` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
         `background_photo_id` int(11) DEFAULT NULL,
         `search` tinyint(1) NOT NULL,
         `draft` tinyint(1) NOT NULL DEFAULT "0",
-        `contest_contact_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-        `contest_contact_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-        `contest_contact_phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-        `contest_contact_website` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-        `contest_contact_facebook` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-        `contest_contact_twitter` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-        `contest_contact_linkedin` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-        `seo_title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-        `seo_keywords` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-        `seo_description` text COLLATE utf8_unicode_ci,
+        `contest_contact_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+        `contest_contact_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+        `contest_contact_phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+        `contest_contact_website` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+        `contest_contact_facebook` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+        `contest_contact_twitter` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+        `contest_contact_linkedin` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+        `seo_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+        `seo_keywords` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+        `seo_description` text COLLATE utf8mb4_unicode_ci,
         `view_count` int(10) UNSIGNED NOT NULL,
         `like_count` int(11) UNSIGNED NOT NULL,
         `comment_count` int(11) UNSIGNED NOT NULL,
@@ -129,7 +129,7 @@ if ($this->getRequest()->isPost()) {
         KEY `search` (`search`),
         KEY `creation_date` (`creation_date`),
         KEY `view_count` (`view_count`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
       $db->query('DROP TABLE IF EXISTS `engine4_sescontest_categories` ;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescontest_categories` (
         `category_id` int(11) unsigned NOT NULL auto_increment,
@@ -148,7 +148,7 @@ if ($this->getRequest()->isPost()) {
         PRIMARY KEY (`category_id`),
         KEY `category_id` (`category_id`,`category_name`),
         KEY `category_name` (`category_name`)
-        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
       $db->query('DROP TABLE IF EXISTS `engine4_contest_fields_maps`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_contest_fields_maps` (
         `field_id` int(11) NOT NULL,
@@ -156,7 +156,7 @@ if ($this->getRequest()->isPost()) {
         `child_id` int(11) NOT NULL,
         `order` smallint(6) NOT NULL,
         PRIMARY KEY (`field_id`,`option_id`,`child_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
       $db->query('INSERT IGNORE INTO `engine4_contest_fields_maps` (`field_id`, `option_id`, `child_id`, `order`) VALUES (0, 0, 1, 1);');
       $db->query('DROP TABLE IF EXISTS `engine4_contest_fields_meta`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_contest_fields_meta` (
@@ -172,12 +172,12 @@ if ($this->getRequest()->isPost()) {
         `show` tinyint(1) unsigned DEFAULT "0",
         `order` smallint(3) unsigned NOT NULL DEFAULT "999",
         `config` text NOT NULL,
-        `validators` text COLLATE utf8_unicode_ci,
-        `filters` text COLLATE utf8_unicode_ci,
-        `style` text COLLATE utf8_unicode_ci,
-        `error` text COLLATE utf8_unicode_ci,
+        `validators` text COLLATE utf8mb4_unicode_ci,
+        `filters` text COLLATE utf8mb4_unicode_ci,
+        `style` text COLLATE utf8mb4_unicode_ci,
+        `error` text COLLATE utf8mb4_unicode_ci,
         PRIMARY KEY (`field_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
       $db->query('INSERT IGNORE INTO `engine4_contest_fields_meta` (`field_id`, `type`, `label`, `description`, `alias`, `required`, `display`, `publish`, `search`, `show`, `order`, `config`, `validators`, `filters`, `style`, `error`) VALUES(1, "profile_type", "Profile Type", "", "profile_type", 1, 0, 0, 2, 0, 999, "", NULL, NULL, NULL, NULL);');
       $db->query('DROP TABLE IF EXISTS `engine4_contest_fields_options`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_contest_fields_options` (
@@ -188,7 +188,7 @@ if ($this->getRequest()->isPost()) {
         `type` tinyint(1) NOT NULL DEFAULT "0",
         PRIMARY KEY (`option_id`),
         KEY `field_id` (`field_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
       $db->query('INSERT IGNORE INTO `engine4_contest_fields_options` (`option_id`, `field_id`, `label`, `order`) VALUES (1, 1, "Rock Band", 0);');
       $db->query('DROP TABLE IF EXISTS `engine4_contest_fields_search`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_contest_fields_search` (
@@ -196,7 +196,7 @@ if ($this->getRequest()->isPost()) {
         `profile_type` smallint(11) unsigned DEFAULT NULL,
         PRIMARY KEY (`item_id`),
         KEY `profile_type` (`profile_type`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
       $db->query('DROP TABLE IF EXISTS `engine4_contest_fields_values`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_contest_fields_values` (
         `item_id` int(11) NOT NULL,
@@ -204,7 +204,7 @@ if ($this->getRequest()->isPost()) {
         `index` smallint(3) NOT NULL DEFAULT "0",
         `value` text NOT NULL,
         PRIMARY KEY (`item_id`,`field_id`,`index`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
       $db->query('DROP TABLE IF EXISTS `engine4_sescontest_dashboards` ;');
       $db->query('CREATE TABLE `engine4_sescontest_dashboards` (
         `dashboard_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -214,7 +214,7 @@ if ($this->getRequest()->isPost()) {
         `main` tinyint(1) NOT NULL default "0",
          PRIMARY KEY (`dashboard_id`),
            KEY `unique` (`type`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
       $db->query('INSERT IGNORE INTO `engine4_sescontest_dashboards` (`type`, `title`, `enabled`, `main`) VALUES
       ("manage_contest", "Manage Contest", "1", "1"),
       ("edit_contest", "Edit Contest", "1", "0"),
@@ -235,7 +235,7 @@ if ($this->getRequest()->isPost()) {
         `enabled` tinyint(1) NOT NULL default "1",
         `banner` int(11) NOT NULL default "0",
          PRIMARY KEY (`media_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
       $db->query('INSERT IGNORE INTO `engine4_sescontest_medias` (`title`, `enabled`, `banner`) VALUES
       ("Text", "1", "0"),
       ("Photo", "1", "0"),
@@ -251,7 +251,7 @@ if ($this->getRequest()->isPost()) {
         PRIMARY KEY  (`favourite_id`),
         KEY `resource_type` (`resource_type`, `resource_id`),
         KEY `user_id` (`user_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
       $db->query('DROP TABLE IF EXISTS `engine4_sescontest_followers`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescontest_followers` (
         `follower_id` int(11) unsigned NOT NULL auto_increment,
@@ -261,13 +261,13 @@ if ($this->getRequest()->isPost()) {
         PRIMARY KEY  (`follower_id`),
         KEY `resource_type` (`resource_type`, `resource_id`),
         KEY `user_id` (`user_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
       $db->query('DROP TABLE IF EXISTS `engine4_sescontest_participants` ;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescontest_participants` (
         `participant_id` int(11) unsigned NOT NULL auto_increment,
         `contest_id` int(11) unsigned NOT NULL,
         `owner_id` int(11) unsigned NOT NULL,
-        `media` tinytext COLLATE utf8_unicode_ci NOT NULL,
+        `media` tinytext COLLATE utf8mb4_unicode_ci NOT NULL,
         `title` varchar(255) NOT NULL,
         `description` text NOT NULL ,
         `name` varchar(255) DEFAULT NULL,
@@ -285,15 +285,15 @@ if ($this->getRequest()->isPost()) {
         `favourite_count` int(11) UNSIGNED NOT NULL,
         `vote_count` int(11) UNSIGNED NOT NULL DEFAULT 0,
         `status` tinyint(1) NOT NULL DEFAULT 0,
-        `type` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT 3,
-        `code` text COLLATE utf8_unicode_ci NOT NULL,
+        `type` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 3,
+        `code` text COLLATE utf8mb4_unicode_ci NOT NULL,
         `duration` int(9) UNSIGNED NOT NULL,
         `rank` tinyint(1) NOT NULL DEFAULT 0,
         `creation_date` datetime NOT NULL,
         `winner_date` datetime NOT NULL,
         `vote_date` datetime NOT NULL,
-        `votingstarttime` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-        `votingendtime` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+        `votingstarttime` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `votingendtime` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
         `start` tinyint(1) NOT NULL DEFAULT 0,
         `end` tinyint(1) NOT NULL DEFAULT 0,
         `offtheday` tinyint(1) NOT NULL,
@@ -302,7 +302,7 @@ if ($this->getRequest()->isPost()) {
         `modified_date` datetime NOT NULL,
         PRIMARY KEY  (`participant_id`),
         KEY `participant_id` (`participant_id`,`contest_id`,`owner_id`,`creation_date`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
       $db->query('DROP TABLE IF EXISTS `engine4_sescontest_saves` ;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescontest_saves` (
         `save_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -313,7 +313,7 @@ if ($this->getRequest()->isPost()) {
         PRIMARY KEY (`save_id`),
         KEY `resource_type` (`resource_type`,`resource_id`),
         KEY `poster_type` (`poster_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
       $db->query('DROP TABLE IF EXISTS `engine4_sescontest_votes` ;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescontest_votes` (
         `vote_id` int(11) unsigned NOT NULL auto_increment,
@@ -326,7 +326,7 @@ if ($this->getRequest()->isPost()) {
         `jury_vote_count` INT(11) NULL DEFAULT "1",
         PRIMARY KEY  (`vote_id`),
         KEY `participant_id` (`participant_id`,`contest_id`,`owner_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
       $db->query('INSERT IGNORE INTO `engine4_core_jobtypes` (`title`, `type`, `module`, `plugin`, `enabled`, `multi`, `priority`) VALUES
       ("Advanced Contests Plugin Video Encode", "sescontest_video_encode", "sescontest", "Sescontest_Plugin_Job_Encode", 1, 2, 75),
       ("Advanced Contests Plugin Rebuild Video Privacy", "video_maintenance_rebuild_privacy", "sescontest", "Sescontest_Plugin_Job_Maintenance_RebuildPrivacy", 1, 1, 50);');
@@ -384,7 +384,7 @@ if ($this->getRequest()->isPost()) {
         `owner_id` INT NOT NULL ,
         `creation_date` DATETIME NOT NULL,
         UNIQUE KEY `uniqueKey` (`resource_id`,`resource_type`, `owner_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
       $db->query('INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
       ("core_main_sescontest", "sescontest", "Contests", "", \'{"route":"sescontest_general","icon":"fas fa-award"}\', "core_main", "", 999),
@@ -438,7 +438,7 @@ if ($this->getRequest()->isPost()) {
         PRIMARY KEY (`integrateothermodule_id`),
         UNIQUE KEY `content_type` (`content_type`,`content_id`),
         KEY `module_name` (`module_name`)
-        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
       $db->query('INSERT IGNORE INTO `engine4_authorization_permissions`
       SELECT

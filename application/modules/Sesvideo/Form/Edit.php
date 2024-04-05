@@ -13,14 +13,12 @@
 
 class Sesvideo_Form_Edit extends Engine_Form {
 
-  protected $_formApi;
-
+  protected $_fromApi;
   public function getFromApi() {
-    return $this->_formApi;
+    return $this->_fromApi;
   }
-
   public function setFromApi($fromApi) {
-    $this->_formApi = $fromApi;
+    $this->_fromApi = $fromApi;
     return $this;
   }
 
@@ -63,7 +61,7 @@ class Sesvideo_Form_Edit extends Engine_Form {
         )
     ));
     $this->title->getValidator('NotEmpty')->setMessage("Please specify an video title");
-		if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesvideo_enable_location', 1)) {
+		if(Engine_Api::_()->getApi('settings', 'core')->getSetting('sesvideo_enable_location', 1) && !$this->getFromApi()){
 		
       $optionsenableglotion = unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('optionsenableglotion',''));
       
@@ -124,29 +122,10 @@ class Sesvideo_Form_Edit extends Engine_Form {
         'description' => 'Separate tags with commas.'
     ));
     $this->tags->getDecorator("Description")->setOption("placement", "append");
-    $upload_url = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'sesbasic', 'controller' => 'index', 'action' => "upload-image"), 'default', true);
-
-    $allowed_html = 'strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr';
-
-    $editorOptions = array(
-      'upload_url' => $upload_url,
-      'html' => (bool) $allowed_html,
-    );
-
-    if (!empty($upload_url)) {
-      $editorOptions['editor_selector'] = 'tinymce';
-      $editorOptions['mode'] = 'specific_textareas';
-      $editorOptions['plugins'] = array(
-        'table', 'fullscreen', 'media', 'preview', 'paste',
-        'code', 'image', 'textcolor', 'jbimages', 'link'
-      );
-
-      $editorOptions['toolbar1'] = array(
-        'undo', 'redo', 'removeformat', 'pastetext', '|', 'code',
-        'media', 'image', 'jbimages', 'link', 'fullscreen',
-        'preview'
-      );
-    }
+    //UPLOAD PHOTO URL
+			$editorOptions = array(
+				'uploadUrl' => Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'index', 'action' => 'upload-photo'), 'default', true),
+			);
     if($settings->getSetting('video.tinymce', 1))
       $tinymce = true;
     else
@@ -155,7 +134,6 @@ class Sesvideo_Form_Edit extends Engine_Form {
       //Overview
      $this->addElement('TinyMce', 'description', array(
        'label' => 'Video Description',
-       'class'=>'tinymce',
        'editorOptions' => $editorOptions,
      ));
    }else{
@@ -177,7 +155,7 @@ class Sesvideo_Form_Edit extends Engine_Form {
     if(engine_count($packages)) {
       $packagesArray = array('' => 'Select Package');
       foreach($packages as $package) {
-        $packagesArray[$package->getIdentity()] = $package->title . ' ('. Engine_Api::_()->epaidcontent()->getCurrencyPrice($package->price, Engine_Api::_()->epaidcontent()->defaultCurrency()) . ')';
+        $packagesArray[$package->getIdentity()] = $package->title . ' ('. Engine_Api::_()->payment()->getCurrencyPrice($package->price, Engine_Api::_()->epaidcontent()->defaultCurrency()) . ')';
       }
       $this->addElement('Select', 'package_id', array(
         'label' => 'Choose Package',
@@ -253,6 +231,7 @@ class Sesvideo_Form_Edit extends Engine_Form {
       $defaultProfileId = "0_0_" . $this->getDefaultProfileId();
       $customFields = new Sesbasic_Form_Custom_Fields(array(
           'item' => Engine_Api::_()->core()->getSubject(),
+          'isCreation' => true,
           'decorators' => array(
               'FormElements'
       )));
@@ -465,7 +444,7 @@ class Sesvideo_Form_Edit extends Engine_Form {
       $this->getElement('price')->getDecorator('Description')->setOptions(array('placement' => 'append', 'escape' => false));
     }
 
-    if (!empty($artistArray) && $this->getFromApi()) {
+    if (!empty($artistArray) && !$this->getFromApi()) {
       $artistsValues = json_decode($video->artists);
       $this->addElement('MultiCheckbox', 'artists', array(
           'label' => 'Video Artist',

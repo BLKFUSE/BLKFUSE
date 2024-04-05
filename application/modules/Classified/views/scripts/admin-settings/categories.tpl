@@ -12,6 +12,8 @@
  */
 
 ?>
+<?php include APPLICATION_PATH .  '/application/modules/Classified/views/scripts/_adminHeader.tpl';?>
+
 <?php 
 $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jQuery/jquery-ui.js');
 $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jQuery/odering.js'); 
@@ -20,16 +22,12 @@ $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/mo
 <script type="application/javascript">
   ajaxurl = en4.core.baseUrl+"admin/classified/settings/change-order";
 </script>
-<?php if( engine_count($this->navigation) ): ?>
-<div class='tabs'>
-  <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?>
-</div>
-<?php endif; ?>
+
 <div class='admin-categories-form'>
   <div>
     <div class="admin-form-cont">
       <h3><?php echo $this->translate("Classified Entry Categories") ?> </h3>
-      <p class="description"><?php echo $this->translate('If you want to allow your users to categorize their classified entries, create the categories below. This feature is useful if you want to list all your users\' classified entries that If you have no categories, your users will not be given the option of assigning a classified category.'); ?></p>
+      <p class="description"><?php echo $this->translate('VIEW_SCRIPTS_ADMINSETTINGS_CATEGORIES_DESCRIPTION'); ?></p>
       <div class="admin-categories-add-form">
         <h4 class="bold"><?php echo $this->translate("Add New Category"); ?></h4>
         <form id="addcategory" method="post" enctype="multipart/form-data">

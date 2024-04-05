@@ -67,13 +67,22 @@ class Paginator
       $urlInfo = parse_url($_SERVER['REQUEST_URI']);
       $urlQueryArr = array();
       parse_str($urlInfo['query'], $urlQueryArr);
+      
+      //CDN Work
+      $path = true;
+      if (file_exists(APPLICATION_PATH_SET .DS. 'general.php')) {
+        $generalConfig = include APPLICATION_PATH_SET . DS . 'general.php';
+        if(!empty($generalConfig['cdn']['enabled'])) {
+          $path = false;
+        }
+      }
 
       $importStr = '';
       $lastEnd = -1;
       foreach( $segments as $segmentEnd ) {
         $urlQueryArr['pageStart'] = $lastEnd + 1;
         $urlQueryArr['pageEnd'] = $segmentEnd + 1;
-        $url = $urlInfo['path'] . '?' . http_build_query($urlQueryArr);
+        $url = (empty($path) ? $path : $urlInfo['path']) . '?' . http_build_query($urlQueryArr);
         $importStr .= '@import "' . $url . '";' . "\r\n";
         $lastEnd = $segmentEnd;
       }

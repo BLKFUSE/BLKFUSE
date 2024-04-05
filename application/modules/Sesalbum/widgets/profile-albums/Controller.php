@@ -135,8 +135,9 @@ class Sesalbum_Widget_ProfileAlbumsController extends Engine_Content_Widget_Abst
 		}else
 			$userId = $_POST['identityObject'];
 		$this->view->identityObject = $value['userId'] = $userId ;
-		$value['allowSpecialAlbums'] = true;
+		// $value['allowSpecialAlbums'] = true;
 		if($type == 'profileAlbums'){
+			$value["widget"] = "profile-album";
 			$paginator = Engine_Api::_()->getDbTable('albums', 'sesalbum')->profileAlbums($value);
 		}else if($type == 'tagged_photo'){
 		$paginator = Engine_Api::_()->sesalbum()->taggedPhoto($value);

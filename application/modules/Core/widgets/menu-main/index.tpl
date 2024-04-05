@@ -62,13 +62,13 @@
                <?php endif; ?>
             </a>
           <?php if(engine_count($menuSubArray) > 0 && $this->submenu): ?>
-            <ul class="main_menu_submenu">
+            <ul class="main_menu_submenu navigation_submenu">
               <?php 
               $counter = 0; 
               foreach( $subMenus as $subMenu): 
              	$active = isset($menuSubArray[$counter]['active']) ? $menuSubArray[$counter]['active'] : 0;
               ?>
-                <li class="sesbasic_clearfix <?php echo ($active) ? 'selected_sub_main_menu' : '' ?>">
+                <li class="<?php echo ($active) ? 'selected_sub_main_menu' : '' ?>">
                   <a href="<?php echo $subMenu->getHref(); ?>" <?php if( $subMenu->get('target') ): ?> target='<?php echo $subMenu->get('target') ?>' <?php endif; ?> class="<?php echo $subMenu->getClass(); ?>">
                     <i class="<?php echo $subMenu->get('icon') ? $subMenu->get('icon') : 'fa fa-star' ?>"></i><span><?php echo $this->translate($subMenu->getLabel()); ?></span>
                   </a>
@@ -87,7 +87,7 @@
       <?php if (engine_count($this->navigation) > $this->menuCount):?>
         <?php $countMenu = 0; ?>
         <li class="more_tab">
-          <a href="javascript:void(0);">
+          <a class="menu_core_main" href="javascript:void(0);">
             <span><?php echo $this->translate("More") ?></span>
             <i class="fa fa-angle-down open_submenu"></i>
           </a>
@@ -126,7 +126,7 @@
                       foreach( $subMenus as $subMenu): 
                       $active = isset($menuSubArray[$counter]['active']) ? $menuSubArray[$counter]['active'] : 0;
                       ?>
-                        <li class="sesbasic_clearfix <?php echo ($active) ? 'selected_sub_main_menu' : '' ?>">
+                        <li class="<?php echo ($active) ? 'selected_sub_main_menu' : '' ?>">
                             <a href="<?php echo $subMenu->getHref(); ?>" <?php if( $subMenu->get('target') ): ?> target='<?php echo $subMenu->get('target') ?>' <?php endif; ?>  class="<?php echo $subMenu->getClass(); ?>">
                             <i class="<?php echo $subMenu->get('icon') ? $subMenu->get('icon') : 'fa fa-star' ?>"></i><span><?php echo $this->translate($subMenu->getLabel()); ?></span>
                           </a>
@@ -147,6 +147,70 @@
   </div>
   </nav>
   <script type="text/javascript">
+
+    // Menu Focus Work
+    scriptJquery(window).keyup(function(e) {
+      var pressedKey = (e.keyCode ? e.keyCode : e.which);
+      if (pressedKey == 9 && $('.menu_core_main').is(':focus')) {
+        scriptJquery('.menu_core_main').each(function() {
+          scriptJquery(this).removeClass('main_menu_focused');
+        });
+        scriptJquery('.menu_core_main:focus').addClass('main_menu_focused');
+      } else if (pressedKey == 16 && pressedKey == 9 && $('.menu_core_main').is(':focus')){
+        var pressedKey = (e.keyCode ? e.keyCode : e.which);
+        if (pressedKey == 9 && scriptJquery('.menu_core_main').is(':focus')) {
+          scriptJquery('.menu_core_main').each(function() {
+            scriptJquery(this).removeClass('focused');
+          });
+          scriptJquery('.menu_core_main:focus').addClass('focused');
+        }
+      }
+    });
+    scriptJquery(document).on('click','.main_menu_focused',function(e){
+      if(scriptJquery(this).parent().find('ul').children().length == 0)
+        return true;
+      e.preventDefault();
+      if(scriptJquery(this).parent().hasClass('has_submenu')){
+        scriptJquery('.has_submenu').find('ul.navigation_submenu').slideToggle('slow');
+        scriptJquery(this).parent().removeClass('has_submenu');
+      } else {
+        scriptJquery('.has_submenu').parent().addClass('dummy');
+        scriptJquery('.has_submenu').find('ul.navigation_submenu').slideToggle('slow');
+        scriptJquery(this).parent().find('ul.navigation_submenu').slideToggle('slow');
+        scriptJquery('.has_submenu').removeClass('has_submenu');
+        scriptJquery(this).parent().addClass('has_submenu');
+      }
+      return false;
+    });
+
+    // function toggleFocus(element) {
+    //   element.addEventListener('focus', (event) => {
+    //     event.currentTarget.classList.add("main_menu_focused");
+    //   }, true);
+    //   element.addEventListener('blur', (event) => {
+    //     event.currentTarget.classList.remove("main_menu_focused");
+    //     // scriptJquery('.menu_active').removeClass('menu_active');
+    //   }, true);
+    // }
+    // function addToggleFocusToItems(selector) {
+    //   const items = document.querySelector(selector);
+    //   const itemsArray = items.querySelectorAll(".menu_core_main");
+    //   itemsArray.forEach((item) => {
+    //     toggleFocus(item);
+    //   });
+    // }
+    // addToggleFocusToItems('.layout_core_menu_main');
+
+    // scriptJquery(document).on('click','.main_menu_focused',function(e){
+    //   if(scriptJquery(this).parent().hasClass('menu_active')){
+    //     scriptJquery(this).parent().removeClass('menu_active');
+    //   } else {
+    //     scriptJquery('.menu_active').removeClass('menu_active');
+    //     scriptJquery(this).parent().addClass('menu_active');
+    //   }
+    //   return false;
+    // });
+
 
     scriptJquery(document).on('click','.open_submenu',function(e){
       if(scriptJquery(this).parent().parent().find('ul').children().length == 0)

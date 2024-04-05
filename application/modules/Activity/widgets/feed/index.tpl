@@ -10,7 +10,15 @@
  * @author     John
  */
 ?>
-
+<?php $enabledModuleNames = Engine_Api::_()->getDbTable('modules', 'core')->getEnabledModuleNames();  ?>
+<?php
+  if(engine_in_array('music',$enabledModuleNames)) {
+    $this->headScript()
+      ->appendFile($this->layout()->staticBaseUrl . 'externals/audio/audio.min.js')
+      ->appendFile($this->layout()->staticBaseUrl . 'application/modules/Music/externals/scripts/core.js')
+      ->appendFile($this->layout()->staticBaseUrl . 'application/modules/Music/externals/scripts/player.js');
+  } 
+?>
 <?php
 
 $this->headScript()
@@ -30,17 +38,19 @@ $this->headScript()
       var subject_guid = '<?php echo $this->subjectGuid ?>';
       var endOfFeed = <?php echo ( $this->endOfFeed ? 'true' : 'false' ) ?>;
 
-      var activityViewMore = window.activityViewMore = function(next_id, subject_guid) {
-        if(en4.core.request.isRequestActive()) return;
+      var activityViewMore = window.activityViewMore = function(next_id, subject_guid,isFirstLoaded) {
+        // if(en4.core.request.isRequestActive()) return;
         
         var url = '<?php echo $this->url(array('module' => 'core', 'controller' => 'widget', 'action' => 'index', 'content_id' => $this->identity), 'default', true) ?>';         
-        scriptJquery('#feed_viewmore')[0].style.display = 'none';
-        scriptJquery('#feed_loading')[0].style.display = '';
+        scriptJquery('#feed_viewmore').hide();
+        scriptJquery('#feed_loading').show();
         
           var request = scriptJquery.ajax({
           url : url,
           dataType : 'html',
+          method:"POST",
           data : {
+            action_id: '<?php echo $this->action_id; ?>',
             format : 'html',
             maxid : next_id,
             feedOnly : true,
@@ -51,9 +61,19 @@ $this->headScript()
           },
           evalScripts : true,
           success : function(responseHTML) {
-            scriptJquery(responseHTML).appendTo(scriptJquery('#activity-feed'));
-            en4.core.runonce.trigger();
-            Smoothbox.bind(scriptJquery('#activity-feed'));
+            if(isFirstLoaded){
+              scriptJquery("#show-loading-cnt").hide();
+              scriptJquery(responseHTML).insertBefore(scriptJquery('#feed_viewmore'));
+              en4.core.runonce.trigger();
+              Smoothbox.bind(scriptJquery('#activity-feed'));
+              if(!scriptJquery("#activity-feed").length){
+                scriptJquery("#no-feed-tip").show();
+              }
+            }else{
+              scriptJquery(responseHTML).appendTo(scriptJquery('#activity-feed'));
+              en4.core.runonce.trigger();
+              Smoothbox.bind(scriptJquery('#activity-feed'));
+            }
           }
         });
       }
@@ -387,14 +407,17 @@ endif; ?>
     </span>
 </div>
 <?php // If requesting a single action and it doesn't exist, show error ?>
+
 <?php if( !$this->activity ): ?>
   <?php if( $this->action_id ): ?>
-    <h2><?php echo $this->translate("Activity Item Not Found") ?></h2>
-    <p>
-      <?php echo $this->translate("The page you have attempted to access could not be found.") ?>
-    </p>
-  <?php return; else: ?>
-    <div class="tip" id="no-feed-tip">
+    <div id="no-feed-tip" style="display: none;">
+      <h2><?php echo $this->translate("Activity Item Not Found") ?></h2>
+      <p>
+        <?php echo $this->translate("The page you have attempted to access could not be found.") ?>
+      </p>
+    </div>
+  <?php else: ?>
+    <div class="tip" id="no-feed-tip" style="display: none;">
       <span>
         <?php
           if(!$this->isHashtagPage) {
@@ -404,9 +427,35 @@ endif; ?>
           } ?>
       </span>
     </div>
-  <?php return; endif; ?>
+  <?php endif; ?>
 <?php endif; ?>
 
+<?php if(!$this->fetchFeed){ ?>
+  
+  <div id="show-loading-cnt">
+    <ul class="feed mt-2">
+      <?php for($i=1;$i<=($this->action_id ? 1 : 4);$i++) { ?>
+        <li class="activity-item">
+          <div class="feed_content_loader">
+            <div class="photo_box"></div>
+            <div class="cont_line _title"></div>
+            <div class="cont_line _date"></div>
+            <div class="_cont"><div class="cont_line"></div><div class="cont_line"></div><div class="cont_line"></div></div>
+            <div class="_footer"><div class="cont_line"></div><div class="cont_line"></div><div class="cont_line"></div></div>
+            <div class="loader_animation"></div>
+          </div>
+        </li>
+      <?php } ?>
+      </ul>
+  </div>
+  <script type="text/javascript">
+    // SHOW LOADER
+    en4.core.runonce.add(function() {
+      var subject_guid = '<?php echo $this->subjectGuid ?>';
+      activityViewMore(0, subject_guid,true);
+    });
+  </script>
+<?php } ?>
 <div id="feed-update"></div>
 
 <?php echo $this->activityLoop($this->activity, array(
@@ -427,10 +476,33 @@ endif; ?>
 </div>
 
 <div class="feed_viewmore" id="feed_loading" style="display: none;">
-  <i class="fa-spinner fa-spin fa"></i>
-  <?php echo $this->translate("Loading ...") ?>
+<div id="show-loading-cnt">
+    <ul class="feed mt-2">
+      <?php for($i=1;$i<=($this->action_id ? 1 : 4);$i++) { ?>
+        <li>
+          <div class="feed_content_loader">
+            <div class="photo_box"></div>
+            <div class="cont_line _title"></div>
+            <div class="cont_line _date"></div>
+            <div class="_cont"><div class="cont_line"></div><div class="cont_line"></div><div class="cont_line"></div></div>
+            <div class="_footer"><div class="cont_line"></div><div class="cont_line"></div><div class="cont_line"></div></div>
+            <div class="loader_animation"></div>
+          </div>
+        </li>
+      <?php } ?>
+      </ul>
+  </div>
 </div>
-
+<style>
+@keyframes placeHolderShimmer {
+	0% {
+	background-position:-800px 0;
+	}
+	100% {
+	background-position:800px 0;
+	}
+}
+</style>
 <script type="text/javascript">
   var showEditMultiNetworks = function (action_id) {
     var action_id = action_id;

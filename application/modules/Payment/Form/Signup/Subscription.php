@@ -27,36 +27,33 @@ class Payment_Form_Signup_Subscription extends Engine_Form
     $this->_isSignup = (bool) $flag;
   }
   
-  public function init()
-  {
-    $this
-      ->setTitle('Subscription Plan')
-      ->setDescription('Please select a subscription plan from the list below.')
-      ;
+  public function init() {
+    $this->setTitle('Subscription Plan')
+      ->setDescription('Please select a subscription plan from the list below.');
+       $this->setAttrib('class', 'global_form payment_subscription_plans');
 
     // Get available subscriptions
     $multiOptions = array();
     $this->_packages = Engine_Api::_()->getDbtable('packages', 'payment')->getEnabledPackages($this->_isSignup);
     foreach( $this->_packages as $package ) {
-      $multiOptions[$package->package_id] = $package->title
-        . ' (' . $package->getPackageDescription() . ')'
-        ;
+      $multiOptions[$package->package_id] = '<b>' .$package->title . ' (' . $package->getPackageDescription() . ')'.'</b><p>'. $package->description. '</p>';
     }
 
     if ($this->_isSignup) {
       $this->setAction(Zend_Controller_Front::getInstance()->getRouter()->assemble(array(), 'user_signup', true));
     }
+    
     // Element: package_id
     //if( engine_count($multiOptions) > 1 ) {
       $this->addElement('Radio', 'package_id', array(
-        'label' => 'Choose Plan:',
+        // 'label' => 'Choose Plan:',
         'required' => true,
         'allowEmpty' => false,
         'multiOptions' => $multiOptions,
+        'escape' => false,
       ));
     //}
 
-    
     // Init submit
     $this->addElement('Button', 'submit', array(
       'label' => 'Continue',

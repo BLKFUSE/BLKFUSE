@@ -128,42 +128,42 @@ CREATE TABLE IF NOT EXISTS `se_users` (
 *  `user_level_id` int(9) NOT NULL default '0',
 *  `user_subnet_id` int(9) NOT NULL default '0',
   `user_profilecat_id` int(9) NOT NULL default '0',
-*  `user_email` varchar(70) collate utf8_unicode_ci NOT NULL default '',
--  `user_newemail` varchar(70) collate utf8_unicode_ci NOT NULL default '',
--  `user_fname` varchar(64) collate utf8_unicode_ci NOT NULL default '',
--  `user_lname` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-*  `user_username` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-*  `user_displayname` varchar(128) collate utf8_unicode_ci default NULL,
-*  `user_password` varchar(50) collate utf8_unicode_ci NOT NULL default '',
+*  `user_email` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+-  `user_newemail` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+-  `user_fname` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+-  `user_lname` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+*  `user_username` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+*  `user_displayname` varchar(128) collate utf8mb4_unicode_ci default NULL,
+*  `user_password` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL default '',
 *  `user_password_method` tinyint(1) NOT NULL default '0',
-*  `user_code` varchar(255) collate utf8_unicode_ci NOT NULL default '',
+*  `user_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL default '',
 *  `user_enabled` int(1) NOT NULL default '0',
 *  `user_verified` int(1) NOT NULL default '0',
   `user_language_id` int(9) NOT NULL default '0',
   `user_signupdate` int(14) NOT NULL default '0',
 *  `user_lastlogindate` int(14) NOT NULL default '0',
   `user_lastactive` int(14) NOT NULL default '0',
-*  `user_ip_signup` varchar(15) collate utf8_unicode_ci NOT NULL default '',
-*  `user_ip_lastactive` varchar(15) collate utf8_unicode_ci NOT NULL default '',
-*  `user_status` varchar(190) collate utf8_unicode_ci NOT NULL default '',
+*  `user_ip_signup` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+*  `user_ip_lastactive` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+*  `user_status` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL default '',
 *  `user_status_date` int(14) NOT NULL default '0',
   `user_logins` int(9) NOT NULL default '0',
   `user_invitesleft` int(3) NOT NULL default '0',
-  `user_timezone` varchar(5) collate utf8_unicode_ci NOT NULL default '',
+  `user_timezone` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL default '',
   `user_dateupdated` int(14) NOT NULL default '0',
-*  `user_blocklist` text collate utf8_unicode_ci,
+*  `user_blocklist` text COLLATE utf8mb4_unicode_ci,
 *  `user_invisible` int(1) NOT NULL default '0',
 *  `user_saveviews` int(1) NOT NULL default '0',
-*  `user_photo` varchar(10) collate utf8_unicode_ci NOT NULL default '',
+*  `user_photo` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL default '',
 *  `user_search` int(1) NOT NULL default '0',
 *  `user_privacy` int(2) NOT NULL default '0',
 *  `user_comments` int(2) NOT NULL default '0',
 -  `user_hasnotifys` tinyint(1) NOT NULL default '0',
--  `user_profile_album` enum('tab','side') collate utf8_unicode_ci NOT NULL default 'tab',
+-  `user_profile_album` enum('tab','side') COLLATE utf8mb4_unicode_ci NOT NULL default 'tab',
   PRIMARY KEY  (`user_id`),
   UNIQUE KEY `user_username` (`user_username`),
   UNIQUE KEY `user_email` (`user_email`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=2 ;
  *
  */
 
@@ -176,11 +176,11 @@ CREATE TABLE `engine4_users` (
 *  `photo_id` int(11) unsigned NOT NULL default '0',
 *  `status` text NULL,
 *  `status_date` datetime NULL,
-?  `password` char(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-?  `salt` char(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `locale` varchar(16) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL default 'auto',
-  `language` varchar(8) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL default 'en_US',
-  `timezone` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL default 'America/Los_Angeles',
+?  `password` char(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+?  `salt` char(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `locale` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL default 'auto',
+  `language` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL default 'en_US',
+  `timezone` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL default 'America/Los_Angeles',
 *  `search` tinyint(1) NOT NULL default '1',
 *  `show_profileviewers` tinyint(1) NOT NULL default '1',
 *  `level_id` int(11) unsigned NOT NULL,
@@ -203,7 +203,7 @@ CREATE TABLE `engine4_users` (
   KEY `CREATION_DATE` (`creation_date`),
   KEY `search` (`search`),
   KEY `enabled` (`enabled`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */
 
@@ -224,19 +224,19 @@ CREATE TABLE `engine4_users` (
 /*
 CREATE TABLE IF NOT EXISTS `se_admins` (
   `admin_id` int(9) NOT NULL auto_increment,
-  `admin_username` varchar(50) collate utf8_unicode_ci NOT NULL default '',
-  `admin_password` varchar(50) collate utf8_unicode_ci NOT NULL default '',
+  `admin_username` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+  `admin_password` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL default '',
   `admin_password_method` tinyint(1) NOT NULL default '0',
-  `admin_code` varchar(16) collate utf8_unicode_ci NOT NULL default '',
-  `admin_name` varchar(50) collate utf8_unicode_ci NOT NULL default '',
-  `admin_email` varchar(70) collate utf8_unicode_ci NOT NULL default '',
+  `admin_code` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+  `admin_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+  `admin_email` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL default '',
   `admin_enabled` tinyint(1) NOT NULL default '1',
   `admin_language_id` smallint(3) NOT NULL default '1',
-  `admin_lostpassword_code` varchar(15) collate utf8_unicode_ci NOT NULL default '',
+  `admin_lostpassword_code` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL default '',
   `admin_lostpassword_time` int(14) NOT NULL default '0',
   PRIMARY KEY  (`admin_id`),
   UNIQUE KEY `UNIQUE` (`admin_username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=2 ;
 
 INSERT INTO `se_admins` (`admin_id`, `admin_username`, `admin_password`, `admin_password_method`, `admin_code`, `admin_name`, `admin_email`, `admin_enabled`, `admin_language_id`, `admin_lostpassword_code`, `admin_lostpassword_time`) VALUES
 (1, 'admin', 'this is an md5', 1, 'this is a salt', 'Administrator', 'email@domain.com', 1, 1, '', 0);
@@ -247,11 +247,11 @@ INSERT INTO `se_admins` (`admin_id`, `admin_username`, `admin_password`, `admin_
 CREATE TABLE IF NOT EXISTS `se_profilestyles` (
   `profilestyle_id` int(9) NOT NULL auto_increment,
   `profilestyle_user_id` int(9) NOT NULL default '0',
-  `profilestyle_css` text collate utf8_unicode_ci,
+  `profilestyle_css` text COLLATE utf8mb4_unicode_ci,
   `profilestyle_stylesample_id` int(9) NOT NULL default '0',
   PRIMARY KEY  (`profilestyle_id`),
   KEY `profilestyle_user_id` (`profilestyle_user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=2 ;
  *
  */
 
@@ -259,8 +259,8 @@ CREATE TABLE IF NOT EXISTS `se_profilestyles` (
 CREATE TABLE IF NOT EXISTS `se_profileviews` (
   `profileview_user_id` int(1) NOT NULL,
   `profileview_views` int(9) NOT NULL,
-  `profileview_viewers` text collate utf8_unicode_ci NOT NULL,
+  `profileview_viewers` text COLLATE utf8mb4_unicode_ci NOT NULL,
   UNIQUE KEY `profileview_user_id` (`profileview_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  *
  */

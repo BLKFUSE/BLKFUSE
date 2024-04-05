@@ -100,7 +100,7 @@
     foreach( $themes as $theme ) {
       if( APPLICATION_ENV != 'development' ) {
         $this->headLink()
-          ->prependStylesheet('application/css.php?request=application/themes/' . $theme . '/theme.css');
+          ->prependStylesheet($staticBaseUrl . 'application/css.php?request=application/themes/' . $theme . '/theme.css');
       } else {
         $this->headLink()
           ->prependStylesheet(rtrim($this->baseUrl(), '/') . '/application/css.php?request=application/themes/' . $theme . '/theme.css');
@@ -167,6 +167,7 @@
       ->prependFile($staticBaseUrl . 'externals/smoothbox/smoothbox4.js')
       ->prependFile($staticBaseUrl . 'application/modules/User/externals/scripts/core.js')
       ->prependFile($staticBaseUrl . 'application/modules/Core/externals/scripts/core.js')
+      ->prependFile($staticBaseUrl . 'externals/bootstrap/js/bootstrap.js')
       ->prependFile($staticBaseUrl . 'externals/mdetect/mdetect.js');
     // Process
     foreach( $this->headScript()->getContainer() as $dat ) {

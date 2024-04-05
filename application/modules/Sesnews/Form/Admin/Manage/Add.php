@@ -20,7 +20,7 @@ class Sesnews_Form_Admin_Manage_Add extends Engine_Form {
       $integrateothermoduleArray = array();
       $integrateothermoduleArray[] = '';
 			//get all enabled modules
-			$notincludepluginarray = array('chat', 'poll', 'forum', 'sesadvancedactivity', 'sesadvancedcomment', 'sesfeedbg', 'sesfeelingactivity', 'sesfeedgif', 'sesbasic', 'sesadvsitenotification', 'sesariana', 'sesbrowserpush', 'seschristmas', 'sescleanwide', 'sescontentcoverphoto', 'sescontestjoinfees', 'sescontestjurymember', 'sescontestpackage', 'sesdemouser', 'seselegant', 'sesemailverification', 'sesemoji', 'seserror', 'seseventticket', 'sesexpose', 'sesfaq', 'sesfbstyle', 'sesfooter', 'seshtmlbackground', 'seslangtranslator', 'sesletteravatar', 'sesmediaimporter', 'sesmember', 'sesmembershorturl', 'sesmetatag', 'sesmultipleform', 'sespagebuilder', 'sespoke', 'sesprofilelock', 'sespymk', 'sessiteiframe', 'sessociallogin', 'sessocialshare', 'sessoundcloudsearch', 'sesspectromedia', 'sesteam', 'sestour', 'sestweet', 'sesusercoverphoto', 'sesvideoimporter');
+			$notincludepluginarray = Engine_Api::_()->sesbasic()->notIncludePlugins();
       $coreTable = Engine_Api::_()->getDbTable('modules', 'core');
       $select = $coreTable->select()
               ->from($coreTable->info('name'), array('name', 'title'))

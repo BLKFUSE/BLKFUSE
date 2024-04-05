@@ -85,7 +85,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
      *
      * @var int
      */
-    protected static $_defaultPageRange = 10;
+    protected static $_defaultPageRange = 3;
 
     /**
      * Scrolling style plugin loader

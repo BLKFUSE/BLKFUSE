@@ -91,21 +91,21 @@ if ($this->getRequest()->isPost()) {
 			$db->query('CREATE TABLE IF NOT EXISTS `engine4_sesmember_userviews` (
         `view_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
         `resource_id` int(11) NOT NULL,
-        `user_id` int(11) COLLATE utf8_unicode_ci NOT NULL,
+        `user_id` int(11) COLLATE utf8mb4_unicode_ci NOT NULL,
         `creation_date` datetime NOT NULL,
         PRIMARY KEY (`view_id`),
         UNIQUE KEY `uniqueKey` (`user_id`,`resource_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
 
 			$db->query('DROP TABLE IF EXISTS `engine4_sesmember_homepages`;');
 			$db->query('CREATE TABLE IF NOT EXISTS `engine4_sesmember_homepages` (
         `homepage_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-        `type` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-        `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+        `type` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
         `page_id` int(11) NOT NULL,
-        `member_levels` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+        `member_levels` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
         PRIMARY KEY (`homepage_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
 			$db->query('DROP TABLE IF EXISTS `engine4_sesmember_reviewvotes`;');
 			$db->query('CREATE TABLE IF NOT EXISTS `engine4_sesmember_reviewvotes` (
         `reviewvote_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -113,14 +113,14 @@ if ($this->getRequest()->isPost()) {
         `review_id` INT(11) unsigned NOT NULL ,
         `type` tinyint(1) NOT NULL,
         PRIMARY KEY (`reviewvote_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
 			$db->query('DROP TABLE IF EXISTS `engine4_sesmember_profilephotos`;');
 			$db->query('CREATE TABLE IF NOT EXISTS `engine4_sesmember_profilephotos` (
         `profilephoto_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
         `profiletype_id` int(11) NOT NULL,
         `photo_id` varchar(128) NOT NULL,
         PRIMARY KEY (`profilephoto_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
 			$db->query('DROP TABLE IF EXISTS `engine4_sesmember_follows`;');
 			$db->query('CREATE TABLE IF NOT EXISTS `engine4_sesmember_follows` (
         `follow_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -129,14 +129,14 @@ if ($this->getRequest()->isPost()) {
         `creation_date` datetime NOT NULL,
         PRIMARY KEY (`follow_id`),
         UNIQUE KEY `uniqueKey` (`user_id`,`resource_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
 			$db->query('DROP TABLE IF EXISTS `engine4_sesmember_featuredphotos`;');
 			$db->query('CREATE TABLE IF NOT EXISTS `engine4_sesmember_featuredphotos` (
         `featuredphoto_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
         `user_id` int(11) NOT NULL,
         `photo_id` int(11) NOT NULL,
         PRIMARY KEY (`featuredphoto_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
 			$db->query('INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
       ("sesmember_admin_main_reviewsettings", "sesmember", "Review Settings", "", \'{"route":"admin_default","module":"sesmember","controller":"manage", "action":"review-settings"}\', "sesmember_admin_main", "", 5),
       ("sesmember_admin_main_reviewparametersettings", "sesmember", "Setting", "", \'{"route":"admin_default","module":"sesmember","controller":"manage", "action":"review-settings"}\', "sesmember_admin_main_review", "", 1),
@@ -148,10 +148,10 @@ if ($this->getRequest()->isPost()) {
         `review_id` int(11) NOT NULL AUTO_INCREMENT,
         `owner_id` int(11) unsigned NOT NULL,
         `user_id` int(11) unsigned NOT NULL DEFAULT "0",
-        `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-        `pros` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-        `cons` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-        `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+        `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `pros` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `cons` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
         `recommended` tinyint(1) NOT NULL DEFAULT "1",
         `like_count` int(11) NOT NULL,
         `comment_count` int(11) NOT NULL,
@@ -167,15 +167,15 @@ if ($this->getRequest()->isPost()) {
         `funny_count` int(11) NOT NULL DEFAULT "0",
         `cool_count` int(11) NOT NULL DEFAULT "0",
         PRIMARY KEY (`review_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
 			$db->query('DROP TABLE IF EXISTS `engine4_sesmember_parameters`;');
 			$db->query('CREATE TABLE IF NOT EXISTS `engine4_sesmember_parameters` (
         `parameter_id` int(11) NOT NULL AUTO_INCREMENT,
-        `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+        `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
         `rating` float NOT NULL,
         `profile_type` int(2) DEFAULT NULL,
         PRIMARY KEY (`parameter_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
 			$db->query('DROP TABLE IF EXISTS `engine4_sesmember_review_parametervalues`;');
 			$db->query('CREATE TABLE IF NOT EXISTS `engine4_sesmember_review_parametervalues` (
         `parametervalue_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -186,7 +186,7 @@ if ($this->getRequest()->isPost()) {
         `content_id` INT(11) NOT NULL,
           PRIMARY KEY (`parametervalue_id`),
         UNIQUE KEY `uniqueKey` (`parameter_id`,`user_id`,`resources_id`,`content_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
 			$db->query('INSERT IGNORE INTO `engine4_core_menus` (`name`, `type`, `title`) VALUES("sesmember_reviewprofile", "standard", "SNS - Ultimate Members - Review Profile Options Menu");');
 			
@@ -334,7 +334,7 @@ if ($this->getRequest()->isPost()) {
         `order` INT(11) NOT NULL DEFAULT "0",
         PRIMARY KEY (`userinfo_id`),
         UNIQUE KEY `user_id` (`user_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
       
       $db->query('INSERT IGNORE INTO `engine4_sesmember_userinfos`(`user_id`) select `user_id` from `engine4_users`;');
       

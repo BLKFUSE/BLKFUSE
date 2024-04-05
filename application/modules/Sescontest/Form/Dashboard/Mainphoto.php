@@ -41,6 +41,13 @@ class Sescontest_Form_Dashboard_Mainphoto extends Engine_Form {
        // 'required' => $required,
         //'allowEmpty' => $allowEmpty,
         'validators' => array(array('Extension', false, 'jpg,jpeg,png,gif,webp'),),
+        'data-function' => 'uploadSignupPhoto',
+    ));
+    
+    $this->addElement('Hidden', 'coordinates', array(
+      'filters' => array(
+        'HtmlEntities',
+      )
     ));
 
     $this->addElement('Button', 'done', array(

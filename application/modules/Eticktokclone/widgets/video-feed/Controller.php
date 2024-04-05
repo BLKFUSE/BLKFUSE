@@ -18,7 +18,7 @@ class Eticktokclone_Widget_VideoFeedController extends Engine_Content_Widget_Abs
 	$this->view->randonNumber = $this->_getParam("randonNumber",false);
 	$this->view->isAjax = $isAjax  = $this->_getParam('is_ajax',0);
 	$this->view->limit_value  = $this->_getParam('limit_value',3);
-	$value['limit'] = $this->_getParam('limit_data',5);
+	$this->view->limit_data = $value['limit'] = $this->_getParam('limit_data',5);
 	$value['type'] = $this->_getParam('featured_sponsored_carosel','all');
 	
 	$this->view->socialshare_enable_plusicon = $this->_getParam('socialshare_enable_plusicon', 1);
@@ -44,7 +44,7 @@ class Eticktokclone_Widget_VideoFeedController extends Engine_Content_Widget_Abs
 	}
 
 	$this->view->paginator = $paginator = Zend_Paginator::factory($select);
-	$paginator->setItemCountPerPage($this->_getParam('limit',10));
+	$paginator->setItemCountPerPage($this->_getParam('limit_data',10));
 	$paginator->setCurrentPageNumber($this->_getParam('page',1));
 	$this->view->page = $this->_getParam('page',1);
 		 // Do not render if nothing to show

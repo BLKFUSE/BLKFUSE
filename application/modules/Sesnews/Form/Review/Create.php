@@ -85,10 +85,9 @@ class Sesnews_Form_Review_Create extends Engine_Form {
       if (Engine_Api::_()->getApi('settings', 'core')->getSetting('sesnews.show.tinymce', 1)) {
         $user = Engine_Api::_()->user()->getViewer();
         $user_level = Engine_Api::_()->user()->getViewer()->level_id;
-        $allowed_html = '';
-        $allowed_html = Engine_Api::_()->authorization()->getPermission($user_level, 'sesnews', 'auth_html');
+        //UPLOAD PHOTO URL
         $editorOptions = array(
-            'html' => (bool) $allowed_html,
+          'uploadUrl' => Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'index', 'action' => 'upload-photo'), 'default', true),
         );
         $this->addElement('TinyMce', 'description', array(
             'label' => 'Description',

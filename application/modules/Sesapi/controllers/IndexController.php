@@ -191,6 +191,16 @@ class Sesapi_IndexController extends Sesapi_Controller_Action_Standard
         $result['sesfeedgif_giphyapi'] = $settings->getSetting('sesfeedgif.giphyapi', '');
       }
       $result['core_modules_enabled'] = $coreModules;
+
+      $result["isAlbumEnable"] = false;
+      if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('album') || Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesalbum')){
+        $result["isAlbumEnable"] = true;
+      }
+      $result["isVideoEnable"] = false;
+      if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesvideo') || Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('video')){
+        $result["isVideoEnable"] = true;
+      }
+
      if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesadvancedcomment')){
         $recArray = array();
         $reactions = Engine_Api::_()->getDbTable('reactions','sesadvancedcomment')->getPaginator();
@@ -431,7 +441,7 @@ class Sesapi_IndexController extends Sesapi_Controller_Action_Standard
           }else if($user->getIdentity())
             $result['default_currency'] = $settings->getSetting("sesmultiplecurrency_user".$user->getIdentity(),Engine_Api::_()->sesmultiplecurrency()->getCurrentCurrency());
           else
-              $result['default_currency'] = Engine_Api::_()->sesmultiplecurrency()->getCurrentCurrency();
+              $result['default_currency'] = Engine_Api::_()->payment()->getCurrentCurrency();
           $_SESSION['sesmultiplecurrency_currencyId'] = $result['default_currency'];
       }
 
@@ -727,8 +737,8 @@ class Sesapi_IndexController extends Sesapi_Controller_Action_Standard
         if($resultData && Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesadvancedactivity')){
              $item_activity_like = Engine_Api::_()->getDbTable('corelikes', 'sesadvancedactivity')->rowExists($resultData->like_id);
             $response['reaction_type'] = $item_activity_like->type;
-            $response['reactionUserData'] = $this->view->FluentListUsers($subject->likes()->getAllLikesUsers(),'',$subject->likes()->getLike($this->view->viewer()),$this->view->viewer());
         }
+        $response['reactionUserData'] = $this->view->FluentListUsers($subject->likes()->getAllLikesUsers(),'',$subject->likes()->getLike($this->view->viewer()),$this->view->viewer());
 
         $table = Engine_Api::_()->getDbTable('likes','core');
         $select = $table->select()->from($table->info('name'),array('total'=>new Zend_Db_Expr('COUNT(like_id)')))->where('resource_id =?',$subject->getIdentity());
@@ -801,6 +811,7 @@ class Sesapi_IndexController extends Sesapi_Controller_Action_Standard
 	public function commentsAction(){
     $resource_id = $this->_getParam('resource_id');
     $resource_type = $this->_getParam('resource_type');
+    $page = $this->_getParam('page',false);
     if(!$resource_id || !$resource_type)
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>'parameter_missing', 'result' => array()));
     $viewer = Engine_Api::_()->user()->getViewer();
@@ -814,7 +825,7 @@ class Sesapi_IndexController extends Sesapi_Controller_Action_Standard
         }
     }
     if($sesAdv){
-      $page = $this->_getParam('page',false);
+      
       $comments = array();
       //likes content
       if($page == 1){
@@ -1061,7 +1072,7 @@ class Sesapi_IndexController extends Sesapi_Controller_Action_Standard
             $likesGroup = Engine_Api::_()->sesadvancedcomment()->commentLikesGroup($comment,false);
 					$reactionData = array();
 					$reactionCounter = 0;
-					if(@count($likesGroup['data'])){
+					if(@engine_count($likesGroup['data'])){
 						foreach($likesGroup['data'] as $type){
 
 							$reactionData[$reactionCounter]['title'] = $this->view->translate('%s (%s)',$type['counts'],Engine_Api::_()->sesadvancedcomment()->likeWord($type['type']));
@@ -1209,29 +1220,17 @@ class Sesapi_IndexController extends Sesapi_Controller_Action_Standard
       }
     }
       //user
-      $text = "";
       if($comment->poster_type == "user"){
         $user = Engine_Api::_()->getItem('user',$comment->poster_id);
         $array[$counter]['user_image'] = $this->userImage($user->getIdentity(),"thumb.profile");
         $user_id = $user->getIdentity();
-        $text = $user->getTitle();;
-        if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('everification')) {
-          $verifieddocuments = $verifieddocuments = Engine_Api::_()->getDbTable('documents', 'everification')->getAllUserDocuments(array('user_id' => $user->getIdentity(), 'verified' => '1', 'fetchAll' => '1'));
-          if(count($verifieddocuments) > 0) {
-$text .= '&nbsp;<img src="https://blkfuse.com/application/modules/Sesbasic/externals/images/verify.png" />';
-          }
-        }
       }else{
         $user = Engine_Api::_()->getItem($comment->poster_type,$comment->poster_id);
         $array[$counter]['user_image'] = $this->getBaseUrl(true,$user->getPhotoUrl('thumb.profile'));
         $user_id = $user->getParent()->getIdentity();
-        $text = $user->getTitle();
       }
         $array[$counter]['user_href'] = $this->getBaseUrl(true,$user->getHref());
-      $array[$counter]['user_title'] = $text;
-      
-      
-      
+      $array[$counter]['user_title'] = $user->getTitle();
       
       //GIF work
       if($activitycomments && isset($activitycomments->gif_url) && $activitycomments->gif_url) {
@@ -1243,7 +1242,7 @@ $text .= '&nbsp;<img src="https://blkfuse.com/application/modules/Sesbasic/exter
       if ($comment->poster_id == $viewer->getIdentity() || $viewer->isAdmin()){
 				$array[$counter]["can_delete"] = true;
 				$optionCounter = 0;
-				if($comment->body){
+				if($comment->body && !$activitycomments->gif_url){
 					$array[$counter]['options'][$optionCounter]['name']= 'edit';
 					$array[$counter]['options'][$optionCounter]['value'] = $this->view->translate('Edit');
 					$optionCounter++;
@@ -1703,8 +1702,8 @@ $text .= '&nbsp;<img src="https://blkfuse.com/application/modules/Sesbasic/exter
            continue;
         }else{
           $itemArray = explode('_',$user_id);
-          $resource_id_reply = $itemArray[count($itemArray) - 1];
-          unset($itemArray[count($itemArray) - 1]);
+          $resource_id_reply = $itemArray[engine_count($itemArray) - 1];
+          unset($itemArray[engine_count($itemArray) - 1]);
           $resource_type_reply = implode('_',$itemArray);
           $item = Engine_Api::_()->getItem($resource_type_reply,$resource_id_reply);
           if(!$item || !$item->getIdentity())
@@ -2008,8 +2007,8 @@ $text .= '&nbsp;<img src="https://blkfuse.com/application/modules/Sesbasic/exter
            continue;
         }else{
           $itemArray = explode('_',$user_id);
-          $resource_id_reply = $itemArray[count($itemArray) - 1];
-          unset($itemArray[count($itemArray) - 1]);
+          $resource_id_reply = $itemArray[engine_count($itemArray) - 1];
+          unset($itemArray[engine_count($itemArray) - 1]);
           $resource_type_reply = implode('_',$itemArray);
           $item = Engine_Api::_()->getItem($resource_type_reply,$resource_id_reply);
           if(!$item || !$item->getIdentity())
@@ -2056,9 +2055,15 @@ $text .= '&nbsp;<img src="https://blkfuse.com/application/modules/Sesbasic/exter
       }
       $resource_id = $this->_getParam('resource_id','');
       $resource_type = $this->_getParam('resource_type','');
+      $subjectid = $this->_getParam('subjectid','');
+      $sbjecttype = $this->_getParam('sbjecttype','');
       $comment_id = $this->view->comment_id = $this->_getParam('comment_id', null);
       $module = $this->_getParam('modulecomment','');
-      if($resource_type == 'activity_action' || $resource_type == 'sesadvancedactivity_action')
+      $item = Engine_Api::_()->getItem('activity_action',$resource_id);
+      // $type = Engine_Api::_()->getDbTable('actionTypes',"activity")->getActionType($item->type);
+      if($item && $item->comments()->getSender()->getType() != 'activity_action'){
+        $comment = Engine_Api::_()->getItem('core_comment',$comment_id);
+      }else if($resource_type == 'activity_action' || $resource_type == 'sesadvancedactivity_action')
         $comment = Engine_Api::_()->getItem('activity_comment',$comment_id);
       else
         $comment = Engine_Api::_()->getItem('core_comment',$comment_id);

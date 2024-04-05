@@ -191,4 +191,26 @@ class Core_Api_Menus extends Core_Api_Abstract
     $name = str_replace(' ', '', $name);
     return $name;
   }
+  
+  public function getMenuItem($params = array()) {
+  
+    // Get items
+    $table = Engine_Api::_()->getDbtable('menuItems', 'core');
+    $select = $table->select();
+    
+    if(isset($params['name']) && !empty($params['name'])) {
+      $select->where('name = ?', $params['name']);
+    }
+    
+    if(isset($params['menu']) && !empty($params['menu'])) {
+      $select->where('menu = ?', $params['menu']);
+    }
+    
+    if(isset($params['module']) && !empty($params['module'])) {
+      $select->where('module = ?', $params['module']);
+    }
+    $select->limit(1);
+
+    return $table->fetchRow($select);
+  }
 }

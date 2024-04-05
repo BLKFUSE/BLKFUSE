@@ -20,7 +20,8 @@ AutocompleterRequestJSON = function (field_name, url, hiddenFieldName) {
       });
     },
     select : function(event, ui) {
-      scriptJquery('#'+field_name).val(ui.item.label);
+      var label = ui.item.label;
+      scriptJquery('#'+field_name).val(label.replace(/(<([^>]+)>)/ig,""));
       hiddenFieldName(ui.item);
       return false;
     }

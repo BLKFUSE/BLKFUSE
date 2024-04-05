@@ -80,6 +80,13 @@ class Music_PlaylistController extends Core_Controller_Action_Standard
         if( !$message_view && !$this->_helper->requireAuth()->setAuthParams($playlist, $viewer, 'view')->isValid() ) {
             return;
         }
+        
+        if( !$playlist || !$playlist->getIdentity() || ((!$playlist->approved) && !$playlist->isOwner($viewer)) ) {
+					if(!empty($viewer->getIdentity()) && $viewer->isAdmin()) {
+					} else
+            return $this->_helper->requireSubject->forward();
+        }
+        
         $this->view->viewer_id = $viewer->getIdentity();
         $this->view->rating_count = Engine_Api::_()->getDbTable('ratings', 'music')->ratingCount($playlist->getIdentity());
         $this->view->rated = Engine_Api::_()->getDbTable('ratings', 'music')->checkRated($playlist->getIdentity(), $viewer->getIdentity());
@@ -361,6 +368,9 @@ class Music_PlaylistController extends Core_Controller_Action_Standard
             if (!$song) {
                 throw new Music_Model_Exception('Song was not successfully attached');
             }
+            //approve setting work
+            $playlist->approved = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('music_playlist', $viewer, 'approve');
+            $playlist->save();
 
             // Response
             $this->view->status = true;

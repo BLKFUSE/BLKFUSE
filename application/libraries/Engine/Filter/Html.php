@@ -58,11 +58,11 @@ class Engine_Filter_Html implements Zend_Filter_Interface
     public function loadDefaultLists()
     {
         $this->_allowedAttributes = array_unique(array_merge((array) $this->_allowedAttributes,
-            array('href', 'src', 'alt', 'border', 'align', 'width', 'height', 'vspace', 'hspace', 'target', 'style', 'name', 'value', 'class', 'id')
+            array('href', 'src', 'alt', 'border', 'align', 'width', 'height', 'vspace', 'hspace', 'target', 'style', 'name', 'value', 'class', 'id', 'title')
         ));
 
         $this->_forbiddenTags = array_unique(array_merge((array) $this->_forbiddenTags,
-            array('applet', 'body', 'bgsound', 'base', 'basefont', 'frame', 'frameset', 'head', 'html', 'id', 'ilayer', 'layer', 'link', 'meta', 'name', 'script', 'style', 'title', 'xml')
+            array('applet', 'body', 'bgsound', 'base', 'basefont', 'frame', 'frameset', 'head', 'html', 'id', 'ilayer', 'layer', 'link', 'meta', 'name', 'script', 'style', 'xml')
         ));
 
         $this->_forbiddenAttributes = array_unique(array_merge((array) $this->_forbiddenAttributes,

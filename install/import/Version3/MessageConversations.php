@@ -76,12 +76,12 @@ class Install_Import_Version3_MessageConversations extends Install_Import_Versio
 /*
 CREATE TABLE IF NOT EXISTS `se_pmconvos` (
 *  `pmconvo_id` int(9) NOT NULL auto_increment,
-*  `pmconvo_subject` varchar(100) collate utf8_unicode_ci NOT NULL default '',
+*  `pmconvo_subject` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL default '',
 *  `pmconvo_recipients` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`pmconvo_id`),
   KEY `pmconvo_recipients` (`pmconvo_recipients`),
   FULLTEXT KEY `SEARCH` (`pmconvo_subject`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -92,6 +92,6 @@ CREATE TABLE `engine4_messages_conversations` (
 *  `modified` datetime NOT NULL,
   `locked` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`conversation_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

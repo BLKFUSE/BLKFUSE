@@ -52,6 +52,7 @@ class Album_Model_Album extends Core_Model_Item_Abstract implements Countable
             $photoInfo = $photoTable->select()
                 ->from($photoTable, array('photo_id', 'file_id'))
                 ->where('album_id = ?', $this->album_id)
+                ->where('approved = ?', 1)
                 ->order('order ASC')
                 ->limit(1)
                 ->query()
@@ -67,6 +68,7 @@ class Album_Model_Album extends Core_Model_Item_Abstract implements Countable
             $photoTable = Engine_Api::_()->getItemTable('album_photo');
             $file_id = $photoTable->select()
                 ->from($photoTable, 'file_id')
+                ->where('approved = ?', 1)
                 ->where('photo_id = ?', $this->photo_id)
                 ->query()
                 ->fetchColumn();
@@ -89,6 +91,7 @@ class Album_Model_Album extends Core_Model_Item_Abstract implements Countable
         $photoTable = Engine_Api::_()->getItemTable('album_photo');
         $select = $photoTable->select()
             ->where('album_id = ?', $this->album_id)
+            ->where('approved = ?', 1)
             ->order('order ASC')
             ->limit($count);
         return $photoTable->fetchAll($select);
@@ -99,6 +102,7 @@ class Album_Model_Album extends Core_Model_Item_Abstract implements Countable
         $photoTable = Engine_Api::_()->getItemTable('album_photo');
         $select = $photoTable->select()
             ->where('album_id = ?', $this->album_id)
+            ->where('approved = ?', 1)
             ->order('order ASC')
             ->limit(1);
         return $photoTable->fetchRow($select);
@@ -109,20 +113,24 @@ class Album_Model_Album extends Core_Model_Item_Abstract implements Countable
         $photoTable = Engine_Api::_()->getItemTable('album_photo');
         $select = $photoTable->select()
             ->where('album_id = ?', $this->album_id)
+            ->where('approved = ?', 1)
             ->order('order DESC')
             ->limit(1);
         return $photoTable->fetchRow($select);
     }
 
-    public function count()
-    {
-        $photoTable = Engine_Api::_()->getItemTable('album_photo');
-        return $photoTable->select()
-            ->from($photoTable, new Zend_Db_Expr('COUNT(photo_id)'))
-            ->where('album_id = ?', $this->album_id)
-            ->limit(1)
-            ->query()
-            ->fetchColumn();
+    public function count() {
+    
+      $viewer = Engine_Api::_()->user()->getViewer();
+      $photoTable = Engine_Api::_()->getItemTable('album_photo');
+      $select = $photoTable->select()
+              ->from($photoTable, new Zend_Db_Expr('COUNT(photo_id)'))
+              ->where('album_id = ?', $this->album_id);
+      if(!$viewer->isAdmin() && $viewer->getIdentity() != $this->owner_id)
+        $select->where('approved = ?', 1);
+      return $select->limit(1)
+          ->query()
+          ->fetchColumn();
     }
 
     /**

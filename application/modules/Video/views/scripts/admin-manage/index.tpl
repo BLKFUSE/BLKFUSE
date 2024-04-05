@@ -10,21 +10,20 @@
  * @author     Jung
  */
 ?>
-
-
+<?php include APPLICATION_PATH .  '/application/modules/Video/views/scripts/_adminHeader.tpl';?>
 <script type="text/javascript">
 
-function multiDelete()
-{
-  return confirm("<?php echo $this->translate("Are you sure you want to delete the selected videos?") ?>");
-}
+  function multiDelete()
+  {
+    return confirm("<?php echo $this->translate("Are you sure you want to delete the selected videos?") ?>");
+  }
 
-function selectAll(obj)
-{
-  scriptJquery('.checkbox').each(function(){
-    scriptJquery(this).prop("checked",scriptJquery(obj).prop("checked"));
-  });
-}
+  function selectAll(obj)
+  {
+    scriptJquery('.checkbox').each(function(){
+      scriptJquery(this).prop("checked",scriptJquery(obj).prop("checked"));
+    });
+  }
 
  function killProcess(video_id) {
     scriptJquery('input[type=radio]').attr('disabled', true);
@@ -43,21 +42,6 @@ function selectAll(obj)
 
   }
 </script>
-
-<h2>
-  <?php echo $this->translate("Videos Plugin") ?>
-</h2>
-
-<?php if( engine_count($this->navigation) ): ?>
-  <div class='tabs'>
-    <?php
-      // Render the menu
-      //->setUlClass()
-      echo $this->navigation()->menu()->setContainer($this->navigation)->render()
-    ?>
-  </div>
-<?php endif; ?>
-
 <p>
   <?php echo $this->translate("VIDEO_VIEWS_SCRIPTS_ADMINMANAGE_INDEX_DESCRIPTION") ?>
   <?php
@@ -81,6 +65,7 @@ function selectAll(obj)
         <th><?php echo $this->translate("Type") ?></th>
         <th><?php echo $this->translate("State") ?></th>
         <th><?php echo $this->translate("Date") ?></th>
+        <th><?php echo $this->translate("Approve") ?></th>
         <th><?php echo $this->translate("Options") ?></th>
       </tr>
     </thead>
@@ -90,7 +75,7 @@ function selectAll(obj)
           <td><input type='checkbox' class='checkbox' name='delete_<?php echo $item->video_id;?>' value='<?php echo $item->video_id ?>' /></td>
           <td data-label="ID"><?php echo $item->video_id ?></td>
           <td data-label="<?php echo $this->translate("Title") ?>"><?php echo $item->title ?></td>
-          <td data-label="<?php echo $this->translate("Owner") ?>"><?php echo $this->user($item->owner_id)->getTitle() ?></td>
+          <td data-label="<?php echo $this->translate("Owner") ?>" class="admin_table_name"><span class="_name"><?php echo $this->user($item->owner_id)->getTitle() ?></span></td>
           <td data-label="<?php echo $this->translate("Views") ?>"><?php echo $this->locale()->toNumber($item->view_count) ?></td>
           <td data-label="<?php echo $this->translate("Type") ?>">
             <?php
@@ -108,7 +93,7 @@ function selectAll(obj)
                   $type = $this->translate("Iframely");
                   break;
                 default:
-                  $type = $this->translate("Unknown");
+                  $type = $this->translate($item->type);
                   break;
               }
               echo $type;
@@ -138,10 +123,30 @@ function selectAll(obj)
             <?php endif;?>
           </td>
           <td data-label="<?php echo $this->translate("Date") ?>"><?php echo $this->locale()->toDateTime($item->creation_date) ?></td>
+          
+          <td data-label="<?php echo $this->translate("Approve") ?>">
+            <?php if(!$item->resubmit) { ?>
+              <?php echo "---"; ?>
+            <?php } else { ?>
+              <?php if($item->approved == 1): ?>
+                <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'core', 'controller' => 'admin-approve-content', 'action' => 'approved', 'resource_id' => $item->getIdentity(), 'resource_type' => $item->getType()), $this->htmlImage($this->layout()->staticBaseUrl . 'application/modules/Core/externals/images/admin/check.png', '', array('title'=> $this->translate('Unapprove'))), array('class' => "smoothbox")) ?>
+              <?php else: ?>
+                <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'core', 'controller' => 'admin-approve-content', 'action' => 'approved', 'resource_id' => $item->getIdentity(), 'resource_type' => $item->getType()), $this->htmlImage($this->layout()->staticBaseUrl . 'application/modules/Core/externals/images/admin/uncheck.png', '', array('title'=> $this->translate('Approve'))), array('class' => "smoothbox")) ?>
+              <?php endif; ?>
+            <?php } ?>
+          </td>
+          
           <td class="admin_table_options">
+            <?php if(!$item->resubmit && empty($item->approved)) { ?>
+              <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'core', 'controller' => 'admin-approve-content', 'action' => 'approved', 'resource_id' => $item->getIdentity(), 'resource_type' => $item->getType()), $this->translate("Approve"),array('class' => 'smoothbox')) ?>
+              |
+              <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'core', 'controller' => 'admin-approve-content', 'action' => 'reject', 'resource_id' => $item->getIdentity(), 'resource_type' => $item->getType()), $this->translate("Reject"),array('class' => 'smoothbox')) ?>
+              |
+            <?php } ?>
             <a href="<?php echo $this->url(array('user_id' => $item->owner_id, 'video_id' => $item->video_id), 'video_view') ?>">
               <?php echo $this->translate("view") ?>
             </a>
+            |
             <?php echo $this->htmlLink(
                 array('route' => 'default', 'module' => 'video', 'controller' => 'admin-manage', 'action' => 'delete', 'id' => $item->video_id),
                 $this->translate("delete"),

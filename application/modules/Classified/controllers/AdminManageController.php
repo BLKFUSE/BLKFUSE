@@ -36,6 +36,7 @@ class Classified_AdminManageController extends Core_Controller_Action_Admin
     $page=$this->_getParam('page',1);
     $this->view->paginator = Engine_Api::_()->getItemTable('classified')->getClassifiedsPaginator(array(
       'orderby' => 'classified_id',
+      'showclassified' => 1,
     ));
     $this->view->paginator->setItemCountPerPage(25);
     $this->view->paginator->setCurrentPageNumber($page);
@@ -77,5 +78,27 @@ class Classified_AdminManageController extends Core_Controller_Action_Admin
 
     // Output
     $this->renderScript('admin-manage/delete.tpl');
+  }
+  
+  //Approved Action
+  public function approvedAction() {
+  
+    $id = $this->_getParam('id');
+    if (!empty($id)) {
+    
+      $item = Engine_Api::_()->getItem('classified', $id);
+      $item->approved = !$item->approved;
+      $item->save();
+
+      // Re-index
+      Engine_Api::_()->getApi('search', 'core')->index($item);
+      
+      if ($item->approved) {
+        Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($item->getOwner(), $item->getOwner(), $item, 'classified_approvedbyadmin', array('classified_title' => $item->getTitle(), 'classifiedowner_title' => $item->getOwner()->getTitle(), 'object_link' => $item->getHref(), 'host' => $_SERVER['HTTP_HOST']));
+      } else {
+        Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($item->getOwner(), $item->getOwner(), $item, 'classified_disapprovedbyadmin', array('classified_title' => $item->getTitle(), 'classifiedowner_title' => $item->getOwner()->getTitle(), 'object_link' => $item->getHref(), 'host' => $_SERVER['HTTP_HOST']));
+      }
+    }
+    $this->_redirect('admin/classified/manage');
   }
 }

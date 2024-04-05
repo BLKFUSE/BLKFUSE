@@ -43,12 +43,7 @@ class Group_Form_Post_Create extends Engine_Form
     }
     
     if( $allowHtml || $allowBbcode ) {
-      $uploadUrl = "";
-    
-      if( Engine_Api::_()->authorization()->isAllowed('album', $viewer, 'create') ) {
-        $uploadUrl = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('controller'=>'index', 'action'=>'upload-photo'), 'group_extended', true);
-
-      }
+      $uploadUrl = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'index', 'action' => 'upload-photo'), 'default', true);
 
       $editorOptions = array(
         'uploadUrl' => $uploadUrl

@@ -18,16 +18,17 @@
       $subMenus = Engine_Api::_()->getApi('menus', 'core')->getNavigation($menuName); 
       $menuSubArray = $subMenus->toArray();
     ?>
-    <li class="<?php echo $link->get('active') ? 'active' : '' ?>" <?php if($link->getlabel() == "Plugins" && count($menuSubArray) == 0): ?> style="display:none;" <?php endif; ?>>
+    <li class="<?php echo $link->get('active') ? 'active' : '' ?>">
       <a href='<?php echo $link->getHref() ?>' class="<?php echo $link->getClass() ? ' ' . $link->getClass() : ''  ?>">
         <span><?php echo $this->translate($link->getlabel()) ?></span>
       </a>
-      <?php if(engine_count($menuSubArray) > 0): ?>
+      <?php if($menuName != 'core_admin_main_plugins' && engine_count($menuSubArray) > 0): ?>
         <ul class="main_menu_submenu">
           <?php foreach( $subMenus as $subMenu): ?>
             <?php
               $subMenuString = explode(' ', $subMenu->class);
               $subMenName = end($subMenuString);
+              if($subMenName == 'core_admin_main_manage_packages' && !$this->viewer()->isSuperAdmin()) continue;
             ?>
             <li>
               <a href="<?php echo $subMenu->getHref(); ?>" class="<?php if ($subMenu->getHref() == $_SERVER['REQUEST_URI']): ?> active <?php endif; ?> <?php echo $subMenu->getClass(); ?>"><span><?php echo $this->translate($subMenu->getLabel()); ?></span>
@@ -39,3 +40,12 @@
     </li>
   <?php endforeach; ?>
 </ul>
+<script  type="text/javascript">
+// Header Spacing
+scriptJquery(document).ready(function(){
+  var height = scriptJquery(".global_header_top").height();
+  if(document.getElementById("global_header")) {
+    scriptJquery(".global_header_left").css("top", height+"px");
+  }
+}); 
+</script>

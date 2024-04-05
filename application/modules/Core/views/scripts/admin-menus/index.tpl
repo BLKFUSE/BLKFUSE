@@ -10,6 +10,7 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_layout", 'childMenuItemName' => 'core_admin_main_layout_menus')); ?>
 
 <script type="text/javascript">
 
@@ -23,7 +24,8 @@
     try {
       element = scriptJquery(event.target);
       element = element.parents('.admin_menus_item').find('.item_url');
-      if(event.type == 'mouseover' ) {
+
+      if(element.find('a').attr('href') && event.type == 'mouseover' && element.find('a').attr('href') != 'javascript:void(0)') {
         element.css('display', 'block');
       } else if( event.type == 'mouseout' ) {
         element.css('display', 'none');
@@ -79,26 +81,21 @@
   }
 
 </script>
-
-<h2>
-  <?php echo $this->translate('Menu Editor') ?>
-</h2>
-<p>
-  <?php echo $this->translate('CORE_VIEWS_SCRIPTS_ADMINMENU_INDEX_DESCRIPTION') ?>
-  <?php
-  $settings = Engine_Api::_()->getApi('settings', 'core');
-  if( $settings->getSetting('user.support.links', 0) == 1 ) {
-          echo 'More info: <a href="https://community.socialengine.com/blogs/597/66/menu-editor" target="_blank">See KB article</a>.';
-
-    if( Zend_Controller_Front::getInstance()->getRequest()->getParam('name') == "core_social_sites" ) {
-      echo '<br> For more info on how to change the social footer menu icons, read this <a href="https://socialengine.atlassian.net/wiki/spaces/SU/pages/5308967/se-php-social-footer-menu-icons" target="_blank">KB article</a>';
-    }
-  } 
-  ?>	
-</p>
-
-<br />
-
+<div class="admin_common_top_section">
+  <h2 class="page_heading"><?php echo $this->translate('Menu Editor') ?></h2>
+  <p>
+    <?php echo $this->translate('CORE_VIEWS_SCRIPTS_ADMINMENU_INDEX_DESCRIPTION') ?>
+    <?php
+    $settings = Engine_Api::_()->getApi('settings', 'core');
+    if( $settings->getSetting('user.support.links', 0) == 1 ) {
+            echo 'More info: <a href="https://community.socialengine.com/blogs/597/66/menu-editor" target="_blank">See KB article</a>.';
+      if( Zend_Controller_Front::getInstance()->getRequest()->getParam('name') == "core_social_sites" ) {
+        echo '<br> For more info on how to change the social footer menu icons, read this <a href="https://community.socialengine.com/blogs/597/68/social-footer-menu-icons" target="_blank">KB article</a>';
+      }
+    } 
+    ?>	
+  </p>
+</div>
 <div class="admin_menus_filter">
   <form action="<?php echo $this->url() ?>" method="get">
     <b><?php echo $this->translate("Editing:") ?></b>
@@ -106,18 +103,13 @@
   </form>
 </div>
 
-<br />
-
 <div class="admin_menus_options">
-  <?php echo $this->htmlLink(array('reset' => false, 'action' => 'create', 'name' => $this->selectedMenu->name), $this->translate('Add Item'), array('class' => 'buttonlink admin_menus_additem smoothbox')) ?>
-  <?php echo $this->htmlLink(array('reset' => false, 'action' => 'create-menu'), $this->translate('Add Menu'), array('class' => 'buttonlink admin_menus_addmenu smoothbox')) ?>
+  <?php echo $this->htmlLink(array('reset' => false, 'action' => 'create', 'name' => $this->selectedMenu->name), $this->translate('Add Item'), array('class' => 'admin_link_btn admin_menus_additem smoothbox')) ?>
+  <?php echo $this->htmlLink(array('reset' => false, 'action' => 'create-menu'), $this->translate('Add Menu'), array('class' => 'admin_link_btn admin_menus_addmenu smoothbox')) ?>
   <?php if( $this->selectedMenu->type == 'custom' ): ?>
-    <?php echo $this->htmlLink(array('reset' => false, 'action' => 'delete-menu', 'name' => $this->selectedMenu->name), $this->translate('Delete Menu'), array('class' => 'buttonlink admin_menus_deletemenu smoothbox')) ?>
+    <?php echo $this->htmlLink(array('reset' => false, 'action' => 'delete-menu', 'name' => $this->selectedMenu->name), $this->translate('Delete Menu'), array('class' => 'admin_link_btn admin_menus_deletemenu smoothbox')) ?>
   <?php endif ?>
 </div>
-
-<br />
-
 <ul class="admin_menus_items" id='menu_list'>
   <?php foreach( $this->menuItems as $menuItem ): ?>
     <li class="admin_menus_item<?php if( isset($menuItem->enabled) && !$menuItem->enabled ) echo ' disabled' ?>" id="admin_menus_item_<?php echo $menuItem->name ?>">
@@ -155,3 +147,7 @@
     </li>
   <?php endforeach; ?>
 </ul>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_layout').parent().addClass('active');
+  scriptJquery('.core_admin_main_layout_menus').addClass('active');
+</script>

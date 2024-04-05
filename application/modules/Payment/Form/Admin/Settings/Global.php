@@ -21,26 +21,26 @@ class Payment_Form_Admin_Settings_Global extends Engine_Form
   public function init()
   {
 
-	$description = $this->getTranslator()->translate(
-        'These settings affect all members in your community. <br>');
+    $description = $this->getTranslator()->translate(
+          'These settings affect all members in your community. <br>');
 
-	$settings = Engine_Api::_()->getApi('settings', 'core');
+    $settings = Engine_Api::_()->getApi('settings', 'core');
 
-	if( $settings->getSetting('user.support.links', 0) == 1 ) {
-	  $moreinfo = $this->getTranslator()->translate(
-        'More Info: <a href="%1$s" target="_blank"> KB Article</a>');
-	} else {
-	  $moreinfo = $this->getTranslator()->translate(
-        '');
-	}
+    if( $settings->getSetting('user.support.links', 0) == 1 ) {
+      $moreinfo = $this->getTranslator()->translate(
+          'More Info: <a href="%1$s" target="_blank"> KB Article</a>');
+    } else {
+      $moreinfo = $this->getTranslator()->translate(
+          '');
+    }
 
     $description = vsprintf($description.$moreinfo, array(
       'https://community.socialengine.com/blogs/597/75/billing-settings',
     ));
 
-	// Decorators
+    // Decorators
     $this->loadDefaultDecorators();
-	$this->getDecorator('Description')->setOption('escape', false);
+    $this->getDecorator('Description')->setOption('escape', false);
 
     $this
       ->setTitle('Global Settings')
@@ -61,48 +61,28 @@ class Payment_Form_Admin_Settings_Global extends Engine_Form
       'label' => 'Currency',
       'value' => 'USD',
       'description' => $currency_description,
+      'value' => $settings->getSetting('payment.currency'),
     ));
     $this->getElement('currency')->getDecorator('Description')->setOption('placement', 'APPEND');
-
-    // Element: benefit
-    $this->addElement('Radio', 'benefit', array(
-      'label' => 'Initial Subscription Status',
-      'description' => 'Do you want to enable subscriptions immediately after '
-          . 'payment, before the payment passes the gateways\' fraud checks? '
-          . 'This may take anywhere from 20 minutes to 4 days, depending on '
-          . 'the circumstances and the gateway.',
-      'multiOptions' => array(
-        'all' => 'Enable subscriptions immediately.',
-        'some' => 'Enable if member has an existing successful transaction, wait if this is their first.',
-        'none' => 'Wait until the gateway signals that the payment has completed successfully.',
-      ),
+    
+    $this->addElement('Select', 'autoupdate', array(
+      'label' => 'Automatically Update Currency Exchange Rates',
+      'multiOptions' => array('1'=>'Yes','0'=>'No'),
+      'value' => $settings->getSetting("payment.autoupdate",0),
+      'onchange' => "autoUpdateCurrency(this.value);",
     ));
 
-    // Element: lapse
-    /*
-    $this->addElement('Radio', 'lapse', array(
-      'label' => 'Subscription Lapse',
-      'multiOptions' => array(
-        'disable' => 'Disable the account when the subscription lapses.',
-        'reassign' => 'Re-assign to the default level.',
-      )
+    //currency api key
+    $url = '<a href="https://free.currencyconverterapi.com/free-api-key" target="_blank">Click here</a>';
+    $description = sprintf('Enter the currency converter API key. %s to create a free license key.',$url);
+    $this->addElement('Text', "currencyapikey", array(
+      'label' => 'Enter Currency Converter API Key',
+      'description' => $description,
+      'allowEmpty' => true,
+      'required' => false,
+      'value' => $settings->getSetting('payment.currencyapikey'),
     ));
-     *
-     */
-
-    /*
-    // Element: grace
-    $this->addElement('Text', 'grace', array(
-      'label' => 'Grace Period',
-      'description' => 'How many days grace period is allowed after a failed ' .
-          'or missed payment before the account is disabled or re-assigned?',
-      'validators' => array(
-        array('Int', true),
-        new Engine_Validate_AtLeast(0),
-      ),
-    ));
-     *
-     */
+    $this->getElement('currencyapikey')->getDecorator('Description')->setOptions(array('placement' => 'PREPEND', 'escape' => false));
 
     $this->addElement('Button', 'execute', array(
       'label' => 'Save Changes',

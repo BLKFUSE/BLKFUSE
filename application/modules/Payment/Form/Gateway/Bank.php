@@ -43,12 +43,16 @@ class Payment_Form_Gateway_Bank extends Engine_Form
         new Zend_Filter_StringTrim(),
       ),
     ));
+    
     $this->addElement('File', 'file', array(
       'label' => 'Upload the receipt of Transaction.',
       'description' => '',
       'required' => $this->_settings['receipt'] ? true : false,
       'priority' => 99998,
+      'accept' => 'image/*',
     ));
+    $this->file->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
+    
     $this->addElement('Button', 'submit', array(
       'label' => 'Upload',
       'order'=>1001,

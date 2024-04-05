@@ -65,7 +65,7 @@ class Video_Form_Admin_Global extends Engine_Form
     ));
 
     $this->addElement('Text', 'video_page', array(
-      'label' => 'Listings Per Page',
+      'label' => 'Videos Per Page',
       'description' => 'How many videos will be shown per page? (Enter a number between 1 and 999)',
       'value' => Engine_Api::_()->getApi('settings', 'core')->getSetting('video.page', 12),
     ));

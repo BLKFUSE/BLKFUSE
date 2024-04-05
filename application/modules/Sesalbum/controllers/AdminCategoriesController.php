@@ -122,61 +122,64 @@ class Sesalbum_AdminCategoriesController extends Core_Controller_Action_Admin {
     //Get all categories
     $this->view->categories = Engine_Api::_()->getDbtable('categories', 'sesalbum')->getCategory(array('column_name' => '*','profile_type'=>true));
   }
- public function changeOrderAction(){
-		if($this->_getParam('id',false) || $this->_getParam('nextid',false)){
-			$id = $this->_getParam('id',false);
-			$order = $this->_getParam('articleorder',false);
-			$order = explode(',',$order);
-			$nextid = $this->_getParam('nextid',false);
-			$dbObject = Engine_Db_Table::getDefaultAdapter();
-			if($id){
-				$category_id = $id;
-			}else if($nextid){
-				$category_id = $id;
-			}
-			$categoryTypeId = '';
-			$checkTypeCategory = $dbObject->query("SELECT * FROM engine4_sesalbum_categories WHERE category_id = ".$category_id)->fetchAll();
-			if(isset($checkTypeCategory[0]['subcat_id']) && $checkTypeCategory[0]['subcat_id'] != 0){
-				$categoryType = 'subcat_id';
-				$categoryTypeId = $checkTypeCategory[0]['subcat_id'];
-			}else if(isset($checkTypeCategory[0]['subsubcat_id']) && $checkTypeCategory[0]['subsubcat_id'] != 0){
-				$categoryType = 'subsubcat_id';
-				$categoryTypeId = $checkTypeCategory[0]['subsubcat_id'];
-			}else
-				$categoryType = 'category_id';
-			if($checkTypeCategory)
-			$currentOrder = Engine_Api::_()->getDbtable('categories', 'sesalbum')->order($categoryType,$categoryTypeId);
-			 // Find the starting point?
-			$start = null;
-			$end = null;
-			$order = array_reverse(array_values(array_intersect($order,$currentOrder)));
-			for ($i = 0, $l = engine_count($currentOrder); $i < $l; $i++) {
-				if (engine_in_array($currentOrder[$i], $order)) {
-					$start = $i;
-					$end = $i + engine_count($order);
-					break;
-				}
-			}
-			if (null === $start || null === $end) {
-				echo "false";die;
-			}
-			$categoryTable = Engine_Api::_()->getDbtable('categories', 'sesalbum');
-			//for ($i = engine_count($order) - 1; $i>0; $i--) {
-				for ($i = 0; $i < engine_count($order) ; $i++) {
-				$category_id = $order[$i - $start];
-				$categoryTable->update(array(
-						'order' => $i,
-								), array(
-						'category_id = ?' => $category_id,
-				));
-			}
-			$checkCategoryChildrenCondition = $dbObject->query("SELECT * FROM engine4_sesalbum_categories WHERE subcat_id = '".$id."' || subsubcat_id = '".$id."' || subcat_id = '".$nextid."' || subsubcat_id = '".$nextid."'")->fetchAll();
-			if(empty($checkCategoryChildrenCondition)){
-				echo 'done';die;
-			}
-			echo "children";die;
-		}
-	}
+  public function changeOrderAction() {
+    if ($this->_getParam('id', false) || $this->_getParam('nextid', false)) {
+      $id = $this->_getParam('id', false);
+      $order = $this->_getParam('categoryorder', false);
+      $order = explode(',', $order);
+      $nextid = $this->_getParam('nextid', false);
+      $dbObject = Engine_Db_Table::getDefaultAdapter();
+      if ($id) {
+        $category_id = $id;
+      } else if ($nextid) {
+        $category_id = $id;
+      }
+      $categoryTypeId = '';
+      $checkTypeCategory = $dbObject->query("SELECT * FROM engine4_sesalbum_categories WHERE category_id = " . $category_id)->fetchAll();
+      if (isset($checkTypeCategory[0]['subcat_id']) && $checkTypeCategory[0]['subcat_id'] != 0) {
+        $categoryType = 'subcat_id';
+        $categoryTypeId = $checkTypeCategory[0]['subcat_id'];
+      } else if (isset($checkTypeCategory[0]['subsubcat_id']) && $checkTypeCategory[0]['subsubcat_id'] != 0) {
+        $categoryType = 'subsubcat_id';
+        $categoryTypeId = $checkTypeCategory[0]['subsubcat_id'];
+      } else
+        $categoryType = 'category_id';
+      if ($checkTypeCategory)
+        $currentOrder = Engine_Api::_()->getDbTable('categories', 'sesalbum')->order($categoryTypeId, $categoryType);
+      //FIND THE STARTING POINT?
+      $start = null;
+      $end = null;
+      $order = array_reverse(array_values(array_intersect($order, $currentOrder)));
+      for ($i = 0, $l = engine_count($currentOrder); $i < $l; $i++) {
+        if (engine_in_array($currentOrder[$i], $order)) {
+          $start = $i;
+          $end = $i + engine_count($order);
+          break;
+        }
+      }
+      if (null === $start || null === $end) {
+        echo "false";
+        die;
+      }
+      $categoryTable = Engine_Api::_()->getDbTable('categories', 'sesalbum');
+      //for ($i = engine_count($order) - 1; $i>0; $i--) {
+      for ($i = 0; $i < engine_count($order); $i++) {
+        $category_id = $order[$i - $start];
+        $categoryTable->update(array(
+            'order' => $i,
+                ), array(
+            'category_id = ?' => $category_id,
+        ));
+      }
+      $checkCategoryChildrenCondition = $dbObject->query("SELECT * FROM engine4_sesalbum_categories WHERE subcat_id = '" . $id . "' || subsubcat_id = '" . $id . "' || subcat_id = '" . $nextid . "' || subsubcat_id = '" . $nextid . "'")->fetchAll();
+      if (empty($checkCategoryChildrenCondition)) {
+        echo 'done';
+        die;
+      }
+      echo "children";
+      die;
+    }
+  }
 
 	 //Edit Category
   public function editCategoryAction() {
@@ -185,7 +188,7 @@ class Sesalbum_AdminCategoriesController extends Core_Controller_Action_Admin {
     $this->view->form = $form = new Sesalbum_Form_Admin_Category_Edit();
     $cat_id = $this->_getParam('id');
     $category = Engine_Api::_()->getItem('sesalbum_category', $cat_id);
-    if($category->subcat_id == 0) {
+    if($category->subcat_id == 0 && $category->subsubcat_id == 0) {
       $category->member_levels = explode(",",$category->member_levels);
     }
     else

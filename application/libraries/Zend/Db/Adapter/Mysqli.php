@@ -553,4 +553,30 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
         $revision = (int) ($version % 100);
         return $major . '.' . $minor . '.' . $revision;
     }
+    
+    /**
+     * Retrieve server version in PHP style
+     *
+     *@return string
+     */
+    public function getClientVersion()
+    {
+        $this->_connect();
+        $version = $this->_connection->client_version;
+        $major = (int) ($version / 10000);
+        $minor = (int) ($version % 10000 / 100);
+        $revision = (int) ($version % 100);
+        return $major . '.' . $minor . '.' . $revision;
+    }
+    
+    /**
+     * Retrieve server version in PHP style
+     *
+     *@return string
+     */
+    public function isMariaDb()
+    {
+        $this->_connect();
+        return $this->_connection->server_info;
+    }
 }

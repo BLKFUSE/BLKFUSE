@@ -10,7 +10,7 @@
  * @author     Jung
  */
 ?>
-
+<?php include APPLICATION_PATH .  '/application/modules/Classified/views/scripts/_adminHeader.tpl';?>
 <script type="text/javascript">
 
 function multiDelete()
@@ -26,25 +26,13 @@ function selectAll(obj)
 }
 </script>
 
-<h2><?php echo $this->translate("Classifieds Plugin") ?></h2>
-
-<?php if( engine_count($this->navigation) ): ?>
-  <div class='tabs'>
-    <?php
-      // Render the menu
-      //->setUlClass()
-      echo $this->navigation()->menu()->setContainer($this->navigation)->render()
-    ?>
-  </div>
-<?php endif; ?>
-
 <p>
   <?php echo $this->translate("CLASSIFIEDS_VIEWS_SCRIPTS_ADMINMANAGE_INDEX_DESCRIPTION") ?>
 </p>
 <?php
 $settings = Engine_Api::_()->getApi('settings', 'core');
 if( $settings->getSetting('user.support.links', 0) == 1 ) {
-	echo '     More info: <a href="https://community.socialengine.com/blogs/597/49/classifieds" target="_blank">See KB article</a>.';
+	echo '     More info: <a href="https://community.socialengine.com/classifieds/597/49/classifieds" target="_blank">See KB article</a>.';
 } 
 ?>		
 <br />
@@ -60,6 +48,7 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
       <th><?php echo $this->translate("Owner") ?></th>
       <th><?php echo $this->translate("Views") ?></th>
       <th><?php echo $this->translate("Date") ?></th>
+      <th><?php echo $this->translate("Approve") ?></th>
       <th><?php echo $this->translate("Options") ?></th>
     </tr>
   </thead>
@@ -69,14 +58,35 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
         <td ><input type='checkbox' class='checkbox' name='delete_<?php echo $item->classified_id;?>' value="<?php echo $item->classified_id; ?>" /></td>
         <td data-label="ID"><?php echo $item->classified_id ?></td>
         <td data-label="<?php echo $this->translate("Title") ?>"><?php echo $item->getTitle() ?></td>
-        <td data-label="<?php echo $this->translate("Owner") ?>"><?php echo $this->user($item->owner_id)->getTitle() ?></td>
+        <td data-label="<?php echo $this->translate("Owner") ?>" class="admin_table_name"><span class="_name"><?php echo $this->user($item->owner_id)->getTitle() ?></span></td>
         <td data-label="<?php echo $this->translate("Views") ?>"><?php echo $this->locale()->toNumber($item->view_count) ?></td>
         <td data-label="<?php echo $this->translate("Date") ?>"><?php echo $this->locale()->toDateTime($item->creation_date) ?></td>
+        
+        
+        <td data-label="<?php echo $this->translate("Approve") ?>">
+          <?php if(!$item->resubmit) { ?>
+            <?php echo "---"; ?>
+          <?php } else { ?>
+            <?php if($item->approved == 1): ?>
+              <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'core', 'controller' => 'admin-approve-content', 'action' => 'approved', 'resource_id' => $item->getIdentity(), 'resource_type' => $item->getType()), $this->htmlImage($this->layout()->staticBaseUrl . 'application/modules/Core/externals/images/admin/check.png', '', array('title'=> $this->translate('Unapprove'))), array('class' => "smoothbox")) ?>
+            <?php else: ?>
+              <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'core', 'controller' => 'admin-approve-content', 'action' => 'approved', 'resource_id' => $item->getIdentity(), 'resource_type' => $item->getType()), $this->htmlImage($this->layout()->staticBaseUrl . 'application/modules/Core/externals/images/admin/uncheck.png', '', array('title'=> $this->translate('Approve'))), array('class' => "smoothbox")) ?>
+            <?php endif; ?>
+					<?php } ?>
+				</td>
+				
         <td  class="admin_table_options">
+          <?php if(!$item->resubmit && empty($item->approved)) { ?>
+            <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'core', 'controller' => 'admin-approve-content', 'action' => 'approved', 'resource_id' => $item->getIdentity(), 'resource_type' => $item->getType()), $this->translate("Approve"),array('class' => 'smoothbox')) ?>
+            |
+            <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'core', 'controller' => 'admin-approve-content', 'action' => 'reject', 'resource_id' => $item->getIdentity(), 'resource_type' => $item->getType()), $this->translate("Reject"),array('class' => 'smoothbox')) ?>
+            |
+          <?php } ?>
+          
           <a href="<?php echo $this->url(array('user_id' => $item->owner_id, 'classified_id' => $item->classified_id), 'classified_entry_view') ?>">
             <?php echo $this->translate("view") ?>
           </a>
-          
+          |
           <?php echo $this->htmlLink(
             array('route' => 'default', 'module' => 'classified', 'controller' => 'admin-manage', 'action' => 'delete', 'id' => $item->classified_id),
             $this->translate("delete"),

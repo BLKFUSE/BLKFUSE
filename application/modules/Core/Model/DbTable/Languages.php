@@ -19,4 +19,20 @@
 class Core_Model_DbTable_Languages extends Engine_Db_Table
 {
   //protected $_rowClass = 'Core_Model_Language';
+  
+  public function isLanguageExist($language) {
+    return $this->select()
+              ->from($this->info('name'), 'language_id')
+              ->where('code =?', $language)
+              ->query()
+              ->fetchColumn();
+  }
+  
+  public function isEnabled($language) {
+    return $this->select()
+              ->from($this->info('name'), 'enabled')
+              ->where('code =?', $language)
+              ->query()
+              ->fetchColumn();
+  }
 }

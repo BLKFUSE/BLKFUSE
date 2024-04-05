@@ -59,6 +59,20 @@
   display:block;
   margin-top:35px;
 }
+.sesalbum_view_related_albums,
+.sesalbum_view_related_albums > div{
+	width:100%;
+}
+.sesalbum_view_related_albums > div > ul{
+	display:flex;
+	flex-wrap:wrap;
+	width:100%;
+}
+.sesalbum_view_related_albums .sesalbum_list_grid{
+	display:flex;
+	flex-wrap:wrap;
+	margin:0 10px 25px;
+}
 /*STATICS:Common Statics CSS Code for All listins*/
 .sesalbum_list_stats > span{
   float:left;
@@ -1103,7 +1117,7 @@
 	float:left;
 	width:45%;
 }
-[dir="rtl"] sesalbum_view_photo_owner_info{
+[dir="rtl"] .sesalbum_view_photo_owner_info{
 	float:right;
 }
 .sesalbum_view_photo_owner_photo{
@@ -1858,7 +1872,7 @@
 /*Album Info:Outside of thumb*/
 .sesa-i-outside .sesalbum_list_grid_info{
 	overflow:hidden;
-	padding:5px;
+	padding:10px;
 	margin:0;
 }
 .sesa-i-outside .sesalbum_list_grid_title a{

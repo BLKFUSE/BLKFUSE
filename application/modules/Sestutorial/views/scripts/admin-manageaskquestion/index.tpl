@@ -29,29 +29,21 @@
   function multiDelete() {
     return confirm("<?php echo $this->translate('Are you sure you want to delete the selected qustions?');?>");
   }
-
-function selectAll()
-{
-  var i;
-  var multidelete_form = document.getElementById('multidelete_form');
-  var inputs = multidelete_form.elements;
-  for (i = 1; i < inputs.length - 1; i++) {
-    inputs[i].checked = inputs[0].checked;
+  function selectAll(){
+    var i;
+    var multidelete_form = document.getElementById('multidelete_form');
+    var inputs = multidelete_form.elements;
+    for (i = 1; i < inputs.length - 1; i++) {
+      inputs[i].checked = inputs[0].checked;
+    }
   }
-}
-
 </script>
 <?php include APPLICATION_PATH .  '/application/modules/Sestutorial/views/scripts/dismiss_message.tpl';?>
 <h3><?php echo $this->translate("Manage Requested Tutorials") ?></h3>
 <p><?php echo $this->translate('This page lists all the Questions asked by the users of your website. Below, you can answer any question or make them Tutorials by clicking in the appropriate links in Options section.'); ?></p>
-<br />
-
-
 <div class='admin_search sestutorial_search_form'>
   <?php echo $this->formFilter->render($this) ?>
 </div>
-<br />
-
 <?php $counter = $this->paginator->getTotalItemCount(); ?> 
 <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
   <div class="sestutorial_search_reasult">
@@ -77,10 +69,10 @@ function selectAll()
             <td><input type='checkbox' class='checkbox' name='delete_<?php echo $item->askquestion_id;?>' value="<?php echo $item->askquestion_id; ?>" /></td>
             <td><?php echo $item->askquestion_id ?></td>
             <td><?php echo $item->description; ?></td>
-            <td><?php echo $item->name; ?></td>
+            <td class="admin_table_name"><?php echo $item->name; ?></td>
             <td><?php echo $item->email; ?></td>
             <td><?php echo $item->creation_date ?></td>
-            <td>
+            <td class="nowrap">
               <?php if($item->tutorial_id) { ?>
                 <?php $tutorial = Engine_Api::_()->getItem('sestutorial_tutorial', $item->tutorial_id); ?>
               <a href="<?php echo $tutorial ? $tutorial->getHref() : 'javascript:;'; ?>">View Tutorial</a>
@@ -101,12 +93,10 @@ function selectAll()
         </tbody>
       </table>
       </div>
-    <br />
     <div class='buttons'>
       <button type='submit'><?php echo $this->translate("Delete Selected") ?></button>
     </div>
   </form>
-  <br/>
   <div>
     <?php echo $this->paginationControl($this->paginator,null,null,$this->urlParams); ?>
   </div>

@@ -23,9 +23,9 @@
 	width:33.33%;
 }
 .sesfeelingactivity_packs_list > div{
-	background-color: #f5fdff;
+	background-color: var(--theme-box-background-alt-color);
 	padding: 10px;
-	border: 1px solid #9cedff;
+	border: 1px solid var(--theme-base-color);
 }
 .sesfeelingactivity_packs_list ._input,
 .sesfeelingactivity_packs_list ._icon{

@@ -48,7 +48,12 @@ class Egames_IndexController extends Sesapi_Controller_Action_Standard
   }
   public function browseAction()
   {
-    $paginator = Engine_Api::_()->getDbTable("games",'egames')->getGamesPaginator($this->_getAllParams());
+    $params = $this->_getAllParams();
+    if($this->_getParam('owner_id')) {
+      $params["managePage"] = true;
+    }
+
+    $paginator = Engine_Api::_()->getDbTable("games",'egames')->getGamesPaginator($params);
     $paginator->setItemCountPerPage($this->_getParam("limit",10));
     $paginator->setCurrentPageNumber( $this->_getParam("page",1));
     $result = $this->gameResult($paginator);
@@ -396,6 +401,26 @@ class Egames_IndexController extends Sesapi_Controller_Action_Standard
     }
 
     $games = $game->toArray();
+    if ($game->category_id) {
+
+      $category = Engine_Api::_()->getItem('egames_category', $game->category_id);
+
+      if ($category) {
+        $games['category_title'] = $category->category_name;
+          if ($game->subcat_id) {
+              $subcat = Engine_Api::_()->getItem('egames_category', $game->subcat_id);
+              if ($subcat) {
+                $games['subcategory_title'] = $subcat->category_name;
+                  if ($game->subsubcat_id) {
+                      $subsubcat = Engine_Api::_()->getItem('egames_category', $game->subsubcat_id);
+                      if ($subsubcat) {
+                        $games['subsubcategory_title'] = $subsubcat->category_name;
+                      }
+                  }
+              }
+          }
+      }
+  }
     if($viewer->getIdentity() != 0) {
         $games['is_content_like'] = Engine_Api::_()->sesapi()->contentLike($game);
         $games['content_like_count'] = (int) Engine_Api::_()->sesapi()->getContentLikeCount($game);
@@ -409,6 +434,9 @@ class Egames_IndexController extends Sesapi_Controller_Action_Standard
         $result['game']['permission']['canCreate'] = Engine_Api::_()->authorization()->getPermission($viewer, 'egames_game', 'create') ? true : false;
         $result['game']['permission']['can_delete'] = $canDelete  = $game->authorization()->isAllowed($viewer,'delete') ? true : false;
   
+
+        
+
         $menuoptions= array();
         $counter = 0;
       

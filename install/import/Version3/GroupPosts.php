@@ -44,11 +44,11 @@ CREATE TABLE IF NOT EXISTS `se_groupposts` (
 *  `grouppost_date` int(14) NOT NULL default '0',
   `grouppost_lastedit_date` int(14) NOT NULL default '0',
   `grouppost_lastedit_user_id` int(9) NOT NULL default '0',
-*  `grouppost_body` text collate utf8_unicode_ci,
+*  `grouppost_body` text COLLATE utf8mb4_unicode_ci,
   `grouppost_deleted` int(1) NOT NULL default '0',
   PRIMARY KEY  (`grouppost_id`),
   KEY `INDEX` (`grouppost_grouptopic_id`,`grouppost_authoruser_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -66,6 +66,6 @@ CREATE TABLE IF NOT EXISTS `engine4_group_posts` (
   KEY `topic_id` (`topic_id`),
   KEY `group_id` (`group_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

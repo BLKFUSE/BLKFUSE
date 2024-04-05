@@ -94,6 +94,9 @@ class Group_PostController extends Core_Controller_Action_Standard
       $post->body = $post->body;
       $post->save();
       
+      //Save editor images
+      Engine_Api::_()->core()->saveTinyMceImages($values['body'], $post);
+      
       $db->commit();
     }
 
@@ -102,13 +105,8 @@ class Group_PostController extends Core_Controller_Action_Standard
       $db->rollBack();
       throw $e;
     }
-
-    // Try to get topic
-    return $this->_forward('success', 'utility', 'core', array(
-      'closeSmoothbox' => true,
-      'parentRefresh' => true,
-      'messages' => array(Zend_Registry::get('Zend_Translate')->_('The changes to your post have been saved.')),
-    ));
+    // Redirect to the post
+    $this->_redirectCustom($post);
   }
 
   public function deleteAction()
@@ -164,11 +162,8 @@ class Group_PostController extends Core_Controller_Action_Standard
     ));
   }
 
-
   public function canEdit($user)
   {
     return $this->getParent()->getParent()->authorization()->isAllowed($user, 'edit') || $this->getParent()->getParent()->authorization()->isAllowed($user, 'topic_edit') || $this->isOwner($user);
   }
-
-
 }

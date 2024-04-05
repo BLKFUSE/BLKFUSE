@@ -33,7 +33,7 @@
     </div>
   </div>
   <div class="generic_layout_container layout_core_content">
-    <?php $currentCurrency = Engine_Api::_()->sescommunityads()->getCurrentCurrency(); ?>
+    <?php $currentCurrency = Engine_Api::_()->payment()->getCurrentCurrency(); ?>
     <div class="sescmads_payment_process">
       <form method="get" action="<?php echo $this->escape($this->url(array('action' => 'process'),'sescomminityads_payment',false)) ?>" enctype="application/x-www-form-urlencoded">
         <h3>
@@ -56,6 +56,7 @@
           <div id="buttons-wrapper" class="form-wrapper">
               <?php foreach( $this->gateways as $gatewayInfo ):
                 $gateway = $gatewayInfo['gateway'];
+                if($gateway->plugin == "Payment_Plugin_Gateway_Stripe") continue;
                 $plugin = $gatewayInfo['plugin'];
                 $first = ( !isset($first) ? true : false );
                 $gatewayObject = $gateway->getGateway();

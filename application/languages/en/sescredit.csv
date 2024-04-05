@@ -91,7 +91,7 @@
 "Your member level upgrade request {item:$object} has been approved.";"Your member level upgrade request {item:$object} has been approved."
 "ACTIVITY_TYPE_NOTIFY_SESCREDIT_APPROVE_UPGRADE_REQUEST";"When my membership upgrade request is approved."
 "ACTIVITY_TYPE_NOTIFY_SESCREDIT_APPROVE_UPGRADE";"When my membership upgrade request is approved."
-"_EMAIL_SESCREDIT_APPROVE_UPGRADE_REQUEST_TITLE";"Credits - Membership Upgrade Approval"
+"_EMAIL_SESCREDIT_APPROVE_UPGRADE_REQUEST_TITLE";"Membership Upgrade Approval"
 "_EMAIL_SESCREDIT_APPROVE_UPGRADE_REQUEST_DESCRIPTION";"This email is sent to members when their request for Membership Upgrade is approved by admin."
 "_EMAIL_SESCREDIT_APPROVE_UPGRADE_REQUEST_SUBJECT";"Your membership upgrade request is approved"
 "_EMAIL_SESCREDIT_APPROVE_UPGRADE_REQUEST_BODY";"[header]
@@ -105,7 +105,7 @@ Congratulations!! Your request for Membership Upgrade has been approved. Now you
 "ACTIVITY_TYPE_NOTIFY_SESCREDIT_REJECT_UPGRADE_REQUEST";"When my membership upgrade request is rejected."
 "ACTIVITY_TYPE_NOTIFY_SESCREDIT_REJECT_UPGRADE_";"When my membership upgrade request is rejected."
 
-"_EMAIL_SESCREDIT_REJECT_UPGRADE_REQUEST_TITLE";"Credits - Membership Upgrade Rejection"
+"_EMAIL_SESCREDIT_REJECT_UPGRADE_REQUEST_TITLE";"Membership Upgrade Rejection"
 "_EMAIL_SESCREDIT_REJECT_UPGRADE_REQUEST_DESCRIPTION";"This email is sent to members their request for Membership Upgrade is Rejected by admin."
 "_EMAIL_SESCREDIT_REJECT_UPGRADE_REQUEST_SUBJECT";"Your membership upgrade request is rejected."
 "_EMAIL_SESCREDIT_REJECT_UPGRADE_REQUEST_BODY";"[header]
@@ -114,7 +114,7 @@ Sorry, Your request for Membership Upgrade has been rejected. Please try again.
 
 [footer]"
 
-"_EMAIL_SESCREDIT_SEND_UPGRADE_REQUEST_TITLE ";"Credits - New Membership Upgrade Request"
+"_EMAIL_SESCREDIT_SEND_UPGRADE_REQUEST_TITLE ";"New Membership Upgrade Request"
 "_EMAIL_SESCREDIT_SEND_UPGRADE_REQUEST_DESCRIPTION";"This email is sent to admin when a member on site requests upgrade membership in exchange of credit points."
 "_EMAIL_SESCREDIT_SEND_UPGRADE_REQUEST_SUBJECT";"New membership upgrade request."
 "_EMAIL_SESCREDIT_SEND_UPGRADE_REQUEST_BODY";"[header]
@@ -125,7 +125,7 @@ Go to the admin panel to take appropriate action on this request.
 
 [footer]"
 
-"_EMAIL_SESCREDIT_SEND_POINT_TITLE";"Credits - User received Credit points"
+"_EMAIL_SESCREDIT_SEND_POINT_TITLE";"User received Credit points"
 "_EMAIL_SESCREDIT_SEND_POINT_DESCRIPTION";"This email is sent to members when they receive credit points from other members on your site."
 "_EMAIL_SESCREDIT_SEND_POINT_SUBJECT";"You have received Credit Points."
 "_EMAIL_SESCREDIT_SEND_POINT_BODY";"[header]
@@ -134,7 +134,7 @@ Go to the admin panel to take appropriate action on this request.
 
 [footer]"
 
-"_EMAIL_SESCREDIT_PURCHASE_POINT_TITLE";"Credits - Credits Points Purchased"
+"_EMAIL_SESCREDIT_PURCHASE_POINT_TITLE";"Credits Points Purchased"
 "_EMAIL_SESCREDIT_PURCHASE_POINT_DESCRIPTION";"This email is sent to admin when a member purchases credit points."
 "_EMAIL_SESCREDIT_PURCHASE_POINT_SUBJECT";"A member has purchased credit points."
 "_EMAIL_SESCREDIT_PURCHASE_POINT_BODY";"[header]
@@ -147,7 +147,7 @@ Go to the admin panel to take appropriate action on this request.
 "ACTIVITY_TYPE_NOTIF_SESCREDIT_SEND_BY_SITE";"When I receive reward points from site administrators."
 
 #Email Work
-"_EMAIL_SESCREDIT_SEND_BY_SITE_TITLE";"Credits - Admin sent credit points to member"
+"_EMAIL_SESCREDIT_SEND_BY_SITE_TITLE";"Admin sent credit points to member"
 "_EMAIL_SESCREDIT_SEND_BY_SITE_DESCRIPTION";"This message is sent to members when you send credit points to them from admin panel."
 "_EMAIL_SESCREDIT_SEND_BY_SITE_SUBJECT";"Admin has sent Reward Points to you."
 "_EMAIL_SESCREDIT_SEND_BY_SITE_BODY";"[header]
@@ -160,7 +160,7 @@ http://[host][object_link].
 
 [footer]"
 
-"_EMAIL_SESCREDIT_RECEIVED_REFERRAL_POINT_TITLE";"Credits - New Referral Points"
+"_EMAIL_SESCREDIT_RECEIVED_REFERRAL_POINT_TITLE";"New Referral Points"
 "_EMAIL_SESCREDIT_RECEIVED_REFERRAL_POINT_DESCRIPTION";"This email is sent to members when their invited referrals join this website through their referral links."
 "_EMAIL_SESCREDIT_RECEIVED_REFERRAL_POINT_SUBJECT";"You have received new Referral points."
 "_EMAIL_SESCREDIT_RECEIVED_REFERRAL_POINT_BODY";"[header]
@@ -169,7 +169,7 @@ Congratulation!! You have received [point] referral points as someone has joined
 
 [footer]"
 
-"_EMAIL_SESCREDIT_PURCHASED_POINT_SUCCESS_TITLE";"Credits - Purchasing Credits Points Successful"
+"_EMAIL_SESCREDIT_PURCHASED_POINT_SUCCESS_TITLE";"Purchasing Credits Points Successful"
 "_EMAIL_SESCREDIT_PURCHASED_POINT_SUCCESS_DESCRIPTION";"This email is sent to member(s) when a member purchased credit points and transaction is successful."
 "_EMAIL_SESCREDIT_PURCHASED_POINT_SUCCESS_SUBJECT";"You have purchased credit points."
 "_EMAIL_SESCREDIT_PURCHASED_POINT_SUCCESS_BODY";"[header]
@@ -179,7 +179,7 @@ You have successfully purchased [point] credit points. Please check your transac
 [footer]"
 
 
-"_EMAIL_SESCREDIT_SEND_UPGRADE_REQUEST_TITLE";"Credits - When you have sent an upgrade request."
+"_EMAIL_SESCREDIT_SEND_UPGRADE_REQUEST_TITLE";"When you have sent an upgrade request."
 "_EMAIL_SESCREDIT_SEND_UPGRADE_REQUEST_DESCRIPTION";"This email will be sent to the site admin when the upgrade request has been sent.”
 "_EMAIL_SESCREDIT_SEND_UPGRADE_REQUEST_SUBJECT";"Upgrade request has been sent”
 "_EMAIL_SESCREDIT_SEND_UPGRADE_REQUEST_BODY";"[header]

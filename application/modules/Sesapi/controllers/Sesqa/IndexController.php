@@ -161,6 +161,7 @@ class Sesqa_IndexController extends Sesapi_Controller_Action_Standard{
 		$counter = $polllabel = 0;
 		$viewer = Engine_Api::_()->user()->getViewer();
 		$viewer_id = $viewer->getIdentity();
+		$canChangeVote = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesqa.canchangevote', true);
 		foreach($paginator as $question){
 			$questionlabel =  0;
 			$result[$counter] = $question->toArray();
@@ -192,6 +193,16 @@ class Sesqa_IndexController extends Sesapi_Controller_Action_Standard{
 			} else {
         $result[$counter]['owner_image'] = $ownerimage;
 			}
+			
+			
+      $result[$counter]['can_vote'] = $canChangeVote;
+      
+      $answer = Engine_Api::_()->authorization()->isAllowed('sesqa_question', null, 'answer');
+      $vote_answer = Engine_Api::_()->authorization()->isAllowed('sesqa_question', null, 'vote_answer');
+      $vote_question = Engine_Api::_()->authorization()->isAllowed('sesqa_question', null, 'vote_question');
+      $result[$counter]['answer'] = $answer;
+      $result[$counter]['vote_answer'] = $vote_answer;
+      $result[$counter]['vote_question'] = $vote_question;
 			
 			$result[$counter]['owner_title'] = $owner->getTitle();
 			$result[$counter]['vote_count'] = Engine_Api::_()->sesqa()->voteCount($question);
@@ -933,7 +944,7 @@ class Sesqa_IndexController extends Sesapi_Controller_Action_Standard{
        $question->setPhoto($form->photo);
 
       if($values['video'] && $values['mediatype'] == 2) {
-        $information = $this->handleIframelyInformation($values['video']);
+        $information = Engine_Api::_()->sesbasic()->handleIframelyInformation($values['video']);
         try{
           $question->setPhoto($information['thumbnail']);
         }catch(Exception $e){
@@ -1117,7 +1128,7 @@ class Sesqa_IndexController extends Sesapi_Controller_Action_Standard{
       if(!empty($_FILES['photo']['name']) && $values['mediatype'] == 1)
        $quote->setPhoto($_FILES['photo']);
       if($values['video'] && $values['mediatype'] == 2 && $question->video_url != $values['video']) {
-        $information = $this->handleIframelyInformation($values['video']);
+        $information = Engine_Api::_()->sesbasic()->handleIframelyInformation($values['video']);
         try{
           $question->setPhoto($information['thumbnail']);
         }catch(Exception $e){
@@ -1318,6 +1329,7 @@ class Sesqa_IndexController extends Sesapi_Controller_Action_Standard{
     $showPieChart = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesqa.showpiechart', false);
     $canVote = $question->authorization()->isAllowed($viewer, 'answer');
     $canChangeVote = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesqa.canchangevote', true);
+    $result['question']['can_vote'] = $canChangeVote;
     $hideLinks = true;
     $getTitle = true;
     $layoutOri = $this->view->layout()->orientation;

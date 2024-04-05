@@ -22,7 +22,7 @@
 
 function showDays(value){
   if(value == 1){
-    document.getElementById('sesadvancedactivity_notificationfriendsdays-wrapper').style.display = 'block';		
+    document.getElementById('sesadvancedactivity_notificationfriendsdays-wrapper').style.display = 'flex';		
   }else{
     document.getElementById('sesadvancedactivity_notificationfriendsdays-wrapper').style.display = 'none';
   }
@@ -30,7 +30,7 @@ function showDays(value){
 showDays(<?php echo Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.notificationfriends', 1); ?>);
 function birthdayText(value){
   if(value == 1){
-    document.getElementById('sesadvancedactivity_friendnotificationbirthdaytext-wrapper').style.display = 'block';		
+    document.getElementById('sesadvancedactivity_friendnotificationbirthdaytext-wrapper').style.display = 'flex';		
   }else{
     document.getElementById('sesadvancedactivity_friendnotificationbirthdaytext-wrapper').style.display = 'none';
   } 
@@ -38,7 +38,7 @@ function birthdayText(value){
 birthdayText(<?php echo Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.friendnotificationbirthday', 1); ?>);
 function dayText(value){
   if(value == 1){
-    document.getElementById('sesadvancedactivity_notificationdaytext-wrapper').style.display = 'block';		
+    document.getElementById('sesadvancedactivity_notificationdaytext-wrapper').style.display = 'flex';		
   }else{
     document.getElementById('sesadvancedactivity_notificationdaytext-wrapper').style.display = 'none';
   } 
@@ -47,7 +47,7 @@ birthdayText(<?php echo Engine_Api::_()->getApi('settings', 'core')->getSetting(
 
 function notificationbday(value){
   if(value == 1){
-    document.getElementById('sesadvancedactivity_notificationbirthdaytext-wrapper').style.display = 'block';		
+    document.getElementById('sesadvancedactivity_notificationbirthdaytext-wrapper').style.display = 'flex';		
   }else{
     document.getElementById('sesadvancedactivity_notificationbirthdaytext-wrapper').style.display = 'none';
   } 

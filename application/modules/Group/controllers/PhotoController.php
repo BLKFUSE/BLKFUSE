@@ -77,6 +77,12 @@ class Group_PhotoController extends Core_Controller_Action_Standard
     if( !$this->_helper->requireAuth()->setAuthParams($group, null, 'view')->isValid() ) {
       return;
     }
+    
+    if( !$group || !$group->getIdentity() || ((!$group->approved) && !$group->isOwner($viewer)) ) {
+      if(!empty($viewer->getIdentity()) && $viewer->isAdmin()) {
+      } else
+        return $this->_forward('requireauth', 'error', 'core');
+    }
 
     if( !$viewer || !$viewer->getIdentity() || $photo->user_id != $viewer->getIdentity() ) {
       $photo->view_count = new Zend_Db_Expr('view_count + 1');

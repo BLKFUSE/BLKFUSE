@@ -14,13 +14,14 @@ return array(
   'package' => array(
     'type' => 'module',
     'name' => 'announcement',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 10150 $',
     'path' => 'application/modules/Announcement',
     'repository' => 'socialengine.com',
     'title' => 'Announcements',
     'description' => 'Announcements',
-    'author' => 'Webligo Developments',
+    'author' => 'SocialEngine Core',
+    'thumb' => 'application/modules/Core/externals/images/thumb.png',
     'dependencies' => array(
       array(
         'type' => 'module',

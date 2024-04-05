@@ -207,7 +207,7 @@ function handleFileUploadSesalbum(files,obj)
    {
 			var url = files[i].name;
     	var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-			if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif' || ext == 'GIF')){
+			if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif' || ext == 'GIF' || ext == "webp")){
 				var status = new createStatusbar(obj,files[i]); //Using this we can set progress.
 				status.setFileNameSize(files[i].name,files[i].size);
 				statusArray[countUploadSes] =status;

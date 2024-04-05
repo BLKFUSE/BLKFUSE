@@ -80,7 +80,7 @@ class Egifts_IndexController extends Core_Controller_Action_Standard {
 
 		$thresholdAmount = Engine_Api::_()->authorization()->getPermission($viewer, 'egifts', 'egifts_threamt');
 		
-		$defaultCurrency = Engine_Api::_()->sesbasic()->defaultCurrency();
+		$defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
 		
     $orderDetails = Engine_Api::_()->getDbtable('giftpurchases', 'egifts')->getGiftStats(array('purchase_user_id' => $viewer->getIdentity()));
     
@@ -95,9 +95,9 @@ class Egifts_IndexController extends Core_Controller_Action_Standard {
       $this->view->remainingAmount = $remainingAmount->remaining_payment;
     }
     
-    $value['total_amount'] = Engine_Api::_()->sesbasic()->getCurrencyPrice($orderDetails['totalAmountSale'], $defaultCurrency);
-    //$value['total_commission_amount'] = Engine_Api::_()->sesbasic()->getCurrencyPrice($orderDetails['commission_amount'], $defaultCurrency);
-    $value['remaining_amount'] = Engine_Api::_()->sesbasic()->getCurrencyPrice($remainingAmount->remaining_payment, $defaultCurrency);
+    $value['total_amount'] = Engine_Api::_()->payment()->getCurrencyPrice($orderDetails['totalAmountSale'], $defaultCurrency);
+    //$value['total_commission_amount'] = Engine_Api::_()->payment()->getCurrencyPrice($orderDetails['commission_amount'], $defaultCurrency);
+    $value['remaining_amount'] = Engine_Api::_()->payment()->getCurrencyPrice($remainingAmount->remaining_payment, $defaultCurrency);
 
     //set value to form
     if ($this->_getParam('id', false)) {

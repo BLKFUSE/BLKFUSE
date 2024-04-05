@@ -365,13 +365,13 @@ Currency
       'helper' => 'fieldOptions',
       'category' => 'specific',
       'multiOptions' => array(
-        '25' => 'Less than $25,000',
-        '25_35' => '$25,001 to $35,000',
-        '35_50' => '$35,001 to $50,000',
-        '50_75' => '$50,001 to $75,000',
-        '75_100' => '$75,001 to $100,000',
-        '100_150' => '$100,001 to $150,000',
-        '150' => '$150,001+',
+        '25' => 'Less than 25,000',
+        '25_35' => '25,001 - 35,000',
+        '35_50' => '35,001 - 50,000',
+        '50_75' => '50,001 - 75,000',
+        '75_100' => '75,001 - 100,000',
+        '100_150' => '100,001 - 150,000',
+        '150' => '> 150,001',
       ),
     ),
     'occupation' => array(
@@ -501,7 +501,6 @@ Currency
       'label' => 'Currency',
       'category' => 'specific',
       'helper' => 'fieldCurrency',
-      'adminFormClass' => 'Fields_Form_Admin_Field_Currency',
     )
   ),
 ) ?>

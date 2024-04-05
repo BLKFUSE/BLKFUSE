@@ -8,9 +8,9 @@
 	box-sizing:border-box;
 }
 .sesmusic_manage_artist_form_head > div{
-	background-color: #f5f5f5;
+	background-color:var(--theme-box-background-alt-color);	
 	padding: 10px;
-	border-bottom: 1px solid #aaa;
+	border-bottom: 1px solid var(--theme-border-color);
 	float:left;
 	font-weight: bold;
 	padding-top: 7px;
@@ -25,16 +25,16 @@
 	margin-bottom:10px;
 }
 .sesmusic_manage_artist_form_list li{
-	border-bottom: 1px solid #eee;
+	border-bottom: 1px solid var(--theme-border-color);
 	cursor:move;
 	clear:both;
 	overflow:hidden;
 }
 .sesmusic_manage_artist_form_list li:nth-child(odd){
-	background-color:#fff;
+	background-color:var(--theme-box-background-color);
 }
 .sesmusic_manage_artist_form_list li:nth-child(even) {
-	background-color: #f8f8f8;
+	background-color:var(--theme-box-background-alt-color);
 }
 .sesmusic_manage_artist_form_list li > div{
 	padding: 10px;

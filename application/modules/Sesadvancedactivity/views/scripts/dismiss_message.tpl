@@ -12,7 +12,8 @@
  */
  
 ?>
-<h2>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenuItemName' => 'core_admin_main_plugins', 'lastMenuItemName' => 'SNS - Professional Activity & Nested Comments Plugin')); ?>
+<h2 class="page_heading">
   <?php echo $this->translate("SNS - Professional Activity & Nested Comments Plugin") ?>
 </h2>
 <?php if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesbasic'))

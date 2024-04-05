@@ -32,7 +32,7 @@
   
   function friendrequest(value) {
     if(value == 1) {
-      document.getElementById('sesadvancedactivity_countfriend-wrapper').style.display = 'block';
+      document.getElementById('sesadvancedactivity_countfriend-wrapper').style.display = 'flex';
     } else {
       document.getElementById('sesadvancedactivity_countfriend-wrapper').style.display = 'none';
     }
@@ -40,7 +40,7 @@
   
   function findfriendssearch(value) {
     if(value == 1) {
-      document.getElementById('sesadvancedactivity_searchnumfriend-wrapper').style.display = 'block';
+      document.getElementById('sesadvancedactivity_searchnumfriend-wrapper').style.display = 'flex';
     } else {
       document.getElementById('sesadvancedactivity_searchnumfriend-wrapper').style.display = 'none';
     }
@@ -49,16 +49,16 @@
   function showwelcometab(value) {
 
     if(value == 1) {
-      document.getElementById('sesadvancedactivity_welcometabtext-wrapper').style.display = 'block';
-      document.getElementById('sesadvancedactivity_welcomeicon-wrapper').style.display = 'block';
-      document.getElementById('sesadvancedactivity_searchnumfriend-wrapper').style.display = 'block';
-      document.getElementById('sesadvancedactivity_tabvisibility-wrapper').style.display = 'block';
-      document.getElementById('sesadvancedactivity_makelandingtab-wrapper').style.display = 'block';
-      //document.getElementById('sesadvancedactivity_profilephotoupload-wrapper').style.display = 'block';
-      document.getElementById('sesadvancedactivity_friendrequest-wrapper').style.display = 'block';
-      document.getElementById('sesadvancedactivity_countfriend-wrapper').style.display = 'block';
-      document.getElementById('sesadvancedactivity_findfriends-wrapper').style.display = 'block';
-      document.getElementById('sesadvancedactivity_tabsettings-wrapper').style.display = 'block';
+      document.getElementById('sesadvancedactivity_welcometabtext-wrapper').style.display = 'flex';
+      document.getElementById('sesadvancedactivity_welcomeicon-wrapper').style.display = 'flex';
+      document.getElementById('sesadvancedactivity_searchnumfriend-wrapper').style.display = 'flex';
+      document.getElementById('sesadvancedactivity_tabvisibility-wrapper').style.display = 'flex';
+      document.getElementById('sesadvancedactivity_makelandingtab-wrapper').style.display = 'flex';
+      //document.getElementById('sesadvancedactivity_profilephotoupload-wrapper').style.display = 'flex';
+      document.getElementById('sesadvancedactivity_friendrequest-wrapper').style.display = 'flex';
+      document.getElementById('sesadvancedactivity_countfriend-wrapper').style.display = 'flex';
+      document.getElementById('sesadvancedactivity_findfriends-wrapper').style.display = 'flex';
+      document.getElementById('sesadvancedactivity_tabsettings-wrapper').style.display = 'flex';
     } else {
       document.getElementById('sesadvancedactivity_welcometabtext-wrapper').style.display = 'none';
       document.getElementById('sesadvancedactivity_welcomeicon-wrapper').style.display = 'none';
@@ -76,9 +76,9 @@
   function tabvisibility(value) {
     if(value == 2) {
       document.getElementById('sesadvancedactivity_numberoffriends-wrapper').style.display = 'none';
-      document.getElementById('sesadvancedactivity_numberofdays-wrapper').style.display = 'block';
+      document.getElementById('sesadvancedactivity_numberofdays-wrapper').style.display = 'flex';
     } else if(value == 1) {
-      document.getElementById('sesadvancedactivity_numberoffriends-wrapper').style.display = 'block';
+      document.getElementById('sesadvancedactivity_numberoffriends-wrapper').style.display = 'flex';
       document.getElementById('sesadvancedactivity_numberofdays-wrapper').style.display = 'none';
     } else if(value == 0) {
       document.getElementById('sesadvancedactivity_numberoffriends-wrapper').style.display = 'none';
@@ -89,7 +89,7 @@
   
   function profilephotoupload(value) {
     if(value == 1) {
-      document.getElementById('sesadvancedactivity_canphotoshow-wrapper').style.display = 'block';
+      document.getElementById('sesadvancedactivity_canphotoshow-wrapper').style.display = 'flex';
     } else if(value == 0) {
       document.getElementById('sesadvancedactivity_canphotoshow-wrapper').style.display = 'none';
     }

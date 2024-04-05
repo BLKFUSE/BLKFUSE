@@ -36,6 +36,8 @@ class Payment_Model_DbTable_Packages extends Engine_Db_Table
     } else {
       $select->where('after_signup = ?', true);
     }
+    
+    $select->order('order ASC');
 
     return $this->fetchAll($select);
   }
@@ -52,6 +54,17 @@ class Payment_Model_DbTable_Packages extends Engine_Db_Table
     return $this->select()
       ->from($this, new Zend_Db_Expr('COUNT(*)'))
       ->where('enabled = ?', 1)
+      ->query()
+      ->fetchColumn()
+      ;
+  }
+  
+  public function getEnabledAfterSignupPackageCount()
+  {
+    return $this->select()
+      ->from($this, new Zend_Db_Expr('COUNT(*)'))
+      ->where('enabled = ?', 1)
+      ->where('after_signup = ?', 1)
       ->query()
       ->fetchColumn()
       ;

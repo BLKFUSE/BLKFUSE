@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `se_classifiedcats` (
   `classifiedcat_order` smallint(5) unsigned NOT NULL default '0',
   `classifiedcat_signup` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`classifiedcat_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=2 ;
  *
  */
 
@@ -37,6 +37,6 @@ CREATE TABLE `engine4_classified_categories` (
 *  `category_name` varchar(128) NOT NULL,
   PRIMARY KEY (`category_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

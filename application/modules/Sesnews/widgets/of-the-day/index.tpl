@@ -58,7 +58,7 @@
 											<span class="sesnews_list_grid_owner"> <a href="<?php echo $itemNews->getOwner()->getHref();?>"><?php echo $this->itemPhoto($itemNews->getOwner(), 'thumb.icon');?></a> <?php echo $this->translate('By');?> <?php echo $this->htmlLink($itemNews->getOwner()->getHref(), $itemNews->getOwner()->getTitle(), array('class' => 'thumbs_author')) ?> </span>
 										<?php }?>
 									</div>
-									<div class="sesnews_list_stats sesnews_list_location sesbasic_text_light"> <span> <i class="fa fa-map-marker"></i><?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?><a href="<?php echo $this->url(array('resource_id' => $itemNews->news_id,'resource_type'=>'sesnews_news','action'=>'get-direction'), 'sesbasic_get_direction', true) ;?>" class="opensmoothboxurl"><?php echo $itemNews->location;?></a><?php } else { ?><?php echo $itemNews->location;?><?php } ?></span> </div>
+									<div class="sesnews_list_stats sesnews_list_location sesbasic_text_light"> <span> <i class="sesbasic_icon_map"></i><?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?><a href="<?php echo $this->url(array('resource_id' => $itemNews->news_id,'resource_type'=>'sesnews_news','action'=>'get-direction'), 'sesbasic_get_direction', true) ;?>" class="opensmoothboxurl"><?php echo $itemNews->location;?></a><?php } else { ?><?php echo $itemNews->location;?><?php } ?></span> </div>
 								</div>
 							</div>
 						<?php } ?>
@@ -149,7 +149,7 @@
 									<?php echo $this->itemPhoto($itemNews->getOwner(), 'thumb.icon');?></a> <?php echo $this->translate('By');?> <?php echo $this->htmlLink($itemNews->getOwner()->getHref(), $itemNews->getOwner()->getTitle(), array('class' => 'thumbs_author')) ?> </span>
 								<?php }?>
 							</div>
-							<div class="sesnews_list_stats sesnews_list_location sesbasic_text_light"> <span> <i class="fa fa-map-marker"></i> <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?><a href="<?php echo $this->url(array('resource_id' => $itemNews->news_id,'resource_type'=>'sesnews_news','action'=>'get-direction'), 'sesbasic_get_direction', true) ;?>" class="opensmoothboxurl"><?php echo $itemNews->location;?></a><?php } else { ?><?php echo $itemNews->location;?><?php } ?></span> </div>
+							<div class="sesnews_list_stats sesnews_list_location sesbasic_text_light"> <span> <i class="sesbasic_icon_map"></i> <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?><a href="<?php echo $this->url(array('resource_id' => $itemNews->news_id,'resource_type'=>'sesnews_news','action'=>'get-direction'), 'sesbasic_get_direction', true) ;?>" class="opensmoothboxurl"><?php echo $itemNews->location;?></a><?php } else { ?><?php echo $itemNews->location;?><?php } ?></span> </div>
 						</div>
 						<?php } ?>
 						<div class="sesnews_list_stats sesbasic_text_light">
@@ -273,7 +273,7 @@
             <?php if(isset($this->byActive)) { ?>
             <span class="sesnews_list_grid_owner"> <a href="<?php $itemNews->getOwner()->getHref();?>"><?php echo $this->itemPhoto($itemNews->getOwner(), 'thumb.icon');?></a> <?php echo $this->translate('By');?> <?php echo $this->htmlLink($itemNews->getOwner()->getHref(), $itemNews->getOwner()->getTitle(), array('class' => 'thumbs_author')) ?> </span>
             <?php }?>
-            | <span><i class="fa fa-map-marker"></i>&nbsp;<?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?><a href="<?php echo $this->url(array('resource_id' => $itemNews->news_id,'resource_type'=>'sesnews_news','action'=>'get-direction'), 'sesbasic_get_direction', true) ;?>" class="opensmoothboxurl"><?php echo $itemNews->location;?></a><?php } else { ?><?php echo $itemNews->location;?><?php } ?></span> </div>
+            | <span><i class="sesbasic_icon_map"></i>&nbsp;<?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?><a href="<?php echo $this->url(array('resource_id' => $itemNews->news_id,'resource_type'=>'sesnews_news','action'=>'get-direction'), 'sesbasic_get_direction', true) ;?>" class="opensmoothboxurl"><?php echo $itemNews->location;?></a><?php } else { ?><?php echo $itemNews->location;?><?php } ?></span> </div>
         </div>
         <div class="sesnews_grid_contant">
           <?php echo $itemNews->getDescription($this->description_truncation);?>

@@ -14,7 +14,9 @@
 class Sesthought_Plugin_Core {
   
 	public function onRenderLayoutDefault($event,$mode=null) {
-	
+    
+    if( defined('_ENGINE_ADMIN_NEUTER') && _ENGINE_ADMIN_NEUTER ) return;
+    
 		$view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
 		$script = '';
 		if(Engine_Api::_()->getApi('settings', 'core')->getSetting('core.iframely.secretIframelyKey')) {

@@ -45,7 +45,7 @@
             
 							<a href="<?php echo $user->getHref(); ?>">
                             
-              	<img class="thumb_icon item_photo_user thumb_icon ses_tooltip" data-src="<?php echo $user->getGuid(); ?>" title="<?php echo $user->getTitle(); ?>"  alt="<?php echo $user->getTitle(); ?>" src="<?php echo $user->getPhotoUrl('thumb.icon'); ?>">
+              	<img class="thumb_icon item_photo_user thumb_icon ses_tooltip" data-src="<?php echo $user->getGuid(); ?>" title="<?php echo $user->getTitle(false); ?>"  alt="<?php echo $user->getTitle(); ?>" src="<?php echo $user->getPhotoUrl('thumb.icon'); ?>">
              </a>
             
             <?php } ?>
@@ -75,7 +75,7 @@
             	<?php $user = Engine_Api::_()->getItem('user',$user4->owner_id); ?>
             
 							<a href="<?php echo $user->getHref(); ?>">
-              	<img class="thumb_icon item_photo_user thumb_icon ses_tooltip" data-src="<?php echo $user->getGuid(); ?>" title="<?php echo $user->getTitle(); ?>"  alt="<?php echo $user->getTitle(); ?>" src="<?php echo $user->getPhotoUrl('thumb.icon'); ?>">
+              	<img class="thumb_icon item_photo_user thumb_icon ses_tooltip" data-src="<?php echo $user->getGuid(); ?>" title="<?php echo $user->getTitle(false); ?>"  alt="<?php echo $user->getTitle(); ?>" src="<?php echo $user->getPhotoUrl('thumb.icon'); ?>">
              </a>
             
             <?php } ?>
@@ -103,7 +103,7 @@
             	<?php $user = Engine_Api::_()->getItem('user',$user3->owner_id); ?>
             
 							<a href="<?php echo $user->getHref(); ?>">
-              	<img class="thumb_icon item_photo_user thumb_icon ses_tooltip" data-src="<?php echo $user->getGuid(); ?>" title="<?php echo $user->getTitle(); ?>"  alt="<?php echo $user->getTitle(); ?>" src="<?php echo $user->getPhotoUrl('thumb.icon'); ?>">
+              	<img class="thumb_icon item_photo_user thumb_icon ses_tooltip" data-src="<?php echo $user->getGuid(); ?>" title="<?php echo $user->getTitle(false); ?>"  alt="<?php echo $user->getTitle(); ?>" src="<?php echo $user->getPhotoUrl('thumb.icon'); ?>">
              </a>
             
             <?php } ?>
@@ -131,7 +131,7 @@
             	<?php $user = Engine_Api::_()->getItem('user',$user2->owner_id); ?>
             
 							<a href="<?php echo $user->getHref(); ?>">
-              	<img class="thumb_icon item_photo_user thumb_icon ses_tooltip" data-src="<?php echo $user->getGuid(); ?>" title="<?php echo $user->getTitle(); ?>"  alt="<?php echo $user->getTitle(); ?>" src="<?php echo $user->getPhotoUrl('thumb.icon'); ?>">
+              	<img class="thumb_icon item_photo_user thumb_icon ses_tooltip" data-src="<?php echo $user->getGuid(); ?>" title="<?php echo $user->getTitle(false); ?>"  alt="<?php echo $user->getTitle(); ?>" src="<?php echo $user->getPhotoUrl('thumb.icon'); ?>">
              </a>
             
             <?php } ?>
@@ -158,7 +158,7 @@
             <?php foreach($start1 as $user1){ ?>
             	<?php $user = Engine_Api::_()->getItem('user',$user1->owner_id); ?>
 							<a href="<?php echo $user->getHref(); ?>">
-              	<img class="thumb_icon item_photo_user thumb_icon ses_tooltip" data-src="<?php echo $user->getGuid(); ?>" title="<?php echo $user->getTitle(); ?>"  alt="<?php echo $user->getTitle(); ?>" src="<?php echo $user->getPhotoUrl('thumb.icon'); ?>">
+              	<img class="thumb_icon item_photo_user thumb_icon ses_tooltip" data-src="<?php echo $user->getGuid(); ?>" title="<?php echo $user->getTitle(false); ?>"  alt="<?php echo $user->getTitle(); ?>" src="<?php echo $user->getPhotoUrl('thumb.icon'); ?>">
              </a>
             <?php } ?>
             <?php if($totalitem1 > 2){ ?>

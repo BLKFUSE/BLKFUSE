@@ -23,7 +23,7 @@ isColorFieldRequired = false;
 <h2>
   <?php echo $this->translate("Native iOS Mobile App") ?>
 </h2>
-<?php if(is_countable($this->navigation) && engine_count($this->navigation) ): ?>
+<?php if( engine_count($this->navigation) ): ?>
   <div class='tabs'>
     <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render() ?>
   </div>
@@ -99,7 +99,7 @@ isColorFieldRequired = false;
           });
           console.log(string);*/
         }
-      }));
+      })).send();
   }
 	function changeThemeColor(value) {
     var customthemeValue = scriptJquery('#custom_theme_color').val();

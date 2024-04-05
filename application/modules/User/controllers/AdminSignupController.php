@@ -65,6 +65,34 @@ class User_AdminSignupController extends Core_Controller_Action_Admin
       $form->addError($this->view->translate("Receive New Signup Alerts is requried field."));
       return;
     }
+    
+    if($signup_id == 1) {
+      // Get settings
+      $global_settings_file = APPLICATION_PATH . '/application/settings/general.php';
+      if (file_exists($global_settings_file)) {
+        $generalConfig = include $global_settings_file;
+      } else {
+        $generalConfig = array();
+      }
+      // Save username settings
+      $generalConfig['username']['enabled'] = (bool) $_POST['username'] && $_POST['showusername'];
+      $dbAdapter = Engine_Db_Table::getDefaultAdapter();
+      if(!empty($generalConfig['username']['enabled'])) {
+        $dbAdapter->query('UPDATE engine4_core_search INNER JOIN engine4_users ON engine4_core_search.id = engine4_users.user_id SET title = engine4_users.username WHERE engine4_core_search.type = "user"');
+      } else {
+        $dbAdapter->query('UPDATE engine4_core_search INNER JOIN engine4_users ON engine4_core_search.id = engine4_users.user_id SET title = engine4_users.displayname WHERE engine4_core_search.type = "user"');
+      }
+      if ((is_file($global_settings_file) && is_writable($global_settings_file)) ||
+          (is_dir(dirname($global_settings_file)) && is_writable(dirname($global_settings_file)))) {
+          $file_contents = "<?php defined('_ENGINE') or die('Access Denied'); return ";
+          $file_contents .= var_export($generalConfig, true);
+          $file_contents .= "; ?>";
+          file_put_contents($global_settings_file, $file_contents);
+      } else {
+          return $form->getElement('username_code')
+                      ->addError('Unable to configure this setting due to the file /application/settings/general.php not having the correct permissions. Please CHMOD (change the permissions of) that file to 666, then try again.');
+      }
+    }
 
     // Process
     if( $plugin->onAdminProcess($form) === false && $signup_id == 5 ) {
@@ -86,7 +114,7 @@ class User_AdminSignupController extends Core_Controller_Action_Admin
 
   }
   
-  public function orderAction() {
+  public function signuporderAction() {
     $table = Engine_Api::_()->getDbtable('signup', 'user');
     $results = $table->fetchAll($table->select());
     $orders = $this->getRequest()->getParam('order');

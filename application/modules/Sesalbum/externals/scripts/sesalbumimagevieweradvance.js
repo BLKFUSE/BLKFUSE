@@ -188,8 +188,8 @@ scriptJquery(document).on("click", '.feed_attachment_album_photo', function (e) 
 scriptJquery(document).on('click','.optionOpenImageViewer',function(){
 	if(!scriptJquery('#ses_media_lightbox_container').length)
 			return;
-  if(document.getElementById('pswp_top_bar_more').style.display == 'block'){
-		scriptJquery(this).removeClass('active');
+	if(scriptJquery('.pswp__top-bar-more-tooltip').css("display") == 'block'){
+				scriptJquery(this).removeClass('active');
 		scriptJquery('.pswp__top-bar-more-tooltip').css('display','none');
 		scriptJquery(".overlay-model-class").css('display','none');
 	}else{

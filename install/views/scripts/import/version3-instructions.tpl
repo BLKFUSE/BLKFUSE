@@ -1,10 +1,10 @@
 
-<h2>SocialEngine 3 Import Instructions</h2>
+<h3><?php echo $this->translate("SocialEngine 3 Import Instructions"); ?></h3>
 
 <p>
-  This SocialEngine 3 Import tool is designed to migrate content directly from a
+  <?php echo $this->translate("This SocialEngine 3 Import tool is designed to migrate content directly from a
   SocialEngine 3 installation. It is intended to be used on a fresh
-  install of SocialEngine 4; it will remove any existing content on the network.
+  install of SocialEngine 4; it will remove any existing content on the network."); ?>
 </p>
 
 <br />
@@ -12,8 +12,8 @@
 
 <?php if( !empty($this->dbHasContent) ): ?>
   <div class="warning">
-    Your site already has content. The content will be removed if you use this
-    import tool.
+    <?php echo $this->translate("Your site already has content. The content will be removed if you use this
+    import tool."); ?>
   </div>
   <br />
   <br />
@@ -22,50 +22,50 @@
 
 <ul>
   <li>
-    The following types of data
-    <b style="font-weight: bold;">will be removed or overwritten from the existing <em>version 4</em> installation</b>:
+    <?php echo $this->translate("The following types of data"); ?>
+    <b style="font-weight: bold;"><?php echo $this->translate("will be removed or overwritten from the existing "); ?><em><?php echo $this->translate("version 4"); ?></em><?php echo $this->translate(" installation"); ?></b>:
     <ul style="margin-left: 20px;margin-bottom: 10px;padding-top: 4px;list-style: circle;">
       <li>
-        All admin and user accounts.
+        <?php echo $this->translate("All admin and user accounts."); ?>
       </li>
       <li>
-        All user content.
+        <?php echo $this->translate("All user content."); ?>
       </li>
       <li>
-        All announcements.
+        <?php echo $this->translate("All announcements."); ?>
       </li>
       <li>
-        All admin created categoried (i.e. blog categories, video categories, etc)
+        <?php echo $this->translate("All admin created categoried (i.e. blog categories, video categories, etc)"); ?>
       </li>
     </ul>
   </li>
   <li>
-    The following types of data
-    <b style="font-weight: bold;">will not be removed or overwritten from the existing <em>version 4</em> installation</b>:
+    <?php echo $this->translate("The following types of data"); ?>
+    <b style="font-weight: bold;"><?php echo $this->translate("will be removed or overwritten from the existing "); ?><em><?php echo $this->translate("version 4"); ?></em><?php echo $this->translate(" installation"); ?></b>:
     <ul style="margin-left: 20px;margin-bottom: 10px;padding-top: 4px;list-style: circle;">
       <li>
-        Any installed plugins, themes, widgets, or language packs.
+        <?php echo $this->translate("Any installed plugins, themes, widgets, or language packs."); ?>
       </li>
       <li>
-        User levels.
+        <?php echo $this->translate("User levels."); ?>
       </li>
       <li>
-        Files uploaded in the admin panel media manager.
+        <?php echo $this->translate("Files uploaded in the admin panel media manager."); ?>
       </li>
       <li>
-        Custom pages or changes to existing pages made in the layout editor.
+        <?php echo $this->translate("Custom pages or changes to existing pages made in the layout editor."); ?>
       </li>
     </ul>
   </li>
   <li>
-    The following types or data
-    <b style="font-weight: bold;">may be removed or overwritten from the existing <em>version 4</em> installation</b>:
+    <?php echo $this->translate("The following types of data"); ?>
+    <b style="font-weight: bold;"><?php echo $this->translate("may be removed or overwritten from the existing ");?><em><?php echo $this->translate("version 4"); ?></em><?php echo $this->translate(" installation"); ?></b>:
     <ul style="margin-left: 20px;margin-bottom: 10px;padding-top: 4px;list-style: circle;">
       <li>
-        Global settings
+        <?php echo $this->translate("Global settings"); ?>
       </li>
       <li>
-        Level settings
+        <?php echo $this->translate("Level settings"); ?>
       </li>
     </ul>
   </li>
@@ -77,5 +77,5 @@
 
 <button type="button" style="margin:10px 0px" id="continue" name="continue"
         onclick="window.location.href='<?php echo $this->url(array('action' => 'version3')) ?>';return false;">
-  Start Import
+  <?php echo $this->translate("Start Import"); ?>
 </button>

@@ -25,7 +25,7 @@
 	<?php echo $this->paginator->getTotalItemCount().$this->translate(' order(s) found.'); ?>
 </div>
 <?php if($this->paginator->getTotalItemCount() > 0): ?>
-<?php $defaultCurrency = Engine_Api::_()->sescontestjoinfees()->defaultCurrency(); ?>
+<?php $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency(); ?>
 <div class="sesbasic_dashboard_table sesbasic_bxs">
   <form id='multidelete_form' method="post">
     <table>
@@ -54,8 +54,8 @@
               <a href="<?php echo $user->getHref(); ?>"><?php echo $user->getTitle(); ?></a>
           </td>
           <td title="<?php echo $user->email; ?>"><?php echo $user->email ? $this->string()->truncate($user->email, 7) : '-'; ?></td>
-          <td><?php echo Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice(round($item->total_amount,2),$defaultCurrency); ?></td>
-          <td><?php echo Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($item->commission_amount,$defaultCurrency); ?></td>
+          <td><?php echo Engine_Api::_()->payment()->getCurrencyPrice(round($item->total_amount,2),$defaultCurrency); ?></td>
+          <td><?php echo Engine_Api::_()->payment()->getCurrencyPrice($item->commission_amount,$defaultCurrency); ?></td>
           <td><?php echo $item->state; ?></td> 
           <td><?php echo $item->gateway_type; ?></td> 
           <td title="<?php echo Engine_Api::_()->sescontestjoinfees()->dateFormat($item->creation_date); ?>"><?php echo $this->string()->truncate(Engine_Api::_()->sescontestjoinfees()->dateFormat($item->creation_date), 10); ?></td> 

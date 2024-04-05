@@ -25,45 +25,39 @@ settings area.
 [dir="rtl"] .networks_right{
   float: right;
 }
-ul.networks
-{
+ul.networks{
   width: 350px;
   margin: 15px 0px 15px 0px;
 }
-ul.networks > li
-{
+ul.networks > li{
   overflow: hidden;
   border: 1px solid $theme_border_medium_color;
   padding: 10px;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
 }
-ul.networks > li + li
-{
+ul.networks > li + li{
   border-top:none;
 }
-ul.networks > li > div
-{
+ul.networks > li > div{
   float: left;
   overflow: hidden;
   font-weight: bold;
 }
-html[dir="rtl"] ul.networks > li > div
-{
-  float: right;
-}
-ul.networks > li > div > span
-{
+ul.networks > li > div > span{
   font-weight: normal;
   font-size: .8em;
 }
-ul.networks > li > a
-{
+ul.networks > li > a{
   display: block;
   overflow: hidden;
-  float: right;
+  margin-left:5px;
 }
-html[dir="rtl"] ul.networks > li > a
-{
-  text-align: left;
+[dir="rtl"] ul.networks > li > a {
+  text-align:left;
+  margin-left:0;
+  margin-right:5px;
 }
 /* USER NETWORK SETTINGS */
 form#network-form input.network_join_selected

@@ -64,8 +64,7 @@ class Tickvideo_Installer extends Engine_Package_Installer_Module {
 				'params' => '',
 			));
 			$leftId = $db->lastInsertId('engine4_core_content');
-			
-			
+
 			// middle column
 			$db->insert('engine4_core_content', array(
 					'page_id' => $pageId,
@@ -117,6 +116,15 @@ class Tickvideo_Installer extends Engine_Package_Installer_Module {
 					'parent_content_id' => $tabId,
 					'order' => 4,
 					'params' => '{"type":"followings","title":"Following","nomobile":"0","name":"eticktokclone.browse-members"}',
+			));
+			
+			$db->insert('engine4_core_content', array(
+					'page_id' => $pageId,
+					'type' => 'widget',
+					'name' => 'eticktokclone.block-members',
+					'parent_content_id' => $tabId,
+					'order' => 5,
+					'params' => '{"title":"Blocked Members","name":"eticktokclone.block-members"}',
 			));
 		}
 

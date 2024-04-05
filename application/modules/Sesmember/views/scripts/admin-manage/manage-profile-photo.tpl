@@ -17,12 +17,9 @@
 <h3><?php echo "Manage Default Profile Photo";?></h3>
 
 <p><?php echo "This page lists default profile photos according to profile type. You can also delete and edit defalut  photo from here." ?></p>
-<br />	
 <div>
-  <?php echo $this->htmlLink(array('action' => 'create-profile-photo', 'reset' => false), $this->translate("Upload New Profile Photo"),array('class' => 'smoothbox buttonlink sesbasic_icon_add')) ?>
+  <?php echo $this->htmlLink(array('action' => 'create-profile-photo', 'reset' => false), $this->translate("Upload New Profile Photo"),array('class' => 'smoothbox buttonlink sesbasic_icon_add sesbasic_btn_space')) ?>
 </div>
-<br />
-
 <?php if( engine_count($this->pages) ): ?>
 <form id='multidelete_form' method="post" action="<?php echo $this->url();?>" onSubmit="return multiDelete()">
   <table class='admin_table' style="width:100%;">

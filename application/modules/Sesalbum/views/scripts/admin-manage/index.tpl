@@ -10,6 +10,7 @@
  * @author     SocialEngineSolutions
  */
 ?>
+<?php include APPLICATION_PATH .  '/application/modules/Sesalbum/views/scripts/dismiss_message.tpl';?>
 <script type="text/javascript">
 function multiDelete()
 {
@@ -25,7 +26,7 @@ function selectAll()
   }
 }
 </script>
-<h2>  <?php echo $this->translate('Advanced Photos & Albums Plugin') ?></h2>
+<h2 class="page_heading"><?php echo $this->translate('Advanced Photos & Albums Plugin') ?></h2>
 <div class="sesbasic_nav_btns">
   <a href="<?php echo $this->url(array('module' => 'sesalbum', 'controller' => 'settings', 'action' => 'help'),'admin_default',true); ?>" class="request-btn">Help</a>
 </div>
@@ -45,16 +46,13 @@ function selectAll()
   </div>
 <?php endif; ?>
 <h3><?php echo $this->translate("Manage Albums") ?></h3>
-<p>This page lists all of the albums your users have created. You can use this page to monitor these albums and delete offensive material if necessary. Entering criteria into the filter fields will help you find specific album. Leaving the filter fields blank will show all the albums on your social network.<br /><br />
-
+<p>This page lists all of the albums your users have created. You can use this page to monitor these albums and delete offensive material if necessary. Entering criteria into the filter fields will help you find specific album. Leaving the filter fields blank will show all the albums on your social network.<br />
 Below, you can also choose any number of albums as Album of the Day, mark Featured, Sponsored. These albums will be displayed randomly in the "Album / Photo of the Day" widget.</p>
-<br />
 <?php
 $settings = Engine_Api::_()->getApi('settings', 'core');?>	
 <div class='admin_search sesbasic_search_form'>
   <?php echo $this->formFilter->render($this) ?>
 </div>
-<br />
 <?php $counter = $this->paginator->getTotalItemCount(); ?> 
 <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
   <div class="sesbasic_search_reasult">

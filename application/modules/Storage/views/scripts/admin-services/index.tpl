@@ -10,37 +10,25 @@
  * @author     John Boehr <j@webligo.com>
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_settings", 'childMenuItemName' => 'core_admin_main_settings_storage')); ?>
 
-<h2>
-  <?php echo $this->translate("Manage Storage Services") ?>
-</h2>
-
-<p>
-  <?php echo $this->translate("STORAGE_VIEWS_ADMIN_SERVICES_INDEX_DESCRIPTION") ?>
-  <a class="admin help" href="http://support.socialengine.com/questions/188/How-to-use-the-CDN-Storage-Feature" target="_blank"> </a>
-</p>
-<br />
-<?php
-$settings = Engine_Api::_()->getApi('settings', 'core');
-if( $settings->getSetting('user.support.links', 0) == 1 ) {
-	echo 'More info: <a href="https://community.socialengine.com/blogs/597/43/storage-system" target="_blank">See KB article</a>.';
-} 
-?>	
-<br />	
-<br />
-
-
+<div class="admin_common_top_section">
+  <h2 class="page_heading"><?php echo $this->translate("Manage Storage Services") ?></h2>
+  <p> <?php echo $this->translate("STORAGE_VIEWS_ADMIN_SERVICES_INDEX_DESCRIPTION") ?>
+    <a class="admin help" href="https://community.socialengine.com/blogs/597/123/how-to-use-the-cloud-storage-feature" target="_blank"> </a>
+  </p>
+  <?php
+  $settings = Engine_Api::_()->getApi('settings', 'core');
+  if( $settings->getSetting('user.support.links', 0) == 1 ) {
+    echo 'More info: <a href="https://community.socialengine.com/blogs/597/43/storage-system" target="_blank">See KB article</a>.';
+  } 
+  ?>	
+</div>
 <div>
   <?php echo $this->htmlLink(array('action' => 'create', 'reset' => false), $this->translate('Add Service'), array(
-    'class' => 'buttonlink',
-    'style' => 'background-image: url(' . $this->layout()->staticBaseUrl . 'application/modules/Storage/externals/images/admin/add.png);'
+    'class' => 'admin_link_btn',
   )) ?>
 </div>
-
-<br />
-
-
-
 <?php if( !empty($this->activeJobs) && $this->activeJobs->count() > 0 ): ?>
   <ul class="form-notices">
     <?php foreach( $this->activeJobs as $activeJob ): ?>
@@ -50,12 +38,7 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
       </li>
     <?php endforeach ?>
   </ul>
-
-  <br />
 <?php endif; ?>
-
-
-
 <div class='admin_results'>
   <div>
     <?php $count = $this->paginator->getTotalItemCount() ?>
@@ -68,11 +51,12 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
   )); ?>
 </div>
 
-<br />
-
-
 <script type="text/javascript">
   function setDefaultStorageService(service_id) {
+    <?php if( _ENGINE_ADMIN_NEUTER ) { ?>
+      alert('disabled');
+      return false;
+    <?php } ?>
     scriptJquery('input[type=radio]').attr('disabled', true);
     var req = scriptJquery.ajax({
       format: 'json',
@@ -110,7 +94,7 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
       <th style='width: 1%;' class='admin_table_centered'>
         <?php echo $this->translate("Default") ?>
       </th>
-      <th style='width: 1%;' class='admin_table_options'><?php echo $this->translate("Options") ?></th>
+      <th style='width: 150px;'><?php echo $this->translate("Options") ?></th>
     </tr>
   </thead>
   <tbody>
@@ -144,14 +128,14 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
             <a href='<?php echo $this->url(array('action' => 'edit', 'service_id' => $item->service_id)) ?>'>
               <?php echo $this->translate("edit") ?>
             </a>
+            |
             <?php if( empty($this->serviceFileInfo[$item->service_id]['count']) && !$item->default ): ?>
-              <span class="sep"></span>
               <a href='<?php echo $this->url(array('action' => 'delete', 'service_id' => $item->service_id)) ?>'>
                 <?php echo $this->translate("delete") ?>
               </a>
+              |
             <?php endif ?>
             <?php if( $item->enabled ): ?>
-              <span class="sep"></span>
               <a href='<?php echo $this->url(array('action' => 'transfer', 'service_id' => $item->service_id)) ?>'>
                 <?php echo $this->translate("transfer") ?>
               </a>
@@ -162,3 +146,7 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
     <?php endif; ?>
   </tbody>
 </table>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_settings').parent().addClass('active');
+  scriptJquery('.core_admin_main_settings_storage').addClass('active');
+</script>

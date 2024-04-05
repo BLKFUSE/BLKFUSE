@@ -47,3 +47,14 @@
 
 "Maximum Allowed Photos";"Maximum Allowed Photos"
 "Enter the maximum allowed photos for which members will be able to post in album and their status posts via activity feed. The field must contain an integer between 1 and 1000000.";"Enter the maximum allowed photos for which members will be able to post in album and their status posts via activity feed. The field must contain an integer between 1 and 1000000."
+
+
+"Allow Profile Type Change";"Allow Profile Type Change"
+"If set to ""yes"", members will be able to change their Profile Types when members edit their profiles. Once they choose to change their profile type, the data of their previous profile type will be lost. (Note: This setting will only work if there are more than 1 profile type on your site excluding Admin & Super Admin profile types.)";"If set to ""yes"", members will be able to change their Profile Types when members edit their profiles. Once they choose to change their profile type, the data of their previous profile type will be lost. (Note: This setting will only work if there are more than 1 profile type on your site excluding Admin & Super Admin profile types.)"
+
+"Change Member Level on Profile Type Change";"Change Member Level on Profile Type Change"
+"If set to ""yes"", then Member Level (mapped with the changed <a href=""%s"">Profile Type</a>) will also be updated when members change their Profile Types.";"If set to ""yes"", then Member Level (mapped with the changed <a href=""%s"">Profile Type</a>) will also be updated when members change their Profile Types."
+
+"PAGETITLE-AUTHORIZATION-CREATE-ADMIN-LEVEL";"Create Member Level"
+"PAGETITLE-AUTHORIZATION-MANAGE-PROFILE-TYPE-MAPPING-ADMIN-LEVEL";"Manage Profile Types and Member Levels Mapping"
+"PAGETITLE-AUTHORIZATION-DELETE-ADMIN-LEVEL";"Delete Level"

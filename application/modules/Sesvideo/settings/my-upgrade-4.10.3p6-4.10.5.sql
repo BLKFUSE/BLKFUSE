@@ -3,9 +3,9 @@ CREATE TABLE IF NOT EXISTS `engine4_sesvideo_videos` (
   `title` varchar(100) NOT NULL,
   `description` text NOT NULL,
   `search` tinyint(1) NOT NULL default 1,
-  `owner_type` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `owner_type` varchar(128) NOT NULL,
   `owner_id` int(11) NOT NULL,
-  `parent_type` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci default NULL,
+  `parent_type` varchar(128) default NULL,
   `parent_id` int(11) unsigned default NULL,
   `creation_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `engine4_sesvideo_videos` (
   `comment_count` int(11) unsigned NOT NULL default 0,
   `like_count` int(11) unsigned NOT NULL default 0,
   `type` VARCHAR( 32 ) NOT NULL,
-  `code` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `code` TEXT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `location` varchar (255) default NULL,
   `photo_id` int(11) unsigned default NULL,
   `rating` float NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `engine4_sesvideo_videos` (
   `subcat_id` int(11) unsigned  NULL default 0,
   `thumbnail_id` int(11) unsigned default NULL,
   `is_locked` tinyint(1) unsigned  NULL default 0,
-  `password` VARCHAR(255)  CHARACTER SET latin1 COLLATE latin1_general_ci default NULL,
+  `password` VARCHAR(255)  default NULL,
   `subsubcat_id` int(11) unsigned  NULL default 0,
   `status` tinyint(1) NOT NULL,
   `file_id` int(11) unsigned NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `engine4_sesvideo_videos` (
     KEY `search` (`search`),
     KEY `creation_date` (`creation_date`),
     KEY `view_count` (`view_count`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 					
 CREATE TABLE IF NOT EXISTS `engine4_sesvideo_categories` (
       `category_id` int(11) unsigned NOT NULL auto_increment,
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `engine4_sesvideo_categories` (
       PRIMARY KEY (`category_id`),
       KEY `category_id` (`category_id`,`category_name`),
       KEY `category_name` (`category_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;
 		  
 CREATE TABLE IF NOT EXISTS `engine4_sesvideo_watchlaters` (
 	`watchlater_id` int(11) unsigned NOT NULL auto_increment,
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `engine4_sesvideo_watchlaters` (
 	PRIMARY KEY  (`watchlater_id`),
 	UNIQUE KEY `uniqueKey` (`video_id`,`owner_id`),
 	KEY `creation_date` (`creation_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 CREATE TABLE IF NOT EXISTS `engine4_sesvideo_chanels` (
 	`chanel_id` int(11) unsigned NOT NULL auto_increment,
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `engine4_sesvideo_chanels` (
 	 KEY `search` (`search`),
 	 KEY `creation_date` (`creation_date`),
 	 KEY `view_count` (`view_count`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 CREATE TABLE IF NOT EXISTS `engine4_sesvideo_chanelphotos` (
 	`chanelphoto_id` int(11) unsigned NOT NULL auto_increment,
@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `engine4_sesvideo_chanelphotos` (
 	 KEY `owner_id` (`owner_id`),
 	 KEY `creation_date` (`creation_date`),
 	 KEY `view_count` (`view_count`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 CREATE TABLE IF NOT EXISTS `engine4_sesvideo_chanelvideos` (
 	`chanelvideo_id` int(11) unsigned NOT NULL auto_increment,
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `engine4_sesvideo_chanelvideos` (
 	PRIMARY KEY  (`chanelvideo_id`),
 	KEY `creation_date` (`creation_date`),
 	UNIQUE KEY `uniqueKey` (`chanel_id`,`video_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 CREATE TABLE IF NOT EXISTS `engine4_sesvideo_chanelfollows` (
 	`chanelfollow_id` int(11) unsigned NOT NULL auto_increment,
@@ -165,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `engine4_sesvideo_chanelfollows` (
 	PRIMARY KEY  (`chanelfollow_id`),
 	UNIQUE KEY `uniqueKey` (`chanel_id`,`owner_id`),
 	KEY `creation_date` (`creation_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 

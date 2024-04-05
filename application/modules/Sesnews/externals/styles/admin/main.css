@@ -11,7 +11,11 @@
   display:none;
 }
 .sesnews_review_parameter_popup .reviewparameter{
-  margin:0 10px 10px 0;
+  margin:0 0px 10px 0;
+}
+.sesnews_review_parameter_popup div#addmore-wrapper .form-element div{
+  margin-bottom: 15px;
+  text-align: right;
 }
 .sesnews_review_parameter_popup .sesmember_added_parameter{
   margin-right: 10px;
@@ -60,7 +64,6 @@
 .sesnews_view_popup_con .sesnews_popup_owner_news p.owner_des{
 	text-align:justify;
 }
-
 /*Import Music*/
 button.sesnews_import_button{
   background-color: #83b64e;

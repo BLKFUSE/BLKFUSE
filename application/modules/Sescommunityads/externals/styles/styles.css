@@ -1155,7 +1155,10 @@
 }
 /*CREATE AN AD CSS END HERE*/
 /*SEARCH WIDGET START HERE*/
-.sescmads_search input:[type="text"],
+.sescmads_search .global_form_box{
+	padding:0;
+}
+.sescmads_search input[type="text"],
 .sescmads_search select{
 	width:100%;
 	max-width:100%;

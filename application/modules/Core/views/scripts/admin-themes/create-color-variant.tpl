@@ -10,7 +10,7 @@
  * @author     Steve
  */
 ?>
-
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_layout", 'parentMenuItemName' => 'core_admin_main_layout_themes', 'lastMenuItemName' => 'Color Variants')); ?>
 <div class="settings">
   <?php echo $this->form->render($this) ?>
 </div>

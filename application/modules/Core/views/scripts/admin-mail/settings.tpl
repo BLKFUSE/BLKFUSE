@@ -10,6 +10,7 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_settings", 'childMenuItemName' => 'core_admin_main_settings_mailsettings')); ?>
 
 <div class='settings'>
   <?php echo $this->form->render($this); ?>
@@ -19,25 +20,25 @@
 <script type="text/javascript">
   scriptJquery(document).ready(function(){
     var smtp = scriptJquery('#mail_smtp_server-wrapper, \
-                          #mail_smtp_port-wrapper, \
-                          #mail_smtp_authentication-wrapper, \
-                          #mail_smtp_username-wrapper, \
-                          #mail_smtp_password-wrapper, \
-                          #mail_smtp_ssl-wrapper');
+              #mail_smtp_port-wrapper, \
+              #mail_smtp_authentication-wrapper, \
+              #mail_smtp_username-wrapper, \
+              #mail_smtp_password-wrapper, \
+              #mail_smtp_ssl-wrapper');
 
     var auth = scriptJquery('#mail_smtp_username-wrapper, #mail_smtp_password-wrapper');
 
     if(scriptJquery('input[id=mail_smtp-1]:checked').length){
-      smtp.css('display','block');
+      smtp.css('display','flex');
     } else {
       smtp.css('display','none');
     }
     scriptJquery('input[name=mail_smtp]').on('change', function(){
       if(!scriptJquery(this).prop("checked")) return;
       if(scriptJquery(this).val() == 1 ){
-        smtp.css('display','block');
+        smtp.css('display','flex');
         if( (scriptJquery('input[id=mail_smtp_authentication-1]:checked').length) ){
-          auth.css('display','block');
+          auth.css('display','flex');
         } else {
           auth.css('display','none');
         }
@@ -46,14 +47,14 @@
       }
     });
     if(scriptJquery('input[id=mail_smtp-1]:checked').length && scriptJquery('input[id=mail_smtp_authentication-1]:checked').length ){
-      auth.css('display','block');
+      auth.css('display','flex');
     } else {
       auth.css('display','none');
     }
     scriptJquery('input[name=mail_smtp_authentication]').on('change', function(){
       if(!scriptJquery(this).prop("checked")) return;
       if(scriptJquery(this).val() == 1 ){
-        auth.css('display','block');
+        auth.css('display','flex');
       } else {
         auth.css('display','none');
       }

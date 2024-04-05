@@ -54,7 +54,7 @@ class Install_Import_Phpfox_EventCategories extends Install_Import_Phpfox_Abstra
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_event_categories` (
   `category_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */

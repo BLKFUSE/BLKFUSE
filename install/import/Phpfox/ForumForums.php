@@ -141,8 +141,8 @@ SELECT "forum" as `resource_type`, forum_id as `resource_id`, "view" as `action`
  * CREATE TABLE IF NOT EXISTS `engine4_forum_forums` (
   `forum_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `category_id` int(11) unsigned NOT NULL,
-  `title` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `creation_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL,
   `order` smallint(6) NOT NULL DEFAULT '999',
@@ -154,21 +154,21 @@ SELECT "forum" as `resource_type`, forum_id as `resource_id`, "view" as `action`
   `lastposter_id` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`forum_id`),
   KEY `category_id` (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */
 
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_forum_categories` (
   `category_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `creation_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL,
   `order` smallint(6) NOT NULL DEFAULT '0',
   `forum_count` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`category_id`),
   KEY `order` (`order`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */
 
 /*
@@ -178,7 +178,7 @@ SELECT "forum" as `resource_type`, forum_id as `resource_id`, "view" as `action`
   `child_count` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`list_id`),
   KEY `owner_id` (`owner_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
  */
 
 /*
@@ -189,19 +189,19 @@ SELECT "forum" as `resource_type`, forum_id as `resource_id`, "view" as `action`
   PRIMARY KEY (`listitem_id`),
   KEY `list_id` (`list_id`),
   KEY `child_id` (`child_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */
 
 /*
  * 
 CREATE TABLE IF NOT EXISTS `engine4_authorization_allow` (
-  `resource_type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `resource_type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `resource_id` int(11) unsigned NOT NULL,
-  `action` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `role` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `action` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `role_id` int(11) unsigned NOT NULL DEFAULT '0',
   `value` tinyint(1) NOT NULL DEFAULT '0',
-  `params` text COLLATE utf8_unicode_ci,
+  `params` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`resource_type`,`resource_id`,`action`,`role`,`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  */

@@ -20,7 +20,7 @@ class Sesmember_Plugin_Core extends Zend_Controller_Plugin_Abstract {
     //don't change module if call is from webserice (ios and android)
     if (defined("_SESAPI_R_TARG"))
       return;
-    if ($module == "user") {
+    if ($module == "user" && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.pluginactivated')) {
       if ($controller == "index" && $action == "browse") {
         $request->setModuleName('sesmember');
         $request->setControllerName('index');
@@ -103,7 +103,7 @@ class Sesmember_Plugin_Core extends Zend_Controller_Plugin_Abstract {
   }
 
   public function onRenderLayoutDefault($event) {
-
+    if( defined('_ENGINE_ADMIN_NEUTER') && _ENGINE_ADMIN_NEUTER ) return;
     $request = Zend_Controller_Front::getInstance()->getRequest();
     $module = $request->getModuleName();
     $controller = $request->getControllerName();

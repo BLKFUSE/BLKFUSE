@@ -30,3 +30,7 @@
 
   <?php endif; ?>
 </div>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_settings').parent().addClass('active');
+  scriptJquery('.core_admin_main_settings_tasks').addClass('active');
+</script>

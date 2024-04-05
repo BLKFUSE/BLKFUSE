@@ -13,12 +13,12 @@
 <?php echo $this->form->render($this); ?>
 <script type="text/javascript">
   scriptJquery(document).ready(function() {
-    <?php if(isset($_POST['submit_code'])) { ?>
+    <?php if(empty($this->emailErrors) && isset($_POST['submit_code']) && !empty($_POST['email'])) { ?>
       scriptJquery('#code-wrapper').show();
       scriptJquery('#code-label').children('label').removeClass('optional').addClass('requried');
       scriptJquery('#verification_message-wrapper').show();
       scriptJquery('#verificationmessage').html('<?php echo $this->translate("We\'ve sent a verification code in an email to %s. Enter the verification code to proceed further.", $_POST['email']); ?>');
-    <?php } else if(isset($_POST['submit'])) { ?>
+    <?php } else if(empty($this->emailErrors) && isset($_POST['submit']) && !empty($_POST['email'])) { ?>
       scriptJquery('#code-wrapper').show();
       scriptJquery('#code-label').children('label').removeClass('optional').addClass('requried');
       scriptJquery('#verification_message-wrapper').show();

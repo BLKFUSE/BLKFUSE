@@ -8,7 +8,7 @@ class Sescontestpackage_Form_Admin_Package_Settings extends Engine_Form {
     $this
         ->setTitle('Packages for Allowing Contest Creation Plugin Settings')
         ->setDescription('From this “Packages for Allowing Contest Creation Plugin” settings you can choose to enable creation of contests cased on the Package selected. You can create multiple package - both Free and Paid, with various features such that members can choose the packages which suits their requirements. Note: When you enable the contest creation based on packages on your website, then the similar settings will not work from the member level settings.')
-        ->setAttrib('class', 'global_form_popup');
+        ->setAttrib('class', 'global_form');
 
     $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
     $supportTicket = '<a href="https://socialnetworking.solutions/support/create-new-ticket/" target="_blank">Support Ticket</a>';

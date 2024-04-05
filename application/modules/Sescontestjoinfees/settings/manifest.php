@@ -31,7 +31,7 @@ return array (
     'type' => 'module',
     'name' => 'sescontestjoinfees',
     //'sku' => 'sescontestjoinfees',
-    'version' => '5.4.0',
+    'version' => '6.5.1',
     'dependencies' => array(
         array(
             'type' => 'module',

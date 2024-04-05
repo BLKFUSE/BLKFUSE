@@ -28,6 +28,11 @@ class Elpis_Plugin_Core extends Zend_Controller_Plugin_Abstract {
       $view->headScript()->appendScript($script);
 		}
 		
+    //Theme mode active
+    $view->headLink()->appendStylesheet(Zend_Registry::get('StaticBaseUrl') . 'application/modules/Elpis/externals/styles/colormode.css');
+    $script = "var isThemeModeActive = true;";
+    $view->headScript()->appendScript($script);
+
     //Google Font Work
     $usegoogleFont = $settings->getSetting('elpis.googlefonts', 1);
     if(!empty($usegoogleFont)) {

@@ -28,7 +28,8 @@ class Sescommunityads_Plugin_Core {
     $this->onRenderLayoutDefault($event);  
   }
   
-	public function onRenderLayoutDefault($event) {    
+	public function onRenderLayoutDefault($event) {
+    if( defined('_ENGINE_ADMIN_NEUTER') && _ENGINE_ADMIN_NEUTER ) return;
     $viewer = Engine_Api::_()->user()->getViewer();		
 		$request = Zend_Controller_Front::getInstance()->getRequest();
 		$moduleName = $request->getModuleName();

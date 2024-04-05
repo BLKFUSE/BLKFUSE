@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_adcampaigns` (
   `clicks` int(11) unsigned NOT NULL default '0',
   `status` tinyint(4) NOT NULL default '0',
   PRIMARY KEY (`adcampaign_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 -- --------------------------------------------------------
 
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_adphotos` (
   `modified_date` datetime NOT NULL,
   PRIMARY KEY (`adphoto_id`),
   KEY `ad_id` (`ad_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_ads` (
   `photo_id` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY (`ad_id`),
   KEY ad_campaign (`ad_campaign`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -83,13 +83,13 @@ CREATE TABLE IF NOT EXISTS `engine4_core_ads` (
 
 DROP TABLE IF EXISTS `engine4_core_auth`;
 CREATE TABLE IF NOT EXISTS `engine4_core_auth` (
-  `id` varchar(40) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `id` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
-  `type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NULL,
+  `type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `expires` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`, `user_id`),
   KEY (`expires`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_bannedemails` (
   `email` varchar(255) NOT NULL,
   PRIMARY KEY  (`bannedemail_id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_bannedips` (
   `stop` varbinary(16) NOT NULL,
   PRIMARY KEY (`bannedip_id`),
   UNIQUE KEY `start` (`start`, `stop`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_bannedusernames` (
   `username` varchar(255) NOT NULL,
   PRIMARY KEY  (`bannedusername_id`),
   KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_bannedwords` (
   `bannedword_id` int(10) unsigned NOT NULL auto_increment,
   `word` text NOT NULL,
   PRIMARY KEY  (`bannedword_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -161,18 +161,18 @@ CREATE TABLE IF NOT EXISTS `engine4_core_bannedwords` (
 DROP TABLE IF EXISTS `engine4_core_comments`;
 CREATE TABLE IF NOT EXISTS `engine4_core_comments` (
   `comment_id` int(11) unsigned NOT NULL auto_increment,
-  `resource_type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `resource_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `resource_id` int(11) unsigned NOT NULL,
-  `poster_type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `poster_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `poster_id` int(11) unsigned NOT NULL,
   `body` text NOT NULL,
   `creation_date` datetime NOT NULL,
-  `params` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `params` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `like_count` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`comment_id`),
   KEY `resource_type` (`resource_type`,`resource_id`),
   KEY `poster_type` (`poster_type`, `poster_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -186,8 +186,8 @@ CREATE TABLE IF NOT EXISTS `engine4_core_content` (
   `content_id` int(11) unsigned NOT NULL auto_increment,
   `page_id` int(11) unsigned NOT NULL,
   /* Rendering */
-  `type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL default 'widget',
-  `name` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL default 'widget',
+  `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   /* Placement */
   `parent_content_id` int(11) unsigned NULL,
   `order` int(11) NOT NULL default '1',
@@ -196,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_content` (
   `attribs` text NULL,
   PRIMARY KEY  (`content_id`),
   KEY (`page_id`, `order`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_core_content`
@@ -205,7 +205,6 @@ CREATE TABLE IF NOT EXISTS `engine4_core_content` (
 INSERT INTO `engine4_core_content` (`content_id`, `page_id`, `type`, `name`, `parent_content_id`, `order`, `params`) VALUES
 /* Header */
 (100, 1, 'container', 'main', NULL, 1, ''),
-(101, 1, 'widget', 'elpis.menu-top', 100, 1, ''),
 (110, 1, 'widget', 'core.menu-mini', 100, 1, ''),
 (111, 1, 'widget', 'core.search-mini', 100, 2, ''),
 (112, 1, 'widget', 'core.menu-logo', 100, 3, ''),
@@ -278,7 +277,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_geotags` (
   `longitude` float NOT NULL,
   PRIMARY KEY  (`geotag_id`),
   KEY `latitude` (`latitude`,`longitude`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -305,7 +304,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_jobs` (
   KEY `jobtype_id` (`jobtype_id`),
   KEY `state` (`state`),
   KEY `is_complete` (`is_complete`, `priority`, `job_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -318,16 +317,16 @@ DROP TABLE IF EXISTS `engine4_core_jobtypes`;
 CREATE TABLE IF NOT EXISTS `engine4_core_jobtypes` (
   `jobtype_id` int(11) unsigned NOT NULL auto_increment,
   `title` varchar(128) NOT NULL,
-  `type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `module` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `plugin` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `form` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NULL,
+  `type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `module` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `plugin` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `form` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `enabled` tinyint(1) unsigned NOT NULL default '1',
   `priority` mediumint(9) NOT NULL default '100',
   `multi` tinyint(3) unsigned NULL default '1',
   PRIMARY KEY  (`jobtype_id`),
   UNIQUE KEY (`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `engine4_core_jobtypes`
@@ -347,12 +346,13 @@ INSERT IGNORE INTO `engine4_core_jobtypes` (`title`, `type`, `module`, `plugin`,
 DROP TABLE IF EXISTS `engine4_core_languages`;
 CREATE TABLE `engine4_core_languages` (
   `language_id` int(11) unsigned NOT NULL auto_increment,
-  `code` varchar(8) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `code` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(255) NOT NULL,
-  `fallback` varchar(8) CHARACTER SET latin1 COLLATE latin1_general_ci NULL,
+  `fallback` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `order` smallint(6) NOT NULL default '1',
+  `enabled` TINYINT(1) NOT NULL DEFAULT "1",
   PRIMARY KEY  (`language_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_languages`
@@ -371,14 +371,15 @@ INSERT IGNORE INTO `engine4_core_languages` (`language_id`, `code`, `name`, `fal
 DROP TABLE IF EXISTS `engine4_core_likes`;
 CREATE TABLE IF NOT EXISTS `engine4_core_likes` (
   `like_id` int(11) unsigned NOT NULL auto_increment,
-  `resource_type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `resource_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `resource_id` int(11) unsigned NOT NULL,
-  `poster_type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `poster_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `poster_id` int(11) unsigned NOT NULL,
+  `creation_date` DATETIME NOT NULL,
   PRIMARY KEY  (`like_id`),
   KEY `resource_type` (`resource_type`, `resource_id`),
   KEY `poster_type` (`poster_type`, `poster_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -394,9 +395,9 @@ CREATE TABLE IF NOT EXISTS `engine4_core_links` (
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `photo_id` int(11) unsigned NOT NULL default '0',
-  `parent_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `parent_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `parent_id` int(11) unsigned NOT NULL,
-  `owner_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `owner_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner_id` int(11) unsigned NOT NULL,
   `view_count` mediumint(6) unsigned NOT NULL default '0',
   `creation_date` datetime NOT NULL,
@@ -405,7 +406,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_links` (
   PRIMARY KEY  (`link_id`),
   KEY `owner` (`owner_type`, `owner_id`),
   KEY `parent` (`parent_type`, `parent_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -422,7 +423,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_listitems` (
   PRIMARY KEY  (`listitem_id`),
   KEY `list_id` (`list_id`),
   KEY `child_id` (`child_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -435,13 +436,13 @@ DROP TABLE IF EXISTS `engine4_core_lists`;
 CREATE TABLE IF NOT EXISTS `engine4_core_lists` (
   `list_id` int(11) unsigned NOT NULL auto_increment,
   `title` varchar(64) NOT NULL default '',
-  `owner_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `owner_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner_id` int(11) unsigned NOT NULL,
-  `child_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `child_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `child_count` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`list_id`),
   KEY `owner_type` (`owner_type`, `owner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -453,7 +454,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_lists` (
 DROP TABLE IF EXISTS `engine4_core_log`;
 CREATE TABLE IF NOT EXISTS `engine4_core_log` (
   `message_id` bigint(20) unsigned NOT NULL auto_increment,
-  `domain` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `domain` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(10) unsigned default NULL,
   `plugin` varchar(128) NULL,
   `timestamp` datetime NOT NULL,
@@ -463,7 +464,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_log` (
   PRIMARY KEY  (`message_id`),
   KEY `domain` (`domain`, `timestamp`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -475,7 +476,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_log` (
 DROP TABLE IF EXISTS `engine4_core_mail`;
 CREATE TABLE IF NOT EXISTS `engine4_core_mail` (
   `mail_id` int(11) unsigned NOT NULL auto_increment,
-  `type` enum('system', 'zend') CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` enum('system', 'zend') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `body` longtext NOT NULL,
   `priority` smallint(3) default '100',
   `recipient_count` int(11) unsigned default '0',
@@ -483,7 +484,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_mail` (
   `creation_time` DATETIME NOT NULL,
   PRIMARY KEY  (`mail_id`),
   KEY (`priority`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -497,9 +498,9 @@ CREATE TABLE IF NOT EXISTS `engine4_core_mailrecipients` (
   `recipient_id` int(11) unsigned NOT NULL auto_increment,
   `mail_id` int(11) unsigned NOT NULL,
   `user_id` int(11) unsigned NULL,
-  `email` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NULL,
+  `email` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   PRIMARY KEY  (`recipient_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -511,13 +512,13 @@ CREATE TABLE IF NOT EXISTS `engine4_core_mailrecipients` (
 DROP TABLE IF EXISTS `engine4_core_mailtemplates`;
 CREATE TABLE IF NOT EXISTS `engine4_core_mailtemplates` (
   `mailtemplate_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `type` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `module` varchar(64) NOT NULL default '',
   `vars` varchar(255) NOT NULL,
   `default` TINYINT(1) NOT NULL DEFAULT "1",
   PRIMARY KEY (`mailtemplate_id`),
   UNIQUE KEY (`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_core_mailtemplates`
@@ -536,7 +537,6 @@ INSERT IGNORE INTO `engine4_core_mailtemplates` (`type`, `module`, `vars`) VALUE
 ('notify_admin_user_signup', 'core', '[host],[email],[date],[recipient_title],[object_title],[object_link]'),
 ('core_lostpassword', 'core', '[host],[email],[recipient_title],[recipient_link],[recipient_photo],[object_link]');
 
-
 -- --------------------------------------------------------
 
 --
@@ -546,14 +546,14 @@ INSERT IGNORE INTO `engine4_core_mailtemplates` (`type`, `module`, `vars`) VALUE
 DROP TABLE IF EXISTS `engine4_core_menus`;
 CREATE TABLE IF NOT EXISTS `engine4_core_menus` (
   `id` int(11) unsigned NOT NULL auto_increment,
-  `name` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `type` enum('standard','hidden','custom') CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL default 'standard',
+  `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` enum('standard','hidden','custom') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL default 'standard',
   `title` varchar(64) NOT NULL,
   `order` smallint(3) NOT NULL default '999',
   PRIMARY KEY  (`id`),
   UNIQUE KEY (`name`),
   KEY `order` (`order`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_core_menus`
@@ -577,20 +577,20 @@ INSERT IGNORE INTO `engine4_core_menus` (`name`, `type`, `title`, `order`) VALUE
 DROP TABLE IF EXISTS `engine4_core_menuitems`;
 CREATE TABLE IF NOT EXISTS `engine4_core_menuitems` (
   `id` int(11) unsigned NOT NULL auto_increment,
-  `name` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `module` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `module` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `label` varchar(64) NOT NULL,
-  `plugin` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NULL,
+  `plugin` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `params` text NOT NULL,
-  `menu` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NULL,
-  `submenu` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NULL,
+  `menu` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `submenu` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `enabled` tinyint(1) NOT NULL default '1',
   `custom` tinyint(1) NOT NULL default '0',
   `order` smallint(6) NOT NULL default '999',
   PRIMARY KEY  (`id`),
   UNIQUE KEY (`name`),
   KEY `LOOKUP` (`name`,`order`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_core_menuitems`
@@ -606,16 +606,16 @@ INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`
 ('core_footer_contact', 'core', 'Contact', '', '{"route":"default","module":"core","controller":"help","action":"contact"}', 'core_footer', '', 3),
 
 ('core_mini_update', 'activity', 'Updates', 'Activity_Plugin_Menus', '{"icon":"far fa-bell"}', 'core_mini', '', 1),
-('core_mini_admin', 'core', 'Admin', 'User_Plugin_Menus', '{"icon":"fas fa-tools"}', 'core_mini', '', 2),
+-- ('core_mini_admin', 'core', 'Admin', 'User_Plugin_Menus', '{"icon":"fas fa-tools"}', 'core_mini', '', 2),
 ('core_mini_profile', 'user', 'My Profile', 'User_Plugin_Menus', '', 'core_mini', '', 3),
-('core_mini_settings', 'user', 'Settings', 'User_Plugin_Menus', '{"icon":"fas fa-cog"}', 'core_mini', '', 5),
+-- ('core_mini_settings', 'user', 'Settings', 'User_Plugin_Menus', '{"icon":"fas fa-cog"}', 'core_mini', '', 5),
 ('core_mini_auth', 'user', 'Auth', 'User_Plugin_Menus', '{"icon":"fa-sign-in-alt"}', 'core_mini', '', 6),
 ('core_mini_signup', 'user', 'Signup', 'User_Plugin_Menus', '{"icon":"fa-user-plus"}', 'core_mini', '', 7),
 
 ('core_admin_main_home', 'core', 'Home', '', '{"route":"admin_default"}', 'core_admin_main', '', 1),
 ('core_admin_main_manage', 'core', 'Manage', '', '{"uri":"javascript:void(0);this.blur();"}', 'core_admin_main', 'core_admin_main_manage', 2),
 ('core_admin_main_settings', 'core', 'Settings', '', '{"uri":"javascript:void(0);this.blur();"}', 'core_admin_main', 'core_admin_main_settings', 3),
-('core_admin_main_plugins', 'core', 'Plugins', '', '{"uri":"javascript:void(0);this.blur();"}', 'core_admin_main', 'core_admin_main_plugins', 4),
+('core_admin_main_plugins', 'core', 'Plugins', '', '{"route":"admin_default","module":"core","controller":"manage-packages","action":"enabled"}', 'core_admin_main', 'core_admin_main_plugins', 4),
 ('core_admin_main_layout', 'core', 'Appearance', '', '{"uri":"javascript:void(0);this.blur();"}', 'core_admin_main', 'core_admin_main_layout', 5),
 ('core_admin_main_monetization', 'core', 'Monetization', '', '{"uri":"javascript:void(0);this.blur();"}', 'core_admin_main', 'core_admin_main_monetization', 6),
 ('core_admin_main_ads', 'core', 'Ads', '', '{"route":"admin_default","controller":"ads"}', 'core_admin_main_monetization', '', 6),
@@ -658,16 +658,15 @@ INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`
 
 ('adcampaign_admin_main_edit', 'core', 'Edit Settings', '', '{"route":"admin_default","module":"core","controller":"ads","action":"edit"}', 'adcampaign_admin_main', '', 1),
 ('adcampaign_admin_main_manageads', 'core', 'Manage Advertisements', '', '{"route":"admin_default","module":"core","controller":"ads","action":"manageads"}', 'adcampaign_admin_main', '', 2),
-('core_admin_main_settings_redirection', 'core', 'Redirection Settings', '', '{"route":"core_admin_settings","action":"redirection"}', 'core_admin_main_settings', '', 15);
+('core_admin_main_settings_redirection', 'core', 'Redirection Settings', '', '{"route":"core_admin_settings","action":"redirection"}', 'core_admin_main_settings', '', 15),
+('core_admin_main_settings_editor', 'core', 'TinyMCE Editor Settings', '', '{"route":"core_admin_settings","action":"editor"}', 'core_admin_main_settings', '', 16);
 
 INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `enabled`, `custom`, `order`) VALUES
-('core_social_site_facebook', 'core', 'Facebook', '', '{"uri": "","target":"_blank", "icon":"fa-facebook"}', 'core_social_sites', 0, 1, 1),
-('core_social_site_twitter', 'core', 'Twitter', '', '{"uri": "","target":"_blank", "icon":"fa-twitter"}', 'core_social_sites', 0, 1, 2),
-('core_social_site_linkedin', 'core', 'Linkedin', '', '{"uri": "","target":"_blank", "icon":"fa-linkedin"}', 'core_social_sites', 0, 1, 3),
-('core_social_site_youtube', 'core', 'Youtube', '', '{"uri": "","target":"_blank", "icon":"fa-youtube"}', 'core_social_sites', 0, 1, 4),
-('core_social_site_googleplus', 'core', 'Google +', '', '{"uri": "","target":"_blank", "icon":"fa-google-plus"}', 'core_social_sites', 0, 1, 5),
-('core_social_site_pinterest', 'core', 'Pinterest', '', '{"uri": "","target":"_blank", "icon":"fa-pinterest"}', 'core_social_sites', 0, 1, 6)
-;
+('core_social_site_facebook', 'core', 'Facebook', '', '{"uri": "javascript:void(0)","target":"_blank", "icon":"fa-facebook"}', 'core_social_sites', 0, 1, 1),
+('core_social_site_twitter', 'core', 'Twitter', '', '{"uri": "javascript:void(0)","target":"_blank", "icon":"fa-twitter"}', 'core_social_sites', 0, 1, 2),
+('core_social_site_linkedin', 'core', 'Linkedin', '', '{"uri": "javascript:void(0)","target":"_blank", "icon":"fab fa-linkedin-in"}', 'core_social_sites', 0, 1, 3),
+('core_social_site_youtube', 'core', 'Youtube', '', '{"uri": "javascript:void(0)","target":"_blank", "icon":"fa-youtube"}', 'core_social_sites', 0, 1, 4),
+('core_social_site_pinterest', 'core', 'Pinterest', '', '{"uri": "javascript:void(0)","target":"_blank", "icon":"fa-brands fa-pinterest-p"}', 'core_social_sites', 0, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -677,10 +676,10 @@ INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`
 
 DROP TABLE IF EXISTS `engine4_core_migrations`;
 CREATE TABLE IF NOT EXISTS `engine4_core_migrations` (
-  `package` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `package` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `current` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY (`package`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -691,14 +690,14 @@ CREATE TABLE IF NOT EXISTS `engine4_core_migrations` (
 
 DROP TABLE IF EXISTS `engine4_core_modules`;
 CREATE TABLE IF NOT EXISTS `engine4_core_modules` (
-  `name` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(64) NOT NULL,
   `description` text NULL,
-  `version` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `version` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `enabled` tinyint(1) NOT NULL default '0',
-  `type` enum('core','standard','extra') character set latin1 collate latin1_general_ci NOT NULL default 'extra',
+  `type` enum('core','standard','extra') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL default 'extra',
   PRIMARY KEY  (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `engine4_core_modules`
@@ -724,7 +723,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_nodes` (
   `last_seen` datetime NOT NULL,
   PRIMARY KEY (`node_id`),
   UNIQUE KEY `signature` (`signature`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -736,7 +735,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_nodes` (
 DROP TABLE IF EXISTS `engine4_core_pages`;
 CREATE TABLE IF NOT EXISTS `engine4_core_pages` (
   `page_id` int(11) unsigned NOT NULL auto_increment,
-  `name` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NULL,
+  `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `displayname` varchar(128) NOT NULL default '',
   `url` varchar(128) NULL,
   `title` varchar(255) NOT NULL,
@@ -752,7 +751,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_pages` (
   PRIMARY KEY  (`page_id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `url` (`url`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_core_pages`
@@ -779,10 +778,10 @@ CREATE TABLE IF NOT EXISTS `engine4_core_processes` (
   `system_pid` int(10) unsigned NOT NULL default '0',
   `started` int(10) unsigned NOT NULL,
   `timeout` mediumint(10) unsigned NOT NULL default '0',
-  `name` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY  (`pid`),
   KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -799,7 +798,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_referrers` (
   `value` int(11) unsigned NOT NULL,
   PRIMARY KEY  (`host`,`path`,`query`),
   KEY `value` (`value`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -812,9 +811,9 @@ DROP TABLE IF EXISTS `engine4_core_reports`;
 CREATE TABLE IF NOT EXISTS `engine4_core_reports` (
   `report_id` int(11) NOT NULL auto_increment,
   `user_id` int(11) NOT NULL,
-  `category` varchar(16) collate utf8_unicode_ci NOT NULL,
-  `description` text collate utf8_unicode_ci NOT NULL,
-  `subject_type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `category` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subject_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `subject_id` int(11) NOT NULL,
   `creation_date` datetime NOT NULL,
   `read` tinyint(1) NOT NULL default '0',
@@ -822,7 +821,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_reports` (
   KEY `category` (`category`),
   KEY `user_id` (`user_id`),
   KEY `read` (`read`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -833,12 +832,12 @@ CREATE TABLE IF NOT EXISTS `engine4_core_reports` (
 
 DROP TABLE IF EXISTS `engine4_core_routes`;
 CREATE TABLE `engine4_core_routes` (
-  `name` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `name` varchar(32) NOT NULL,
   `config` text NOT NULL,
   `order` smallint(6) NOT NULL default '1',
   PRIMARY KEY  (`name`),
   KEY `order` (`order`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -849,15 +848,18 @@ CREATE TABLE `engine4_core_routes` (
 
 DROP TABLE IF EXISTS `engine4_core_search`;
 CREATE TABLE IF NOT EXISTS `engine4_core_search` (
-  `type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `search_id` INT(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type` varchar(32) NOT NULL,
   `id` int(11) unsigned NOT NULL,
   `title` varchar(255) NOT NULL,
-  `description` varchar(255) NULL DEFAULT NULL,
+  `description` text  NULL DEFAULT NULL,
   `keywords` varchar(255) NOT NULL,
   `hidden` varchar(255) NULL DEFAULT NULL,
-  PRIMARY KEY  (`type`,`id`),
+  `approved` TINYINT(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY  (`search_id`),
+  UNIQUE KEY `type` (`type`,`id`),
   FULLTEXT KEY `LOOKUP` (`title`, `description`, `keywords`, `hidden`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 -- --------------------------------------------------------
 
@@ -869,13 +871,13 @@ DROP TABLE IF EXISTS `engine4_core_serviceproviders`;
 CREATE TABLE IF NOT EXISTS `engine4_core_serviceproviders` (
   `serviceprovider_id` int(10) unsigned NOT NULL auto_increment,
   `title` varchar(128) NOT NULL,
-  `type` varchar(128) character set latin1 collate latin1_general_ci NOT NULL,
-  `name` varchar(128) character set latin1 collate latin1_general_ci NOT NULL,
-  `class` varchar(128) character set latin1 collate latin1_general_ci NOT NULL,
+  `type` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `class` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `enabled` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`serviceprovider_id`),
   UNIQUE KEY `type` (`type`,`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_core_serviceproviders`
@@ -905,14 +907,14 @@ INSERT IGNORE INTO `engine4_core_serviceproviders` (`title`, `type`, `name`, `cl
 DROP TABLE IF EXISTS `engine4_core_services`;
 CREATE TABLE IF NOT EXISTS `engine4_core_services` (
   `service_id` int(10) unsigned NOT NULL auto_increment,
-  `type` varchar(128) character set latin1 collate latin1_general_ci NOT NULL,
-  `name` varchar(128) character set latin1 collate latin1_general_ci NOT NULL,
-  `profile` varchar(128) character set latin1 collate latin1_general_ci NOT NULL default 'default',
+  `type` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `profile` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL default 'default',
   `config` text NOT NULL,
   `enabled` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`service_id`),
   UNIQUE KEY `type` (`type`, `profile`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_core_services`
@@ -929,12 +931,12 @@ DROP TABLE IF EXISTS `engine4_core_servicetypes`;
 CREATE TABLE IF NOT EXISTS `engine4_core_servicetypes` (
   `servicetype_id` int(10) unsigned NOT NULL auto_increment,
   `title` varchar(128) NOT NULL,
-  `type` varchar(128) character set latin1 collate latin1_general_ci NOT NULL,
-  `interface` varchar(128) character set latin1 collate latin1_general_ci default NULL,
+  `type` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `interface` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci default NULL,
   `enabled` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`servicetype_id`),
   UNIQUE KEY `type` (`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_core_servicetypes`
@@ -964,7 +966,7 @@ CREATE TABLE `engine4_core_session` (
   `user_id` int(10) unsigned default NULL,
   PRIMARY KEY  (`id`),
   KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -975,10 +977,10 @@ CREATE TABLE `engine4_core_session` (
 
 DROP TABLE IF EXISTS `engine4_core_settings`;
 CREATE TABLE `engine4_core_settings` (
-  `name` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` longtext NOT NULL,
   PRIMARY KEY  (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_core_settings`
@@ -1065,11 +1067,11 @@ INSERT IGNORE INTO `engine4_core_settings` (`name`, `value`) VALUES
 
 DROP TABLE IF EXISTS `engine4_core_statistics`;
 CREATE TABLE IF NOT EXISTS `engine4_core_statistics` (
-  `type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
   `value` int(11) NOT NULL default '0',
   PRIMARY KEY  (`type`,`date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -1081,12 +1083,12 @@ CREATE TABLE IF NOT EXISTS `engine4_core_statistics` (
 DROP TABLE IF EXISTS `engine4_core_status`;
 CREATE TABLE IF NOT EXISTS `engine4_core_status` (
   `status_id` int(11) unsigned NOT NULL auto_increment,
-  `resource_type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `resource_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `resource_id` int(11) unsigned NOT NULL,
   `body` text NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY  (`status_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -1097,11 +1099,11 @@ CREATE TABLE IF NOT EXISTS `engine4_core_status` (
 
 DROP TABLE IF EXISTS `engine4_core_styles`;
 CREATE TABLE IF NOT EXISTS `engine4_core_styles` (
-  `type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `id` int(11) unsigned NOT NULL,
   `style` text NOT NULL,
   PRIMARY KEY  (`type`,`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -1113,11 +1115,11 @@ CREATE TABLE IF NOT EXISTS `engine4_core_styles` (
 DROP TABLE IF EXISTS `engine4_core_tagmaps`;
 CREATE TABLE IF NOT EXISTS `engine4_core_tagmaps` (
   `tagmap_id` int(11) unsigned NOT NULL auto_increment,
-  `resource_type` varchar(24) character set latin1 collate latin1_general_ci NOT NULL,
+  `resource_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `resource_id` int(11) unsigned NOT NULL,
-  `tagger_type` varchar(24) character set latin1 collate latin1_general_ci NOT NULL,
+  `tagger_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tagger_id` int(11) unsigned NOT NULL,
-  `tag_type` varchar(24) character set latin1 collate latin1_general_ci NOT NULL,
+  `tag_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tag_id` int(11) unsigned NOT NULL,
   `creation_date` datetime default NULL,
   `extra` text NULL,
@@ -1125,7 +1127,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_tagmaps` (
   KEY `resource_type` (`resource_type`,`resource_id`),
   KEY `tagger_type` (`tagger_type`,`tagger_id`),
   KEY `tag_type` (`tag_type`,`tag_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -1142,7 +1144,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_tags` (
   `modified_date` datetime DEFAULT NULL,
   PRIMARY KEY  (`tag_id`),
   UNIQUE KEY `text` (`text`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -1156,7 +1158,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_tasks` (
   `task_id` int(11) unsigned NOT NULL auto_increment,
   `title` varchar(255) NOT NULL,
   `module` varchar(128) NOT NULL default '',
-  `plugin` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `plugin` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `timeout` int(11) unsigned NOT NULL default '60',
   `processes` smallint(3) unsigned NOT NULL default '1',
   `semaphore` smallint(3) NOT NULL default '0',
@@ -1172,7 +1174,7 @@ CREATE TABLE IF NOT EXISTS `engine4_core_tasks` (
   UNIQUE KEY `plugin` (`plugin`),
   KEY `module` (`module`),
   KEY `started_last` (`started_last`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_core_tasks`
@@ -1182,7 +1184,6 @@ INSERT IGNORE INTO `engine4_core_tasks` (`title`, `module`, `plugin`, `timeout`)
 ('Job Queue', 'core', 'Core_Plugin_Task_Jobs', 5),
 ('Background Mailer', 'core', 'Core_Plugin_Task_Mail', 15),
 ('Cache Prefetch', 'core', 'Core_Plugin_Task_Prefetch', 300),
-('Statistics', 'core', 'Core_Plugin_Task_Statistics', 43200),
 ('Log Rotation', 'core', 'Core_Plugin_Task_LogRotation', 7200),
 ('Clear Login Logs', 'core', 'Core_Plugin_Task_ClarLoginLog', 432000);
 
@@ -1196,14 +1197,14 @@ INSERT IGNORE INTO `engine4_core_tasks` (`title`, `module`, `plugin`, `timeout`)
 DROP TABLE IF EXISTS `engine4_core_themes`;
 CREATE TABLE IF NOT EXISTS `engine4_core_themes` (
   `theme_id` int(11) unsigned NOT NULL auto_increment,
-  `name` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `active` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`theme_id`),
   UNIQUE KEY `name` (`name`),
   KEY `active` (`active`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_core_themes`
@@ -1226,15 +1227,15 @@ INSERT IGNORE INTO `engine4_core_themes` (`theme_id`, `name`, `title`, `descript
 DROP TABLE IF EXISTS `engine4_core_banners`;
 CREATE TABLE IF NOT EXISTS `engine4_core_banners` (
   `banner_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `module` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `module` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(64) NOT NULL,
   `body` varchar(255) NOT NULL,
   `photo_id` int(11) unsigned NOT NULL default '0',
   `params` text NOT NULL,
   `custom` tinyint(1) NOT NULL default '0',
   PRIMARY KEY (`banner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1315,9 +1316,111 @@ CREATE TABLE `engine4_core_files` (
   `creation_date` datetime NOT NULL, 
   `modified_date` datetime NOT NULL, 
   PRIMARY KEY  (`file_id`) 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 ALTER TABLE `engine4_core_mailtemplates` ADD `member_level` TEXT NULL DEFAULT NULL;
+ALTER TABLE `engine4_core_languages` ADD `icon` VARCHAR(255) NULL DEFAULT NULL;
+
+INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
+('core_admin_main_manage_tags', 'core', 'Manage Tags', '', '{"route":"admin_default","module":"core","controller":"managetags"}', 'core_admin_main_manage', '', 8),
+('core_admin_main_manage_comments', 'core', 'Manage Comments', '', '{"route":"admin_default","module":"core","controller":"manage-comments"}', 'core_admin_main_manage', '', 10), ('core_admin_main_contentcomments', 'core', 'Comments on Content', '', '{"route":"admin_default","module":"core","controller":"manage-comments"}', 'core_admin_main_manage_comments', '', 1),
+('core_admin_main_activitycomments', 'core', 'Comments on Activity Feeds', '', '{"route":"admin_default","module":"core","controller":"manage-comments", "action":"activity"}', 'core_admin_main_manage_comments', '', 2),
+
+('core_admin_settings_activity', 'activity', 'Activity Feed Settings', '', '{"route":"admin_default","module":"activity","controller":"settings","action":"index"}', 'core_admin_main_settings_activity', '', 1),
+('core_admin_settings_activitytypes', 'activity', 'Activity Feeds Item Type Settings', '', '{"route":"admin_default","module":"activity","controller":"settings","action":"types"}', 'core_admin_main_settings_activity', '', 2),
+('core_admin_main_manage_activity', 'core', 'Manage Activity Feeds', '', '{"route":"admin_default","module":"core","controller":"manage-activity"}', 'core_admin_main_settings_activity', '', 3),('core_admin_main_manage_activitycom', 'core', 'Manage Comments on Activity Feeds', '', '{"route":"admin_default","module":"core","controller":"manage-comments", "action":"activity"}', 'core_admin_main_settings_activity', '', 4);
 
 INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES ('core_admin_main_manage_tags', 'core', 'Manage Tags', '', '{"route":"admin_default","module":"core","controller":"managetags"}', 'core_admin_main_manage', '', 8);
+
+ALTER TABLE `engine4_core_mailtemplates` ADD `is_admin` TINYINT(1) NOT NULL DEFAULT '0';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `engine4_core_reasons`
+--
+
+DROP TABLE IF EXISTS `engine4_core_tickets`;
+CREATE TABLE IF NOT EXISTS `engine4_core_tickets` (
+  `ticket_id` int(11) NOT NULL auto_increment,
+  `user_id` int(11) NOT NULL,
+  `subject` text NOT NULL,
+  `description` text NULL DEFAULT NULL,
+  `resource_type` varchar(32) NOT NULL,
+  `resource_id` int(11) NOT NULL,
+  `status` varchar(32) NOT NULL default 'Open',
+  `creation_date` datetime NOT NULL,
+  `lastreply_date` datetime NOT NULL,
+  `category_id` INT(11) NOT NULL DEFAULT '0',
+  `subcat_id` INT(11) NOT NULL DEFAULT '0',
+  `subsubcat_id` INT(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY  (`ticket_id`),
+  KEY `user_id` (`user_id`),
+  KEY `category_id` (`category_id`),
+  KEY `subcat_id` (`subcat_id`),
+  KEY `subsubcat_id` (`subsubcat_id`),
+  KEY `status` (`status`),
+  KEY `resource_type` (`resource_type`),
+  KEY `resource_id` (`resource_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
+
+DROP TABLE IF EXISTS `engine4_core_ticketreplies`;
+CREATE TABLE IF NOT EXISTS `engine4_core_ticketreplies` (
+  `ticketreply_id` int(11) NOT NULL auto_increment,
+  `ticket_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `description` text NULL DEFAULT NULL,
+  `creation_date` datetime NOT NULL,
+  PRIMARY KEY  (`ticketreply_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
+
+INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES ('core_admin_main_manage_tickets', 'core', 'Support Inbox', '', '{"route":"admin_default","module":"core","controller":"support"}', 'core_admin_main_manage', '', 12), ('core_admin_manage_tickets', 'core', 'Support Inbox', '', '{"route":"admin_default","module":"core","controller":"support"}', 'core_admin_main_manage_tickets', '', 1), ('core_admin_manage_categories', 'core', 'Categories', '', '{"route":"admin_default","module":"core","controller":"support", "action": "categories"}', 'core_admin_main_manage_tickets', '', 2);
+
+
+DROP TABLE IF EXISTS `engine4_core_categories`;
+CREATE TABLE `engine4_core_categories` (
+  `category_id` int(11) NOT NULL auto_increment,
+  `user_id` int(11) unsigned NOT NULL,
+  `category_name` varchar(128) NOT NULL,
+  `subcat_id` INT(11) NOT NULL DEFAULT '0',
+  `subsubcat_id` INT(11) NOT NULL DEFAULT '0',
+  `order` INT(11) NOT NULL DEFAULT '0',
+  `type` varchar(128) NOT NULL DEFAULT 'tickets',
+  PRIMARY KEY (`category_id`),
+  KEY `user_id` (`user_id`),
+  KEY `category_id` (`category_id`, `category_name`),
+  KEY `category_name` (`category_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
+
+
+INSERT IGNORE INTO `engine4_core_menus` (`name`, `type`, `title`) VALUES
+('core_minimenuquick', 'standard', 'Mini Menu Quick Links Menu');
+
+INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
+('core_minimenu_edit', 'core', 'Edit Profile', 'User_Plugin_Menus', '', 'core_minimenuquick', '', 1),
+('core_minimenu_settings', 'core', 'Account Settings', '', '{"route":"user_extended","module":"user","controller":"settings","action":"general", "icon":"fas fa-cog"}', 'core_minimenuquick', '', 2);
+
+ALTER TABLE `engine4_core_categories` ADD INDEX(`subcat_id`);
+ALTER TABLE `engine4_core_categories` ADD INDEX(`subsubcat_id`);
+ALTER TABLE `engine4_core_categories` ADD INDEX(`order`);
+ALTER TABLE `engine4_core_categories` ADD INDEX(`type`);
+ALTER TABLE `engine4_core_comments` ADD INDEX(`creation_date`);
+ALTER TABLE `engine4_core_comments` ADD INDEX(`like_count`);
+ALTER TABLE `engine4_core_files` ADD INDEX(`name`);
+ALTER TABLE `engine4_core_files` ADD INDEX(`storage_file_id`);
+ALTER TABLE `engine4_core_files` ADD INDEX(`creation_date`);
+ALTER TABLE `engine4_core_languages` ADD INDEX(`code`);
+ALTER TABLE `engine4_core_languages` ADD INDEX(`enabled`);
+ALTER TABLE `engine4_core_languages` ADD INDEX(`order`);
+ALTER TABLE `engine4_core_likes` ADD INDEX(`creation_date`);
+ALTER TABLE `engine4_core_search` ADD INDEX(`approved`);
+ALTER TABLE `engine4_core_ticketreplies` ADD INDEX(`ticket_id`);
+ALTER TABLE `engine4_core_ticketreplies` ADD INDEX(`creation_date`);
+ALTER TABLE `engine4_core_tickets` ADD INDEX(`creation_date`);
+ALTER TABLE `engine4_core_tickets` ADD INDEX(`lastreply_date`);
+
+INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES 
+('core_minimenu_supportinbox', 'core', 'Support Inbox', '', '{"route":"user_support","module":"user","controller":"support","action":"index", "icon":"fas fa-headset"}', 'core_minimenuquick', '', 3);
+
+ALTER TABLE `engine4_core_search` ADD `username` VARCHAR(255) NULL DEFAULT NULL;

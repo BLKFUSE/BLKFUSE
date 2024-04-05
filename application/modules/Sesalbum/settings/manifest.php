@@ -14,18 +14,19 @@ return array(
     array(
         'type' => 'module',
         'name' => 'sesalbum',
-        'version' => '6.4.0',
+        'version' => '6.5.1',
 				'dependencies' => array(
             array(
                 'type' => 'module',
                 'name' => 'core',
-                'minVersion' => '6.2.0',
+                'minVersion' => '6.5.1',
             ),
         ),
         'path' => 'application/modules/Sesalbum',
         'title' => 'SNS - Advanced Photos & Albums Plugin',
         'description' => 'SNS - Advanced Photos & Albums Plugin',
         'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+		'thumb' => 'application/modules/Sesalbum/externals/images/thumb.png',
         'callback' => array(
             'path' => 'application/modules/Sesalbum/settings/install.php',
             'class' => 'Sesalbum_Installer',

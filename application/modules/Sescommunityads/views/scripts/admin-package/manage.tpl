@@ -16,27 +16,18 @@
 <h3>Manage Ads Packages</h3>
 <p>From this section, you can create New Packages either Default or Paid which you can choose at the time of Ad creation. You can also search for the specific Package by entering the criteria into the fields.<br />
 You can also disable the packages or can mark them as default according to your requirement from here. If you want to edit any package then you can do that also.</p>
-<br />
 <?php if( !empty($this->error) ): ?>
   <ul class="form-errors">
     <li>
       <?php echo $this->error ?>
     </li>
   </ul>
-
-  <br />
 <?php /*return; */ endif; ?>
-
-
 <div>
   <?php echo $this->htmlLink(array('action' => 'create', 'reset' => false), $this->translate('Add Package'), array(
     'class' => 'buttonlink sesbasic_icon_add',
   )) ?>
 </div>
-
-<br />
-
-
 <?php //if( $this->paginator->getTotalItemCount() > 0 ): ?>
   <script type="text/javascript">
     var currentOrder = '<?php echo $this->filterValues['order'] ?>';
@@ -56,12 +47,7 @@ You can also disable the packages or can mark them as default according to your 
   <div class='admin_search'>
     <?php echo $this->formFilter->render($this) ?>
   </div>
-  
-  <br />
 <?php //endif; ?>
-
-
-
 <div class='admin_results'>
   <div>
     <?php $count = $this->paginator->getTotalItemCount() ?>
@@ -74,10 +60,6 @@ You can also disable the packages or can mark them as default according to your 
     )); ?>
   </div>
 </div>
-
-<br />
-
-
 <?php if( $this->paginator->getTotalItemCount() > 0 ): ?>
 <div style="overflow:auto">
   <table class='admin_table'>

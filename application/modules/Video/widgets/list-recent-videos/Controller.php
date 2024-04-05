@@ -38,6 +38,7 @@ class Video_Widget_ListRecentVideosController extends Engine_Content_Widget_Abst
             $select = Engine_Api::_()->getDbTable('videos','video')->select();
             $select->where('search =?',1);
         }
+        $select->where('approved = ?', 1)->where('parent_type = ?', 'user');
         $select->where('status = ?', 1);
 
         if( $recentType == 'creation' ) {

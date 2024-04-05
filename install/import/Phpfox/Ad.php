@@ -204,72 +204,72 @@ class Install_Import_Phpfox_Ad extends Install_Import_Phpfox_Abstract
  * CREATE TABLE IF NOT EXISTS `engine4_core_adcampaigns` (
   `adcampaign_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `end_settings` tinyint(4) NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `start_time` datetime NOT NULL,
   `end_time` datetime NOT NULL,
   `limit_view` int(11) unsigned NOT NULL DEFAULT '0',
   `limit_click` int(11) unsigned NOT NULL DEFAULT '0',
-  `limit_ctr` varchar(11) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
-  `network` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `level` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `limit_ctr` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `network` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `level` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `views` int(11) unsigned NOT NULL DEFAULT '0',
   `clicks` int(11) unsigned NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`adcampaign_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */
 
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_core_adphotos` (
   `adphoto_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ad_id` int(11) unsigned NOT NULL,
-  `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `file_id` int(11) unsigned NOT NULL,
   `creation_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL,
   PRIMARY KEY (`adphoto_id`),
   KEY `ad_id` (`ad_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */
 
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_storage_files` (
   `file_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `parent_file_id` int(10) unsigned DEFAULT NULL,
-  `type` varchar(16) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-  `parent_type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+  `type` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parent_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `parent_id` int(10) unsigned DEFAULT NULL,
   `user_id` int(10) unsigned DEFAULT NULL,
   `creation_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL,
   `service_id` int(10) unsigned NOT NULL DEFAULT '1',
-  `storage_path` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `extension` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `mime_major` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `mime_minor` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `storage_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `extension` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) collate utf8mb4_unicode_ci default NULL,
+  `mime_major` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mime_minor` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `size` bigint(20) unsigned NOT NULL,
-  `hash` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `hash` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`file_id`),
   UNIQUE KEY `parent_file_id` (`parent_file_id`,`type`),
   KEY `PARENT` (`parent_type`,`parent_id`),
   KEY `user_id` (`user_id`),
   KEY `service_id` (`service_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */
 
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_core_ads` (
   `ad_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
   `ad_campaign` int(11) unsigned NOT NULL,
   `views` int(11) unsigned NOT NULL DEFAULT '0',
   `clicks` int(11) unsigned NOT NULL DEFAULT '0',
-  `media_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `html_code` text COLLATE utf8_unicode_ci NOT NULL,
+  `media_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `html_code` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `photo_id` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ad_id`),
   KEY `ad_campaign` (`ad_campaign`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 
  */

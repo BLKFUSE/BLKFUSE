@@ -24,8 +24,11 @@ class Sesalbum_Plugin_Menus
     }
     return true;
   }
+  
 	public function canEnableAlbum(){}
+	
 	public function canEnableViewAlbum(){}
+	
 	public function isLoggedIn(){
 		// Must be logged in
 		$viewer = Engine_Api::_()->user()->getViewer();
@@ -34,6 +37,7 @@ class Sesalbum_Plugin_Menus
 		}
 		return true;
 	}
+	
   public function canViewAlbums()
   {
     $viewer = Engine_Api::_()->user()->getViewer();

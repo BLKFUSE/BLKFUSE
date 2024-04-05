@@ -19,7 +19,7 @@ function getRequestedVideoForImageViewer(imageURL,requestedURL){
   if(!scriptJquery('#ses_media_lightbox_container_video').length)
 	  defaultLayourForVideoPopup();
 	scriptJquery('#ses_media_lightbox_container_video').show();
-	scriptJquery('body').css({ 'overflow': 'hidden' });
+	// scriptJquery('body').css({ 'overflow': 'hidden' });
   if(firstStartPoint == 0){
     offsetY = window.pageYOffset;
     scriptJquery('html').css('position','fixed').css('width','100%').css('overflow','hidden');
@@ -58,9 +58,10 @@ function changeurlsesbasic(url){
 scriptJquery(document).on('click','.ses_media_lightbox_overlay, #crossSes, .cross',function (e) {
 	if(typeof checkRequestmoduleIsVideo != "function")
 		return;
+	scriptJquery('html').css('position','initial').css('width','100%').css('overflow','initial').css("top","auto");
+
 	if(scriptJquery('#ses_media_lightbox_container_video').css('display') != 'none'){
 		scriptJquery('body').css({ 'overflow': 'initial' });
-    scriptJquery('html').css('position','auto').css('overflow','auto');
     scriptJquery(window).scrollTop(offsetY);
     if(scriptJquery('.emoji_content').css('display') == 'block')
       scriptJquery('.exit_emoji_btn').click();

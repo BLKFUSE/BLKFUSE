@@ -45,9 +45,9 @@ $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/ses-
   function checkUpload(value) {
     if (value == 'both' || value == 'soundCloud') {
       if (document.getElementById('sesmusic_scclientid-wrapper'))
-        document.getElementById('sesmusic_scclientid-wrapper').style.display = 'block';
+        document.getElementById('sesmusic_scclientid-wrapper').style.display = 'flex';
       if (document.getElementById('sesmusic_scclientscreatid-wrapper'))
-        document.getElementById('sesmusic_scclientscreatid-wrapper').style.display = 'block';
+        document.getElementById('sesmusic_scclientscreatid-wrapper').style.display = 'flex';
     } else {
       if (document.getElementById('sesmusic_scclientid-wrapper'))
         document.getElementById('sesmusic_scclientid-wrapper').style.display = 'none';
@@ -90,3 +90,10 @@ $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/ses-
 		});
   </script>
 <?php endif; ?>
+<style> 
+	button[disabled] { 
+	  background:#bdbdbd; 
+	  border-color:#bdbdbd; 
+	  cursor:not-allowed; 
+  }
+</style>

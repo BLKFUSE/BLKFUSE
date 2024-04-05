@@ -177,7 +177,6 @@ scriptJquery(document).on('click','.sesadvancedcommentreply',function(e){
     scriptJquery(body).mentionsInput("addmention",ownerInfo); 
     body.val(body.val()+' ');
   }
-  console.log(body.val());
   complitionRequestTrigger();
 })
 function sesadvancedcommentlike(action_id, comment_id,obj,page_id,type,sbjecttype,subjectid,guid) {
@@ -225,7 +224,6 @@ function sesadvancedcommentunlike(action_id, comment_id,obj,page_id,type,sbjectt
       }
     }
   });
-   ajax
 }
 //like feed action content
 scriptJquery(document).on('click','.sesadvancedcommentunlike',function(){
@@ -255,7 +253,7 @@ scriptJquery(document).on('click','.sesadvancedcommentunlike',function(){
     },
     'success' : function(responseHTML) {
       if( responseHTML ) {
-       var elemnt =  scriptJquery(obj).closest('.comment-feed').find('.sesadvcmt_comments').find('.comments_cnt_ul');
+       var elemnt =  scriptJquery(obj).closest('.comment-feed').find('._sesadvcmt_comments').find('.comments_cnt_ul');
        if(elemnt.find('.sesadvcmt_comments_stats').length){
         elemnt = elemnt.find('.sesadvcmt_comments_stats');
         var getPreviousSearchComment = scriptJquery('.comment_stats_'+action_id).html();
@@ -268,7 +266,6 @@ scriptJquery(document).on('click','.sesadvancedcommentunlike',function(){
       }
     }
   });
-   ajax
 });
 scriptJquery(document).on("mouseover",".sesadvcmt_hoverbox_wrapper", function(e){
   scriptJquery(this).removeClass("_close");
@@ -359,7 +356,6 @@ scriptJquery(document).on('click','.sesadvancedcommentlike',function(){
       }
     }
   });    
-  ajax
 });
 //cancel comment edit
 scriptJquery(document).on('click','.sesadvancedcomment_cancel',function(e){
@@ -787,7 +783,6 @@ scriptJquery(document).on('click','#sesadvbtnsubmit',function(e){
       type:type
     },
     'success' : function(responseHTML) {
-      console.log(responseHTML.status,'responseHTML.status')
       if(typeof responseHTML.status != 'undefined' && responseHTML.status){
          var videoid = responseHTML.video_id;
          var src = responseHTML.src;
@@ -892,10 +887,6 @@ function sesadvancedcommentactivitycomment(action_id,page,obj,subjecttype){
              var dataJson = responseHTML;
           }
           var onbView = scriptJquery(obj).closest('.comment-feed').find('.comments').find('.comments_cnt_ul').find('.comment_view_more');
-          var previousComments = scriptJquery(obj).closest('.comment-feed').find('.comments').find('.comments_cnt_ul > li').map((x,y)=>{if(scriptJquery(y).attr("id")){return scriptJquery(y).attr("id")}});
-          dataJson = scriptJquery(dataJson);
-          dataJson.find(".comments_cnt_ul > li#"+previousComments.toArray().join(", li#")+"").remove();
-          dataJson = dataJson.find(".comments_cnt_ul").html();
           var elem = scriptJquery(obj).closest('.comment-feed').find('.comments').find('.comments_cnt_ul'); 
           if(typeof activitycommentreverseorder != "undefined" && activitycommentreverseorder){
             scriptJquery(dataJson).insertAfter(elem.find("li[id^='comment']:last"));
@@ -1051,6 +1042,7 @@ function submitCommentForm(that,data){
               elemC.prepend(dataJson.commentStats);
               var commentCount = elemC.find('.sesadvcmt_comments_stats').find('a.comment_btn_open').html();
             }
+            scriptJquery(that).closest('.comment-feed').find('.comments').find('.sesadvancedactivity-comment-form').find('._form_container').find('.comment_form').find('.highlighter').html('');
 
             scriptJquery('.comment_stats_'+action_id).html(getPreviousSearchComment).find('a.comment_btn_open').html(commentCount);
             scriptJquery(that).closest('.comment-feed').find('.comments').find('.sesadvancedactivity-comment-form').find('._form_container').find('.comment_form').find('.body').val('');
@@ -1313,7 +1305,8 @@ scriptJquery(document).on('click','a.gif_comment_select',function() {
   scriptJquery("#emoji_close").show();
   clickGifContentContainer = this;
   scriptJquery('.gif_content').removeClass('from_bottom');
-  var topPositionOfParentDiv =  scriptJquery(this).offset().top + 35;
+  var position = scriptJquery(this).offset().top
+  var topPositionOfParentDiv =  position + 35;
   topPositionOfParentDiv = topPositionOfParentDiv;
   if(scriptJquery(this).hasClass('activity_gif_content_a') && typeof sesadvancedactivityDesign != 'undefined' && sesadvancedactivityDesign == 2){
     var leftSub = 55;  
@@ -1329,7 +1322,7 @@ scriptJquery(document).on('click','a.gif_comment_select',function() {
     }
     leftPositionOfParentDiv = leftPositionOfParentDiv+'px';
     if(scriptJquery('#ses_media_lightbox_container').length || scriptJquery('#ses_media_lightbox_container_video').length)
-      topPositionOfParentDiv = topPositionOfParentDiv + offsetY;
+      topPositionOfParentDiv = topPositionOfParentDiv;
     scriptJquery('._gif_content').css('top',topPositionOfParentDiv+'px');
     scriptJquery('._gif_content').css('left',leftPositionOfParentDiv).css('z-index',100);
     scriptJquery('._gif_content').show();
@@ -1525,7 +1518,10 @@ scriptJquery(document).on('click','.feeling_emoji_comment_select',function(){
 
   clickFeelingEmojiContentContainer = this;
   scriptJquery('.feeling_emoji_content').removeClass('from_bottom');
-  var topPositionOfParentDiv =  scriptJquery(this).offset().top + 35;
+  
+  var position =  scriptJquery(this).offset().top
+  
+  var topPositionOfParentDiv =  position + 35;
   topPositionOfParentDiv = topPositionOfParentDiv;
 
   if(scriptJquery(this).hasClass('feeling_activity_emoji_content_a') && typeof sesadvancedactivityDesign != 'undefined' && sesadvancedactivityDesign == 2) {
@@ -1537,7 +1533,7 @@ scriptJquery(document).on('click','.feeling_emoji_comment_select',function(){
   leftPositionOfParentDiv = leftPositionOfParentDiv+'px';
   
   if(scriptJquery('#ses_media_lightbox_container').length || scriptJquery('#ses_media_lightbox_container_video').length)
-    topPositionOfParentDiv = topPositionOfParentDiv + offsetY;
+    topPositionOfParentDiv = topPositionOfParentDiv;
 
   scriptJquery('._feeling_emoji_content').css('top',topPositionOfParentDiv+'px');
   scriptJquery('._feeling_emoji_content').css('left',leftPositionOfParentDiv).css('z-index',100);
@@ -1750,7 +1746,7 @@ scriptJquery(document).on('click','.remove_reaction_image_feed',function(){
     scriptJquery('#feedbg_content').css('display','block');
     var feedagainsrcurl = scriptJquery('#feed_bg_image_'+feedbgid).attr('src');
     scriptJquery('.sesact_post_box').css("background-image","url("+ feedagainsrcurl +")");
-    scriptJquery('#feedbgid_isphoto').val(1);
+    scriptJquery('#feedbgid_isphoto').val(1); 
     scriptJquery('#feedbg_main_continer').css('display','block');
     if(feedbgid) {
       scriptJquery('#activity-form').addClass('feed_background_image');
@@ -1819,14 +1815,23 @@ scriptJquery(document).on('click','.sesadv_reaction_remove_emoji, .sesadv_reacti
           scriptJquery(that).prop("disabled", false);
          if(action == 'add'){
           var content = '<a data-galleryid="'+gallery+'" class="_headbtn sesadv_tooltip sesadv_emotion_btn_clk" title="'+title+'"><img src="'+src+'" alt="'+title+'"></a>';
-          scriptJquery(".ses_emoji_tabs").data('owlCarousel').addItem(content);
+          sesowlJqueryObject('.ses_emoji_tabs')
+            .trigger('add.owl.carousel', [content])
+            .trigger('refresh.owl.carousel');
           scriptJquery(".ses_emoji_holder").append("<div style='display:none;position:relative;height:100%;' class='emoji_content'><div class='sesbasic_loading_container _emoji_cnt' style='height:100%;'></div></div>");
           sesadvtooltip();
           scriptJquery(".sesbasic_custom_scroll").mCustomScrollbar({
             theme:"minimal-dark"
           });
         }else{
-           scriptJquery(".ses_emoji_tabs").data('owlCarousel').removeItem(index);
+          let indexItem = 0
+          let items = sesowlJqueryObject('.ses_emoji_tabs').find("a");
+          items.each((index,item) => {
+            if(parseInt(scriptJquery(item).attr("data-galleryid")) == parseInt(gallery)){
+              indexItem = index;
+            }
+          })
+          sesowlJqueryObject('.ses_emoji_tabs').trigger( 'remove.owl.carousel', [indexItem] ).trigger('refresh.owl.carousel');
            scriptJquery(".ses_emoji_holder > .emoji_content").eq(index).remove();
         }
       }
@@ -2203,6 +2208,7 @@ scriptJquery(document).on('click','.sesadvancedcommentcommentunlike',function(){
     },
     'success' : function(responseHTML) {
       if( responseHTML ) {
+        scriptJquery(obj).closest(".comments_info").find(".comments_likes_total").eq(0).remove();
         scriptJquery(obj).closest('.comments_date').replaceWith(responseHTML.body);
         en4.core.runonce.trigger();
         complitionRequestTrigger();

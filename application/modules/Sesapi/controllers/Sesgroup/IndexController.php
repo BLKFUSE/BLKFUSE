@@ -2354,7 +2354,7 @@ function getNavigation($group,$viewer){
       }
       foreach($paginator as $member){
         $result['notification'][$counterLoop]['user_id'] = $member->getIdentity();
-        $result['notification'][$counterLoop]['title'] = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle()); 
+        $result['notification'][$counterLoop]['title'] = $member->getTitle();//preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle()); 
         if(!empty($member->location))
            $result['notification'][$counterLoop]['location'] =   $member->location;
        //follow
@@ -4732,7 +4732,7 @@ protected function setPhoto($photo, $id) {
 		//Create video
 		$table = Engine_Api::_()->getDbtable('videos', 'sesgroupvideo');
 		if($values['type'] == 'iframely') {
-			$information = $this->handleIframelyInformation($values['url']);
+			$information = Engine_Api::_()->sesbasic()->handleIframelyInformation($values['url']);
 			if (empty($information)) {
 				$form->addError('We could not find a video there - please check the URL and try again.');
 			}

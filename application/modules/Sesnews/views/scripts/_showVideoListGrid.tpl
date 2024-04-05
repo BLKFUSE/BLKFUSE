@@ -237,7 +237,7 @@
              <?php if(isset($this->locationActive) && isset($item->location) && $item->location && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesvideo_enable_location', 1)){ ?>
             	<div class="sesvideo_listing_in_grid2_date sesvideo_list_stats sesvideo_list_location sesbasic_text_light">
                 <span>
-                  <i class="fa fa-map-marker"></i>
+                  <i class="sesbasic_icon_map"></i>
                   <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?>
                     <a href="javascript:;" onclick="openURLinSmoothBox('<?php echo $this->url(array("module"=> "sesvideo", "controller" => "index", "action" => "location",  "video_id" => $item->getIdentity(),'type'=>'video_location'),'default',true); ?>');return false;"><?php echo $item->location; ?></a>
                   <?php } else { ?>
@@ -448,7 +448,7 @@
               <?php if(isset($this->locationActive) && isset($item->location) && $item->location  && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesvideo_enable_location', 1)){ ?>
             	<div class="sesvideo_grid_date sesvideo_list_stats sesbasic_text_light sesvideo_list_location">
                 <span>
-                  <i class="fa fa-map-marker"></i>
+                  <i class="sesbasic_icon_map"></i>
                   <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?>
                     <a href="javascript:;" onclick="openURLinSmoothBox('<?php echo $this->url(array("module"=> "sesvideo", "controller" => "index", "action" => "location",  "video_id" => $item->getIdentity(),'type'=>'video_location'),'default',true); ?>');return false;"><?php echo $item->location; ?></a>
                   <?php } else { ?>
@@ -670,7 +670,7 @@
                  <?php if(isset($this->locationActive) && isset($item->location) && $item->location && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesvideo_enable_location', 1)){ ?>
             	<div class="sesvideo_list_date sesvideo_list_stats sesbasic_text_light sesvideo_list_location">
                 <span>
-                  <i class="fa fa-map-marker"></i>
+                  <i class="sesbasic_icon_map"></i>
                   <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?>
                    <a href="javascript:;" onclick="openURLinSmoothBox('<?php echo $this->url(array("module"=> "sesvideo", "controller" => "index", "action" => "location",  "video_id" => $item->getIdentity(),'type'=>'video_location'),'default',true); ?>');return false;"><?php echo $item->location; ?></a>
                   <?php } else { ?>
@@ -884,7 +884,7 @@
 										  <?php if(isset($this->locationActive) && isset($item->location) && $item->location && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesvideo_enable_location', 1)){ ?>
             	<div class="sesvideo_grid_date sesvideo_list_stats sesbasic_text_light sesvideo_list_location">
                 <span>
-                  <i class="fa fa-map-marker"></i>
+                  <i class="sesbasic_icon_map"></i>
                   <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?>
                     <a href="javascript:;" onclick="openURLinSmoothBox('<?php echo $this->url(array("module"=> "sesvideo", "controller" => "index", "action" => "location",  "video_id" => $item->getIdentity(),'type'=>'video_location'),'default',true); ?>');return false;"><?php echo $item->location; ?></a>
                   <?php } else { ?>
@@ -1201,7 +1201,7 @@ scriptJquery(document).on('click','.selectView_<?php echo $randonNumber; ?>',fun
 				identity : '<?php echo $randonNumber; ?>',
       },
       success: function(responseHTML) {
-        document.getElementById('tabbed-widget_<?php echo $randonNumber; ?>').innerHTML = responseHTML;
+        scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').html(responseHTML);
           if(scriptJquery('.selectView_<?php echo $randonNumber; ?>.active').attr('rel') == 'grid') {
             scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').addClass('row');
           } else {
@@ -1245,7 +1245,11 @@ scriptJquery(document).on('click','.selectView_<?php echo $randonNumber; ?>',fun
 				wookmark<?php echo $randonNumber ?> = new Wookmark('.sesbasic_pinboard_<?php echo $randonNumber; ?>', {
 					itemWidth: <?php echo isset($this->width_pinboard) ? str_replace(array('px','%'),array(''),$this->width_pinboard) : '300'; ?>, // Optional min width of a grid item
 					outerOffset: 0, // Optional the distance from grid to parent
-					align:'left',
+           <?php if($orientation = ($this->layout()->orientation == 'right-to-left')){ ?>
+              align:'right',
+            <?php }else{ ?>
+              align:'left',
+            <?php } ?>
 					flexibleWidth: function () {
 						// Return a maximum width depending on the viewport
 						return getWindowWidth() < 1024 ? '100%' : '40%';

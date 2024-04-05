@@ -76,7 +76,7 @@ scriptJquery(document).ready(function(){
       success: function(responseHTML) {
         if (document.getElementById('subcat_id') && responseHTML) {
           if (document.getElementById('subcat_id-wrapper')) {
-            document.getElementById('subcat_id-wrapper').style.display = "block";
+            document.getElementById('subcat_id-wrapper').style.display = "flex";
           }
           document.getElementById('subcat_id').innerHTML = responseHTML;
         } else {
@@ -118,7 +118,7 @@ scriptJquery(document).ready(function(){
       success: function(responseHTML) {
         if (document.getElementById('subsubcat_id') && responseHTML) {
           if (document.getElementById('subsubcat_id-wrapper')) {
-            document.getElementById('subsubcat_id-wrapper').style.display = "block";
+            document.getElementById('subsubcat_id-wrapper').style.display = "flex";
 						 document.getElementById('subsubcat_id').innerHTML = responseHTML;
           }
        }else{

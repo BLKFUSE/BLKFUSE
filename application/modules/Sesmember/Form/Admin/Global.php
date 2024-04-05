@@ -127,7 +127,7 @@ class Sesmember_Form_Admin_Global extends Engine_Form {
       ));
       //New File System Code
         $default_photos_main = array();
-        $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png')));
+        $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png', 'webp')));
         foreach( $files as $file ) {
           $default_photos_main[$file->storage_path] = $file->name;
         }
@@ -167,12 +167,18 @@ class Sesmember_Form_Admin_Global extends Engine_Form {
           'ignore' => true
       ));
     } else {
-      //Add submit button
-      $this->addElement('Button', 'submit', array(
-          'label' => 'Activate Your Plugin',
+      $enabledSesbasic = Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesbasic');
+      $fields = array(
+          'label' => 'Activate This Plugin',
           'type' => 'submit',
           'ignore' => true
-      ));
+      );
+      if(!$enabledSesbasic){
+        $fields['disable'] = true;
+        $fields['title'] = 'To Activate this plugin, please first install all dependent plugins as show in the tips above.';
+      }
+      //Add submit button
+      $this->addElement('Button', 'submit',$fields);
     }
   }
 

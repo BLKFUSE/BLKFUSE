@@ -53,9 +53,14 @@ class Music_Model_DbTable_Playlists extends Engine_Db_Table
         $playlist->title = $translate->_('_MUSIC_DEFAULT_PLAYLIST');
         $playlist->search = 1;
       }
-
+      
+      //approve setting work
+      $approved = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('music_playlist', $user, 'approve');
+      $playlist->approved = $approved;
+      if($approved)
+        $playlist->resubmit = 1;
       $playlist->save();
-
+      
       // Authorizations
       if( $type != 'message' ) {
         $auth = Engine_Api::_()->authorization()->context;

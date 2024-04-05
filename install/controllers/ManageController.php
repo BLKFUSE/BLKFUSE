@@ -114,6 +114,15 @@ class ManageController extends Zend_Controller_Action
          * @var Zend_Db_Adapter_Abstract $db
          */
         $db = Zend_Registry::get('Zend_Db');
+        
+        $generalSiteTitle = $db->select()->from('engine4_core_settings')
+                    ->where('name = ? ', 'core.general.site.url');
+        $generalSiteTitle = $db->fetchRow($generalSiteTitle);
+        if(!empty($generalSiteTitle['value'])) {
+          $this->view->siteURL = $generalSiteTitle['value'];
+        } else { 
+          $this->view->siteURL = _ENGINE_SITE_URL;
+        }
 
         // Check for updates
         try {
@@ -271,6 +280,7 @@ class ManageController extends Zend_Controller_Action
                 $navigation[] = array(
                     'label' => 'disable',
                     'href' => $this->view->url(array('action' => 'disable')) . '?package=' . $installedPackage->getKey(),
+                    'class' => "package_disable",
                 );
             }
 
@@ -279,6 +289,7 @@ class ManageController extends Zend_Controller_Action
                 $navigation[] = array(
                     'label' => 'enable',
                     'href' => $this->view->url(array('action' => 'enable')) . '?package=' . $installedPackage->getKey(),
+                    'class' => "package_enable",
                 );
             }
 
@@ -288,6 +299,7 @@ class ManageController extends Zend_Controller_Action
                 $navigation[] = array(
                     'label' => 'install',
                     'href' => $this->view->url(array('action' => 'install')) . '?package=' . $installedPackage->getKey(),
+                    'class' => "package_install",
                 );
             }
 
@@ -304,6 +316,7 @@ class ManageController extends Zend_Controller_Action
                             'label' => 'upgrade',
                             //'href' => $this->view->url(array('action' => 'prepare')) . '?packages[]=' . $installedPackage->getKey(),
                             'href' => $this->view->url(array('action' => 'install')) . '?package=' . $installedPackage->getKey(),
+                            'class' => "package_upgrade",
                         );
                         break;
                 }
@@ -314,6 +327,7 @@ class ManageController extends Zend_Controller_Action
                 $navigation[] = array(
                     'label' => 'delete',
                     'href' => $this->view->url(array('action' => 'prepare')) . '?packages[]=' . $installedPackage->getKey() . '&actions[]=remove',
+                    'class' => "package_delete",
                 );
             }
 
@@ -1008,6 +1022,10 @@ class ManageController extends Zend_Controller_Action
 
     public function queryAction()
     {
+
+
+       
+
         // Check for modifications to installer (to prevent problems)
         if (!$this->_checkForModifications()) {
             return;
@@ -1112,36 +1130,23 @@ class ManageController extends Zend_Controller_Action
         try {
             Engine_Package_Utilities::fsRmdirRecursive(APPLICATION_PATH . '/temporary/scaffold', false, array('index.html'));
         } catch (Exception $e) {
-        }
 
-        // Try to increment the site counter
-        try {
-            $db = Zend_Registry::get('Zend_Db');
-            $db->update('engine4_core_settings', array(
-                'value' => new Zend_Db_Expr('value + 1'),
-            ), array(
-                'name = ?' => 'core.site.counter',
-            ));
-        } catch (Exception $e) {
-            // Silence
         }
+        
+        // Try to increment the site counter
+        // try {
+            
+            // $db->update('engine4_core_settings', array(
+                // 'value' => new Zend_Db_Expr('value + 1'),
+            // ), array(
+                // 'name = ?' => 'core.site.counter',
+            // ));
+        // } catch (Exception $e) {
+           // Silence
+        // }
 
         $this->_session->unsetAll();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public function enableAction()
     {

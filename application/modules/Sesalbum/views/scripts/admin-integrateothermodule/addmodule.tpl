@@ -1,6 +1,6 @@
 <?php ?>
-
-<h2>
+<?php include APPLICATION_PATH .  '/application/modules/Sesalbum/views/scripts/dismiss_message.tpl';?>
+<h2 class="page_heading">
   <?php echo $this->translate("Advanced Photos & Albums Plugin") ?>
 </h2>
 <div class="sesbasic_nav_btns">
@@ -12,7 +12,7 @@
   </div>
 <?php endif; ?>
 <?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesalbum', 'controller' => 'integrateothermodule', 'action' => 'index'), $this->translate("Back to Integrate and Manage Other Plugins"), array('class'=>'sesbasic_icon_back buttonlink')) ?>
-<br style="clear:both;" /><br />
+<br style="clear:both;" />
 <div class='clear'>
   <div class='settings sesbasic_admin_form'>
     <?php echo $this->form->render($this); ?>

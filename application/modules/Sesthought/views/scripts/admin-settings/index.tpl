@@ -32,7 +32,7 @@
   function showCat(value) {
     if(value == 1) {
       if(document.getElementById('sesthought_categoryrequried-wrapper'))
-        document.getElementById('sesthought_categoryrequried-wrapper').style.display = 'block';
+        document.getElementById('sesthought_categoryrequried-wrapper').style.display = 'flex';
     } else {
       if(document.getElementById('sesthought_categoryrequried-wrapper'))
         document.getElementById('sesthought_categoryrequried-wrapper').style.display = 'none';
@@ -46,3 +46,10 @@
 		});
   </script>
 <?php } ?>
+<style> 
+	button[disabled] { 
+	  background:#bdbdbd; 
+	  border-color:#bdbdbd; 
+	  cursor:not-allowed; 
+  }
+</style>

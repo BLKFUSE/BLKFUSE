@@ -29,6 +29,7 @@
     'title' => '<span style="color:#DDDDDD">SNS - Live Streaming</span>',
     'description' => 'SNS - Live Streaming',
     'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	'thumb' => 'application/modules/Elivestreaming/externals/images/thumb.png',
     'callback' =>
     array(
       'class' => 'Engine_Package_Installer_Module',

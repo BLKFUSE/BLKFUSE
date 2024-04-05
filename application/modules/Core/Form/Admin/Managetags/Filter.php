@@ -31,6 +31,15 @@ class Core_Form_Admin_Managetags_Filter extends Engine_Form {
         'class' => 'global_form_box',
       ))
       ->setMethod('GET');
+      
+    $this->addElement('Text', 'tag_id', array(
+        'label' => 'ID',
+        'decorators' => array(
+            'ViewHelper',
+            array('Label', array('tag' => null, 'placement' => 'PREPEND')),
+            array('HtmlTag', array('tag' => 'div'))
+        ),
+    ));
 
     $this->addElement('Text', 'text', array(
         'label' => 'Tag Name',

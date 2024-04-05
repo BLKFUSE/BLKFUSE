@@ -20,7 +20,7 @@
   </div>
   <div class="generic_layout_container">
     <div class="sescontestpackage_payment_process">
-      <?php $currentCurrency =  Engine_Api::_()->sescontestpackage()->getCurrentCurrency(); ?>
+      <?php $currentCurrency =  Engine_Api::_()->payment()->getCurrentCurrency(); ?>
       <form method="get" action="<?php echo $this->escape($this->url(array('action' => 'process'))) ?>" enctype="application/x-www-form-urlencoded">
         <h3>
           <?php echo $this->translate('Make Payment to subscribe to ').$this->package->title; ?>
@@ -42,6 +42,7 @@
           <div id="buttons-wrapper" class="form-wrapper">
               <?php foreach( $this->gateways as $gatewayInfo ):
                 $gateway = $gatewayInfo['gateway'];
+                if($gateway->plugin == "Payment_Plugin_Gateway_Stripe") continue;
                 $plugin = $gatewayInfo['plugin'];
                 $first = ( !isset($first) ? true : false );
                 $gatewayObject = $gateway->getGateway();

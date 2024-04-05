@@ -34,24 +34,24 @@
     });
   });
 
-  scriptJquery(window).on('onChangeFields', function() {
-    var firstSep = scriptJquery('li.browse-separator-wrapper').eq(0);
-    var lastSep;
-    var nextEl = firstSep;
-    var allHidden = true;
-    do {
-      nextEl = nextEl.next();
-      if( nextEl.hasClass('browse-separator-wrapper')) {
-        lastSep = nextEl;
-        nextEl = false;
-      } else {
-        allHidden = allHidden && ( nextEl.css('display') == 'none' );
-      }
-    } while(nextEl);
-      if(lastSep) {
-        lastSep.css('display', (allHidden ? 'none' : ''));
-      }
-  });
+  // scriptJquery(window).on('onChangeFields', function() {
+  //   var firstSep = scriptJquery('li.browse-separator-wrapper').eq(0);
+  //   var lastSep;
+  //   var nextEl = firstSep;
+  //   var allHidden = true;
+  //   do {
+  //     nextEl = nextEl.next();
+  //     if( nextEl.hasClass('browse-separator-wrapper')) {
+  //       lastSep = nextEl;
+  //       nextEl = false;
+  //     } else {
+  //       allHidden = allHidden && ( nextEl.css('display') == 'none' );
+  //     }
+  //   } while(nextEl);
+  //     if(lastSep) {
+  //       lastSep.css('display', (allHidden ? 'none' : ''));
+  //     }
+  // });
 </script>
 
 <script type="text/javascript">
@@ -148,6 +148,7 @@
             <div class='classifieds_browse_info_des'>
               <?php echo $this->string()->truncate($this->string()->stripTags($item->body), 92) ?>
             </div>
+            <?php echo $this->partial('_approved_tip.tpl', 'core', array('item' => $item)); ?>
           </div>
         </li>
       <?php endforeach; ?>

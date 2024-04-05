@@ -20,7 +20,7 @@ class Payment_AdminIndexController extends Core_Controller_Action_Admin
 {
   public function indexAction()
   {
-    $this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_payment', array(), 'core_admin_main_payment_transactions');
+    $this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_orders', array(), 'core_admin_main_orders_transactions');
       
     // Test curl support
     if( !function_exists('curl_version') ||
@@ -231,16 +231,33 @@ class Payment_AdminIndexController extends Core_Controller_Action_Admin
     $order->save();
     $user = $order->getUser();
     $subscription = $order->getSource();
-    $subscription->onPaymentSuccess();
+    $subscription->onPaymentSuccess('fromadmin');
     $subscription->save();
-    $package = $subscription->getPackage();
-    Engine_Api::_()->getApi('mail', 'core')->sendSystem($user, 'payment_subscription_active', array(
-      'subscription_title' => $package->title,
-      'subscription_description' => $package->description,
-      'subscription_terms' => $package->getPackageDescription(),
-      'object_link' => 'http://' . $_SERVER['HTTP_HOST'] .
-          Zend_Controller_Front::getInstance()->getRouter()->assemble(array(), 'user_login', true),
-    ));
+    
+    //Member Verfication work
+    if($order->source_type == 'payment_verification' && $transaction->type == 'payment verification') {
+      $subscription->transaction_id = $transaction->transaction_id;
+      $subscription->save();
+      
+      $user->is_verified = 1;
+      $user->save();
+      
+      Engine_Api::_()->getApi('mail', 'core')->sendSystem($user, 'payment_verification_active', array(
+        'subscription_terms' => $desc,
+        'object_link' => 'https://' . $_SERVER['HTTP_HOST'] . Zend_Controller_Front::getInstance()->getRouter()->assemble(array("module" => 'payment', 'controller' => "settings", "action" => "verification"), 'default', true),
+      ));
+    }
+    
+    if($subscription->getType() == 'payment_subscription') {
+      $package = $subscription->getPackage();
+      Engine_Api::_()->getApi('mail', 'core')->sendSystem($user, 'payment_subscription_active', array(
+        'subscription_title' => $package->title,
+        'subscription_description' => $package->description,
+        'subscription_terms' => $package->getPackageDescription(),
+        'object_link' => 'http://' . $_SERVER['HTTP_HOST'] .
+            Zend_Controller_Front::getInstance()->getRouter()->assemble(array(), 'user_login', true),
+      ));
+    }
     return $this->_forward('success' ,'utility', 'core', array(
           'smoothboxClose' => true,
           'parentRefresh' => true,
@@ -264,14 +281,21 @@ class Payment_AdminIndexController extends Core_Controller_Action_Admin
     $subscription = $order->getSource();
     $subscription->onCancel();
     $subscription->save();
-    $package = $subscription->getPackage();
-    Engine_Api::_()->getApi('mail', 'core')->sendSystem($user, 'payment_subscription_cancelled', array(
-      'subscription_title' => $package->title,
-      'subscription_description' => $package->description,
-      'subscription_terms' => $package->getPackageDescription(),
-      'object_link' => 'http://' . $_SERVER['HTTP_HOST'] .
-          Zend_Controller_Front::getInstance()->getRouter()->assemble(array(), 'user_login', true),
-    ));
+    
+    //Member Verfication work
+    if($order->source_type == 'payment_verification' && $transaction->type == 'payment verification') {
+      Engine_Api::_()->getApi('mail', 'core')->sendSystem($user, 'payment_verification_cancelled', array('object_link' => 'https://' . $_SERVER['HTTP_HOST'] . Zend_Controller_Front::getInstance()->getRouter()->assemble(array("module" => "payment", "controller" => "settings", "action" => "verification"), 'default', true)));
+    } else {
+      $package = $subscription->getPackage();
+      Engine_Api::_()->getApi('mail', 'core')->sendSystem($user, 'payment_subscription_cancelled', array(
+        'subscription_title' => $package->title,
+        'subscription_description' => $package->description,
+        'subscription_terms' => $package->getPackageDescription(),
+        'object_link' => 'https://' . $_SERVER['HTTP_HOST'] .
+            Zend_Controller_Front::getInstance()->getRouter()->assemble(array(), 'user_login', true),
+      ));
+    }
+    
     return $this->_forward('success' ,'utility', 'core', array(
           'smoothboxClose' => true,
           'parentRefresh' => true,

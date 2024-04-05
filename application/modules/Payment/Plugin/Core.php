@@ -36,23 +36,23 @@ class Payment_Plugin_Core extends Core_Model_Abstract
 
   public function onUserUpdateBefore($event)
   {
-    $payload = $event->getPayload();
+    // $payload = $event->getPayload();
 
-    if( !($payload instanceof User_Model_User) ) {
-      return;
-    }
+    // if( !($payload instanceof User_Model_User) ) {
+      // return;
+    // }
 
-    // Actually, let's ignore if they've logged in before
-    if( !empty($payload->lastlogin_date) ) {
-      return;
-    }
+    //Actually, let's ignore if they've logged in before
+    // if( !empty($payload->lastlogin_date) ) {
+      // return;
+    // }
 
-    // Check if the user should be enabled?
-    $subscriptionsTable = Engine_Api::_()->getDbtable('subscriptions', 'payment');
-    if( !$subscriptionsTable->check($payload) ) {
-      $payload->enabled = false;
-      // We don't want to save here
-    }
+    //Check if the user should be enabled?
+    // $subscriptionsTable = Engine_Api::_()->getDbtable('subscriptions', 'payment');
+    // if( !$subscriptionsTable->check($payload) ) {
+      // $payload->enabled = false;
+      //We don't want to save here
+    // }
   }
 
   public function onAuthorizationLevelDeleteBefore($event)

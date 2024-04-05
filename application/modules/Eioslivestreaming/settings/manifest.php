@@ -15,18 +15,19 @@
   array (
     'type' => 'module',
     'name' => 'eioslivestreaming',
-    'version' => '6.4.4p4',
+    'version' => '6.5.1',
     'dependencies' => array(
       array(
         'type' => 'module',
         'name' => 'core',
-        'minVersion' => '6.2.0',
+        'minVersion' => '6.5.1',
       ),
     ),
     'path' => 'application/modules/Eioslivestreaming',
     'title' => 'SNS - Live Streaming in iOS Mobile App',
     'description' => 'SNS - Live Streaming in iOS Mobile App',
      'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	 'thumb' => 'application/modules/Eioslivestreaming/externals/images/thumb.png',
     'callback' =>
     array (
         'path' => 'application/modules/Eioslivestreaming/settings/install.php',

@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `engine4_sesmember_userinfos` (
 	`order` INT(11) NOT NULL DEFAULT "0",
 	PRIMARY KEY (`userinfo_id`),
 	UNIQUE KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
 INSERT IGNORE INTO `engine4_sesmember_userinfos`(`user_id`, `follow_count`, `location`, `rating`, `user_verified`, `cool_count`, `funny_count`, `useful_count`, `featured`, `sponsored`, `vip`, `offtheday`, `starttime`, `endtime`, `adminpicks`, `order`) select `user_id`, `follow_count`, `location`, `rating`, `user_verified`, `cool_count`, `funny_count`, `useful_count`, `featured`, `sponsored`, `vip`, `offtheday`, `starttime`, `endtime`, `adminpicks`, `order` from `engine4_users`;
 

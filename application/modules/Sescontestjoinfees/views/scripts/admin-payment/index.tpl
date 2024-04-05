@@ -26,14 +26,12 @@
         <?php echo $this->navigation()->menu()->setContainer($this->subsubNavigation)->render();?>
       </div>
     <?php endif; ?>
-    <?php $defaultCurrency = Engine_Api::_()->sescontestjoinfees()->defaultCurrency(); ?>
+    <?php $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency(); ?>
     <h3><?php echo $this->translate("Manage Payment Requests") ?></h3>
-<p><?php echo $this->translate('This page lists all of the payment requests your users have made. You can use this page to monitor these requests and take appropriate action for each. Entering criteria into the filter fields will help you find specific payment request. Leaving the filter fields blank will show all the payment requests on your social network.<br>Below, you can approve / reject a payment request and see payment details.'); ?></p>
-    <br />
+<p><?php echo $this->translate('This page lists all of the payment requests your users have made. You can use this page to monitor these requests and take appropriate action for each. Entering criteria into the filter fields will help you find specific payment request. Leaving the filter fields blank will show all the payment requests on your social network.<br> Below, you can approve / reject a payment request and see payment details.'); ?></p>
 		<div class='admin_search sesbasic_search_form'>
       <?php echo $this->formFilter->render($this) ?>
     </div>
-    <br />
     <?php $counter = $this->paginator->getTotalItemCount(); ?> 
     <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
       <div class="sesbasic_search_reasult">
@@ -67,7 +65,7 @@
               <td><?php echo $this->htmlLink($contest->getHref(), $this->translate(Engine_Api::_()->sesbasic()->textTruncation($contest->getTitle(),16)), array('title' => $contest->getTitle(), 'target' => '_blank')); ?></td>
           <?php  $owner = Engine_Api::_()->getItem('user', $contest->user_id); ?>
           <td><?php echo $this->htmlLink($owner->getHref(), $this->translate(Engine_Api::_()->sesbasic()->textTruncation($owner->getTitle(),16)), array('title' => $owner->getTitle(), 'target' => '_blank')); ?></td>
-              <td><?php echo Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($item->requested_amount,$defaultCurrency); ?></td>
+              <td><?php echo Engine_Api::_()->payment()->getCurrencyPrice($item->requested_amount,$defaultCurrency); ?></td>
               <td><?php echo Engine_Api::_()->sescontestjoinfees()->dateFormat($item->creation_date	); ?></td> 
               <!--<td><?php echo $this->string()->truncate(empty($item->user_message) ? '-' : $item->user_message, 30) ?></td>-->
               <!--<td><?php echo $this->string()->truncate(empty($item->admin_message	) ? '-' : $item->admin_message, 30) ?></td>-->
@@ -86,7 +84,6 @@
         </table>
         </div>
       </form>
-      <br/>
       <div>
         <?php echo $this->paginationControl($this->paginator); ?>
       </div>

@@ -10,11 +10,11 @@
  * @author     John
  */
 ?>
-
-<?php if( !empty($this->form) ): ?>
-  <?php echo $this->form->render($this) ?>
-<?php endif; ?>
-
+<div class="admin_import_ning_form">
+  <?php if( !empty($this->form) ): ?>
+    <?php echo $this->form->render($this) ?>
+  <?php endif; ?>
+</div>
 <?php if( $this->status ): ?>
   <?php if( !$this->hasError ): ?>
     Your import is complete.

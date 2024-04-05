@@ -26,8 +26,9 @@ class Group_Widget_ListPopularGroupsController extends Engine_Content_Widget_Abs
 
         // Get paginator
         $table = Engine_Api::_()->getItemTable('group');
-        $select = $table->getItemsSelect($params)
-            ->order($popularType . ' DESC');
+        $select = $table->getItemsSelect($params);
+        $select->where('approved = ?', 1);
+        $select->order($popularType . ' DESC');
 
         $select = Engine_Api::_()->network()->getNetworkSelect($table->info('name'), $select, 'user_id');
 

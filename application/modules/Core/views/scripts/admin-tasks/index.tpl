@@ -10,8 +10,9 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_settings", 'childMenuItemName' => 'core_admin_main_settings_tasks')); ?>
 
-<h2><?php echo $this->translate("Task Scheduler") ?></h2>
+<h2 class="page_heading"><?php echo $this->translate("Task Scheduler") ?></h2>
 
 <?php if( engine_count($this->navigation) ): ?>
   <div class='tabs'>
@@ -28,22 +29,18 @@
     'CORE_VIEWS_SCRIPTS_ADMINTASKS_INDEX_DESCRIPTION' !== ($desc = $this->translate("CORE_VIEWS_SCRIPTS_ADMINTASKS_INDEX_DESCRIPTION")) ?
     $desc : '' ) ?>
 </p>	
-
-<?php
-  $settings = Engine_Api::_()->getApi('settings', 'core');
-  if( $settings->getSetting('user.support.links', 0) == 1 ) {
-    echo 'More info: <a href="https://community.socialengine.com/blogs/597/39/task-scheduler" target="_blank">See KB article</a>.';
-  } 
-?>	
-
-<br />
-<br />
+<p>
+  <?php
+    $settings = Engine_Api::_()->getApi('settings', 'core');
+    if( $settings->getSetting('user.support.links', 0) == 1 ) {
+      echo 'More info: <a href="https://community.socialengine.com/blogs/597/39/task-scheduler" target="_blank">See KB article</a>.';
+    } 
+  ?>	
+</p>
 
 <div class='admin_search'>
   <?php echo $this->formFilter->render($this) ?>
 </div>
-
-<br />
 
 
 <script type="text/javascript">
@@ -384,3 +381,7 @@
 
   </form>
 </div>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_settings').parent().addClass('active');
+  scriptJquery('.core_admin_main_settings_tasks').addClass('active');
+</script>

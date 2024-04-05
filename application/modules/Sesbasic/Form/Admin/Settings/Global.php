@@ -63,15 +63,6 @@ class Sesbasic_Form_Admin_Settings_Global extends Engine_Form {
       ),
       'value' => unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('optionsenableglotion','')),
     ));
-
-    $this->addElement('Text', "ses_addthis", array(
-        'label' => 'Add This Publisher Id',
-        'description' => 'Enter the Add This Publisher Id for displaying Add This Widget on your website.<a href="https://www.addthis.com/dashboard" target="_blank">Click Here</a> to generate the Publisher Id.',
-        'allowEmpty' => true,
-        'required' => false,
-        'value' => $coreSetting->getSetting('ses.addthis', ''),
-    ));
-    $this->ses_addthis->addDecorator('Description', array('placement' => Zend_Form_Decorator_Abstract::PREPEND, 'escape' => false));
 		
 		//check ses video and album
 		$sesalbum_enable_module = Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesalbum'));

@@ -40,6 +40,16 @@ class Core_Widget_MenuMainController extends Engine_Content_Widget_Abstract
         empty($headernonloggedinoptions) ? $this->setNoRender() : ((!engine_in_array('mainMenu', $headernonloggedinoptions)) ? $this->setNoRender() : '');
     }
     
+    if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('prism')) {
+      $viewer_id = Engine_Api::_()->user()->getViewer()->getIdentity();
+      $headerloggedinoptions = unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('prism.headerloggedinoptions', 'a:4:{i:0;s:6:"search";i:1;s:8:"miniMenu";i:2;s:8:"mainMenu";i:3;s:4:"logo";}'));
+      $headernonloggedinoptions = unserialize(Engine_Api::_()->getApi('settings', 'core')->getSetting('prism.headernonloggedinoptions', 'a:4:{i:0;s:6:"search";i:1;s:8:"miniMenu";i:2;s:8:"mainMenu";i:3;s:4:"logo";}'));
+      if(!empty($viewer_id))
+        (empty($headerloggedinoptions) ? $this->setNoRender() : ((!engine_in_array('mainMenu', $headerloggedinoptions)) ? $this->setNoRender() : ''));
+      else 
+        (empty($headernonloggedinoptions) ? $this->setNoRender() : ((!engine_in_array('mainMenu', $headernonloggedinoptions)) ? $this->setNoRender() : ''));
+    }
+    
     $this->view->navigation = $navigation = Engine_Api::_()
       ->getApi('menus', 'core')
       ->getNavigation('core_main');
