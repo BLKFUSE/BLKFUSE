@@ -1,4 +1,4 @@
-ALTER TABLE `engine4_group_topics` CHANGE `title` `title` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
+ALTER TABLE `engine4_group_topics` CHANGE `title` `title` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
 
 -- --------------------------------------------------------
 
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `engine4_group_ratings` (
   `rating` tinyint(1) unsigned default NULL,
   PRIMARY KEY  (`group_id`,`user_id`),
   KEY `INDEX` (`group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 ALTER TABLE `engine4_group_groups` ADD `rating` FLOAT NOT NULL;
 

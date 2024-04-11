@@ -35,12 +35,10 @@
 }
 .light_mode .global_form button[type=submit],
 .light_mode .browsemembers_criteria button,
-.light_mode .profile_cover_btn i,
 .light_mode button,
 .light_mode ul.forum_categories > li > div > h3,
 .light_mode ul.grid_wrapper > li .groups_members *,
-.light_mode ul.profile_options_pulldown > li:hover a, 
-.light_mode .coverphoto_navigation ul > li:hover a{
+.light_mode ul.profile_options_pulldown > li:hover a{
 	color:$theme_button_font_color !important;
 }
 .light_mode .layout_core_menu_main .navigation > li > ul > li > a:hover *,

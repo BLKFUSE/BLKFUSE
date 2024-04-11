@@ -265,7 +265,7 @@ class Core_Bootstrap extends Engine_Application_Bootstrap_Abstract
                     'core' => array(
                         'automatic_serialization' => true,
                         'cache_id_prefix' => 'Engine4_',
-                        'lifetime' => '300',
+                        'lifetime' => '86400',
                         'caching' => true,
                     ),
                 ),
@@ -988,6 +988,11 @@ class Core_Bootstrap extends Engine_Application_Bootstrap_Abstract
         }
         Zend_Registry::set('timezone', $timezone);
 
+        $isEnabled = Engine_Api::_()->getDbTable('languages', 'core')->isEnabled($language);
+        if(!$isEnabled) {
+          $locale = Engine_Api::_()->getApi('settings', 'core')->getSetting('core.locale.locale', 'auto');
+          $language = Engine_Api::_()->getApi('settings', 'core')->getSetting('core.locale.locale', 'auto');
+        }
         // Make sure it's valid
         try {
             $locale = Zend_Locale::findLocale($locale);

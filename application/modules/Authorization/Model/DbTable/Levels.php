@@ -56,14 +56,17 @@ class Authorization_Model_DbTable_Levels extends Engine_Db_Table
     return $this->_defaultLevel;
   }
   
-  public function getLevelsAssoc()
+  public function getLevelsAssoc($params = array())
   {
-    $levels = $this->select()
+    $select = $this->select()
         ->from($this, array('level_id', 'title'))
-        ->order('level_id ASC')
-        ->query()
-        ->fetchAll();
+        ->order('level_id ASC');
     
+    if(isset($params['type']) && !empty($params['type'])) {
+      $select->where('type IN (?)', $params['type']);
+    }
+        
+    $levels = $this->fetchAll($select);
     $data = array();
     foreach( $levels as $level ) {
       $data[$level['level_id']] = $level['title'];

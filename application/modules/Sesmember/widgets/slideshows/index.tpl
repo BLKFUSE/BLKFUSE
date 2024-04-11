@@ -80,19 +80,14 @@ $this->headLink()->appendStylesheet($base_url . 'application/modules/Sesmember/e
         <div class="sesmember_top_tittle_block">
           <?php if(isset($this->titleActive)):?>
             <div class="sesmember_content_slideshow_title">
-              <?php if(strlen($member->getTitle()) > $this->title_truncation_list){
-          $title = mb_substr($member->getTitle(),0,($this->title_truncation_list-3)).'...';
-          echo $this->htmlLink($member->getHref(),$title, array('class' => 'ses_tooltip', 'data-src' => $member->getGuid()));
-              } else { ?>
-          <?php echo $this->htmlLink($member->getHref(),$member->getTitle(), array('class' => 'ses_tooltip', 'data-src' => $member->getGuid())) ?>
-	      <?php } ?>
-	    </div>
-	  <?php endif;?>
-	<?php if(Engine_Api::_()->getApi('core', 'sesmember')->allowReviewRating() && $this->ratingActive):?>
-	  <div class="sesmember_content_slideshow_rating">
-	    <?php echo $this->partial('_userRating.tpl', 'sesmember', array('rating' => $member->rating)); ?>
-	  </div>
-	<?php endif;?>
+              <?php echo $this->htmlLink($member->getHref(),$member->getTitle(), array('class' => 'ses_tooltip', 'data-src' => $member->getGuid())) ?>
+            </div>
+          <?php endif;?>
+          <?php if(Engine_Api::_()->getApi('core', 'sesmember')->allowReviewRating() && $this->ratingActive):?>
+            <div class="sesmember_content_slideshow_rating">
+              <?php echo $this->partial('_userRating.tpl', 'sesmember', array('rating' => $member->rating)); ?>
+            </div>
+          <?php endif;?>
         </div>
         <div class="sesmember_contact_info sesbasic_clearfix clear">
 	  <?php if(isset($this->profileTypeActive)): ?>

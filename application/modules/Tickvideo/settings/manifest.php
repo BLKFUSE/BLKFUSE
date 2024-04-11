@@ -35,18 +35,19 @@ return array (
   array (
     'type' => 'module',
     'name' => 'tickvideo',
-    'version' => '6.4.1',
+    'version' => '6.5.1',
 	'dependencies' => array(
       array(
         'type' => 'module',
         'name' => 'core',
-        'minVersion' => '6.2.0',
+        'minVersion' => '6.5.1',
       ),
     ),
     'path' => 'application/modules/Tickvideo',
     'title' => 'SNS - Short TikTak Videos Plugin for Mobile Apps',
     'description' => 'SNS - Short TikTak Videos Plugin for Mobile Apps',
       'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	  'thumb' => 'application/modules/Tickvideo/externals/images/thumb.png',
       'callback' => array(
           'path' => 'application/modules/Tickvideo/settings/install.php',
           'class' => 'Tickvideo_Installer',

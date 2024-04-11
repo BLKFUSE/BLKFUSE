@@ -11,4 +11,4 @@ CREATE TABLE IF NOT EXISTS `engine4_sesbasic_instagram` (
   `expires` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
    PRIMARY KEY (`instagram_id`),
    UNIQUE KEY `instagram_uid` (`instagram_uid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;

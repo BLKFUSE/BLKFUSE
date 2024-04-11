@@ -56,28 +56,28 @@ $songs = $this->playlist->getSongs();
     </div>
   </div>
 </div>
+<?php echo $this->partial('_approved_tip.tpl', 'core', array('item' => $this->subject())); ?>
 <div class="layout_middle">
   <div class="generic_layout_container">
-<?php echo $this->form->render($this) ?>
-
-<div style="display:none;">
-  <?php if (!empty($songs)): ?>
-    <ul id="music_songlist">
-      <?php foreach ($songs as $song): ?>
-      <li id="song_item_<?php echo $song->song_id ?>" class="file file-success">
-        <a href="javascript:void(0)" class="file-remove" data-file_id="<?php echo $song->song_id ?>">
-          <b><?php echo $this->translate('Remove') ?></b>
-        </a>
-        <span class="file-name">
-          <?php echo $song->getTitle() ?>
-        </span>
-        (<a href="javascript:void(0)" class="song_action_rename file-rename"><?php echo $this->translate('rename') ?></a>)
-      </li>
-      <?php endforeach; ?>
-    </ul>
-  <?php endif; ?>
-</div>
-</div>
+    <?php echo $this->form->render($this) ?>
+    <div style="display:none;">
+      <?php if (!empty($songs)): ?>
+        <ul id="music_songlist">
+          <?php foreach ($songs as $song): ?>
+          <li id="song_item_<?php echo $song->song_id ?>" class="file file-success">
+            <a href="javascript:void(0)" class="file-remove" data-file_id="<?php echo $song->song_id ?>">
+              <b><?php echo $this->translate('Remove') ?></b>
+            </a>
+            <span class="file-name">
+              <?php echo $song->getTitle() ?>
+            </span>
+            (<a href="javascript:void(0)" class="song_action_rename file-rename"><?php echo $this->translate('rename') ?></a>)
+          </li>
+          <?php endforeach; ?>
+        </ul>
+      <?php endif; ?>
+    </div>
+  </div>
 </div>
 <script type="text/javascript">
 //<![CDATA[

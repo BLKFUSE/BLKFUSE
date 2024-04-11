@@ -15,7 +15,7 @@
     <div class="image">
         <?php echo $this->htmlLink($this->viewer()->getHref(), $this->itemBackgroundPhoto($this->viewer(), 'thumb.icon')) ?>
     </div>
-    <div class="user">
+    <div class="user member_name">
         <?php echo $this->htmlLink($this->viewer()->getHref(), $this->viewer()->getTitle()); ?>
     </div>
 </div>

@@ -81,7 +81,7 @@ class Sesadvancedactivity_Form_Admin_Createevent extends Engine_Form {
         'label' => 'Upload Image',
         'description' => ''
     ));
-    $this->file->addValidator('Extension', false, 'jpg,jpeg,png,gif,PNG,GIF,JPG,JPEG');
+    $this->file->addValidator('Extension', false, 'jpg,jpeg,png,gif,webp');
 		if (isset($event) && $event->file_id) {
       $img_path = Engine_Api::_()->storage()->get($event->file_id, '')->getPhotoUrl();
 			if(strpos($img_path,'http')  === FALSE ){

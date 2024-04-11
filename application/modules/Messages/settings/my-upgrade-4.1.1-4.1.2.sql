@@ -1,6 +1,6 @@
 
 ALTER TABLE `engine4_messages_conversations`
-  ADD COLUMN `resource_type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci default '',
+  ADD COLUMN `resource_type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci default '',
   ADD COLUMN `resource_id` int(11) unsigned NOT NULL default '0' ;
 
 INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES

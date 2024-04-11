@@ -43,6 +43,8 @@ class Core_Install extends Engine_Package_Installer_Module
             throw $e;
         }
 
+        $this->_onUpgrade645();
+
         // Get array of levels
         $select = new Zend_Db_Select($db);
         $levels = $select
@@ -639,7 +641,33 @@ class Core_Install extends Engine_Package_Installer_Module
             $db->query(sprintf('ALTER TABLE `%s` CHANGE COLUMN `%s` `%s` varbinary(16) %s', $table, $temporaryColumn, $column, ($isNull ? 'default NULL' : 'NOT NULL')));
         }
     }
+    protected function _onUpgrade645(){
+        $db = $this->getDb();
+        if( $this->_databaseOperationType == 'upgrade' || version_compare($this->_currentVersion, '6.4.5', '<') ) {
+            $configFile = APPLICATION_PATH . '/application/settings/database.php';
+            $contents = include ($configFile);
+            $dbName = $contents["params"]["dbname"];
 
+            $allTables = $db->query("SELECT CONCAT('ALTER TABLE ', TABLE_NAME, ' CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;') as data FROM information_schema.TABLES WHERE TABLE_SCHEMA = '".$dbName."' AND TABLE_TYPE != 'VIEW';")->fetchAll();
+        
+            foreach($allTables as $query){
+                try{
+                    $db->query($query["data"]);
+                }catch(Exception $e){
+
+                }
+            }
+            // replace DB charset to utf8mb4
+            if( file_exists($configFile)) {
+                $contents = file_get_contents($configFile);
+                $contents = str_replace('UTF8', 'utf8mb4', $contents);
+
+                if( !@file_put_contents($configFile, $contents)) {
+                
+                }   
+            }
+        }
+    }
     protected function _onUpgrade490()
     {
         $db = $this->getDb();

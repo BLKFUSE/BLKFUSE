@@ -130,7 +130,7 @@ class Sesadvancedactivity_Widget_FeedController extends Engine_Content_Widget_Ab
        $this->view->usersettings =  'everyone';
     $this->view->contentCount = $this->_getParam('contentCount',0);
     $this->view->autoloadfeed = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.autoloadfeed',1);
-    $this->view->submitWithAjax = true;//GitHub Issue https://github.com/Vaibhav-Agarwal06/sedev/issues/118 Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.submitWithAjax', 1);
+    $this->view->submitWithAjax = true;
     $this->view->filterFeed  = $filterFeed = $this->_getParam('filterFeed','all');
     if($subject && empty($_POST) && $filterFeed == "all"){
          $this->view->filterFeed = $filterFeed = "own";
@@ -464,8 +464,11 @@ class Sesadvancedactivity_Widget_FeedController extends Engine_Content_Widget_Ab
           if($row->active)
             $this->view->enableComposer = true;
         } else if($subject->getType() == 'stores') {
+					$row = $subject->membership()->getRow($viewer);
           $isAdmin = Engine_Api::_()->getDbTable('storeroles', 'estore')->isAdmin(array('store_id' => $subject->getIdentity(), 'user_id' => $viewer->getIdentity()));
           if($isAdmin)
+            $this->view->enableComposer = true;
+					if($row->active)
             $this->view->enableComposer = true;
         }
         else {

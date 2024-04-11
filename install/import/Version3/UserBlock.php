@@ -30,7 +30,7 @@ class Install_Import_Version3_UserBlock extends Install_Import_Version3_Abstract
 }
 
 /*
-*  `user_blocklist` text collate utf8_unicode_ci,
+*  `user_blocklist` text COLLATE utf8mb4_unicode_ci,
  * 
  */
 
@@ -40,6 +40,6 @@ CREATE TABLE IF NOT EXISTS `engine4_user_block` (
 *  `blocked_user_id` int(11) unsigned NOT NULL,
   PRIMARY KEY  (`user_id`,`blocked_user_id`),
   KEY `REVERSE` (`blocked_user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

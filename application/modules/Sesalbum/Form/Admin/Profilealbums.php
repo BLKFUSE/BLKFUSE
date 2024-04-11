@@ -64,7 +64,7 @@ class Sesalbum_Form_Admin_Profilealbums extends Engine_Form
 						'view' => 'Views Count',
 						'title' => 'Photo / Album Title',
 						'by' => 'Owner\'s Name',
-						'socialSharing' =>'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+						'socialSharing' =>'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
 						'favouriteCount' => 'Favourites Count',
 						'downloadCount' => 'Downloads Count',
 						'photoCount' => 'Photos Count',

@@ -12,4 +12,4 @@
  */
  
 ?>
-
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenuItemName' => 'core_admin_main_plugins', 'lastMenuItemName' => 'Native Android Mobile App')); ?>

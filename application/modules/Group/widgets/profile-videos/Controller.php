@@ -43,7 +43,9 @@ class Group_Widget_ProfileVideosController extends Engine_Content_Widget_Abstrac
     $this->getElement()->removeDecorator('Title');
 
     // Get paginator
-    $this->view->paginator = $paginator = $group->getVideosPaginator();
+    $params['user_id'] = $viewer->getIdentity();
+    $params['owner_id'] = $group->user_id;
+    $this->view->paginator = $paginator = $group->getVideosPaginator($params);
     $this->view->canAdd = $canAdd = $group->authorization()->isAllowed(null, 'video') && Engine_Api::_()->authorization()->isAllowed('video', null, 'create');
 
     // Set item count per page and current page number

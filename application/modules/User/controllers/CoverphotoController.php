@@ -33,9 +33,11 @@ class User_CoverphotoController extends Core_Controller_Action_Standard {
       $this->view->level_id = $level_id = $this->_getParam("level_id", 0);
     }
     if ($photo && empty($uploadDefaultCover)) {
-      $coverPhotoParams = is_array($user->coverphotoparams) ? $user->coverphotoparams :
-        Zend_Json_Decoder::decode($user->coverphotoparams);
-      $this->view->topPosition = $coverPhotoParams['top'];
+      $coverPhotoParams = is_array($user->coverphotoparams) ? $user->coverphotoparams : (!empty($user->coverphotoparams) ? Zend_Json_Decoder::decode($user->coverphotoparams): '');
+      if(!empty($coverPhotoParams))
+        $this->view->topPosition = $coverPhotoParams['top'];
+      else 
+        $this->view->topPosition = 0;
     } else {
       $coverPhotoParams = Zend_Json_Decoder::decode(Engine_Api::_()->getApi("settings", "core")->getSetting(
         "usercoverphoto.preview.level.params.$user->level_id",
@@ -396,13 +398,6 @@ class User_CoverphotoController extends Core_Controller_Action_Standard {
       ->write($mainPath)
       ->destroy();
 
-    $coverPath = $path . DIRECTORY_SEPARATOR . $base . '_c.' . $extension;
-    $image = Engine_Image::factory();
-    $image->open($file)
-      ->resize(1500, 1500)
-      ->write($coverPath)
-      ->destroy();
-
     if (!empty($user)) {
       $params = array(
         'parent_type' => $user->getType(),
@@ -413,38 +408,18 @@ class User_CoverphotoController extends Core_Controller_Action_Standard {
 
       try {
         $iMain = $filesTable->createFile($mainPath, $params);
-        $iCover = $filesTable->createFile($coverPath, $params);
-        $iMain->bridge($iCover, 'thumb.cover');
-        if(!Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('album')){
-          // if user coverphoto column is empty.
-          if(!empty($user['coverphoto'])){
-            $file = Engine_Api::_()->getItem('storage_file', $user['coverphoto']);
-            $getParentChilds = $file->getChildren($file->getIdentity());
-            foreach ($getParentChilds as $child) {
-              // remove child file.
-              $this->unlinkFile(APPLICATION_PATH . DIRECTORY_SEPARATOR . $child['storage_path']);
-              // remove child directory.
-              $childPhotoDir = $this->getDirectoryPath($child['storage_path']);
-              $this->removeDir($childPhotoDir);
-              // remove child row from db.
-              $child->remove();
-            }
-            // remove parent file.
-            $this->unlinkFile(APPLICATION_PATH . DIRECTORY_SEPARATOR . $file['storage_path']);
-            // remove directory.
-            $parentPhotoDir = $this->getDirectoryPath($file['storage_path']);
-            $this->removeDir($parentPhotoDir);
-            if ($file) {
-              // remove parent form db.
-              $file->remove();
-            }
-          }
-        }
+				// if user coverphoto column is empty.
+				if(!empty($user['coverphoto'])){
+					$file = Engine_Api::_()->getItem('storage_file', $user['coverphoto']);
+					if($file) {
+						Engine_Api::_()->storage()->deleteExternalsFiles($file->file_id);
+						$file->delete();
+					}
+				}
         $user->coverphoto = $iMain->file_id;
         $user->save();
       } catch (Exception $e) {
         @unlink($mainPath);
-        @unlink($coverPath);
         if ($e->getCode() == Storage_Model_DbTable_Files::SPACE_LIMIT_REACHED_CODE
           && Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('album')) {
           throw new Album_Model_Exception($e->getMessage(), $e->getCode());
@@ -453,7 +428,6 @@ class User_CoverphotoController extends Core_Controller_Action_Standard {
         }
       }
       @unlink($mainPath);
-      @unlink($coverPath);
       if (!empty($tmpRow)) {
         $tmpRow->delete();
       }
@@ -461,14 +435,10 @@ class User_CoverphotoController extends Core_Controller_Action_Standard {
     } else {
       try {
         $iMain = $filesTable->createSystemFile($mainPath);
-        $iCover = $filesTable->createSystemFile($coverPath);
-        $iMain->bridge($iCover, 'thumb.cover');
         // Remove temp files
         @unlink($mainPath);
-        @unlink($coverPath);
       } catch (Exception $e) {
         @unlink($mainPath);
-        @unlink($coverPath);
         if ($e->getCode() == Storage_Model_DbTable_Files::SPACE_LIMIT_REACHED_CODE
           && Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('album')) {
           throw new Album_Model_Exception($e->getMessage(), $e->getCode());
@@ -566,32 +536,30 @@ class User_CoverphotoController extends Core_Controller_Action_Standard {
     if (!empty($tmpRow)) {
       $tmpRow->delete();
     }
-
-    //if(!Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('album')){
-      // if user photo_id column is empty.
-      if(!empty($user['photo_id'])){
-        $file = Engine_Api::_()->getItem('storage_file', $user['photo_id']);
-        $getParentChilds = $file->getChildren($file->getIdentity());
-        foreach ($getParentChilds as $child) {
-          // remove child file.
-          $this->unlinkFile(APPLICATION_PATH . DIRECTORY_SEPARATOR . $child['storage_path']);
-          // remove child directory.
-          $childPhotoDir = $this->getDirectoryPath($child['storage_path']);
-          $this->removeDir($childPhotoDir);
-          // remove child row from db.
-          $child->remove();
-        }
-        // remove parent file.
-        $this->unlinkFile(APPLICATION_PATH . DIRECTORY_SEPARATOR . $file['storage_path']);
-        // remove directory.
-        $parentPhotoDir = $this->getDirectoryPath($file['storage_path']);
-        $this->removeDir($parentPhotoDir);
-        if ($file) {
-          // remove parent form db.
-          $file->remove();
-        }
-      }
-    //}
+    
+		// if user photo_id column is empty.
+		if(!empty($user['photo_id'])){
+			$file = Engine_Api::_()->getItem('storage_file', $user['photo_id']);
+			$getParentChilds = $file->getChildren($file->getIdentity());
+			foreach ($getParentChilds as $child) {
+				// remove child file.
+				$this->unlinkFile(APPLICATION_PATH . DIRECTORY_SEPARATOR . $child['storage_path']);
+				// remove child directory.
+				$childPhotoDir = $this->getDirectoryPath($child['storage_path']);
+				$this->removeDir($childPhotoDir);
+				// remove child row from db.
+				$child->remove();
+			}
+			// remove parent file.
+			$this->unlinkFile(APPLICATION_PATH . DIRECTORY_SEPARATOR . $file['storage_path']);
+			// remove directory.
+			$parentPhotoDir = $this->getDirectoryPath($file['storage_path']);
+			$this->removeDir($parentPhotoDir);
+			if ($file) {
+				// remove parent form db.
+				$file->remove();
+			}
+		}
 
     $user->photo_id = $iMain->file_id;
     $user->save();
@@ -613,29 +581,27 @@ class User_CoverphotoController extends Core_Controller_Action_Standard {
   }
 
   protected function whenRemove($user,$deleteType = null){
-    if(!Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('album')){
-      if(!empty($user[$deleteType])){
-        $file = Engine_Api::_()->getItem('storage_file', $user[$deleteType]);
-        $getParentChilds = $file->getChildren($file->getIdentity());
-        foreach ($getParentChilds as $child) {
-          // remove child file.
-          $this->unlinkFile(APPLICATION_PATH . DIRECTORY_SEPARATOR . $child['storage_path']);
-          // remove child directory.
-          $childPhotoDir = $this->getDirectoryPath($child['storage_path']);
-          $this->removeDir($childPhotoDir);
-          // remove child row from db.
-          $child->remove();
-        }
-        // remove parent file.
-        $this->unlinkFile(APPLICATION_PATH . DIRECTORY_SEPARATOR . $file['storage_path']);
-        // remove directory.
-        $parentPhotoDir = $this->getDirectoryPath($file['storage_path']);
-        $this->removeDir($parentPhotoDir);
-        if ($file) {
-          // remove parent form db.
-          $file->remove();
-        }
-      }
-    }
+		if(!empty($user[$deleteType])){
+			$file = Engine_Api::_()->getItem('storage_file', $user[$deleteType]);
+			$getParentChilds = $file->getChildren($file->getIdentity());
+			foreach ($getParentChilds as $child) {
+				// remove child file.
+				$this->unlinkFile(APPLICATION_PATH . DIRECTORY_SEPARATOR . $child['storage_path']);
+				// remove child directory.
+				$childPhotoDir = $this->getDirectoryPath($child['storage_path']);
+				$this->removeDir($childPhotoDir);
+				// remove child row from db.
+				$child->remove();
+			}
+			// remove parent file.
+			$this->unlinkFile(APPLICATION_PATH . DIRECTORY_SEPARATOR . $file['storage_path']);
+			// remove directory.
+			$parentPhotoDir = $this->getDirectoryPath($file['storage_path']);
+			$this->removeDir($parentPhotoDir);
+			if ($file) {
+				// remove parent form db.
+				$file->remove();
+			}
+		}
   }
 }

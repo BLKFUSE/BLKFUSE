@@ -27,6 +27,12 @@ class Fields_View_Helper_FieldOptions extends Fields_View_Helper_FieldAbstract
     if( is_object($value) ) {
       if( isset($info[$value->value]) ) {
         $label =  $this->view->translate($info[$value->value]);
+        
+        //Income Profile Field
+        if($field->type == 'income') {
+          $values = explode(' - ', $info[$value->value]);
+          $label = Engine_Api::_()->payment()->getCurrencyPrice(str_replace(',', '', $values[0])) . ' - ' . Engine_Api::_()->payment()->getCurrencyPrice(str_replace(',', '', $values[1]));
+        }
         return $this->encloseInLink($subject, $field, $value->value, $label);
       }
     }

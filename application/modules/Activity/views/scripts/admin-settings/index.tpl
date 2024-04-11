@@ -10,7 +10,13 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_manage", 'childMenuItemName' => 'core_admin_main_settings_activity')); ?>
 
+<?php if( count($this->navigation) ): ?>
+  <div class='tabs'>
+    <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?>
+  </div>
+<?php endif; ?>
 <?php
   $this->form->setTitle('Activity Feed Settings');
   $this->form->setDescription($this->translate('ACTIVITY_FORM_ADMIN_SETTINGS_GENERAL_DESCRIPTION',

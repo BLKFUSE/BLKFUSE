@@ -225,7 +225,7 @@ return array(
                             'view' => 'Views Count',
                             'title' => 'Photo / Album Title',
                             'by' => 'Owner\'s Name',
-                            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+                            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
                             'favouriteCount' => 'Favourites Count',
                             'downloadCount' => 'Downloads Count',
                             'photoCount' => 'Photos Count',
@@ -816,7 +816,7 @@ return array(
                             'view' => 'Views Count',
                             'title' => 'Album Title',
                             'by' => 'Owner\'s Name',
-                            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+                            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
                             'favouriteCount' => 'Favourites Count',
                             'downloadCount' => 'Downloads Count',
                             'photoCount' => 'Photos Count',
@@ -971,7 +971,7 @@ return array(
                     'Select',
                     'enable_search',
                     array(
-                        'label' => "Do you want to enable searching (auto-suggest) of photos / albums?",
+                        'label' => "Do you want to enable searching (auto-suggest) of photos?",
                         'multiOptions' => array(
                             'yes' => 'Yes',
                             'no' => 'No',
@@ -1203,7 +1203,7 @@ return array(
                             'view' => 'Views Count',
                             'title' => 'Photo / Album Title',
                             'by' => 'Owner\'s Name',
-                            'socialSharing' => 'Social Share Buttons<a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+                            'socialSharing' => 'Social Share Buttons<a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
                             'favouriteCount' => 'Favourites Count',
                             'downloadCount' => 'Downloads Count',
                             'photoCount' => 'Photos Count (This option will only work on Albums)',
@@ -1338,7 +1338,7 @@ return array(
                             'view' => 'Views Count',
                             'title' => 'Photo Title',
                             'by' => 'Owner\'s Name',
-                            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+                            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
                             'favouriteCount' => 'Favourites Count',
                             'downloadCount' => 'Downloads Count',
                             'photoCount' => 'Photos Count',
@@ -1467,7 +1467,7 @@ return array(
                             'view' => 'Views Count',
                             'title' => 'Photo / Album Title',
                             'by' => 'Owner\'s Name',
-                            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+                            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
                             'favouriteCount' => 'Favourites Count',
                             'downloadCount' => 'Downloads Count',
                             'photoCount' => 'Photos Count',
@@ -1481,18 +1481,18 @@ return array(
                 ),
                 $socialshare_enable_plusicon,
                 $socialshare_icon_limit,
-                array(
-                    'Text',
-                    'duration',
-                    array(
-                        'label' => 'Enter the delay time.',
-                        'value' => '300',
-                        'validators' => array(
-                            array('Int', true),
-                            array('GreaterThan', true, array(0)),
-                        )
-                    )
-                ),
+//                 array(
+//                     'Text',
+//                     'duration',
+//                     array(
+//                         'label' => 'Enter the delay time.',
+//                         'value' => '300',
+//                         'validators' => array(
+//                             array('Int', true),
+//                             array('GreaterThan', true, array(0)),
+//                         )
+//                     )
+//                 ),
                 array(
                     'Text',
                     'height',
@@ -1625,7 +1625,7 @@ return array(
                             'view' => 'Views Count',
                             'title' => 'Photo / Album Title',
                             'by' => 'Owner\'s Name',
-                            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+                            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
                             'favouriteCount' => 'Favourites Count',
                             'downloadCount' => 'Downloads Count',
                             'photoCount' => 'Photos Count',

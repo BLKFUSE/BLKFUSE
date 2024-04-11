@@ -10,10 +10,45 @@
  * @author     SocialEngineSolutions
  */
 ?>
-<h2>
+<?php include APPLICATION_PATH .  '/application/modules/Sesalbum/views/scripts/dismiss_message.tpl';?>
+<style>
+.sesalbums_nav_btns{
+	float:right;
+	margin-top:-62px !important;
+}
+.sesalbums_nav_btns a{
+	background-color:#208ed3;
+	border-radius:3px;
+	background-position:10px center;
+	background-repeat:no-repeat;
+	color:#fff !important;
+	float:left;
+	font-weight:bold;
+	padding:7px 15px 7px 30px;
+	margin:0 8px;
+	position:relative;
+}
+.sesalbums_nav_btns a:before{
+	font-family:'Font Awesome 5 Free';
+	left:10px;
+	position:absolute;
+	font-size:17px;
+	font-weight:normal;
+	top:5px;
+}
+.sesalbums_nav_btns a:hover{
+	text-decoration:none;
+	opacity:.8;
+}
+.sesalbums_nav_btns .request-btn:before{
+	content:"\f059"
+}
+</style>
+
+<h2 class="page_heading">
   <?php echo $this->translate("Advanced Photos & Albums Plugin") ?>
 </h2>
-<div class="sesbasic_nav_btns">
+<div class="sesalbums_nav_btns">
     <a href="<?php echo $this->url(array('module' => 'sesalbum', 'controller' => 'settings', 'action' => 'help'),'admin_default',true); ?>" class="request-btn">Help</a>
 </div>
 <?php if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesbasic'))
@@ -68,64 +103,75 @@
 
 
 <script type="text/javascript">
-function rating_album(value){
-		if(value == 1){
-			document.getElementById('sesalbum_ratealbum_own-wrapper').style.display = 'block';		
-			document.getElementById('sesalbum_ratealbum_again-wrapper').style.display = 'block';
-			document.getElementById('sesalbum_ratealbum_show-wrapper').style.display = 'none';	
-		}else{
-			document.getElementById('sesalbum_ratealbum_show-wrapper').style.display = 'block';
-			document.getElementById('sesalbum_ratealbum_own-wrapper').style.display = 'none';
-			document.getElementById('sesalbum_ratealbum_again-wrapper').style.display = 'none';
-		}
-}
-function show_position(value){
-	if(value == 1){
-			document.getElementById('sesalbum_position_watermark-wrapper').style.display = 'block';
-	}else{
-			document.getElementById('sesalbum_position_watermark-wrapper').style.display = 'none';		
-	}
-}
-// if(document.querySelector('[name="sesalbum_watermark_enable"]:checked').value == 0){
-// 	document.getElementById('sesalbum_position_watermark-wrapper').style.display = 'none';	
-// }else{
-// 		document.getElementById('sesalbum_position_watermark-wrapper').style.display = 'block';
-// }
-function rating_photo(value){
-		if(value == 1){
-			document.getElementById('sesalbum_ratephoto_show-wrapper').style.display = 'none';
-			document.getElementById('sesalbum_ratephoto_own-wrapper').style.display = 'block';
-			document.getElementById('sesalbum_ratephoto_again-wrapper').style.display = 'block';			
-		}else{
-			document.getElementById('sesalbum_ratephoto_show-wrapper').style.display = 'block';
-			document.getElementById('sesalbum_ratephoto_own-wrapper').style.display = 'none';
-			document.getElementById('sesalbum_ratephoto_again-wrapper').style.display = 'none';	
-		}
-}
-// if(document.querySelector('[name="sesalbum_album_rating"]:checked').value == 0){
-// 	document.getElementById('sesalbum_ratealbum_own-wrapper').style.display = 'none';		
-// 	document.getElementById('sesalbum_ratealbum_again-wrapper').style.display = 'none';
-// 	document.getElementById('sesalbum_ratealbum_show-wrapper').style.display = 'block';
-// }else{
-// 	document.getElementById('sesalbum_ratealbum_show-wrapper').style.display = 'none';
-// }
-// if(document.querySelector('[name="sesalbum_photo_rating"]:checked').value == 0){
-// 			document.getElementById('sesalbum_ratephoto_own-wrapper').style.display = 'none';	
-// 			document.getElementById('sesalbum_ratephoto_again-wrapper').style.display = 'none';	
-// 			document.getElementById('sesalbum_ratephoto_show-wrapper').style.display = 'block';	
-// }else{
-// 			document.getElementById('sesalbum_ratephoto_show-wrapper').style.display = 'none';	
-// }
-scriptJquery(document).ready(function() {
+
+  scriptJquery(document).ready(function() {
     if(!<?php echo Engine_Api::_()->getApi('settings', 'core')->getSetting('sesalbum.enable.location', '1') ;?>)
     document.getElementById('sesalbum_search_type-wrapper').style.display = 'none';
+    
+    rating_album('<?php echo Engine_Api::_()->getApi('settings', 'core')->getSetting('sesalbum.album.rating', '1') ;?>');
+    rating_photo('<?php echo Engine_Api::_()->getApi('settings', 'core')->getSetting('sesalbum.photo.rating', '1') ;?>');
   });
-function enableLocationAlbumPhoto(value) {
-	if(value == 1)
-	  document.getElementById('sesalbum_search_type-wrapper').style.display = 'block';
-	else 
-	  document.getElementById('sesalbum_search_type-wrapper').style.display = 'none';
-	}
+  
+  function rating_album(value){
+      if(value == 1){
+        document.getElementById('sesalbum_ratealbum_own-wrapper').style.display = 'flex';		
+        document.getElementById('sesalbum_ratealbum_again-wrapper').style.display = 'flex';
+        document.getElementById('sesalbum_ratealbum_show-wrapper').style.display = 'none';	
+      }else{
+        document.getElementById('sesalbum_ratealbum_show-wrapper').style.display = 'flex';
+        document.getElementById('sesalbum_ratealbum_own-wrapper').style.display = 'none';
+        document.getElementById('sesalbum_ratealbum_again-wrapper').style.display = 'none';
+      }
+  }
+  function show_position(value){
+    if(value == 1){
+        document.getElementById('sesalbum_position_watermark-wrapper').style.display = 'flex';
+    }else{
+        document.getElementById('sesalbum_position_watermark-wrapper').style.display = 'none';		
+    }
+  }
+  // if(document.querySelector('[name="sesalbum_watermark_enable"]:checked').value == 0){
+  // 	document.getElementById('sesalbum_position_watermark-wrapper').style.display = 'none';	
+  // }else{
+  // 		document.getElementById('sesalbum_position_watermark-wrapper').style.display = 'flex';
+  // }
+  function rating_photo(value){
+      if(value == 1){
+        document.getElementById('sesalbum_ratephoto_show-wrapper').style.display = 'none';
+        document.getElementById('sesalbum_ratephoto_own-wrapper').style.display = 'flex';
+        document.getElementById('sesalbum_ratephoto_again-wrapper').style.display = 'flex';			
+      }else{
+        document.getElementById('sesalbum_ratephoto_show-wrapper').style.display = 'flex';
+        document.getElementById('sesalbum_ratephoto_own-wrapper').style.display = 'none';
+        document.getElementById('sesalbum_ratephoto_again-wrapper').style.display = 'none';	
+      }
+  }
+  // if(document.querySelector('[name="sesalbum_album_rating"]:checked').value == 0){
+  // 	document.getElementById('sesalbum_ratealbum_own-wrapper').style.display = 'none';		
+  // 	document.getElementById('sesalbum_ratealbum_again-wrapper').style.display = 'none';
+  // 	document.getElementById('sesalbum_ratealbum_show-wrapper').style.display = 'flex';
+  // }else{
+  // 	document.getElementById('sesalbum_ratealbum_show-wrapper').style.display = 'none';
+  // }
+  // if(document.querySelector('[name="sesalbum_photo_rating"]:checked').value == 0){
+  // 			document.getElementById('sesalbum_ratephoto_own-wrapper').style.display = 'none';	
+  // 			document.getElementById('sesalbum_ratephoto_again-wrapper').style.display = 'none';	
+  // 			document.getElementById('sesalbum_ratephoto_show-wrapper').style.display = 'flex';	
+  // }else{
+  // 			document.getElementById('sesalbum_ratephoto_show-wrapper').style.display = 'none';	
+  // }
 
-
+  function enableLocationAlbumPhoto(value) {
+    if(value == 1)
+      document.getElementById('sesalbum_search_type-wrapper').style.display = 'flex';
+    else 
+      document.getElementById('sesalbum_search_type-wrapper').style.display = 'none';
+  }
 </script>
+<style> 
+	button[disabled] { 
+	  background:#bdbdbd; 
+	  border-color:#bdbdbd; 
+	  cursor:not-allowed; 
+  }
+</style>

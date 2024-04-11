@@ -19,4 +19,15 @@
 class Messages_Model_DbTable_Recipients extends Engine_Db_Table
 {
   protected $_rowClass = 'Messages_Model_Recipient';
+  
+  public function getRecipient($params = array()) {
+    $cName = $this->info('name');
+    return $this->select()
+                  ->from($cName, 'user_id')
+                  ->where("`{$cName}`.`conversation_id` = ?", $params['conversation_id'])
+                  ->where("`{$cName}`.`inbox_message_id` = ?", $params['message_id'])
+                  ->query()
+                  ->fetchColumn();
+
+  }
 }

@@ -26,4 +26,4 @@ CREATE TABLE IF NOT EXISTS `engine4_core_bannedusernames` (
   `username` varchar(255) NOT NULL,
   PRIMARY KEY  (`bannedusername_id`),
   KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

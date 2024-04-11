@@ -40,7 +40,7 @@ class Sescredit_Form_Purchasepoint extends Engine_Form {
     $this->sescredit_number_point->addValidator('alnum', true);
 
     $this->addElement('Dummy', 'sescredit_number_point_value', array(
-        'description' => Engine_Api::_()->sescredit()->getCurrencyPrice(0, '', '', true),
+        'description' => Engine_Api::_()->payment()->getCurrencyPrice(0, '', '', true),
     ));
 
     $this->addElement('Hidden', 'gateway_id', array(

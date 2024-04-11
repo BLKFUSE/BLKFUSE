@@ -119,24 +119,24 @@ CREATE TABLE IF NOT EXISTS `phpfox_video_category` (
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_video_videos` (
   `video_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `search` tinyint(1) NOT NULL DEFAULT '1',
-  `owner_type` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `owner_type` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner_id` int(11) NOT NULL,
-  `parent_type` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+  `parent_type` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `parent_id` int(11) unsigned DEFAULT NULL,
   `creation_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL,
   `view_count` int(11) unsigned NOT NULL DEFAULT '0',
   `comment_count` int(11) unsigned NOT NULL DEFAULT '0',
   `type` tinyint(1) NOT NULL,
-  `code` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
+  `code` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
   `photo_id` int(11) unsigned DEFAULT NULL,
   `rating` float NOT NULL,
   `category_id` int(11) unsigned NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
-  `file_id` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
+  `file_id` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
   `duration` int(9) unsigned NOT NULL,
   `rotation` smallint(5) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`video_id`),
@@ -144,5 +144,5 @@ CREATE TABLE IF NOT EXISTS `phpfox_video_category` (
   KEY `search` (`search`),
   KEY `creation_date` (`creation_date`),
   KEY `view_count` (`view_count`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
  */

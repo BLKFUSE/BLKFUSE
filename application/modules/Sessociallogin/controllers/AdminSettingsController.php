@@ -229,28 +229,28 @@ class Sessociallogin_AdminSettingsController extends Core_Controller_Action_Admi
         }
     }
 
-    public function hotmailAction() {
-
-        $this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('sessociallogin_admin_main', array(), 'sessociallogin_admin_main_hotmail');
-
-        $this->view->form = $form = new Sessociallogin_Form_Admin_Settings_Hotmail();
-        if( _ENGINE_ADMIN_NEUTER ) {
-          $form->populate(array(
-              'sessociallogin_hotmailclientid' => '******',
-              'sessociallogin_hotmailclientsecret' => '******',
-          ));
-        }
-        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
-            $values = $form->getValues();
-            foreach ($values as $key => $value) {
-                if ($value != '')
-                    Engine_Api::_()->getApi('settings', 'core')->setSetting($key, $value);
-            }
-            $form->addNotice('Your changes have been saved.');
-            if ($error)
-                $this->_helper->redirector->gotoRoute(array());
-        }
-    }
+//     public function hotmailAction() {
+// 
+//         $this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('sessociallogin_admin_main', array(), 'sessociallogin_admin_main_hotmail');
+// 
+//         $this->view->form = $form = new Sessociallogin_Form_Admin_Settings_Hotmail();
+//         if( _ENGINE_ADMIN_NEUTER ) {
+//           $form->populate(array(
+//               'sessociallogin_hotmailclientid' => '******',
+//               'sessociallogin_hotmailclientsecret' => '******',
+//           ));
+//         }
+//         if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
+//             $values = $form->getValues();
+//             foreach ($values as $key => $value) {
+//                 if ($value != '')
+//                     Engine_Api::_()->getApi('settings', 'core')->setSetting($key, $value);
+//             }
+//             $form->addNotice('Your changes have been saved.');
+//             if ($error)
+//                 $this->_helper->redirector->gotoRoute(array());
+//         }
+//     }
     
     public function statisticAction() {
     

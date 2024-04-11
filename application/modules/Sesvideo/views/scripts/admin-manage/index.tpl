@@ -55,11 +55,9 @@ function selectAll()
 <p>
 	<?php echo $this->translate('This page lists all of the videos your users have created. You can use this page to monitor these videos and delete offensive material if necessary. Entering criteria into the filter fields will help you find specific video. Leaving the filter fields blank will show all the videos on your social network. <br /> Below, you can also choose any number of videos as Videos of the Day. These videos will be displayed randomly in the "Videos / Channels / Playlists of the Day" widget.') ?>
 </p>
-<br />
 <div class='admin_search sesbasic_search_form'>
   <?php echo $this->formFilter->render($this) ?>
 </div>
-<br />
 <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
   <div class="sesbasic_search_reasult">
     <?php echo $this->translate(array('%s video found.', '%s videos found.', $this->paginator->getTotalItemCount()), $this->locale()->toNumber($this->paginator->getTotalItemCount())) ?>
@@ -90,7 +88,7 @@ function selectAll()
             <td><input type='checkbox' class='checkbox' name='delete_<?php echo $item->video_id;?>' value='<?php echo $item->video_id ?>' /></td>
             <td><?php echo $item->getIdentity() ?></td>
             <td><?php echo  $this->htmlLink($item->getHref(), $item->getTitle()); ?></td>
-            <td><?php echo $this->htmlLink($item->getHref(), $item->getOwner()); ?></td>
+            <td class="admin_table_name"><?php echo $this->htmlLink($item->getHref(), $item->getOwner()); ?></td>
             <td>
               <?php 
                 switch( $item->type ) {
@@ -191,7 +189,7 @@ function selectAll()
                   array('route' => 'default', 'module' => 'sesvideo', 'controller' => 'admin-manage', 'action' => 'approve', 'id' => $item->video_id,'approve' =>1),$this->htmlImage($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/images/icons/error.png', '', array('title'=> $this->translate('Mark Approved'))))  ; ?>
             
             </td>
-            <td>
+            <td class="admin_btn_options">
               <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'sesvideo', 'controller' => 'admin-manage', 'action' => 'view', 'type'=> 'video', 'id' => $item->video_id), $this->translate("View Details"), array('class' => 'smoothbox')) ?>
               |
               <a href="<?php echo $item->getHref(); ?>" target = "_blank" ><?php echo $this->translate("View") ?></a>
@@ -208,22 +206,14 @@ function selectAll()
       </tbody>
     </table>
   </div>
-
-  <br />
-
   <div class='buttons'>
     <button type='submit'><?php echo $this->translate("Delete Selected") ?></button>
   </div>
   </form>
-
-  <br />
-
   <div>
     <?php echo $this->paginationControl($this->paginator); ?>
   </div>
-
 <?php else: ?>
-  <br />
   <div class="tip">
     <span>
       <?php echo $this->translate("There are no videos posted by your members yet.") ?>

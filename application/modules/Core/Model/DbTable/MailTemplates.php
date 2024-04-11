@@ -30,7 +30,7 @@ class Core_Model_DbTable_MailTemplates extends Engine_Db_Table {
         $name = $this->info('name');
 
         $select = $this->select()
-            ->from($name, array('type', 'module', 'default'))
+            ->from($name, array('type', 'module', 'default', 'is_admin'))
             ->where('module IN(?)', $enabledModuleNames)
             ->where('type NOT IN(?)', $excludeMailTypes);
 

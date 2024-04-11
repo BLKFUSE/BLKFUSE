@@ -17,18 +17,19 @@ return array (
     'type' => 'module',
     'name' => 'sesadvancedactivity',
     //'sku' => 'sesadvancedactivity',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'dependencies' => array(
         array(
             'type' => 'module',
             'name' => 'core',
-            'minVersion' => '6.2.0',
+            'minVersion' => '6.5.1',
         ),
     ),
     'path' => 'application/modules/Sesadvancedactivity',
     'title' => 'SNS - Professional Activity & Nested Comments Plugin',
     'description' => 'SNS - Professional Activity & Nested Comments Plugin',
      'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	 'thumb' => 'application/modules/Sesadvancedactivity/externals/images/thumb.png',
     'callback' => array(
 			'path' => 'application/modules/Sesadvancedactivity/settings/install.php',
 			'class' => 'Sesadvancedactivity_Installer',
@@ -102,15 +103,15 @@ return array (
   ),
   // Compose -------------------------------------------------------------------
   'composer' => array(
-    'sesadvancedactivityfacebook' => array(
-      'script' => array('_composeFacebook.tpl', 'sesadvancedactivity'),
-    ),
-    'sesadvancedactivitytwitter' => array(
-      'script' => array('_composeTwitter.tpl', 'sesadvancedactivity'),
-    ),
-    'sesadvancedactivitylinkedin' => array(
-      'script' => array('_composeLinkedin.tpl', 'sesadvancedactivity'),
-    ),
+//     'sesadvancedactivityfacebook' => array(
+//       'script' => array('_composeFacebook.tpl', 'sesadvancedactivity'),
+//     ),
+//     'sesadvancedactivitytwitter' => array(
+//       'script' => array('_composeTwitter.tpl', 'sesadvancedactivity'),
+//     ),
+//     'sesadvancedactivitylinkedin' => array(
+//       'script' => array('_composeLinkedin.tpl', 'sesadvancedactivity'),
+//     ),
     'sesadvancedactivitylink' => array(
       'script' => array('_composeLink.tpl', 'sesadvancedactivity'),
       'plugin' => 'Sesadvancedactivity_Plugin_LinkComposer',
@@ -127,9 +128,9 @@ return array (
       'script' => array('_composebuysell.tpl', 'sesadvancedactivity'),
       'plugin' => 'Sesadvancedactivity_Plugin_BuysellComposer',
     ),
-    'sesadvancedactivityfacebookpostembed' => array(
-      'script' => array('_composefacebookpostembed.tpl', 'sesadvancedactivity'),
-    ),
+//     'sesadvancedactivityfacebookpostembed' => array(
+//       'script' => array('_composefacebookpostembed.tpl', 'sesadvancedactivity'),
+//     ),
   ),
   // Items ---------------------------------------------------------------------
   'items' => array(

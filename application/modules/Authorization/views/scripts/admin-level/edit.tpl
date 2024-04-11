@@ -10,6 +10,8 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_manage", 'parentMenuItemName' => 'authorization_admin_main_manage', 'childMenuItemName' => 'authorization_admin_main_level')); ?>
+
 <?php $permissionTable = $this->permissionTable; ?>
 
 <script type="text/javascript">
@@ -17,9 +19,10 @@
     window.location.href = en4.core.baseUrl + 'admin/authorization/level/edit/id/' + level_id;
     //alert(level_id);
   }
+
 </script>
 
-<h2>
+<h2 class="page_heading">
   <?php echo $this->translate("Member Levels") ?>
 </h2>
 
@@ -39,11 +42,22 @@
   </div>
 </div>
 <script type="text/javascript">
+
+  function showProfileMemberLevel(value) { 
+    if(value == 1) {
+      scriptJquery('#editprotylevel-wrapper').show();
+    } else {
+      scriptJquery('#editprotylevel-wrapper').hide();
+    } 
+  }
+  
   function showPreview() {
     Smoothbox.open(scriptJquery('#show_default_preview'));
   }
-  
+
   scriptJquery("ready").ready(function() {
+    showProfileMemberLevel('<?php echo $permissionTable->getAllowed('user', $this->level_id, 'editprofiletype'); ?>');
+    
     showHideSettings('lastLoginShow', '<?php echo $permissionTable->getAllowed('user', $this->level_id, 'lastLoginShow'); ?>');
     
     showHideSettings('lastUpdateShow', '<?php echo $permissionTable->getAllowed('user', $this->level_id, 'lastUpdateShow'); ?>');
@@ -61,6 +75,8 @@
     showHideSettings('friendsCountShow', '<?php echo $permissionTable->getAllowed('user', $this->level_id, 'friendsCountShow'); ?>');
     
     showHideSettings('changeemail', '<?php echo $permissionTable->getAllowed('user', $this->level_id, 'changeemail'); ?>');
+    
+    priceVerified('<?php echo $permissionTable->getAllowed('user', $this->level_id, 'paid_verified'); ?>');
   });
   
   function showHideSettings(settingName, value) {
@@ -141,6 +157,16 @@
       }
     }
   }
+  
+  function priceVerified(value) {
+    if(value == 1) {
+      scriptJquery('#price_verified-wrapper').show();
+      scriptJquery('#recurrence-wrapper').show();
+    } else { 
+      scriptJquery('#price_verified-wrapper').hide();
+      scriptJquery('#recurrence-wrapper').hide();
+    }
+  }
 </script>
 
 <style type="text/css">
@@ -148,3 +174,7 @@
     display: none;
   }
 </style>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_manage').parent().addClass('active');
+  scriptJquery('.core_admin_main_manage_levels').addClass('active');
+</script>

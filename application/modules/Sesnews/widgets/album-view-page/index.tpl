@@ -500,7 +500,7 @@ function take_snapshot() {
 		scriptJquery('#sesnews_popup_cam_upload').hide();
 		// upload results
 		scriptJquery('.sesnews_album_cover_container').append('<div id="sesnews_album_cover_loading" class="sesbasic_loading_cont_overlay"></div>');
-		 Webcam.upload( data_uri, en4.core.staticBaseUrl+'sesnews/album/upload-cover/album_id/<?php echo $this->album_id ?>' , function(code, text) {
+		 Webcam.upload( data_uri, en4.core.baseUrl+'sesnews/album/upload-cover/album_id/<?php echo $this->album_id ?>' , function(code, text) {
 				response = scriptJquery.parseJSON(text);
 				scriptJquery('#sesnews_album_cover_loading').remove();
 				scriptJquery('.sesnews_album_cover_image').css('background-image', 'url(' + response.file + ')');
@@ -528,7 +528,7 @@ scriptJquery(document).on('click','#coverChangesesnews',function(){
 function uploadCoverArt(input){
 	 var url = input.value;
     var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-    if (input.files && input.files[0] && (ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif'  || ext == 'GIF')){
+    if (input.files && input.files[0] && (ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif'  || ext == 'GIF'  || ext == 'webp')){
 				uploadFileToServer(input.files[0]);
     }else{
 				//Silence
@@ -539,7 +539,7 @@ scriptJquery('#coverRemovesesnews').click(function(){
 		scriptJquery('.sesnews_album_cover_image').css('background-image', 'url()');
 		scriptJquery('#sesnews_album_cover_default').show();
 		var album_id = '<?php echo $this->album->album_id; ?>';
-		uploadURL = en4.core.staticBaseUrl+'sesnews/album/remove-cover/album_id/'+album_id;
+		uploadURL = en4.core.baseUrl+'sesnews/album/remove-cover/album_id/'+album_id;
 		var jqXHR=scriptJquery.ajax({
 			url: uploadURL,
 			type: "POST",
@@ -568,7 +568,7 @@ scriptJquery('#saveCoverPosition').click(function(){
 	scriptJquery('.sesnews_album_cover_fade').css('display','block');
 	scriptJquery('.sesnews_album_cover_inner').css('display','block');
 	scriptJquery('#sesnews-pos-btn').css('display','none');
-	var URL = en4.core.staticBaseUrl+'albums/index/change-position/album_id/'+album_id;
+	var URL = en4.core.baseUrl+'albums/index/change-position/album_id/'+album_id;
 	(scriptJquery.ajax({
     dataType: 'html',
 		method: 'post',
@@ -587,7 +587,7 @@ function uploadFileToServer(files){
 	scriptJquery('.sesnews_album_cover_container').append('<div id="sesnews_album_cover_loading" class="sesbasic_loading_cont_overlay"></div>');
 	var formData = new FormData();
 	formData.append('Filedata', files);
-	uploadURL = en4.core.staticBaseUrl+'sesnews/album/upload-cover/album_id/<?php echo $this->album_id ?>';
+	uploadURL = en4.core.baseUrl+'sesnews/album/upload-cover/album_id/<?php echo $this->album_id ?>';
 	var jqXHR=scriptJquery.ajax({
     dataType: 'json',
     url: uploadURL,

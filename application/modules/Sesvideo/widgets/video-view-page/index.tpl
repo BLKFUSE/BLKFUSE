@@ -37,10 +37,7 @@
     }
 ?>
 <?php $flowplayer = Engine_Api::_()->sesbasic()->checkPluginVersion('core', '4.8.10') ? 'externals/flowplayer/flowplayer-3.2.18.swf' : 'externals/flowplayer/flowplayer-3.1.5.swf'; ?>
-<?php $addThisCode = Engine_Api::_()->getApi('settings', 'core')->getSetting('ses.addthis',0); ?>
-<?php if(is_array($this->allowAdvShareOptions) && $addThisCode && engine_in_array('addThis',$this->allowAdvShareOptions)){ ?>
-<?php $this->headScript()->appendFile("//s7.addthis.com/js/300/addthis_widget.js#pubid=<?php echo $addThisCode; ?>"); ?>
-<?php } ?>
+
 <?php
 if(isset($this->docActive)){
 	$imageURL = $this->video->getPhotoUrl();
@@ -253,7 +250,7 @@ var tagAction = window.tagAction = function(tag,name){
         <?php if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('videovod')): ?>
           <?php include APPLICATION_PATH . '/application/modules/Videovod/views/scripts/iframe/index.tpl'; ?>
         <?php else: ?>
-          <video id="video" controls preload="auto" width="480" height="386">
+          <video id="video" controls preload="auto" width="480" height="386" controlsList="nodownload">
             <source type='video/mp4' src="<?php echo $this->video_location ?>">
           </video>
         <?php endif ?>
@@ -361,7 +358,7 @@ var tagAction = window.tagAction = function(tag,name){
     <?php } ?>
   </div>
   <div class="sesvideo_view_desc clear">
-    <?php echo nl2br($this->video->description);?>
+    <?php echo nl2br($this->video->getDescription()); ?>
   </div>
   <div class="sesvideo_view_custom_fields">
 	<?php
@@ -375,7 +372,7 @@ var tagAction = window.tagAction = function(tag,name){
     <?php //SEll Work ?>
     <div class="sesvideo_sellbutton_wrapper">
       <?php if($this->video->price > 0) { ?>
-        <?php $currency = Engine_Api::_()->sesbasic()->getCurrencyPrice($this->video->price, 'USD');  ?>
+        <?php $currency = Engine_Api::_()->payment()->getCurrencyPrice($this->video->price, 'USD');  ?>
         <span class="sesvideo_view_price"><?php echo $currency; ?></span>
     	<?php } ?>
       <span>
@@ -408,7 +405,7 @@ var tagAction = window.tagAction = function(tag,name){
       	<a href="javascript:;" title="<?php echo $this->translate('Favourite'); ?>" class="sesbasic_icon_btn sesbasic_icon_btn_count sesbasic_icon_fav_btn sesvideo_favourite_sesvideo_video <?php echo ($favStatus)  ? 'button_active' : '' ?>"  data-url="<?php echo $this->video->getIdentity(); ; ?>"><i class="fa fa-heart"></i><span><?php echo $this->video->favourite_count; ?></span></a>
     <?php } ?>
     <?php if(engine_in_array('shareAdvance',$this->allowOptions)){ ?>
-      <a href="javascript:;" title="<?php echo $this->translate('Share'); ?>" class="sesbasic_icon_btn initialism sesbasic_popup_slide_open btn btn-success">
+      <a href="javascript:;" title="<?php echo $this->translate('Share'); ?>" class="sesbasic_icon_btn initialism sesbasic_popup_slide_open btn">
       	<i class="fas fa-share-alt"></i>
       </a>
 		<?php } ?>
@@ -420,13 +417,13 @@ var tagAction = window.tagAction = function(tag,name){
       </a>
     <?php } ?>
     <?php if(Engine_Api::_()->user()->getViewer()->getIdentity() && engine_in_array('addToPlaylist',$this->allowOptions)){ ?>
-             <?php if(Engine_Api::_()->authorization()->getPermission(Engine_Api::_()->user()->getViewer()->level_id, 'video', 'addplayl_video')) { ?>
+             <?php if(Engine_Api::_()->authorization()->getPermission($level, 'video', 'addplayl_video')) { ?>
       <a href="javascript:;" onclick="opensmoothboxurl('<?php echo $this->url(array('action' => 'add','module'=>'sesvideo','controller'=>'playlist','video_id'=>$this->video->video_id),'default',true); ?>')" class="sesbasic_icon_btn sesvideo_add_playlist"  title="<?php echo  $this->translate('Add To Playlist'); ?>" data-url="<?php echo $this->video->video_id ; ?>"><i class="fa fa-plus"></i></a>
              <?php } ?>
     <?php } ?>
     <?php if( Engine_Api::_()->user()->getViewer()->getIdentity() ): ?>
 			<?php if(engine_in_array('shareSimple',$this->allowOptions)){ ?>
-      	<a href="<?php echo $this->url(array('module'=> 'sesvideo', 'controller' => 'index','action' => 'share','route' => 'default','type' => 'video','id' => $this->video->getIdentity(),'format' => 'smoothbox'),'default',true); ?>" class="sesbasic_icon_btn initialism btn btn-success smoothbox"  title="<?php echo  $this->translate('Share'); ?>"><i class="fas fa-share-alt"></i></a>
+      	<a href="<?php echo $this->url(array('module'=> 'sesvideo', 'controller' => 'index','action' => 'share','route' => 'default','type' => 'video','id' => $this->video->getIdentity(),'format' => 'smoothbox'),'default',true); ?>" class="sesbasic_icon_btn initialism btn smoothbox"  title="<?php echo  $this->translate('Share'); ?>"><i class="fas fa-share-alt"></i></a>
       <?php  } ?>
       <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('video.enable.report',1) && engine_in_array('reportVideo',$this->allowOptions) && (Engine_Api::_()->user()->getViewer()->getIdentity() != $this->video->owner_id)){ ?>
     		<a href="<?php echo $this->url(array('module'=> 'core','controller' => 'report','action' => 'create','route' => 'default','subject' => $this->video->getGuid(),'format' => 'smoothbox'),'default',true); ?>" class="sesbasic_icon_btn sesbasic_icon_report_btn smoothbox"  title="<?php echo  $this->translate('Report'); ?>" data-url="<?php echo $this->video->video_id ; ?>"><i class="fa fa-flag"></i></a>
@@ -461,7 +458,7 @@ var tagAction = window.tagAction = function(tag,name){
     <div class="sesbasic_popup_content">
       <div class="sesbasic_share_popup_content_row clear sesbasic_clearfix">
       	<div class="sesbasic_share_popup_buttons clear">
-          <?php if(is_array($this->allowAdvShareOptions) && engine_in_array('privateMessage',$this->allowAdvShareOptions)){ ?>
+          <?php if(Engine_Api::_()->authorization()->getPermission($level, 'messages', 'create') && is_array($this->allowAdvShareOptions) && engine_in_array('privateMessage',$this->allowAdvShareOptions)){ ?>
             <a href="javascript:void(0)" class="sesbasic_button" onClick="opensmoothboxurl('<?php echo $this->url(array('module'=> 'sesbasic', 'controller' => 'index', 'action' => 'message','item_id' => $this->video->getIdentity(), 'type'=>'sesvideo_video'),'default',true); ?>')"> <?php echo $this->translate("Private Message"); ?></a>
             <?php } ?>
              <?php if(is_array($this->allowAdvShareOptions) && engine_in_array('siteShare',$this->allowAdvShareOptions)){ ?>
@@ -472,14 +469,6 @@ var tagAction = window.tagAction = function(tag,name){
           <?php } ?>
       	</div>
       </div>
-      <?php if(is_array($this->allowAdvShareOptions) && $addThisCode && engine_in_array('addThis',$this->allowAdvShareOptions)){ ?>
-      	<div class="sesbasic_share_popup_content_row clear sesbasic_clearfix">
-          <div class="sesbasic_share_popup_content_field clear">
-            <!-- Go to www.addthis.com/dashboard to customize your tools -->
-            <div class="addthis_sharing_toolbox"></div>
-          </div>
-       	</div>
-     <?php  } ?>
 		 <!-- <?php if( $this->can_embed && Engine_Api::_()->getApi('settings', 'core')->getSetting('video.embeds', 1) && engine_in_array('embed',$this->allowAdvShareOptions)): ?>   
       <div class="sesbasic_share_popup_content_row clear sesbasic_clearfix">
         <div class="sesbasic_share_popup_content_label">

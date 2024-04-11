@@ -107,7 +107,6 @@ class Sesbasic_AdminSettingsController extends Core_Controller_Action_Admin {
     if( _ENGINE_ADMIN_NEUTER ) {
       $form->populate(array(
           'ses_mapApiKey' => '******',
-          'ses_addthis' => '******',
       ));
     }
     if ($this->getRequest()->isPost() && $form->isValid($this->_getAllParams())) {
@@ -238,7 +237,7 @@ class Sesbasic_AdminSettingsController extends Core_Controller_Action_Admin {
     if (!empty($table_exist_action)) {
       $privacy = $db->query('SHOW COLUMNS FROM engine4_activity_actions LIKE \'privacy\'')->fetch();
       if (!empty($privacy)) {
-        $db->query('ALTER TABLE `engine4_activity_actions` CHANGE `privacy` `ses_privacy` VARCHAR(500) CHARACTER SET latin1 COLLATE latin1_general_ci NULL DEFAULT NULL;');
+        $db->query('ALTER TABLE `engine4_activity_actions` CHANGE `privacy` `ses_privacy` VARCHAR(500) NULL DEFAULT NULL;');
       }
     }
   }
@@ -251,7 +250,7 @@ class Sesbasic_AdminSettingsController extends Core_Controller_Action_Admin {
       $privacy = $db->query('SHOW COLUMNS FROM engine4_activity_actions LIKE \'privacy\'')->fetch();
       if (!empty($privacy)) {
         $db->query('ALTER TABLE `engine4_activity_actions` DROP `privacy`;');
-        $db->query('ALTER TABLE `engine4_activity_actions` CHANGE `ses_privacy` `privacy` VARCHAR(500) CHARACTER SET latin1 COLLATE latin1_general_ci NULL DEFAULT NULL;');
+        $db->query('ALTER TABLE `engine4_activity_actions` CHANGE `ses_privacy` `privacy` VARCHAR(500) NULL DEFAULT NULL;');
       }
     }
   }

@@ -10,10 +10,8 @@
  * @author     SocialEngineSolutions
  */
 ?>
-<?php
-
-?>
-<h2>
+<?php include APPLICATION_PATH .  '/application/modules/Sesalbum/views/scripts/dismiss_message.tpl';?>
+<h2 class="page_heading">
   <?php echo $this->translate("Advanced Photos & Albums Plugin") ?>
 </h2>
 <div class="sesbasic_nav_btns">
@@ -60,8 +58,8 @@ if(value == 1) {
   var enableShareval = scriptJquery('input[name=sesalbum_enablesocialshare]:checked').val();
   var enablesessocialshareval = scriptJquery('input[name=sesalbum_enablesessocialshare]:checked').val();
   scriptJquery('input[name="sesalbum_enablesocialshare"]').prop('checked',true);
-  document.getElementById('sesalbum_enableplusicon-wrapper').style.display = 'block';
-  document.getElementById('sesalbum_iconlimit-wrapper').style.display = 'block';
+  document.getElementById('sesalbum_enableplusicon-wrapper').style.display = 'flex';
+  document.getElementById('sesalbum_iconlimit-wrapper').style.display = 'flex';
 } else {
   document.getElementById('sesalbum_enableplusicon-wrapper').style.display = 'none';
   document.getElementById('sesalbum_iconlimit-wrapper').style.display = 'none';

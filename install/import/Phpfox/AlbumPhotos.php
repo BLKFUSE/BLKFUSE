@@ -304,12 +304,12 @@ class Install_Import_Phpfox_AlbumPhotos extends Install_Import_Phpfox_Abstract
  * CREATE TABLE IF NOT EXISTS `engine4_album_photos` (
   `photo_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `album_id` int(11) unsigned NOT NULL,
-  `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `description` mediumtext COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `creation_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL,
   `order` int(11) unsigned NOT NULL DEFAULT '0',
-  `owner_type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `owner_type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner_id` int(11) unsigned NOT NULL,
   `file_id` int(11) unsigned NOT NULL,
   `view_count` int(11) unsigned NOT NULL DEFAULT '0',
@@ -317,15 +317,15 @@ class Install_Import_Phpfox_AlbumPhotos extends Install_Import_Phpfox_Abstract
   PRIMARY KEY (`photo_id`),
   KEY `album_id` (`album_id`),
   KEY `owner_type` (`owner_type`,`owner_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */
 
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_album_albums` (
   `album_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `description` mediumtext COLLATE utf8_unicode_ci NOT NULL,
-  `owner_type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner_type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner_id` int(11) unsigned NOT NULL,
   `category_id` int(11) unsigned NOT NULL DEFAULT '0',
   `creation_date` datetime NOT NULL,
@@ -334,28 +334,28 @@ class Install_Import_Phpfox_AlbumPhotos extends Install_Import_Phpfox_Abstract
   `view_count` int(11) unsigned NOT NULL DEFAULT '0',
   `comment_count` int(11) unsigned NOT NULL DEFAULT '0',
   `search` tinyint(1) NOT NULL DEFAULT '1',
-  `type` enum('wall','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','profile','message','blog','cover') COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type` enum('wall','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','wall_onlyme','wall_friend','wall_network','profile','message','blog','cover') collate utf8mb4_unicode_ci default NULL,
   PRIMARY KEY (`album_id`),
   KEY `owner_type` (`owner_type`,`owner_id`),
   KEY `category_id` (`category_id`),
   KEY `search` (`search`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */
 
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_core_tagmaps` (
   `tagmap_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `resource_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `resource_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `resource_id` int(11) unsigned NOT NULL,
-  `tagger_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `tagger_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tagger_id` int(11) unsigned NOT NULL,
-  `tag_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `tag_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tag_id` int(11) unsigned NOT NULL,
   `creation_date` datetime DEFAULT NULL,
-  `extra` text COLLATE utf8_unicode_ci,
+  `extra` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`tagmap_id`),
   KEY `resource_type` (`resource_type`,`resource_id`),
   KEY `tagger_type` (`tagger_type`,`tagger_id`),
   KEY `tag_type` (`tag_type`,`tag_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
  */

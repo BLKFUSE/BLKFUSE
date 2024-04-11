@@ -66,27 +66,37 @@ class Activity_Model_Action extends Core_Model_Item_Abstract
      */
     protected $_comments;
 
-
-
     // General
-
-    public function getHref($params = array())
-    {
-        $displayable = $this->getTypeInfo()->displayable;
-        $params['action_id'] = $this->getIdentity();
-        if ($displayable & 2) {
-            $obj = $this->getObject();
-            return !$obj ? null : $obj->getHref($params);
-        } elseif ($displayable & 1) {
-            $obj = $this->getSubject();
-            return !$obj ? null : $obj->getHref($params);
-        } elseif ($displayable & 4) {
-            $params['action'] = 'home';
-            return Zend_Controller_Front::getInstance()->getRouter()->assemble($params, 'user_general', true);
-        } else {
-            return null;
-        }
+    public function getHref($params = array()) {
+      $params = array_merge(array(
+        'route' => 'activity_view',
+        'reset' => true,
+        'action_id' => $this->getIdentity(),
+      ), $params);
+      $route = $params['route'];
+      $reset = $params['reset'];
+      unset($params['route']);
+      unset($params['reset']);
+      return Zend_Controller_Front::getInstance()->getRouter()->assemble($params, $route, $reset);
     }
+    
+//     public function getHref($params = array())
+//     {
+//         $displayable = $this->getTypeInfo()->displayable;
+//         $params['action_id'] = $this->getIdentity();
+//         if ($displayable & 2) {
+//             $obj = $this->getObject();
+//             return !$obj ? null : $obj->getHref($params);
+//         } elseif ($displayable & 1) {
+//             $obj = $this->getSubject();
+//             return !$obj ? null : $obj->getHref($params);
+//         } elseif ($displayable & 4) {
+//             $params['action'] = 'home';
+//             return Zend_Controller_Front::getInstance()->getRouter()->assemble($params, 'user_general', true);
+//         } else {
+//             return null;
+//         }
+//     }
 
     /**
      * Gets an item that defines the authorization permissions, usually the item
@@ -532,6 +542,8 @@ class Activity_Model_Action extends Core_Model_Item_Abstract
         if (!$shareable) {
             return;
         }
+        //Share only activity feed
+        $shareable = 4;
         if ($shareable === 2) {
             return $this->getSubject();
         }

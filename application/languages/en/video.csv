@@ -47,7 +47,7 @@
 
 "You do not have any videos.";"You do not have any videos."
 
-"The video you are looking for does not exist or has not been processed yet.";"The video you are looking for does not exist or has not been processed yet."sss
+"The video you are looking for does not exist or has not been processed yet.";"The video you are looking for does not exist or has not been processed yet."
 
 "Posted";"Posted"
 "Filed in";"Filed in"
@@ -203,7 +203,6 @@
 "There are no videos posted by your members yet.";"There are no videos posted by your members yet."
 
 "Video Categories";"Video Categories"
-"VIDEO_VIEWS_SCRIPTS_ADMINSETTINGS_CATEGORIES_DESCRIPTION";"If you want to allow your users to categorize their videos, create the categories below. This feature is useful if you want to list all your users' video that If you have no categories, your users will not be given the option of assigning a video category."
 
 "There are currently no categories.";"There are currently no categories."
 "Add New Category";"Add New Category"
@@ -245,7 +244,7 @@
 "Enable Rating";"Enable Rating"
 "Do you want to enable rating for the videos on your website?";"Do you want to enable rating for the videos on your website?"
 "Edit Category";"Edit Category"
-"Here, you can edit the category title. If you do want to change the parent category then do not choose any category from the parent category dropdown.";"Here, you can edit the category title. If you do want to change the parent category then do not choose any category from the parent category dropdown."
+"Here, you can edit the category title. If you do not want to change the parent category then do not choose any category from the parent category dropdown.";"Here, you can edit the category title. If you do not want to change the parent category then do not choose any category from the parent category dropdown."
 
 
 

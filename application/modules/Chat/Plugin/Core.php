@@ -77,6 +77,7 @@ EOF;
 
       $view->headTranslate(array(
         'The chat room has been disabled by the site admin.', 'Browse Chatrooms',
+        'Type a message and press enter.',
         'You are sending messages too quickly - please wait a few seconds and try again.',
         '%1$s has joined the room.', '%1$s has left the room.', 'Settings',
         'Friends Online', 'None of your friends are online.', 

@@ -21,8 +21,8 @@ class Sesadvancedactivity_View_Helper_GetUserInfo extends Zend_View_Helper_Abstr
       return json_encode($userInfo,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_NUMERIC_CHECK);
     } 
     $userInfo = array(
-      'type'  => 'user',
-      'id'    => $user->getIdentity(),
+      'type'  => $user->getType(),
+      'id'    => $user->getGuid(),
       'name'  => $user->getTitle(),
       'value' => $user->getTitle(),
       'avatar' => htmlspecialchars(str_replace('"',"'",$this->view->itemPhoto($user, 'thumb.icon')),ENT_QUOTES),

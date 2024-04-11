@@ -91,6 +91,7 @@
   }
 	#core_menu_mini_menu > ul {
 		flex-wrap: wrap;
+		justify-content:center;
 	}
 	#core_menu_mini_menu > ul > li{
 		position: inherit;
@@ -215,19 +216,12 @@
 
 }
 @media only screen and (max-width:767px){
-	html .profile_main_photo_wrapper {
-    position: absolute;
-    bottom: 60px;
-    left: 15px;
-  }
-	html .cover_photo_profile_options {
-		position: absolute;
-    left: 20px;
-    bottom: -40px;
-  }
 	div.tabs > ul, div.tabs_alt > ul {
     overflow-x: auto !important;
   }
+	.user_settings_page .layout_left{
+		width:100% !important;
+	}
 }
 @media only screen and (max-width:540px){
 	#core_menu_mini_menu > ul > li{

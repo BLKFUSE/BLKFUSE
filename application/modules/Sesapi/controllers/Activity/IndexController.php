@@ -1580,7 +1580,7 @@ class Activity_IndexController extends Sesapi_Controller_Action_Standard {
 		}
 	  }
 	  $users[$counterLoop]['user_id'] = $member->getIdentity();
-	  $users[$counterLoop]['title'] = $member->getTitle();// preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
+	  $users[$counterLoop]['title'] = $member->getTitle();
 	  $users[$counterLoop]['user_image'] = $this->userImage($member->getIdentity(), "thumb.profile");
     if($this->friendRequest($member)) {
       $users[$counterLoop]['membership'] = $this->friendRequest($member);

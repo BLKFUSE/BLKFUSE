@@ -71,7 +71,7 @@ $this->headScript()
 </script>
 
 <?php if( !$this->getUpdate ): ?>
-<ul class='feed' id="activity-feed">
+<ul class='feed' <?php if(empty($this->hideOptions)) { ?> id="activity-feed" <?php } ?>>
   <?php endif ?>
 
   <?php
@@ -84,11 +84,13 @@ $this->headScript()
 
   ob_start();
   ?>
-  <?php if( !$this->noList ): ?><li id="activity-item-<?php echo $action->action_id ?>" class="activity-item" data-activity-feed-item="<?php echo $action->action_id ?>"><?php endif; ?>
-    <?php $this->commentForm->setActionIdentity($action->action_id) ?>
+  <?php if( !$this->noList ): ?><li <?php if(empty($this->hideOptions)) { ?> id="activity-item-<?php echo $action->action_id ?>" <?php } ?> class="activity-item" data-activity-feed-item="<?php echo $action->action_id ?>"><?php endif; ?>
+    <?php if(empty($this->hideOptions)) { ?>
+      <?php $this->commentForm->setActionIdentity($action->action_id) ?>
+    <?php } ?>
     <?php // User's profile photo ?>
     <div class='feed_item_photo'><?php echo $this->htmlLink($action->getSubject()->getHref(),
-      $this->itemBackgroundPhoto($action->getSubject(), 'thumb.icon', $action->getSubject()->getTitle())
+      $this->itemBackgroundPhoto($action->getSubject(), 'thumb.icon', $action->getSubject()->getTitle(false))
       ) ?></div>
 
     <div class='feed_item_body'>
@@ -100,14 +102,31 @@ $this->headScript()
         endif; 
       ?>
       <?php // Main Content ?>
-      <?php echo $this->editActivity($action);?>
+      <?php if(empty($this->hideOptions)) { ?>
+        <?php echo $this->editActivity($action);?>
+      <?php } ?>
       <span class="feed_item_body_content <?php echo ( empty($action->getTypeInfo()->is_generated) ? 'feed_item_posted' : 'feed_item_generated' ) ?>">
         <?php echo $this->getActionContent($action, $this->similarActivities)?>
         <div class="feed_item_date <?php echo $icon_type ?>">
-          <?php echo $this->timestamp($action->getTimeValue()) ?>
+          <a href="<?php echo $action->getHref(); ?>"><?php echo $this->timestamp($action->getTimeValue()) ?></a>
           <?php echo $this->lastEditedActivity($action); ?>
         </div>
       </span>
+
+      <?php // Private Content ?>
+      <?php $viewPermission = $action->getObject()->authorization()->isAllowed($this->viewer(), 'view'); ?>
+      <?php if(!$viewPermission || (isset($action->getObject()->approved) && empty($action->getObject()->approved))) { ?>
+        <div class="feed_item_private_message">
+          <div class="feed_item_private_message_icon">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="feed_item_private_message_content">
+            <p><?php echo $this->translate("You do not have access to view this content."); ?></p>
+            <p><?php echo $this->translate("This usually happens when owner has not shared this content with you or it's been deleted."); ?></p>
+          </div>
+        </div>
+      <?php } else { ?>
+
       <?php // Attachments ?>
       <?php if( $action->getTypeInfo()->attachable && $action->attachment_count > 0 ): // Attachments ?>
       <div class='feed_item_attachments'>
@@ -121,7 +140,7 @@ $this->headScript()
           <?php elseif( $attachment->meta->mode == 1 ): // Thumb/text/title type actions ?>
                   <div>
                     <?php
-                      if ($attachment->item->getType() == "core_link")
+                      if ($attachment->item->getType() == "core_link"  || $attachment->item->getType() == 'storage_file')
                       {
                         $attribs = Array('target'=>'_blank');
                       }
@@ -133,55 +152,98 @@ $this->headScript()
                     <?php if( $attachment->item->getPhotoUrl() ): ?>
                     <?php echo $this->htmlLink($attachment->item->getHref(), $this->itemPhoto($attachment->item, 'thumb.profile', $attachment->item->getTitle()), $attribs) ?>
                     <?php endif; ?>
-                    <div>
-                      <div class='feed_item_link_title'>
-                        <?php
-                          echo $this->htmlLink($attachment->item->getHref(), $attachment->item->getTitle() ? Engine_Api::_()->core()->DecodeEmoji($attachment->item->getTitle()) : '', $attribs);
-                        ?>
+                    
+                    <?php $attachmentTitle = $this->htmlLink($attachment->item->getHref(), $attachment->item->getTitle() ? Engine_Api::_()->core()->DecodeEmoji($attachment->item->getTitle()) : '', $attribs); ?>
+                    <?php if($attachment->item->getType() == 'activity_action') {
+                        $previousAction = $action;
+                        $previousAttachment = $attachment;
+                        $action = Engine_Api::_()->getItem('activity_action', $attachment->item->getIdentity());;
+                        $hideOptions = true;
+                        $attachmentDes = $this->partial('_activityText.tpl', 'activity', array('actions' => array($action), 'hideOptions' => $hideOptions));
+                        //include('application/modules/Activity/views/scripts/_activityText.tpl');
+                        $action = $previousAction;
+                        $hideOptions = false;
+                        $attachment = $previousAttachment;
+                        $previousAction = $previousAttachment = "";
+                      } else { ?>
+                      <?php $attachmentDescription = Engine_Api::_()->core()->DecodeEmoji($attachment->item->getDescription()); ?>
+                      <?php if (strip_tags($action->body) != $attachmentDescription): ?>
+                        <?php if(engine_in_array($action->type, array('forum_topic_create', 'forum_topic_reply', 'group_topic_create', 'event_topic_create', 'group_topic_reply', 'event_topic_reply'))) { ?>
+                          <?php $attachmentDes = $this->viewMore(Engine_Api::_()->core()->smileyToEmoticons(strip_tags($attachmentDescription)), 255, 1027, 511, false); ?>
+                        <?php } else { ?>
+                          <?php $attachmentDes = $this->viewMore(Engine_Api::_()->core()->smileyToEmoticons(strip_tags($attachmentDescription)), 255, 1027, 511, false); ?>
+                        <?php } ?>
+                      <?php endif; ?>
+                    <?php } ?>
+                    <?php if(($attachment->item->getTitle() && $attachmentTitle) || $attachmentDes) { ?>
+                      <div>
+                        <?php if($attachmentTitle) { ?>
+                          <div class='feed_item_link_title'>
+                            <?php
+                              echo $attachmentTitle;
+                            ?>
+                          </div>
+                        <?php } ?>
+                        <?php  if($attachmentDes) { ?>
+                          <div class='feed_item_link_desc'>
+                            <?php echo $attachmentDes; ?>
+                          </div>
+                        <?php } ?>
                       </div>
-                      <div class='feed_item_link_desc'>
-                        <?php $attachmentDescription = Engine_Api::_()->core()->DecodeEmoji($attachment->item->getDescription()); ?>
-                        <?php if (strip_tags($action->body) != $attachmentDescription): ?>
-                          <?php if(engine_in_array($action->type, array('forum_topic_create', 'forum_topic_reply', 'group_topic_create', 'event_topic_create', 'group_topic_reply', 'event_topic_reply'))) { ?>
-                            <?php echo $this->viewMore(Engine_Api::_()->core()->smileyToEmoticons(strip_tags($attachmentDescription)), 255, 1027, 511, false); ?>
-                          <?php } else { ?>
-                            <?php echo $this->viewMore(Engine_Api::_()->core()->smileyToEmoticons(strip_tags($attachmentDescription))); ?>
-                          <?php } ?>
-                        <?php endif; ?>
-                      </div>
-                    </div>
+                    <?php } ?>
                   </div>
-                <?php elseif( $attachment->meta->mode == 2 ): // Thumb only type actions?>
-                  <div class="feed_attachment_photo">
+                <?php elseif( $attachment->meta->mode == 2 ): // Thumb only type actions ?>
                     <?php if (!$this->action_id && engine_count($action->getAttachments()) > $this->viewMaxPhoto && $key === $this->viewMaxPhoto - 1): ?>
-                      <a href="<?php echo $action->getHref(); ?>">
-                        <span class="feed_attachment_photo_overlay"></span>
-                        <span class="feed_attachment_photo_more_count"><?php echo '+' . (engine_count($action->getAttachments()) - $this->viewMaxPhoto  + 1) ?></span>
-                        <?php echo $this->itemBackgroundPhoto($attachment->item)?>
-                      </a>
-                    <?php break; ?>
+											<div class="feed_attachment_photo">
+												<a href="<?php echo $action->getHref(); ?>">
+													<span class="feed_attachment_photo_overlay"></span>
+													<span class="feed_attachment_photo_more_count"><?php echo '+' . (engine_count($action->getAttachments()) - $this->viewMaxPhoto  + 1) ?></span>
+													<?php echo $this->itemBackgroundPhoto($attachment->item)?>
+												</a>
+											</div>
+											<?php break; ?>
                     <?php endif; ?>
-                    <a href="<?php echo $attachment->item->getHref(); ?>">
-                      <?php echo $this->itemBackgroundPhoto($attachment->item)?>
-                    </a>
-                  </div>
-          <?php elseif( $attachment->meta->mode == 3 ): // Description only type actions ?>
-            <?php if(engine_in_array($action->type, array('forum_topic_create', 'forum_topic_reply', 'group_topic_create', 'event_topic_create', 'group_topic_reply', 'event_topic_reply'))) { ?>
-							<div class='feed_item_link_title'>
-								<?php echo $this->htmlLink($attachment->item->getHref(), $attachment->item->getTitle() ? Engine_Api::_()->core()->DecodeEmoji($attachment->item->getTitle()) : '', $attribs); ?>
-							</div>
-              <?php echo $this->viewMore(strip_tags($attachment->item->getDescription()), 255, 1027, 511, false); ?>
-            <?php } else { ?>
-              <?php echo $this->viewMore($attachment->item->getDescription()); ?>
-            <?php } ?>
-          <?php elseif( $attachment->meta->mode == 4 ): // Multi collectible thingy (@todo) ?>
-          <?php endif; ?>
-                </span>
+                    <?php if(isset($attachment->item->approved) && empty($attachment->item->approved)) continue; ?>
+                    <div class="feed_attachment_photo">
+											<a href="<?php echo $attachment->item->getHref(); ?>">
+												<?php echo $this->itemBackgroundPhoto($attachment->item)?>
+											</a>
+											<?php if($attachment->item->getTitle() || $attachment->item->getDescription()) { ?>
+												<div>
+													<?php if($attachment->item->getTitle()) { ?>
+														<div class='feed_item_link_title'>
+															<?php echo $this->htmlLink($attachment->item->getHref(), $attachment->item->getTitle() ? Engine_Api::_()->core()->DecodeEmoji($attachment->item->getTitle()) : '', @$attribs); ?>
+														</div>
+													<?php } ?>
+													<?php if($attachment->item->getDescription()) { ?>
+														<div class='feed_item_link_desc'>
+															<?php $attachmentDescription = Engine_Api::_()->core()->DecodeEmoji($attachment->item->getDescription()); ?>
+															<?php if (strip_tags($action->body) != $attachmentDescription): ?>
+																<?php echo $this->viewMore(Engine_Api::_()->core()->smileyToEmoticons(strip_tags($attachmentDescription))); ?>
+															<?php endif; ?>
+														</div>
+													<?php } ?>
+												</div>
+											<?php } ?>
+										</div>
+								<?php elseif( $attachment->meta->mode == 3 ): // Description only type actions ?>
+									<?php if(engine_in_array($action->type, array('forum_topic_create', 'forum_topic_reply', 'group_topic_create', 'event_topic_create', 'group_topic_reply', 'event_topic_reply'))) { ?>
+										<div class='feed_item_link_title'>
+											<?php echo $this->htmlLink($attachment->item->getHref(), $attachment->item->getTitle() ? Engine_Api::_()->core()->DecodeEmoji($attachment->item->getTitle()) : '', $attribs); ?>
+										</div>
+										<?php echo $this->viewMore(strip_tags($attachment->item->getDescription()), 255, 1027, 511, false); ?>
+									<?php } else { ?>
+                    <?php echo $this->viewMore(Engine_Api::_()->core()->smileyToEmoticons(strip_tags($attachment->item->getDescription())), 255, 1027, 511, false); ?>
+									<?php } ?>
+								<?php elseif( $attachment->meta->mode == 4 ): // Multi collectible thingy (@todo) ?>
+								<?php endif; ?>
+							</span>
         <?php endforeach; ?>
         <?php endif; ?>
         <?php endif; ?>
       </div>
       <?php endif; ?>
+      
 
       <?php if( !empty($this->hashtag[$action->action_id]) ): ?>
       <div class="hashtag_activity_item">
@@ -197,6 +259,8 @@ $this->headScript()
         </ul>
       </div>
       <?php endif; ?>
+      
+      <?php if(empty($this->hideOptions)) { ?>
       <div id='comment-likes-activity-item-<?php echo $action->action_id ?>'>
 
         <?php // Icon, time since, action links ?>
@@ -284,7 +348,11 @@ $this->headScript()
             <?php if( $shareableItem && $this->viewer()->getIdentity() ): ?>
             <li class="feed_item_option_share">
               <span>-</span>
-              <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'activity', 'controller' => 'index', 'action' => 'share', 'type' => $shareableItem->getType(), 'id' => $shareableItem->getIdentity(), 'action_id' => $action->getIdentity(), 'format' => 'smoothbox'), $this->translate('Share'), array('class' => 'smoothbox', 'title' => 'Share')) ?>
+                <?php if($action->type == 'share') { ?>
+                  <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'activity', 'controller' => 'index', 'action' => 'share', 'type' => $attachment->item->getType(), 'id' => $attachment->item->getIdentity(), 'action_id' => $action->getIdentity(), 'format' => 'smoothbox'), $this->translate('Share'), array('class' => 'smoothbox', 'title' => 'Share')) ?>
+                <?php } else { ?>
+                  <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'activity', 'controller' => 'index', 'action' => 'share', 'type' => $shareableItem->getType(), 'id' => $shareableItem->getIdentity(), 'action_id' => $action->getIdentity(), 'format' => 'smoothbox'), $this->translate('Share'), array('class' => 'smoothbox', 'title' => 'Share')) ?>
+                <?php } ?>
             </li>
             <?php endif; ?>
           </ul>
@@ -343,7 +411,7 @@ $this->headScript()
             <li id="comment-<?php echo $comment->comment_id ?>">
               <div class="comments_author_photo">
                 <?php echo $this->htmlLink($this->item($comment->poster_type, $comment->poster_id)->getHref(),
-                $this->itemBackgroundPhoto($this->item($comment->poster_type, $comment->poster_id), 'thumb.icon', $action->getSubject()->getTitle())
+                $this->itemBackgroundPhoto($this->item($comment->poster_type, $comment->poster_id), 'thumb.icon', $action->getSubject()->getTitle(false))
                 ) ?>
               </div>
               <div class="comments_info">
@@ -457,7 +525,8 @@ $this->headScript()
         <?php endif; ?>
 
       </div> <!-- End of Comment Likes -->
-
+      <?php } ?>
+      <?php } ?>
 
     </div>
     <?php if( !$this->noList ): ?></li><?php endif; ?>

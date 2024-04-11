@@ -28,7 +28,7 @@
 	<div class="egifts_dashboard_search_result">
 		<?php echo $this->paginator->getTotalItemCount(). $this->translate(' order(s) found.'); ?>
 	</div>
-	<?php $defaultCurrency = Engine_Api::_()->sesbasic()->defaultCurrency(); ?>
+	<?php $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency(); ?>
 	<div class="egifts_manage_table">
 		<form id='multidelete_form' method="post">
 			<table class="egifts_manage_table">
@@ -47,7 +47,7 @@
 						<?php $gift = Engine_Api::_()->getItem('egifts_gift', $item->gift_id); ?>
 						<td data-label="<?php echo $this->translate("Order ID") ?>"><?php echo $item->giftpurchase_id; ?></td>
 						<td data-label="<?php echo $this->translate("Gift Name") ?>" class='egifts_manage_table_price'><a href="<?php echo $gift->getHref(); ?>"><?php echo $gift->getTitle(); ?></a></td>
-						<td data-label=" <?php echo $this->translate("Order Total") ?>" class='egifts_manage_table_price'><?php echo Engine_Api::_()->sesbasic()->getCurrencyPrice(round($item->total_amount,2),$defaultCurrency); ?></td>
+						<td data-label=" <?php echo $this->translate("Order Total") ?>" class='egifts_manage_table_price'><?php echo Engine_Api::_()->payment()->getCurrencyPrice(round($item->total_amount,2),$defaultCurrency); ?></td>
 						<td data-label=" <?php echo $this->translate("Status") ?>"><?php echo $item->state; ?></td>
 						<td data-label=" <?php echo $this->translate("Order Date") ?>"><?php echo Engine_Api::_()->sesbasic()->dateFormat($item->transcation_date); ?></td>
 					</tr>

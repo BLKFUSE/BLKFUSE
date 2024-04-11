@@ -10,24 +10,12 @@
  * @author     Steve
  */
 ?>
-
-<h2><?php echo $this->translate("Music Plugin") ?></h2>
-
-<?php if( engine_count($this->navigation) ): ?>
-  <div class='tabs'>
-    <?php
-      echo $this->navigation()->menu()->setContainer($this->navigation)->render()
-    ?>
+<?php include APPLICATION_PATH .  '/application/modules/Music/views/scripts/_adminHeader.tpl';?>
+<div class='clear'>
+  <div class='settings'>
+    <?php echo $this->form->render($this); ?>
   </div>
-<?php endif; ?>
-
-  <div class='clear'>
-    <div class='settings'>
-
-      <?php echo $this->form->render($this); ?>
-
-    </div>
-  </div>
+</div>
 <script type="text/javascript">
   scriptJquery(document).ready(function() {
     scriptJquery('input[type=radio][name=music_enable_rating]:checked').trigger('change');

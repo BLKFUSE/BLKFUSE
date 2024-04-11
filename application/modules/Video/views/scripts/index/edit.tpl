@@ -34,6 +34,7 @@
     </div>
   </div>
 </div>
+<?php echo $this->partial('_approved_tip.tpl', 'core', array('item' => $this->subject())); ?>
 <div class="layout_middle">
   <div class="generic_layout_container">
     <div class="video_edit_form"><?php echo $this->form->render(); ?></div>
@@ -71,7 +72,7 @@
     if(category_id && category_id != 0) {
       showSubCategory(category_id, subcat_id);
     } else {
-      if(scriptJquery('#category_id').val()) {
+      if(scriptJquery('#category_id').val() != 0) {
         showSubCategory(scriptJquery('#category_id').val());
       } else {
         if(document.getElementById('subcat_id-wrapper'))

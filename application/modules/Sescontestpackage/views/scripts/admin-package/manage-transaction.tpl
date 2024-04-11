@@ -8,24 +8,20 @@
 </div>
 <h3><?php echo $this->translate("Manage Contest Package Payment Transactions") ?></h3>
 <p><?php echo $this->translate('This page list all the payment transactions of the contest packages that Contest Owners have made on your site.  You can use this page to monitor these package transactions. Entering criteria into the filter fields will help you find specific transaction. Leaving the filter fields blank will show all the transactions on your social network.'); ?></p>
-<br />
 <?php if( !empty($this->error) ): ?>
   <ul class="form-errors">
     <li>
       <?php echo $this->error ?>
     </li>
   </ul>
-  <br />
 <?php /*return; */ endif; ?>
 <div class='admin_search'>
   <?php echo $this->formFilter->render($this) ?>
 </div>
-<br />
 <div class='sesbasic_search_reasult'>
     <?php $count = $this->paginator->getTotalItemCount() ?>
     <?php echo $this->translate(array("%s transaction found", "%s transactions found", $count), $count) ?>  
 </div>
-<br />
 <?php if( $this->paginator->getTotalItemCount() > 0 ): ?>
    	<table class='admin_table'>
     <thead>

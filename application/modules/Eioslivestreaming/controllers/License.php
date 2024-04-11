@@ -180,7 +180,7 @@ if ($this->getRequest()->isPost()) {
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_elivestreaming_hosts` (
         `elivehost_id` int(11) NOT NULL AUTO_INCREMENT,
         `user_id` int(11) NOT NULL,
-        `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+        `name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
         `video_id` INT NULL DEFAULT NULL,
         `action_id` INT NOT NULL,
         `story_id` INT NULL DEFAULT NULL,
@@ -188,14 +188,14 @@ if ($this->getRequest()->isPost()) {
         `datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (`elivehost_id`),
         KEY `elivehost_id_1` (`elivehost_id`,`user_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
       
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_elivestreaming_notificationreceivers` ( 
         `notificationreceiver_id` INT NOT NULL AUTO_INCREMENT , 
         `elivehost_id` INT NOT NULL , 
         `notification_id` INT NOT NULL , 
         PRIMARY KEY (`notificationreceiver_id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       include_once APPLICATION_PATH . "/application/modules/Eioslivestreaming/controllers/defaultsettings.php";
 

@@ -13,7 +13,7 @@
  
 ?>
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sescontestjoinfees/externals/styles/styles.css'); ?>
-<?php $givenSymbol = Engine_Api::_()->sescontest()->getCurrentCurrency(); ?>
+<?php $givenSymbol = Engine_Api::_()->payment()->getCurrentCurrency(); ?>
 <div id="popupcontainer" class="sescontest_fees_process_popup sesbasic_bxs">
 	<div class="sescontest_fees_process_popup_content">
   <?php if($this->popupTitle){ ?>
@@ -45,10 +45,11 @@
         <form method="get" action="<?php echo $this->escape($this->url(array('action' => 'process','module'=>'sescontestjoinfees','controller'=>'index','contest_id'=>$this->contest_id),'default',true)) ?>" enctype="application/x-www-form-urlencoded">
           <div class="sescontest_fees_process_step">
             <?php $contest = Engine_Api::_()->getItem('contest',$this->contest_id); ?>
-            <h3><?php echo $this->translate('Pay %s to join the contest ',Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($contest->entry_fees)).$contest->getTitle(); ?></h3>
+            <h3><?php echo $this->translate('Pay %s to join the contest ',Engine_Api::_()->payment()->getCurrencyPrice($contest->entry_fees)).$contest->getTitle(); ?></h3>
             <div id="buttons-wrapper" class="_btn">
               <?php foreach( $this->gateways as $gatewayInfo ):
                 $gateway = $gatewayInfo['gateway'];
+                if($gateway->plugin == "Payment_Plugin_Gateway_Stripe") continue;
                 $plugin = $gatewayInfo['plugin'];
                 $gatewayObject = $gateway->getGateway();
                 $supportedCurrencies = $gatewayObject->getSupportedCurrencies();

@@ -66,19 +66,31 @@ class Chat_AjaxController extends Core_Controller_Action_Standard
     if( $fresh && $fresh != 'false' ) {
       // Like online friends
       $users = array();
+      
+      $verified_tiptext = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $viewer, 'verified_tiptext');
+      $verified_tiptext = !empty($verified_tiptext) ? $verified_tiptext : 'Verified';
+
       // Add viewer
       $users[$viewer->getIdentity()] = array(
         'identity' => $viewer->getIdentity(),
-        'title' => $viewer->getTitle(),
+        'title' => $viewer->getTitle(false),
+        'icon' => $viewer->verifiedIcon(),
+        'verified_tiptext' => $verified_tiptext,
         'href' => $viewer->getHref(),
         'photo' => $viewer->getPhotoUrl('thumb.icon'),
         'state' => 1,
         'self' => 1
       );
       foreach( Engine_Api::_()->getItemMulti('user', $user->getUsersToBeNotifiedOfPresence()) as $friend ) {
+
+        $verified_tiptext = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $friend, 'verified_tiptext');
+        $verified_tiptext = !empty($verified_tiptext) ? $verified_tiptext : 'Verified';
+
         $users[$friend->getIdentity()] = array(
           'identity' => $friend->getIdentity(),
-          'title' => $friend->getTitle(),
+          'title' => $friend->getTitle(false),
+          'icon' => $friend->verifiedIcon(),
+          'verified_tiptext' => $verified_tiptext,
           'href' => $friend->getHref(),
           'photo' => $friend->getPhotoUrl('thumb.icon'),
           'state' => 1,
@@ -95,11 +107,17 @@ class Chat_AjaxController extends Core_Controller_Action_Standard
         $whispers[$whisper->whisper_id] = $whipserData;
         if( !isset($this->view->users[$whipserData['user_id']]) ) {
           $whisperUser = Engine_Api::_()->getItem('user', $whipserData['user_id']);
+
+          $verified_tiptext = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $whisperUser, 'verified_tiptext');
+          $verified_tiptext = !empty($verified_tiptext) ? $verified_tiptext : 'Verified';
+
           if( $whisperUser && isset($whisperUser->user_id) ) {
             $this->view->users[$whipserData['user_id']] = array(
               'type' => 'presence',
               'identity' => $whisperUser->user_id,
-              'title' => $whisperUser->getTitle(),
+              'title' => $whisperUser->getTitle(false),
+              'icon' => $whisperUser->verifiedIcon(),
+              'verified_tiptext' => $verified_tiptext,
               'href' => $whisperUser->getHref(),
               'photo' => $whisperUser->getPhotoUrl('thumb.icon'),
               'state' => 0,
@@ -167,13 +185,18 @@ class Chat_AjaxController extends Core_Controller_Action_Standard
         $this->view->error_message = $e->__toString();
       }
     }
+    
+    $verified_tiptext = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $viewer, 'verified_tiptext');
+    $verified_tiptext = !empty($verified_tiptext) ? $verified_tiptext : 'Verified';
 
     // In either case, send back room info
     $roomUsers = array();
     $roomUsers[$viewer->getIdentity()] = array(
         'type' => 'grouppresence',
         'identity' => $viewer->getIdentity(),
-        'title' => $viewer->getTitle(),
+        'title' => $viewer->getTitle(false),
+        'icon' => $viewer->verifiedIcon(),
+        'verified_tiptext' => $verified_tiptext,
         'href' => $viewer->getHref(),
         'photo' => $viewer->getPhotoUrl('thumb.icon'),
         'stale' => true,
@@ -183,10 +206,16 @@ class Chat_AjaxController extends Core_Controller_Action_Standard
     );
     foreach( $room->getUsers() as $user ) {
       if( $user->getIdentity() == $viewer->getIdentity() ) continue;
+      
+      $verified_tiptext = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $user, 'verified_tiptext');
+      $verified_tiptext = !empty($verified_tiptext) ? $verified_tiptext : 'Verified';
+
       $roomUsers[$user->getIdentity()] = array(
         'type' => 'grouppresence',
         'identity' => $user->getIdentity(),
-        'title' => $user->getTitle(),
+        'title' => $user->getTitle(false),
+        'icon' => $user->verifiedIcon(),
+        'verified_tiptext' => $verified_tiptext,
         'href' => $user->getHref(),
         'photo' => $user->getPhotoUrl('thumb.icon'),
         'stale' => true,

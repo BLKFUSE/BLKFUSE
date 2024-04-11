@@ -528,16 +528,19 @@ class Sesbasic_IndexController extends Core_Controller_Action_Standard {
             }
             $sender = $values['sender_name'];
 						$message = '';
-            Engine_Api::_()->getApi('mail', 'core')->sendSystem($reciver_ids, 'SESBASIC_TELLAFRIEND_EMAIL', array(
+						$item_title = ucfirst(str_replace(array('sesevent_',''),'',$item->getType()));
+            Engine_Api::_()->getApi('mail', 'core')->sendSystem($reciver_ids, 'sesbasic_tellafriend_email', array(
                 'host' => $_SERVER['HTTP_HOST'],
                 'sender' => $sender,
                 'heading' => $heading,
                 'message' => $message ,
                 'object_link' => $item->getHref(),
+                'title' => $item->getTitle(),
+                'item_type' => $item_title,
                 'email' => $sender_email,
                 'queue' => false
             ));
-					$item_title = ucfirst(str_replace(array('sesevent_',''),'',$item->getType()));
+					
             $this->_forward('success', 'utility', 'core', array(
                 'smoothboxClose' => true,
                 'parentRefreshTime' => '15',

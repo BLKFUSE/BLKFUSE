@@ -6,15 +6,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
     <meta http-equiv="Content-Language" content="en-US" >
 
-    <link href="<?php echo $base ?>/externals/styles/compat.css" media="screen" rel="stylesheet" type="text/css" >
     <link href="<?php echo $base ?>/externals/styles/styles.css" media="screen" rel="stylesheet" type="text/css" >
     <link href="<?php echo $base ?>/externals/styles/sdk.css" media="screen" rel="stylesheet" type="text/css" >
+    
   </head>
   <body>
     <div class='topbar_wrapper'>
       <div class="topbar">
         <div class='logo'>
-          <img src="<?php echo $base ?>/externals/images/socialengine_logo_admin.png" alt="" />
+          <img src="<?php echo $base ?>/externals/images/logo.svg" alt="logo"  />
         </div>
       </div>
     </div>

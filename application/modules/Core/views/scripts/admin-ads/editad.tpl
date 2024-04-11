@@ -15,3 +15,7 @@
 <?php echo $this->form->setAttrib('class', '')->render($this) ?>
 
 </div>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_monetization').parent().addClass('active');
+  scriptJquery('.core_admin_main_ads').addClass('active');
+</script>

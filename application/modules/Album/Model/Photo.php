@@ -154,6 +154,7 @@ class Album_Model_Photo extends Core_Model_Item_Abstract
 
         // Resize image (normal)
         $normalPath = $path . DIRECTORY_SEPARATOR . $base . '_in.' . $extension;
+        
         $image = Engine_Image::factory();
         $image->open($file)
             ->autoRotate()
@@ -182,7 +183,13 @@ class Album_Model_Photo extends Core_Model_Item_Abstract
         // Remove temp files
         @unlink($mainPath);
         @unlink($normalPath);
-
+        
+				//Temp file delete
+				$publicPath = APPLICATION_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'temporary' . DIRECTORY_SEPARATOR . $name;
+				if(is_file($publicPath)) {
+					@unlink($publicPath);
+				}
+				
         // Update row
         $this->modified_date = date('Y-m-d H:i:s');
         $this->file_id = $iMain->file_id;
@@ -192,7 +199,7 @@ class Album_Model_Photo extends Core_Model_Item_Abstract
         if( !empty($tmpRow) ) {
             $tmpRow->delete();
         }
-
+        
         return $this;
     }
 

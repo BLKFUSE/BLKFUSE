@@ -344,7 +344,7 @@ class Activity_FeedController extends Sesapi_Controller_Action_Standard {
           $db->rollback();
           $this->view->status = false;
         }
-
+ 
       } elseif ($comment_id) {
           $comment = $action->comments()->getComment($comment_id);
           // allow delete if profile/entry owner
@@ -364,15 +364,20 @@ class Activity_FeedController extends Sesapi_Controller_Action_Standard {
               $commentModuleEnableSes = Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesadvancedcomment');
               if($comment->parent_id && $commentModuleEnableSes){
                 $parentCommentType = 'core_comment';
-                if($action->getType() == 'activity_action'){
-                  $commentType = $action->likes(true);
-                  if($commentType->getType() == 'activity_action')
-                    $parentCommentType = 'activity_comment';
+                // if($action->getType() == 'activity_action'){
+                //   $commentType = $action->likes(true);
+                //   if($commentType->getType() == 'activity_action')
+                //     $parentCommentType = 'activity_comment';
+                // }
+                if(isset($comment) && $comment->getType() == 'activity_comment') {
+                  $activitycomments = Engine_Api::_()->getDbTable('activitycomments', 'sesadvancedactivity')->rowExists($comment->getIdentity());
+                } else if(isset($comment) && $comment->getType() == 'core_comment') {
+                  $activitycomments = Engine_Api::_()->getDbTable('corecomments', 'sesadvancedactivity')->rowExists($comment->getIdentity());
                 }
-                $parentCommentId = $comment->parent_id;
-                $parentComment = Engine_Api::_()->getItem($parentCommentType,$parentCommentId);
-                $parentComment->reply_count = new Zend_Db_Expr('reply_count - 1');
-                $parentComment->save();
+                // $parentCommentId = $comment->parent_id; 
+                // $parentComment = Engine_Api::_()->getItem($parentCommentType,$parentCommentId);
+                $activitycomments->reply_count = new Zend_Db_Expr('reply_count - 1');
+                $activitycomments->save();
               }
               if($commentModuleEnableSes){
               $this->view->commentCount = Engine_Api::_()->sesadvancedcomment()->commentCount($action);

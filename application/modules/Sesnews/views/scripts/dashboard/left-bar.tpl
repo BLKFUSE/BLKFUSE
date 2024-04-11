@@ -91,7 +91,7 @@
             <?php endif; ?>
             
 						<?php if(@$editLocation->enabled && !empty($this->news->location)): ?>
-							<li><a  href="<?php echo $this->url(array('news_id' => $this->news->custom_url, 'action'=>'edit-location'), 'sesnews_dashboard', true); ?>" class="dashboard_a_link"><i class="fa fa-map-marker "></i> <?php echo $this->translate($editLocation->title); ?></a></li>
+							<li><a  href="<?php echo $this->url(array('news_id' => $this->news->custom_url, 'action'=>'edit-location'), 'sesnews_dashboard', true); ?>" class="dashboard_a_link"><i class="sesbasic_icon_map "></i> <?php echo $this->translate($editLocation->title); ?></a></li>
 						<?php endif; ?>
             
             <?php if(@$mainphoto->enabled): ?>
@@ -158,7 +158,7 @@
                 <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?>
                   <?php echo $location = "<div class=\"sesnews_list_stats sesnews_list_location\">
                     <span class=\"widthfull\">
-                      <i class=\"fa fa-map-marker sesbasic_text_light\" title=\"$locationText\"></i>
+                      <i class=\"sesbasic_icon_map sesbasic_text_light\" title=\"$locationText\"></i>
                       <span title=\"$locationvalue\"><a href='".$this->url(array('resource_id' => $this->news->news_id,'resource_type'=>'sesnews_news','action'=>'get-direction'), 'sesbasic_get_direction', true)."' class=\"openSmoothbox\">".$this->news->location."</a></span>
                     </span>
                   </div>"; 
@@ -166,7 +166,7 @@
               <?php } else { ?>
                 <?php echo $location = "<div class=\"sesnews_list_stats sesnews_list_location\">
                     <span class=\"widthfull\">
-                      <i class=\"fa fa-map-marker sesbasic_text_light\" title=\"$locationText\"></i>
+                      <i class=\"sesbasic_icon_map sesbasic_text_light\" title=\"$locationText\"></i>
                       <span title=\"$locationvalue\">".$this->news->location."</span>
                     </span>
                   </div>"; 

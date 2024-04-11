@@ -9,37 +9,10 @@
  * @version    $Id: Albumviewpage.php 2015-06-16 00:00:00 SocialEngineSolutions $
  * @author     SocialEngineSolutions
  */
-class Sesalbum_Form_Admin_Albumviewpage extends Engine_Form
-{
-  public function init()
-  {
-// 				$this->addElement(
-// 					'Select',
-// 					'is_fullwidth',
-// 					array(
-// 							'label' => "Want to show cover widget in full width?",
-// 							'multiOptions' => array(
-// 									'1' => 'Yes, want to show cover widget in full width',
-// 									'0' => 'No, don\'t want to show cover widget in full width',
-// 							),
-// 							'value' => '1',
-// 					)
-// 			);
-// 		
-// 		$this->addElement(
-// 				'Text',
-// 				'height_cover',
-// 				array(
-// 						'label' => 'Height of the cover widget(px)?',
-// 						'value' => 300,
-// 						'validators' => array(
-// 								array('Int', true),
-// 								array('GreaterThan', true, array(0)),
-// 						)
-// 				)
-// 		);
+class Sesalbum_Form_Admin_Albumviewpage extends Engine_Form {
 
-		
+  public function init() {
+  
 		$this->addElement('Radio', "view_type", array(
 			'label' => "Choose the View Type for photos.",
         'multiOptions' => array(
@@ -65,26 +38,25 @@ class Sesalbum_Form_Admin_Albumviewpage extends Engine_Form
 						'value' => 'fix',
     ));
 	  $this->addElement('MultiCheckbox', "show_criteria_album_cover", array(
-       
-		'label' => "Choose from below the details that you want to show for Album Cover in this widget.",
-        'multiOptions' => array(
-						'likeCount' => 'Likes Count',
-						'commentCount' => 'Comments Count',
-						'ratingStars' => 'Rating Stars',
-						'viewCount' => 'Views Count',
-						'titleName' => 'Title',
-						'byName' => 'Owner\'s Name',
-						'photoCountCover' => 'Photo Count',
-						'timeCreation' => 'Creation Date',
-						'socialSharingIcons' => 'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
-						'favouriteCounts' => 'Favourites Count',
-						'downloadCounts' => 'Downloads Count',
-						'likeButtonCover' =>'Like Button',
-						'messageButtonCover' => 'Message Button',
-						 'downloadButtonCover' => 'Download Button',
-						'favouriteButtonCover' =>'Favourite Button',
-        ),
-        'escape' => false,
+      'label' => "Choose from below the details that you want to show for Album Cover in this widget.",
+      'multiOptions' => array(
+        'likeCount' => 'Likes Count',
+        'commentCount' => 'Comments Count',
+        'ratingStars' => 'Rating Stars',
+        'viewCount' => 'Views Count',
+        'titleName' => 'Title',
+        'byName' => 'Owner\'s Name',
+        'photoCountCover' => 'Photo Count',
+        'timeCreation' => 'Creation Date',
+        'socialSharingIcons' => 'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+        'favouriteCounts' => 'Favourites Count',
+        'downloadCounts' => 'Downloads Count',
+        'likeButtonCover' =>'Like Button',
+        'messageButtonCover' => 'Message Button',
+        'downloadButtonCover' => 'Download Button',
+        'favouriteButtonCover' =>'Favourite Button',
+      ),
+      'escape' => false,
     ));
 		$this->addElement('MultiCheckbox', "show_criteria", array(
        
@@ -97,15 +69,12 @@ class Sesalbum_Form_Admin_Albumviewpage extends Engine_Form
 						'title' => 'Title',
 						'by' => 'Owner\'s Name',
 						'time' => 'Creation Date',
-						// 'photoCount' => 'Photo Count',
-						'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+						'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
 						'favouriteCount' => 'Favourites Count',
 						'downloadCount' => 'Downloads Count',
 						'featured' =>'Featured Label',
 						'sponsored'=>'Sponsored Label',
 						'likeButton' =>'Like Button',
-						 'messageButton' => 'Message Button',
-						 'downloadButton' => 'Download Button',
 						'favouriteButton' =>'Favourite Button',
         ),
         'escape' => false,
@@ -205,7 +174,7 @@ class Sesalbum_Form_Admin_Albumviewpage extends Engine_Form
 						'view' => 'Views Count',
 						'title' => 'Album Title',
 						'by' => 'Owner\'s Name',
-						'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+						'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
 						'favouriteCount' => 'Favourites Count',
 						'downloadCount' => 'Downloads Count',
 						'photoCount' => 'Photos Count',

@@ -18,3 +18,7 @@
     parent.Smoothbox.close();
   </script>
 <?php endif; ?>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_monetization').parent().addClass('active');
+  scriptJquery('.core_admin_main_payment').addClass('active');
+</script>

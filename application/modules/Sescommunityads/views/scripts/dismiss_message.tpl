@@ -12,8 +12,8 @@
  */
  
  ?>
-
-<h2><?php echo $this->translate("Community Advertisements Plugin") ?></h2>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenuItemName' => 'core_admin_main_plugins', 'childMenuItemName' => 'core_admin_main_plugins_sescommunityads')); ?>
+<h2 class="page_heading"><?php echo $this->translate("Community Advertisements Plugin") ?></h2>
 <div class="sesbasic_nav_btns">
   <a href="<?php echo 'admin/sescommunityads/settings/support' ?>"  class="help-btn">Help Center</a>
 </div>

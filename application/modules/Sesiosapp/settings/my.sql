@@ -10,5 +10,5 @@
  */
 
 INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
-('core_admin_main_plugins_sesiosapp', 'sesiosapp', 'SNS - iOS Native...', '', '{"route":"admin_default","module":"sesiosapp","controller":"settings","action":"index"}', 'core_admin_main_plugins', '', 999),
+('core_admin_main_plugins_sesiosapp', 'sesiosapp', 'SNS - Native iOS Mobile App Plugin', '', '{"route":"admin_default","module":"sesiosapp","controller":"settings","action":"index"}', 'core_admin_main_plugins', '', 999),
 ('sesiosapp_admin_main_settings', 'sesiosapp', 'Global Settings', '', '{"route":"admin_default","module":"sesiosapp","controller":"settings"}', 'sesiosapp_admin_main', '', 1);

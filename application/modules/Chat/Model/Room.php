@@ -146,7 +146,7 @@ class Chat_Model_Room extends Engine_Db_Table_Row
     switch( $command ) {
       case 'me':
         // Send system message
-        $body = $user->getTitle() . ' ' . $body;
+        $body = $user->getTitle(false) . ' ' . $body;
         $messageTable = Engine_Api::_()->getDbtable('messages', 'chat');
         $message = $messageTable->createRow();
         $message->setRoom($this)->setFromArray(array(

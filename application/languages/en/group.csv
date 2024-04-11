@@ -358,7 +358,6 @@
 
 "Are you sure you want to delete the selected groups?";"Are you sure you want to delete the selected groups?"
 "GROUP_VIEWS_SCRIPTS_ADMINMANAGE_INDEX_DESCRIPTION";"This page lists all of the group entries your users have posted. You can use this page to monitor these groups and delete offensive material if necessary."
-"GROUP_VIEWS_SCRIPTS_ADMINSETTINGS_CATEGORIES_DESCRIPTION";"If you want to allow your users to categorize their groups, create the categories below. This feature is useful if you want to list all your users' group that If you have no categories, your users will not be given the option of assigning a group category."
 
 "There are currently no categories.";"There are currently no categories."
 
@@ -613,7 +612,7 @@ http://[host][object_link]
 "{item:$subject} liked {item:$owner}''s {item:$object:group}.";"{item:$subject} liked {item:$owner}''s {item:$object:group}."
 "Uncategorized";"Uncategorized"
 "Edit Category";"Edit Category"
-"Here, you can edit the category title. If you do want to change the parent category then do not choose any category from the parent category dropdown.";"Here, you can edit the category title. If you do want to change the parent category then do not choose any category from the parent category dropdown."
+"Here, you can edit the category title. If you do not want to change the parent category then do not choose any category from the parent category dropdown.";"Here, you can edit the category title. If you do not want to change the parent category then do not choose any category from the parent category dropdown."
 
 
 "{item:$subject} has rated your group {item:$object}.";"{item:$subject} has rated your group {item:$object}."

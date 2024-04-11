@@ -22,10 +22,11 @@ class User_Widget_SettingsMenuController extends Engine_Content_Widget_Abstract
   {
     $id = $this->_getParam('id', null);
     
+    // Set up edit profile navigation
+    $this->view->user_edit_navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('user_edit', ( $id ? array('params' => array('id'=>$id)) : array()));
+    
     // Set up navigation
-    $this->view->navigation = $navigation = Engine_Api::_()
-      ->getApi('menus', 'core')
-      ->getNavigation('user_settings', ( $id ? array('params' => array('id'=>$id)) : array()));
+    $this->view->navigation = $navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('user_settings', ( $id ? array('params' => array('id'=>$id)) : array()));
     
     // Check last super admin
     $user = Engine_Api::_()->user()->getViewer();

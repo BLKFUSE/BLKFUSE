@@ -23,8 +23,8 @@ scriptJquery('#mapcanvas-label').attr('id','map-canvas-list');
 scriptJquery('#map-canvas-list').css('height','200px');
 scriptJquery('#ses_location-label').attr('id','ses_location_data_list');
 scriptJquery('#ses_location_data_list').html('<?php echo $this->photo->location; ?>');
-// scriptJquery('#ses_location-wrapper').css('display','none');
-// scriptJquery('#mapcanvas-wrapper').css('display','none');
+scriptJquery('#ses_location-wrapper').css('display','none');
+scriptJquery('#mapcanvas-wrapper').css('display','none');
 <?php if($this->type == 'location'){ ?>
 	scriptJquery('#location-wrapper').hide();
 	scriptJquery('#execute').hide();

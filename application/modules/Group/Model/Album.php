@@ -25,6 +25,7 @@ class Group_Model_Album extends Core_Model_Item_Collection
   protected $_children_types = array('group_photo');
 
   protected $_collectible_type = 'group_photo';
+  protected $_searchTriggers = false;
 
   public function getHref($params = array())
   {

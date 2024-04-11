@@ -14,14 +14,13 @@
 ?>
 <?php include APPLICATION_PATH .  '/application/modules/Sesadvancedactivity/views/scripts/dismiss_message.tpl';?>
 <h3>String Color in Feed Setting</h3>
-<p>Below, you can add strings and set different colors for them. When someone on your website use any of the string in their status updates, then the matching string will show-up in the selected color.</p><br />
+<p>Below, you can add strings and set different colors for them. When someone on your website use any of the string in their status updates, then the matching string will show-up in the selected color.</p>
 <div class="sesbasic_search_reasult">
 	<?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesadvancedactivity', 'controller' => 'statustextcolor', 'action' => 'create'), $this->translate("Add New String"), array('class'=>'sesbasic_icon_add buttonlink smoothbox')) ?>
 </div>
 <div class='admin_search sesbasic_search_form'>
   <?php echo $this->formFilter->render($this) ?>
 </div>
-<br />
 <script type="text/javascript">
 function multiDelete()
 {
@@ -107,8 +106,6 @@ function multiDelete()
           </div>
         <?php endif;?>
       </div>
-  <br />
   </form>
-  <br />
   <div>
   </div>

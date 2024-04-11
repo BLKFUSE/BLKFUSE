@@ -53,17 +53,15 @@ function selectAll()
 </script>
 
 <?php include APPLICATION_PATH .  '/application/modules/Sesmusic/views/scripts/dismiss_message.tpl';?>
-
 <div class='clear'>
   <div class="sesmusic_manage_artist_form settings">
     <form id='multidelete_form' method="post" action="<?php echo $this->url(array('action' => 'multi-delete-artists'));?>" onSubmit="return multiDelete()">
       <div>
         <h3><?php echo "Manage Artists"; ?></h3>
         <p><?php echo 'Here, you can add artists to your website by using the "Add New Artist" button below. You can also add about Artist and photo for any artists. <br /> Below, you can also choose any number of artists as Artist of the Day. These artists will be displyed randomly in the "Album / Song / Artist of the Day" widget.'; ?> </p>
-        <br />
         <div>
-          <?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesmusic', 'controller' => 'settings', 'action' => 'add-artist'), $this->translate('Add a New Artist'), array('class' => 'buttonlink smoothbox sesbasic_icon_add')); ?>
-        </div><br />
+          <?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesmusic', 'controller' => 'settings', 'action' => 'add-artist'), $this->translate('Add a New Artist'), array('class' => 'buttonlink smoothbox sesbasic_icon_add sesbasic_btn_space')); ?>
+        </div>
         <?php if(engine_count($this->paginator) > 0):?>
           <div class="sesmusic_manage_artist_form_head">
             <div style="width:5%">

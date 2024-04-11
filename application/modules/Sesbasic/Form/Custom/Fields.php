@@ -11,6 +11,7 @@
  * @author     SocialEngineSolutions
  */
 class Sesbasic_Form_Custom_Fields extends Engine_Form {
+
   /* Custom */
 
   protected $_item;
@@ -128,14 +129,14 @@ class Sesbasic_Form_Custom_Fields extends Engine_Form {
       $field = $map->getChild();
       
       // Ignore fields not searchable (even though getFieldsStructureSearch should have skipped it already)
-      if( !$this->_item && !$field->search ) {
+      if(!$this->_isCreation && !$field->search ) {
         continue;
       }
       
       // Skip fields hidden on signup
-      if (isset($field->show) && !$field->show && $this->_isCreation) {
-        continue;
-      }
+//       if (isset($field->show) && !$field->show && $this->_isCreation) {
+//         continue;
+//       }
       if ($isEnableCheck && !engine_in_array($fskey, $fieldsEnable) && $fskey != '0_0_1' && $enableCheck == 2)
         continue;
 

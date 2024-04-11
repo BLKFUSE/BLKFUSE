@@ -16,7 +16,7 @@
   $headScript = new Zend_View_Helper_HeadScript();
   $headScript->appendFile($this->layout()->staticBaseUrl.'externals/selectize/js/selectize.js');
 ?>
-<div class="sesandroidapp_popup_form">
+<div class="">
   <div class='settings'>
     <?php echo $this->form->render($this); ?>
   </div>

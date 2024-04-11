@@ -29,7 +29,7 @@ $creditCheckout = new Zend_Session_Namespace('sescredit_points');
 					<input type="hidden" name="gateway_id" id="gateway_id" value="" />
         	<div class="total_price">
           	<span><?php echo $this->translate("Total Price"); ?></span>
-            <?php echo Engine_Api::_()->egifts()->getCurrencyPrice(round($this->itemPrice,2),$currentCurrency); ?>
+            <?php echo Engine_Api::_()->payment()->getCurrencyPrice(round($this->itemPrice,2)); ?>
           </div>
           <?php if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sescredit')) { ?>
             <div class="egifts_payment_process_page">

@@ -67,20 +67,6 @@ class Album_IndexController extends Core_Controller_Action_Standard
         
         $settings = Engine_Api::_()->getApi('settings', 'core');
 
-        // Get params
-        switch($this->_getParam('sort', 'recent')) {
-            case 'popular':
-                $order = 'view_count';
-                break;
-            case 'rating':
-                $order = 'rating';
-                break;
-            case 'recent':
-            default:
-                $order = 'modified_date';
-                break;
-        }
-
         $userId = $this->_getParam('user');
         $this->view->excludedLevels = $excludedLevels = array(1, 2, 3);   // level_id of Superadmin,Admin & Moderator
         $registeredPrivacy = array('everyone', 'registered');
@@ -104,9 +90,6 @@ class Album_IndexController extends Core_Controller_Action_Standard
 
         // Prepare data
         $table = Engine_Api::_()->getItemTable('album');
-        if( !engine_in_array($order, $table->info('cols')) ) {
-            $order = 'modified_date';
-        }
 
         $select = $table->select();
         if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('album.allow.unauthorized', 0)) {
@@ -137,8 +120,17 @@ class Album_IndexController extends Core_Controller_Action_Standard
         }
         
         $select->where("search = 1")
-            ->order($order . ' DESC');
-            
+            ->where("approved = 1");
+        
+        $sort = $this->_getParam('sort', 'creation_date');
+				if(!empty($sort) && $sort == 'atoz') {
+					$select->order('title ASC');
+				} else if(!empty($sort) && $sort == 'ztoa') {
+					$select->order('title DESC');
+				} else  {
+					$select->order( !empty($sort) ? $sort.' DESC' : 'creation_date DESC' );
+				}
+				
         if( $this->_getParam('category_id') )
         {
             $select->where('category_id = ?', $this->_getParam('category_id'));
@@ -174,10 +166,7 @@ class Album_IndexController extends Core_Controller_Action_Standard
         $this->view->searchParams = $searchForm->getValues();
 
         // Render
-        $this->_helper->content
-            //->setNoRender()
-            ->setEnabled()
-        ;
+        $this->_helper->content->setEnabled();
     }
 
     public function browsePhotosAction()
@@ -203,89 +192,73 @@ class Album_IndexController extends Core_Controller_Action_Standard
             $this->view->search = $params['search'];
         }
 
-        switch($this->_getParam('sort', 'recent')) {
-            case 'popular':
-                $order = 'view_count';
-                break;
-            case 'rating':
-                $order = 'rating';
-                break;
-            case 'recent':
-            default:
-                $order = 'modified_date';
-                break;
-        }
-
         // Prepare data
         $albumTable = Engine_Api::_()->getItemTable('album');
         $select = $albumTable->select()->from($albumTable->info('name'), 'album_id');
 
         if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('album.allow.unauthorized', 0)) {
-            $excludedLevels = array(1, 2, 3);   // level_id of Superadmin,Admin & Moderator
-            $registeredPrivacy = array('everyone', 'registered');
-            $this->view->viewer = $viewer = Engine_Api::_()->user()->getViewer();
-            if ($viewer->getIdentity() && !engine_in_array($viewer->level_id, $excludedLevels)) {
-                $viewerId = $viewer->getIdentity();
-                $netMembershipTable = Engine_Api::_()->getDbtable('membership', 'network');
-                $this->view->viewerNetwork = $viewerNetwork = $netMembershipTable->getMembershipsOfIds($viewer);
-                if (!empty($viewerNetwork)) {
-                    array_push($registeredPrivacy, 'owner_network');
-                }
+					$excludedLevels = array(1, 2, 3);   // level_id of Superadmin,Admin & Moderator
+					$registeredPrivacy = array('everyone', 'registered');
+					$this->view->viewer = $viewer = Engine_Api::_()->user()->getViewer();
+					if ($viewer->getIdentity() && !engine_in_array($viewer->level_id, $excludedLevels)) {
+						$viewerId = $viewer->getIdentity();
+						$netMembershipTable = Engine_Api::_()->getDbtable('membership', 'network');
+						$this->view->viewerNetwork = $viewerNetwork = $netMembershipTable->getMembershipsOfIds($viewer);
+						if (!empty($viewerNetwork)) {
+								array_push($registeredPrivacy, 'owner_network');
+						}
 
-                $friendsIds = $viewer->membership()->getMembersIds();
-                $friendsOfFriendsIds = $friendsIds;
-                foreach ($friendsIds as $friendId) {
-                    $friend = Engine_Api::_()->getItem('user', $friendId);
-                    $friendMembersIds = $friend->membership()->getMembersIds();
-                    $friendsOfFriendsIds = array_merge($friendsOfFriendsIds, $friendMembersIds);
-                }
-            }
+						$friendsIds = $viewer->membership()->getMembersIds();
+						$friendsOfFriendsIds = $friendsIds;
+						foreach ($friendsIds as $friendId) {
+							$friend = Engine_Api::_()->getItem('user', $friendId);
+							$friendMembersIds = $friend->membership()->getMembersIds();
+							$friendsOfFriendsIds = array_merge($friendsOfFriendsIds, $friendMembersIds);
+						}
+					}
 
+					if (!$viewer->getIdentity()) {
+							$select->where("view_privacy = ?", 'everyone');
+					} elseif (!engine_in_array($viewer->level_id, $excludedLevels)) {
+						$select->Where("owner_id = ?", $viewerId)
+								->orwhere("view_privacy IN (?)", $registeredPrivacy);
+						if (!empty($friendsIds)) {
+								$select->orWhere("view_privacy = 'owner_member' AND owner_id IN (?)", $friendsIds);
+						}
+						if (!empty($friendsOfFriendsIds)) {
+								$select->orWhere("view_privacy = 'owner_member_member' AND owner_id IN (?)", $friendsOfFriendsIds);
+						}
+						if (empty($viewerNetwork) && !empty($friendsOfFriendsIds)) {
+								$select->orWhere("view_privacy = 'owner_network' AND owner_id IN (?)", $friendsOfFriendsIds);
+						}
 
-            if (!$viewer->getIdentity()) {
-                $select->where("view_privacy = ?", 'everyone');
-            } elseif (!engine_in_array($viewer->level_id, $excludedLevels)) {
-                $select->Where("owner_id = ?", $viewerId)
-                    ->orwhere("view_privacy IN (?)", $registeredPrivacy);
-                if (!empty($friendsIds)) {
-                    $select->orWhere("view_privacy = 'owner_member' AND owner_id IN (?)", $friendsIds);
-                }
-                if (!empty($friendsOfFriendsIds)) {
-                    $select->orWhere("view_privacy = 'owner_member_member' AND owner_id IN (?)", $friendsOfFriendsIds);
-                }
-                if (empty($viewerNetwork) && !empty($friendsOfFriendsIds)) {
-                    $select->orWhere("view_privacy = 'owner_network' AND owner_id IN (?)", $friendsOfFriendsIds);
-                }
-
-                $subquery = $select->getPart(Zend_Db_Select::WHERE);
-                $select->reset(Zend_Db_Select::WHERE);
-                $select->where(implode(' ', $subquery));
-            }
+						$subquery = $select->getPart(Zend_Db_Select::WHERE);
+						$select->reset(Zend_Db_Select::WHERE);
+						$select->where(implode(' ', $subquery));
+					}
         }
 
-
-
-        $select->where("search = 1");
+        $select->where("search = 1")->where("approved = 1");
         $select = Engine_Api::_()->network()->getNetworkSelect($albumTable->info('name'), $select);
+
         $albums = $albumTable->fetchAll($select);
         $albumIds = array();
         foreach ($albums as $album) {
             $albumIds[] = $album->album_id;
         }
+        
+				$order = $this->_getParam('sort', 'creation_date');
 
         $photoTable = Engine_Api::_()->getItemTable('album_photo');
         $this->view->paginator = $paginator = $photoTable->getPhotoPaginator(array_merge(
-            ['album_ids' => $albumIds, 'order' => $order],
+            ['album_ids' => $albumIds, 'order' => $order, 'action' => 'browsephoto'],
             $values
         ));
 				$paginator->setItemCountPerPage(Engine_Api::_()->getApi('settings', 'core')->getSetting('photo_page', 12));
         $paginator->setCurrentPageNumber($this->_getParam('page'));
 
         // Render
-        $this->_helper->content
-            //->setNoRender()
-            ->setEnabled()
-        ;
+        $this->_helper->content->setEnabled();
     }
 
 
@@ -311,53 +284,39 @@ class Album_IndexController extends Core_Controller_Action_Standard
         // Render
         $this->_helper->content
             //->setNoRender()
-            ->setEnabled()
-        ;
+            ->setEnabled();
 
         // Get params
         $this->view->page = $page = $this->_getParam('page');
-
-        // Get params
-        switch($this->_getParam('sort', 'recent')) {
-            case 'popular':
-                $order = 'view_count';
-                break;
-            case 'rating':
-                $order = 'rating';
-                break;
-            case 'recent':
-            default:
-                $order = 'modified_date';
-                break;
-        }
-
+        
         // Prepare data
         $user = Engine_Api::_()->user()->getViewer();
         $table = Engine_Api::_()->getItemTable('album');
         $tableAlbumName = $table->info('name');
         $tablePhotoName = Engine_Api::_()->getItemTable('album_photo')->info('name');
 
-        if( !engine_in_array($order, $table->info('cols')) ) {
-            $order = 'modified_date';
-        }
-
         $select = $table->select()
             ->from($tableAlbumName)
             ->setIntegrityCheck(false)
             ->join($tablePhotoName, "$tablePhotoName.album_id = $tableAlbumName.album_id",null)
             ->where($tableAlbumName.'.owner_id = ?', $user->getIdentity())
-            ->order($order . ' DESC')
             ->group($tablePhotoName.'.album_id');
+            
+        $sort = $this->_getParam('sort', 'creation_date');
+				if(!empty($sort) && $sort == 'atoz') {
+					$select->order('title ASC');
+				} else if(!empty($sort) && $sort == 'ztoa') {
+					$select->order('title DESC');
+				} else  {
+					$select->order( !empty($sort) ? $sort.' DESC' : 'creation_date DESC' );
+				}
 
         if ($this->_getParam('category_id')) $select->where($tableAlbumName.".category_id = ?", $this->_getParam('category_id'));
 
         if ($this->_getParam('search', false)) {
             $select->where($tableAlbumName.'.title LIKE ? OR '.$tableAlbumName.'.description LIKE ?', '%'.$this->_getParam('search').'%');
         }
-        
-
         $this->view->canCreate = Engine_Api::_()->authorization()->isAllowed('album', null, 'create');
-
         $this->view->paginator = $paginator = Zend_Paginator::factory($select);
         $paginator->setItemCountPerPage(Engine_Api::_()->getApi('settings', 'core')->getSetting('album_page', 12));
         $paginator->setCurrentPageNumber($page);

@@ -141,4 +141,12 @@ class Fields_Model_DbTable_Maps extends Fields_Model_DbTable_Abstract
 
     return $this;
   }
+  
+  public function getOptionId($params = array()) {
+    return $this->select()
+          ->from($this->info('name'), array('option_id'))
+          ->where($this->info('name') . '.child_id = ?', $params['child_id'])
+          ->query()
+          ->fetchColumn();
+  }
 }

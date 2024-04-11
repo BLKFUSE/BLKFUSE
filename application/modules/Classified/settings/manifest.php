@@ -14,13 +14,14 @@ return array(
   'package' => array(
     'type' => 'module',
     'name' => 'classified',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 10111 $',
     'path' => 'application/modules/Classified',
     'repository' => 'socialengine.com',
     'title' => 'Classifieds',
-    'description' => 'Classifieds',
-    'author' => 'Webligo Developments',
+    'description' => 'Host classifieds listings for goods and services, and create a trusted community marketplace where members can post and browse items.',
+    'author' => '<a href="https://socialengine.com/" style="text-decoration:underline;" target="_blank">SocialEngine</a>',
+    'thumb' => 'application/modules/Classified/externals/images/thumb.png',
     'dependencies' => array(
       array(
         'type' => 'module',

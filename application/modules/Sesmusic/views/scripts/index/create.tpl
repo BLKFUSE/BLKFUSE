@@ -703,7 +703,7 @@ if (playlist_id > 0) {
 function showReadImage(input,id) {
   var url = input.value; 
   var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-  if (input.files && input.files[0] && (ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG')){
+  if (input.files && input.files[0] && (ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'webp')){
     var reader = new FileReader();
     reader.onload = function (e) {
       document.getElementById(id+'-wrapper').style.display = 'block';

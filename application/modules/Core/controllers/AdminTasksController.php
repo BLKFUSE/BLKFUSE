@@ -66,6 +66,10 @@ class Core_AdminTasksController extends Core_Controller_Action_Admin
     foreach( $values as $key => $value ) {
       $select->where($tasksTable->getAdapter()->quoteIdentifier($key) . ' = ?', $value);
     }
+    
+    if( !empty($_GET['task_id']) ) {
+      $select->where('task_id = ?', (int) $_GET['task_id']);
+    }
 
     // Make paginator
     $this->view->tasks = $tasks = Zend_Paginator::factory($select);

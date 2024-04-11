@@ -16,11 +16,11 @@ DROP TABLE IF EXISTS `engine4_storage_services`;
 CREATE TABLE IF NOT EXISTS `engine4_storage_services` (
   `service_id` int(10) unsigned NOT NULL auto_increment,
   `servicetype_id` int(10) unsigned NOT NULL,
-  `config` text CHARACTER SET latin1 COLLATE latin1_general_ci default NULL,
+  `config` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci default NULL,
   `enabled` tinyint(1) unsigned NOT NULL default '0',
   `default` tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (`service_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 INSERT IGNORE INTO `engine4_storage_services` (`service_id`, `servicetype_id`, `enabled`, `default`) VALUES
 (1, 1, 1, 1);
@@ -30,10 +30,10 @@ DROP TABLE IF EXISTS `engine4_storage_servicetypes`;
 CREATE TABLE IF NOT EXISTS `engine4_storage_servicetypes` (
   `servicetype_id` int(10) unsigned NOT NULL auto_increment,
   `title` varchar(128) NOT NULL,
-  `plugin` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `form` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci default NULL,
+  `plugin` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `form` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci default NULL,
   PRIMARY KEY  (`servicetype_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 /* 1 must be the ID of the local storage service because of the default column value in the files table */
 INSERT IGNORE INTO `engine4_storage_servicetypes` (`servicetype_id`, `title`, `plugin`, `form`) VALUES

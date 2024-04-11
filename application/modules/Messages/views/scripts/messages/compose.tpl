@@ -25,20 +25,34 @@
       labelField: 'label',
       searchField: 'label',
       //create: true,
+      render: {
+        option: function(item, escape) {
+          return `<div>
+            <span class="option-image">${item.photo}</span>
+            <span class="option-label">${item.label}</span>
+            </div>`;
+        },
+        item: function(item, escape) {
+          return `<div>
+              <span class="option-image">${item.photo}</span>
+              <span class="option-label">${item.label}</span>
+            </div>`;
+        }
+      },
       load: function(query, callback) {
-          if (!query.length) return callback();
-          scriptJquery.ajax({
-            url: '<?php echo $this->url(array('module' => 'user', 'controller' => 'friends', 'action' => 'suggest','message' => true), 'default', true) ?>',
-            data: { 
-              value: query 
-            },
-            success: function (transformed) {
-              callback(transformed);
-            },
-            error: function () {
-                callback([]);
-            }
-          });
+        if (!query.length) return callback();
+        scriptJquery.ajax({
+          url: '<?php echo $this->url(array('module' => 'user', 'controller' => 'friends', 'action' => 'suggest','message' => true), 'default', true) ?>',
+          data: { 
+            value: query 
+          },
+          success: function (transformed) {
+            callback(transformed);
+          },
+          error: function () {
+              callback([]);
+          }
+        });
       }
     });
   });

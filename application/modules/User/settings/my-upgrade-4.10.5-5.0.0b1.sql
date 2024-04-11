@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `engine4_user_codes` (
   PRIMARY KEY (`code_id`),
   KEY `email` (`email`),
   KEY `code` (`code`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
 ALTER TABLE `engine4_users` ADD `lastLoginDate` VARCHAR(24) NOT NULL DEFAULT 'everyone' AFTER `login_attempt_count`, ADD `lastUpdateDate` VARCHAR(24) NOT NULL DEFAULT 'everyone' AFTER `lastLoginDate`, ADD `inviteeName` VARCHAR(24) NOT NULL DEFAULT 'everyone' AFTER `lastUpdateDate`, ADD `profileType` VARCHAR(24) NOT NULL DEFAULT 'everyone' AFTER `inviteeName`, ADD `memberLevel` VARCHAR(24) NOT NULL DEFAULT 'everyone' AFTER `profileType`, ADD `profileViews` VARCHAR(24) NOT NULL DEFAULT 'everyone' AFTER `memberLevel`, ADD `joinedDate` VARCHAR(24) NOT NULL DEFAULT 'everyone' AFTER `profileViews`, ADD `friendsCount` VARCHAR(24) NOT NULL DEFAULT 'everyone' AFTER `joinedDate`;
 
@@ -275,5 +275,5 @@ CREATE TABLE IF NOT EXISTS `engine4_user_codes` (
   PRIMARY KEY (`code_id`),
   KEY `email` (`email`),
   KEY `code` (`code`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 

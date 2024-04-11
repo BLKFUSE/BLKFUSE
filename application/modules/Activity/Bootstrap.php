@@ -30,8 +30,7 @@ class Activity_Bootstrap extends Engine_Application_Bootstrap_Abstract
 
         //Emotions Load
         $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
-        $script = "var tinyMceEmotions = ".Engine_Api::_()->activity()->getEmoticons('', true).";";
-        $script .= "var chatEmotions = ".Engine_Api::_()->activity()->getEmoticons('', '', true).";";
+        $script = "var chatEmotions = ".Engine_Api::_()->activity()->getEmoticons('', '', true).";";
         $view->headScript()->appendScript($script);
     }
 }

@@ -20,7 +20,7 @@ class Sesdating_View_Filter_Bodyclass {
     $moduleName = $request->getModuleName();
     $actionName = $request->getActionName();
     $controllerName = $request->getControllerName();
-    if (substr($request->getPathInfo(), 1, 6) != "admin/") {
+    if (substr($request->getPathInfo(), 1, 5) != "admin") {
 			// Get body identity
 			if( isset($layout->siteinfo['identity']) ) {
 				$identity = $layout->siteinfo['identity'];

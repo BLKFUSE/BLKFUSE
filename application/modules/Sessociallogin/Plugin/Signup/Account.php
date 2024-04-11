@@ -23,7 +23,7 @@ class Sessociallogin_Plugin_Signup_Account extends Core_Plugin_FormSequence_Abst
     public function onView() {
         if (!empty($_SESSION['facebook_signup']) ||
                 !empty($_SESSION['twitter_signup']) ||
-                !empty($_SESSION['janrain_signup']) || !empty($_SESSION['telegram_signup']) ||  !empty($_SESSION['linkedin_signup']) || !empty($_SESSION['instagram_signup']) || !empty($_SESSION['google_signup']) || !empty($_SESSION['yahoo_signup']) || !empty($_SESSION['pinterest_signup']) || !empty($_SESSION['flickr_signup'])) {
+                !empty($_SESSION['janrain_signup']) || !empty($_SESSION['hotmail_signup']) || !empty($_SESSION['telegram_signup']) ||  !empty($_SESSION['linkedin_signup']) || !empty($_SESSION['instagram_signup']) || !empty($_SESSION['google_signup']) || !empty($_SESSION['yahoo_signup']) || !empty($_SESSION['pinterest_signup']) || !empty($_SESSION['flickr_signup'])) {
             // Attempt to preload information
             if (!empty($_SESSION['facebook_signup'])) {
                 try {
@@ -83,6 +83,19 @@ class Sessociallogin_Plugin_Signup_Account extends Core_Plugin_FormSequence_Abst
                 }
             }
             if (!empty($_SESSION['telegram_signup'])) {
+                try {
+                    
+                        // General
+                        $form = $this->getForm();
+                        if (($emailEl = $form->getElement('email')) && !$emailEl->getValue()) {
+                            $emailEl->setValue($_SESSION['signup_fields']['email']);
+                        }
+                    
+                } catch (Exception $e) {
+                    // Silence?
+                }
+            }
+            if (!empty($_SESSION['hotmail_signup'])) {
                 try {
                     
                         // General
@@ -175,26 +188,26 @@ class Sessociallogin_Plugin_Signup_Account extends Core_Plugin_FormSequence_Abst
             }
 
             // Attempt to preload information
-            if (!empty($_SESSION['janrain_signup']) &&
-                    !empty($_SESSION['janrain_signup_info'])) {
-                try {
-                    $form = $this->getForm();
-                    $info = $_SESSION['janrain_signup_info'];
+            // if (!empty($_SESSION['janrain_signup']) &&
+            //         !empty($_SESSION['janrain_signup_info'])) {
+            //     try {
+            //         $form = $this->getForm();
+            //         $info = $_SESSION['janrain_signup_info'];
 
-                    if (($emailEl = $form->getElement('email')) && !$emailEl->getValue() && !empty($info['verifiedEmail'])) {
-                        $emailEl->setValue($info['verifiedEmail']);
-                    }
-                    if (($emailEl = $form->getElement('email')) && !$emailEl->getValue() && !empty($info['email'])) {
-                        $emailEl->setValue($info['email']);
-                    }
+            //         if (($emailEl = $form->getElement('email')) && !$emailEl->getValue() && !empty($info['verifiedEmail'])) {
+            //             $emailEl->setValue($info['verifiedEmail']);
+            //         }
+            //         if (($emailEl = $form->getElement('email')) && !$emailEl->getValue() && !empty($info['email'])) {
+            //             $emailEl->setValue($info['email']);
+            //         }
 
-                    if (($usernameEl = $form->getElement('username')) && !$usernameEl->getValue() && !empty($info['preferredUsername'])) {
-                        $usernameEl->setValue(preg_replace('/[^A-Za-z]/', '', $info['preferredUsername']));
-                    }
-                } catch (Exception $e) {
-                    // Silence?
-                }
-            }
+            //         if (($usernameEl = $form->getElement('username')) && !$usernameEl->getValue() && !empty($info['preferredUsername'])) {
+            //             $usernameEl->setValue(preg_replace('/[^A-Za-z]/', '', $info['preferredUsername']));
+            //         }
+            //     } catch (Exception $e) {
+            //         // Silence?
+            //     }
+            // }
         }
     }
     

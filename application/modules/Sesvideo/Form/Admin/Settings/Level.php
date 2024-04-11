@@ -248,7 +248,7 @@ $this->loadDefaultDecorators();
           'description' => 'Choose from below the video sources from which uplaoded videos will not be auto-approved on your website. Videos from the checked video sources will not be auto-approve and you can manually approve them from the "Manage Videos" section of this plugin.',
           'label' => 'Options for Video Sources Not to be Auto-Approved',
           'multiOptions' => array(
-            'youtube' => 'Youtube',
+            //'youtube' => 'Youtube',
 //               'youtubePlaylist' => 'Youtube Playlists',
 //               'vimeo' => 'Vimeo',
 //               'dailymotion' => 'Dailymotion',

@@ -37,13 +37,13 @@ INSERT IGNORE INTO `engine4_core_settings` (`name`, `value`) VALUES
 ('core.log.adapter', 'file');
 
 /* Fix some incorrect default collations */
-ALTER TABLE `engine4_core_mailrecipients` DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
-ALTER TABLE `engine4_core_mailtemplates` DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
-ALTER TABLE `engine4_core_themes` DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
-ALTER TABLE `engine4_core_status` DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+ALTER TABLE `engine4_core_mailrecipients` DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
+ALTER TABLE `engine4_core_mailtemplates` DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
+ALTER TABLE `engine4_core_themes` DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
+ALTER TABLE `engine4_core_status` DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 ALTER TABLE `engine4_core_mailrecipients`
-  CHANGE `email` `email` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NULL ;
+  CHANGE `email` `email` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL ;
 
 DROP TABLE IF EXISTS `engine4_core_nodes`;
 CREATE TABLE IF NOT EXISTS `engine4_core_nodes` (
@@ -55,4 +55,4 @@ CREATE TABLE IF NOT EXISTS `engine4_core_nodes` (
   `last_seen` datetime NOT NULL,
   PRIMARY KEY (`node_id`),
   UNIQUE KEY `signature` (`signature`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;

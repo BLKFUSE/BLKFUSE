@@ -223,29 +223,10 @@ class Sesvideo_Form_Video extends Engine_Form {
       )
     ));
     $this->tags->getDecorator("Description")->setOption("placement", "append");
-    $upload_url = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'sesbasic', 'controller' => 'index', 'action' => "upload-image"), 'default', true);
-
-    $allowed_html = 'strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr';
-
-    $editorOptions = array(
-      'upload_url' => $upload_url,
-      'html' => (bool) $allowed_html,
-    );
-
-    if (!empty($upload_url)) {
-      $editorOptions['editor_selector'] = 'tinymce';
-      $editorOptions['mode'] = 'specific_textareas';
-      $editorOptions['plugins'] = array(
-        'table', 'fullscreen', 'media', 'preview', 'paste',
-        'code', 'image', 'textcolor', 'jbimages', 'link'
-      );
-
-      $editorOptions['toolbar1'] = array(
-        'undo', 'redo', 'removeformat', 'pastetext', '|', 'code',
-        'media', 'image', 'jbimages', 'link', 'fullscreen',
-        'preview'
-      );
-    }
+    //UPLOAD PHOTO URL
+			$editorOptions = array(
+				'uploadUrl' => Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'index', 'action' => 'upload-photo'), 'default', true),
+			);
     if($settings->getSetting('video.tinymce', 1))
       $tinymce = true;
     else
@@ -254,7 +235,6 @@ class Sesvideo_Form_Video extends Engine_Form {
       //Overview
      $this->addElement('TinyMce', 'description', array(
        'label' => 'Video Description',
-       'class'=>'tinymce',
        'editorOptions' => $editorOptions,
      ));
    }else{
@@ -275,7 +255,7 @@ class Sesvideo_Form_Video extends Engine_Form {
     if(engine_count($packages)) {
       $packagesArray = array('' => 'Select Package');
       foreach($packages as $package) {
-        $packagesArray[$package->getIdentity()] = $package->title . ' ('. Engine_Api::_()->epaidcontent()->getCurrencyPrice($package->price, Engine_Api::_()->epaidcontent()->defaultCurrency()) . ')';
+        $packagesArray[$package->getIdentity()] = $package->title . ' ('. Engine_Api::_()->payment()->getCurrencyPrice($package->price, Engine_Api::_()->epaidcontent()->defaultCurrency()) . ')';
       }
       $this->addElement('Select', 'package_id', array(
         'label' => 'Choose Package',
@@ -357,6 +337,7 @@ class Sesvideo_Form_Video extends Engine_Form {
   $defaultProfileId = "0_0_" . $this->getDefaultProfileId();
   $customFields = new Sesbasic_Form_Custom_Fields(array(
     'item' => 'video',
+    'isCreation' => true,
     'decorators' => array(
       'FormElements'
     )));

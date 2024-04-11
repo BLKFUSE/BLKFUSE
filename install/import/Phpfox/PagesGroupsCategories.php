@@ -54,8 +54,8 @@ class Install_Import_Phpfox_PagesGroupsCategories extends Install_Import_Phpfox_
  * CREATE TABLE IF NOT EXISTS `engine4_classified_categories` (
   `category_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
-  `category_name` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `category_name` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`category_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */

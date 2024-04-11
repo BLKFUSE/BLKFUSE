@@ -66,10 +66,9 @@
   </div>
  </div>
 </div>
+<?php echo $this->partial('_approved_tip.tpl', 'core', array('item' => $this->subject())); ?>
 <div class="layout_middle">
   <div class="generic_layout_container">
-<?php
-  echo $this->form->render();
-?>
+    <?php echo $this->form->render(); ?>
   </div>
 </div>

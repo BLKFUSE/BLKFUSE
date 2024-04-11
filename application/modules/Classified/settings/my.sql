@@ -37,7 +37,7 @@ CREATE TABLE `engine4_classified_classifieds` (
   PRIMARY KEY (`classified_id`),
   KEY `owner_id` (`owner_id`),
   KEY `search` (`search`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -62,7 +62,7 @@ CREATE TABLE `engine4_classified_albums` (
   `collectible_count` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY (`album_id`),
   KEY `classified_id` (`classified_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -88,7 +88,7 @@ CREATE TABLE `engine4_classified_photos` (
   KEY `album_id` (`album_id`),
   KEY `classified_id` (`classified_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -104,7 +104,7 @@ CREATE TABLE `engine4_classified_categories` (
   `category_name` varchar(128) NOT NULL,
   PRIMARY KEY (`category_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_classified_categories`
@@ -138,7 +138,7 @@ CREATE TABLE `engine4_classified_fields_maps` (
   `child_id` int(11) NOT NULL,
   `order` smallint(6) NOT NULL,
   PRIMARY KEY  (`field_id`,`option_id`,`child_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_classified_fields_maps`
@@ -160,7 +160,7 @@ DROP TABLE IF EXISTS `engine4_classified_fields_meta`;
 CREATE TABLE `engine4_classified_fields_meta` (
   `field_id` int(11) NOT NULL auto_increment,
 
-  `type` varchar(24) collate latin1_general_ci NOT NULL,
+  `type` varchar(24) collate utf8mb4_unicode_ci NOT NULL,
   `label` varchar(64) NOT NULL,
   `description` varchar(255) NOT NULL default '',
   `alias` varchar(32) NOT NULL default '',
@@ -177,10 +177,10 @@ CREATE TABLE `engine4_classified_fields_meta` (
   `style` text NULL,
   `error` text NULL,
   `icon` TEXT NULL DEFAULT NULL,
-  /*`unit` varchar(32) COLLATE utf8_unicode_ci NOT NULL,*/
+  /*`unit` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,*/
 
   PRIMARY KEY  (`field_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_classified_fields_fields`
@@ -206,7 +206,7 @@ CREATE TABLE `engine4_classified_fields_options` (
   `type` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`option_id`),
   KEY `field_id` (`field_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -222,7 +222,7 @@ CREATE TABLE `engine4_classified_fields_values` (
   `index` smallint(3) NOT NULL default '0',
   `value` text NOT NULL,
   PRIMARY KEY  (`item_id`,`field_id`,`index`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -239,7 +239,7 @@ CREATE TABLE IF NOT EXISTS `engine4_classified_fields_search` (
   PRIMARY KEY  (`item_id`),
   KEY `price` (`price`),
   KEY `location` (`location`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 
@@ -354,7 +354,7 @@ INSERT IGNORE INTO `engine4_authorization_permissions`
     'classified' as `type`,
     'auth_html' as `name`,
     3 as `value`,
-    'strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr' as `params`
+    'blockquote, strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr, iframe, table, td, tbody, tr, table, td, tbody, tr' as `params`
   FROM `engine4_authorization_levels` WHERE `type` NOT IN('public');
 INSERT IGNORE INTO `engine4_authorization_permissions`
   SELECT
@@ -362,7 +362,7 @@ INSERT IGNORE INTO `engine4_authorization_permissions`
     'classified' as `type`,
     'auth_html' as `name`,
     3 as `value`,
-    'strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr' as `params`
+    'blockquote, strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr, iframe, table, td, tbody, tr, table, td, tbody, tr' as `params`
   FROM `engine4_authorization_levels` WHERE `type` NOT IN('public');
 
 -- ADMIN, MODERATOR
@@ -583,7 +583,7 @@ CREATE TABLE IF NOT EXISTS `engine4_classified_ratings` (
   `rating` tinyint(1) unsigned default NULL,
   PRIMARY KEY  (`classified_id`,`user_id`),
   KEY `INDEX` (`classified_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 ALTER TABLE `engine4_classified_classifieds` ADD `rating` FLOAT NOT NULL;
 
@@ -591,3 +591,29 @@ INSERT IGNORE INTO `engine4_activity_notificationtypes` (`type`, `module`, `body
 ("classified_rating", "classified", '{item:$subject} has rated your classified {item:$object}.', 0, "");
 
 INSERT IGNORE INTO `engine4_core_mailtemplates` (`type`, `module`, `vars`) VALUES ("notify_classified_rating", "classified", "[host],[email],[recipient_title],[recipient_link],[recipient_photo],[sender_title],[sender_link],[sender_photo],[object_title],[object_link],[object_photo],[object_description]");
+
+
+
+ALTER TABLE `engine4_classified_classifieds` ADD `approved` TINYINT(1) NOT NULL DEFAULT "1";
+ALTER TABLE `engine4_classified_classifieds` ADD INDEX(`approved`);
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'classified' as `type`,
+    'approve' as `name`,
+    1 as `value`,
+    NULL as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('moderator', 'admin');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'classified' as `type`,
+    'approve' as `name`,
+    1 as `value`,
+    NULL as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('user');
+  
+ALTER TABLE `engine4_classified_classifieds` ADD `resubmit` TINYINT(1) NOT NULL DEFAULT "0";
+ALTER TABLE `engine4_classified_classifieds` ADD INDEX(`resubmit`);

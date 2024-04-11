@@ -10,6 +10,7 @@
  * @author     Jung
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_manage", 'parentMenuItemName' => 'core_admin_main_manage_reports')); ?>
 <div class="settings">
   <div class='global_form'>
     <form method="post">
@@ -30,9 +31,7 @@
     </form>
   </div>
 </div>
-
-<?php if( @$this->closeSmoothbox ): ?>
-<script type="text/javascript">
-  TB_close();
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_manage').parent().addClass('active');
+  scriptJquery('.core_admin_main_manage_reports').addClass('active');
 </script>
-<?php endif; ?>

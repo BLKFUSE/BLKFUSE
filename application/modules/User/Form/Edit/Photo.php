@@ -20,6 +20,7 @@ class User_Form_Edit_Photo extends Engine_Form
 {
   public function init()
   {
+    $this->setTitle("Edit My Photo");
     $this
       ->setAttrib('enctype', 'multipart/form-data')
       ->setAttrib('name', 'EditPhoto');

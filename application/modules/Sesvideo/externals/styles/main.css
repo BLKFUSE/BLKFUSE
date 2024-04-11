@@ -211,10 +211,13 @@ html [class*='tab_layout_sesvideo_']{
   -webkit-transition:all 500ms ease;
   -moz-transition:all 500ms ease;
   transition:all 500ms ease;
+	display:flex;
+	align-items:center;
+	justify-content:center;
 }
 .sesvideo_thumb_btns > a{
 	float:none;
-	display:inline-block;
+	display:inline-fix;
 	line-height:32px;
 }
 [dir="rtl"] .sesvideo_thumb_btns{
@@ -295,22 +298,79 @@ html[dir="rtl"] #compose-video-body .compose-preview-image{float:right;margin-ri
 #compose-video-form-submit{margin-top:5px;clear:both;}
 
 /*VIDEO ATTACHMENT*/
-.sesvideo_attachment_thumb{float:left;height:180px;margin:0 10px 0 0;width:240px;padding:0 !important;}
-[dir="rtl"] .sesvideo_attachment_thumb{float:right;margin:0 0 0 10px;}
-.sesvideo_attachment_thumb .sesvideo_attachment_thumb_img{display:block;height:100% !important;width:100% !important;}
-.sesvideo_attachment_thumb .sesvideo_watch_later_btn{height:20px !important;width:20px !important;}
-.sesvideo_attachment_info{overflow:hidden;}
-.sesvideo_attachment_info > a{font-weight:bold;}
-.sesvideo_attachment_desc{margin-top:5px;}
-.sesvideo_object{margin-bottom:10px;}
-.feed_item_attachments .sesvideo_object iframe{height:300px;width:450px;}
-.sesvideo_attachment_info h3{margin-bottom:0px;}
-
+.sesvideo_attachment_thumb{
+	float:left;
+	height:180px;
+	margin:0 10px 0 0;
+	width:240px;
+	padding:0 !important;
+}
+[dir="rtl"] .sesvideo_attachment_thumb{
+	float:right;
+	margin:0 0 0 10px;
+}
+.sesvideo_attachment_thumb .sesvideo_attachment_thumb_img{
+	display:block;
+	height:100% !important;
+	width:100% !important;
+}
+.sesvideo_attachment_thumb .sesvideo_watch_later_btn{
+	height:20px !important;
+	width:20px !important;
+}
+.sesvideo_attachment_info{
+	overflow:hidden;
+}
+.sesvideo_attachment_info > a.sesvideo_attachment_title{
+	font-weight:bold;
+	overflow:hidden;
+	display:block;
+}
+.sesvideo_attachment_desc{
+	margin-top:5px;
+}
+.sesvideo_object{
+	margin-bottom:10px;
+}
+.feed_item_attachments .sesvideo_object iframe{
+	height:300px;
+	width:450px;
+}
+.sesvideo_attachment_info h3{
+	margin-bottom:0px;
+}
 .feed_item_attachments .sesvideo_attachment_thumb{
-  border-width:1px 1px 0;
-  height:300px;
-  margin:0;
-  width:100%;
+	border-width:1px 1px 0;
+	position:relative;
+	margin:0;
+	width:100%;
+	aspect-ratio:9/6;
+	height:auto;
+}
+.sesvideo_feed_expend{
+	font-size:$theme_font_size_small;
+	color:$theme_button_background_color !important;
+	font-weight:bold;
+	line-height:1;
+	float:right;
+	margin:5px 0 0 15px;
+}
+[dir="rtl"] .sesvideo_feed_expend{
+	float:left;
+	margin:5px 15px 0 0;
+}
+.sesvideo_feed_expend i{
+	margin-left:5px;
+}
+[dir="rtl"] .sesvideo_feed_expend i{
+	margin-left:0;
+	margin-right:5px;
+}
+.feed_item_attachments .sesvideo_object{
+	margin:0 !important;
+}
+.feed_item_attachments .sesvideo_object iframe{
+	aspect-ratio:9/6;
 }
 .feed_item_attachments .sesvideo_attachment_info{
   border-width:0 1px 1px;
@@ -382,7 +442,6 @@ html[dir="rtl"] #compose-video-body .compose-preview-image{float:right;margin-ri
 	color:$theme_button_background_color !important;
 	border:1px solid $theme_button_background_color;
 }
-.feed_item_attachments .sesvideo_attachment_info > a,
 .feed_item_attachments .sesvideo_attachment_info .sesvideo_attachment_desc,
 .sesvideo_channel_cover_stats .sesvideo_channel_cover_stat_text,
 .sesvideo_channel_cover_tabs > div > ul > li > a,
@@ -395,7 +454,6 @@ html[dir="rtl"] #compose-video-body .compose-preview-image{float:right;margin-ri
 #compose-video-body .compose-preview-info > div,
 .sesvideo_attachment_desc,
 .sesvideo_verified,
-#submit-wrapper #submit-element button#submit,
 .sesvideo_listing_grid .sesvideo_length,
 .sesvideo_grid_date,
 .sesvideo_list_date,
@@ -421,4 +479,20 @@ div.sesvideo_listing_options_pulldown a,
 .sesvideo_sidebar_list_stats,
 .sesvideo_view_labels > span{
   font-size:$theme_font_size_small !important;
+}
+/*Channel Photo View Page*/
+.layout_sesvideo_chanel_photo_view_page .sesalbum_view_photo{
+  display:block;
+}
+.layout_sesvideo_chanel_photo_view_page .sesalbum_view_photo_container_wrapper{
+	position:relative;
+}
+/*SlideShow Css*/
+.cd-header{
+	width:$theme_content_width;
+}
+@media (max-width:1199px) {
+	.cd-header{
+		width:100%;
+	}	
 }

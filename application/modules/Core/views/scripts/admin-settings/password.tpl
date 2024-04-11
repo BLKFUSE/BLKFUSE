@@ -10,7 +10,8 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_settings", 'childMenuItemName' => 'core_admin_main_settings_password')); ?>
 
-<div class='settings'>
+<div class='settings admin_user_edit_form'>
   <?php echo $this->form->render($this); ?>
 </div>

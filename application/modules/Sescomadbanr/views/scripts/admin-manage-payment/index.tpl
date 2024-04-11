@@ -37,16 +37,13 @@ function selectAll()
 <p>
 	<?php echo $this->translate("This page lists all the user payments information that you sent using direct link. After receiving payment by member you can click on edit link and mark as complete.") ?>	
 </p>
-<br class="clear" />
 <div class="sesbasic_search_reasult">
 	<?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sescomadbanr', 'controller' => 'manage-payment', 'action' => 'create'), $this->translate("Add New"), array('class'=>'smoothbox sesbasic_icon_add buttonlink')) ?>
 </div>
-<br />
 <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
   <div class="sesbasic_search_reasult">
     <?php echo $this->translate(array('%s entry found.', '%s entries found', $this->paginator->getTotalItemCount()), $this->locale()->toNumber($this->paginator->getTotalItemCount())) ?>
   </div>
-  <br />
   <form id='multidelete_form' method="post" action="<?php echo $this->url();?>" onSubmit="return multiDelete()">
   <table class='admin_table'>
     <thead>
@@ -95,12 +92,10 @@ function selectAll()
       <?php endforeach; ?>
     </tbody>
   </table>
-  <br />
   <div class='buttons'>
     <button type='submit'><?php echo $this->translate("Delete Selected") ?></button>
   </div>
   </form>
-  <br />
   <div>
     <?php echo $this->paginationControl($this->paginator); ?>
   </div>

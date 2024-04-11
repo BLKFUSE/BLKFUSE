@@ -1123,21 +1123,21 @@ div.comments_comment_likes_tips{
 #ses_media_lightbox_container.pswp--open + * + * + #TB_load,
 #ses_media_lightbox_container.pswp--open + * + #TB_load + #TB_window,
 #ses_media_lightbox_container.pswp--open + * + * + #TB_load + #TB_window{position:fixed;}
-/* COMMENTS */
-.ses_pswp_comments .sesadvcmt_comments .comment_form_main{
-  display:block !important;
+
+/*Adv Comment*/
+.ses_pswp_comments .sesadvcmt_comments form.advcomment_form .comment_form_main{
+  align-items:flex-end;
 }
-.ses_pswp_comments .comment_form_main button > i{
-  display:none;
+.ses_pswp_comments .sesadvcmt_comments div._form_container div.comment_form{
+  border-radius:10px;
+  flex:inherit;
+  justify-content:initial;
+  width:100%;
 }
-.ses_pswp_comments .comment_form_main button > span{
-  display:block !important;
-}
-.ses_pswp_comments .comment_form_main button{
-	border-radius:4px !important;
-	padding:0 10px !important;
-	margin-top:5px;
-	float:right;
+.ses_pswp_comments .sesadvcmt_comments div._form_container div.comment_form .mentions-input-box,
+.ses_pswp_comments .sesadvcmt_comments div._form_container div.comment_form > textarea{
+  width:100%;
+  flex:inherit;
 }
 .ses_pswp_comments .sesadvcmt_comments .comments_date a:before,
 .ses_pswp_comments .comments_date > .advcomnt_feed_votebtn span{

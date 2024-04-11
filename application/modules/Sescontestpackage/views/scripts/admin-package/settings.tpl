@@ -32,8 +32,8 @@
 <script type="application/javascript">
   function enable_package(value){
     if(value == 1){
-      document.getElementById('sescontestpackage_package_info-wrapper').style.display = 'block';	
-      document.getElementById('sescontestpackage_payment_mod_enable-wrapper').style.display = 'block';	
+      document.getElementById('sescontestpackage_package_info-wrapper').style.display = 'flex';	
+      document.getElementById('sescontestpackage_payment_mod_enable-wrapper').style.display = 'flex';	
     }else{
       document.getElementById('sescontestpackage_package_info-wrapper').style.display = 'none';	
       document.getElementById('sescontestpackage_payment_mod_enable-wrapper').style.display = 'none';		

@@ -59,6 +59,7 @@
 	max-height:600px;
 	aspect-ratio:9/16;
 	overflow:hidden;
+	min-width:350px;
 }
 .eticktokclone_videos_feed_item_body ._video video{
 	background-color:#000;
@@ -113,6 +114,7 @@
 	}
 	.eticktokclone_videos_feed_item_body ._video{
     max-height:inherit;
+		min-width:inherit;
 	}
 	.eticktokclone_videos_feed_item_body ._video .sesvideo_thumb_img{
 		width:100%;
@@ -217,6 +219,20 @@
 /*PROFILE VIDEOS END*/
 
 /*SIDEBAR LINKS START*/
+.eticktokclone_profile_link a{
+	line-height:40px;
+	padding:0 15px;
+	align-items:center;
+}
+.eticktokclone_profile_link a i{
+	margin-right:5px;
+	position:relative;
+	top:1px;
+}
+[dir="rtl"] .eticktokclone_profile_link a i{
+	margin-right:0;
+	margin-left:5px;
+}
 .eticktokclone_sidebar_links li{
 	margin:5px 0;
 }
@@ -363,7 +379,7 @@
 	text-overflow:ellipsis;
 	overflow:hidden;
 	white-space:nowrap;
-	max-width:130px;
+	max-width:100px;
 }
 .eticktokclone_member_item ._cont ._username{
 	word-break:break-all;

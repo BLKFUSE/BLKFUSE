@@ -12,3 +12,7 @@
 ?>
 
 <?php echo $this->form->render($this) ?>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_layout').parent().addClass('active');
+  scriptJquery('.core_admin_main_layout_themes').addClass('active');
+</script>

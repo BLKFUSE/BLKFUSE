@@ -37,6 +37,7 @@ html[dir="rtl"] .album_options a
 	width:auto;
   float:right;
 	padding:8px 10px;
+  min-height:inherit;
 }
 html[dir="rtl"] .album_options select{
 	float:left;
@@ -196,6 +197,9 @@ ul.albums_manage .albums_manage_options > a
   margin:0 5px;
   padding-bottom:2px;
   padding-top:2px;
+}
+ul.albums_manage > li .content_approval_msg span{
+  margin:10px 0 0;
 }
 ul.albums_editphotos > li
 {

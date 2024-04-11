@@ -163,7 +163,6 @@
 "CLASSIFIEDS_VIEWS_SCRIPTS_ADMINSETTINGS_DELETE_DESCRIPTION";"Are you sure that you want to delete this category? It will not be recoverable after being deleted."
 
 "Classified Listing Categories";"Classified Listing Categories"
-"CLASSIFIEDS_VIEWS_SCRIPTS_ADMINSETTINGS_CATEGORIES_DESCRIPTION";"If you want to allow your users to categorize their classified entries, create the categories below. This feature is useful if you want to list all your users' classified entries that If you have no categories, your users will not be given the option of assigning a classified category."
 "There are currently no categories.";"There are currently no categories."
 "Upload complete.";"Upload complete."
 "An error occurred:";"An error occurred:"
@@ -276,7 +275,7 @@
 "Popular Classifieds";"Popular Classifieds"
 "Recent Classifieds";"Recent Classifieds"
 "Edit Category";"Edit Category"
-"Here, you can edit the category title. If you do want to change the parent category then do not choose any category from the parent category dropdown.";"Here, you can edit the category title. If you do want to change the parent category then do not choose any category from the parent category dropdown."
+"Here, you can edit the category title. If you do not want to change the parent category then do not choose any category from the parent category dropdown.";"Here, you can edit the category title. If you do not want to change the parent category then do not choose any category from the parent category dropdown."
 
 "{item:$subject} has rated your classified {item:$object}.";"{item:$subject} has rated your classified {item:$object}."
 "ACTIVITY_TYPE_CLASSIFIED_RATING";"When someone rated my classified"

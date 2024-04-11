@@ -4,8 +4,8 @@ INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`
 CREATE TABLE IF NOT EXISTS `engine4_user_telegram` (
 `telegram_id` int(11) NOT NULL auto_increment,
 `user_id` INT(11) NOT NULL,
-`telegram_uid` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-`access_token` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT "",
+`telegram_uid` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+`access_token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "",
 PRIMARY KEY (`telegram_id`),
 UNIQUE KEY `telegram_uid` (`telegram_uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;

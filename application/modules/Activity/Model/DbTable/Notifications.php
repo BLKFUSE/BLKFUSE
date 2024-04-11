@@ -55,6 +55,8 @@ class Activity_Model_DbTable_Notifications extends Engine_Db_Table
         if(!empty($checkDisableNotification)) {
           return;
         }
+        
+        $notificationType = Engine_Api::_()->getDbtable('NotificationTypes', 'activity')->getNotificationType($type);
 
         // We may want to check later if a request exists of the same type already
         $row = $this->createRow();
@@ -66,6 +68,7 @@ class Activity_Model_DbTable_Notifications extends Engine_Db_Table
         $row->type = $type;
         $row->params = $params;
         $row->date = date('Y-m-d H:i:s');
+        $row->is_admin = $notificationType->is_admin;
         $row->save();
 
         // Try to add row to caching
@@ -95,13 +98,13 @@ class Activity_Model_DbTable_Notifications extends Engine_Db_Table
                 'host' => $_SERVER['HTTP_HOST'],
                 'email' => $user->email,
                 'date' => time(),
-                'recipient_title' => $user->getTitle(),
+                'recipient_title' => $user->getTitle(false),
                 'recipient_link' => $user->getHref(),
                 'recipient_photo' => $recipient_photo,
-                'sender_title' => $subject->getTitle(),
+                'sender_title' => $subject->getTitle(false),
                 'sender_link' => $subject->getHref(),
                 'sender_photo' => $sender_photo,
-                'object_title' => $object->getTitle(),
+                'object_title' => $object->getTitle(false),
                 'object_link' => $object->getHref(),
                 'object_photo' => $object->getPhotoUrl('thumb.icon'),
                 'object_description' => $object->getDescription(),
@@ -110,7 +113,7 @@ class Activity_Model_DbTable_Notifications extends Engine_Db_Table
             try {
                 $objectParent = $object->getParent();
                 if ($objectParent && !$objectParent->isSelf($object)) {
-                    $defaultParams['object_parent_title'] = $objectParent->getTitle();
+                    $defaultParams['object_parent_title'] = $objectParent->getTitle(false);
                     $defaultParams['object_parent_link'] = $objectParent->getHref();
                     $defaultParams['object_parent_photo'] = $objectParent->getPhotoUrl('thumb.icon');
                     $defaultParams['object_parent_description'] = $objectParent->getDescription();
@@ -120,7 +123,7 @@ class Activity_Model_DbTable_Notifications extends Engine_Db_Table
             try {
                 $objectOwner = $object->getParent();
                 if ($objectOwner && !$objectOwner->isSelf($object)) {
-                    $defaultParams['object_owner_title'] = $objectOwner->getTitle();
+                    $defaultParams['object_owner_title'] = $objectOwner->getTitle(false);
                     $defaultParams['object_owner_link'] = $objectOwner->getHref();
                     $defaultParams['object_owner_photo'] = $objectOwner->getPhotoUrl('thumb.icon');
                     $defaultParams['object_owner_description'] = $objectOwner->getDescription();
@@ -293,7 +296,8 @@ class Activity_Model_DbTable_Notifications extends Engine_Db_Table
         }
 
         $sql1 = $this->select()
-            ->where('user_id = ?', $user->getIdentity());
+            ->where('user_id = ?', $user->getIdentity())
+            ->where('mitigated = ?', 0);
 				if($enabledNotificationTypes)
             $sql1->where('`type` IN(?)', $enabledNotificationTypes);
 				$sql1->where("`object_type`<>'messages_conversation'");

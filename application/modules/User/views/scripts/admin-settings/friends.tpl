@@ -10,6 +10,7 @@
  * @author     Sami
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_settings", 'childMenuItemName' => 'core_admin_main_settings_friends')); ?>
 
 <?php
   echo $this->navigation()

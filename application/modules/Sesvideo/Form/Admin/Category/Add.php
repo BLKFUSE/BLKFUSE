@@ -106,7 +106,7 @@ class Sesvideo_Form_Admin_Category_Add extends Engine_Form {
         'label' => 'Icon',
         'description' => 'Upload an icon. (The dimensions of the image should be 40x40 px. The currently associated image is shown below this field.)'
     ));
-    $this->cat_icon->addValidator('Extension', false, 'jpg,jpeg,png,gif,PNG,GIF,JPG,JPEG');
+    $this->cat_icon->addValidator('Extension', false, 'jpg,jpeg,png,gif,webp');
 
     if (isset($category) && $category->cat_icon) {
       $img_path = Engine_Api::_()->storage()->get($category->cat_icon, '')->getPhotoUrl();
@@ -130,7 +130,7 @@ class Sesvideo_Form_Admin_Category_Add extends Engine_Form {
         'label' => 'Thumbnail',
         'description' => 'Upload an thumbnail. (The dimensions of the image should be 500x300 px. The currently associated image is shown below this field.)'
     ));
-    $this->cat_icon->addValidator('Extension', false, 'jpg,jpeg,png,gif,PNG,GIF,JPG,JPEG');
+    $this->cat_icon->addValidator('Extension', false, 'jpg,jpeg,png,gif,webp');
 
     if (isset($category) && $category->thumbnail) {
       $img_path = Engine_Api::_()->storage()->get($category->thumbnail, '')->getPhotoUrl();

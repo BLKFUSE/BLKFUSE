@@ -39,6 +39,9 @@ class Storage_Plugin_Core
           }
         }
       }
+      
+      //Delete tinymce files
+      $table->deleteTinyMceFiles($item);
     }
   }
 }

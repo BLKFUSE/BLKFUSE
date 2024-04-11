@@ -10,17 +10,37 @@
  * @author     John
  */
 ?>
-
-<h1>
-  <?php echo $this->translate('Step 2: Setup MySQL Database') ?>
-</h1>
-
-<p>
-  <?php echo $this->translate('We\'ve successfully connected to the database. Now, let\'s make sure your MySQL server has everything it needs to support SocialEngine.') ?>
-</p>
-
-<br />
-
+<ul class="intsall_admin_step">
+  <li class="active">
+    <a href="<?php echo $this->url(array('action' => 'sanity')) ?>">
+      <span class="cont_number">
+        1
+      </span>
+    </a>
+  </li>
+  <li class="active">
+    <a href="<?php echo $this->url(array('action' => 'db-info'), '', true) ?>?clear=1';">
+      <span class="cont_number">
+        2
+      </span>
+    </a>
+  </li>
+  <li>
+    <a href="<?php echo $this->url(array('action' => 'account')) ?>">
+      <span class="cont_number">
+        3
+      </span>
+    </a>
+  </li>
+</ul>
+<div class="install_heding_description">
+  <h1>
+    <?php echo $this->translate('Step 2: Setup MySQL Database') ?>
+  </h1>
+  <p>
+    <?php echo $this->translate('We\'ve successfully connected to the database. Now, let\'s make sure your MySQL server has everything it needs to support SocialEngine.') ?>
+  </p>
+</div>  
 <div class="sanity_wrapper">
   <div>
     <ul class='sanity'>
@@ -49,25 +69,24 @@
     </ul>
   </div>
 </div>
-
-<br />
-
 <div>
   <?php if( $this->maxErrorLevel >= 4 ): ?>
-
+  <div class="admin_install_btn">
+    <button class="back_btn" onclick="window.location.href = '<?php echo $this->url(array('action' => 'db-info'), '', true) ?>?clear=1';">
+      <?php echo $this->translate('Back') ?>
+    </button>
     <button onclick="window.location.replace(window.location.href);">
       <?php echo $this->translate('Try Again') ?>
     </button>
-
+  </div>
   <?php else: ?>
-
+  <div class="admin_install_btn">
+    <button class="back_btn"  onclick="window.location.href = '<?php echo $this->url(array('action' => 'db-info'), '', true) ?>?clear=1';">
+      <?php echo $this->translate('Back') ?>
+    </button>
     <button onclick="window.location.href = '<?php echo $this->url(array('action' => 'db-create'), '', true) ?>';">
-      <?php echo $this->translate('Continue...') ?>
+      <?php echo $this->translate('Continue') ?>
     </button>
-
-    <button onclick="window.location.href = '<?php echo $this->url(array('action' => 'db-info'), '', true) ?>?clear=1';">
-      <?php echo $this->translate('Re-enter MySQL Info') ?>
-    </button>
-
+  </div>
   <?php endif; ?>
 </div>

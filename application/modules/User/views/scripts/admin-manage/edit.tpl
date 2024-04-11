@@ -11,6 +11,6 @@
  */
 ?>
 
-<div class="global_form_popup">
+<div class="global_form_popup admin_user_edit_form">
   <?php echo $this->form->setAttrib('class', '')->render($this) ?>
 </div>

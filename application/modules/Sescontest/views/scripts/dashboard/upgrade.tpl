@@ -23,7 +23,7 @@
 <?php 
 $information = array('description' => 'Package Description', 'featured' => 'Featured', 'sponsored' => 'Sponsored', 'verified' => 'Verified', 'hot' => 'Hot', 'custom_fields' => 'Custom Fields');
 $showinfo = Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestpackage.package.info', array_keys($information)); ?>
-<?php $currentCurrency =  Engine_Api::_()->sescontestpackage()->getCurrentCurrency(); ?>
+<?php $currentCurrency =  Engine_Api::_()->payment()->getCurrentCurrency(); ?>
 <div class="sescontest_packages_main sesbasic_clearfix sesbasic_bxs sescontest_packages_upgrade">
   <?php if($this->currentPackage){ 
     $package = Engine_Api::_()->getItem('sescontestpackage_package',$this->currentPackage->package_id);
@@ -41,20 +41,20 @@ $showinfo = Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestp
               <div class="_title"><h5><?php echo $this->translate($package->title); ?></h5></div>
               <div class="_price">
                 <?php if(!$package->isFree() && $package->recurrence_type != 'forever'){ ?>
-                  <span><?php echo Engine_Api::_()->sescontestpackage()->getCurrencyPrice($package->price,'','',true); ?></span>
+                  <span><?php echo Engine_Api::_()->payment()->getCurrencyPrice($package->price); ?></span>
                   <small>
                     <?php if($package->recurrence_type == 'day'):?>
                        <?php echo $this->translate('Daily');?>
                      <?php elseif($package->price && $package->recurrence_type != 'forever'):?>
                        <?php echo $this->translate(ucfirst($package->recurrence_type).'ly');?>
                      <?php elseif($package->recurrence_type == 'forever'): ?>
-                       <?php echo sprintf($this->translate('One-time fee of %1$s'), Engine_Api::_()->sescontestpackage()->getCurrencyPrice($package->price,'','',true)); ?>
+                       <?php echo sprintf($this->translate('One-time fee of %1$s'), Engine_Api::_()->payment()->getCurrencyPrice($package->price)); ?>
                      <?php else:?>
                        <?php echo $this->translate('Free');?>
                      <?php endif;?>
                   </small>
                 <?php }elseif($package->recurrence_type == 'forever'){ ?>
-                  <span><?php echo sprintf($this->translate('One-time fee of %1$s'), Engine_Api::_()->sescontestpackage()->getCurrencyPrice($package->price,'','',true)); ?></span>
+                  <span><?php echo sprintf($this->translate('One-time fee of %1$s'), Engine_Api::_()->payment()->getCurrencyPrice($package->price)); ?></span>
                 <?php }else{ ?>
                   <span><?php echo $this->translate("FREE"); ?></span>
                 <?php } ?>
@@ -182,14 +182,14 @@ $showinfo = Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestp
                 <div class="_title"><h5><?php echo $this->translate($package->title); ?></h5></div>
                 <div class="_price">
                   <?php if(!$package->isFree()){ ?>
-                    <span><?php echo Engine_Api::_()->sescontestpackage()->getCurrencyPrice($package->price,'','',true); ?></span>
+                    <span><?php echo Engine_Api::_()->payment()->getCurrencyPrice($package->price); ?></span>
                     <small>
                       <?php if($package->recurrence_type == 'day'):?>
                         <?php echo $this->translate('Daily');?>
                       <?php elseif($package->price && $package->recurrence_type != 'forever'):?>
                         <?php echo $this->translate(ucfirst($package->recurrence_type).'ly');?>
                       <?php elseif($package->recurrence_type == 'forever'): ?>
-                        <?php echo sprintf($this->translate('One-time fee of %1$s'), Engine_Api::_()->sescontestpackage()->getCurrencyPrice($package->price,'','',true)); ?>
+                        <?php echo sprintf($this->translate('One-time fee of %1$s'), Engine_Api::_()->payment()->getCurrencyPrice($package->price)); ?>
                       <?php else:?>
                         <?php echo $this->translate('Free');?>
                       <?php endif;?>

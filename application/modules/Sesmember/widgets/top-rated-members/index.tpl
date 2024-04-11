@@ -73,14 +73,9 @@
         <div class="sesmember_rating_list_info_top sesbasic_clearfix">
           <div class="sesmember_rating_list_title floatL">
             <span class="sesmember_list_title">
-	      <?php  if(isset($this->titleActive)){ ?>
-		<?php if(strlen($member->getTitle()) > $this->title_truncation_list){
-		  $title = mb_substr($member->getTitle(),0,($this->title_truncation_list-3)).'...';
-		  echo $this->htmlLink($member->getHref(),$title, array('class' => 'ses_tooltip', 'data-src' => $member->getGuid()));
-		} else { ?>
-		  <?php echo $this->htmlLink($member->getHref(),$member->getTitle(), array('class' => 'ses_tooltip', 'data-src' => $member->getGuid())) ?>
-		<?php } ?>
-	      <?php } ?>
+              <?php  if(isset($this->titleActive)){ ?>
+                <?php echo $this->htmlLink($member->getHref(),$member->getTitle(), array('class' => 'ses_tooltip', 'data-src' => $member->getGuid())) ?>
+              <?php } ?>
             </span>
             <?php if(isset($this->verifiedLabelActive) && $member->user_verified == 1): ?>
               <i class="sesmember_verified_sign_<?php echo $member->user_id?> sesbasic_verified_icon" title="Verified"></i>

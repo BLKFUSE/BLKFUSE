@@ -109,14 +109,14 @@
     <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?>
 			<?php $location = "<div class=\"sesnews_list_stats sesnews_list_location sesbasic_text_light\">
 			<span class=\"widthfull\">
-			<i class=\"fa fa-map-marker\" title=\"$locationText\"></i>
+			<i class=\"sesbasic_icon_map\" title=\"$locationText\"></i>
 			<span title=\"$locationvalue\"><a href='".$this->url(array('resource_id' => $news->news_id,'resource_type'=>'sesnews_news','action'=>'get-direction'), 'sesbasic_get_direction', true)."' class=\"opensmoothboxurl\">$locationvalue</a></span>
 			</span>
 			</div>";?>
     <?php } else { ?>
       <?php $location = "<div class=\"sesnews_list_stats sesnews_list_location sesbasic_text_light\">
 			<span class=\"widthfull\">
-			<i class=\"fa fa-map-marker\" title=\"$locationText\"></i>
+			<i class=\"sesbasic_icon_map\" title=\"$locationText\"></i>
 			<span title=\"$locationvalue\">$locationvalue</span>
 			</span>
 			</div>";?>
@@ -294,7 +294,7 @@
 					identity : '<?php echo $randonNumber; ?>',
 				},
 				success: function(responseHTML) {
-					document.getElementById('tabbed-widget_<?php echo $randonNumber; ?>').innerHTML = responseHTML;
+					scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').html(responseHTML);
 					
           if(scriptJquery('.selectView_<?php echo $randonNumber; ?>.active').attr('rel') == 'grid') {
             scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').addClass('row');
@@ -356,7 +356,11 @@
 					wookmark<?php echo $randonNumber ?> = new Wookmark('.sesbasic_pinboard_<?php echo $randonNumber; ?>', {
 						itemWidth: <?php echo isset($this->width_pinboard) ? str_replace(array('px','%'),array(''),$this->width_pinboard) : '300'; ?>, // Optional min width of a grid item
 						outerOffset: 0, // Optional the distance from grid to parent
-						align:'left',
+           <?php if($orientation = ($this->layout()->orientation == 'right-to-left')){ ?>
+              align:'right',
+            <?php }else{ ?>
+              align:'left',
+            <?php } ?>
 						flexibleWidth: function () {
 							// Return a maximum width depending on the viewport
 							return getWindowWidth() < 1024 ? '100%' : '40%';

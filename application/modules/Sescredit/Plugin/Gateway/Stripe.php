@@ -10,7 +10,7 @@
  * @version    $Id: Stripe.php  2019-04-25 00:00:00 SocialEngineSolutions $
  * @author     SocialEngineSolutions
  */
-include_once APPLICATION_PATH . "/application/modules/Sesadvpmnt/Api/Stripe/init.php";
+include_once APPLICATION_PATH . "/application/libraries/Engine/Service/Stripe/init.php";
 class Sescredit_Plugin_Gateway_Stripe extends Engine_Payment_Plugin_Abstract
 {
   protected $_gatewayInfo;

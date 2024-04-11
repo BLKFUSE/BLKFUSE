@@ -31,7 +31,7 @@
       <li id="music_playlist_item_<?php echo $playlist->getIdentity() ?>">
         <div class="music_browse_author_photo">
           <?php echo $this->htmlLink($playlist->getOwner(),
-                     $this->itemBackgroundPhoto($playlist->getOwner(), 'thumb.profile') ) ?>
+                     $this->itemBackgroundPhoto($playlist->getOwner(), 'thumb.icon') ) ?>
         </div>
         <div class="music_browse_info">
           <div class="music_browse_info_title">
@@ -40,11 +40,11 @@
             </h3>
           </div>
           <div class="music_info_top">
-          <div class="music_browse_info_date">
-            <?php echo $this->translate('Created %s by ', $this->timestamp($playlist->creation_date)) ?>
-            <?php echo $this->htmlLink($playlist->getOwner(), $playlist->getOwner()->getTitle()) ?>
-          </div>
-          <div class="music_playlist_stats">
+            <div class="music_browse_info_date">
+              <?php echo $this->translate('Created %s by ', $this->timestamp($playlist->creation_date)) ?>
+              <?php echo $this->htmlLink($playlist->getOwner(), $playlist->getOwner()->getTitle()) ?>
+            </div>
+           <div class="music_playlist_stats">
               <?php if( $playlist->comment_count > 0 ) :?>
                 <span><?php echo $this->translate(array('%s Comment', '%s Comments', $playlist->comment_count), $this->locale()->toNumber($playlist->comment_count)) ?></span>
               <?php endif; ?>

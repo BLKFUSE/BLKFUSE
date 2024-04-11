@@ -100,7 +100,7 @@ if ($attachUserTags) {
     
     <?php // User's profile photo ?>
     <div class='feed_item_photo'><?php echo $this->htmlLink($action->getSubject()->getHref(),
-      $this->itemPhoto($action->getSubject(), 'thumb.icon', $action->getSubject()->getTitle())
+      $this->itemPhoto($action->getSubject(), 'thumb.icon', $action->getSubject()->getTitle(false))
     ) ?></div>
 
 
@@ -321,7 +321,7 @@ if ($attachUserTags) {
                 <li id="comment-<?php echo $comment->comment_id ?>">
                   <div class="comments_author_photo">
                     <?php echo $this->htmlLink($this->item($comment->poster_type, $comment->poster_id)->getHref(),
-                      $this->itemBackgroundPhoto($this->item($comment->poster_type, $comment->poster_id), 'thumb.icon', $action->getSubject()->getTitle())
+                      $this->itemBackgroundPhoto($this->item($comment->poster_type, $comment->poster_id), 'thumb.icon', $action->getSubject()->getTitle(false))
                     ) ?>
                   </div>
                   <div class="comments_info">

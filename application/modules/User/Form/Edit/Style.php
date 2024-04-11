@@ -20,6 +20,7 @@ class User_Form_Edit_Style extends Engine_Form
 {
   public function init()
   {
+    $this->setTitle("Profile Style");
     $this->addElement('Textarea', 'style', array(
       'label' => 'Profile Style',
       'description' => 'Add your own CSS code above to give your profile a more personalized look.'

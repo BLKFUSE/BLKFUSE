@@ -11,18 +11,8 @@
  */
 ?>
 
-<h2>
-  <?php echo $this->translate("Theme Editor") ?>
-</h2>
-
-<p>
-  <?php echo $this->translate("CORE_VIEWS_SCRIPTS_ADMINTHEMES_THEMES_DESCRIPTION") ?>
-</p>
-
-<br />
-
-
-
+<h2 class="page_heading"><?php echo $this->translate("Theme Editor") ?></h2>
+<p><?php echo $this->translate("CORE_VIEWS_SCRIPTS_ADMINTHEMES_THEMES_DESCRIPTION") ?></p>
 
 <script type="text/javascript">
   var modifications = [];
@@ -67,18 +57,10 @@
     }
   }
   var exportThemeFile = function() {
-
   }
 </script>
-
-<h3>
-  <?php echo $this->translate("Edit your current theme:") ?> <?php echo $this->activeTheme->title ?>
-</h3>
-
-<br />
-
+<h3><?php echo $this->translate("Edit your current theme:") ?> <?php echo $this->activeTheme->title ?></h3>
 <?php if( $this->themes[$this->active]['writable'] ): ?>
-
   <div class="admin_theme_editor_wrapper">
     <div class="admin_theme_editor_header">
       <div class="admin_theme_editor_header_options">
@@ -104,32 +86,17 @@
   </div>
 
 <?php else: ?>
-
   <div class="tip">
     <span>
-
       <?php echo $this->translate("CORE_VIEWS_SCRIPTS_ADMINTHEMES_THEMES_TIP","application/themes/" . $this->active) ?>
-      
     </span>
   </div>
 
 <?php endif; ?>
 
-<br />
-
-
-
-
-
-
-
-
 <h3>
   <?php echo $this->translate('Or, pick a new theme:') ?>
 </h3>
-
-<br />
-
 <form action="<?php echo $this->url(array('action' => 'change')) ?>" method="post">
   <div class="admin_theme_editor_wrapper">
     <ul class="admin_themes">
@@ -172,3 +139,7 @@
 </form>
 
 <br />
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_layout').parent().addClass('active');
+  scriptJquery('.core_admin_main_layout_themes').addClass('active');
+</script>

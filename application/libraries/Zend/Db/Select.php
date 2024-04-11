@@ -491,11 +491,16 @@ class Zend_Db_Select
      * @param int      $type  OPTIONAL The type of the given value
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
-    public function where($cond, $value = null, $type = null)
-    {
-        $this->_parts[self::WHERE][] = $this->_where($cond, $value, $type, true);
-
-        return $this;
+    public function where($cond, $value = null, $type = null) {
+      //Username Work
+      if (file_exists(APPLICATION_PATH . DS . 'application' . DS . 'settings' . DS . 'general.php')) {
+        $generalConfig = include APPLICATION_PATH . DS . 'application' . DS . 'settings' . DS . 'general.php';
+        if(!empty($generalConfig['username']['enabled'])) {
+          $cond = str_replace('displayname', 'username', $cond);
+        }
+      }
+      $this->_parts[self::WHERE][] = $this->_where($cond, $value, $type, true);
+      return $this;
     }
 
     /**

@@ -13,9 +13,9 @@ CREATE TABLE IF NOT EXISTS `se_classifiedcomments` (
   `classifiedcomment_classified_id` int(10) unsigned NOT NULL default '0',
   `classifiedcomment_authoruser_id` int(10) unsigned NOT NULL default '0',
   `classifiedcomment_date` int(10) unsigned NOT NULL default '0',
-  `classifiedcomment_body` text collate utf8_unicode_ci,
+  `classifiedcomment_body` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY  (`classifiedcomment_id`),
   KEY `INDEX` (`classifiedcomment_classified_id`,`classifiedcomment_authoruser_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */

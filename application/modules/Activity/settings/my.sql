@@ -9,8 +9,6 @@
  * @version    $Id: my.sql 10267 2014-06-10 00:55:28Z lucas $
  * @author     John
  */
-
-
 -- --------------------------------------------------------
 
 --
@@ -20,10 +18,10 @@
 DROP TABLE IF EXISTS `engine4_activity_actions`;
 CREATE TABLE `engine4_activity_actions` (
   `action_id` int(11) unsigned NOT NULL auto_increment,
-  `type` varchar(32) NOT NULL,
-  `subject_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(128) NOT NULL,
+  `subject_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `subject_id` int(11) unsigned NOT NULL,
-  `object_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `object_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `object_id` int(11) unsigned NOT NULL,
   `body` text NULL,
   `params` text NULL,
@@ -32,11 +30,11 @@ CREATE TABLE `engine4_activity_actions` (
   `attachment_count` smallint(3) unsigned NOT NULL default '0',
   `comment_count` mediumint(5) unsigned NOT NULL default '0',
   `like_count` mediumint(5) unsigned NOT NULL default '0',
-  `privacy` varchar(500) CHARACTER SET latin1 COLLATE latin1_general_ci NULL default NULL,
+  `privacy` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL default NULL,
   PRIMARY KEY  (`action_id`),
   KEY `SUBJECT` (`subject_type`,`subject_id`),
   KEY `OBJECT` (`object_type`,`object_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -48,10 +46,10 @@ CREATE TABLE `engine4_activity_actions` (
 DROP TABLE IF EXISTS `engine4_activity_actionsettings`;
 CREATE TABLE IF NOT EXISTS `engine4_activity_actionsettings` (
   `user_id` int(11) unsigned NOT NULL,
-  `type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `publish` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`user_id`,`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -62,8 +60,8 @@ CREATE TABLE IF NOT EXISTS `engine4_activity_actionsettings` (
 
 DROP TABLE IF EXISTS `engine4_activity_actiontypes`;
 CREATE TABLE IF NOT EXISTS `engine4_activity_actiontypes` (
-  `type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `module` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `module` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `body` text NOT NULL,
   `enabled` tinyint(1) NOT NULL default '1',
   `displayable` tinyint(1) NOT NULL default '3',
@@ -73,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `engine4_activity_actiontypes` (
   `editable` tinyint(1) NOT NULL default '0',
   `is_generated` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 INSERT IGNORE INTO `engine4_activity_actiontypes` (`type`, `module`, `body`, `enabled`, `displayable`, `attachable`, `commentable`, `shareable`, `editable`, `is_generated`)
 VALUES ('share', 'activity', '{item:$subject} shared {item:$object}''s {var:$type}. {body:$body}', 1, 5, 1, 1, 0, 1, 1),
@@ -93,13 +91,13 @@ DROP TABLE IF EXISTS `engine4_activity_attachments`;
 CREATE TABLE IF NOT EXISTS `engine4_activity_attachments` (
   `attachment_id` int(11) unsigned NOT NULL auto_increment,
   `action_id` int(11) unsigned NOT NULL,
-  `type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `id` int(11) unsigned NOT NULL,
   `mode` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`attachment_id`),
   KEY `action_id` (`action_id`),
   KEY `type_id` (`type`, `id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -112,7 +110,7 @@ DROP TABLE IF EXISTS `engine4_activity_comments`;
 CREATE TABLE IF NOT EXISTS `engine4_activity_comments` (
   `comment_id` int(11) unsigned NOT NULL auto_increment,
   `resource_id` int(11) unsigned NOT NULL,
-  `poster_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `poster_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `poster_id` int(11) unsigned NOT NULL,
   `body` text NOT NULL,
   `creation_date` datetime NOT NULL,
@@ -121,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `engine4_activity_comments` (
   PRIMARY KEY  (`comment_id`),
   KEY `resource_type` (`resource_id`),
   KEY `poster_type` (`poster_type`, `poster_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -134,12 +132,12 @@ DROP TABLE IF EXISTS `engine4_activity_likes`;
 CREATE TABLE `engine4_activity_likes` (
   `like_id` int(11) unsigned NOT NULL auto_increment,
   `resource_id` int(11) unsigned NOT NULL,
-  `poster_type` varchar(16) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `poster_type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `poster_id` int(11) unsigned NOT NULL,
   PRIMARY KEY  (`like_id`),
   KEY `resource_id` (`resource_id`),
   KEY `poster_type` (`poster_type`, `poster_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -152,11 +150,11 @@ DROP TABLE IF EXISTS `engine4_activity_notifications`;
 CREATE TABLE IF NOT EXISTS `engine4_activity_notifications` (
   `notification_id` int(11) unsigned NOT NULL auto_increment,
   `user_id` int(11) unsigned NOT NULL,
-  `subject_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `subject_type` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `subject_id` int(11) unsigned NOT NULL,
-  `object_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `object_type` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `object_id` int(11) unsigned NOT NULL,
-  `type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `params` text NULL,
   `read` tinyint(1) NOT NULL default '0',
   `mitigated` tinyint(1) NOT NULL default '0',
@@ -165,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `engine4_activity_notifications` (
   KEY `LOOKUP` (`user_id`,`date`),
   KEY `subject` (`subject_type`, `subject_id`),
   KEY `object` (`object_type`, `object_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -177,10 +175,10 @@ CREATE TABLE IF NOT EXISTS `engine4_activity_notifications` (
 DROP TABLE IF EXISTS `engine4_activity_notificationsettings`;
 CREATE TABLE IF NOT EXISTS `engine4_activity_notificationsettings` (
   `user_id` int(11) unsigned NOT NULL,
-  `type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`user_id`,`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -191,14 +189,14 @@ CREATE TABLE IF NOT EXISTS `engine4_activity_notificationsettings` (
 
 DROP TABLE IF EXISTS `engine4_activity_notificationtypes`;
 CREATE TABLE IF NOT EXISTS `engine4_activity_notificationtypes` (
-  `type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `module` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `body` text COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `module` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_request` tinyint(1) NOT NULL DEFAULT '0',
-  `handler` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `handler` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `default` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_activity_notificationtypes`
@@ -209,8 +207,7 @@ INSERT IGNORE INTO `engine4_activity_notificationtypes` (`type`, `module`, `body
 ('commented', 'activity', '{item:$subject} has commented on your {item:$object:$label}.', 0, ''),
 ('commented_commented', 'activity', '{item:$subject} has commented on a {item:$object:$label} you commented on.', 0, ''),
 ('liked_commented', 'activity', '{item:$subject} has commented on a {item:$object:$label} you liked.', 0, ''),
-('shared', 'activity', '{item:$subject} has shared your {item:$object:$label}.', 0, '')
-;
+('shared', 'activity', '{item:$subject} has shared your {item:$object:$label}.', 0, '');
 
 -- --------------------------------------------------------
 
@@ -220,18 +217,18 @@ INSERT IGNORE INTO `engine4_activity_notificationtypes` (`type`, `module`, `body
 
 DROP TABLE IF EXISTS `engine4_activity_stream`;
 CREATE TABLE `engine4_activity_stream` (
-  `target_type` varchar(16) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `target_type` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `target_id` int(11) unsigned NOT NULL,
-  `subject_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `subject_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `subject_id` int(11) unsigned NOT NULL,
-  `object_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `object_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `object_id` int(11) unsigned NOT NULL,
-  `type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `action_id` int(11) unsigned NOT NULL,
   PRIMARY KEY  (`target_type`,`target_id`,`action_id`),
   KEY `SUBJECT` (`subject_type`,`subject_id`,`action_id`),
   KEY `OBJECT` (`object_type`,`object_id`,`action_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -341,3 +338,22 @@ ALTER TABLE `engine4_activity_notifications` ADD INDEX(`mitigated`);
 ALTER TABLE `engine4_activity_notificationtypes` ADD INDEX(`module`);
 
 ALTER TABLE `engine4_activity_notificationtypes` ADD INDEX(`default`);
+
+ALTER TABLE `engine4_activity_notificationtypes` ADD `is_admin` TINYINT(1) NOT NULL DEFAULT '0';
+
+ALTER TABLE `engine4_activity_actions` ADD `share_count` INT(11) NOT NULL DEFAULT '0';
+
+ALTER TABLE `engine4_activity_notifications` ADD `is_admin` TINYINT(1) NOT NULL DEFAULT '0';
+
+ALTER TABLE `engine4_activity_actions` ADD INDEX(`date`);
+ALTER TABLE `engine4_activity_actions` ADD INDEX(`modified_date`);
+ALTER TABLE `engine4_activity_actions` ADD INDEX(`attachment_count`);
+ALTER TABLE `engine4_activity_actions` ADD INDEX(`comment_count`);
+ALTER TABLE `engine4_activity_actions` ADD INDEX(`like_count`);
+ALTER TABLE `engine4_activity_actions` ADD INDEX(`privacy`);
+ALTER TABLE `engine4_activity_actions` ADD INDEX(`share_count`);
+ALTER TABLE `engine4_activity_comments` ADD INDEX(`creation_date`);
+ALTER TABLE `engine4_activity_comments` ADD INDEX(`like_count`);
+ALTER TABLE `engine4_activity_notifications` ADD INDEX(`is_admin`);
+ALTER TABLE `engine4_activity_notificationtypes` ADD INDEX(`is_admin`);
+ALTER TABLE `engine4_activity_stream` ADD INDEX(`type`);

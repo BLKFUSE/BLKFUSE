@@ -125,12 +125,13 @@ class Sesapi_Controller_Action_Helper_Dispatcher extends Zend_Controller_Action_
         if($user->getIdentity()){
           Zend_Auth::getInstance()->getStorage()->write($user_id);
           Engine_Api::_()->user()->setViewer();  
-          if(!empty($locale) && !empty($language)){
-            $setLocale = new Zend_Locale($locale);
-            $user->locale = $locale;
-            $user->language = $language;
-            $user->save();
-          }
+          // fixed issue for local change from general settings page
+          // if(!empty($locale) && !empty($language)){
+          //   $setLocale = new Zend_Locale($locale);
+          //   $user->locale = $locale;
+          //   $user->language = $language;
+          //   $user->save();
+          // }
           if(empty($_REQUEST["restApi"]) && empty($user_id_loggedin)){
             header("Location:".$_SERVER["REQUEST_URI"]);
             exit();

@@ -83,13 +83,20 @@ Composer.Plugin.Link = function(options){
     this.elements.formInput.focus();
   }
 
+//   this.deactivate = function() {
+//     if( !this.active ) return;
+//     //this.parent();
+//     this.active = false;
+//     this.__proto__.detach.call(this);
+//     this.request = false;
+//   },
+
   this.deactivate = function() {
     if( !this.active ) return;
-    //this.parent();
-    this.active = false;
-    this.__proto__.detach.call(this);
+    this.__proto__.deactivate.call(this);
+    
     this.request = false;
-  },
+  }
 
   this.poll = function() {
     // Active plugin, ignore

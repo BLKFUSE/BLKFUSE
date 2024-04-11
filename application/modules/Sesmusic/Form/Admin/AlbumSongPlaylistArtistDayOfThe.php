@@ -44,7 +44,7 @@ class Sesmusic_Form_Admin_AlbumSongPlaylistArtistDayOfThe extends Engine_Form {
             "favouriteCount" => "Favorite Count",
             "downloadCount" => "Downloaded Count [This will only show for 'Album Song' content type]",
             "songsListShow" => "Show songs of each playlist",
-            'socialSharing' => 'Social Share Button [This will only show for "Music Album" and "Songs" content types] <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a> ',
+            'socialSharing' => 'Social Share Button [This will only show for "Music Album" and "Songs" content types] <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a> ',
             "addLikeButton" => "Like Button [This will only show for 'Music Album' and 'Songs' content types]",
             "addFavouriteButton" => "Add to Favorite Button [This will only show for 'Music Album' and 'Songs' content types]",
         ),

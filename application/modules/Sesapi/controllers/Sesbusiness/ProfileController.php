@@ -463,7 +463,7 @@ class Sesbusiness_ProfileController extends Sesapi_Controller_Action_Standard
                     elseif($package->price && $package->recurrence_type != 'forever')
                         $result['existingleftpackages'][$counterleft]['payment_type']  = $this->view->translate(ucfirst($package->recurrence_type).'ly');
                     elseif($package->recurrence_type == 'forever')
-                        $result['existingleftpackages'][$counterleft]['payment_type'] =  sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->sesbusinesspackage()->getCurrencyPrice($package->price,'','',true));
+                        $result['existingleftpackages'][$counterleft]['payment_type'] =  sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->payment()->getCurrencyPrice($package->price,'','',true));
                     else
                         $result['existingleftpackages'][$counterleft]['payment_type'] =  $this->view->translate('Free');
                 }else{
@@ -490,7 +490,7 @@ class Sesbusiness_ProfileController extends Sesapi_Controller_Action_Standard
                 elseif($package->price && $package->recurrence_type != 'forever')
                     $result['existingleftpackages'][$counterleft]['params'][$paramscounter]['value'] = $this->view->translate(ucfirst($package->recurrence_type).'ly');
                 elseif($package->recurrence_type == 'forever')
-                    $result['existingleftpackages'][$counterleft]['params'][$paramscounter]['value'] = sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->sesbusinesspackage()->getCurrencyPrice($package->price,'','',true));
+                    $result['existingleftpackages'][$counterleft]['params'][$paramscounter]['value'] = sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->payment()->getCurrencyPrice($package->price,'','',true));
                 else
                     $result['existingleftpackages'][$counterleft]['params'][$paramscounter]['value'] = $this->view->translate('Free');
                 $paramscounter ++;
@@ -558,7 +558,7 @@ class Sesbusiness_ProfileController extends Sesapi_Controller_Action_Standard
                     $result['existingleftpackages'][$counterleft]['subscribe_detail'][$paramscountersuscribe]['value']=  date('d F Y', strtotime($leftpackages->expiration_date));
                     $paramscountersuscribe++;
                 }
-                $result['existingleftpackages'][$counterleft]['price_type'] = Engine_Api::_()->sesbusinesspackage()->getCurrencyPrice($package->price,'','',true);
+                $result['existingleftpackages'][$counterleft]['price_type'] = Engine_Api::_()->payment()->getCurrencyPrice($package->price,'','',true);
                 $counterleft++;
             }
         }
@@ -576,7 +576,7 @@ class Sesbusiness_ProfileController extends Sesapi_Controller_Action_Standard
                     elseif($packages->price && $packages->recurrence_type != 'forever')
                         $result['packages'][$counter]['payment_type']  = $this->view->translate(ucfirst($packages->recurrence_type).'ly');
                     elseif($packages->recurrence_type == 'forever')
-                        $result['packages'][$counter]['payment_type'] =  sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->sesbusinesspackage()->getCurrencyPrice($packages->price,'','',true));
+                        $result['packages'][$counter]['payment_type'] =  sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->payment()->getCurrencyPrice($packages->price,'','',true));
                     else
                         $result['packages'][$counter]['payment_type'] =  $this->view->translate('Free');
                 }else{
@@ -604,7 +604,7 @@ class Sesbusiness_ProfileController extends Sesapi_Controller_Action_Standard
                 elseif($packages->price && $packages->recurrence_type != 'forever')
                     $result['packages'][$counter]['params'][$paramscounter]['value'] = $this->view->translate(ucfirst($packages->recurrence_type).'ly');
                 elseif($packages->recurrence_type == 'forever')
-                    $result['packages'][$counter]['params'][$paramscounter]['value'] = sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->sesbusinesspackage()->getCurrencyPrice($packages->price,'','',true));
+                    $result['packages'][$counter]['params'][$paramscounter]['value'] = sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->payment()->getCurrencyPrice($packages->price,'','',true));
                 else
                     $result['packages'][$counter]['params'][$paramscounter]['value'] = $this->view->translate('Free');
                 $paramscounter ++;
@@ -660,7 +660,7 @@ class Sesbusiness_ProfileController extends Sesapi_Controller_Action_Standard
                 $result['packages'][$counter]['params'][$paramscounter]['label'] = $this->view->translate('Businesses Count');
                 $result['packages'][$counter]['params'][$paramscounter]['value'] = $packages->item_count;
                 $paramscounter ++;
-                $result['packages'][$counter]['price_type'] = Engine_Api::_()->sesbusinesspackage()->getCurrencyPrice($packages->price,'','',true);
+                $result['packages'][$counter]['price_type'] = Engine_Api::_()->payment()->getCurrencyPrice($packages->price,'','',true);
                 $counter++;
             }
         }
@@ -674,7 +674,7 @@ class Sesbusiness_ProfileController extends Sesapi_Controller_Action_Standard
         $existingleftpackages = Engine_Api::_()->getDbTable('orderspackages', 'sesbusinesspackage')->getLeftPackages(array('owner_id' => $viewer->getIdentity()));
         $information = array('description' => 'Package Description', 'featured' => 'Featured', 'sponsored' => 'Sponsored', 'verified' => 'Verified', 'hot' => 'Hot', 'custom_fields' => 'Custom Fields');
         $showinfo = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesbusinesspackage.package.info', array_keys($information));
-        $currentCurrency =  Engine_Api::_()->sesbusinesspackage()->getCurrentCurrency();
+        $currentCurrency =  Engine_Api::_()->payment()->getCurrentCurrency();
         $result = array();
         $counterleft =0;
         if(engine_count($existingleftpackages)){
@@ -692,7 +692,7 @@ class Sesbusiness_ProfileController extends Sesapi_Controller_Action_Standard
                     elseif($package->price && $package->recurrence_type != 'forever')
                         $result['existingleftpackages'][$counterleft]['payment_type']  = $this->view->translate(ucfirst($package->recurrence_type).'ly');
                     elseif($package->recurrence_type == 'forever')
-                        $result['existingleftpackages'][$counterleft]['payment_type'] =  sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->sesbusinesspackage()->getCurrencyPrice($package->price,'','',true));
+                        $result['existingleftpackages'][$counterleft]['payment_type'] =  sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->payment()->getCurrencyPrice($package->price,'','',true));
                     else
                         $result['existingleftpackages'][$counterleft]['payment_type'] =  $this->view->translate('Free');
                 }else{
@@ -719,7 +719,7 @@ class Sesbusiness_ProfileController extends Sesapi_Controller_Action_Standard
                 elseif($package->price && $package->recurrence_type != 'forever')
                     $result['existingleftpackages'][$counterleft]['params'][$paramscounter]['value'] = $this->view->translate(ucfirst($package->recurrence_type).'ly');
                 elseif($package->recurrence_type == 'forever')
-                    $result['existingleftpackages'][$counterleft]['params'][$paramscounter]['value'] = sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->sesbusinesspackage()->getCurrencyPrice($package->price,'','',true));
+                    $result['existingleftpackages'][$counterleft]['params'][$paramscounter]['value'] = sprintf($this->view->translate('One-time fee of %1$s'), Engine_Api::_()->payment()->getCurrencyPrice($package->price,'','',true));
                 else
                     $result['existingleftpackages'][$counterleft]['params'][$paramscounter]['value'] = $this->view->translate('Free');
                 $paramscounter ++;
@@ -786,7 +786,7 @@ class Sesbusiness_ProfileController extends Sesapi_Controller_Action_Standard
                     $result['existingleftpackages'][$counterleft]['subscribe_detail'][$paramscountersuscribe]['value']=  date('d F Y', strtotime($packageleft->expiration_date));
                     $paramscountersuscribe++;
                 }
-                $result['existingleftpackages'][$counterleft]['price_type'] = Engine_Api::_()->sesbusinesspackage()->getCurrencyPrice($package->price,'','',true);
+                $result['existingleftpackages'][$counterleft]['price_type'] = Engine_Api::_()->payment()->getCurrencyPrice($package->price,'','',true);
                 $counterleft++;
             }
         }else{

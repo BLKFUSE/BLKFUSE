@@ -10,17 +10,37 @@
  * @author     John
  */
 ?>
-
-<h1>
-  <?php echo $this->translate('Step 3: Create Admin Account') ?>
-</h1>
-
-<p>
-  <?php echo $this->translate('Now that you\'ve setup SocialEngine, let\'s get started by naming your community and creating an administrator account. Please provide your email address and choose a password. You will use this information to sign in to your control panel and manage your social network.') ?>
-</p>
-
-<br />
-
+<ul class="intsall_admin_step">
+  <li class="active">
+    <a href="<?php echo $this->url(array('action' => 'sanity')) ?>">
+      <span class="cont_number">
+        1
+      </span>
+    </a>
+  </li>
+  <li class="active">
+    <a href="<?php echo $this->url(array('action' => 'db-info'), '', true) ?>?clear=1';">
+      <span class="cont_number">
+        2
+      </span>
+    </a>
+  </li>
+  <li class="active">
+    <a href="<?php echo $this->url(array('action' => 'account')) ?>">
+      <span class="cont_number">
+        3
+      </span>
+    </a>
+  </li>
+</ul>
+<div class="install_heding_description">
+  <h1>
+    <?php echo $this->translate('Step 3: Create Admin Account') ?>
+  </h1>
+  <p>
+    <?php echo $this->translate('Now that you\'ve setup SocialEngine, let\'s get started by naming your community and creating an administrator account. Please provide your email address and choose a password. You will use this information to sign in to your control panel and manage your social network.') ?>
+  </p>
+</div>  
 <?php if( !empty($this->form) ): ?>
   <div class="create-admin-form">
     <?php echo $this->form->render($this) ?>

@@ -27,9 +27,9 @@ CREATE TABLE `engine4_users` (
   `status_date` datetime NULL,
   `password` char(255) NOT NULL,
   `salt` char(64) NOT NULL,
-  `locale` varchar(16) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL default 'auto',
-  `language` varchar(8) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL default 'en_US',
-  `timezone` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL default 'America/Los_Angeles',
+  `locale` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL default 'auto',
+  `language` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL default 'en_US',
+  `timezone` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL default 'America/Los_Angeles',
   `search` tinyint(1) NOT NULL default '1',
   `show_profileviewers` tinyint(1) NOT NULL default '1',
   `level_id` int(11) unsigned NOT NULL,
@@ -67,6 +67,7 @@ CREATE TABLE `engine4_users` (
   `donotsellinfo` TINYINT(1) NOT NULL DEFAULT '0',
   `mention` VARCHAR(24) NOT NULL default 'registered',
   `birthday_format` VARCHAR(24) DEFAULT NULL,
+  `is_verified` TINYINT(1) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`user_id`),
   UNIQUE KEY `EMAIL` (`email`),
   UNIQUE KEY `USERNAME` (`username`),
@@ -74,7 +75,7 @@ CREATE TABLE `engine4_users` (
   KEY `CREATION_DATE` (`creation_date`),
   KEY `search` (`search`),
   KEY `enabled` (`enabled`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 -- --------------------------------------------------------
 
 --
@@ -87,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `engine4_user_block` (
   `blocked_user_id` int(11) unsigned NOT NULL,
   PRIMARY KEY  (`user_id`,`blocked_user_id`),
   KEY `REVERSE` (`blocked_user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -105,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `engine4_user_facebook` (
   `expires` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`user_id`),
   UNIQUE KEY `facebook_uid` (`facebook_uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -117,11 +118,11 @@ CREATE TABLE IF NOT EXISTS `engine4_user_facebook` (
 DROP TABLE IF EXISTS `engine4_user_forgot`;
 CREATE TABLE IF NOT EXISTS `engine4_user_forgot` (
   `user_id` int(11) unsigned NOT NULL,
-  `code` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY  (`user_id`),
   KEY `code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -137,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `engine4_user_listitems` (
   PRIMARY KEY  (`listitem_id`),
   KEY `list_id` (`list_id`),
   KEY `child_id` (`child_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -154,7 +155,7 @@ CREATE TABLE IF NOT EXISTS `engine4_user_lists` (
   `child_count` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`list_id`),
   KEY `owner_id` (`owner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -170,14 +171,14 @@ CREATE TABLE IF NOT EXISTS `engine4_user_logins` (
   `email` varchar(128) default NULL,
   `ip` varbinary(16) NOT NULL,
   `timestamp` datetime NOT NULL,
-  `state` enum('success','no-member','bad-password','disabled','unpaid','third-party','v3-migration','unknown') CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL default 'unknown',
+  `state` enum('success','no-member','bad-password','disabled','unpaid','third-party','v3-migration','unknown') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL default 'unknown',
   `active` tinyint(1) NOT NULL default '0',
   `source` VARCHAR(32) NULL DEFAULT NULL,
   PRIMARY KEY (`login_id`),
   KEY `user_id` (`user_id`),
   KEY `email` (`email`),
   KEY `ip` (`ip`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -197,7 +198,7 @@ CREATE TABLE `engine4_user_membership` (
   `description` text default NULL,
   PRIMARY KEY  (`resource_id`, `user_id`),
   KEY `REVERSE` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -213,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `engine4_user_online` (
   `active` datetime NOT NULL,
   PRIMARY KEY  (`ip`,`user_id`),
   KEY `LOOKUP` (`active`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -225,10 +226,10 @@ CREATE TABLE IF NOT EXISTS `engine4_user_online` (
 DROP TABLE IF EXISTS `engine4_user_settings`;
 CREATE TABLE IF NOT EXISTS `engine4_user_settings` (
   `user_id` int(10) unsigned NOT NULL,
-  `name` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` varchar(255) NOT NULL,
   PRIMARY KEY (`user_id`, `name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -240,11 +241,11 @@ CREATE TABLE IF NOT EXISTS `engine4_user_settings` (
 DROP TABLE IF EXISTS `engine4_user_signup`;
 CREATE TABLE IF NOT EXISTS `engine4_user_signup` (
   `signup_id` int(11) unsigned NOT NULL auto_increment,
-  `class` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `class` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `order` smallint(6) NOT NULL default '999',
   `enable` smallint(1) NOT NULL default '0',
   PRIMARY KEY  (`signup_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_user_signup`
@@ -254,8 +255,8 @@ INSERT INTO `engine4_user_signup` (`signup_id`, `class`, `order`, `enable`) VALU
 (1, 'User_Plugin_Signup_Account', 1, 1),
 (2, 'User_Plugin_Signup_Otp', 2, 1),
 (3, 'User_Plugin_Signup_Fields', 3, 1),
-(4, 'User_Plugin_Signup_Photo', 4, 1),
-(5, 'User_Plugin_Signup_Invite', 5, 0);
+(4, 'User_Plugin_Signup_Photo', 4, 1);
+-- (5, 'User_Plugin_Signup_Invite', 5, 0);
 -- --------------------------------------------------------
 
 --
@@ -270,7 +271,7 @@ CREATE TABLE IF NOT EXISTS `engine4_user_twitter` (
   `twitter_secret` varchar(255) NOT NULL default '',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `twitter_uid` (`twitter_uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -282,11 +283,11 @@ CREATE TABLE IF NOT EXISTS `engine4_user_twitter` (
 DROP TABLE IF EXISTS `engine4_user_verify`;
 CREATE TABLE IF NOT EXISTS `engine4_user_verify` (
   `user_id` int(11) unsigned NOT NULL,
-  `code` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
   PRIMARY KEY (`user_id`),
   KEY `code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -340,17 +341,17 @@ INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`
 ('user_profile_report', 'user', 'Report User', 'User_Plugin_Menus', '', 'user_profile', '', 5),
 ('user_profile_admin', 'user', 'Admin Settings', 'User_Plugin_Menus', '', 'user_profile', '', 9),
 
-('user_edit_profile', 'user', 'Personal Info', '', '{"route":"user_extended","module":"user","controller":"edit","action":"profile"}', 'user_edit', '', 1),
-('user_edit_photo', 'user', 'Edit My Photo', '', '{"route":"user_extended","module":"user","controller":"edit","action":"photo"}', 'user_edit', '', 2),
-('user_edit_style', 'user', 'Profile Style', 'User_Plugin_Menus', '{"route":"user_extended","module":"user","controller":"edit","action":"style"}', 'user_edit', '', 3),
-('user_delete_photos', 'user', 'Delete My Photos', 'User_Plugin_Menus', '', 'user_edit', '', 4),
+('user_edit_profile', 'user', 'Personal Info', '', '{"route":"user_extended","module":"user","controller":"edit","action":"profile","icon":"fas fa-id-card-alt"}', 'user_edit', '', 1),
+('user_edit_photo', 'user', 'Edit My Photo', '', '{"route":"user_extended","module":"user","controller":"edit","action":"photo","icon":"fas fa-user-edit"}', 'user_edit', '', 2),
+('user_edit_style', 'user', 'Profile Style', 'User_Plugin_Menus', '{"route":"user_extended","module":"user","controller":"edit","action":"style","icon":"fas fa-user-tie"}', 'user_edit', '', 3),
+('user_delete_photos', 'user', 'Delete My Photos', 'User_Plugin_Menus', '{"route":"user_extended","module":"user","controller":"edit","action":"profile-photos","icon":"fas fa-trash-alt"}', 'user_edit', '', 4),
 
-('user_settings_general', 'user', 'General', '', '{"route":"user_extended","module":"user","controller":"settings","action":"general"}', 'user_settings', '', 1),
-('user_settings_privacy', 'user', 'Privacy', '', '{"route":"user_extended","module":"user","controller":"settings","action":"privacy"}', 'user_settings', '', 2),
-('user_settings_notifications', 'user', 'Notifications', 'User_Plugin_Menus', '{"route":"user_extended","module":"user","controller":"settings","action":"notifications"}', 'user_settings', '', 3),
-('user_settings_emails', 'user', 'Emails', '', '{"route":"user_extended","module":"user","controller":"settings","action":"emails"}', 'user_settings', '', 4),
-('user_settings_password', 'user', 'Change Password', '', '{"route":"user_extended", "module":"user", "controller":"settings", "action":"password"}', 'user_settings', '', 5),
-('user_settings_delete', 'user', 'Delete Account', 'User_Plugin_Menus::canDelete', '{"route":"user_extended", "module":"user", "controller":"settings", "action":"delete"}', 'user_settings', '', 6),
+('user_settings_general', 'user', 'General', '', '{"route":"user_extended","module":"user","controller":"settings","action":"general", "icon":"fas fa-cog"}', 'user_settings', '', 1),
+('user_settings_privacy', 'user', 'Privacy', '', '{"route":"user_extended","module":"user","controller":"settings","action":"privacy", "icon":"fas fa-lock"}', 'user_settings', '', 2),
+('user_settings_notifications', 'user', 'Notifications', 'User_Plugin_Menus', '{"route":"user_extended","module":"user","controller":"settings","action":"notifications", "icon":"fas fa-bell"}', 'user_settings', '', 3),
+('user_settings_emails', 'user', 'Emails', '', '{"route":"user_extended","module":"user","controller":"settings","action":"emails", "icon":"fas fa-envelope"}', 'user_settings', '', 4),
+('user_settings_password', 'user', 'Change Password', '', '{"route":"user_extended", "module":"user", "controller":"settings", "action":"password", "icon":"fas fa-key"}', 'user_settings', '', 5),
+('user_settings_delete', 'user', 'Delete Account', 'User_Plugin_Menus::canDelete', '{"route":"user_extended", "module":"user", "controller":"settings", "action":"delete", "icon":"fas fa-user-times"}', 'user_settings', '', 6),
 
 ('core_admin_main_manage_members', 'user', 'Members', '', '{"route":"admin_default","module":"user","controller":"manage"}', 'core_admin_main_manage', '', 1),
 ('core_admin_main_signup', 'user', 'Signup Process', '', '{"route":"admin_default", "controller":"signup", "module":"user"}', 'core_admin_main_settings', '', 3),
@@ -374,8 +375,7 @@ INSERT IGNORE INTO `engine4_core_menus` (`name`, `type`, `title`) VALUES
 ('user_profile', 'standard', 'Member Profile Options Menu'),
 ('user_edit', 'standard', 'Member Edit Profile Navigation Menu'),
 ('user_browse', 'standard', 'Member Browse Navigation Menu'),
-('user_settings', 'standard', 'Member Settings Navigation Menu')
-;
+('user_settings', 'standard', 'Member Settings Navigation Menu');
 
 
 -- --------------------------------------------------------
@@ -401,7 +401,6 @@ INSERT IGNORE INTO `engine4_core_settings` (`name`, `value`) VALUES
 ('user.friends.lists', '1'),
 ('user.signup.approve', 1),
 ('user.signup.checkemail', 1),
-('user.signup.inviteonly', 0),
 ('user.signup.random', 0),
 ('user.signup.terms', 1),
 ('user.signup.username', 1),
@@ -694,7 +693,7 @@ CREATE TABLE `engine4_user_fields_maps` (
   `child_id` int(11) unsigned NOT NULL,
   `order` smallint(6) NOT NULL,
   PRIMARY KEY  (`field_id`,`option_id`,`child_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `engine4_user_fields_maps`
@@ -745,10 +744,10 @@ INSERT IGNORE INTO `engine4_user_fields_maps` (`field_id`, `option_id`, `child_i
 DROP TABLE IF EXISTS `engine4_user_fields_meta`;
 CREATE TABLE `engine4_user_fields_meta` (
   `field_id` int(11) unsigned NOT NULL auto_increment,
-  `type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `label` varchar(64) NOT NULL,
   `description` varchar(255) NULL DEFAULT NULL,
-  `alias` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL default '',
+  `alias` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL default '',
   `required` tinyint(1) NOT NULL default '0',
   `display` tinyint(1) unsigned NOT NULL,
   `publish` tinyint(1) unsigned NOT NULL default '0',
@@ -762,7 +761,7 @@ CREATE TABLE `engine4_user_fields_meta` (
   `error` text NULL,
   `icon` text NULL,
   PRIMARY KEY  (`field_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_user_fields_fields`
@@ -822,7 +821,7 @@ CREATE TABLE `engine4_user_fields_options` (
   `type` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`option_id`),
   KEY `field_id` (`field_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_user_fields_options`
@@ -834,13 +833,13 @@ INSERT IGNORE INTO `engine4_user_fields_options` (`option_id`, `field_id`, `labe
 (3, 5, 'Female', 2,0),
 (4, 5, 'Other', 3,0),
 (5, 1, 'Super Admin Member', 5,1),
-(6, 16, 'Male', 6,1),
-(7, 16, 'Female', 7,1),
-(8, 16, 'Other', 8,1),
+(6, 16, 'Male', 6,0),
+(7, 16, 'Female', 7,0),
+(8, 16, 'Other', 8,0),
 (9, 1, 'Admin Member', 9,1),
-(10, 27, 'Male', 10,1),
-(11, 27, 'Female', 11,1),
-(12, 27, 'Other', 12,1);
+(10, 27, 'Male', 10,0),
+(11, 27, 'Female', 11,0),
+(12, 27, 'Other', 12,0);
 
 -- --------------------------------------------------------
 
@@ -856,7 +855,7 @@ CREATE TABLE `engine4_user_fields_values` (
   `value` text NOT NULL,
   `privacy` varchar(64) default NULL,
   PRIMARY KEY  (`item_id`,`field_id`,`index`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_user_fields_values`
@@ -883,7 +882,7 @@ CREATE TABLE IF NOT EXISTS `engine4_user_fields_search` (
   KEY (`last_name`),
   KEY (`gender`),
   KEY (`birthdate`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 -- --------------------------------------------------------
 
@@ -894,10 +893,10 @@ CREATE TABLE IF NOT EXISTS `engine4_user_fields_search` (
 DROP TABLE IF EXISTS `engine4_user_emailsettings`;
 CREATE TABLE IF NOT EXISTS `engine4_user_emailsettings` (
   `user_id` int(11) unsigned NOT NULL,
-  `type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`user_id`,`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
 ('core_admin_main_settings_emails', 'user', 'Default Email Alerts', '', '{"route":"admin_default","module":"user","controller":"settings","action":"emails"}', 'core_admin_main_settings', '', 12);
@@ -1155,7 +1154,7 @@ CREATE TABLE IF NOT EXISTS `engine4_user_codes` (
   PRIMARY KEY (`code_id`),
   KEY `email` (`email`),
   KEY `code` (`code`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
 
 INSERT IGNORE INTO `engine4_authorization_permissions`
@@ -1383,7 +1382,6 @@ INSERT IGNORE INTO `engine4_core_mailtemplates` (`type`, `module`, `vars`) VALUE
 INSERT IGNORE INTO `engine4_authorization_mapprofiletypelevels` (`title`, `description`, `profile_type_id`, `member_level_id`, `member_count`) VALUES
 ('', '', 5, 1, 0),
 ('', '', 9, 2, 0);
-INSERT IGNORE INTO `engine4_core_menuitems` ( `name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `enabled`, `custom`, `order`) VALUES ("core_mini_friends", "user", "Friend Requests", "User_Plugin_Menus", '{"route":"default","module":"user","controller":"index","action":"friend-request","icon":"fas fa-user-friends"}', "core_mini", "",1,0,  5);
 
 INSERT IGNORE INTO `engine4_authorization_permissions`
   SELECT
@@ -1401,3 +1399,206 @@ INSERT IGNORE INTO `engine4_authorization_permissions`
     20 as `value`,
     NULL as `params`
   FROM `engine4_authorization_levels` WHERE `type` IN('user');
+  
+-- editor
+  
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'user' as `type`,
+    'core_menubar_editor' as `name`,
+    1 as `value`,
+    NULL as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('moderator', 'admin');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'user' as `type`,
+    'core_menubar_editor' as `name`,
+    1 as `value`,
+    NULL as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('user');
+  
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'user' as `type`,
+    'core_statusbar_editor' as `name`,
+    1 as `value`,
+    NULL as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('moderator', 'admin');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'user' as `type`,
+    'core_statusbar_editor' as `name`,
+    1 as `value`,
+    NULL as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('user');
+  
+  
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'user' as `type`,
+    'core_autosave_editor' as `name`,
+    3 as `value`,
+    300 as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('moderator', 'admin');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'user' as `type`,
+    'core_autosave_editor' as `name`,
+    3 as `value`,
+    300 as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('user');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'user' as `type`,
+    'core_editors_allow' as `name`,
+    5 as `value`,
+    '["table","fullscreen","media","code","image","link","lists","advlist","searchreplace","emoticons","autolink","autosave","preview","directionality","visualblocks","visualchars","codesample","wordcount","accordion","charmap","pagebreak","nonbreaking","anchor","insertdatetime"]' as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('moderator', 'admin');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'user' as `type`,
+    'core_editors_allow' as `name`,
+    5 as `value`,
+    '["table","fullscreen","media","code","image","link","lists","advlist","searchreplace","emoticons","autolink","autosave","preview","directionality","visualblocks","visualchars","codesample","wordcount","accordion","charmap","pagebreak","nonbreaking","anchor","insertdatetime"]' as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('user');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'user' as `type`,
+    'verified' as `name`,
+    0 as `value`,
+    NULL as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('moderator', 'admin');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'user' as `type`,
+    'verified' as `name`,
+    0 as `value`,
+    NULL as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('user');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'user' as `type`,
+    'verified_icon' as `name`,
+    3 as `value`,
+    NULL as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('moderator', 'admin');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'user' as `type`,
+    'verified_icon' as `name`,
+    3 as `value`,
+    NULL as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('user');
+
+
+INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES ('core_admin_main_manage_verification', 'user', 'Manage Verifications', '', '{"route":"core_admin_settings","action":"verification"}', 'core_admin_main_manage', '', 10),
+('core_admin_main_settings_verification', 'core', 'Verification Settings', '', '{"route":"core_admin_settings","action":"verification"}', 'core_admin_main_manage_verification', '', 1),
+('core_admin_main_manage_verificationrequests', 'user', 'Manage Verification Requests', '', '{"route":"admin_default","module":"user","controller":"manage","action":"verification-requests"}', 'core_admin_main_manage_verification', '', 2);
+
+  
+DROP TABLE IF EXISTS `engine4_user_verificationrequests`;
+CREATE TABLE IF NOT EXISTS `engine4_user_verificationrequests` (
+  `verificationrequest_id` int(11) unsigned NOT NULL auto_increment,
+  `user_id` int(11) unsigned NOT NULL,
+  `creation_date` datetime NOT NULL,
+  `approved` tinyint(1) NOT NULL DEFAULT "0",
+  `message` VARCHAR(265) NULL DEFAULT NULL,
+  PRIMARY KEY  (`verificationrequest_id`),
+  KEY `approved` (`approved`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+
+
+INSERT IGNORE INTO `engine4_activity_notificationtypes` (`type`, `module`, `body`, `is_request`, `handler`) VALUES
+("user_verirequestto_superadmin", "user", '{item:$subject} has sent verification request and is waiting for approval.', 0, ""),
+("user_verirequest_approved", "user", 'Your {var:$verificationlink} request has been approved. You are now a verified member.', 0, ""),
+("user_verirequest_reject", "user", 'Your {var:$verificationlink} request has been rejected.', 0, "");
+
+
+
+INSERT IGNORE INTO `engine4_activity_notificationtypes` (`type`, `module`, `body`, `is_request`, `handler`, `is_admin`) VALUES
+("content_waitingapprovalforadmin", "user", '{item:$subject} has created a new {var:$content_text} {item:$object} and this is waiting for admin approval.', 0, "", 1),
+("content_resubmitwaitapprforadmin", "user", '{item:$subject} has resubmitted the {var:$content_text} {item:$object} and is waiting for admin approval.', 0, "", 1),
+("content_waitingapprovalforowner", "user", 'Your {var:$content_text} {item:$object} has been created and is waiting for admin approval.', 0, "", 0),
+("content_approvedbyadmin", "user", 'Your {var:$content_text} {item:$object} has been approved.', 0, "", 0),
+("content_disapprovedbyadmin", "user", 'Your {var:$content_text} {item:$object} has been disapproved.', 0, "", 0),
+("content_rejectedbyadmin", "user", 'Your {var:$content_text} {item:$object} has been rejected.', 0, "", 0),
+("content_ticketcreate", "user", '{item:$subject} has opened a new support ticket {var:$admin_ticket_link}.', 0, "", 1),
+("content_ticketreply", "user", 'You have received a reply on your support ticket {var:$ticket_link}.', 0, "", 0),
+("content_newticketcreate", "user", 'A new support ticket {var:$ticket_link} has been created by our site admin.', 0, "", 0);
+
+INSERT IGNORE INTO `engine4_core_mailtemplates` (`type`, `module`, `vars`, `is_admin`) VALUES
+("notify_content_waitingapprovalforadmin", "user", "[host],[email],[recipient_title],[recipient_link],[recipient_photo],[sender_title],[sender_link],[sender_photo],[object_title],[object_link],[object_photo],[object_description],[owner_title],[content_text]", 1),
+("notify_content_resubmitwaitapprforadmin", "user", "[host],[email],[recipient_title],[recipient_link],[recipient_photo],[sender_title],[sender_link],[sender_photo],[object_title],[object_link],[object_photo],[object_description],[owner_title],[content_text]", 1),
+("notify_content_waitingapprovalforowner", "user", "[host],[email],[recipient_title],[recipient_link],[recipient_photo],[sender_title],[sender_link],[sender_photo],[object_title],[object_link],[object_photo],[object_description],[object_title],[owner_title],[content_text]", 0),
+("notify_content_approvedbyadmin", "user", "[host],[email],[recipient_title],[recipient_link],[recipient_photo],[sender_title],[sender_link],[sender_photo],[object_title],[object_link],[object_photo],[object_description],[object_title],[owner_title],[content_text]", 0),
+("notify_content_disapprovedbyadmin", "user", "[host],[email],[recipient_title],[recipient_link],[recipient_photo],[sender_title],[sender_link],[sender_photo],[object_title],[object_link],[object_photo],[object_description],[object_title],[owner_title],[content_text]", 0),
+("notify_content_rejectedbyadmin", "user", "[host],[email],[recipient_title],[recipient_link],[recipient_photo],[sender_title],[sender_link],[sender_photo],[object_title],[object_link],[object_photo],[object_description],[object_title],[owner_title],[admin_ticket_link],[ticket_subject],[ticket_description]", 0),
+("notify_content_ticketreply", "user", "[host],[email],[recipient_title],[recipient_link],[recipient_photo],[sender_title],[sender_link],[sender_photo],[object_title],[object_link],[object_photo],[object_description],[object_title],[owner_title],[ticket_link],[ticket_subject],[ticket_description]", 0),
+("notify_content_newticketcreate", "user", "[host],[email],[recipient_title],[recipient_link],[recipient_photo],[sender_title],[sender_link],[sender_photo],[object_title],[object_link],[object_photo],[object_description],[object_title],[owner_title],[ticket_link],[ticket_id],[ticket_description]", 0),
+("notify_content_ticketcreate", "user", "[host],[email],[recipient_title],[recipient_link],[recipient_photo],[sender_title],[sender_link],[sender_photo],[object_title],[object_link],[object_photo],[object_description],[object_title],[owner_title],[ticket_link],[ticket_id],[ticket_description]", 1);
+
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'core_ticket' as `type`,
+    'view' as `name`,
+    2 as `value`,
+    NULL as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('moderator', 'admin');
+  
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'core_ticket' as `type`,
+    'view' as `name`,
+    1 as `value`,
+    NULL as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('user');
+  
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'core_ticketreply' as `type`,
+    'view' as `name`,
+    2 as `value`,
+    NULL as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('moderator', 'admin');
+  
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'core_ticketreply' as `type`,
+    'view' as `name`,
+    1 as `value`,
+    NULL as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('user');
+
+ALTER TABLE `engine4_users` ADD INDEX(`is_verified`);
+ALTER TABLE `engine4_user_membership` ADD INDEX(`active`);
+ALTER TABLE `engine4_user_membership` ADD INDEX(`resource_approved`);
+ALTER TABLE `engine4_user_membership` ADD INDEX(`user_approved`);
+ALTER TABLE `engine4_users` ADD `referral_code` VARCHAR(256) NULL DEFAULT NULL, ADD `referral_count` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `engine4_users` ADD INDEX(`referral_code`);

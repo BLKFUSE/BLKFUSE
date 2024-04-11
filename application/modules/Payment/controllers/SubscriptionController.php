@@ -16,6 +16,9 @@
  * @copyright  Copyright 2006-2020 Webligo Developments
  * @license    http://www.socialengine.com/license/
  */
+ 
+include_once APPLICATION_PATH . "/application/libraries/Engine/Service/Stripe/init.php";
+
 class Payment_SubscriptionController extends Core_Controller_Action_Standard
 {
   /**
@@ -51,8 +54,8 @@ class Payment_SubscriptionController extends Core_Controller_Action_Standard
   public function init()
   {
     // If there are no enabled gateways or packages, disable
-    if( Engine_Api::_()->getDbtable('gateways', 'payment')->getEnabledGatewayCount() <= 0 ||
-        Engine_Api::_()->getDbtable('packages', 'payment')->getEnabledNonFreePackageCount() <= 0 ) {
+    //|| Engine_Api::_()->getDbtable('packages', 'payment')->getEnabledNonFreePackageCount() <= 0
+    if( Engine_Api::_()->getDbtable('gateways', 'payment')->getEnabledGatewayCount() <= 0) {
       return $this->_helper->redirector->gotoRoute(array(), 'default', true);
     }
 
@@ -100,6 +103,34 @@ class Payment_SubscriptionController extends Core_Controller_Action_Standard
       'isSignup' => false,
       'action' => $this->view->url(),
     ));
+    
+    // Process
+    $subscriptionsTable = Engine_Api::_()->getDbtable('subscriptions', 'payment');
+    $this->view->user = $user = $this->_user;
+    if($user) {
+      $this->view->currentSubscription = $currentSubscription = $subscriptionsTable->fetchRow(array(
+        'user_id = ?' => $user->getIdentity(),
+        'active = ?' => true,
+      ));
+      
+      // Get current package
+      if( $currentSubscription ) {
+        $packagesTable = Engine_Api::_()->getDbtable('packages', 'payment');
+        $this->view->currentPackage = $currentPackage = $packagesTable->fetchRow(array(
+          'package_id = ?' => $currentSubscription->package_id,
+        ));
+      }
+      
+      // Get packages
+      $this->view->packages = $packages = Engine_Api::_()->getDbtable('packages', 'payment')->getEnabledAfterSignupPackageCount();
+      
+    } else {
+      // Get packages
+      $this->view->packages = $packages = Engine_Api::_()->getDbtable('packages', 'payment')->getEnabledPackageCount();
+    }
+    if($packages == 0) {
+      return $this->_helper->redirector->gotoRoute(array(), 'default', true);
+    }
 
     // Check method/valid
     if( !$this->getRequest()->isPost() ) {
@@ -116,14 +147,6 @@ class Payment_SubscriptionController extends Core_Controller_Action_Standard
     }
     $this->view->package = $package;
 
-
-    // Process
-    $subscriptionsTable = Engine_Api::_()->getDbtable('subscriptions', 'payment');
-    $user = $this->_user;
-    $currentSubscription = $subscriptionsTable->fetchRow(array(
-      'user_id = ?' => $user->getIdentity(),
-      'active = ?' => true,
-    ));
 
     // Cancel any other existing subscriptions
     Engine_Api::_()->getDbtable('subscriptions', 'payment')
@@ -278,6 +301,9 @@ class Payment_SubscriptionController extends Core_Controller_Action_Standard
       'source_id' => $subscription->subscription_id,
     ));
     $this->_session->order_id = $order_id = $ordersTable->getAdapter()->lastInsertId();
+    $this->_session->current_currency = $currentCurrency = Engine_Api::_()->payment()->getCurrentCurrency();
+    $currencyData = Engine_Api::_()->getDbTable('currencies', 'payment')->getCurrency($currentCurrency);
+    $this->_session->change_rate = $currencyData->change_rate;
 
     // Unset certain keys
     unset($this->_session->package_id);
@@ -289,11 +315,9 @@ class Payment_SubscriptionController extends Core_Controller_Action_Standard
     $this->view->gatewayPlugin = $gatewayPlugin = $gateway->getGateway();
     $plugin = $gateway->getPlugin();
 
-
     // Prepare host info
     $schema = _ENGINE_SSL ? 'https://' : 'http://';
     $host = $_SERVER['HTTP_HOST'];
-
 
     // Prepare transaction
     $params = array();
@@ -303,6 +327,12 @@ class Payment_SubscriptionController extends Core_Controller_Action_Standard
       $params['region'] = $localeParts[1];
     }
     $params['vendor_order_id'] = $order_id;
+    
+    $action = 'index';
+    if($gateway->plugin == "Payment_Plugin_Gateway_Stripe") {
+      $action = 'stripe';
+    }
+    
     $this->view->returnUrl = $params['return_url'] = $schema . $host
       . $this->view->url(array('action' => 'return'))
       . '?order_id=' . $order_id
@@ -316,26 +346,42 @@ class Payment_SubscriptionController extends Core_Controller_Action_Standard
       //. '&subscription_id=' . $this->_subscription->subscription_id
       . '&state=' . 'cancel';
     $params['ipn_url'] = $schema . $host
-      . $this->view->url(array('action' => 'index', 'controller' => 'ipn'))
+      . $this->view->url(array('action' => $action, 'controller' => 'ipn'))
       . '?order_id=' . $order_id;
       //. '?gateway_id=' . $this->_gateway->gateway_id
       //. '&subscription_id=' . $this->_subscription->subscription_id;
+    
+    $this->view->gateway_id = $gateway_id = $gateway->getIdentity();
+    
+    if($gateway->plugin == "Payment_Plugin_Gateway_Stripe") {
+    
+      $params['order_id'] = $order_id;
+      $params['amount'] = $package->price;
+      $params['type'] = 'user';
+      $params['currency'] = Engine_Api::_()->getApi('settings', 'core')->getSetting('payment.currency', 'USD');
+      
+      $this->view->publishKey = $publishKey = $gateway->config['publish'];
 
-    // Process transaction
-    $transaction = $plugin->createSubscriptionTransaction($this->_user,
-        $subscription, $package, $params);
+      $secretKey = $gateway->config['secret'];
+      \Stripe\Stripe::setApiKey($secretKey);
 
-    // Pull transaction params
-    $this->view->transactionUrl = $transactionUrl = $gatewayPlugin->getGatewayUrl();
-    $this->view->transactionMethod = $transactionMethod = $gatewayPlugin->getGatewayMethod();
-    $this->view->transactionData = $transactionData = $transaction->getData();
+      $this->view->session = $plugin->createSubscriptionTransaction($this->_user, $subscription, $package, $params);
+    } else {
 
+      // Process transaction
+      $transaction = $plugin->createSubscriptionTransaction($this->_user,
+          $subscription, $package, $params);
 
+      // Pull transaction params
+      $this->view->transactionUrl = $transactionUrl = $gatewayPlugin->getGatewayUrl();
+      $this->view->transactionMethod = $transactionMethod = $gatewayPlugin->getGatewayMethod();
+      $this->view->transactionData = $transactionData = $transaction->getData();
 
-    // Handle redirection
-    if( $transactionMethod == 'GET' ) {
-      $transactionUrl .= '?' . http_build_query($transactionData);
-      return $this->_helper->redirector->gotoUrl($transactionUrl, array('prependBase' => false));
+      // Handle redirection
+      if( $transactionMethod == 'GET' ) {
+        $transactionUrl .= '?' . http_build_query($transactionData);
+        return $this->_helper->redirector->gotoUrl($transactionUrl, array('prependBase' => false));
+      }
     }
 
     // Post will be handled by the view script

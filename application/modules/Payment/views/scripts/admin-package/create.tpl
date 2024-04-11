@@ -10,8 +10,10 @@
  * @author     John Boehr <j@webligo.com>
  */
 ?>
-<h2>
-  <?php echo $this->translate("Billing") ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_monetization", 'parentMenuItemName' => 'core_admin_main_membership', 'childMenuItemName' => 'core_admin_main_payment_packages')); ?>
+
+<h2 class="page_heading">
+  <?php echo $this->translate("Membership") ?>
 </h2>	
 <?php if( count($this->navigation) ): ?>
 <div class='tabs'>
@@ -40,4 +42,8 @@
   }
   if(document.getElementById('reminder_email-select'))
   document.getElementById('reminder_email-select').style.display = "none";
+</script>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_monetization').parent().addClass('active');
+  scriptJquery('.core_admin_main_membership').addClass('active');
 </script>

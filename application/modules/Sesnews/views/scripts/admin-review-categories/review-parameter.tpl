@@ -39,7 +39,7 @@ scriptJquery(document).on('click','.removeAlreadyAddedElem',function(e){
 	scriptJquery(this).parent().parent().remove();
 });
 scriptJquery(document).on('click','#addmoreelem',function(e){
-	scriptJquery('<div><input type="text" name="parameters[]" value="" class="reviewparameter"><a href="javascript:;" class="removeAddedElem fa fa-trash">Remove</a></div>').insertBefore(this);
+	scriptJquery('<div><input type="text" name="parameters[]" value="" class="reviewparameter"><a href="javascript:;" class="removeAddedElem buttonlink sesbasic_icon_delete">Remove</a></div>').insertBefore(this);
 });
 scriptJquery(document).on('click','.removeAddedElem',function(e){
 	scriptJquery(this).parent().remove();

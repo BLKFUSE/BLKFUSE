@@ -13,8 +13,15 @@
 
 return array(
   array(
+    'title' => 'SNS - TikTok Clone - TikTok Profile Page Link',
+    'description' => 'This widget shows the link of TikTok Profile Page. You can place this widget on Member Profile Page only.',
+    'category' => 'SNS - TikTok Clone',
+    'type' => 'widget',
+    'name' => 'eticktokclone.tikttok-profile-link',
+  ),
+  array(
     'title' => 'SNS - TikTok Clone - Sidebar Links',
-    'description' => '',
+    'description' => 'This widget shows the For You and Following buttons in sidebar. You can place this widget on Tiktok Explore page.',
     'category' => 'SNS - TikTok Clone',
     'type' => 'widget',
     'name' => 'eticktokclone.sidebar-links',
@@ -44,14 +51,14 @@ return array(
   ),
   array(
     'title' => 'SNS - TikTok Clone - Profile Videos',
-    'description' => 'This widget will display recent videos feed.',
+    'description' => 'This widget shows the users videos on their TikTok profile page. You can place this widget on TikTok profile page only.',
     'category' => 'SNS - TikTok Clone',
     'type' => 'widget',
     'name' => 'eticktokclone.profile-videos',
   ),
   array(
     'title' => 'SNS - TikTok Clone - Profile Like Videos',
-    'description' => 'This widget will display profile like videos.',
+    'description' => 'This widget shows the users liked videos on their TikTok profile page. You can place this widget on TikTok profile page only.',
     'category' => 'SNS - TikTok Clone',
     'type' => 'widget',
     'name' => 'eticktokclone.profile-like-videos',
@@ -65,7 +72,7 @@ return array(
   ),
   array(
     'title' => 'SNS - TikTok Clone - Browse Members',
-    'description' => '',
+    'description' => 'This widget shows the Followers and Followings on Tiktok member profile page. You can place this widget on Tiktok member profile page.',
     'category' => 'SNS - TikTok Clone',
     'type' => 'widget',
     'name' => 'eticktokclone.browse-members',
@@ -86,6 +93,13 @@ return array(
           ),
       )
     ),
+  ),
+  array(
+    'title' => 'SNS - TikTok Clone - Block Members',
+    'description' => 'This widget shows the block members on Tiktok member profile page. You can place this widget on Tiktok member profile page.',
+    'category' => 'SNS - TikTok Clone',
+    'type' => 'widget',
+    'name' => 'eticktokclone.block-members',
   ),
   array(
     'title' => 'SNS - TikTok Clone - Suggested Members',

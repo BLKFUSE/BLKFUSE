@@ -764,7 +764,7 @@ class Sesmusic_IndexController extends Sesapi_Controller_Action_Standard
   
 		// check for video
 		if($uploadCheck == 'song' && $_POST['youtube_video']){
-			$information = $this->handleIframelyInformation($_POST['youtube_video']);
+			$information = Engine_Api::_()->sesbasic()->handleIframelyInformation($_POST['youtube_video']);
 			if (empty($information)) {
 				Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$this->view->translate("video does not exist."), 'result' => array()));
 			}else{

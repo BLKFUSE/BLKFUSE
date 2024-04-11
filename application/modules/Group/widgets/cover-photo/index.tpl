@@ -41,8 +41,28 @@
         ->getSetting("groupcoverphoto.preview.level.id.$level_id"); ?>
     <div class="profile_cover_wrapper">
       <div class="profile_cover_photo_wrapper" id="group_cover_photo">
+        <div class="shimmer_profile_cover_photo_wrapper"> 
+        </div>            
       </div>
-      <div class="profile_cover_head_section" id="group_main_photo"></div>
+      <div class="profile_cover_head_section" id="group_main_photo">
+        <div class="shimmer_profile_cover_head_inner">
+          <div class="shimmer_profile_main_photo_wrapper">
+          </div>
+          <div class="shimmer_cover_photo_profile_information">
+            <div class="shimmer_cover_photo_profile_status">
+              <h2></h2>
+              <p class="shimmer_cover_photo_stats"></p>
+            </div>
+            <div class="shimmer_coverphoto_navigation">
+              <ul>
+                <li>
+                  <a href="javascript:void(0)" class=""></a>
+                </li>
+              </ul>
+            </div>    
+          </div>         
+        </div>        
+      </div>
     </div>
 
     <div class="clr"></div>

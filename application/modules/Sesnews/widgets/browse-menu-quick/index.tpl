@@ -13,7 +13,7 @@
  
  ?>
 <?php if( engine_count($this->quickNavigation) > 0 ): ?>
-  <div class="quicklinks sesbasic_create_btn">
+  <div class="sesbasic_create_btn">
     <?php
       // Render the menu
       echo $this->navigation()

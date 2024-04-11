@@ -233,7 +233,7 @@ class Core_Api_Core extends Core_Api_Abstract
           $storage = Engine_Api::_()->getItem('storage_file', $result);
           return $storage->map();
         } else {
-          return $image;
+          return '';
         }
     }
     public function isMobile()
@@ -401,4 +401,86 @@ class Core_Api_Core extends Core_Api_Abstract
     }
     return $show;
 	}
+	
+	public function saveTinyMceImages($body, $item) {
+    $doc = new DOMDocument();
+    $doc->loadHTML($body);
+    $xml = simplexml_import_dom($doc);
+    $images = $xml->xpath('//img');
+    $storageDbTable = Engine_Api::_()->getDbTable('files', 'storage');
+    $imageIds = array();
+    foreach ($images as $img) {
+      $img = end(explode('/', $img['src']));
+      $storageData = $storageDbTable->getStorageData($img);
+      
+      if($storageData) {
+        $storageData->resource_type = $item->getType();
+        $storageData->resource_id = $item->getIdentity();
+        $storageData->save();
+        
+        $imageIds[] = $storageData->file_id;
+      }
+    }
+
+    //Delete images after upload new or delete images from tinymce
+    $select = $storageDbTable->select()
+              ->where('resource_type = ?', $item->getType())
+              ->where('resource_id = ?', $item->getIdentity());
+    if(engine_count($imageIds) > 0) {
+      $select->where('file_id NOT In (?)', $imageIds);
+    }
+    foreach( $storageDbTable->fetchAll($select) as $file ) {
+      try {
+        Engine_Api::_()->storage()->deleteExternalsFiles($file->file_id);
+        $file->delete();
+      } catch( Exception $e ) {
+        if( !($e instanceof Engine_Exception) ) {
+          $log = Zend_Registry::get('Zend_Log');
+          $log->log($e->__toString(), Zend_Log::WARN);
+        }
+      }
+    }
+	}
+	
+  public function getModuleItem($moduleName) {
+    $itemType = array();
+    $filePath =  APPLICATION_PATH . DIRECTORY_SEPARATOR ."application" . DIRECTORY_SEPARATOR . "modules" . DIRECTORY_SEPARATOR . ucfirst($moduleName) . DIRECTORY_SEPARATOR . "settings" . DIRECTORY_SEPARATOR . "manifest.php";
+    if (is_file($filePath)) {
+      $manafestFile = include $filePath;
+      if (is_array($manafestFile) && isset($manafestFile['items'])) {
+        foreach ($manafestFile['items'] as $item) {
+          $itemType[] = $item;
+        }
+      }
+    }
+    return $itemType;
+  }
+  
+  public function contentApprove($item, $content_text) {
+
+    $viewer = Engine_Api::_()->user()->getViewer();
+
+    if (!$item->approved) {
+      //Send to admins only
+      $admins = Engine_Api::_()->getDbTable('users', 'user')->getAllAdmin();
+      foreach ($admins as $admin) {
+        Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($admin, $viewer, $item, 'content_waitingapprovalforadmin', array('content_text' => $content_text,  'sender_title' => $item->getOwner()->getTitle(), 'object_title' => $item->getTitle(), 'object_link' => $item->getHref(), 'host' => $_SERVER['HTTP_HOST']));
+      }
+
+      //Send to content owner
+      Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($viewer, $viewer, $item, 'content_waitingapprovalforowner', array('content_text' => $content_text, 'object_title' => $item->getTitle(), 'object_link' => $item->getHref(), 'host' => $_SERVER['HTTP_HOST']));
+    } else {
+      $item->resubmit = 1;
+      $item->save();
+    }
+  }
+  
+  public function getContantValueXML($key) {
+    $filePath = APPLICATION_PATH . "/application/settings/constants.xml";
+    $results = simplexml_load_file($filePath);
+    $xmlNodes = $results->xpath('/root/constant[name="' . $key . '"]');
+    $nodeName = @$xmlNodes[0];
+    $value = @$nodeName->value;
+    return $value;
+  }
 }

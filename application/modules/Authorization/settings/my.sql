@@ -19,15 +19,15 @@
 
 DROP TABLE IF EXISTS `engine4_authorization_allow`;
 CREATE TABLE IF NOT EXISTS `engine4_authorization_allow` (
-  `resource_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `resource_type` varchar(24) NOT NULL,
   `resource_id` int(11) unsigned NOT NULL,
-  `action` varchar(16) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `role` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `action` varchar(16) NOT NULL,
+  `role` varchar(24) NOT NULL,
   `role_id` int(11) unsigned NOT NULL default '0',
   `value` tinyint(1) NOT NULL default '0',
   `params` text,
   PRIMARY KEY  (`resource_type`,`resource_id`,`action`,`role`, `role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_authorization_allow`
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `engine4_authorization_levels` (
   `type` enum('public','user','moderator','admin') NOT NULL default 'user',
   `flag` enum('default','superadmin','public') NULL,
   PRIMARY KEY  (`level_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_authorization_levels`
@@ -81,12 +81,12 @@ INSERT IGNORE INTO `engine4_authorization_levels` (`level_id`, `title`, `descrip
 DROP TABLE IF EXISTS `engine4_authorization_permissions`;
 CREATE TABLE `engine4_authorization_permissions` (
   `level_id` int(11) unsigned NOT NULL,
-  `type` varchar(16) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `name` varchar(16) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(64) NOT NULL,
+  `name` varchar(64) NOT NULL,
   `value` tinyint(3) NOT NULL default '0',
-  `params` varchar(255) NULL,
+  `params` TEXT NULL DEFAULT NULL,
   PRIMARY KEY  (`level_id`,`type`,`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_authorization_permissions`
@@ -235,7 +235,7 @@ CREATE TABLE IF NOT EXISTS `engine4_authorization_mapprofiletypelevels` (
   `member_level_id` int(11) NOT NULL,
   `member_count` int(11) NOT NULL,
   PRIMARY KEY (`mapprofiletypelevel_id`)
-) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT = 1;
+) ENGINE = InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT = 1;
 
 
 --
@@ -252,3 +252,39 @@ ALTER TABLE `engine4_authorization_mapprofiletypelevels` ADD INDEX(`profile_type
 
 ALTER TABLE `engine4_authorization_mapprofiletypelevels` ADD INDEX(`member_level_id`);
 
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'user' as `type`,
+    'editprofiletype' as `name`,
+    0 as `value`,
+    NULL as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('moderator', 'admin');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'user' as `type`,
+    'editprofiletype' as `name`,
+    0 as `value`,
+    NULL as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('user');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'user' as `type`,
+    'editprotylevel' as `name`,
+    0 as `value`,
+    NULL as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('moderator', 'admin');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'user' as `type`,
+    'editprotylevel' as `name`,
+    0 as `value`,
+    NULL as `params`
+  FROM `engine4_authorization_levels` WHERE `type` IN('user');

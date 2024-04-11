@@ -89,7 +89,7 @@
               <?php if(isset($this->joinButtonActive) && isset($participate['can_join']) && isset($participate['show_button'])):?>
                 <div class="clear _btn"> <a href="<?php echo $contest->getHref();?>" class="sesbasic_animation">
                    <?php if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sescontestjoinfees') && $contest->entry_fees > 0 && Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontestjoinfees.allow.entryfees', 1)){ ?>
-                      <?php echo $this->translate('Join Contest').'<br>'.Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($contest->entry_fees);;?></a>
+                      <?php echo $this->translate('Join Contest').'<br>'.Engine_Api::_()->payment()->getCurrencyPrice($contest->entry_fees);;?></a>
                     <?php }else{ ?>
                      <?php echo $this->translate('Join Contest');?></a>
                     <?php } ?>

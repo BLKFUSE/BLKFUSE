@@ -15,7 +15,7 @@ class Sescontest_Api_Core extends Core_Api_Abstract {
   function getCurrentCurrency() {
     $settings = Engine_Api::_()->getApi('settings', 'core');
     if (!empty($_SESSION['ses_multiple_currency']['multipleCurrencyPluginActivated'])) {
-      return Engine_Api::_()->sesmultiplecurrency()->getCurrentCurrency();
+      return Engine_Api::_()->payment()->getCurrentCurrency();
     } else {
       return $settings->getSetting('payment.currency', 'USD');
     }

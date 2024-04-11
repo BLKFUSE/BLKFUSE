@@ -10,11 +10,4 @@
  * @author     John Boehr <j@webligo.com>
  */
 ?>
-
 <?php echo $this->form->setAttrib('class', 'global_form_popup')->render($this) ?>
-
-<?php if( @$this->closeSmoothbox ): ?>
-  <script type="text/javascript">
-    parent.Smoothbox.close();
-  </script>
-<?php endif; ?>

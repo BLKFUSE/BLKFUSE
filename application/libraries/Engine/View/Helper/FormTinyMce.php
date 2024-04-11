@@ -63,7 +63,7 @@ class Engine_View_Helper_FormTinyMce extends Zend_View_Helper_FormTextarea
             unset($attribs['editorOptions']);
         }
         $this->view->tinyMce()->render();
-        $xhtml = '<textarea rows=24, cols=80, style="width:553px;" name="' . $this->view->escape($name) . '"'
+        $xhtml = '<input type="hidden" name="tinyMce[]" value="' . $this->view->escape($name) . '" /><textarea rows=24, cols=80, style="width:553px;" name="' . $this->view->escape($name) . '"'
                 . ' id="' . $this->view->escape($id) . '"'
                 . $disabled
                 . $this->_htmlAttribs($attribs) . '>'

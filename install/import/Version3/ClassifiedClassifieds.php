@@ -79,9 +79,9 @@ CREATE TABLE IF NOT EXISTS `se_classifieds` (
 *  `classified_date` int(11) NOT NULL default '0',
 *  `classified_dateupdated` int(11) NOT NULL default '0',
 *  `classified_views` int(10) unsigned NOT NULL default '0',
-*  `classified_title` varchar(128) collate utf8_unicode_ci NOT NULL default '',
-*  `classified_body` text collate utf8_unicode_ci,
-  `classified_photo` varchar(16) collate utf8_unicode_ci NOT NULL default '',
+*  `classified_title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+*  `classified_body` text COLLATE utf8mb4_unicode_ci,
+  `classified_photo` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL default '',
 *  `classified_search` tinyint(3) unsigned NOT NULL default '0',
 *  `classified_privacy` tinyint(3) unsigned NOT NULL default '0',
 *  `classified_comments` tinyint(3) unsigned NOT NULL default '0',
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `se_classifieds` (
   PRIMARY KEY  (`classified_id`),
   KEY `INDEX` (`classified_user_id`,`classified_classifiedcat_id`),
   FULLTEXT KEY `SEARCH` (`classified_title`,`classified_body`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -110,7 +110,7 @@ CREATE TABLE `engine4_classified_classifieds` (
   PRIMARY KEY (`classified_id`),
   KEY `owner_id` (`owner_id`),
   KEY `search` (`search`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */
 
@@ -125,10 +125,10 @@ CREATE TABLE `engine4_classified_classifieds` (
 CREATE TABLE IF NOT EXISTS `se_classifiedstyles` (
   `classifiedstyle_id` int(11) NOT NULL auto_increment,
   `classifiedstyle_user_id` int(11) NOT NULL default '0',
-  `classifiedstyle_css` text collate utf8_unicode_ci,
+  `classifiedstyle_css` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY  (`classifiedstyle_id`),
   KEY `INDEX` (`classifiedstyle_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 

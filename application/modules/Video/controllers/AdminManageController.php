@@ -37,7 +37,7 @@ class Video_AdminManageController extends Core_Controller_Action_Admin
 
     $page=$this->_getParam('page',1);
     $this->view->paginator = Engine_Api::_()->video()->getVideosPaginator(array(
-      'orderby' => 'video_id',
+      'orderby' => 'video_id', 'showvideo' => 1,
     ));
     $this->view->paginator->setItemCountPerPage(25);
     $this->view->paginator->setCurrentPageNumber($page);
@@ -103,4 +103,24 @@ class Video_AdminManageController extends Core_Controller_Action_Admin
     }
   }
 
+  //Approved Action
+  public function approvedAction() {
+    $id = $this->_getParam('id');
+    if (!empty($id)) {
+    
+      $item = Engine_Api::_()->getItem('video', $id);
+      $item->approved = !$item->approved;
+      $item->save();
+
+      // Re-index
+      Engine_Api::_()->getApi('search', 'core')->index($item);
+      
+      if ($item->approved) {
+        Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($item->getOwner(), $item->getOwner(), $item, 'video_approvedbyadmin', array('video_title' => $item->getTitle(), 'videoowner_title' => $item->getOwner()->getTitle(), 'object_link' => $item->getHref(), 'host' => $_SERVER['HTTP_HOST']));
+      } else {
+        Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($item->getOwner(), $item->getOwner(), $item, 'video_disapprovedbyadmin', array('video_title' => $item->getTitle(), 'videoowner_title' => $item->getOwner()->getTitle(), 'object_link' => $item->getHref(), 'host' => $_SERVER['HTTP_HOST']));
+      }
+    }
+    $this->_redirect('admin/video/manage');
+  }
 }

@@ -34,6 +34,14 @@ class User_Form_Admin_Manage_Filter extends Engine_Form
         'class' => 'global_form_box',
       ))
       ->setMethod('GET');
+      
+    $ID = new Zend_Form_Element_Text('user_id');
+    $ID
+      ->setLabel('ID')
+      ->clearDecorators()
+      ->addDecorator('ViewHelper')
+      ->addDecorator('Label', array('tag' => null, 'placement' => 'PREPEND'))
+      ->addDecorator('HtmlTag', array('tag' => 'div'));
 
     $displayname = new Zend_Form_Element_Text('displayname');
     $displayname
@@ -88,14 +96,34 @@ class User_Form_Admin_Manage_Filter extends Engine_Form
       ))
       ->setValue('-1');
 
-    $submit = new Zend_Form_Element_Button('search', array('type' => 'submit'));
-    $submit
-      ->setLabel('Search')
+    $is_verified = new Zend_Form_Element_Select('is_verified');
+    $is_verified
+      ->setLabel('Verified')
       ->clearDecorators()
       ->addDecorator('ViewHelper')
-      ->addDecorator('HtmlTag', array('tag' => 'div', 'class' => 'buttons'))
-      ->addDecorator('HtmlTag2', array('tag' => 'div'));
+      ->addDecorator('Label', array('tag' => null, 'placement' => 'PREPEND'))
+      ->addDecorator('HtmlTag', array('tag' => 'div'))
+      ->setMultiOptions(array(
+        '-1' => '',
+        '0' => 'Not Verified',
+        '1' => 'Verified',
+      ))
+      ->setValue('-1');
 
+    $lastlogin_date = new Zend_Form_Element_Select('lastlogin_date');
+    $lastlogin_date
+      ->setLabel('Logged In')
+      ->clearDecorators()
+      ->addDecorator('ViewHelper')
+      ->addDecorator('Label', array('tag' => null, 'placement' => 'PREPEND'))
+      ->addDecorator('HtmlTag', array('tag' => 'div'))
+      ->setMultiOptions(array(
+        '-1' => '',
+        '0' => 'No',
+        '1' => 'Yes',
+      ))
+      ->setValue('-1');
+      
     $this->addElement('Hidden', 'order', array(
       'order' => 10001,
     ));
@@ -108,14 +136,34 @@ class User_Form_Admin_Manage_Filter extends Engine_Form
       'order' => 10003,
     ));
 
-    
     $this->addElements(array(
+      $ID,
       $displayname,
       $username,
       $email,
       $level_id,
       $enabled,
-      $submit,
+      $is_verified,
+      $lastlogin_date,
+    ));
+    
+// 		$subform = new Engine_Form(array(
+// 			'description' => 'Signup Date',
+// 			'elementsBelongTo'=> 'date',
+// 			'decorators' => array(
+// 				'FormElements',
+// 				array('Description', array('placement' => 'PREPEND', 'tag' => 'label', 'class' => 'form-label')),
+// 				array('HtmlTag', array('tag' => 'div', 'id' =>'integer-wrapper'))
+// 			)
+// 		));
+// 		$subform->addElement('Text', 'date_from', array('placeholder'=>'from'));
+//     $subform->addElement('Text', 'date_to', array('placeholder'=>'to'));
+// 		$this->addSubForm($subform, 'date');
+		
+    $this->addElement('Button', 'search', array(
+      'label' => 'Search',
+      'type' => 'submit',
+      'ignore' => true,
     ));
 
     // Set default action without URL-specified params

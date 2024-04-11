@@ -51,13 +51,14 @@ class Activity_Form_Admin_Settings_ActionType extends Engine_Form
 
     $this->addElement('Radio', 'shareable', array(
       'label' => 'Shareable?',
-      'description' => 'Can members share this activity feed item type? (Note: You can choose below which part of this feed you want members to be able to share.)',
+      'description' => 'Can members share this activity feed item type?',
       'multiOptions' => array(
+        1 => 'Yes',
         0 => 'No',
-        1 => 'Yes, only attachment will be shareable',
-        2 => 'Yes, only subject will be shareable',
-        3 => 'Yes, only object will be shareable',
-        4 => 'Yes, only activity will be shareable',
+//         1 => 'Yes, only attachment will be shareable',
+//         2 => 'Yes, only subject will be shareable',
+//         3 => 'Yes, only object will be shareable',
+//         4 => 'Yes, only activity will be shareable',
       ),
     ));
 

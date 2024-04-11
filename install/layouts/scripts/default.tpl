@@ -30,7 +30,6 @@
       $this->headLink()
         ->prependStylesheet($this->baseUrl() . '/externals/styles/sdk.css')
         ->prependStylesheet($this->baseUrl() . '/externals/styles/styles.css')
-        ->prependStylesheet($this->baseUrl() . '/externals/styles/compat.css')
         ;
     ?>
     <?php echo $this->headLink()->toString()."\n" ?>
@@ -53,83 +52,98 @@
     <?php echo $this->headScript()->toString()."\n" ?>
   </head>
   <body>
-
-    <?php if( empty($this->layout()->hideIdentifiers) ): ?>
-      <div class='topbar_wrapper'>
-        <div class="topbar">
-          <div class='logo'>
-            <img src="externals/images/socialengine_logo_admin.png" alt="" />
-          </div>
-          <?php if( !$this->layout()->inInstall ): ?>
-            <div class='topmenu'>
-              <p>
-                <?php echo $this->translate('You are currently signed-in to the ' .
-                    'package manager, a tool used for adding plugins, mods, ' .
-                    'themes, languages, and other extensions to ' .
-                    'your community.') ?>
-              </p>
-              <a href="<?php echo $this->url(array(), 'logout') ?>?return=<?php echo urlencode($appBaseHref . 'admin/') ?>" class="buttonlink packages_return">Return to Admin Panel</a>
+      <?php if( empty($this->layout()->hideIdentifiers) ): ?>
+        <div class='topbar_wrapper'>
+          <?php if( $this->layout()->inInstall ): ?>
+            <div class="topbar">
+              <div class='logo'>
+                <img src="externals/images/logo.svg" alt="" />
+              </div>
             </div>
-          <?php endif ?>
+          <?php endif; ?>
+          <!--After Install Header Start-->
+          <?php if( !$this->layout()->inInstall ): ?>
+            <div class="topbar_manage_page">
+              <div class='logo'>
+                <img src="externals/images/logo.svg" alt="" />
+              </div>
+              <div class='topmenu_manage_page'>
+                <p>
+                  <?php echo $this->translate('You are currently signed-in to the ' .
+                      'package manager, a tool used for adding plugins, <br/> mods, ' .
+                      'themes, languages, and other extensions to ' .
+                      'your community.') ?>
+                </p>
+                <a href="<?php echo $this->url(array(), 'logout') ?>?return=<?php echo urlencode($appBaseHref . 'admin/') ?>" class=" package_return_btn"> <img src="externals/images/admin-return.svg">  <?php echo $this->translate("Return to Admin Panel")?> </a>
+                </div>
+            </div>
+          <?php endif ?> 
+          <!--After Install Header End-->
         </div>
-      </div>
-    <div class="content main_packages">
-      <div class="content tabs_packagemanager">
-        <?php if( !$this->layout()->inInstall ): ?>
-          <h2>
-            Package Manager
-          </h2>
-          <?php echo $this->render('_managerMenu.tpl') ?>
-        <?php else: ?>
-          <h2>
-            SocialEngine Installation
-          </h2>
-          <?php //echo $this->render('_managerMenu.tpl') ?>
-        <?php endif ?>
-      </div>
-      
+        <!--After Install Manage Section Start-->
+        <?php if( !$this->layout()->inInstall ): ?> 
+          <div class="install_main_packages">
+            <div class='install_main_packages_left'>
+                <?php echo $this->render('_managerMenu.tpl') ?>       
+              </div>
+              <div class='install_main_packages_right'>
+                <?php echo $this->layout()->content ?>
+              </div>
+          </div>
+        <?php endif ?> 
+
+        <!--After Install Manage Section End-->
+        <!--Install Time Section Start-->
+        <div class="content main_packages" id="main_packages">
+          <div class="tabs_packagemanager">
+            <h2>SocialEngine Installation</h2>
+          </div>
+      <?php endif; ?>     
+          <div class='packagemanager'>
+            <?php echo $this->layout()->content ?>
+          </div>
+        </div>  
+        <!-- Install Time Section Start-->
+    <?php if( !$this->layout()->inInstall ): ?>
+      <script>
+        scriptJquery('#main_packages').hide();
+      </script>
     <?php endif; ?>
-    
-    <div class='content packagemanager'>
-      <?php echo $this->layout()->content ?>
-    </div>
-  </div>
-
     <?php if( APPLICATION_ENV == 'development' ): ?>
-    <div style="margin-bottom: 40px; text-align: center;">
-      <span>
-        Peak Memory Usage: <?php echo number_format(memory_get_peak_usage()) ?>
-        <br />
+      <div style="margin-bottom: 40px; text-align: center;">
+        <span>
+          Peak Memory Usage: <?php echo number_format(memory_get_peak_usage()) ?>
+          <br />
 
-        Load time (approx): 
-        <?php
-          $deltaTime = microtime(true) - _ENGINE_REQUEST_START;
-          $hours = floor($deltaTime / 3600);
-          $minutes = floor(($deltaTime % 3600) / 60);
-          $seconds = floor((($deltaTime % 3600) % 60));
-          $milliseconds = floor(($deltaTime - floor($deltaTime)) * 1000);
-          if( $hours > 0 ) {
-            echo $this->translate(array('%d hour', '%d hours', $hours), $hours);
-            echo ", ";
-          }
-          if( $minutes > 0 ) {
-            echo $this->translate(array('%d minute', '%d minutes', $minutes), $minutes);
-            echo ", ";
-          }
-          if( $seconds > 0 ) {
-            echo $this->translate(array('%d second', '%d seconds', $seconds), $seconds);
-            echo ", ";
-          }
-          if( $milliseconds > 0 ) {
-            echo $this->translate(array('%d millisecond', '%d milliseconds', $milliseconds), $milliseconds);
-            echo ", ";
-          }
-          echo number_format($deltaTime, 3);
-          echo ' seconds total';
-        ?>
-        <br />
-      </span>
-    </div>
+          Load time (approx): 
+          <?php
+            $deltaTime = microtime(true) - _ENGINE_REQUEST_START;
+            $hours = floor($deltaTime / 3600);
+            $minutes = floor(($deltaTime % 3600) / 60);
+            $seconds = floor((($deltaTime % 3600) % 60));
+            $milliseconds = floor(($deltaTime - floor($deltaTime)) * 1000);
+            if( $hours > 0 ) {
+              echo $this->translate(array('%d hour', '%d hours', $hours), $hours);
+              echo ", ";
+            }
+            if( $minutes > 0 ) {
+              echo $this->translate(array('%d minute', '%d minutes', $minutes), $minutes);
+              echo ", ";
+            }
+            if( $seconds > 0 ) {
+              echo $this->translate(array('%d second', '%d seconds', $seconds), $seconds);
+              echo ", ";
+            }
+            if( $milliseconds > 0 ) {
+              echo $this->translate(array('%d millisecond', '%d milliseconds', $milliseconds), $milliseconds);
+              echo ", ";
+            }
+            echo number_format($deltaTime, 3);
+            echo ' seconds total';
+          ?>
+          <br />
+        </span>
+      </div>
     <?php endif; ?>
   </body>
 </html>

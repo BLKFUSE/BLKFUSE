@@ -32,12 +32,7 @@ $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/mo
     <div class="clear">
       <?php  if(isset($this->titleActive)){ ?>
       <span class="sesmember_sidebar_list_title">
-      <?php if(strlen($member->getTitle()) > $this->title_truncation_list){
-          $title = mb_substr($member->getTitle(),0,($this->title_truncation_list-3)).'...';
-          echo $this->htmlLink($member->getHref(),$title, array('class' => 'ses_tooltip', 'data-src' => $member->getGuid()));
-          } else { ?>
-      <?php echo $this->htmlLink($member->getHref(),$member->getTitle(), array('class' => 'ses_tooltip', 'data-src' => $member->getGuid())) ?>
-      <?php } ?>
+        <?php echo $this->htmlLink($member->getHref(),$member->getTitle(), array('class' => 'ses_tooltip', 'data-src' => $member->getGuid())) ?>
       </span>
       <?php } ?>
       <?php if(isset($this->verifiedLabelActive) && $userInfoItem->user_verified == 1): ?>
@@ -176,12 +171,7 @@ $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/mo
   <div class="sesmember_grid_view_three_info sesbasic_clearfix">
   <?php if(isset($this->titleActive) ){ ?>
   <div class="sesmember_grid_view_info_title">
-    <?php if(strlen($member->getTitle()) > $this->title_truncation_grid){ 
-	  $title = mb_substr($member->getTitle(),0,($this->title_truncation_grid - 3)).'...';
-	  echo $this->htmlLink($member->getHref(),$title, array('class' => 'ses_tooltip', 'data-src' => $member->getGuid())) ?>
-    <?php }else{ ?>
     <?php echo $this->htmlLink($member->getHref(),$member->getTitle(), array('class' => 'ses_tooltip', 'data-src' => $member->getGuid())) ?>
-    <?php } ?>
   </div>
   <?php } ?>
   <?php if(isset($this->verifiedLabelActive) && $userInfoItem->user_verified == 1): ?>
@@ -263,12 +253,7 @@ $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/mo
     <a href="<?php echo $href; ?>" class="sesmember_member_thumb_view_img floatL"> <span class="floatL sesbasic_animation ses_tooltip" data-src = "<?php echo $member->getGuid();?>" style="background-image:url(<?php echo $imageURL; ?>);"></span> </a>
     <?php if(isset($this->titleActive) && $this->image_type == 'square'){ ?>
     <span>
-    <?php if(strlen($member->getTitle()) > $this->title_truncation_grid){ 
-          $title = mb_substr($member->getTitle(),0,($this->title_truncation_grid - 3)).'...';
-          echo $this->htmlLink($member->getHref(),$title, array('class' => 'ses_tooltip', 'data-src' => $member->getGuid()) ) ?>
-    <?php } else { ?>
-    <?php echo $this->htmlLink($member->getHref(),$member->getTitle(), array('class' => 'ses_tooltip', 'data-src' => $member->getGuid())) ?>
-    <?php } ?>
+      <?php echo $this->htmlLink($member->getHref(),$member->getTitle(), array('class' => 'ses_tooltip', 'data-src' => $member->getGuid())) ?>
     </span>
     <?php } ?>
   </div>
@@ -296,12 +281,7 @@ $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/mo
     <?php if(isset($this->titleActive) ){ ?>
     <div class='sesmember_member_info_profile_img'><a href='' class=''><?php echo $this->itemPhoto($member, 'thumb.icon')?></a></div>
     <div class="sesmember_member_grid_title sesbasic_clearfix">
-      <?php if(strlen($member->getTitle()) > $this->title_truncation_grid){ 
-          $title = mb_substr($member->getTitle(),0,($this->title_truncation_grid - 3)).'...';
-          echo $this->htmlLink($member->getHref(),$title, array('class' => 'ses_tooltip', 'data-src' => $member->getGuid()) ) ?>
-      <?php }else{ ?>
       <?php echo $this->htmlLink($member->getHref(),$member->getTitle(), array('class' => 'ses_tooltip', 'data-src' => $member->getGuid())) ?>
-      <?php } ?>
     </div>
     <?php } ?>
     <?php if(isset($this->verifiedLabelActive) && $userInfoItem->user_verified == 1): ?>

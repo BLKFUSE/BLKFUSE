@@ -19,6 +19,6 @@ $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/ses-
 <script>
 hashSign = '#';
 </script>
-<div class='settings sesbasic_popup_form'>
+<div class='settings'>
   <?php echo $this->form->render($this); ?>
 </div>

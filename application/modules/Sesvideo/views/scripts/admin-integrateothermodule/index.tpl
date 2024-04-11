@@ -3,13 +3,10 @@
 <?php include APPLICATION_PATH .  '/application/modules/Sesvideo/views/scripts/dismiss_message.tpl';?>
 
 <h3 style="margin-bottom:6px;"><?php echo $this->translate("Integrate and Manage Other Plugins"); ?></h3>
-<p>In this page, you can enable the creation of Browse Videos Page in other plugins. Below you can add the integration with any plugin using “Add New Plugin” button.<br /><br />
+<p>In this page, you can enable the creation of Browse Videos Page in other plugins. Below you can add the integration with any plugin using “Add New Plugin” button.<br />
 This process is very easy, but still if you face any difficulty, then please contact our support team for Free integration of other plugins from here: <a href="https://socialnetworking.solutions/support/create-new-ticket/" target="_blank">https://socialnetworking.solutions/support/create-new-ticket/</a> .</p>
-<br class="clear" />
 <?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesvideo', 'controller' => 'integrateothermodule', 'action' => 'addmodule'), $this->translate("Add New Plugin"), array('class'=>'buttonlink sesbasic_icon_add'));
 ?>
-<br /><br />
-
 <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
 <form id='multidelete_form'>
   <table class='admin_table'>

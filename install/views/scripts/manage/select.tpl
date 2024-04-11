@@ -113,6 +113,8 @@
     scriptJquery('#upload_file').each(function (el) {
     
       scriptJquery(document).on('change',function(obj){
+        if(scriptJquery('#package_select_noselection_message'))
+          scriptJquery('#package_select_noselection_message').hide();
       //el.addEvent('change', function (obj) {
         currentlyUploading = true;
         var files = scriptJquery('#upload_file').prop('files');
@@ -302,12 +304,12 @@
 <br />
 
 <p>
-  Let's get started with installing your new packages. First, you will need to upload
-  the packages you want to install. Click the "Upload Packages" link below to select one or
-  multiple packages from your computer to upload them to the server.
+  <?php echo $this->translate("Let's get started with installing your new packages. First, you will need to upload
+  the packages you want to install. Click the 'Upload Packages' link below to select one or
+  multiple packages from your computer to upload them to the server."); ?>
   <br />
-  Note: The packages are extracted on upload, so the progress bar will pause at 100% for
-  up to several minutes (depending on the size of the package).
+   <?php echo $this->translate("Note: The packages are extracted on upload, so the progress bar will pause at 100% for
+  up to several minutes (depending on the size of the package).");?>
 </p>
 
 <br />
@@ -325,8 +327,8 @@
       <div class="upload-buttons" id="upload-buttons">
         <?php echo $this->htmlLink('javascript:void(0);', $this->translate('Add Packages'), array('id' => 'demo-browse', 'class' => 'buttonlink package_uploader_choosepackages', 'onclick' => 'uploadFile();')) ?>
           -
-        <a href="javascript:void(0);" id="select-check-all" onclick="scriptJquery('input[type=checkbox]').attr('checked', true);">Check All</a> /
-        <a href="javascript:void(0);" id="select-check-all" onclick="scriptJquery('input[type=checkbox]').attr('checked', false);">Uncheck All</a>
+        <a href="javascript:void(0);" id="select-check-all" onclick="scriptJquery('input[type=checkbox]').attr('checked', true);"><?php echo $this->translate("Check All");?></a> /
+        <a href="javascript:void(0);" id="select-check-all" onclick="scriptJquery('input[type=checkbox]').attr('checked', false);"><?php echo $this->translate("Uncheck All");?></a>
       </div>
       <div class="upload-status-overall" id="upload-status-overall" style="display:none">
         <div class="overall-title"></div>
@@ -360,25 +362,25 @@
   <div id="package_select_continue">
 
     <div class="package_select_uploading_message">
-      Please wait until the upload finishes or while archives are extracted.
+      <?php echo $this->translate("Please wait until the upload finishes or while archives are extracted.");?>
     </div>
     
-    <div class="package_select_noselection_message">
-      Please upload or select a package.
+    <div class="package_select_noselection_message" id="package_select_noselection_message">
+      <?php echo $this->translate("Please upload or select a package.");?>
     </div>
     
     <div class="package_select_continue_message">
       <p>
-        If you're ready to install the packages checked above, click the button below.
+        <?php echo $this->translate("If you're ready to install the packages checked above, click the button below.
         In the next step, we will check to make sure your server has everything it needs
-        to complete the installation.
+        to complete the installation.");?>
       </p>
 
       <br />
       
       <div>
-        <button type="submit">Continue</button>
-        or <a href="./">cancel installation</a>
+        <button type="submit"><?php echo $this->translate("Continue");?></button>
+      <?php echo $this->translate(" or ");?><a href="./"><?php echo $this->translate("cancel installation");?></a>
       </div>
     </div>
   </div>

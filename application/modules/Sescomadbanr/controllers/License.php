@@ -27,7 +27,7 @@ if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('sescomadbanr.plugi
   `sescommunityad_id` int(10) unsigned NOT NULL default "0",
   `status` tinyint(1) NOT NULL DEFAULT "1",
   PRIMARY KEY (`userpayment_id`)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
   
   $db->query('DROP TABLE IF EXISTS `engine4_sescomadbanr_banners`;');
   $db->query('CREATE TABLE `engine4_sescomadbanr_banners` (
@@ -37,7 +37,7 @@ if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('sescomadbanr.plugi
   `width` INT(11) NOT NULL DEFAULT "0",
   `enabled` tinyint(1) NOT NULL DEFAULT "1",
   PRIMARY KEY (`banner_id`)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
   
   $db->query('INSERT IGNORE INTO `engine4_sescomadbanr_banners` (`banner_id`, `banner_name`, `height`, `width`, `enabled`) VALUES
   (1, "Banner - 1", 200, 200, 1);');

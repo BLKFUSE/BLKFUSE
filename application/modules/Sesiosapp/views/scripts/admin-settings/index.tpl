@@ -16,13 +16,15 @@
 <h2>
   <?php echo $this->translate("Native iOS Mobile App") ?>
 </h2>
-<?php if(is_countable($this->navigation) && engine_count($this->navigation) ): ?>
+<?php if( engine_count($this->navigation) ): ?>
   <div class='tabs'>
     <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render() ?>
   </div>
 <?php endif; ?>
-<div class="settings sesbasic_admin_form">
-  <?php echo $this->form->render($this); ?>
+<div class="settings sesiosapp_admin_form">
+  <div class='settings'>
+    <?php echo $this->form->render($this); ?>
+  </div>
 </div>
 <div class="sesiosapp_waiting_msg_box" style="display:none;">
 	<div class="sesiosapp_waiting_msg_box_cont">
@@ -30,7 +32,6 @@
     <i></i>
   </div>
 </div>
-<img src="application/modules/Sesiosapp/externals/images/admin/loading.gif" style="display:none">
 <script type="application/javascript">
 
 scriptJquery('.loading_img').click(function(e){
@@ -46,3 +47,10 @@ scriptJquery('.loading_img').click(function(e){
 		});
   </script>
 <?php } ?>
+<style> 
+	button[disabled] { 
+	  background:#bdbdbd; 
+	  border-color:#bdbdbd; 
+	  cursor:not-allowed; 
+  }
+</style>

@@ -13,13 +13,14 @@ return array(
     'package' => array(
         'type' => 'module',
         'name' => 'core',
-        'version' => '6.4.0',
+        'version' => '6.5.1',
         'revision' => '$Revision: 10271 $',
         'path' => 'application/modules/Core',
         'repository' => 'socialengine.com',
         'title' => 'Core',
         'description' => 'Core',
-        'author' => 'Webligo Developments',
+        'author' => 'SocialEngine Core',
+        'thumb' => 'application/modules/Core/externals/images/thumb.png',
         'actions' => array(
             'install',
             'upgrade',
@@ -137,6 +138,10 @@ return array(
         'core_tag',
         'core_tag_map',
         'core_file',
+        'core_language',
+        'core_ticket',
+        'core_ticketreply',
+        'core_category',
     ),
     // Routes --------------------------------------------------------------------
     'routes' => array(
@@ -174,6 +179,17 @@ return array(
                 'controller' => 'hashtag',
                 'action' => 'index'
             )
-        )
+        ),
+        'core_tickets' => array(
+            'route' => 'supports/:action/*',
+            'defaults' => array(
+                'module' => 'core',
+                'controller' => 'support',
+                'action' => 'index'
+            ),
+            'reqs' => array(
+              'action' => '(index|resubmit)',
+            ),
+        ),
     )
 );

@@ -35,12 +35,12 @@
     }
     parent.Smoothbox.close();
   }
-
+  
   function getSelectedNetworks() {
     var selectedNets = new Array();
-    $$('.network_list').each(function(el) {
-      if(el.checked){
-        selectedNets.push(el.value);
+    scriptJquery('.network_list').each(function() {
+      if(scriptJquery(this).is(':checked')){
+        selectedNets.push(scriptJquery(this).val());
       }
     });
     return selectedNets.join();

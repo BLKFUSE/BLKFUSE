@@ -544,8 +544,7 @@ class Core_IndexController extends Sesapi_Controller_Action_Standard
                 continue;
             }
             $result['notification'][$counterLoop]['user_id'] = $member->getIdentity();
-            $result['notification'][$counterLoop]['title'] = $member->getTitle();//preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
-
+            $result['notification'][$counterLoop]['title'] = $member->getTitle();
             //$age = $this->userAge($member);
             //if($age){
             //$result['notification'][$counterLoop]['age'] =  $age ;
@@ -841,6 +840,8 @@ class Core_IndexController extends Sesapi_Controller_Action_Standard
           $select->where("video_id = ?",$object->getIdentity());
           $NotiVideo = $video->fetchAll($select);
           $result['notification'][$counterLoop]['notification_video'] = $this->getVideos($NotiVideo)[0];
+          
+          
         }
 
         if (!empty($memberEnable)) {
@@ -1070,6 +1071,20 @@ class Core_IndexController extends Sesapi_Controller_Action_Standard
                 }
             }
         }
+        
+				$photo = $this->getBaseUrl(false,$videos->getPhotoUrl());
+				if($photo)
+					$video["share"]["imageUrl"] = $photo;
+				$video["share"]["url"] = $this->getBaseUrl(false,$videos->getHref());
+				$video["share"]["title"] = $videos->getTitle();
+				$video["share"]["description"] = strip_tags($videos->getDescription());
+				$video["share"]['urlParams'] = array(
+					"type" => $videos->getType(),
+					"id" => $videos->getIdentity()
+				);
+				if(is_null($video["share"]["title"]))
+					unset($video["share"]["title"]);
+						
         $result[$counter] = array_merge($video,array());
         $counter++;
     }
@@ -1196,7 +1211,7 @@ class Core_IndexController extends Sesapi_Controller_Action_Standard
       $message = Zend_Registry::get('Zend_Translate')->_('Friendship request was not sent because you blocked this member.');
       Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $message, 'result' => array()));
     }
-
+    
     // Make form
     /*$this->view->form = $form = new User_Form_Friends_Add(array('user' => $user));
 
@@ -1253,7 +1268,7 @@ class Core_IndexController extends Sesapi_Controller_Action_Standard
         Engine_Api::_()->getDbtable('notifications', 'activity')
           ->addNotification($user, $viewer, $user, 'friend_follow_request');
 
-        $message = Zend_Registry::get('Zend_Translate')->_("Your friend request has been sent.");
+        $message = Zend_Registry::get('Zend_Translate')->_("Your follow request has been sent.");
       } else if ($user->membership()->isReciprocal()) {
         // if two way friendship and verification required
 
@@ -1285,7 +1300,7 @@ class Core_IndexController extends Sesapi_Controller_Action_Standard
     $counterLoop = 0;
     $image = $this->_getParam('image', '');
     $result['member']['user_id'] = $member->getIdentity();
-    $result['member']['title'] = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
+    $result['member']['title'] = $member->getTitle();
     $viewer = Engine_Api::_()->user()->getViewer();
     if (Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesmember')) {
       $memberEnable = true;
@@ -1552,7 +1567,12 @@ class Core_IndexController extends Sesapi_Controller_Action_Standard
       Engine_Api::_()->getDbtable('statistics', 'core')->increment('user.friendships');
 
       $db->commit();
-      $message = $this->view->translate('You are now friends with %s', $user->getTitle());
+      $direction = (int) Engine_Api::_()->getApi('settings', 'core')->getSetting('user.friends.direction', 1);
+      if(!empty($direction)) {
+				$message = $this->view->translate('You are now friends with %s', $user->getTitle());
+      } else {
+				$message = $this->view->translate('You have accepted the follow request.');
+      }
     } catch (Exception $e) {
       $db->rollBack();
       $message = $e->getMessage();
@@ -1595,7 +1615,7 @@ class Core_IndexController extends Sesapi_Controller_Action_Standard
     // Process
     $db = Engine_Api::_()->getDbtable('membership', 'user')->getAdapter();
     $db->beginTransaction();
-
+		$direction = (int) Engine_Api::_()->getApi('settings', 'core')->getSetting('user.friends.direction', 1);
     try {
       $user->membership()->removeMember($viewer);
  
@@ -1615,7 +1635,11 @@ class Core_IndexController extends Sesapi_Controller_Action_Standard
         $notification->save();
       }
       $db->commit();
-      $message =  $this->view->translate('You ignored a friend request from %s', $user->getTitle());
+      if(!empty($direction)) {
+				$message =  $this->view->translate('You ignored a friend request from %s', $user->getTitle());
+      } else {
+				$message =  $this->view->translate('You have canceled the follow request.');
+      }
     } catch (Exception $e) {
       $db->rollBack();
       $message = $e->getMessage();
@@ -1703,7 +1727,9 @@ class Core_IndexController extends Sesapi_Controller_Action_Standard
       $message = Zend_Registry::get('Zend_Translate')->_('No member specified');
       $error = 1;
     }
-
+		
+		$direction = (int) Engine_Api::_()->getApi('settings', 'core')->getSetting('user.friends.direction', 1);
+		
     // Process
     $db = Engine_Api::_()->getDbtable('membership', 'user')->getAdapter();
     $db->beginTransaction();
@@ -1736,7 +1762,11 @@ class Core_IndexController extends Sesapi_Controller_Action_Standard
         $notification->save();
       }
       $db->commit();
-      $message =  Zend_Registry::get('Zend_Translate')->_('This person has been removed from your friends.');
+      if(!empty($direction)) {
+				$message =  Zend_Registry::get('Zend_Translate')->_('This person has been removed from your friends.');
+      } else {
+				$message =  Zend_Registry::get('Zend_Translate')->_('This person has been removed from your followers.');
+      }
     } catch (Exception $e) {
       $db->rollBack();
       $message = $e->getMessage();

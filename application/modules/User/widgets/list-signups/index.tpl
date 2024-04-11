@@ -17,7 +17,7 @@
         <li>
           <?php echo $this->htmlLink($user->getHref(), $this->itemBackgroundPhoto($user, 'thumb.icon', $user->getTitle()), array('class' => 'newestmembers_thumb')) ?>
           <div class='newestmembers_info'>
-            <div class='newestmembers_name'>
+            <div class='newestmembers_name member_name'>
               <?php echo $this->htmlLink($user->getHref(), $user->getTitle()) ?>
             </div>
             <div class='newestmembers_date'>

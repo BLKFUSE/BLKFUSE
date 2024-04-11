@@ -21,13 +21,13 @@ class Sesbasic_Installer extends Engine_Package_Installer_Module {
     if(empty($bannedTable)) {
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesbasic_bannedwords` (
         `bannedword_id` int(10) unsigned NOT NULL auto_increment,
-        `resource_type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+        `resource_type` varchar(32) DEFAULT NULL,
         `resource_id` int(11) unsigned DEFAULT NULL,
         `word` text NOT NULL,
         PRIMARY KEY  (`bannedword_id`),
         KEY `resource_type` (`resource_type`, `resource_id`),
         UNIQUE KEY (`resource_type`, `resource_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
       $db->query("INSERT IGNORE INTO `engine4_sesbasic_bannedwords` (`word`,`resource_type`) VALUES
       ('help',''),
       ('activity',''),

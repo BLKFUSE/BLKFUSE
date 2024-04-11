@@ -33,7 +33,7 @@ class Sesadvpmnt_Form_Admin_Settings_Stripe extends Engine_Form {
       $this->getDecorator('Description')->setOption('escape', false);
       //New File System Code
       $banner_options = array('' => '');
-      $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png')));
+      $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png', 'webp')));
       foreach( $files as $file ) {
         $banner_options[$file->storage_path] = $file->name;
       }

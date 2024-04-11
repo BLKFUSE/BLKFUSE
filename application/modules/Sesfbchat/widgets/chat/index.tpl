@@ -29,17 +29,4 @@
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
 </script>
-<div
-class="fb-customerchat"
-page_id="<?php echo $this->pageId; ?>"
-theme_color="#<?php  echo $this->theme_color; ?>"
-logged_in_greeting="<?php echo $this->login_text; ?>"
-logged_out_greeting="<?php echo $this->logout_text; ?>">
-</div>
-<?php if($this->position == 1){?>
-<style>
-.fb_dialog {
-   left: 18pt !important;
-}
-</style>
-<?php }?>
+<div class="fb-customerchat" page_id="<?php echo $this->pageId; ?>" theme_color="#<?php  echo $this->theme_color; ?>" logged_in_greeting="<?php echo $this->login_text; ?>" logged_out_greeting="<?php echo $this->logout_text; ?>"></div>

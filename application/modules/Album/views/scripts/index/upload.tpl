@@ -18,7 +18,7 @@
   var updateTextFields = function()
   {
     var fieldToggleGroup = ['#title-wrapper', '#category_id-wrapper', '#description-wrapper', '#search-wrapper',
-                            '#auth_view-wrapper',  '#auth_comment-wrapper', '#auth_tag-wrapper'];
+                            '#auth_view-wrapper',  '#auth_comment-wrapper', '#auth_tag-wrapper', '#networks-wrapper'];
         fieldToggleGroup = scriptJquery(fieldToggleGroup.join(','))
     if (scriptJquery('#album').val() == 0) {
       fieldToggleGroup.show();

@@ -305,7 +305,7 @@ class SdkController extends Zend_Controller_Action
         $buildPackages = array();
         foreach ($availablePackages as $availablePackage) {
             if (empty($availablePackage['manifest']['package']['author']) ||
-                $availablePackage['manifest']['package']['author'] != 'Webligo Developments' ||
+                $availablePackage['manifest']['package']['author'] != 'SocialEngine Core' ||
                 $this->_includeNative) {
                 $buildPackages[] = $availablePackage;
             }

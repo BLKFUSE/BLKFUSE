@@ -18,6 +18,8 @@
  */
 class Group_Model_Rating extends Core_Model_Item_Abstract
 {
+  protected $_searchTriggers = false;
+  
   public function getTable()
   {
     if( is_null($this->_table) )

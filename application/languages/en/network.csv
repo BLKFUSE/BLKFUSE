@@ -32,3 +32,5 @@
 "Network Name";"Network Name"
 "n/a";"n/a"
 "ITEM_TYPE_NETWORK";"Networks"
+"PAGETITLE-NETWORK-CREATE-ADMIN-MANAGE";"Create Network"
+"PAGETITLE-NETWORK-EDIT-ADMIN-MANAGE";"Edit Network"

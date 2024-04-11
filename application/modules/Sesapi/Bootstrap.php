@@ -33,7 +33,6 @@ if (defined('_SESAPI_R_TARG')) {
 
 		public function run()
 		{
-		    
 			// Ensure frontcontroller and router are bootstrapped
 			$this->bootstrap('frontcontroller');
 			$this->bootstrap('router');
@@ -185,7 +184,7 @@ if (defined('_SESAPI_R_TARG')) {
 						'core' => array(
 							'automatic_serialization' => true,
 							'cache_id_prefix' => 'Engine4_',
-							'lifetime' => '300',
+							'lifetime' => '86400',
 							'caching' => true,
 						),
 					),

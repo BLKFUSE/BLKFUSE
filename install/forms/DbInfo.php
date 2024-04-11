@@ -128,16 +128,27 @@ class Install_Form_DbInfo extends Engine_Form
       ->setMessage('Please fill in the MySQL Database.', 'notEmptyInvalid')
       ->setMessage('Please fill in the MySQL Database.', 'isEmpty');
 
+    // Back Button
+    $content = Zend_Registry::get('Zend_Translate')->_('<a href="install/install" class="install_back_btn">Back</a>');
+    $this->addElement('Dummy', 'back', array(
+      'content' => $content,
+     ));
+
     // init submit
     $this->addElement('Button', 'submit', array(
-      'label' => 'Continue...',
+      'label' => 'Next',
       'type' => 'submit',
       'ignore' => true,
-      'decorators' => array(
-        'ViewHelper',
-        array('HtmlTag', array('tag' => 'div', 'class' => 'form-wrapper')),
-      )
+      // 'decorators' => array(
+      //   'ViewHelper',
+      //   array('HtmlTag', array('tag' => 'div', 'class' => 'form-wrapper')),
+      // )
     ));
+
+    // Group back Button and next button
+     $this->addDisplayGroup(array('buttons', 'back', 'submit'), 'buttons');
+
+
 
     // Modify decorators
     $this->loadDefaultDecorators();

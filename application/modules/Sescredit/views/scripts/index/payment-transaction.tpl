@@ -1,6 +1,6 @@
 <?php ?>
 
-<?php $defaultCurrency = Engine_Api::_()->sesbasic()->defaultCurrency(); ?>
+<?php $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency(); ?>
 <?php echo $this->partial('index/left-bar.tpl', 'sescredit', array("navigation" => $this->navigation)); ?>
 					<div class="sescredit_dashboard_content sesbm sesbasic_clearfix">
 						<div class="sescredit_dashboard_content_header sesbasic_clearfix">	
@@ -25,8 +25,8 @@
 										<tbody>
 											<?php foreach ($this->paymentRequests as $item): ?>
 												<tr>
-													<td  data-label="<?php echo $this->translate("Requested Amount") ?>" class="centerT"><?php echo Engine_Api::_()->sesbasic()->getCurrencyPrice($item->requested_amount,$defaultCurrency); ?></td>
-													<td  data-label="<?php echo $this->translate("Released Amount") ?>" class="centerT"><?php echo Engine_Api::_()->sesbasic()->getCurrencyPrice($item->release_amount	,$defaultCurrency); ?></td>
+													<td  data-label="<?php echo $this->translate("Requested Amount") ?>" class="centerT"><?php echo Engine_Api::_()->payment()->getCurrencyPrice($item->requested_amount,$defaultCurrency); ?></td>
+													<td  data-label="<?php echo $this->translate("Released Amount") ?>" class="centerT"><?php echo Engine_Api::_()->payment()->getCurrencyPrice($item->release_amount	,$defaultCurrency); ?></td>
 													<td class="centerT"><?php echo $item->credit_point; ?></td>
 													<td data-label="<?php echo $this->translate("Released Date") ?>"><?php echo $item->release_date ? ($item->release_date) :  '-'; ?></td>
 													<td data-label="<?php echo $this->translate("Response Message") ?>">

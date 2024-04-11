@@ -30,18 +30,19 @@ return array(
     array(
         'type' => 'module',
         'name' => 'sescredit',
-        'version' => '6.4.0p1',
+        'version' => '6.5.1',
         'dependencies' => array(
             array(
                 'type' => 'module',
                 'name' => 'core',
-                'minVersion' => '6.2.0',
+                'minVersion' => '6.5.1',
             ),
         ),
         'path' => 'application/modules/Sescredit',
           'title' => 'SNS - Credits & Activity / Reward Points Plugin',
         'description' => 'SNS - Credits & Activity / Reward Points Plugin',
         'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+		'thumb' => 'application/modules/Sescredit/externals/images/thumb.png',
         'callback' => array(
             'path' => 'application/modules/Sescredit/settings/install.php',
             'class' => 'Sescredit_Installer',

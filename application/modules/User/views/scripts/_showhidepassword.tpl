@@ -11,7 +11,7 @@
  */
 ?>
 <div class="user_showhidepassword">
-  <i class="fa fa-eye" id="togglePassword"></i>
+  <i id="togglePassword"></i>
 </div>
 <script>
   var togglePassword = document.querySelector('#togglePassword');
@@ -28,6 +28,6 @@
       var type = password.getAttribute('type') === 'password' ? 'text' : 'password';
       password.setAttribute('type', type);
       // toggle the eye / eye slash icon
-      this.classList.toggle('fa-eye-slash');
+      this.classList.toggle('showpassword');
   });
 </script>

@@ -32,7 +32,6 @@ class Sesfbchat_Widget_ChatController extends Engine_Content_Widget_Abstract
         $sesfbchat_widget = Zend_Registry::isRegistered('sesfbchat_widget') ? Zend_Registry::get('sesfbchat_widget') : null;
         if(empty($sesfbchat_widget))
           return $this->setNoRender();
-        $this->view->position = $setting->getSetting('sesfbchat_position', '0');
        $device = $setting->getSetting('sesfbchat_devices', '0');
        $detect = Engine_Api::_()->getApi('detect', 'sesfbchat');
         if($device){

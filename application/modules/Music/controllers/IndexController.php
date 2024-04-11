@@ -134,6 +134,8 @@ class Music_IndexController extends Core_Controller_Action_Standard
 
     // Get paginator
     $values['user'] = Engine_Api::_()->user()->getViewer()->getIdentity();
+    $values['showmusic'] = 1;
+		$values['sort'] = !empty($_GET['sort']) ? $_GET['sort'] : 'creation_date';
     $this->view->paginator = $paginator = Engine_Api::_()->music()->getPlaylistPaginator($values);
     $paginator->setItemCountPerPage(Engine_Api::_()->getApi('settings', 'core')->getSetting('music.playlistsperpage', 10));
     $paginator->setCurrentPageNumber($this->_getParam('page', 1));

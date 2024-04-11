@@ -1,3 +1,4 @@
+"You can not login until this member is approved.";"You can not login until this member is approved."
 "User";"User"
 "profile";"profile"
 
@@ -176,7 +177,7 @@
 "Edit Profile Photo";"Edit Profile Photo"
 "Apply Changes";"Apply Changes"
 
-"Hi %1$s!";"Hi %1$s!"
+"Hi";"Hi"
 
 "Missing heading";"Missing heading"
 "Lists:";"Lists"
@@ -187,6 +188,10 @@
 "Friends:";"Friends:"
 "Last Update:";"Last Update:"
 "Joined:";"Joined:"
+"Member Statistics";"Member Statistics"
+"Joined IP:";"Joined IP:"
+"Last Login IP:";"Last Login IP:"
+"Do Not Sell My Personal Information:";"Do Not Sell My Personal Information:"
 
 "%s view";"%s view";"%s views"
 "%1$s view";"%1$s view";"%1$s views"
@@ -327,12 +332,11 @@ to Facebook. To do so, create an Application through the
 
 "Allow account deletion?";"Allow account deletion?"
 "If set to ""yes"", members will have the option of deleting their accounts.";"If set to ""yes"", members will have the option of deleting their accounts."
-"Step 1: Create Account";"Step 1: Create Account"
 
 "Enable Profile Address?";"Enable Profile Address?"
-"USER_FORM_ADMIN_SIGNUP_USERNAME_DESCRIPTION";"If you have selected YES, members will be given the option of choosing a unique profile address. If you select NO, their user id will be used in the URL instead."
-"Yes, allow members to choose a profile address.";"Yes, allow members to choose a profile address."
-"No, do not allow profile addresses.";"No, do not allow profile addresses."
+"USER_FORM_ADMIN_SIGNUP_USERNAME_DESCRIPTION";"If you have selected YES, members will be given the option of choosing a unique profile address. If you select NO, their user id will be used in the URL instead. This profile address is also their username which is displayed in the Manage Members section for each user."
+"Yes, allow members to choose a profile address (username).";"Yes, allow members to choose a profile address (username)."
+"No, do not allow profile addresses (username).";"No, do not allow profile addresses (username)."
 
 "Auto-approve Members";"Auto-approve Members"
 "USER_FORM_ADMIN_SIGNUP_APPROVE_DESCRIPTION";"If you have selected YES, members will automatically be enabled when they signup. If you select NO, you will need to manually enable members through the View Members page. Members that are not enabled cannot login."
@@ -649,7 +653,7 @@ http://[host][object_link]
 [footer]"
 
 "Send Invites";"Send Invites"
-"Send a friend request if the user(s) join(s) the network";"Send friend a request if the user(s) join(s) the network"
+"Send a friend request if the user(s) join(s) the network";"Send a friend request if the user(s) join(s) the network"
 "Thanks for joining!";"Thanks for joining!"
 
 "Linking your Facebook account will let you login with Facebook";"Linking your Facebook account will let you login with Facebook"
@@ -845,7 +849,7 @@ Verification Code: [code]
 
 [footer]"
 
-"Edit Email";"Edit Email"
+"Edit Email Address";"Edit Email Address"
 "Enter your new email below.";"Enter your new email below."
 "Verification Code";"Verification Code"
 "We\'ve sent a verification code in an email to %s. Enter the verification code to proceed further.";"We\'ve sent a verification code in an email to %s. Enter the verification code to proceed further."
@@ -863,3 +867,226 @@ Verification Code: [code]
 "Step %d: Two Step Authentication";"Step %d: Two Step Authentication"
 
 "Not a Member? <b>Join</b>";"Not a Member? <b>Join</b>"
+
+
+"Your members will be asked to provide some information about themselves when joining the community or editing their profile. Create some profile questions that allow them to describe themselves in a way that relates to the theme of your community. To reorder the profile questions, click on their names and drag them up or down. If you want to show different sets of questions to different types of members, you can create multiple ""profile types"". This is useful, for example, if you want your community to have ""fans"" and ""musicians"", each with a different set of profile questions.<br /> You can allow your members to change their profile types from <a href=""admin/authorization/level"">Member Level Settings</a>. You can also change individual user''s profile type from <a href="admin/user/manage"">Manage Members</a> settings.";"Your members will be asked to provide some information about themselves when joining the community or editing their profile. Create some profile questions that allow them to describe themselves in a way that relates to the theme of your community. To reorder the profile questions, click on their names and drag them up or down. If you want to show different sets of questions to different types of members, you can create multiple ""profile types"". This is useful, for example, if you want your community to have ""fans"" and ""musicians"", each with a different set of profile questions.<br /> You can allow your members to change their profile types from <a href=""admin/authorization/level"">Member Level Settings</a>. You can also change individual user''s profile type from <a href="admin/user/manage"">Manage Members</a> settings."
+
+"Map with Member Level";"Map with Member Level"
+"Editing Profile Type:";"Editing Profile Type:"
+
+"%1$s: Create Account";"%1$s: Create Account"
+"Yes, verify email address and send welcome email.";"Yes, verify email address and send welcome email."
+"Send a welcome email when users are enabled from admin panel";"Send a welcome email when users are enabled from admin panel"
+"Do you want to send a welcome email to users who are enabled from admin panel?";"Do you want to send a welcome email to users who are enabled from admin panel?"
+"Yes";"Yes"
+"No";"No"
+"Notify Admin by email when user signs up?";"Notify Admin by email when user signs up?"
+"Yes, notify admin by email.";"Yes, notify admin by email."
+"No, do not notify admin by email.";"No, do not notify admin by email."
+"Invite Only?";"Invite Only?"
+"Check Invite Email?";"Check Invite Email?"
+"Save Changes";"Save Changes"
+"%1$s: Create Profile";"%1$s: Create Profile"
+"%1$s: Add Your Photo";"%1$s: Add Your Photo"
+"Require User Photo";"Require User Photo"
+"Do you want to require your users to upload a photo of themselves upon signup?";"Do you want to require your users to upload a photo of themselves upon signup?"
+"Yes, require users upload a photo upon signup.";"Yes, require users upload a photo upon signup."
+"No, do not require users upload a photo upon signup.";"No, do not require users upload a photo upon signup."
+"%1$s: Invite Your Friends";"%1$s: Invite Your Friends"
+
+"Show Username as Display Name";"Show Username as Display Name"
+"Do you want to show the username as the display name of users instead of their first name and last name? If you choose Yes, this username will be displayed for the user everyplace the user''s name is shown. If you choose No, the First Name and Last Name configured for their profile will display everyplace the user''s name is shown.";"Do you want to show the username as the display name of users instead of their first name and last name? If you choose Yes, this username will be displayed for the user everyplace the user''s name is shown. If you choose No, the First Name and Last Name configured for their profile will display everyplace the user''s name is shown."
+
+"<b>Note:</b> Please make sure to place ''Create Profile'' & ''Two Step Authentication'' after ''Create Account'' for the proper functioning of the signup process steps.";"<b>Note:</b> Please make sure to place ''Create Profile'' & ''Two Step Authentication'' after ''Create Account'' for the proper functioning of the signup process steps."
+
+"This page displays user verification requests submitted by members on your site. If you need to search for a specific member, enter your search criteria in the fields below. </br />Note: You will receive verification requests only if you have enabled users to request verification for at least one member level on your site.";"This page displays user verification requests submitted by members on your site. If you need to search for a specific member, enter your search criteria in the fields below. </br />Note: You will receive verification requests only if you have enabled users to request verification for at least one member level on your site."
+"Profile Type (Note: Once you choose to change this user''s profile type, the data associated with the previous profile type will be lost and user will have to fill profile data again.)";"Profile Type (Note: Once you choose to change this user''s profile type, the data associated with the previous profile type will be lost and user will have to fill profile data again.)"
+
+"Profile Type (Note: Once you choose to change this user''s profile type, the data associated with the previous profile type will be lost and user will have to fill profile data again.)";"Profile Type (Note: Once you choose to change this user''s profile type, the data associated with the previous profile type will be lost and user will have to fill profile data again.)"
+"Choose a new Profile Type for your profile. Once you choose change your profile type, the data of your current profile type will be lost.";"Choose a new Profile Type for your profile. Once you choose change your profile type, the data of your current profile type will be lost."
+"Are you sure you want to change your Profile Type? Your current profile data will not be recovered once deleted.";"Are you sure you want to change your Profile Type? Your current profile data will not be recovered once deleted."
+
+"Edit Profile Type";"Edit Profile Type"
+"Are you sure you want to change Profile Type of this user? Once you change the profile type, the data of this member''s current profile type will be lost and will not be recovered once deleted.";"Are you sure you want to change Profile Type of this user? Once you change the profile type, the data of this member''s current profile type will be lost and will not be recovered once deleted."
+"Do you also want to update the Member Level of this member based on mapping with selected Profile Type?";"Do you also want to update the Member Level of this member based on mapping with selected Profile Type?"
+"Last Login Date";"Last Login Date"
+"Logged In";"Logged In"
+"Your verification request has been successfully submitted.";"Your verification request has been successfully submitted."
+"Verification request cancelled successfully.";"Verification request cancelled successfully."
+"Request Verification";"Request Verification"
+"Are you sure you want to request for verification of your profile? Also, include a message to support your verification request.";"Are you sure you want to request for verification of your profile? Also, include a message to support your verification request."
+"Message (optional):";"Message (optional):"
+"Cancel Request";"Cancel Request"
+"Are you sure you want to cancel this verification request? You'll need to reapply if canceled.";"Are you sure you want to cancel this verification request? You'll need to reapply if canceled."
+"Approve Verification Request";"Approve Verification Request"
+"Are you sure you want to approve verification request by this user?";"Are you sure you want to approve verification request by this user?"
+"Reject Verification Request";"Reject Verification Request"
+"Are you sure you want to reject verification request by this user?";"Are you sure you want to reject verification request by this user?"
+"Cancel This Subscription?";"Cancel This Subscription?"
+"Are you sure you want to cancel your verification subscription? You''ll need to reapply if canceled.";"Are you sure you want to cancel your verification subscription? You''ll need to reapply if canceled."
+"Verification Subscription cancelled successfully.";"Verification Subscription cancelled successfully."
+"Note: You will be able to edit <a href='admin/user/fields' target='_blank'>Profile Types</a> of members only if there are more than 1 profile type on your site excluding Admin & Super Admin profile types.";"Note: You will be able to edit <a href='admin/user/fields' target='_blank'>Profile Types</a> of members only if there are more than 1 profile type on your site excluding Admin & Super Admin profile types."
+
+"Verification code sent successfully. Please check your email.";"Verification code sent successfully. Please check your email."
+"PAGETITLE-USER-MANAGE-IMPORTS-ADMIN-MANAGE";"Bulk Import Members Using CSV File"
+"PAGETITLE-USER-ADD-NEW-USER-ADMIN-MANAGE";"Add New User"
+"PAGETITLE-USER-VERIFICATION-REQUESTS-ADMIN-MANAGE";"Manage Verification Requests"
+"pagetitle-user-profile-edit";"Personal Info"
+"pagetitle-user-photo-edit";"Edit My Photo"
+"pagetitle-user-style-edit";"Profile Style"
+"pagetitle-user-profile-photos-edit";"Delete Profile Photos"
+"pagetitle-user-general-settings";"General"
+"pagetitle-user-privacy-settings";"Privacy"
+"pagetitle-user-notifications-settings";"Notifications"
+"pagetitle-user-emails-settings";"Emails"
+"pagetitle-user-password-settings";"Change Password"
+"pagetitle-user-network-settings";"Networks"
+"pagetitle-invite-manage-invites-settings";"Manage Invites"
+"pagetitle-invite-index-index";"Invite Your Friends"
+"pagetitle-user-tickets-settings";"Support Inbox"
+"pagetitle-payment-index-settings";"Membership Subscription"
+"pagetitle-payment-verification-settings";"Verification"
+"pagetitle-user-delete-settings";"Delete Account"
+"pagetitle-payment-transaction-settings";"Transaction History"
+"pagetitle-user-manage-settings";"Support Message"
+
+#content_approval
+
+
+"ACTIVITY_TYPE_CONTENT_WAITINGAPPROVALFORADMIN";"When users create new content and has to wait for admin approval."
+"ACTIVITY_TYPE_CONTENT_RESUBMITWAITAPPRFORADMIN";"When users resubmit content for approval and is waiting for admin approval."
+"ACTIVITY_TYPE_CONTENT_WAITINGAPPROVALFOROWNER";"When my new content is waiting for admin approval."
+"ACTIVITY_TYPE_CONTENT_APPROVEDBYADMIN";"When my content gets approved."
+"ACTIVITY_TYPE_CONTENT_DISAPPROVEDBYADMIN";"When my content gets disapproved."
+"ACTIVITY_TYPE_CONTENT_REJECTEDBYADMIN";"When my content gets rejected."
+"ACTIVITY_TYPE_CONTENT_TICKETCREATE";"When members create new support tickets."
+"ACTIVITY_TYPE_CONTENT_TICKETREPLY";"When I get reply on my support ticket."
+"ACTIVITY_TYPE_CONTENT_NEWTICKETCREATE";"When admin creates a new ticket for me."
+
+# CONTENT_APPROVEDBYADMIN
+"_EMAIL_NOTIFY_CONTENT_APPROVEDBYADMIN_TITLE";"Content is Approved"
+"_EMAIL_NOTIFY_CONTENT_APPROVEDBYADMIN_DESCRIPTION";"This email will be sent to member when their Content gets approved."
+"_EMAIL_NOTIFY_CONTENT_APPROVEDBYADMIN_SUBJECT";"Congratulations your [content_text] has been approved."
+"_EMAIL_NOTIFY_CONTENT_APPROVEDBYADMIN_BODY";"[header]
+
+Congratulations '[owner_title]'!!! Your [content_text] '[object_title]' has been approved by the administrator. Click on the following link to view your [content_text]:
+
+http://[host][object_link]
+
+[footer]"
+
+
+# CONTENT_REJECTEDBYADMIN
+"_EMAIL_NOTIFY_CONTENT_REJECTEDBYADMIN_TITLE";"Content is Rejected"
+"_EMAIL_NOTIFY_CONTENT_REJECTEDBYADMIN_DESCRIPTION";"This email will be sent to member when their Content gets rejected."
+"_EMAIL_NOTIFY_CONTENT_REJECTEDBYADMIN_SUBJECT";"Your [content_text] has been rejected."
+"_EMAIL_NOTIFY_CONTENT_REJECTEDBYADMIN_BODY";"[header]
+
+Sorry '[owner_title]'!!! Your [content_text] '[object_title]' has been rejected by the administrator. Click on the following link to view your [content_text]:
+
+http://[host][object_link]
+
+[footer]"
+
+
+# CONTENT_DISAPPROVEDBYADMIN
+"_EMAIL_NOTIFY_CONTENT_DISAPPROVEDBYADMIN_TITLE";"Content is Disapproved"
+"_EMAIL_NOTIFY_CONTENT_DISAPPROVEDBYADMIN_DESCRIPTION";"This email will be sent to member when their Content gets disapproved."
+"_EMAIL_NOTIFY_CONTENT_DISAPPROVEDBYADMIN_SUBJECT";"Your [content_text] has been disapproved."
+"_EMAIL_NOTIFY_CONTENT_DISAPPROVEDBYADMIN_BODY";"[header]
+
+Sorry '[owner_title]'!!! Your [content_text] '[object_title]' has been disapproved by the administrator. Click on the following link to view your [content_text]:
+
+http://[host][object_link]
+
+[footer]"
+
+
+# CONTENT_WAITINGAPPROVALFORADMIN
+"_EMAIL_NOTIFY_CONTENT_WAITINGAPPROVALFORADMIN_TITLE";"New Content is Created and Waiting for Admin Approval - Mail to Admins"
+"_EMAIL_NOTIFY_CONTENT_WAITINGAPPROVALFORADMIN_DESCRIPTION";"This email will be sent to the admin for approving new Content on the website."
+"_EMAIL_NOTIFY_CONTENT_WAITINGAPPROVALFORADMIN_SUBJECT";"[sender_title] has create a new [content_text] and is waiting for approval."
+"_EMAIL_NOTIFY_CONTENT_WAITINGAPPROVALFORADMIN_BODY";"[header]
+
+[sender_title] has created a new [content_text] [object_title] on your website. Please take action to approve or reject the content approval request.
+
+To visit the [content_text], click here: http://[host][object_link]
+
+[footer]"
+
+
+# CONTENT_RESUBMITWAITAPPRFORADMIN
+"_EMAIL_NOTIFY_CONTENT_RESUBMITWAITAPPRFORADMIN_TITLE";"Content is resubmit again and Waiting for admin approval"
+"_EMAIL_NOTIFY_CONTENT_RESUBMITWAITAPPRFORADMIN_DESCRIPTION";"This email will be sent to admin when member resubmit content for approval."
+"_EMAIL_NOTIFY_CONTENT_RESUBMITWAITAPPRFORADMIN_SUBJECT";"[sender_title] has resubmitted [content_text] and is waiting for approval."
+"_EMAIL_NOTIFY_CONTENT_RESUBMITWAITAPPRFORADMIN_BODY";"[header]
+
+[sender_title] has resubmitted [content_text] [object_title] on your website. Please take action to approve or reject the content approval request.
+
+To visit the [content_text], click here: http://[host][object_link]
+
+[footer]"
+
+
+# CONTENT_WAITINGAPPROVALFOROWNER
+"_EMAIL_NOTIFY_CONTENT_WAITINGAPPROVALFOROWNER_TITLE";"New Content is Created and Waiting for Admin Approval - Mail to Members"
+"_EMAIL_NOTIFY_CONTENT_WAITINGAPPROVALFOROWNER_DESCRIPTION";"This email will be sent to member when their Content is sent to admin for approval."
+"_EMAIL_NOTIFY_CONTENT_WAITINGAPPROVALFOROWNER_SUBJECT";"Your [content_text] has been submitted for approval."
+"_EMAIL_NOTIFY_CONTENT_WAITINGAPPROVALFOROWNER_BODY";"[header]
+
+Your [content_text] '[object_title]' has been submitted for approval. You will be notified once it is approved or rejected.
+
+http://[host][object_link]
+
+[footer]"
+
+
+# CONTENT_TICKETCREATE
+"_EMAIL_NOTIFY_CONTENT_TICKETCREATE_TITLE";"Support Ticket Created by Members"
+"_EMAIL_NOTIFY_CONTENT_TICKETCREATE_DESCRIPTION";"This email will be sent to the admin when member create a new support ticket."
+"_EMAIL_NOTIFY_CONTENT_TICKETCREATE_SUBJECT";"New support ticket [ticket_subject] has been created."
+"_EMAIL_NOTIFY_CONTENT_TICKETCREATE_BODY";"[header]
+
+[ticket_description]
+
+[object_link]
+
+[footer]"
+
+
+# CONTENT_TICKETREPLY
+"_EMAIL_NOTIFY_CONTENT_TICKETREPLY_TITLE";"Support Ticket is Replied"
+"_EMAIL_NOTIFY_CONTENT_TICKETREPLY_DESCRIPTION";"This email will be sent to members or admins when a support ticket is replied."
+"_EMAIL_NOTIFY_CONTENT_TICKETREPLY_SUBJECT";"New reply on support ticket [ticket_subject] has been received."
+"_EMAIL_NOTIFY_CONTENT_TICKETREPLY_BODY";"[header]
+
+[ticket_description]
+
+[object_link]
+
+[footer]"
+
+
+# CONTENT_NEWTICKETCREATE
+"_EMAIL_NOTIFY_CONTENT_NEWTICKETCREATE_TITLE";"Support Ticket Created by Admin for Members"
+"_EMAIL_NOTIFY_CONTENT_NEWTICKETCREATE_DESCRIPTION";"This email will be sent to the member when admin create a new support ticket on behalf of member."
+"_EMAIL_NOTIFY_CONTENT_NEWTICKETCREATE_SUBJECT";"New support ticket [ticket_subject] has been created."
+"_EMAIL_NOTIFY_CONTENT_NEWTICKETCREATE_BODY";"[header]
+
+[ticket_description]
+
+[object_link]
+
+[footer]"
+"Add New User";"Add New User"
+"Here, you can add a new user to your site.";"Here, you can add a new user to your site."
+"Bulk Import Members Using CSV File";"Bulk Import Members Using CSV File"
+"Choose the .csv file to upload members in bulk on your site";"Choose the .csv file to upload members in bulk on your site"
+"Below settings will apply to all the members imported via uploaded csv file.";"Below settings will apply to all the members imported via uploaded csv file."
+"This page enables you to import Members on your website from CSV file. Please download the template file using the ""Download Template File"" button below. To start importing Members, click on the ""Import Members"" button.<br /><b>Notes:</b> See the points below and make sure the csv is created follows each one:<br />1. Do not add any new column in the downloaded template file.<br />2. The data in the file should be pipe (""|"") separated and in same ordering as that of the template file.<br />3. We recommend you to import 100 Members from the csv file at a time.<br />4. File must be in .csv format Only.<br />5. If you are adding fields- First Name, Last Name, Gender (Male/Female/Other), Birthdate (yyyy-mm-dd),  in csv file, then make sure you have added these fields in the profile type you will select while importing your csv file. This ensures that the data is properly mapped and not lost during the import process.<br />";"This page enables you to import Members on your website from CSV file. Please download the template file using the ""Download Template File"" button below. To start importing Members, click on the ""Import Members"" button.<br /><b>Notes:</b> See the points below and make sure the csv is created follows each one:<br />1. Do not add any new column in the downloaded template file.<br />2. The data in the file should be pipe (""|"") separated and in same ordering as that of the template file.<br />3. We recommend you to import 100 Members from the csv file at a time.<br />4. File must be in .csv format Only.<br />5. If you are adding fields- First Name, Last Name, Gender (Male/Female/Other), Birthdate (yyyy-mm-dd),  in csv file, then make sure you have added these fields in the profile type you will select while importing your csv file. This ensures that the data is properly mapped and not lost during the import process.<br />"
+"Generate Password";"Generate Password"
+"Copy Password";"Copy Password"
+"Password copied successfully.";"Password copied successfully."
+"Ticket ID";"Ticket ID"
+"Requestor";"Requestor"
+"Creation Date";"Creation Date"

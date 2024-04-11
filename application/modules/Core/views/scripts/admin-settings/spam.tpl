@@ -10,8 +10,9 @@
  * @author     Jung
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_settings", 'childMenuItemName' => 'core_admin_banning_general')); ?>
 
-<h2>
+<h2 class="page_heading">
   <?php echo $this->translate("Spam & Banning Tools") ?>
 </h2>
 <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('core.general.enableloginlogs', 0)): ?>
@@ -50,8 +51,8 @@
 function changeLock(obj) {
     var value = obj.value
     if(value == 1){
-        document.getElementById('lockattempts-wrapper').style.display = "block";
-        document.getElementById('lockduration-wrapper').style.display = "block";
+        document.getElementById('lockattempts-wrapper').style.display = "flex";
+        document.getElementById('lockduration-wrapper').style.display = "flex";
     }else{
         document.getElementById('lockattempts-wrapper').style.display = "none";
         document.getElementById('lockduration-wrapper').style.display = "none";

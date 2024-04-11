@@ -223,7 +223,7 @@ class Sesuserimport_Form_Admin_AddSingleMember extends Engine_Form_Email {
       'multiFile' => 1,
       'validators' => array(
         array('Count', false, 1),
-        array('Extension', false, 'jpg,jpeg,png,gif'),
+        array('Extension', false, 'jpg,jpeg,png,gif,webp'),
       ),
       'tabindex' => $tabIndex++,
     ));
@@ -234,7 +234,7 @@ class Sesuserimport_Form_Admin_AddSingleMember extends Engine_Form_Email {
       'multiFile' => 1,
       'validators' => array(
         array('Count', false, 1),
-        array('Extension', false, 'jpg,jpeg,png,gif'),
+        array('Extension', false, 'jpg,jpeg,png,gif,webp'),
       ),
       'tabindex' => $tabIndex++,
     ));

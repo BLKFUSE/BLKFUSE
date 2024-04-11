@@ -233,6 +233,9 @@ sesowlJqueryObject(document).ready(function() {
 		dots:false,
 		loop:true,
 		autoPlay:true,
+    <?php if($orientation = ($this->layout()->orientation == 'right-to-left')){ ?>
+       rtl:'true',
+    <?php } ?>    
 		responsiveClass:true,
     responsive:{
         0:{

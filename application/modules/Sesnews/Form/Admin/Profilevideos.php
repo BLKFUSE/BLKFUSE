@@ -45,7 +45,7 @@ class Sesnews_Form_Admin_Profilevideos extends Engine_Form {
             'favouriteButton' => 'Favourite Button',
             'playlistAdd' => 'Playlist Add Button',
             'likeButton' => 'Like Button',
-            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
             'watchLater' => 'Watch Later Button',
             'like' => 'Likes',
             'comment' => 'Comments',

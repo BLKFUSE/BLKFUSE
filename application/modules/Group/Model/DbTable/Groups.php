@@ -67,6 +67,11 @@ class Group_Model_DbTable_Groups extends Core_Model_Item_DbTable_Abstract
         if (isset($params['search'])) {
             $select->where('search = ?', (bool) $params['search']);
         }
+        
+				if(!isset($params['showgroup']) && empty($params['showgroup'])) {
+					$select->where('approved =?', 1);
+				}
+				
         // Category
         if (!empty($params['category_id'])) {
             $select->where('category_id = ?', $params['category_id']);
@@ -84,13 +89,14 @@ class Group_Model_DbTable_Groups extends Core_Model_Item_DbTable_Abstract
         if (!empty($params['search_text'])) {
             $select->where("(`description` LIKE ? OR `title` LIKE ?)", '%' . $params['search_text'] . '%');
         }
-
-        // Order
-        if (!empty($params['order'])) {
-            $select->order($params['order']);
-        } else {
-            $select->order('creation_date DESC');
-        }
+        
+				if(!empty($params['order']) && $params['order'] == 'atoz') {
+					$select->order('title ASC');
+				} else if(!empty($params['order']) && $params['order'] == 'ztoa') {
+					$select->order('title DESC');
+				} else  {
+					$select->order( !empty($params['order']) ? $params['order'].' DESC' : 'creation_date DESC' );
+				}
 
         //$select = Engine_Api::_()->network()->getNetworkSelect($table->info('name'), $select, 'user_id');
 
@@ -193,6 +199,9 @@ class Group_Model_DbTable_Groups extends Core_Model_Item_DbTable_Abstract
                 if (!empty($getViewer)) {
                     $select->orWhere("view_privacy = 'member' AND user_id = $ownerId AND group_id IN (?)", $this->getViewerGroups());
                 }
+                $subquery = $select->getPart(Zend_Db_Select::WHERE);
+                $select->reset(Zend_Db_Select::WHERE);
+                $select->where(implode(' ', $subquery));
                 return $select;
             }
 

@@ -46,7 +46,7 @@ WHERE `name` = 'core_main_video';
 -- Updating type of columns
 --
 ALTER TABLE `engine4_video_videos` CHANGE `type` `type` VARCHAR( 32 ) NOT NULL;
-ALTER TABLE `engine4_video_videos` CHANGE `code` `code` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ;
+ALTER TABLE `engine4_video_videos` CHANGE `code` `code` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL ;
 
 --
 -- Update `type` column in `engine4_video_videos` table

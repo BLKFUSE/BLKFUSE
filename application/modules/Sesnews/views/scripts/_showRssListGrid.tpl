@@ -161,7 +161,7 @@
 					identity : '<?php echo $randonNumber; ?>',
 				},
 				success: function(responseHTML) {
-					document.getElementById('tabbed-widget_<?php echo $randonNumber; ?>').innerHTML = responseHTML;
+					scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').html(responseHTML);
 					scriptJquery('#total_item_count_sesnews').html(scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').find('#totalitemcountsesnews').html());
           if(scriptJquery('.selectView_<?php echo $randonNumber; ?>.active').attr('rel') == 'grid') {
             scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').addClass('row');

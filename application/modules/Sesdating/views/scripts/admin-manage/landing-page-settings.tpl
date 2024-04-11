@@ -29,7 +29,7 @@
     <?php
 //New File System Code
 $banner_options = array('' => '');
-$files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png')));
+$files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png', 'webp')));
 foreach( $files as $file ) {
   $banner_options[$file->storage_path] = $file->name;
 }
@@ -338,18 +338,18 @@ foreach( $files as $file ) {
 
   var landingpageparam = '<?php echo $this->param; ?>';
   if(landingpageparam == 'banner') {
-    document.getElementById('banner_widget').style.display = 'block';
+    document.getElementById('banner_widget').style.display = 'flex';
     document.getElementById('featured_widget').style.display = 'none';
     document.getElementById('membercloud_widget').style.display = 'none';
   
   } else if(landingpageparam == 'featuredwidget') {
     document.getElementById('banner_widget').style.display = 'none';
-    document.getElementById('featured_widget').style.display = 'block';
+    document.getElementById('featured_widget').style.display = 'flex';
     document.getElementById('membercloud_widget').style.display = 'none';
   } else if(landingpageparam == 'membercloud') {
     document.getElementById('banner_widget').style.display = 'none';
     document.getElementById('featured_widget').style.display = 'none';
-    document.getElementById('membercloud_widget').style.display = 'block';
+    document.getElementById('membercloud_widget').style.display = 'flex';
   }
 
   var elementCounter = <?php echo $featureKey; ?>;
@@ -358,7 +358,7 @@ foreach( $files as $file ) {
    elementCounter--;
     if(elementCounter < 6){
       if(document.getElementById('add_feature_content'))
-        document.getElementById('add_feature_content').style.display = 'block';
+        document.getElementById('add_feature_content').style.display = 'flex';
     }
   });
   

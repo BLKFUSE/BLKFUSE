@@ -103,7 +103,8 @@ class Egifts_Plugin_Gateway_PayPal extends Engine_Payment_Plugin_Abstract {
     $settings = Engine_Api::_()->getApi('settings', 'core');
     $currencyValue = 1;
     if ($currentCurrency != $defaultCurrency) {
-      $currencyValue = $settings->getSetting('sesmultiplecurrency.' . $currentCurrency);
+      $currencyData = Engine_Api::_()->getDbTable('currencies', 'payment')->getCurrency($currentCurrency);
+      $currencyValue = $currencyData->change_rate;
     }
     $totalprice = 0;
     $totalprice = $giftOrder->total_amount;
@@ -290,7 +291,7 @@ class Egifts_Plugin_Gateway_PayPal extends Engine_Payment_Plugin_Abstract {
       $rate = $session->change_rate;
       if (!$rate)
         $rate = 1;
-      $defaultCurrency = Engine_Api::_()->egifts()->defaultCurrency();
+      $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
       $settings = Engine_Api::_()->getApi('settings', 'core');
       $currencyValue = 1;
       if ($currency != $defaultCurrency)

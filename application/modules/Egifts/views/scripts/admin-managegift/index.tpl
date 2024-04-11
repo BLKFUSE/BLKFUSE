@@ -20,8 +20,7 @@
 ?>
 <h3><?php echo $this->translate("Manage Gifts"); ?></h3>
 <p><?php echo $this->translate("From here, you can browse all the gifts created by you. You can also create new by clicking on “Add New Gift” below. You can enable / disable gifts if you don’t like them to be sent or displayed on Browse Gifts Page. Click on Edit Link to edit details of the gift. Also you can delete them whenever required. Search any of the gifts by entering the searching criteria into the filter field."); ?></p>
-<br>
-<div class="sesbasic_search_reasult"> <?php echo $this->htmlLink(array("route" => 'admin_default', "module" => 'egifts', "controller" => 'managegift', "action" => 'create'), "Add New Gift", array('class' => "sesbasic_icon_add buttonlink smoothbox")); ?> </div>
+<div class="sesbasic_search_reasult"> <?php echo $this->htmlLink(array("route" => 'admin_default', "module" => 'egifts', "controller" => 'managegift', "action" => 'create'), "Add New Gift", array('class' => "sesbasic_icon_add buttonlink smoothbox sesbasic_btn_space")); ?> </div>
 <?php if(isset($this->paginator) && engine_count($this->paginator)>0){  ?>
   <div class="egift_admin_gift_list">
     <table style="width: 100%"  class="admin_table">

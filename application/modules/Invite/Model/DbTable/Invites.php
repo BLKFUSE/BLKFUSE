@@ -16,21 +16,25 @@
  * @copyright  Copyright 2006-2020 Webligo Developments
  * @license    http://www.socialengine.com/license/
  */
-class Invite_Model_DbTable_Invites extends Engine_Db_Table
-{
+class Invite_Model_DbTable_Invites extends Engine_Db_Table {
+
   protected $_name = 'invites';
+  
   protected $_alreadyMembers = [];
-  public function sendInvites(User_Model_User $user, $recipients, $message, $friendship, $resend = '')
-  {
+  
+  public function sendInvites(User_Model_User $user, $recipients, $message, $friendship, $resend = '', $import_method = 'Invite') {
+  
     $settings = Engine_Api::_()->getApi('settings', 'core');
     
     // Check recipients
     if( is_string($recipients) ) {
       $recipients = preg_split("/[\s,]+/", $recipients);
     }
+    
     if( is_array($recipients) ) {
       $recipients = array_map('strtolower', array_unique(array_filter(array_map('trim', $recipients))));
     }
+    
     if( !is_array($recipients) || empty($recipients) ) {
       return 0;
     }
@@ -61,17 +65,20 @@ class Invite_Model_DbTable_Invites extends Engine_Db_Table
     // Remove the ones that are already members
     $recipients = array_diff($recipients, $alreadyMemberEmails);
     $emailsSent = 0;
+    
+    //generate unique invite code and confirm it truly is unique
+    $inviteCode = $user->referral_code;
 
     // Send them invites
     foreach( $recipients as $recipient ) {
-      if(empty($resend) && $this->isInvited(array('email'=>$recipient))){
+      if(empty($resend) && $this->isInvited(array('email' => $recipient))){
         continue;
       }
       // start inserting database entry
       // generate unique invite code and confirm it truly is unique
-      do {
-        $inviteCode = substr(md5(rand(0, 999) . $recipient), 10, 7);
-      } while( null !== $inviteTable->fetchRow(array('code = ?' => $inviteCode)) );
+//       do {
+//         $inviteCode = substr(md5(rand(0, 999) . $recipient), 10, 7);
+//       } while( null !== $inviteTable->fetchRow(array('code = ?' => $inviteCode)) );
 
       $row = $inviteTable->createRow();
       $row->user_id = $user->getIdentity();
@@ -80,6 +87,7 @@ class Invite_Model_DbTable_Invites extends Engine_Db_Table
       $row->code = $inviteCode;
       $row->timestamp = new Zend_Db_Expr('NOW()');
       $row->message = $message;
+      $row->import_method = $import_method;
       $row->save();
       
       try {
@@ -133,12 +141,15 @@ class Invite_Model_DbTable_Invites extends Engine_Db_Table
 
     return $emailsSent;
   }
+  
   public function getAlreadyMembers(){
     return $this->_alreadyMembers;
   }
+  
   public function setDefaultAlreadyMembers($default = array()){
     $this->_alreadyMembers = $default;
   }
+  
   public function isInvited($subject){
     $recipient = $subject['email'];
     $select = $this->select()->from($this->info('name'), 'user_id');
@@ -159,6 +170,15 @@ class Invite_Model_DbTable_Invites extends Engine_Db_Table
     return $this->select()
                 ->from($this->info('name'), 'id')
                 ->where('recipient = ?', $email)
+                ->query()
+                ->fetchColumn();
+  }
+  
+  public function isAlreadyJoined($email){
+    return $this->select()
+                ->from($this->info('name'), 'id')
+                ->where('recipient = ?', $email)
+                ->where('new_user_id <> ?', 0)
                 ->query()
                 ->fetchColumn();
   }

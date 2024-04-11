@@ -45,10 +45,10 @@ class Activity_Model_DbTable_Actions extends Engine_Db_Table
       unset($params['privacy']);
     }
       $bodyEmojis = explode(' ', $body);
-      foreach($bodyEmojis as $bodyEmoji) {
-          $emojisCode = Engine_Text_Emoji::encode($bodyEmoji);
-          $body = str_replace($bodyEmoji,$emojisCode,$body);
-      }
+      // foreach($bodyEmojis as $bodyEmoji) {
+      //     $emojisCode = Engine_Text_Emoji::encode($bodyEmoji);
+      //     $body = str_replace($bodyEmoji,$emojisCode,$body);
+      // }
     // Create action
     $action = $this->createRow();
     $action->setFromArray(array(
@@ -62,6 +62,7 @@ class Activity_Model_DbTable_Actions extends Engine_Db_Table
       'params' => (array) $params,
       'date' => date('Y-m-d H:i:s')
     ));
+    
     $action->save();
 
     // Add bindings

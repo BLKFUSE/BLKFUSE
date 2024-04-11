@@ -14,19 +14,18 @@
   array (
     'type' => 'theme',
     'name' => 'elpis',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 10113 $',
     'path' => 'application/themes/elpis',
     'repository' => 'socialengine.com',
     'title' => 'Elpis',
     'thumb' => 'theme.jpg',
-    'author' => 'Webligo Developments',
+    'author' => 'SocialEngine Core',
     'actions' =>
     array (
       0 => 'install',
       1 => 'upgrade',
       2 => 'refresh',
-      3 => 'remove',
     ),
     'callback' =>
     array (

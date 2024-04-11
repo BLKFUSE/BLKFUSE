@@ -312,31 +312,15 @@ class User_EditController extends Sesapi_Controller_Action_Standard
     $base = rtrim(substr(basename($fileName), 0, strrpos(basename($fileName), '.')), '.');
     $path = APPLICATION_PATH . DIRECTORY_SEPARATOR . 'temporary';
     $filesTable = Engine_Api::_()->getDbtable('files', 'storage');
-    $coreSettings = Engine_Api::_()->getApi('settings', 'core');
-    $mainHeight = $coreSettings->getSetting('main.photo.height', 1600);
-    $mainWidth = $coreSettings->getSetting('main.photo.width', 1600);
+    
     // Resize image (main)
     $mainPath = $path . DIRECTORY_SEPARATOR . $base . '_m.' . $extension;
     $image = Engine_Image::factory();
     $image->open($file)
-      ->resize($mainWidth, $mainHeight)
+      ->resize(1600, 1600)
       ->write($mainPath)
       ->destroy();
-    $normalHeight = $coreSettings->getSetting('normal.photo.height', 375);
-    $normalWidth = $coreSettings->getSetting('normal.photo.width', 375);
-    // Resize image (normal)
-    $normalPath = $path . DIRECTORY_SEPARATOR . $base . '_in.' . $extension;
-    $image = Engine_Image::factory();
-    $image->open($file)
-      ->resize($normalWidth, $normalHeight)
-      ->write($normalPath)
-      ->destroy();
-    $coverPath = $path . DIRECTORY_SEPARATOR . $base . '_c.' . $extension;
-    $image = Engine_Image::factory();
-    $image->open($file)
-      ->resize(1500, 1500)
-      ->write($coverPath)
-      ->destroy();
+
     if (!empty($user)) {
       $params = array(
         'parent_type' => $user->getType(),
@@ -346,16 +330,11 @@ class User_EditController extends Sesapi_Controller_Action_Standard
       );
       try {
         $iMain = $filesTable->createFile($mainPath, $params);
-        $iIconNormal = $filesTable->createFile($normalPath, $params);
-        $iMain->bridge($iIconNormal, 'thumb.normal');
-        $iCover = $filesTable->createFile($coverPath, $params);
-        $iMain->bridge($iCover, 'thumb.cover');
+
         $user->coverphoto = $iMain->file_id;
         $user->save();
       } catch (Exception $e) {
         @unlink($mainPath);
-        @unlink($normalPath);
-        @unlink($coverPath);
         if ($e->getCode() == Storage_Model_DbTable_Files::SPACE_LIMIT_REACHED_CODE
           && Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('album')) {
           throw new Album_Model_Exception($e->getMessage(), $e->getCode());
@@ -364,8 +343,6 @@ class User_EditController extends Sesapi_Controller_Action_Standard
         }
       }
       @unlink($mainPath);
-      @unlink($normalPath);
-      @unlink($coverPath);
       if (!empty($tmpRow)) {
         $tmpRow->delete();
       }
@@ -373,18 +350,10 @@ class User_EditController extends Sesapi_Controller_Action_Standard
     } else {
       try {
         $iMain = $filesTable->createSystemFile($mainPath);
-        $iIconNormal = $filesTable->createSystemFile($normalPath);
-        $iMain->bridge($iIconNormal, 'thumb.normal');
-        $iCover = $filesTable->createSystemFile($coverPath);
-        $iMain->bridge($iCover, 'thumb.cover');
         // Remove temp files
         @unlink($mainPath);
-        @unlink($normalPath);
-        @unlink($coverPath);
       } catch (Exception $e) {
         @unlink($mainPath);
-        @unlink($normalPath);
-        @unlink($coverPath);
         if ($e->getCode() == Storage_Model_DbTable_Files::SPACE_LIMIT_REACHED_CODE
           && Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('album')) {
           throw new Album_Model_Exception($e->getMessage(), $e->getCode());
@@ -401,6 +370,29 @@ class User_EditController extends Sesapi_Controller_Action_Standard
   {
     // Get form
     $user = Engine_Api::_()->core()->getSubject();
+
+    $file = Engine_Api::_()->getItem('storage_file', $user->photo_id);
+    if($file->parent_type == 'user') {
+      $getParentChilds = $file->getChildren($file->getIdentity());
+      foreach ($getParentChilds as $child) {
+        // remove child file.
+        $this->unlinkFile(APPLICATION_PATH . DIRECTORY_SEPARATOR . $child['storage_path']);
+        // remove child directory.
+        $childPhotoDir = $this->getDirectoryPath($child['storage_path']);
+        $this->removeDir($childPhotoDir);
+        // remove child row from db.
+        $child->remove();
+      }
+      // remove parent file.
+      $this->unlinkFile(APPLICATION_PATH . DIRECTORY_SEPARATOR . $file['storage_path']);
+      // remove directory.
+      $parentPhotoDir = $this->getDirectoryPath($file['storage_path']);
+      $this->removeDir($parentPhotoDir);
+      if ($file) {
+        // remove parent form db.
+        $file->remove();
+      }
+    }
     $user->photo_id = 0;
     $user->save();
 
@@ -408,5 +400,19 @@ class User_EditController extends Sesapi_Controller_Action_Standard
     $this->view->message = Zend_Registry::get('Zend_Translate')->_('Your photo has been removed.');
     Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'', 'result' => $this->view->message));
 
+  }
+  
+  protected function getDirectoryPath($storage_path){
+    return APPLICATION_PATH . DIRECTORY_SEPARATOR . str_replace(basename($storage_path),"",$storage_path);
+  }
+
+  protected function removeDir($dirPath){
+    if(@is_dir($dirPath)){
+     @rmdir($dirPath);
+   }
+  }
+
+  protected function unlinkFile($filePath){
+    @unlink($filePath);
   }
 }

@@ -1,6 +1,6 @@
 <?php ?>
 <?php $orderDetails = $this->orderDetails; ?>
-<?php $defaultCurrency = Engine_Api::_()->sesbasic()->defaultCurrency(); ?>
+<?php $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency(); ?>
 <?php echo $this->partial('index/left-bar.tpl', 'egifts', array("navigation" => $this->navigation)); ?>
   <div class="egifts_dashboard_content sesbm sesbasic_clearfix">
 		<div class="egifts_dashboard_content_header sesbasic_clearfix">
@@ -10,7 +10,7 @@
 			<?php if ($this->thresholdAmount > 0) { ?>
 				<div class="egifts_dashboard_threshold_amt">
 					<?php echo $this->translate("Threshold for payout: "); ?> <b>
-						<?php echo Engine_Api::_()->sesbasic()->getCurrencyPrice($this->thresholdAmount, $defaultCurrency); ?>
+						<?php echo Engine_Api::_()->payment()->getCurrencyPrice($this->thresholdAmount, $defaultCurrency); ?>
 					</b>
 				</div>
 			<?php } ?>
@@ -33,21 +33,21 @@
 				<span>
 					<?php echo $this->translate("Total Amount"); ?>
 				</span>
-				<span><?php echo Engine_Api::_()->sesbasic()->getCurrencyPrice($orderDetails['totalAmountSale'],$defaultCurrency); ?></span>
+				<span><?php echo Engine_Api::_()->payment()->getCurrencyPrice($orderDetails['totalAmountSale'],$defaultCurrency); ?></span>
 			</div>
 			<div class="egifts_dashboard_stat">
 				<span>
 					<?php echo $this->translate("Total Commission"); ?>
 				</span>
 				<span>
-					<?php echo Engine_Api::_()->sesbasic()->getCurrencyPrice($this->adminTotalCommission, $defaultCurrency); ?>
+					<?php echo Engine_Api::_()->payment()->getCurrencyPrice($this->adminTotalCommission, $defaultCurrency); ?>
 				</span>
 			</div>
 			<div class="egifts_dashboard_stat">
 				<span>
 					<?php echo $this->translate("Total Remaining Amount"); ?>
 				</span>
-				<span><?php echo Engine_Api::_()->sesbasic()->getCurrencyPrice($this->remainingAmount, $defaultCurrency); ?></span>
+				<span><?php echo Engine_Api::_()->payment()->getCurrencyPrice($this->remainingAmount, $defaultCurrency); ?></span>
 			</div>
 		</div>
 		<?php if($this->remainingAmount && $this->remainingAmount >= $this->thresholdAmount && ($this->userGateway) && count($this->isAlreadyRequests) == 0){ ?>
@@ -95,9 +95,9 @@
 							foreach ($this->paymentRequests as $item): ?>
 								<tr>
 									<td data-label="<?php echo $this->translate("Request Id") ?>" class="centerT"><?php echo $item->userpayrequest_id; ?></td>
-									<td data-label="<?php echo $this->translate("Amount Requested") ?>" class="centerT"><?php echo Engine_Api::_()->sesbasic()->getCurrencyPrice($item->requested_amount, $defaultCurrency); ?></td>
+									<td data-label="<?php echo $this->translate("Amount Requested") ?>" class="centerT"><?php echo Engine_Api::_()->payment()->getCurrencyPrice($item->requested_amount, $defaultCurrency); ?></td>
 									<td data-label="<?php echo $this->translate("Requested Date") ?>"><?php echo $item->creation_date; ?></td>
-									<td data-label="<?php echo $this->translate("Release Amount") ?>" class="centerT"><?php echo $item->state != 'pending' ? Engine_Api::_()->sesbasic()->getCurrencyPrice($item->release_amount, $defaultCurrency) : "-"; ?>
+									<td data-label="<?php echo $this->translate("Release Amount") ?>" class="centerT"><?php echo $item->state != 'pending' ? Engine_Api::_()->payment()->getCurrencyPrice($item->release_amount, $defaultCurrency) : "-"; ?>
 									</td>
 									<td data-label="<?php echo $this->translate("Request Message") ?>">
 										<div class="_msg"><?php echo $item->user_message; ?></div>

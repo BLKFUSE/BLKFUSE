@@ -5,4 +5,4 @@ CREATE TABLE `engine4_sesadvancedactivity_pinposts` (
   `resource_id` int(11) NOT NULL,
   `resource_type` varchar(255) NOT NULL,
    PRIMARY KEY (`pinpost_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;

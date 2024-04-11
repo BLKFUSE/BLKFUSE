@@ -196,4 +196,60 @@ class Storage_Model_DbTable_Files extends Engine_Db_Table
                 ->query()
                 ->fetchColumn();
   }
+  
+	public function getFileId($storage_path) {
+  
+    return $this->select()
+                ->from($this->info('name'), 'file_id')
+                ->where('storage_path =?', $storage_path)
+                ->query()
+                ->fetchColumn();
+  }
+  
+	public function getStorageData($storage_path) {
+    $select = $this->select()
+                ->from($this->info('name'))
+                ->where('storage_path LIKE (?)', '%'.$storage_path.'%');
+    return $this->fetchRow($select);
+  }
+  
+  public function deleteTinyMceFiles($item) {
+  
+    $select = $this->select()
+                  ->where('resource_type = ?', $item->getType())
+                  ->where('resource_id = ?', $item->getIdentity());
+    foreach( $this->fetchAll($select) as $file ) {
+      try {
+        Engine_Api::_()->storage()->deleteExternalsFiles($file->file_id);
+        $file->delete();
+      } catch( Exception $e ) {
+        if( !($e instanceof Engine_Exception) ) {
+          $log = Zend_Registry::get('Zend_Log');
+          $log->log($e->__toString(), Zend_Log::WARN);
+        }
+      }
+    }
+  }
+
+	public function getFlushPhotoData($params = array()) {
+
+		$select = $this->select();
+		
+		if(isset($params['count']) && $params['count'] == 1)
+      $select->from($this->info('name'), new Zend_Db_Expr('COUNT(file_id) as total'));
+    else 
+      $select->from($this->info('name'));
+
+    $select->where('parent_type =?', 'core_wysiwygphotos')
+          ->where('resource_type IS NULL')
+          ->where('resource_id IS NULL')
+          ->where('DATE(NOW()) != DATE(creation_date)');
+    
+    if(isset($params['count']) && $params['count'] == 1) {
+      $data = $this->fetchRow($select);
+      return (int) $data->total;
+		} else  {
+      return $this->fetchAll($select);
+    }
+	}
 }

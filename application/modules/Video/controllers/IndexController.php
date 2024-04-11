@@ -255,6 +255,7 @@ class Video_IndexController extends Core_Controller_Action_Standard
                     $form->addError('We could not find a video there - please check the URL and try again.');
                 }
                 $values['code'] = $information['code'];
+                $values['type'] = $information['type'];
                 $values['thumbnail'] = $information['thumbnail'];
                 $values['duration'] = $information['duration'];
                 $video = $table->createRow();
@@ -273,7 +274,10 @@ class Video_IndexController extends Core_Controller_Action_Standard
             if (empty($values['auth_view'])) {
                 $values['auth_view'] = 'everyone';
             }
-
+            
+            //approve setting work
+            $values['approved'] = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('video', $viewer, 'approve');
+            
             $values['view_privacy'] = $values['auth_view'];
             $values['parent_type'] = $parent_type;
             $values['parent_id'] =  $parent_id;
@@ -372,14 +376,14 @@ class Video_IndexController extends Core_Controller_Action_Standard
             throw $e;
         }
 
-
+        //if($values['approved'] == 1) {
         $db->beginTransaction();
         try {
             if ($insertAction) {
               $owner = $video->getOwner();
               
               if( $parent_type == 'group' && Engine_Api::_()->hasItemType('group') ) {
-                $action = Engine_Api::_()->getDbtable('actions', 'activity')->addActivity($owner, $group, 'video_new', '', array('privacy' => isset($values['networks'])? $network_privacy : null));
+                $action = Engine_Api::_()->getDbtable('actions', 'activity')->addActivity($owner, $group, 'group_video_new', '', array('privacy' => isset($values['networks'])? $network_privacy : null));
               } else {
                 $action = Engine_Api::_()->getDbtable('actions', 'activity')->addActivity($owner, $video, 'video_new', '', array('privacy' => isset($values['networks'])? $network_privacy : null));
               }
@@ -400,6 +404,10 @@ class Video_IndexController extends Core_Controller_Action_Standard
             $db->rollBack();
             throw $e;
         }
+        //}
+        
+        //Start Send Approval Request to Admin
+        Engine_Api::_()->core()->contentApprove($video, 'video');
 
         if ($video->type == 'upload') {
             return $this->_helper->redirector->gotoRoute(array('action' => 'manage'), 'video_general', true);
@@ -477,7 +485,10 @@ class Video_IndexController extends Core_Controller_Action_Standard
             $video->title = $_FILES['Filedata']['name'];
             $video->owner_id = $viewer->getIdentity();
             $video->save();
-
+            if($video->approved) {
+              $video->resubmit = 1;
+              $video->save();
+            }
             $db->commit();
             return $video->video_id;
         } catch (Exception $e) {
@@ -755,8 +766,19 @@ class Video_IndexController extends Core_Controller_Action_Standard
             return;
         }
         
+        if( !$video || !$video->getIdentity() || ((!$video->approved) && !$video->isOwner($viewer)) ) {
+					if(!empty($viewer->getIdentity()) && $viewer->isAdmin()) {
+					} else
+            return $this->_forward('requireauth', 'error', 'core');
+        }
+        
         if($video->parent_type == 'group' && $video->parent_id) {
           $group = Engine_Api::_()->getItem($video->parent_type, $video->parent_id);
+          if( !$group || !$group->getIdentity() || ((!$group->approved) && !$group->isOwner($viewer)) ) {
+            if(!empty($viewer->getIdentity()) && $viewer->isAdmin()) {
+            } else
+              return $this->_forward('requireauth', 'error', 'core');
+          }
           $viewPermission = $group->authorization()->isAllowed($viewer, 'view');
           if(empty($viewPermission)) {
             return $this->_forward('requireauth', 'error', 'core');
@@ -844,9 +866,10 @@ class Video_IndexController extends Core_Controller_Action_Standard
         $values = $form->getValues();
         $values['user_id'] = $viewer->getIdentity();
         $this->view->category = $values['category'];
-
-        $this->view->paginator = $paginator =
-            Engine_Api::_()->getApi('core', 'video')->getVideosPaginator($values);
+        $values['showvideo'] = 1;
+        $values['actionName'] = 'manage';
+        
+        $this->view->paginator = $paginator = Engine_Api::_()->getApi('core', 'video')->getVideosPaginator($values);
 
         $items_count = (int) Engine_Api::_()->getApi('settings', 'core')->getSetting('video.page', 12);
         $this->view->paginator->setItemCountPerPage($items_count);
@@ -921,7 +944,7 @@ class Video_IndexController extends Core_Controller_Action_Standard
         $db->beginTransaction();
 
         try {
-
+        
             // create video
             $table = Engine_Api::_()->getDbtable('videos', 'video');
             $video = $table->createRow();
@@ -930,9 +953,17 @@ class Video_IndexController extends Core_Controller_Action_Standard
             $video->duration = $information['duration'];
             $video->owner_id = $viewer->getIdentity();
             $video->code = $information['code'];
-            $video->type = $video_type;
+            $video->type = $information['type'] ? $information['type'] : $video_type;
+            
+            //approve setting work
+            $video->approved = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('video', $viewer, 'approve');
             $video->save();
-
+            
+            if($video->approved) {
+              $video->resubmit = 1;
+              $video->save();
+            }
+              
             // Now try to create thumbnail
             if ($information['thumbnail']) {
                 $thumbnail = $information['thumbnail'];
@@ -1047,44 +1078,52 @@ class Video_IndexController extends Core_Controller_Action_Standard
 
     // HELPER FUNCTIONS
 
-    public function handleIframelyInformation($uri)
-    {
-        $iframelyDisallowHost = Engine_Api::_()->getApi('settings', 'core')->getSetting('video_iframely_disallow');
-        if (parse_url($uri, PHP_URL_SCHEME) === null) {
-            $uri = "http://" . $uri;
-        }
-        $uriHost = Zend_Uri::factory($uri)->getHost();
-        if ($iframelyDisallowHost && engine_in_array($uriHost, $iframelyDisallowHost)) {
-            return;
-        }
-        if(engine_in_array($uriHost, array('youtube.com','www.youtube.com','youtube', 'youtu.be'))){
-            return $this->YoutubeVideoInfo($uri);
-        } else {
-            $config = Engine_Api::_()->getApi('settings', 'core')->core_iframely;
-            $iframely = Engine_Iframely::factory($config)->get($uri);
-        }
-        if (!engine_in_array('player', array_keys($iframely['links']))) {
-            return;
-        }
-        $information = array('thumbnail' => '', 'title' => '', 'description' => '', 'duration' => '');
-        if (!empty($iframely['links']['thumbnail'])) {
-            $information['thumbnail'] = $iframely['links']['thumbnail'][0]['href'];
-            if (parse_url($information['thumbnail'], PHP_URL_SCHEME) === null) {
-                $information['thumbnail'] = str_replace(array('://', '//'), '', $information['thumbnail']);
-                $information['thumbnail'] = "http://" . $information['thumbnail'];
-            }
-        }
-        if (!empty($iframely['meta']['title'])) {
-            $information['title'] = $iframely['meta']['title'];
-        }
-        if (!empty($iframely['meta']['description'])) {
-            $information['description'] = $iframely['meta']['description'];
-        }
-        if (!empty($iframely['meta']['duration'])) {
-            $information['duration'] = $iframely['meta']['duration'];
-        }
-        $information['code'] = $iframely['html'];
-        return $information;
+    public function handleIframelyInformation($uri) {
+
+			$iframelyDisallowHost = Engine_Api::_()->getApi('settings', 'core')->getSetting('video_iframely_disallow');
+			if (parse_url($uri, PHP_URL_SCHEME) === null) {
+					$uri = "http://" . $uri;
+			}
+			$uriHost = Zend_Uri::factory($uri)->getHost();
+			if ($iframelyDisallowHost && engine_in_array($uriHost, $iframelyDisallowHost)) {
+					return;
+			}
+
+			if(Engine_Api::_()->getApi('settings', 'core')->getSetting('video.youtube.apikey') && engine_in_array($uriHost, array('youtube.com','www.youtube.com','youtube', 'youtu.be'))){
+				return $this->YoutubeVideoInfo($uri);
+			} else {
+				$config = Engine_Api::_()->getApi('settings', 'core')->core_iframely;
+				$iframely = Engine_Iframely::factory($config)->get($uri, 'video');
+			}
+
+			if (!engine_in_array('player', array_keys($iframely['links']))) {
+					return;
+			}
+			
+			$information = array('thumbnail' => '', 'title' => '', 'description' => '', 'duration' => '');
+			if (!empty($iframely['links']['thumbnail'])) {
+					$information['thumbnail'] = $iframely['links']['thumbnail'][0]['href'];
+					if (parse_url($information['thumbnail'], PHP_URL_SCHEME) === null) {
+							$information['thumbnail'] = str_replace(array('://', '//'), '', $information['thumbnail']);
+							$information['thumbnail'] = "http://" . $information['thumbnail'];
+					}
+			}
+			if (!empty($iframely['meta']['title'])) {
+					$information['title'] = $iframely['meta']['title'];
+			}
+			if (!empty($iframely['meta']['description'])) {
+					$information['description'] = $iframely['meta']['description'];
+			}
+			if (!empty($iframely['meta']['duration'])) {
+					$information['duration'] = $iframely['meta']['duration'];
+			}
+			if (!empty($iframely['meta']['site_name'])) {
+					$information['type'] = $iframely['meta']['site_name'];
+			} else {
+        $information['type'] = 'iframely';
+			}
+			$information['code'] = $iframely['html'];
+			return $information;
     }
     
     public function getYoutubeIdFromUrl($url) {
@@ -1103,49 +1142,156 @@ class Video_IndexController extends Core_Controller_Action_Standard
       }
       return false;
     }
+    
+    public function geLinkContents($url) {
+			$ch = curl_init($url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36');
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+			curl_setopt($ch, CURLOPT_ENCODING, '');
+			$data = curl_exec($ch);
+			curl_close($ch);
+			return $data;
+    }
+    
+    public function getLinkData($uri) {
+    
+			$doc = new DOMDocument("1.0", 'utf-8');
+			$html = $this->geLinkContents($uri);
+
+			$encoding = 'utf-8';
+			preg_match('/<html(.*?)>/i', $html, $regMatches);
+			preg_match('/<meta[^<].*charset=["]?([\w-]*)["]?/i', $html, $charSetMatches);
+			if (isset($charSetMatches[1])) {
+				$encoding = $charSetMatches[1];
+			} elseif(isset($regMatches[1])) {
+				preg_match('/lang=["|\'](.*?)["|\']/is', $regMatches[1], $languages);
+				if(isset($languages[1]) && in_array($languages[1], ['uk'])) {
+					$encoding = 'Windows-1251';
+				}
+			}
+			$contentType = '<meta http-equiv="Content-Type" content="text/html; charset=' . $encoding . '">';
+			$html = str_replace('<head>', '<head>' . $contentType, $html);
+
+			if (function_exists('mb_convert_encoding')) {
+				@$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', $encoding));
+			} else {
+				@$doc->loadHTML($html);
+			}
+			
+			$metaList = $doc->getElementsByTagName("meta");
+			foreach ($metaList as $iKey => $meta) {
+				$type = $meta->getAttribute('property');
+				$content = $meta->getAttribute('content');
+				if(empty($type)) {
+					$type = $meta->getAttribute('name');
+				}
+				$iframely[$type] = $content;
+			}
+
+			$information = array('thumbnail' => '', 'title' => '', 'description' => '', 'duration' => '');
+			
+			//Get OG Title
+			if(!empty($iframely['og:title'])) {
+				$information['title'] = $iframely['og:title'];
+			} else {
+				$titleList = $doc->getElementsByTagName("title");
+				if ($titleList->length > 0) {
+					$information['title'] = $titleList->item(0)->nodeValue;
+				} else {
+					$information['title'] = '';
+				}
+			}
+			
+			//Get OG Description
+			if(!empty($iframely['og:description'])) {
+				$information['description'] = $iframely['og:description'];
+			} else {
+				$titleList = $doc->getElementsByTagName("description");
+				if ($titleList->length > 0) {
+					$information['description'] = $titleList->item(0)->nodeValue;
+				} else {
+					$information['description'] = '';
+				}
+			}
+
+			//Get OG Image
+			if (!empty($iframely['og:image'])) {
+				$information['thumbnail'] = $iframely['og:image'];
+			}
+
+			//Get video duration for Dailymotion and Vimeo for special case
+			if(preg_match('/dailymotion/',$sUrl)) {
+				$information['duration'] = isset($iframely['video:duration']) ? $iframely['video:duration'] : (isset($iframely['duration']) ? $iframely['duration'] : '');
+			} elseif (preg_match('/vimeo/', $sUrl)) {
+				$aScript = $doc->getElementsByTagName('script');
+				$iVimeoDuration = 0;
+				foreach($aScript as $script) {
+					if(preg_match('/(.*?)duration":{"raw":(.*?),/',$script->textContent, $aHtmlMatch)) {
+						$iVimeoDuration = (int)$aHtmlMatch[2];
+						break;
+					}
+				}
+				if(!empty($iVimeoDuration)) {
+					$information['duration'] = $iVimeoDuration;
+				}
+			}
+			//Get OG Enbed URL
+			$embedUrl = $iframely['og:video:url'] ? $iframely['og:video:url'] : $uri;
+			$information['code'] = '<iframe width="480" height="270" src="'.$embedUrl.'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+
+			return $information;
+    }
 
     public function YoutubeVideoInfo($uri) {
-        
-        $video_id = $this->getYoutubeIdFromUrl($uri);
-        $key = Engine_Api::_()->getApi('settings', 'core')->getSetting('video.youtube.apikey');
-        if(empty($key)){
-            return;
-        }
-        $url = 'https://www.googleapis.com/youtube/v3/videos?id='.$video_id.'&key='.$key.'&part=snippet,player,contentDetails';
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_REFERER, $_SERVER['HTTP_REFERER']);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        $response_a = json_decode($response,TRUE);    
-        $iframely =  $response_a['items'][0];
-        if (!engine_in_array('player', array_keys($iframely))) {
-            return;
-        }
-        $information = array('thumbnail' => '', 'title' => '', 'description' => '', 'duration' => '');
-        if (!empty($iframely['snippet']['thumbnails'])) {
-            $information['thumbnail'] = $iframely['snippet']['thumbnails']['high']['url'];
-            if (parse_url($information['thumbnail'], PHP_URL_SCHEME) === null) {
-                $information['thumbnail'] = str_replace(array('://', '//'), '', $information['thumbnail']);
-                $information['thumbnail'] = "http://" . $information['thumbnail'];
-            }
-        }
-        if (!empty($iframely['snippet']['title'])) {
-            $information['title'] = $iframely['snippet']['title'];
-        }
-        if (!empty($iframely['snippet']['description'])) {
-            $information['description'] = $iframely['snippet']['description'];
-        }
-        if (!empty($iframely['contentDetails']['duration'])) {
-            $information['duration'] =  Engine_Date::convertISO8601IntoSeconds($iframely['contentDetails']['duration']);
-        }
-        $information['code'] = $iframely['player']['embedHtml'];
-        return $information; 
+    
+			$key = Engine_Api::_()->getApi('settings', 'core')->getSetting('video.youtube.apikey');
+			if(empty($key)) {
+				$information = $this->getLinkData($uri);
+			} else {
+				$video_id = $this->getYoutubeIdFromUrl($uri);
+				$url = 'https://www.googleapis.com/youtube/v3/videos?id='.$video_id.'&key='.$key.'&part=snippet,player,contentDetails';
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_REFERER, $_SERVER['HTTP_REFERER']);
+				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+				$response = curl_exec($ch);
+				curl_close($ch);
+				$response_a = json_decode($response,TRUE);    
+				$iframely =  $response_a['items'][0];
+				if (!engine_in_array('player', array_keys($iframely))) {
+						return;
+				}
+				$information = array('thumbnail' => '', 'title' => '', 'description' => '', 'duration' => '');
+				if (!empty($iframely['snippet']['thumbnails'])) {
+					$information['thumbnail'] = $iframely['snippet']['thumbnails']['high']['url'];
+					if (parse_url($information['thumbnail'], PHP_URL_SCHEME) === null) {
+						$information['thumbnail'] = str_replace(array('://', '//'), '', $information['thumbnail']);
+						$information['thumbnail'] = "http://" . $information['thumbnail'];
+					}
+				}
+				if (!empty($iframely['snippet']['title'])) {
+						$information['title'] = $iframely['snippet']['title'];
+				}
+				if (!empty($iframely['snippet']['description'])) {
+						$information['description'] = $iframely['snippet']['description'];
+				}
+				if (!empty($iframely['contentDetails']['duration'])) {
+						$information['duration'] =  Engine_Date::convertISO8601IntoSeconds($iframely['contentDetails']['duration']);
+				}
+				$information['code'] = $iframely['player']['embedHtml'];
+				$information['type'] = "YouTube";
+			}
+			return $information; 
     }
     
     public function subcategoryAction() {

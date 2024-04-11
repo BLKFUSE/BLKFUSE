@@ -18,22 +18,18 @@ class Sesmusic_Plugin_Core extends Zend_Controller_Plugin_Abstract {
     $event->addResponse($select->query()->fetchColumn(0), 'music albums');
   }
   public function onRenderLayoutDefault($event, $mode = null) {
-
+    if( defined('_ENGINE_ADMIN_NEUTER') && _ENGINE_ADMIN_NEUTER ) return;
     $request = Zend_Controller_Front::getInstance()->getRequest();
     $moduleName = $request->getModuleName();
     $actionName = $request->getActionName();
     $controllerName = $request->getControllerName();
     $viewer = Engine_Api::_()->user()->getViewer();
     $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
-    		
-		$checkWelcomePage = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmusic.check.welcome', 2);
-    $checkWelcomeEnable = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmusic.enable.welcome', 1);
-    $checkWelcomePage = (($checkWelcomePage == 1 && $viewer->getIdentity() == 0) ? true : (($checkWelcomePage == 0 && $viewer->getIdentity() != 0) ? true : (($checkWelcomePage == 2) ? true : false)));
-    if (!$checkWelcomeEnable)
-      $checkWelcomePage = false;
-    if($actionName == 'welcome' && $controllerName == 'index' && $moduleName == 'sesmusic'){
+
+    $checkWelcomeEnable = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmusic.enable.welcome', 0);
+    if($actionName == 'welcome' && $controllerName == 'index' && $moduleName == 'sesmusic') {
       $redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
-      if (!$checkWelcomePage)
+      if ($checkWelcomePage == 0)
         $redirector->gotoRoute(array('module' => 'sesmusic', 'controller' => 'index', 'action' => 'home'), 'sesmusic_general', false);
       else if ($checkWelcomeEnable == 2)
         $redirector->gotoRoute(array('module' => 'sesmusic', 'controller' => 'index', 'action' => 'browse'), 'sesmusic_general', false);

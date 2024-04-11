@@ -44,9 +44,9 @@ class Install_Import_Phpfox_UserStyles extends Install_Import_Phpfox_Abstract
 
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_core_styles` (
-  `type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `id` int(11) unsigned NOT NULL,
-  `style` text COLLATE utf8_unicode_ci NOT NULL,
+  `style` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`type`,`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  */

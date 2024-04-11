@@ -22,12 +22,7 @@
     <div class="sesmember_review_sidebar_list_info">
     	<?php  if(isset($this->titleActive)){ ?>
       	<div class="sesmember_review_sidebar_list_title">
-          <?php if(strlen($review->getTitle()) > $this->title_truncation_list){
-          $title = mb_substr($review->getTitle(),0,($this->title_truncation_list-3)).'...';
-          echo $this->htmlLink($review->getHref(),$title);
-          } else { ?>
           <?php echo $this->htmlLink($review->getHref(),$review->getTitle()) ?>
-        	<?php } ?>
       	</div>
       <?php } ?>
         <?php $reviewCrator = Engine_Api::_()->getItem('user', $review->owner_id);?>

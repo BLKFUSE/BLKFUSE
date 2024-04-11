@@ -212,7 +212,7 @@ function handleFileUpload(files,obj)
    {
 			var url = files[i].name;
     	var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-			if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif'  || ext == 'GIF')){
+			if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif'  || ext == 'GIF'  || ext == 'webp')){
 				var status = new createStatusbar(obj,files[i]); //Using this we can set progress.
 				status.setFileNameSize(files[i].name,files[i].size);
 				statusArray[countUploadSes] =status;
@@ -407,7 +407,7 @@ scriptJquery(document).on('click','#upload_from_url',function(e){
 	var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
 	var name = url.split('/').pop();
 	name = name.substr(0, name.lastIndexOf('.'));
-		if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif'  || ext == 'GIF')){
+		if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif'  || ext == 'GIF'  || ext == 'webp')){
 			var status = new createStatusbar(scriptJquery('#dragandrophandler'),url,'url'); //Using this we can set progress.
 			var fd = new FormData();
 			fd.append('Filedata', url);

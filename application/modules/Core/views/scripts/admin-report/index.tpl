@@ -10,6 +10,7 @@
  * @author     Sami
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_manage", 'childMenuItemName' => 'core_admin_main_manage_reports')); ?>
 
 <script type="text/javascript">
   en4.core.runonce.add(function() {
@@ -38,22 +39,20 @@
 
 </script>
 
-<h2>
+<h2 class="page_heading">
   <?php echo $this->translate("Abuse Reports") ?>
 </h2>
 <p>
   <?php echo $this->translate("This page lists all of the reports your users have sent in regarding inappropriate content, system abuse, spam, and so forth. You can use the search field to look for reports that contain a particular word or phrase. Very old reports are periodically deleted by the system.") ?>
 </p>
-
-<?php
-$settings = Engine_Api::_()->getApi('settings', 'core');
-if( $settings->getSetting('user.support.links', 0) == 1 ) {
-	echo 'More info: <a href="https://community.socialengine.com/blogs/597/21/abuse-reports" target="_blank">See KB article</a>.';
-} 
-?>	
-<br />
-<br />
-
+<p>
+  <?php
+  $settings = Engine_Api::_()->getApi('settings', 'core');
+  if( $settings->getSetting('user.support.links', 0) == 1 ) {
+    echo 'More info: <a href="https://community.socialengine.com/blogs/597/21/abuse-reports" target="_blank">See KB article</a>.';
+  } 
+  ?>
+</p>  	
 <?php if( $this->paginator->getTotalItemCount() > 0 ): ?>
   <script type="text/javascript">
     var currentOrder = '<?php echo $this->filterValues['order'] ?>';
@@ -69,16 +68,11 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
       scriptJquery('#filter_form').trigger("submit");
     }
   </script>
-
   <div class='admin_search'>
     <?php echo $this->formFilter->render($this) ?>
   </div>
 
-  <br />
 <?php endif; ?>
-
-
-
 <div class='admin_results'>
   <div>
     <?php $count = $this->paginator->getTotalItemCount() ?>
@@ -91,11 +85,6 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
     )); ?>
   </div>
 </div>
-
-<br />
-
-
-
 <?php if( engine_count($this->paginator) ): ?>
 <div class="admin_table_form">
   <table class='admin_table admin_responsive_table'>
@@ -147,20 +136,19 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
         <td data-label="<?php echo $this->translate("Reasons") ?>" class="nowrap"><?php echo $item->category ?></td>
         <td class="admin_table_options">
           <?php echo $this->htmlLink(array('action' => 'action', 'id' => $item->getIdentity(), 'reset' => false, 'format' => 'smoothbox'), $this->translate("take action"), array('class' => 'smoothbox')) ?>
+          |
           <span class="sep"></span>
           <?php if( !empty($item->subject_type) ): ?>
             <?php echo $this->htmlLink(array('action' => 'view', 'id' => $item->getIdentity(), 'reset' => false), $this->translate("view content"), array('target' => '_blank')) ?>
             <span class="sep"></span>
           <?php endif; ?>
+          |
           <?php echo $this->htmlLink(array('action' => 'delete', 'id' => $item->getIdentity(), 'reset' => false), $this->translate("dismiss")) ?>
         </td>
       </tr>
       <?php endforeach; ?>
     </tbody>
   </table>
-
-  <br/>
-
   <div class='buttons'>
     <button onclick="javascript:delectSelected();" type='submit'><?php echo $this->translate("Dismiss Selected") ?></button>
   </div>
@@ -176,6 +164,7 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
   </div>
 
 <?php endif; ?>
-
-
-</div>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_manage').parent().addClass('active');
+  scriptJquery('.core_admin_main_manage_reports').addClass('active');
+</script>

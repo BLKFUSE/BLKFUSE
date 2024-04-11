@@ -10,6 +10,7 @@
  * @author     Jung
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_monetization", 'childMenuItemName' => 'core_admin_main_ads_manage')); ?>
 
 <script type="text/javascript">
   function selectAll(obj)
@@ -62,7 +63,7 @@
   }
 </script>
 
-<h2>
+<h2 class="page_heading">
   <?php echo $this->translate("Ads") ?>
 </h2>
 <?php if( count($this->navigation) ): ?>
@@ -70,35 +71,21 @@
     <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?>
   </div>
 <?php endif; ?>
-<br />
-<h3>
-  <?php echo $this->translate("Manage Ad Campaigns") ?>
-</h3>
-<p>
-  <?php echo $this->translate("CORE_VIEWS_SCRIPTS_ADMINADS_INDEX_DESCRIPTION") ?>
-</p>
-<?php
-$settings = Engine_Api::_()->getApi('settings', 'core');
-if( $settings->getSetting('user.support.links', 0) == 1 ) {
-	echo 'More info: <a href="https://community.socialengine.com/blogs/597/73/create-and-manage-ad-campaigns" target="_blank">See KB article</a>.';
-} 
-?>	
-
-<br />
-<br />
-
-
-
+<div class="admin_common_top_section">
+  <h3><?php echo $this->translate("Manage Ad Campaigns") ?></h3>
+  <p><?php echo $this->translate("CORE_VIEWS_SCRIPTS_ADMINADS_INDEX_DESCRIPTION") ?></p>
+  <?php
+  $settings = Engine_Api::_()->getApi('settings', 'core');
+  if( $settings->getSetting('user.support.links', 0) == 1 ) {
+    echo 'More info: <a href="https://community.socialengine.com/blogs/597/73/create-and-manage-ad-campaigns" target="_blank">See KB article</a>.';
+  } 
+  ?>	
+</div>
 <div>
   <?php echo $this->htmlLink(array('action' => 'create', 'reset' => false), 
         $this->translate("Create New Campaign"),
-        array('class' => 'buttonlink admin_ads_create')) ?>
+        array('class' => 'admin_link_btn admin_ads_create')) ?>
 </div>
-
-<br />
-
-
-
 <div class='admin_results'>
   <div>
     <?php $count = $this->paginator->getTotalItemCount() ?>
@@ -111,10 +98,6 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
     )); ?>
   </div>
 </div>
-
-<br />
-
-
 
 <?php if( engine_count($this->paginator) ): ?>
   <table class='admin_table admin_responsive_table'>
@@ -190,8 +173,11 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
           <a href="javascript:void(0);" onclick="javascript:changeStatus('<?php echo $item->adcampaign_id?>');">
             <?php if($item->status) echo $this->translate("pause"); else echo $this->translate("un-pause"); ?>
           </a> 
+          |
           <?php echo $this->htmlLink(array('action' => 'manageads', 'id' => $item->adcampaign_id, 'reset' => false), $this->translate("manage")) ?> 
+          |
           <?php echo $this->htmlLink(array('action' => 'edit', 'id' => $item->adcampaign_id, 'reset' => false), $this->translate("edit")) ?> 
+          |
           <a class='smoothbox' href='<?php echo $this->url(array('action' => 'delete', 'id' => $item->getIdentity())) ?>'>
             <?php echo $this->translate("delete") ?>
           </a>
@@ -200,9 +186,6 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
       <?php endforeach; ?>
     </tbody>
   </table>
-
-  <br />
-
   <div class='buttons'>
     <button onclick="javascript:delectSelected();" type='submit'><?php echo $this->translate("Delete Selected") ?></button>
   </div>

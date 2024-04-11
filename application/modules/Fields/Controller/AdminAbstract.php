@@ -302,6 +302,12 @@ class Fields_Controller_AdminAbstract extends Core_Controller_Action_Admin
 
   public function typeDeleteAction()
   {
+  
+    $request = Zend_Controller_Front::getInstance()->getRequest();
+    $moduleName = $request->getModuleName();
+    $actionName = $request->getActionName();
+    $controllerName = $request->getControllerName();
+    
     $option = Engine_Api::_()->fields()->getOption($this->_getParam('option_id'), $this->_fieldType);
     $field = Engine_Api::_()->fields()->getField($option->field_id, $this->_fieldType);
 
@@ -321,6 +327,21 @@ class Fields_Controller_AdminAbstract extends Core_Controller_Action_Admin
     if( !$this->getRequest()->isPost() ) {
       return;
     }
+    
+    //When profile type select
+    $users = array();
+    if(!empty($_POST['profile_type']) && $moduleName == 'user' && $controllerName == 'admin-fields' && $actionName == 'type-delete') {
+      $valuesTable = Engine_Api::_()->fields()->getTable('user', 'values');
+      $valuesTableName = $valuesTable->info('name');
+      $select = $valuesTable->select()
+                      ->from($valuesTableName)
+                      ->where($valuesTableName . '.value = ?', $this->_getParam('option_id'))
+                      ->where($valuesTableName . '.field_id = ?', 1);
+      $results = $valuesTable->fetchAll($select);
+      foreach($results as $result) {
+        $users[] = $result->item_id;
+      }
+    }
 
     // Process
     $maps = Engine_Api::_()->fields()->getTable($this->_fieldType, 'maps')->getMapsById($option->option_id);
@@ -335,9 +356,28 @@ class Fields_Controller_AdminAbstract extends Core_Controller_Action_Admin
     // Delete mapping
     Engine_Api::_()->authorization()->mappingGC();
     // @todo reassign stuff
+
+    //When profile type select
+    if(!empty($_POST['profile_type']) && engine_count($users) > 0) {
+      $dbAdapter = Zend_Db_Table_Abstract::getDefaultAdapter();
+      foreach($users as $user) {
+        $dbAdapter->query("INSERT IGNORE INTO `engine4_user_fields_values` (`item_id`, `field_id`, `index`, `value`, `privacy`) VALUES ('".$user."', 1, 0, '".$_POST['profile_type']."', NULL);");
+      }
+      
+      $mapLevelId = Engine_Api::_()->getDbtable('mapProfileTypeLevels', 'authorization')->getMappedLevelId($_POST['profile_type']);
+      
+      if(!empty($mapLevelId)) {
+        $this->_helper->redirector->gotoRoute(array(
+          'action' => 'update-member-levels',
+          'controller' => 'fields',
+          'module' => 'user',
+          'users' => implode(',',$users),
+          'level_id' => $mapLevelId,
+          'profile_type_id' => $_POST['profile_type'],
+        ), 'admin_default', false);
+      }
+    }
   }
-
-
 
   // Headings
 
@@ -816,5 +856,36 @@ class Fields_Controller_AdminAbstract extends Core_Controller_Action_Admin
     $optionData->getTable()->flushCache();
 
     $this->view->status = true;
+  }
+  
+  public function updateMemberLevelsAction() {
+
+    $this->_helper->layout->setLayout('default-simple');
+    if (!$this->getRequest()->isPost()) {
+      $this->view->profile_type_id = $profileTypeId =  $this->_getParam('profile_type_id', null);
+      $this->view->users = $this->_getParam('users', null);
+      $this->view->level_id = $this->_getParam('level_id', null);
+    }
+
+    if ($this->getRequest()->isPost()) {
+      
+      $db = Zend_Db_Table_Abstract::getDefaultAdapter();
+      
+      if(!empty($_POST['userids'])){
+        $profileTypeId =  $this->_getParam('profile_type_id', null);
+        $profileTypesUsers = explode("," , $_POST['userids']);
+        if (!empty($profileTypesUsers)) {
+          $userTable = Engine_Api::_()->getItemTable('user');
+          foreach ($profileTypesUsers as $value) {
+            $userTable->update(array('level_id' => $_POST['level_id']), array('user_id = ?' => $value, 'level_id != ?' => 1));
+          }
+        }
+      }
+      $this->_forward('success', 'utility', 'core', array(
+        'smoothboxClose' => true,
+        'parentRefresh'=> true,
+        'messages' => Array(Zend_Registry::get('Zend_Translate')->_('The profile type has been successfully edited.'))
+      ));
+    }
   }
 }

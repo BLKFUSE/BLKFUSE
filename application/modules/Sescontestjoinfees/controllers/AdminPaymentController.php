@@ -63,21 +63,21 @@ class Sescontestjoinfees_AdminPaymentController extends Core_Controller_Action_A
         $this->view->disable_gateway = false;	
         // Make form
       $this->view->form = $form = new Sescontestjoinfees_Form_Admin_Payment_Approve(array('contestId'=>$event->contest_id));
-      $defaultCurrency = Engine_Api::_()->sescontestjoinfees()->defaultCurrency();
+      $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
       $remainingAmount  =  Engine_Api::_()->getDbtable('remainingpayments', 'sescontestjoinfees')->getEventRemainingAmount(array('contest_id'=>$event->contest_id));
         $orderDetails  =  Engine_Api::_()->getDbtable('orders', 'sescontestjoinfees')->getContestStats(array('contest_id'=>$event->contest_id));
         $value = array();
-        $value['total_amount'] = Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($orderDetails['totalAmountSale'],$defaultCurrency);
-        $value['total_tax_amount'] = Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($orderDetails['totalTaxAmount'],$defaultCurrency);
-        $value['total_commission_amount'] = Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($orderDetails['commission_amount'],$defaultCurrency);
-        $value['remaining_amount'] = Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($remainingAmount->remaining_payment,$defaultCurrency);
+        $value['total_amount'] = Engine_Api::_()->payment()->getCurrencyPrice($orderDetails['totalAmountSale'],$defaultCurrency);
+        $value['total_tax_amount'] = Engine_Api::_()->payment()->getCurrencyPrice($orderDetails['totalTaxAmount'],$defaultCurrency);
+        $value['total_commission_amount'] = Engine_Api::_()->payment()->getCurrencyPrice($orderDetails['commission_amount'],$defaultCurrency);
+        $value['remaining_amount'] = Engine_Api::_()->payment()->getCurrencyPrice($remainingAmount->remaining_payment,$defaultCurrency);
         //set value to form
         if($this->_getParam('id',false)){
             $item = Engine_Api::_()->getItem('sescontestjoinfees_userpayrequest', $this->_getParam('id'));
             if($item){
               $itemValue = $item->toArray();
               $value = array_merge($itemValue,$value);
-              $value['requested_amount'] = Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($itemValue['requested_amount'],$defaultCurrency);
+              $value['requested_amount'] = Engine_Api::_()->payment()->getCurrencyPrice($itemValue['requested_amount'],$defaultCurrency);
               $value['release_amount'] = $itemValue['requested_amount'];
             }else{
               return $this->_forward('requireauth', 'error', 'core');	
@@ -180,7 +180,7 @@ class Sescontestjoinfees_AdminPaymentController extends Core_Controller_Action_A
       .  $this->view->url(array('action' => 'index', 'controller' => 'ipn', 'module' => 'payment'), 'admin_default', true).'&order_id=' . $order_id;
     // Process transaction
     if($gateway->plugin == "Sescontestjoinfees_Plugin_Gateway_Event_Stripe") {
-        $params['currency'] = Engine_Api::_()->sescontestjoinfees()->getCurrentCurrency();
+        $params['currency'] = Engine_Api::_()->payment()->getCurrentCurrency();
         $this->view->publishKey = $gateway->config['sesadvpmnt_stripe_publish']; 
         $this->view->session =  $plugin->createOrderTransaction($item,$event,$params);  
         $this->renderScript('/application/modules/Sesadvpmnt/views/scripts/payment/index.tpl');

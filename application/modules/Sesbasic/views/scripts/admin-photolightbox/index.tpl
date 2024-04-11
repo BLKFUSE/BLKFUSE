@@ -12,8 +12,8 @@
  */
  
 ?>
-
-<h2><?php echo $this->translate('SocialNetworking.Solutions (SNS) Basic Required Plugin'); ?></h2>
+<?php include APPLICATION_PATH .  '/application/modules/Sesbasic/views/scripts/dismiss_message.tpl';?>
+<h2 class="page_heading"><?php echo $this->translate('SocialNetworking.Solutions (SNS) Basic Required Plugin'); ?></h2>
 <?php if (engine_count($this->navigation)): ?>
   <div class='tabs'>
     <?php

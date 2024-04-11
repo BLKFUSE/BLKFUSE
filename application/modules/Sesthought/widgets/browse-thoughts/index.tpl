@@ -263,7 +263,11 @@
         wookmark<?php echo $randonNumber ?> = new Wookmark('.sesbasic_pinboard_<?php echo $randonNumber; ?>', {
           itemWidth: <?php echo isset($this->allParams['width']) ? str_replace(array('px','%'),array(''),$this->allParams['width']) : '300'; ?>, // Optional min width of a grid item
           outerOffset: 0, // Optional the distance from grid to parent
-          align:'left',
+           <?php if($orientation = ($this->layout()->orientation == 'right-to-left')){ ?>
+              align:'right',
+            <?php }else{ ?>
+              align:'left',
+            <?php } ?>
           flexibleWidth: function () {
             // Return a maximum width depending on the viewport
             return getWindowWidth() < 1024 ? '100%' : '40%';

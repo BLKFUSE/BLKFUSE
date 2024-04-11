@@ -30,7 +30,7 @@
   }
 
 </script>
-<div class='settings sesbasic_popup_form'>
+<div class='settings'>
   <?php echo $this->form->render($this); ?>
 </div>
 <style>

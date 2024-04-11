@@ -20,22 +20,17 @@ class Core_Form_Admin_Settings_Performance extends Engine_Form
 {
     public function init()
     {
-        $description = $this->getTranslator()->translate(
-            'For very large social networks, it may be necessary to enable caching to improve performance. If there is a noticeable decrease in performance on your social network, consider enabling caching below (or upgrading your hardware). Caching takes some load off the database server by storing commonly retrieved data in temporary files (file-based caching) or memcached (memory-based caching). If you are not familiar with caching, we do not recommend that you change any of these settings. <br>');
+        $description = $this->getTranslator()->translate('For very large social networks, it may be necessary to enable caching to improve performance. If there is a noticeable decrease in performance on your social network, consider enabling caching below (or upgrading your hardware). Caching takes some load off the database server by storing commonly retrieved data in temporary files (file-based caching) or memcached (memory-based caching). If you are not familiar with caching, we do not recommend that you change any of these settings. <br>');
 
         $settings = Engine_Api::_()->getApi('settings', 'core');
 
         if ($settings->getSetting('user.support.links', 0) == 1) {
-            $moreinfo = $this->getTranslator()->translate(
-                'More Info: <a href="%1$s" target="_blank"> KB Article</a>');
+					$moreinfo = $this->getTranslator()->translate('More Info: <a href="%1$s" target="_blank"> KB Article</a>');
         } else {
-            $moreinfo = $this->getTranslator()->translate(
-                '');
+					$moreinfo = $this->getTranslator()->translate('');
         }
 
-        $description = vsprintf($description.$moreinfo, array(
-            'https://community.socialengine.com/blogs/597/37/performance-caching',
-        ));
+        $description = vsprintf($description.$moreinfo, array('https://community.socialengine.com/blogs/597/37/performance-caching'));
 
         // Decorators
         $this->loadDefaultDecorators();

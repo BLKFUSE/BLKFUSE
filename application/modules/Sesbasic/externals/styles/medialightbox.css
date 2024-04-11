@@ -85,6 +85,15 @@
 .ses_media_lightbox_item > div .sesbasic_view_embed iframe{
 	margin:0 !important;
 }
+.ses_media_lightbox_item > div #video_embed_lightbox video{
+  width: 100% !important;
+  height: calc(100vh - 100px) !important;
+}
+#ses_media_lightbox_container_video #sesbasic_lightbox_content video{
+  width: 100% !important;
+  height:100vh !important;
+  margin-top: 0 !important;
+}
 /*MEDIA LIGHTBOX NAV BUTTONS*/
 .ses_media_lightbox_nav_btns{
   height:60px;
@@ -509,9 +518,23 @@ div.comments_comment_likes_tips{
 	line-height:30px;
 	font-size:13px;
 }
-/*
-  RESPONSIVE CSS
-*/
+/*Adv Comment*/
+.ses_media_lightbox_comments .sesadvcmt_comments form.advcomment_form .comment_form_main{
+  align-items:flex-end;
+}
+.ses_media_lightbox_comments .sesadvcmt_comments div._form_container div.comment_form{
+  border-radius:10px;
+  flex:inherit;
+  justify-content:initial;
+  width:100%;
+}
+.ses_media_lightbox_comments .sesadvcmt_comments div._form_container div.comment_form .mentions-input-box,
+.ses_media_lightbox_comments .sesadvcmt_comments div._form_container div.comment_form > textarea{
+  width:100%;
+  flex:inherit;
+}
+
+/*RESPONSIVE CSS*/
 @media (min-width:780px) and (max-width:900px) {
   .ses_media_lightbox_information{
     width:300px;

@@ -13,9 +13,9 @@ CREATE TABLE IF NOT EXISTS `se_eventmediacomments` (
   `eventmediacomment_eventmedia_id` int(10) unsigned NOT NULL default '0',
   `eventmediacomment_authoruser_id` int(10) unsigned NOT NULL default '0',
   `eventmediacomment_date` int(10) unsigned NOT NULL default '0',
-  `eventmediacomment_body` text collate utf8_unicode_ci,
+  `eventmediacomment_body` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY  (`eventmediacomment_id`),
   KEY `INDEX` (`eventmediacomment_eventmedia_id`,`eventmediacomment_authoruser_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */

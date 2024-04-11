@@ -49,7 +49,7 @@ class Authorization_Form_Admin_Level_Delete extends Engine_Form
       'label' => 'cancel',
       'link' => true,
       'prependText' => ' or ',
-      'href' => 'admin/levels',
+      'href' => 'admin/authorization/level',
       'decorators' => array(
         'ViewHelper'
       )

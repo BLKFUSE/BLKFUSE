@@ -13,3 +13,7 @@
 <div class="settings">
   <?php echo $this->form->render($this); ?>
 </div>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_settings').parent().addClass('active');
+  scriptJquery('.core_admin_main_signup').addClass('active');
+</script>

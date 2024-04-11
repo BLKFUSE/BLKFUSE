@@ -12,7 +12,7 @@
 ?>
 
 <div class="global_form_popup admin_member_stats">
-  <h3>Member Statistics</h3>
+  <h3><?php echo $this->translate('Member Statistics') ?></h3>
   <ul>
     <li>
       <?php echo $this->itemPhoto($this->user, 'thumb.icon', $this->user->getTitle()) ?>
@@ -92,13 +92,13 @@
       <?php echo $this->translate('Do Not Sell My Personal Information:'); ?>
       <span>
         <?php if($this->user->donotsellinfo == 1) { ?>
-          <?php echo $this->htmlImage($this->layout()->staticBaseUrl . 'application/modules/Core/externals/images/admin/check.png'); ?>
+          <i class="far fa-check-circle _check"></i>
         <?php } else { ?>
-          <?php echo $this->htmlImage($this->layout()->staticBaseUrl . 'application/modules/Core/externals/images/admin/uncheck.png'); ?>
+          <i class="far fa-times-circle _uncheck"></i>
         <?php } ?>
       </span>
     </li>
   </ul>
   <br/>
-  <button type="submit" onclick="parent.Smoothbox.close();return false;" name="close_button" value="Close">Close</button>
+  <!--<button type="submit" onclick="parent.Smoothbox.close();return false;" name="close_button" value="Close">Close</button>-->
 </div>

@@ -64,9 +64,9 @@
 
   <?php $yahooTable = Engine_Api::_()->getDbtable('yahoo', 'sessociallogin');?>
 
-  <?php $hotmailHref = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'sessociallogin', 'controller' => 'auth','action' => 'hotmail'), 'default', true).'?return_url='.$returnUrl;?>
+  <?php //$hotmailHref = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'sessociallogin', 'controller' => 'auth','action' => 'hotmail'), 'default', true).'?return_url='.$returnUrl;?>
 
-  <?php $hotmailTable = Engine_Api::_()->getDbtable('hotmail', 'sessociallogin');?>
+  <?php //$hotmailTable = Engine_Api::_()->getDbtable('hotmail', 'sessociallogin');?>
 
    <?php $flickrHref = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'sessociallogin', 'controller' => 'auth','action' => 'flickr'), 'default', true).'?return_url='.$returnUrl;?>
 
@@ -142,11 +142,11 @@
 
         <?php endif;?>
 
-        <?php if($hotmailTable->isConnected()): ?>
+        <?php //if($hotmailTable->isConnected()): ?>
 
-          <li <?php if($this->label == 1): ?> style="width:<?php echo $this->btnwidth ?>px;" <?php endif; ?> class="sessl_hotmail"><a href="<?php echo $hotmailHref;?>"><i class="fa fa-envelope"></i><span><?php echo $this->translate($this->butontext, 'Hot Mail');?></span></a></li>
+          <!--<li <?php //if($this->label == 1): ?> style="width:<?php //echo $this->btnwidth ?>px;" <?php //endif; ?> class="sessl_hotmail"><a href="<?php //echo $hotmailHref;?>"><i class="fa fa-envelope"></i><span><?php //echo $this->translate($this->butontext, 'Hot Mail');?></span></a></li>-->
 
-        <?php endif;?>
+        <?php //endif;?>
 
         <?php if($flickrTable->isConnected()):?>
 
@@ -274,17 +274,17 @@
 
           <?php endif;?>
 
-          <?php if($hotmailTable->isConnected()): ?>
+          <?php //if($hotmailTable->isConnected()): ?>
 
-            <li class="sessl_hotmail" title="<?php echo $this->translate('Hot Mail');?>">
+            <!--<li class="sessl_hotmail" title="<?php //echo $this->translate('Hot Mail');?>">
 
-              <a href="<?php echo $hotmailHref;?>"><i class="fa fa-envelope"></i></a>
+              <a href="<?php //echo $hotmailHref;?>"><i class="fa fa-envelope"></i></a>
 
-              <span><?php echo $this->translate('Hot Mail');?></span>
+              <span><?php //echo $this->translate('Hot Mail');?></span>
 
-            </li>
+            </li>-->
 
-          <?php endif;?>
+          <?php //endif;?>
 
           <?php if($flickrTable->isConnected()):?>
 

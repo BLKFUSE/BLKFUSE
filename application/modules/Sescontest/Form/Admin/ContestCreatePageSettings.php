@@ -211,13 +211,9 @@ class Sescontest_Form_Admin_ContestCreatePageSettings extends Engine_Form {
         'onclick' => 'showGuideEditor(this.value)',
     ));
 
-    $allowed_html = 'strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr';
-
+    //UPLOAD PHOTO URL
     $editorOptions = array(
-        'html' => (bool) $allowed_html,
-    );
-    $editorOptions['plugins'] = array(
-        'preview', 'code',
+        'uploadUrl' => Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'index', 'action' => 'upload-photo'), 'default', true),
     );
     $this->addElement('TinyMce', 'sescontest_message_guidelines', array(
         'label' => 'Enter Guidelines',

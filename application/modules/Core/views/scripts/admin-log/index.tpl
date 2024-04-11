@@ -10,25 +10,18 @@
  * @author     Alex
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_stats", 'childMenuItemName' => 'core_admin_main_stats_logs')); ?>
 
-<h2>
-  <?php echo $this->translate("Log Browser") ?>
-</h2>
-
-<p>
-  <?php echo $this->translate("CORE_VIEWS_SCRIPTS_ADMINSYSTEM_LOG_DESCRIPTION") ?>
-</p>
-
-<?php
-  $settings = Engine_Api::_()->getApi('settings', 'core');
-  if( $settings->getSetting('user.support.links', 0) == 1 ) {
-    echo 'More info: <a href="https://community.socialengine.com/blogs/597/83/log-browser" target="_blank">See KB article</a>.';
-  } 
-?>	
-
-<br />
-<br />
-
+<div class="admin_common_top_section">
+  <h2 class="page_heading"><?php echo $this->translate("Log Browser") ?></h2>
+  <p><?php echo $this->translate("CORE_VIEWS_SCRIPTS_ADMINSYSTEM_LOG_DESCRIPTION") ?></p>
+  <?php
+    $settings = Engine_Api::_()->getApi('settings', 'core');
+    if( $settings->getSetting('user.support.links', 0) == 1 ) {
+      echo 'More info: <a href="https://community.socialengine.com/blogs/597/83/log-browser" target="_blank">See KB article</a>.';
+    } 
+  ?>	
+</div>
 <script type="text/javascript">
   scriptJquery(document).ready(function() {
     var el = scriptJquery('.admin_logs');
@@ -68,10 +61,7 @@
       <?php echo $this->formFilter->render($this) ?>
     </div>
   </div>
-
-  <br />
 <?php endif; ?>
-
 <?php if( $this->error ): ?>
   <ul class="form-notices">
     <li>
@@ -79,12 +69,8 @@
     </li>
   </ul>
 <?php endif; ?>
-
-
 <?php if( !empty($this->logText) ): ?>
-
   <div class="admin_logs_container">
-
     <div class="admin_logs_info">
       <?php echo $this->translate(
         'Showing the last %1$s lines, %2$s bytes from the end. The file\'s size is %3$s bytes.',
@@ -93,8 +79,6 @@
         $this->locale()->toNumber($this->logSize)
       ) ?>
     </div>
-    <br />
-
     <div class="admin_logs_nav">
       <span class="admin_logs_nav_next">
         <?php if( $this->logEndOffset > 0 ): ?>
@@ -112,15 +96,17 @@
           <a href="<?php echo $this->url() ?>?<?php echo http_build_query(array(
             'file' => $this->logName,
           )) ?>">
-            Back to End
+            Back
           </a>
         </span>
       <?php endif; ?>
     </div>
-
     <div class="admin_logs">
       <pre><?php echo $this->logText ?></pre>
     </div>
-    
   </div>
 <?php endif; ?>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_stats').parent().addClass('active');
+  scriptJquery('.core_admin_main_stats_logs').addClass('active');
+</script>

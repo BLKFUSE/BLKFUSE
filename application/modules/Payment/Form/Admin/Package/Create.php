@@ -43,8 +43,38 @@ class Payment_Form_Admin_Package_Create extends Engine_Form
       'label' => 'Description',
       'validators' => array(
         array('StringLength', true, array(0, 250)),
-      )
+      ),
+      'maxlength' => 250,
     ));
+    
+    $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
+    $fileLink = $view->baseUrl() . '/admin/files/';
+
+    $fileOptions = array('' => '');
+    $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png', 'webp')));
+    foreach( $files as $file ) {
+      $fileOptions[$file->storage_path] = $file->name;
+    }
+    if (engine_count($fileOptions) > 1) {
+      $description = $this->getTranslator()->translate('Choose an image to show with this plan. This image will show with this plan at the user panel of your site. [Note: You can add a new image from the "<a href="%1$s" target="_blank">File & Media Manager</a>" section. If you leave the field blank then nothing will show.]');
+      $description = vsprintf($description, array($fileLink));
+
+      $this->addElement('Select', 'photo_id', array(
+        'label' => "Photo",
+        'description' => $description,
+        'multiOptions' => $fileOptions,
+      ));
+      $this->photo_id->addDecorator('Description', array('placement' => Zend_Form_Decorator_Abstract::PREPEND, 'escape' => false));
+    } else {
+      $description = $this->getTranslator()->translate('There are currently no images in the <a href="%1$s" target="_blank"> File & Media Manager </a> section of your site. Please begin by uploading an image to get started.');
+      $description = vsprintf($description, array($fileLink));
+      $description = "<div class='tip'><span>" . $description . "</span></div>";
+      $this->addElement('Dummy', 'photo_id', array(
+        'label' => "Photo",
+        'description' => $description,
+      ));
+      $this->photo_id->addDecorator('Description', array('placement' => Zend_Form_Decorator_Abstract::PREPEND, 'escape' => false));
+    }
 
     // Element: level_id
     $multiOptions = array('' => '');
@@ -146,7 +176,7 @@ class Payment_Form_Admin_Package_Create extends Engine_Form
      */
      
     // Element: enabled
-    $this->addElement('Radio', 'send_reminder', array(
+    $this->addElement('Select', 'send_reminder', array(
       'label' => 'Send Reminders for Emails & Notifications',
       'description' => 'Do you want to send Reminders for Emails & Notifications?',
       'multiOptions' => array(
@@ -160,16 +190,19 @@ class Payment_Form_Admin_Package_Create extends Engine_Form
 
     // Element: reminder_email
     $this->addElement('Text', 'reminder_email', array(
-        'label' => 'Reminders for Emails & Notifications',
-        'description' => 'Choose the duration (in Days) from Plan Expiry before which Email and Notifications should be sent to members of your website. This duration will be calculated from the expiry date of Plan.',
-        'validators' => array(
-          array('Int', true),
-          array('GreaterThan', true, array(0)),
-        ),
+      'label' => 'Reminders for Emails & Notifications',
+      'description' => 'Choose the duration (in Days) from Plan Expiry before which Email and Notifications should be sent to members of your website. This duration will be calculated from the expiry date of Plan.',
+      'validators' => array(
+        array('Int', true),
+        array('GreaterThan', true, array(0)),
+      ),
+      'required' => true,
+      'allowEmpty' => false,
+      'value' => 1,
     ));
 
     // Element: enabled
-    $this->addElement('Radio', 'enabled', array(
+    $this->addElement('Select', 'enabled', array(
       'label' => 'Enabled?',
       'description' => 'Can members choose this plan? Please note that disabling this plan will <a href="https://en.wikipedia.org/wiki/Grandfather_clause" target="_blank">grandfather</a> in existing plan members until they pick a new plan.',
       'multiOptions' => array(
@@ -180,18 +213,18 @@ class Payment_Form_Admin_Package_Create extends Engine_Form
     ));
     $this->getElement('enabled')->getDecorator('description')->setOption('escape', false);
     // Element: signup
-    $this->addElement('Radio', 'signup', array(
+    $this->addElement('Select', 'signup', array(
       'label' => 'Show on signup?',
       'description' => 'Can members choose this plan on signup?',
       'multiOptions' => array(
         '1' => 'Yes, show this plan on signup.',
-        '0' => 'No, only show this plan after signup.',
+        '0' => 'No, do not show this plan on signup.',
       ),
       'value' => 1,
     ));
 
     // Element: after_signup
-    $this->addElement('Radio', 'after_signup', array(
+    $this->addElement('Select', 'after_signup', array(
       'label' => 'Show after signup?',
       'description' => 'Can members choose this plan after signup?',
       'multiOptions' => array(
@@ -202,7 +235,7 @@ class Payment_Form_Admin_Package_Create extends Engine_Form
     ));
 
     // Element: default
-    $this->addElement('Radio', 'default', array(
+    $this->addElement('Select', 'default', array(
       'label' => 'Default Plan?',
       'description' => 'If choosing a plan on signup is disabled, this plan ' .
           'will be assigned to new members. Selecting this option will ' .

@@ -48,11 +48,11 @@ class Install_Import_Version3_AnnouncementAnnouncements extends Install_Import_V
 CREATE TABLE IF NOT EXISTS `se_announcements` (
 *  `announcement_id` int(9) NOT NULL auto_increment,
 -  `announcement_order` int(9) NOT NULL default '0',
-*  `announcement_date` varchar(255) collate utf8_unicode_ci NOT NULL default '0',
-*  `announcement_subject` varchar(255) collate utf8_unicode_ci NOT NULL default '',
-*  `announcement_body` text collate utf8_unicode_ci,
+*  `announcement_date` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL default '0',
+*  `announcement_subject` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+*  `announcement_body` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY  (`announcement_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  * 
  */
 
@@ -66,6 +66,6 @@ CREATE TABLE IF NOT EXISTS `engine4_announcement_announcements` (
 -  `modified_date` datetime NULL,
   PRIMARY KEY  (`announcement_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  * 
  */

@@ -22,7 +22,8 @@ class Fields_View_Helper_FieldCurrency extends Fields_View_Helper_FieldAbstract
   public function fieldCurrency($subject, $field, $value)
   {
     $value = $value->value ? $value->value : 0;
-    $label = $this->view->locale()->toCurrency($value, $field->config['unit']);
+    $label = Engine_Api::_()->payment()->getCurrencyPrice($value);
+    //$label = $this->view->locale()->toCurrency($value, $field->config['unit']);
     return $this->encloseInLink($subject, $field, $value, $label, true);
   }
 }

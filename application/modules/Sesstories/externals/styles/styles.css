@@ -82,18 +82,18 @@
   transform:scale(-1, 1);
 }
 .sesstories_allstories .owl-nav > div.owl-prev{
-	left:-10px;
+	left:-5px;
 }
 [dir="rtl"] .sesstories_allstories .owl-nav > div.owl-prev{
 	left:inherit;
-	right:-10px;
+	right:-5px;
 }
 .sesstories_allstories .owl-nav > div.owl-next{
-	right:-10px;
+	right:-5px;
 }
 [dir="rtl"] .sesstories_allstories .owl-nav > div.owl-next{
 	right:inherit;
-	left:-10px;
+	left:-5px;
 }
 .sesstories_allstories_item{
 	border-radius:10px;
@@ -196,6 +196,36 @@
 	.sesstories_allstories .owl-nav > div{
 		display:none;
 	}
+}
+.sesstories_allstories_item_loading{
+	background-image:url(../images/transprant-bg.png);
+	position:relative;
+}
+.sesstories_allstories_item_loading .sesstories_allstories_item_img{
+	background-image:url(../images/transprant-bg.png);
+	border-radius:50%;
+	position:absolute;
+	top:10px;
+	left:10px;
+	height:40px;
+	width:40px;
+}
+.sesstories_allstories_item_loading .sesstories_allstories_item_img:after{
+	display:none;
+}
+@keyframes shimmer{
+	100%{transform:translateX(100%);}
+}
+.sesstories_allstories_item_loading:after{
+	content:'';
+	position:absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	transform:translateX(-100%);
+	background-image:linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0));
+	animation:shimmer 1200ms infinite;
 }
 /*All Stories CSS End*/
 
@@ -349,12 +379,32 @@
 .sesstories_story_view_container .sesstories_story_item_content video{
 	height:100%;
 	width:100%;
+	object-fit:cover;
 }
-.sesstories_story_view_container .sesstories_story_item_content > div:not(.sesstories_content){
+.sesstories_story_view_container .sesstories_story_item_content .sesstories_media_content._isphoto{
+	height:100%;
+	width:100%;
+	top:0;
+	left:0;
+	position:absolute;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+.sesstories_story_view_container .sesstories_story_item_content .sesstories_media_content:not(._isphoto),
+.sesstories_story_view_container .sesstories_story_item_content .sesstories_media_content._isphoto .sesstories_reaction_data{
 	position:absolute;
 	bottom:0;
 	padding:10px;
 	width:100%;
+}
+.sesstories_story_view_container .sesstories_story_item_content .sesstories_media_content .sesstories_story_item_caption:not(._photo),
+.sesstories_story_view_container .sesstories_story_item_content .sesstories_media_content .sesstories_reaction_data *{
+	color:#fff;
+	text-shadow:0 0 5px rgba(0, 0, 0, .9);
+}
+.sesstories_story_view_container .sesstories_story_item_content .sesstories_story_item_caption:not(._photo){
+	font-size:110%;
 }
 /*Text Story*/
 .sesstories_story_view_container .sesstories_story_item_content > div.sesstories_content_text{
@@ -373,27 +423,30 @@
 	align-items:center;
 	justify-content:center;
 	height:100%;
-	width: 100%;
+	width:100%;
 }
-.sesstories_content_text .sesstories_contenttext{
+.sesstories_content_text .sesstories_contenttext,
+.sesstories_story_item_caption._photo{
 	color:#fff;
 	max-width:90%;
+	font-weight:bold;
 	font-size:20px;
-	line-height:150%s;
+	line-height:1.2;
+	white-space:pre;
+	white-space:pre-line;
 	margin:0 auto;
 	min-width:100%;
 	overflow:auto;
-	text-align:center;
+	text-align:center !important;
 	word-break:break-word;
 	max-height:100%;
 	padding:30px;
+	text-shadow:0 0px 1px rgba(0, 0, 0, .9);
+	max-height:90%;
 }
-.sesstories_story_view_container .sesstories_story_item_content > div *{
-	color:#fff;
-	text-shadow:0 0 5px rgba(0, 0, 0, .9);
-}
-.sesstories_story_view_container .sesstories_story_item_content .sesstories_story_item_caption{
-	font-size:110%;
+.sesstories_content_text .sesstories_contenttext *,
+.sesstories_story_item_caption._photo *{
+	color:#fff !important;
 }
 .sesstories_story_view_container .sesstories_story_item_content .sesstories_reaction_data{
 	margin-top:5px;
@@ -597,10 +650,16 @@
 	.sesstories_story_view_container .sesstories_story_item_content{
 		border-radius:0;
 	}
-	.sesstories_story_view_container .sesstories_story_item_content > div:not(.sesstories_content){
+	.sesstories_story_view_container .sesstories_story_item_content > .sesstories_media_content:not(._isphoto){
 		bottom:60px;
 	}
-	.sesstories_story_view_container .sesstories_story_item_footer {
+	.sesstories_content_text .sesstories_contenttext,
+	.sesstories_story_item_caption._photo{
+		max-height: calc(90% - 100px);
+		font-size:15px;
+		line-height:1.5;
+	}
+	.sesstories_story_view_container .sesstories_story_item_footer{
 		background-color:rgba(0, 0, 0, .3);
     border-top:1px solid rgba(255, 255, 255, .5);
 		padding:10px;
@@ -628,6 +687,7 @@
 		left:10px;
 		right:auto;
 	} 
+
 }
 /*Story View Popup End*/
 
@@ -802,30 +862,127 @@
 /*Archive Stories Popup End*/
 
 /*Create Stoty Popup Start*/
+.sesstories_add_story_popup_container .sessmoothbox_container{
+	left:0 !important;
+	width:100% !important;
+	height:100vh !important;
+	top:0 !important;
+	transition:all 500ms ease 0s;
+}
 .sesstories_add_story_popup{
-	width:500px;
+	width:100%;
 }
-.sesstories_add_story_popup_header{
-	background-image:url(../images/transprant-bg.png);
-	border-bottom-width:1px;
-	padding:15px;
-	font-weight:bold;
+.sesstories_add_story_popup_container .sessmoothbox_close_btn{
+	top:10px !important;
+	left:10px !important;
+}
+[dir="rtl"] .sesstories_add_story_popup_container .sessmoothbox_close_btn{
+	left:auto !important;
+	right:10px !important;
+}
+.sesstories_add_story_popup_main{
 	display:flex;
+	flex-wrap:wrap;
+	height:100vh;
 }
-.sesstories_add_story_popup_content{
+.sesstories_add_story_popup_left{
+	border-right-width:1px;
+	display:flex;
+	flex-direction:column;
+	padding-top:40px;
+	width:300px;
+}
+[dir="rtl"] .sesstories_add_story_popup_left{
+	border-left-width:1px;
+	border-right-width:0;
+}
+.sesstories_add_story_popup_left section{
+	flex:1;
+}
+.sesstories_add_story_popup_left ._top{
+	padding:10px 15px;
+	border-bottom-width:1px;
+}
+.sesstories_add_story_popup_left ._header{
+	font-size:20px;
+	font-weight:bold;
+}
+.sesstories_add_story_popup_left ._userinfo{
+	padding:15px 0;
+}
+.sesstories_add_story_popup_left ._userinfo .bg_thumb_icon{
+	height:50px;
+	width:50px;
+}
+.sesstories_add_story_popup_left ._userinfo ._name{
+	flex:1;
+	margin-left:10px;
+	font-weight:bold;
+}
+[dir="rtl"] .sesstories_add_story_popup_left ._userinfo ._name{
+	margin-left:0;
+	margin-right:10px;
+}
+.sesstories_add_story_popup_left ._cont{
 	padding:15px;
 }
-.sesstories_add_story_popup_content .sesstories_add_story_field{
+.sesstories_add_story_popup_left ._field{
 	margin-bottom:20px;
 }
-.sesstories_add_story_popup_content .sesstories_add_story_field textarea{
+.sesstories_add_story_popup_left ._field textarea{
 	width:100%;
 	min-width:inherit;
 	min-height:80px;
 }
-.sesstories_story_uploader_main{
+.sesstories_add_bg_images{
 	display:flex;
-	justify-content:space-around;
+	flex-wrap:wrap;
+	margin:0 -5px;
+}
+.sesstories_add_bg_images label{
+	font-weight:bold;
+	margin:10px 5px;
+	width: 100%;
+}
+.sesstories_add_bg_images a{
+	margin:0 5px 5px;
+}
+.sesstories_add_bg_images a img{
+	border-radius:50%;
+	object-fit:cover;
+	height:30px;
+	width:30px;
+}
+.sesstories_add_story_popup_left ._footer{
+	border-top-width:1px;
+	padding:10px 10px;
+	display:flex;
+	justify-content:flex-end;
+}
+.sesstories_add_story_popup_left ._footer > div{
+	padding:5px;
+	width:50%;		
+}
+.sesstories_add_story_popup_left ._footer > div a,
+.sesstories_add_story_popup_left ._footer > div button{
+	width:100%;
+	display:block;
+	border-radius:5px;
+	padding:10px;
+	font-weight:bold;
+	border-width:1px;
+	line-height:1.5;
+}
+.sesstories_add_story_popup_content{
+	padding:15px;
+	flex:1;
+}
+.sesstories_story_uploader_main,
+.sesstories_story_uploader_preview{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	height:100%;
 }
 .sesstories_story_uploader article{
 	border-radius:5px;
@@ -834,7 +991,8 @@
 	flex-direction:column;
 	justify-content:center;
 	align-items:center;
-	height:250px;
+	margin:10px;
+	height:300px;
 	width:200px;
 	position:relative;
 }
@@ -883,29 +1041,184 @@
 	text-overflow:ellipsis;
 	overflow:hidden;
 }
-.sesstories_add_bg_images{
+.sesstories_story_uploader_preview{
+	padding:30px;
+}
+.sesstories_story_uploader_preview section{
+	box-shadow:0 0 10px rgba(0, 0, 0, .1);
+	border-radius:10px;
+	height:100%;
+	width:100%;
+	max-width:600px;
+	padding:15px;
 	display:flex;
-	flex-wrap:wrap;
-	margin:0 -5px;
+	flex-direction:column;
 }
-.sesstories_add_bg_images a{
-	margin:0 5px 5px;
+.sesstories_story_uploader_preview ._head{
+	font-weight:bold;
+	font-size:20px;
+	margin-bottom:10px;
 }
-.sesstories_add_bg_images a img{
-	border-radius:5px;
-	object-fit:cover;
-	height:30px;
-	width:30px;
+.sesstories_story_uploader_preview ._preview{
+	border-radius:10px;
+	background-color:#111;
+	flex:1;
+	padding:10px;
 }
-.sesstories_add_story_popup_footer{
+.sesstories_story_uploader_preview ._previewimg{
+	background-position:center center;
+	background-size:cover;
+	border-radius:10px;
+	overflow:hidden;
 	border-width:1px;
-	padding:10px 15px;
+	aspect-ratio:9/16;
+	position:relative;
 	display:flex;
-	justify-content:flex-end;
+	align-items:center;
+	justify-content:center;
+	height:100%;
+	max-height:100%;
+	max-width:350px;
+}
+.sesstories_story_uploader_preview ._previewimg video{
+	width:100%;
+	height:100%;
+	object-fit:cover;
+	position:absolute;
+	left:0;
+	top:0;
+}
+.sesstories_story_uploader_preview ._previewtext{
+	color:#fff;
+	font-weight:bold;
+	text-align:center !important;
+	width:90%;
+	text-shadow:0 0px 1px rgba(0, 0, 0, .9);
+	font-size:20px;
+	line-height:1.2;
+	white-space:pre;
+	white-space:pre-line;
+	margin:10px;
+	overflow:auto;
+	max-height:90%;
+}
+.sesstories_content_text .sesstories_contenttext::-webkit-scrollbar,
+.sesstories_story_uploader_preview ._previewtext::-webkit-scrollbar,
+.sesstories_story_item_caption._photo::-webkit-scrollbar{
+  width:2px;
+}
+.sesstories_content_text .sesstories_contenttext::-webkit-scrollbar:hover,
+.sesstories_story_uploader_preview ._previewtext::-webkit-scrollbar:hover,
+.sesstories_story_item_caption._photo::-webkit-scrollbar:hover{
+  width:10px;
+}
+.sesstories_content_text .sesstories_contenttext::-webkit-scrollbar-track,
+.sesstories_story_uploader_preview ._previewtext::-webkit-scrollbar-track,
+.sesstories_story_item_caption._photo::-webkit-scrollbar-track{
+  box-shadow:inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.sesstories_content_text .sesstories_contenttext::-webkit-scrollbar-thumb,
+.sesstories_story_uploader_preview ._previewtext::-webkit-scrollbar-thumb,
+.sesstories_story_item_caption._photo::-webkit-scrollbar-thumb{
+  background-color:#e5e5e5;
+  outline:1px solid #e5e5e5;
+	border-radius:10px;
+}
+@media only screen and (min-width:1400px){
+	.sesstories_add_story_popup_left{
+		width:350px;
+	}
 }
 @media only screen and (max-width:767px){
 	.sesstories_add_story_popup{
 		width:100%;
 	}
+	.sesstories_add_story_popup_main{
+		display:block;
+		overflow:auto;
+	}
+	.sesstories_add_story_popup_left,
+	.sesstories_add_story_popup_content{
+		width:100%;
+	}
+	.sesstories_story_uploader_preview{
+		padding:0;
+	}
+	.sesstories_story_uploader_preview ._previewimg{
+		width:350px;
+	}
+}
+@media only screen and (max-width:540px){
+	.sesstories_story_uploader article{
+		height:200px;
+    width:150px;
+		margin:5px;
+	}
+	.sesstories_story_uploader_preview ._previewimg{
+		width:100%;
+		max-width:100%;
+	}
+	.sesstories_story_uploader_preview ._previewtext{
+		font-size:15px;
+		max-height:100%;
+		width:100%;
+		margin:0;
+		padding:10px;
+	}
+	
 }
 /*Create Stoty Popup End*/
+/*Confirm Popup Start*/
+.sesstories_confirm_popup_container{
+	background-color:rgba(0, 0, 0, .1);
+	display:none;
+	position:fixed;
+	left:0;
+	top:0;
+	height:100%;
+	width:100%;
+	z-index: 101;
+}
+.sesstories_confirm_popup_container._show{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+.sesstories_confirm_popup{
+	border-radius:10px;
+	overflow:hidden;
+	min-width:400px;
+}
+.sesstories_confirm_popup > div{
+	padding:10px;
+	text-align:center;
+}
+.sesstories_confirm_popup ._head{
+	border-bottom-width:1px;
+	font-size:20px;
+	font-weight:bold;
+}
+.sesstories_confirm_popup ._footer{
+	display:flex;
+	justify-content:flex-end;
+}
+.sesstories_confirm_popup ._footer button{
+	display:inline-block;
+	border-radius:5px;
+	padding:10px 20px;
+	font-weight:bold;
+	border-width:1px;
+	line-height:1.5;
+	margin-left:10px;
+}
+[dir="rtl"] .sesstories_confirm_popup ._footer button{
+	margin-left:0;
+	margin-right:10px;
+}
+@media only screen and (max-width:540px){
+	.sesstories_confirm_popup{
+		width:90%;
+		min-width:inherit;
+	}
+}
+/*Confirm Popup End*/

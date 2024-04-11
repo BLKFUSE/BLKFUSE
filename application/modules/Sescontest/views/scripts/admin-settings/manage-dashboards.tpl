@@ -14,11 +14,8 @@
 ?>
 
 <?php include APPLICATION_PATH .  '/application/modules/Sescontest/views/scripts/dismiss_message.tpl';?>
-
-
 <h3><?php echo "Manage Dashboard Menu Items"; ?></h3>
 <p><?php echo "Here, you can manage the contest dashboard menu items and edit their titles. You can also enable / disable any menu item from below."; ?> </p>
-<br />
 <table class='admin_table' style="width:50%;">
   <thead>
     <tr>

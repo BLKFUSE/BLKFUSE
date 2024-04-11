@@ -11,18 +11,18 @@
  */
 
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_monetization", 'parentMenuItemName' => 'core_admin_main_ads', 'childMenuItemName' => 'adcampaign_admin_main_edit')); ?>
+
 <script type="text/javascript">
 var myCalStart = false;
 var myCalEnd = false;
 
 en4.core.runonce.add(function(){
   scriptJquery(`<button type="button" class="event_calendar"></button>`).insertBefore(scriptJquery('#start_time-date').attr("type","text").attr("autocomplete","off").datepicker({
-    dateFormat: "mm/dd/yy"
     })
   );
   
   scriptJquery(`<button type="button" class="event_calendar"></button>`).insertBefore(scriptJquery('#end_time-date').attr("type","text").attr("autocomplete","off").datepicker({
-    dateFormat: "mm/dd/yy"
     })
   );
 });
@@ -50,7 +50,7 @@ var updateTextFields = function(endsettings)
   en4.core.runonce.add(updateTextFields);
 <?php endif;?>
 </script>
-<h2><?php echo $this->translate("Editing Ad Campaign: ") ?><?php echo $this->campaign->name;?></h2>
+<h2 class="page_heading"><?php echo $this->translate("Editing Ad Campaign: ") ?><?php echo $this->campaign->name;?></h2>
 <?php if( engine_count($this->navigation) ): ?>
   <div class='tabs'>
     <?php
@@ -63,3 +63,7 @@ var updateTextFields = function(endsettings)
 <div class='settings'>
   <?php echo $this->form->render($this); ?>
 </div>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_monetization').parent().addClass('active');
+  scriptJquery('.core_admin_main_ads').addClass('active');
+</script>

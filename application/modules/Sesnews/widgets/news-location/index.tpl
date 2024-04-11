@@ -51,14 +51,14 @@
 			<?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?>
         <?php $location = "<div class=\"sesnews_list_stats sesnews_list_location sesbasic_text_light\">
         <span class=\"widthfull\">
-        <i class=\"fa fa-map-marker\" title=\"$locationText\"></i>
+        <i class=\"sesbasic_icon_map\" title=\"$locationText\"></i>
         <span title=\"$locationvalue\"><a href='".$this->url(array('resource_id' => $news->news_id,'resource_type'=>'sesnews_news','action'=>'get-direction'), 'sesbasic_get_direction', true)."' class=\"opensmoothboxurl\">$locationvalue</a></span>
         </span>
         </div>";?>
     <?php } else { ?>
       <?php $location = "<div class=\"sesnews_list_stats sesnews_list_location sesbasic_text_light\">
 			<span class=\"widthfull\">
-			<i class=\"fa fa-map-marker\" title=\"$locationText\"></i>
+			<i class=\"sesbasic_icon_map\" title=\"$locationText\"></i>
 			<span title=\"$locationvalue\">$locationvalue</span>
 			</span>
 			</div>";?>

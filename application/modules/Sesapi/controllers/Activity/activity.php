@@ -166,7 +166,7 @@ if(@$sesAdv) {
             $attachment['buy_url'] = $buysell->buy;
             $attachment['description'] = $buysell->description;
             $attachment['buysell_id'] = $buysell->getIdentity();
-            $attachment['price'] = Engine_Api::_()->sesadvancedactivity()->getCurrencyPrice($buysell->price,$buysell->currency);
+            $attachment['price'] = Engine_Api::_()->payment()->getCurrencyPrice($buysell->price,$buysell->currency);
             $attachment['owner_id'] = $action->subject_id;
             $attachment['owner_title'] = $action->getOwner()->getTitle();
             $attachment['can_message_owner'] = false;
@@ -342,7 +342,7 @@ if(@$sesAdv) {
             $total = $activityParams;
             $attachment['totalImagesCount'] = !empty($total['count']) ? $total['count'] : engine_count($attachments);;
           }
-          if($attachmentData->item->getType() == "sespage_photo" || $attachmentData->item->getType() == "sesgroup_photo" || $attachmentData->item->getType() == "sesbusiness_photo" || $attachmentData->item->getType() == "event_photo"  || $attachmentData->item->getType() == "group_photo"){
+          if($attachmentData->item->getType() == "sespage_photo" || $attachmentData->item->getType() == "sesgroup_photo" || $attachmentData->item->getType() == "sesbusiness_photo" || $attachmentData->item->getType() == "event_photo" || $attachmentData->item->getType() == "sesevent_photo"   || $attachmentData->item->getType() == "group_photo"){
             $attachment["images"][$counterImage] =  Engine_Api::_()->sesapi()->getPhotoUrls($attachmentData->item->file_id,'','',$getImageSize);
           }else{
             $attachment["images"][$counterImage] =  Engine_Api::_()->sesapi()->getPhotoUrls($attachmentData->item,'','',$getImageSize);
@@ -544,7 +544,7 @@ if(engine_count($hashTagActivity)){
       $uArray["title"] = $this->view->viewer()->getTitle();
       $uArray["id"] = $this->view->viewer()->getIdentity();
       $uArray["type"] = $this->view->viewer()->getType();
-    //   array_unshift($itemS,$uArray);
+      // array_unshift($itemS,$uArray);
     }
     $activity[$counter]['comment']['likeUserData'] = $itemsLike;
 
@@ -865,15 +865,6 @@ if ($action->getTypeInfo()->shareable == 1 && ($attachment = $action->getFirstAt
   $activity[$counter]['item_user']["title"] = $subjectModule->getTitle();
   $activity[$counter]['item_user']["user_image"] = $subjectModule->getType() == "user" ? $this->userImage($subjectModule->getIdentity(),"thumb.profile") : $this->getBaseUrl(true,$subjectModule->getPhotoUrl('thumb.profile'));
   $activity[$counter]['item_user']["user_type"] = $subjectModule->getType();
-  $activity[$counter]['item_user']["verified"] = 0;
-   if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('everification')) {
-          $verifieddocuments = $verifieddocuments = Engine_Api::_()->getDbTable('documents', 'everification')->getAllUserDocuments(array('user_id' => $subjectModule->getIdentity(), 'verified' => '1', 'fetchAll' => '1'));
-          if(count($verifieddocuments) > 0) {
-               $activity[$counter]['item_user']["verified"] = 1;
-               $activity[$counter]['item_user']["image_url"] = 'https://blkfuse.com/application/modules/Sesbasic/externals/images/verify.png';
-          }
-        }
-  
   $counterOptions = 0;
 
   if(!empty($fromActivityFeed)){
@@ -944,10 +935,12 @@ if ($action->getTypeInfo()->shareable == 1 && ($attachment = $action->getFirstAt
             }
         }
     }
-    if($viewer->getIdentity() != $action->getSubject()->getIdentity() && $sesAdv){
-        $activity[$counter]['options'][$counterOptions]['name'] = "hide_feed";
-        $activity[$counter]['options'][$counterOptions]['value'] = $this->view->translate("Hide Feed");
-        $counterOptions++;
+    if($viewer->getIdentity() != $action->getSubject()->getIdentity()){
+        if($sesAdv){
+          $activity[$counter]['options'][$counterOptions]['name'] = "hide_feed";
+          $activity[$counter]['options'][$counterOptions]['value'] = $this->view->translate("Hide Feed");
+          $counterOptions++;
+        }
         $activity[$counter]['options'][$counterOptions]['name'] = "report";
         $activity[$counter]['options'][$counterOptions]['value'] = $this->view->translate("Report Feed");
         $counterOptions++;
@@ -1003,17 +996,17 @@ if ($action->getTypeInfo()->shareable == 1 && ($attachment = $action->getFirstAt
   
   $activity[$counter]['activityType'] = Engine_Api::_()->getApi('activity','sesapi')->assemble($action->getTypeInfo()->body, $params,$groupId);          //get icon for privacy
     if($action->privacy == 'onlyme'){
-      $privacyImageUrl = $this->getBaseUrl(true,"application/modules/Sesapi/externals/images/onlyme.png");
+      $privacyImageUrl = $this->getBaseUrl(true,"/application/modules/Sesapi/externals/images/onlyme.png");
     }else if($action->privacy == 'friends'){
-      $privacyImageUrl = $this->getBaseUrl(true,"application/modules/Sesapi/externals/images/friends.png");
+      $privacyImageUrl = $this->getBaseUrl(true,"/application/modules/Sesapi/externals/images/friends.png");
     }else if($action->privacy == 'networks'){
-      $privacyImageUrl = $this->getBaseUrl(true,"application/modules/Sesapi/externals/images/network.png");
+      $privacyImageUrl = $this->getBaseUrl(true,"/application/modules/Sesapi/externals/images/network.png");
     }else if(strpos($action->privacy,'network_list') !== false){
-      $privacyImageUrl = $this->getBaseUrl(true,"application/modules/Sesapi/externals/images/network.png");
+      $privacyImageUrl = $this->getBaseUrl(true,"/application/modules/Sesapi/externals/images/network.png");
     }else if(strpos($action->privacy,'members_list') !== false || strpos($action->privacy,'member_list') !== false){
-      $privacyImageUrl = $this->getBaseUrl(true,"application/modules/Sesapi/externals/images/list.png");
+      $privacyImageUrl = $this->getBaseUrl(true,"/application/modules/Sesapi/externals/images/list.png");
     }else{
-      $privacyImageUrl = $this->getBaseUrl(true,"application/modules/Sesapi/externals/images/public.png");
+      $privacyImageUrl = $this->getBaseUrl(true,"/application/modules/Sesapi/externals/images/public.png");
     }
     $activity[$counter]['privacyImageUrl'] = $privacyImageUrl;
     //get activity icon

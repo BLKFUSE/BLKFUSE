@@ -698,7 +698,7 @@ class Engine_Package_Manager
      * @param array $options
      * @return Engine_Package_Manager_PackageCollection
      */
-    public function listInstalledPackages($options = array())
+    public function listInstalledPackages($options = array(), $throwerror = true)
     {
         if (null !== $this->_installedPackages) {
             return $this->_installedPackages;
@@ -731,7 +731,7 @@ class Engine_Package_Manager
                 unset($packageFile);
             } catch (Exception $e) {
                 // Silence?
-                if (APPLICATION_ENV == 'development') {
+                if (APPLICATION_ENV == 'development' && $throwerror) {
                     throw $e;
                 }
             }

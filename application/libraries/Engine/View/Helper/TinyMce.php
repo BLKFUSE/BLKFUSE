@@ -22,11 +22,11 @@ class Engine_View_Helper_TinyMce extends Zend_View_Helper_Abstract
   protected $_html = true;
   protected $_bbcode = false;
   protected $_supported = array(
-    'mode' => array(
+    'selector' => array(
       'textareas', 'specific_textareas', 'exact', 'none'
     ),
     'theme' => array(
-      'modern'
+      'silver'
     ),
     'format' => array(
       'html', 'xhtml'
@@ -50,18 +50,19 @@ class Engine_View_Helper_TinyMce extends Zend_View_Helper_Abstract
       'importcss', 'media', 'nonbreaking', 'noneditable', 'pagebreak', 'paste',
       'preview', 'print', 'save', 'searchreplace', 'spellchecker', 'tabfocus',
       'table', 'template', 'textcolor', 'visualblocks', 'visualchars', 'toc',
-      'wordcount', 'jbimages', 'imagetools', 'colorpicker', 'codesample'
+      'wordcount', 'imagetools', 'colorpicker', 'codesample'
     ),
   );
+  
   protected $_config = array(
-    'mode' => 'textareas',
+    'selector' => 'textarea.tinymce_editor',
     'plugins' => array(
       'table', 'fullscreen', 'media', 'preview', 'paste',
       'code', 'image', 'textcolor', 'link', 'lists', 'autosave',
-      'colorpicker', 'imagetools', 'advlist', 'searchreplace', 'emoticons'
+      'colorpicker', 'imagetools', 'advlist', 'searchreplace', 'emoticons','autolink'
     ),
-    'theme' => 'modern',
-    'menubar' => false,
+    'theme' => 'silver',
+    'menubar' => true,
     'statusbar' => false,
     'toolbar1' => array(
       'undo', 'redo', 'removeformat', 'pastetext', '|', 'searchreplace', 'code',
@@ -78,11 +79,19 @@ class Engine_View_Helper_TinyMce extends Zend_View_Helper_Abstract
     'element_format' => 'html',
     'autosave_ask_before_unload' => false,
     'autosave_retention' => '300m',
-    'height' => '225px',
+    'height' => '500px',
+    'width' => "600px",
     'convert_urls' => false,
-    'upload_url' => '',
+    'images_upload_url' => '',
+    'disallowPlugins' => '',
     'browser_spellcheck' => true,
+    
+    'toolbar_mode' => 'wrap',
+    'promotion' => false,
+    'branding' => false,
+    //'image_caption' => true,
   );
+  
   protected $_scriptPath;
   protected $_scriptFile;
 
@@ -137,7 +146,15 @@ class Engine_View_Helper_TinyMce extends Zend_View_Helper_Abstract
   
   public function setUploadUrl($value)
   {
-    $this->_config['upload_url'] = $value;
+    $this->_config['images_upload_url'] = $value;
+    $this->updateSettings();
+  }
+  
+  public function setDisallowPlugins($value)
+  { 
+    $viewer = Engine_Api::_()->user()->getViewer();
+    $level_id = !empty($viewer->getIdentity()) ? $viewer->level_id : 5;
+    $this->_config['disallowPlugins'] = Engine_Api::_()->getDbtable('permissions', 'authorization')->getAllowed('user', $level_id, 'core_editors_allow');
     $this->updateSettings();
   }
 
@@ -177,28 +194,20 @@ class Engine_View_Helper_TinyMce extends Zend_View_Helper_Abstract
     }
 
     if( $this->_html ) { // HTML
+    
       $this->_config['plugins'] = array(
-        'table', 'fullscreen', 'media', 'preview', 'paste',
-        'code', 'image', 'textcolor', 'link', 'lists', 'autosave',
-        'colorpicker', 'imagetools', 'advlist', 'searchreplace', 'emoticons', 'codesample'
+        'table', 'fullscreen', 'media', 'preview', 
+        'code', 'image', 'link', 'lists', 'autosave',
+        'advlist', 'searchreplace', 'emoticons', 'codesample','autolink',
+        
+        'importcss', 'save', 'directionality', 'visualblocks', 'visualchars', 'charmap', 'pagebreak', 'nonbreaking', 'anchor', 'insertdatetime', 'wordcount', 'quickbars', 'accordion'
       );
       $this->_config['toolbar1'] = array(
-        'undo', 'redo', 'removeformat', 'pastetext', '|', 'searchreplace', 'code',
-        'media', 'image', 'link', 'fullscreen',
-        'preview', 'emoticons', 'codesample'
+        'undo', 'redo', 'removeformat', '|', 'searchreplace', 'code', 'media', 'image', 'link', 'fullscreen', 'preview', 'emoticons', 'codesample' 
       );
       $this->_config['toolbar2'] = array(
-        'fontselect', 'fontsizeselect', 'bold', 'italic', 'underline',
-        'strikethrough', 'forecolor', 'backcolor', 'table', '|', 'alignleft',
-        'aligncenter', 'alignright', 'alignjustify', '|', 'bullist',
-        'numlist', '|', 'outdent', 'indent', 'blockquote',
+        'fontselect', 'fontsizeselect', 'bold', 'italic', 'underline', 'strikethrough', 'forecolor', 'backcolor', 'table', '|', 'save', 'print', 'anchor', 'ltr', 'rtl', '|', 'alignleft', 'aligncenter', 'alignright', 'alignjustify', '|', 'align', 'bullist', 'numlist', '|', 'lineheight', 'outdent', 'indent', 'blockquote',
       );
-    }
-   
-    if( $this->_config['upload_url'] ) {
-      $this->_config['plugins'][] = 'jbimages';
-      $jbimagesIndex = array_search('image', $this->_config['toolbar1']);
-      array_splice($this->_config['toolbar1'], $jbimagesIndex + 1, 0, array('jbimages'));
     }
 
     if( $this->_bbcode ) { // BBCODE
@@ -208,7 +217,25 @@ class Engine_View_Helper_TinyMce extends Zend_View_Helper_Abstract
       $this->_config['add_unload_trigger'] = 0;
       $this->_config['remove_linebreaks'] = false;
     }
+    
+    $viewer = Engine_Api::_()->user()->getViewer();
+    $level_id = !empty($viewer->getIdentity()) ? $viewer->level_id : 5;
+    $this->_config['disallowPlugins'] = Engine_Api::_()->getDbtable('permissions', 'authorization')->getAllowed('user', $level_id, 'core_editors_allow');
+    if(is_array($this->_config['disallowPlugins'])) {
+      $this->_config['plugins'] = array_intersect($this->_config['plugins'], $this->_config['disallowPlugins']);
+    }
+
+    $this->_config['menubar'] = Engine_Api::_()->getDbtable('permissions', 'authorization')->getAllowed('user', $level_id, 'core_menubar_editor') ? true : false;
+    $this->_config['statusbar'] = Engine_Api::_()->getDbtable('permissions', 'authorization')->getAllowed('user', $level_id, 'core_statusbar_editor') ? true : false;
+    $this->_config['autosave_retention'] = Engine_Api::_()->getDbtable('permissions', 'authorization')->getAllowed('user', $level_id, 'core_autosave_editor').'m';
+
     $this->_config['plugins'] = array_unique($this->_config['plugins']);
+    $this->_config['plugins'] = implode(" ", $this->_config['plugins']);
+    
+    $this->_config['toolbar1'] = implode(" ", $this->_config['toolbar1']);
+    $this->_config['toolbar2'] = implode(" ", $this->_config['toolbar2']);
+    if(is_array($this->_config['toolbar3']))
+      $this->_config['toolbar3'] = implode(" ", $this->_config['toolbar3']);
   }
 
   public function setScriptPath($path)

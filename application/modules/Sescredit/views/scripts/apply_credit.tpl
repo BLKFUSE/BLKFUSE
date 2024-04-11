@@ -39,15 +39,15 @@ $apply_credit = Zend_Registry::isRegistered('apply_credit') ? Zend_Registry::get
             <tfoot>
               <tr>
                 <td><?php echo $this->translate("Net Amount"); ?></td>
-                <td id="item_price_<?php echo $this->id; ?>"><?php echo Engine_Api::_()->sesbasic()->getCurrencyPrice(round((isset($creditCheckout->item_amount) ? $creditCheckout->item_amount : 0),2)); ?></td>
+                <td id="item_price_<?php echo $this->id; ?>"><?php echo Engine_Api::_()->payment()->getCurrencyPrice(round((isset($creditCheckout->item_amount) ? $creditCheckout->item_amount : 0),2)); ?></td>
               </tr>
               <tr style="display:<?php echo isset($creditCheckout->purchaseValue) ? 'block': 'none'; ?>">
                 <td><?php echo $this->translate("Credit Points Redeemed"); ?></td>
-                <td id="purchaseValue_<?php echo $this->id; ?>"><?php echo Engine_Api::_()->sesbasic()->getCurrencyPrice(round((isset($creditCheckout->purchaseValue) ? $creditCheckout->purchaseValue : 0),2)); ?></td>
+                <td id="purchaseValue_<?php echo $this->id; ?>"><?php echo Engine_Api::_()->payment()->getCurrencyPrice(round((isset($creditCheckout->purchaseValue) ? $creditCheckout->purchaseValue : 0),2)); ?></td>
               </tr>
               <tr>
                 <td><?php echo $this->translate("Order Total"); ?></td>
-                <td id="total_amount_<?php echo $this->id; ?>"><?php echo Engine_Api::_()->sesbasic()->getCurrencyPrice(round((isset($creditCheckout->total_amount) ? $creditCheckout->total_amount : 0),2)); ?></td>
+                <td id="total_amount_<?php echo $this->id; ?>"><?php echo Engine_Api::_()->payment()->getCurrencyPrice(round((isset($creditCheckout->total_amount) ? $creditCheckout->total_amount : 0),2)); ?></td>
               </tr>
             </tfoot>
           </table>

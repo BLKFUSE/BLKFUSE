@@ -10,7 +10,7 @@
  * @version    $Id: index.tpl 2015-10-11 00:00:00 SocialEngineSolutions $
  * @author     SocialEngineSolutions
  */
- ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL); 
+
 ?>
 <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/flexcroll.js'); ?>
 
@@ -69,9 +69,9 @@ if(!$this->is_ajax){
         <?php  echo $this->partial('_socialShareIcons.tpl','sesbasic',array('resource' => $this->photo, 'param' => 'photoviewpage')); ?>
 
         
-        <a title="<?php echo $this->translate('Share'); ?>" href="<?php echo $this->url(array("action" => "share", "type" => "sesvideo_chanelphoto", "photo_id" => $this->photo->getIdentity(),"format" => "smoothbox"), 'sesalbum_general', true); ?>" class="sesalbum_photo_view_share_button smoothbox"><i class="fas fa-share-alt"></i></a>
+        <a title="<?php echo $this->translate('Share'); ?>" href="<?php echo $this->url(array("action" => "share", "type" => "sesvideo_chanelphoto", "photo_id" => $this->photo->getIdentity(),"format" => "smoothbox"), 'sesvideo_chanel', true); ?>" class="sesalbum_photo_view_share_button smoothbox"><i class="fas fa-share-alt"></i></a>
         <a title="<?php echo $this->translate('Download'); ?>" href="<?php echo $this->url(array('module' => 'sesvideo', 'action' => 'download', 'photo_id' => $this->photo->chanelphoto_id,'file_id'=>$this->photo->file_id), 'sesvideo_chanel', true); ?>" class="sesalbum_photo_view_download_button"><i class="fa fa-download"></i></a>
-       <?php if($this->canComment){ ?>
+       <?php if(0 && $this->canComment){ ?>
      	 <?php $LikeStatus = Engine_Api::_()->sesalbum()->getLikeStatusPhoto($this->photo->chanelphoto_id,'chanelphoto'); ?>
         <a href="javascript:void(0);" id="sesLikeUnlikeButton" class="sesalbum_view_like_button <?php echo $LikeStatus === true ? 'button_active' : '' ;  ?>"><i class="fa fa-thumbs-up"></i></a>
         <?php } ?>
@@ -85,7 +85,7 @@ if(!$this->is_ajax){
     <?php } ?>
   </div>
   <div class="sesalbum_view_photo_count">
-		<?php echo $this->translate('Photo %1$s of %2$s', $this->locale()->toNumber($this->photo->getPhotoIndex() + 1), $this->chanel->engine_count()) ?>
+		<?php echo $this->translate('Photo %1$s of %2$s', $this->locale()->toNumber($this->photo->getPhotoIndex() + 1), $this->chanel->count()) ?>
   </div>
 	<div class="sesalbum_photo_view_bottom_right">
     <?php if(isset($this->status_slideshowPhoto)){ ?>
@@ -192,7 +192,7 @@ scriptJquery( window ).load(function() {
 	doResizeForButton();
 });
 var optionDataForButton;
-optionDataForButton = '<div class="sesalbum_option_box"><?php if ($this->viewer()->getIdentity()):?><?php if( $this->canEdit ): ?><?php echo $this->htmlLink(Array("module"=> "sesvideo", "controller" => "chanel", "action" => "location", "route" => "sesvideo_chanel","chanel_id" =>$this->photo->chanel_id, "photo_id" => $this->photo->getIdentity(),"type"=>"photo"), $this->translate("Edit Location"), array("class" => "smoothboxOpen sesvideo_icon_map")); ?><?php echo $this->htmlLink(Array("module"=> "sesvideo", "controller" => "chanel", "action" => "edit-photo", "route" => "sesvideo_chanel","chanel_id" =>$this->photo->chanel_id, "photo_id" => $this->photo->getIdentity()), $this->translate("Edit"), array("class" => "smoothboxOpen sesbasic_icon_edit")) ?><?php endif; ?><?php if( $this->canDelete ): ?><?php echo $this->htmlLink(Array("module"=> "sesvideo", "controller" => "chanel", "action" => "delete-photo", "route" => "sesvideo_chanel","chanel_id" =>$this->photo->chanel_id, "photo_id" => $this->photo->getIdentity()), $this->translate("Delete"), array("class" => "smoothboxOpen sesbasic_icon_delete")) ?><?php endif; ?><?php if( !$this->message_view ):?>  <?php echo $this->htmlLink($this->url(array("action" => "share", "type" => "chanelphoto", "photo_id" => $this->photo->getIdentity(),"format" => "smoothbox"), "sesalbum_general"	, true), $this->translate("Share"), array("class" => "smoothboxOpen sesbasic_icon_share")); ?><?php echo $this->htmlLink(Array("module"=> "core", "controller" => "report", "action" => "create", "route" => "default", "subject" => $this->photo->getGuid()), $this->translate("Report"), array("class" => "smoothboxOpen sesbasic_icon_report")); ?><?php endif; ?><?php endif; ?></div>';
+optionDataForButton = '<div class="sesalbum_option_box"><?php if ($this->viewer()->getIdentity()):?><?php if( $this->canEdit ): ?><?php echo $this->htmlLink(Array("module"=> "sesvideo", "controller" => "chanel", "action" => "location", "route" => "sesvideo_chanel","chanel_id" =>$this->photo->chanel_id, "photo_id" => $this->photo->getIdentity(),"type"=>"photo"), $this->translate("Edit Location"), array("class" => "smoothboxOpen sesvideo_icon_map")); ?><?php echo $this->htmlLink(Array("module"=> "sesvideo", "controller" => "chanel", "action" => "edit-photo", "route" => "sesvideo_chanel","chanel_id" =>$this->photo->chanel_id, "photo_id" => $this->photo->getIdentity()), $this->translate("Edit"), array("class" => "smoothboxOpen sesbasic_icon_edit")) ?><?php endif; ?><?php if( $this->canDelete ): ?><?php echo $this->htmlLink(Array("module"=> "sesvideo", "controller" => "chanel", "action" => "delete-photo", "route" => "sesvideo_chanel","chanel_id" =>$this->photo->chanel_id, "photo_id" => $this->photo->getIdentity()), $this->translate("Delete"), array("class" => "smoothboxOpen sesbasic_icon_delete")) ?><?php endif; ?><?php if( !$this->message_view ):?>  <?php echo $this->htmlLink($this->url(array("action" => "share", "type" => "chanelphoto", "photo_id" => $this->photo->getIdentity(),"format" => "smoothbox"), "sesvideo_chanel"	, true), $this->translate("Share"), array("class" => "smoothboxOpen sesbasic_icon_share")); ?><?php echo $this->htmlLink(Array("module"=> "core", "controller" => "report", "action" => "create", "route" => "default", "subject" => $this->photo->getGuid()), $this->translate("Report"), array("class" => "smoothboxOpen sesbasic_icon_report")); ?><?php endif; ?><?php endif; ?></div>';
 scriptJquery(optionDataForButton).appendTo('body');
 <?php if(!$this->is_ajax){ ?>
 	scriptJquery(document).click(function(event){
@@ -376,7 +376,7 @@ scriptJquery(document).ready(function(){
 <?php } ?>
 function getTagData(value){
 	if(value){
-		url = en4.core.staticBaseUrl+'albums/index/tag-photo/photo_id/'+value;
+		url = en4.core.baseUrl+'albums/index/tag-photo/photo_id/'+value;
 		openURLinSmoothBox(url);	
 		return;
 	}
@@ -406,7 +406,7 @@ function getTagData(value){
 <?php } ?>
 function getLikeData(value){
 	if(value){
-		url = en4.core.staticBaseUrl+'albums/index/like-photo/photo_id/'+value;
+		url = en4.core.baseUrl+'albums/index/like-photo/photo_id/'+value;
 		openURLinSmoothBox(url);	
 		return;
 	}

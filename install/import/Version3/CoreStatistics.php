@@ -54,16 +54,16 @@ CREATE TABLE IF NOT EXISTS `se_stats` (
   `stat_chat_bandwidth` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`stat_id`),
   UNIQUE KEY `stat_date` (`stat_date`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=2 ;
  * 
  */
 
 /*
 CREATE TABLE IF NOT EXISTS `engine4_core_statistics` (
-  `type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
   `value` int(11) NOT NULL default '0',
   PRIMARY KEY  (`type`,`date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  * 
  */

@@ -619,7 +619,7 @@ scriptJquery(document).on('click','#save_featured_photo',function(event){
   var photoId4 = scriptJquery('#featured_photo_4').val();
   var photoId5 = scriptJquery('#featured_photo_5').val();
   sessmoothboxclose();
-  var URL = en4.core.staticBaseUrl+'sesmember/index/featured-photos/';
+  var URL = en4.core.baseUrl+'sesmember/index/featured-photos/';
   (scriptJquery.ajax({
     dataType: 'html',
     method: 'post',
@@ -650,7 +650,7 @@ scriptJquery(document).on('click','a[id^="sesmember_existing_album_see_more_"]',
     scriptJquery('#sesmember_existing_album_see_more_page_'+id).remove();
     return;
   }
-  var URL = en4.core.staticBaseUrl+'sesmember/index/existing-album-photos/';
+  var URL = en4.core.baseUrl+'sesmember/index/existing-album-photos/';
   (scriptJquery.ajax({
     dataType: 'html',
     method: 'post',
@@ -681,7 +681,7 @@ scriptJquery(document).ready(function(){
     var tabIndex = scriptJquery('#timezone').attr('tabindex');
     var locationTabIndex = tabIndex-1;
     for(i=0;i<locationElement.length;i++) {
-      var html = '<div id="ses_location-wrapper" class="form-wrapper"><div id="ses_location-label" class="form-label"><label for="ses_location" class="optional">'+en4.core.language.translate("Location")+'</label></div><div id="ses_location-element" class="form-element"><input tabIndex="'+locationTabIndex+'" name="ses_location" id="ses_location_'+i+'" value="" placeholder="Enter a location" autocomplete="off" type="text"></div></div><input name="ses_lat" value="" id="ses_lat" type="hidden"><input name="ses_lng" value="" id="ses_lng" type="hidden"><input name="ses_zip" value="" id="ses_zip" type="hidden"><input name="ses_city" value="" id="ses_city" type="hidden"><input name="ses_state" value="" id="ses_state" type="hidden"><input name="ses_country" value="" id="ses_country" type="hidden">';
+      var html = '<div id="ses_location-wrapper" class="form-wrapper"><div id="ses_location-label" class="form-label"><label for="ses_location_'+i+'" class="optional">'+en4.core.language.translate("Location")+'</label></div><div id="ses_location-element" class="form-element"><input tabIndex="'+locationTabIndex+'" name="ses_location" id="ses_location_'+i+'" value="" placeholder="Enter a location" autocomplete="off" type="text"></div></div><input name="ses_lat" value="" id="ses_lat" type="hidden"><input name="ses_lng" value="" id="ses_lng" type="hidden"><input name="ses_zip" value="" id="ses_zip" type="hidden"><input name="ses_city" value="" id="ses_city" type="hidden"><input name="ses_state" value="" id="ses_state" type="hidden"><input name="ses_country" value="" id="ses_country" type="hidden">';
         if(scriptJquery(locationElement[i]).closest('form').attr('id') == 'signup_account_form') {
             scriptJquery(html).insertBefore(locationElement[i]);
             sesMemberLocation(i);

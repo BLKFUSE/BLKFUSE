@@ -783,6 +783,7 @@ class Sesalbum_IndexController extends Core_Controller_Action_Standard {
   
     //Advanced activity album work
     $this->view->anfalbumparams = $anfalbumparams = $this->_getParam('params', null);
+    $this->view->album_id = $this->_getParam('album_id', null);
     //media importer
     $this->view->mediaimporter = $mediaimporter = $this->_getParam('typeMedia', null);
     $this->view->isOpenPopup = $isOpenPopup = $this->_getParam('ispopup', null);

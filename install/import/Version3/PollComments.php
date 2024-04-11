@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS `se_pollcomments` (
   `pollcomment_poll_id` int(9) unsigned NOT NULL default '0',
   `pollcomment_authoruser_id` int(9) unsigned NOT NULL default '0',
   `pollcomment_date` int(14) NOT NULL default '0',
-  `pollcomment_body` text collate utf8_unicode_ci,
+  `pollcomment_body` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY  (`pollcomment_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */

@@ -15,7 +15,7 @@ return array (
   array (
     'type' => 'module',
     'name' => 'sesadvancedcomment',
-    'version' => '4.10.3p6',
+    'version' => '6.5.1',
     'dependencies' => array(
         array(
             'type' => 'module',

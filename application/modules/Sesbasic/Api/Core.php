@@ -1010,6 +1010,10 @@ class Sesbasic_Api_Core extends Core_Api_Abstract {
     $territoryDataList = Zend_Locale_Data::getList(null, 'territory');
 
     foreach ($languageList as $localeCode) {
+      $isEnabled = Engine_Api::_()->getDbTable('languages', 'core')->isEnabled($localeCode);
+      if(empty($isEnabled)) {
+        continue;
+      }
       $languageNameList[$localeCode] = Engine_String::ucfirst(Zend_Locale::getTranslation($localeCode, 'language', $localeCode));
       if (empty($languageNameList[$localeCode])) {
         if (false !== strpos($localeCode, '_')) {
@@ -1062,6 +1066,21 @@ class Sesbasic_Api_Core extends Core_Api_Abstract {
   $db->commit();
   }
   
+  function multiCurrencyActive(){
+    if(!empty($_SESSION['ses_multiple_currency']['multipleCurrencyPluginActivated'])){
+      return Engine_Api::_()->sesmultiplecurrency()->multiCurrencyActive();
+    }else{
+      return false;
+    }
+  }
+  function isMultiCurrencyAvailable(){
+    if(!empty($_SESSION['ses_multiple_currency']['multipleCurrencyPluginActivated'])){
+      return Engine_Api::_()->sesmultiplecurrency()->isMultiCurrencyAvailable();
+    }else{
+      return false;
+    }
+  }
+  
   function defaultCurrency(){
     if(!empty($_SESSION['ses_muljoinfeesle_currency']['muljoinfeesleCurrencyPluginActivated'])){
       return Engine_Api::_()->sesmuljoinfeeslecurrency()->defaultCurrency();
@@ -1074,7 +1093,7 @@ class Sesbasic_Api_Core extends Core_Api_Abstract {
   public function getCurrentCurrency(){
       $settings = Engine_Api::_()->getApi('settings', 'core');
       if(!empty($_SESSION['ses_multiple_currency']['multipleCurrencyPluginActivated'])){
-      return Engine_Api::_()->sesmultiplecurrency()->getCurrentCurrency();
+      return Engine_Api::_()->payment()->getCurrentCurrency();
       }else{
       return $settings->getSetting('payment.currency', 'USD');
       }
@@ -1084,53 +1103,158 @@ class Sesbasic_Api_Core extends Core_Api_Abstract {
     $precisionValue = $settings->getSetting('sesmultiplecurrency.precision', 2);
     $defaultParams['precision'] = $precisionValue;
     if (!empty($_SESSION['ses_multiple_currency']['multipleCurrencyPluginActivated'])) {
-      return Engine_Api::_()->sesmultiplecurrency()->getCurrencyPrice($price, $givenSymbol, $change_rate);
+      return Engine_Api::_()->payment()->getCurrencyPrice($price, $givenSymbol, $change_rate);
     } else {
 	  $givenSymbol = $settings->getSetting('payment.currency', 'USD');
       return Zend_Registry::get('Zend_View')->locale()->toCurrency($price, $givenSymbol, $defaultParams);
     }
   }
   
-  public function footerLanguages() {
-    // Languages
-    $translate = Zend_Registry::get('Zend_Translate');
-    $languageList = $translate->getList();
+  public function notIncludePlugins() {
+		return array('chat', 'poll', 'forum', 'sesadvancedactivity', 'sesadvancedcomment', 'sesfeedbg', 'sesfeelingactivity', 'sesfeedgif', 'sesbasic', 'sesadvsitenotification', 'sesariana', 'sesbrowserpush', 'seschristmas', 'sescleanwide', 'sescontentcoverphoto', 'sescontestjoinfees', 'sescontestjurymember', 'sescontestpackage', 'sesdemouser', 'seselegant', 'sesemailverification', 'sesemoji', 'seserror', 'seseventticket', 'sesexpose', 'sesfaq', 'sesfbstyle', 'sesfooter', 'seshtmlbackground', 'seslangtranslator', 'sesletteravatar', 'sesmediaimporter', 'sesmember', 'sesmembershorturl', 'sesmetatag', 'sesmultipleform', 'sespagebuilder', 'sespoke', 'sesprofilelock', 'sespymk', 'sessiteiframe', 'sessociallogin', 'sessocialshare', 'sessoundcloudsearch', 'sesspectromedia', 'sesteam', 'sestour', 'sestweet', 'sesusercoverphoto', 'sesvideoimporter', 'egifts', 'elpis', 'ememcomp', 'estorepackage', 'network', 'sesalbum', 'sesblogpackage', 'sescredit', 'seseventreview', 'seseventvideo', 'sesgroupforum', 'sesgroupjoinfees', 'sesgrouppackage' , 'sesgrouppoll', 'sesgroupteam', 'sesgroupurl', 'sesgroupveroth', 'sesgroupvideo', 'sesjobpackage', 'seslistingpackage', 'sespageforum', 'sespagejoinfees', 'sespagenote', 'sespageoffer', 'sespagepackage', 'sespagepoll', 'sespagereview', 'sespageteam', 'sespageurl', 'sespageveroth', 'sespagevideo', 'advancedsearch', 'booking', 'coursespackage', 'coursesvideo', 'eandlivestreaming', 'eandroidstories', 'econtbox', 'ecoupon', 'edating', 'edeletedmember', 'efamilytree', 'egames', 'eioslivestreaming', 'eiosstories', 'elivestreaming', 'emailtemplates', 'ememsub', 'emessages', 'emodbox', 'epaytm', 'eweblivestreaming', 'ewebstories', 'ewide', 'sesadvancedbanner', 'sesadvpmnt', 'sesadvpoll', 'sesanalytic', 'sesandroidapp', 'sesapi', 'sesatoz', 'sesavatar', 'sesbday', 'sesbusinessforum', 'sesbusinessoffer', 'sesbusinesspackage', 'sesbusinesspoll', 'sesbusinessreview', 'sesbusinessteam', 'sesbusinessurl', 'sesbusinessveroth', 'sesbusinessvideo', 'sescomadbanr', 'sescommunityads', 'sescompany', 'sescusdash', 'sesdating', 'sesdbslide', 'sesdiscussion', 'sesforum', 'sesgdpr', 'sesinterest', 'sesinviter', 'sesiosapp', 'seslike', 'seslinkedin', 'seslocation', 'sesmaterial', 'sesmembershipcard', 'sesmemveroth', 'sesmultiplecurrency', 'sesmusic', 'sesnews', 'sesnewsletter', 'sespopupbuilder', 'sesprayer', 'sesprofilefield', 'sespwa', 'sesqa', 'sesquote', 'sesrecentlogin', 'sesseo', 'sesshortcut', 'sesshoutbox', 'sessportz', 'sesstories', 'sestestimonial', 'sesthought', 'sestwitterclone', 'sesusercovervideo', 'sesuserimport', 'sesvideo', 'sesweather', 'seswishe', 'sesytube', 'subscriptionbadge', 'tickvideo');
+  }
+  
+	public function getSignupId($class) {
+    
+    $table = Engine_Api::_()->getDbTable('signup', 'user');
+    return $table->select()
+                ->from($table->info('name'), 'signup_id')
+                ->where('class = ?', $class)
+                ->where('enable =?', 0)
+                ->query()
+                ->fetchColumn();
+  }
+  
+  public function handleIframelyInformation($uri) {
 
-    // Prepare default langauge
-    $defaultLanguage = Engine_Api::_()->getApi('settings', 'core')->getSetting('core.locale.locale', 'en');
-    if (!engine_in_array($defaultLanguage, $languageList)) {
-      if ($defaultLanguage == 'auto' && isset($languageList['en'])) {
-        $defaultLanguage = 'en';
-      } else {
-        $defaultLanguage = null;
-      }
+    $iframelyDisallowHost = Engine_Api::_()->getApi('settings', 'core')->getSetting('video_iframely_disallow');
+    if (parse_url($uri, PHP_URL_SCHEME) === null) {
+        $uri = "http://" . $uri;
+    }
+    
+    $uriHost = Zend_Uri::factory($uri)->getHost();
+    if ($iframelyDisallowHost && engine_in_array($uriHost, $iframelyDisallowHost)) {
+        return;
     }
 
-    // Prepare language name list
-    $languageNameList = array();
-    $languageDataList = Zend_Locale_Data::getList(null, 'language');
-    $territoryDataList = Zend_Locale_Data::getList(null, 'territory');
-
-    foreach ($languageList as $localeCode) {
-      $languageNameList[$localeCode] = Engine_String::ucfirst(Zend_Locale::getTranslation($localeCode, 'language', $localeCode));
-      if (empty($languageNameList[$localeCode])) {
-        if (false !== strpos($localeCode, '_')) {
-          list($locale, $territory) = explode('_', $localeCode);
-        } else {
-          $locale = $localeCode;
-          $territory = null;
-        }
-        if (isset($territoryDataList[$territory]) && isset($languageDataList[$locale])) {
-          $languageNameList[$localeCode] = $territoryDataList[$territory] . ' ' . $languageDataList[$locale];
-        } else if (isset($territoryDataList[$territory])) {
-          $languageNameList[$localeCode] = $territoryDataList[$territory];
-        } else if (isset($languageDataList[$locale])) {
-          $languageNameList[$localeCode] = $languageDataList[$locale];
-        } else {
-          continue;
-        }
-      }
+    if(Engine_Api::_()->getApi('settings', 'core')->getSetting('video.youtube.apikey') && engine_in_array($uriHost, array('youtube.com','www.youtube.com','youtube', 'youtu.be'))){
+      return $this->YoutubeVideoInfo($uri);
+    } else {
+      $config = Engine_Api::_()->getApi('settings', 'core')->core_iframely;
+      $iframely = Engine_Iframely::factory($config)->get($uri, 'video');
     }
-    return array_merge(array($defaultLanguage => $defaultLanguage), $languageNameList);
+    
+    if (!engine_in_array('player', array_keys($iframely['links'])))
+      return;
+
+    if (engine_in_array('player', array_keys($iframely['links']))) {
+        if(empty($iframely['links']['player']))
+          return;
+    }
+
+    $information = array('thumbnail' => '', 'title' => '', 'description' => '', 'duration' => '');
+    if (!empty($iframely['links']['thumbnail'])) {
+        $information['thumbnail'] = $iframely['links']['thumbnail'][0]['href'];
+        if (parse_url($information['thumbnail'], PHP_URL_SCHEME) === null) {
+            $information['thumbnail'] = str_replace(array('://', '//'), '', $information['thumbnail']);
+            $information['thumbnail'] = "http://" . $information['thumbnail'];
+        }
+    }
+    if (!empty($iframely['meta']['title'])) {
+        $information['title'] = $iframely['meta']['title'];
+    }
+    if (!empty($iframely['meta']['description'])) {
+        $information['description'] = $iframely['meta']['description'];
+    }
+    if (!empty($iframely['meta']['duration'])) {
+        $information['duration'] = $iframely['meta']['duration'];
+    }else if($iframely['meta']['site'] == 'YouTube') {
+      $video_id = explode("?v=", $iframely['meta']['canonical']);
+      $video_id = $video_id[1];
+      $information['duration'] = $this->YoutubeVideoInfo($video_id);
+      $information['duration'] = Engine_Date::convertISO8601IntoSeconds($information['duration']);
+    }else if($iframely['meta']['site'] == 'Dailymotion') {
+      $video_id = explode("/video/", $iframely['meta']['canonical']);
+      $information = $this->handleInformation(4,$video_id[1]);
+      $information['duration'] = $information['duration'];
+    }
+    else{
+      $information['duration'] = 0;
+    }
+    $information['status'] = 1;
+    $information['code'] = $iframely['html'];
+    if($iframely['meta']['site'])
+      $information['site'] = $iframely['meta']['site'];
+    return $information;
+  }
+  
+  public function YoutubeVideoInfo($video_id) {
+    $key = Engine_Api::_()->getApi('settings', 'core')->getSetting('video.youtube.apikey');
+      $url = 'https://www.googleapis.com/youtube/v3/videos?id='.$video_id.'&key='.$key.'&part=snippet,contentDetails';
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, $url);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+      $response = curl_exec($ch);
+      curl_close($ch);
+      $response_a = json_decode($response);
+      return  $response_a->items[0]->contentDetails->duration; //get video duaration
+  }
+  
+  // retrieves infromation and returns title + desc
+  public function handleInformation($type, $code) {
+    switch ($type) {
+      //youtube
+      case "1":
+        $key = Engine_Api::_()->getApi('settings', 'core')->getSetting('video.youtube.apikey');
+        if (function_exists('curl_init')){
+          $data =  ($this->url_get_contents("https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=$code&key=$key"));
+        } else
+          $data = file_get_contents("https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=$code&key=$key");
+          
+        if (empty($data)) {
+          return;
+        }
+        
+        $data = Zend_Json::decode($data);
+        $information = array();
+        $youtube_video = $data['items'][0];
+        $information['title'] = $youtube_video['snippet']['title'];
+        $information['description'] = $youtube_video['snippet']['description'];
+        //$information['duration'] = Engine_Date::convertISO8601IntoSeconds($youtube_video['contentDetails']['duration']);
+        return $information;
+      //vimeo
+      case "2":
+        //thumbnail_medium
+        $data = simplexml_load_file("http://vimeo.com/api/v2/video/" . $code . ".xml");
+        $thumbnail = $data->video->thumbnail_medium;
+        $information = array();
+        $information['title'] = $data->video->title;
+        $information['description'] = $data->video->description;
+        $information['duration'] = $data->video->duration;
+        return $information;
+      case "4":
+        if (function_exists('curl_init')) {
+          $data =  ($this->url_get_contents("https://api.dailymotion.com/video/$code?fields=allow_embed,description,duration,thumbnail_url,title"));
+        } else
+          $data = file_get_contents("https://api.dailymotion.com/video/$code?fields=allow_embed,description,duration,thumbnail_url,title");
+        $data = json_decode($data, true);
+        $information['title'] = $data['title'];
+        $information['description'] = $data['description'];
+        $information['duration'] = $data['duration'];
+        return $information;
+    }
+  }
+  
+  function url_get_contents($Url) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $Url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    $output = curl_exec($ch);
+    curl_close($ch);
+    return $output;
   }
 }

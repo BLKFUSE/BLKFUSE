@@ -44,4 +44,14 @@ class Core_Model_DbTable_Files extends Engine_Db_Table {
 
     return $select;
   }
+  
+  public function getFilesAssoc() {
+  
+    $filesArray = array('' => '');
+		$files = $this->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png', 'webp')));
+		foreach($files as $file ) {
+			$filesArray[$file->storage_path] = $file->name;
+		}
+    return $filesArray;
+  } 
 }

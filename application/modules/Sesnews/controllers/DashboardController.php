@@ -330,34 +330,6 @@ class Sesnews_DashboardController extends Core_Controller_Action_Standard {
       }
 			return $this->_helper->redirector->gotoRoute(array('action' => 'mainphoto', 'news_id' => $news->custom_url), "sesnews_dashboard", true);
   }
-	public function mainphotoAction(){
-		$is_ajax = $this->view->is_ajax = $this->_getParam('is_ajax', null) ? $this->_getParam('is_ajax') : false;
-    $is_ajax_content = $this->view->is_ajax_content = $this->_getParam('is_ajax_content', null) ? $this->_getParam('is_ajax_content') : false;
-    $this->view->news = $news = Engine_Api::_()->core()->getSubject();
-    $viewer = Engine_Api::_()->user()->getViewer();
-    if (!($this->_helper->requireAuth()->setAuthParams(null, null, 'edit')->isValid() || $news->isOwner($viewer)))
-      return;
-    // Create form
-    $this->view->form = $form = new Sesnews_Form_Dashboard_Mainphoto();
-    $form->populate($news->toArray());
-    if (!$this->getRequest()->isPost())
-      return;
-    // Not post/invalid
-    if (!$this->getRequest()->isPost() || $is_ajax_content)
-      return;
-    if (!$form->isValid($this->getRequest()->getPost()) || $is_ajax_content)
-      return;
-    $db = Engine_Api::_()->getDbtable('news', 'sesnews')->getAdapter();
-    $db->beginTransaction();
-    try {
-      $news->setPhoto($_FILES['background']);
-      $news->save();
-      $db->commit();
-    } catch (Exception $e) {
-      $db->rollBack();
-    }
-		 return $this->_helper->redirector->gotoRoute(array('action' => 'mainphoto', 'news_id' => $news->custom_url), "sesnews_dashboard", true);
-	}
 
 	 //get style detail
   public function styleAction() {
@@ -459,18 +431,13 @@ class Sesnews_DashboardController extends Core_Controller_Action_Standard {
     if( $form->Filedata->getValue() !== null ) {
       $db = $news->getTable()->getAdapter();
       $db->beginTransaction();
-
       try {
-
         $fileElement = $form->Filedata;
-
-       // $news->setPhoto($fileElement);
         $photo_id = Engine_Api::_()->sesbasic()->setPhoto($fileElement, false,false,'sesnews','sesnews_news','',$news,true);
         $news->photo_id = $photo_id;
         $news->save();
         $db->commit();
       }
-
       // If an exception occurred within the image adapter, it's probably an invalid image
       catch( Engine_Image_Adapter_Exception $e )
       {
@@ -484,6 +451,40 @@ class Sesnews_DashboardController extends Core_Controller_Action_Standard {
         $db->rollBack();
         throw $e;
       }
+    }
+    // Resizing a photo
+    elseif ($form->getValue('coordinates') !== '') {
+      $storage = Engine_Api::_()->storage();
+
+      $iProfile = $storage->get($news->photo_id);
+      if (!$iProfile) {
+          return;   // don't do anything
+      }
+      $iSquare = $storage->get($news->photo_id, 'thumb.icon');
+
+      // Read into tmp file
+      $pName = $iProfile->getStorageService()->temporary($iProfile);
+      $iName = dirname($pName) . '/nis_' . basename($pName);
+
+      list($x, $y, $w, $h) = explode(':', $form->getValue('coordinates'));
+
+      $image = Engine_Image::factory();
+      $image->open($pName)
+          ->resample($x+.1, $y+.1, $w-.1, $h-.1, 48, 48)
+          ->write($iName)
+          ->destroy();
+
+      $iSquare->store($iName);
+
+      $image = Engine_Image::factory();
+      $image->open($pName)
+          ->resample($x+.1, $y+.1, $w-.1, $h-.1, 440, 440)
+          ->write($pName)
+          ->destroy();
+      $iProfile->store($pName);
+      // Remove temp files
+      @unlink($iName);
+      @unlink($pName);
     }
   }
 

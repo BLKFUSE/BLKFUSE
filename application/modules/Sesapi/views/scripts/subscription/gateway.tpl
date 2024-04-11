@@ -46,6 +46,7 @@
           <div id="buttons-wrapper" class="form-wrapper">
               <?php foreach( $this->gateways as $gatewayInfo ):
                 $gateway = $gatewayInfo['gateway'];
+                if($gateway->plugin == "Payment_Plugin_Gateway_Stripe") continue;
                 $plugin = $gatewayInfo['plugin'];
                 $first = ( !isset($first) ? true : false );
                 ?>

@@ -150,15 +150,22 @@ class User_Api_Core extends Core_Api_Abstract
    */
   public function authenticate($identity, $credential,$user)
   {
+    $emailField = 'email';
+    if(Engine_Api::_()->getApi('settings', 'core')->getSetting('user.signup.username', 1) && Engine_Api::_()->getApi('settings', 'core')->getSetting('user.signup.allowloginusername', 0)) {
+      if (strpos($identity, '@') == false) { 
+        $emailField = 'username';
+      }
+    }
+
     // Translate email
     $userTable = Engine_Api::_()->getItemTable('user');
     $userIdentity = $userTable->select()
       ->from($userTable, 'user_id')
-      ->where('`email` = ?', $identity)
+      ->where("`$emailField` = ?", $identity)
       ->limit(1)
       ->query()
-      ->fetchColumn(0)
-      ;
+      ->fetchColumn(0);
+      
     if(strlen($user->password) > 32){
         $credential = $user->password;
     }
@@ -370,5 +377,27 @@ class User_Api_Core extends Core_Api_Abstract
                     ->where($optionsTableName . '.option_id = ?', $params['option_id'])
                     ->query()
                     ->fetchColumn();
+  }
+  
+  public function getProfileFieldValue($params = array()) {
+    $valuesTable = Engine_Api::_()->fields()->getTable('user', 'values');
+    $valuesTableName = $valuesTable->info('name');
+    return $valuesTable->select()
+                    ->from($valuesTableName, array('value'))
+                    ->where($valuesTableName . '.item_id = ?', $params['user_id'])
+                    ->where($valuesTableName . '.field_id = ?', $params['field_id'])
+                    ->query()
+                    ->fetchColumn();
+  }
+  
+  public function getOptionValue($params = array()) {
+    $optionsTable = Engine_Api::_()->fields()->getTable('user', 'options');
+    $optionsTableName = $optionsTable->info('name');
+    return $optionsTable->select()
+            ->from($optionsTableName, array('option_id'))
+            ->where($optionsTableName . '.field_id = ?', $params['field_id'])
+            ->where($optionsTableName . '.label = ?', $params['label'])
+            ->query()
+            ->fetchColumn();
   }
 }

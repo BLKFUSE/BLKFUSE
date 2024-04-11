@@ -29,6 +29,7 @@ class Sesalbum_Plugin_Core
     return $this->onRenderLayoutDefault($event,'simple');
   }
 	public function onRenderLayoutDefault($event,$mode=null){
+    if( defined('_ENGINE_ADMIN_NEUTER') && _ENGINE_ADMIN_NEUTER ) return;
 		$view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
 		$viewer = Engine_Api::_()->user()->getViewer();
 		$request = Zend_Controller_Front::getInstance()->getRequest();
@@ -107,7 +108,7 @@ var openEventPhotoInLightBoxSesalbum = ".Engine_Api::_()->getApi('settings', 'co
 var showAddnewPhotoIconShortCut = ".Engine_Api::_()->getApi('settings', 'core')->getSetting('sesalbum.enable.addphotoshortcut',1).";
 ";
         $canCreate =  Engine_Api::_()->authorization()->isAllowed('album',Engine_Api::_()->user()->getViewer(), 'create');
-if(0 && $viewer->getIdentity() != 0 && empty($_GET['format']) && $canCreate){
+if($viewer->getIdentity() != 0 && empty($_GET['format']) && $canCreate){
 	$script .= 'scriptJquery(document).ready(function() {
 	if(scriptJquery("body").attr("id").search("sesalbum") > -1 && typeof showAddnewPhotoIconShortCut != "undefined" && showAddnewPhotoIconShortCut ){
 		scriptJquery("<a class=\'sesbasic_create_button sesbasic_animation\' href=\'albums/create\' title=\'Add New Photos\'><i class=\'fa fa-plus\'></i></a>").appendTo("body");

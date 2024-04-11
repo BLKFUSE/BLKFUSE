@@ -214,7 +214,7 @@ class Sescommunityads_Plugin_Gateway_Paytm extends Engine_Payment_Plugin_Abstrac
       $rate = $session->change_rate;
       if (!$rate)
         $rate = 1;
-      $defaultCurrency = Engine_Api::_()->sescommunityads()->defaultCurrency();
+      $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
       $settings = Engine_Api::_()->getApi('settings', 'core');
       $currencyValue = 1;
       if ($currency != $defaultCurrency)
@@ -404,7 +404,7 @@ class Sescommunityads_Plugin_Gateway_Paytm extends Engine_Payment_Plugin_Abstrac
       $rate = $session->change_rate;
       if (!$rate)
         $rate = 1;
-      $defaultCurrency = Engine_Api::_()->sescontestpackage()->defaultCurrency();
+      $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
       $settings = Engine_Api::_()->getApi('settings', 'core');
       $currencyValue = 1;
       if ($currency != $defaultCurrency) {

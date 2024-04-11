@@ -13,13 +13,14 @@ return array(
   'package' => array(
     'type' => 'module',
     'name' => 'group',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 10271 $',
     'path' => 'application/modules/Group',
     'repository' => 'socialengine.com',
     'title' => 'Groups',
-    'description' => 'Groups',
-    'author' => 'Webligo Developments',
+    'description' => 'Groups act as smaller communities within your community, and are places of discussion and sharing under member control. Businesses can expand their reach with their own group.',
+    'author' => '<a href="https://socialengine.com/" style="text-decoration:underline;" target="_blank">SocialEngine</a>',
+    'thumb' => 'application/modules/Group/externals/images/thumb.png',
     'dependencies' => array(
       array(
         'type' => 'module',

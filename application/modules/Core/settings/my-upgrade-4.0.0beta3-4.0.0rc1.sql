@@ -29,4 +29,4 @@ UPDATE `engine4_core_menuitems` SET
 WHERE
   `name` = 'core_admin_main_manage_plugins';
 
-ALTER TABLE `engine4_core_modules` CHANGE `version` `version` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL;
+ALTER TABLE `engine4_core_modules` CHANGE `version` `version` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;

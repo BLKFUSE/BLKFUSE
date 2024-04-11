@@ -103,7 +103,6 @@
       <?php endif; ?>
     </div>
   <?php endif; ?>
-	<div class="clr"></div>
 <?php else : ?>
   <?php $levelId = $this->level_id;?>
   <div class="profile_cover_photo cover_photo_wap b_dark">
@@ -142,7 +141,6 @@
                 <?php echo $this->translate('Upload Default Cover Photo'); ?>
               </a>
             </li>
-
             <?php if (Engine_Api::_()->getApi("settings", "core")->getSetting("groupcoverphoto.preview.level.id.$levelId")) : ?>
               <li><a  href="javascript:document.coverPhoto.reposition.start()" class="cover_reposition profile_cover_icon_move">
                   <?php echo $this->translate("Reposition"); ?></a>

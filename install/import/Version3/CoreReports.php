@@ -48,12 +48,12 @@ class Install_Import_Version3_CoreReports extends Install_Import_Version3_Abstra
 CREATE TABLE IF NOT EXISTS `se_reports` (
 *  `report_id` int(9) NOT NULL auto_increment,
 *  `report_user_id` int(9) NOT NULL default '0',
-  `report_url` varchar(250) collate utf8_unicode_ci NOT NULL default '',
+  `report_url` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL default '',
 *  `report_reason` int(1) NOT NULL default '0',
-  `report_details` text collate utf8_unicode_ci,
+  `report_details` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY  (`report_id`),
   KEY `INDEX` (`report_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -61,13 +61,13 @@ CREATE TABLE IF NOT EXISTS `se_reports` (
 CREATE TABLE IF NOT EXISTS `engine4_core_reports` (
 *  `report_id` int(11) NOT NULL auto_increment,
 *  `user_id` int(11) NOT NULL,
-*  `category` varchar(16) collate utf8_unicode_ci NOT NULL,
-*  `description` text collate utf8_unicode_ci NOT NULL,
+*  `category` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
+*  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `subject_type` varchar(32) character set latin1 collate latin1_bin NOT NULL,
   `subject_id` int(11) NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY  (`report_id`),
   KEY `category` (`category`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  * 
  */

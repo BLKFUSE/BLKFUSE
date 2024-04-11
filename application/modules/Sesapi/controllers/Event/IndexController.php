@@ -151,37 +151,11 @@ class Event_IndexController extends Sesapi_Controller_Action_Standard
   }
   
   public function searchFormAction() {
-
-    $filterOptions = (array)$this->_getParam('order', array('starttime ASC' => 'Start Time',
-      'creation_date DESC' => 'Recently Created',
-      'member_count DESC' => 'Most Popular',));
-    $search_for = $this-> _getParam('search_for', 'event');
-
-    $default_search_type = $this->_getParam('default_search_type', 'recentlySPcreated');
-
-    $form = new Event_Form_Filter_Browse();
-
-    if(engine_count($filterOptions)) {
-      $arrayOptions = $filterOptions;
-      $filterOptions = array();
-      foreach ($arrayOptions as $key=>$filterOption) {
-        $value = str_replace(array('SP',''), array(' ',' '), $filterOption);
-        $filterOptions[$key] = ucwords($value);
-      }
-      $filterOptions = array(''=>'')+$filterOptions;
-      $form->order->setMultiOptions($filterOptions);
-      $form->order->setValue($default_search_type);
-    }
-    // Populate with categories
-    $categories = Engine_Api::_()->getDbtable('categories', 'event')->getCategoriesAssoc();
-    asort($categories, SORT_LOCALE_STRING);
-    foreach( $categories as $k => $v ) {
-      $categoryOptions[$k] = $v;
-    }
-    if (sizeof($categoryOptions) <= 1) {
-      $form->removeElement('category_id');
+    $searchaction = $this->_getParam('searchaction', 'browse');
+    if($searchaction == 'browse') {
+      $form = new Event_Form_Filter_Browse();
     } else {
-      $form->category_id->setMultiOptions($categoryOptions);
+      $form = new Event_Form_Filter_Manage();
     }
     $form->populate($_POST);
     $formFields = Engine_Api::_()->getApi('FormFields','sesapi')->generateFormFields($form);

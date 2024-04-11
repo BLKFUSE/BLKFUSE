@@ -40,7 +40,7 @@ endif; ?>
           <?php if($valueOptions == 'play1Count'): ?>
             <a href="javascript:;" onclick="changeTabSes_<?php echo $randonNumber; ?>('<?php echo $valueOptions; ?>')"><?php echo $this->translate('Most Played'); ?></a>
           <?php else: ?>
-            <a href="javascript:;" onclick="changeTabSes_<?php echo $randonNumber; ?>('<?php echo $valueOptions; ?>')"><?php echo $this->translate(ucwords($value)); ?></a>
+            <a href="javascript:;" onclick="changeTabSes_<?php echo $randonNumber; ?>('<?php echo $valueOptions; ?>')"><?php echo $this->translate(ucfirst($value)); ?></a>
           <?php endif; ?>          
         </li>
       <?php endforeach; ?>

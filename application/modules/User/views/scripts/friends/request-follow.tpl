@@ -10,63 +10,37 @@
  * @author     Jung
  */
 ?>
-
-<script type="text/javascript">
-  var userWidgetRequestSend = function(action, data)
-  {
-    var url;
-    if( action == 'confirm' )
-    {
-      url = '<?php echo $this->url(array('controller' => 'friends', 'action' => 'confirm'), 'user_extended', true) ?>';
-    }
-    else if( action == 'reject' )
-    {
-      url = '<?php echo $this->url(array('controller' => 'friends', 'action' => 'ignore'), 'user_extended', true) ?>';
-    }
-    else
-    {
-      return false;
-    }
-
-    (scriptJquery.ajax({
-      'url' : url,
-      'data' : data,
-      success : function(responseJSON)
-      {
-        if( !responseJSON.status )
-        {
-          document.getElementById('user-widget-request-' + data.notification_id).innerHTML = responseJSON.error;
-        }
-        else
-        {
-          document.getElementById('user-widget-request-' + data.notification_id).innerHTML = responseJSON.message;
-        }
-      }
-    }));
-  }
-</script>
-
+<?php $notification = $this->notification; ?>
 <?php $params = $this->jsonInline(array(
-  'user_id' => $this->notification->getSubject()->getIdentity(),
-  'notification_id' => $this->notification->notification_id,
+  'user_id' => $notification->getSubject()->getIdentity(),
+  'notification_id' => $notification->notification_id,
    $this->tokenName =>  $this->tokenValue,
   'format' => 'json'
 ));?>
 
-<li id="user-widget-request-<?php echo $this->notification->notification_id ?>">
-  <?php echo $this->itemPhoto($this->notification->getSubject(), 'thumb.icon') ?>
-  <div>
-    <div>
-      <?php echo $this->translate('%1$s has requested to follow you.', $this->htmlLink($this->notification->getSubject()->getHref(), $this->notification->getSubject()->getTitle())); ?>
+<li <?php if( !$notification->read ): ?> class="notifications_unread"<?php endif; ?> id="notifications_<?php echo $notification->getIdentity();?>" value="<?php echo $notification->getIdentity();?>">
+  <div class="notification_item_photo">
+    <?php $user = Engine_Api::_()->getItem('user', $notification->subject_id);?>
+    <?php if($notification->getContentObject() && ($notification->getContentObject() instanceof Core_Model_Item_Abstract)): ?>
+      <?php echo $this->htmlLink($user->getHref(), $this->itemBackgroundPhoto($user, 'thumb.icon',$notification->getContentObject()->getTitle(),array("class"=>"notification_subject_icon"))) ?>
+    <?php endif; ?>
+  </div>
+  <div class="notification_item_content">
+    <div class="notification_item_title">
+      <?php echo $notification->__toString() ?>
     </div>
-    <div>
-      <button type="submit" onclick='userWidgetRequestSend("confirm", <?php echo $params ?>)'>
-        <?php echo $this->translate('Allow');?>
-      </button>
-      <?php echo $this->translate('or');?>
-      <a href="javascript:void(0);" onclick='userWidgetRequestSend("reject", <?php echo $params ?>)'>
-        <?php echo $this->translate('ignore request');?>
-      </a>
+    <div class="notification_item_date notification_item_general notification_type_<?php echo $notification->type ?>">
+      <?php echo $this->timestamp($notification->date); ?>
+    </div>
+    <div class="notification_item_buttons">
+      <a data-class="notifications_donotclose" href="javascript:void(0);" class="button" type="submit" onclick='userWidgetRequestSend("confirm", <?php echo $params ?>)'><?php echo $this->translate('Accept Request');?></a>
+      <a data-class="notifications_donotclose" href="javascript:void(0);" class="button" onclick='userWidgetRequestSend("ignore", <?php echo $params ?>)'><?php echo $this->translate('Ignore Request');?></a>
+    </div>
+  </div>
+  <div class="notifications_item_delete">
+    <a href="javascript:void(0);" class="notifications_delete_show"><i class="fa fa-ellipsis-h"></i></a>
+    <div class="notifications_delete_dropdown" id="notifications_delete_dropdown" style="display:none;">
+      <a id="remove_notification_update" data-class="notifications_donotclose" href="javascript:void(0);" onclick="removenotification('<?php echo $notification->getIdentity(); ?>');"><i id="remove_notification_update" data-class="notifications_donotclose" class="far fa-times-circle"></i><?php echo $this->translate("Remove this Notification"); ?></a>
     </div>
   </div>
 </li>

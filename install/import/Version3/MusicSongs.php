@@ -82,11 +82,11 @@ CREATE TABLE IF NOT EXISTS `se_music` (
   `music_user_id` int(10) unsigned NOT NULL default '0',
   `music_track_num` int(10) unsigned NOT NULL default '0',
   `music_date` int(11) NOT NULL default '0',
-  `music_title` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-  `music_ext` varchar(8) collate utf8_unicode_ci NOT NULL default '',
+  `music_title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+  `music_ext` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL default '',
   `music_filesize` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`music_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  * 
  */
 
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `engine4_music_playlists` (
   `title` varchar(63) NOT NULL default '',
   `description` text NOT NULL,
   `photo_id` int(11) unsigned NOT NULL default '0',
-  `owner_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `owner_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner_id` int(11) unsigned NOT NULL,
   `search` tinyint(1) NOT NULL default '1',
   `profile` tinyint(1) NOT NULL default '0',
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `engine4_music_playlists` (
   KEY `creation_date` (`creation_date`),
   KEY `play_count` (`play_count`),
   KEY `owner_id` (`owner_type`,`owner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  * 
  */
 
@@ -117,12 +117,12 @@ CREATE TABLE IF NOT EXISTS `engine4_music_playlist_songs` (
   `song_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `playlist_id` int(11) unsigned NOT NULL,
   `file_id` int(11) unsigned NOT NULL,
-  `title` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
   `play_count` int(11) unsigned NOT NULL default '0',
   `order` smallint(6) NOT NULL default '0',
   PRIMARY KEY (`song_id`),
   KEY (`playlist_id`,`file_id`),
   KEY `play_count` (`play_count`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  * 
  */

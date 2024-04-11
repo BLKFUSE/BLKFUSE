@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `se_forummoderators` (
   `forummoderator_forum_id` int(10) unsigned NOT NULL default '0',
   `forummoderator_user_id` int(10) unsigned NOT NULL default '0',
   UNIQUE KEY `unique` (`forummoderator_forum_id`,`forummoderator_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  *
  */
 
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `engine4_forum_listitems` (
   PRIMARY KEY  (`listitem_id`, `child_id`),
   KEY `list_id` (`list_id`),
   KEY `child_id` (`child_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */
 
@@ -74,6 +74,6 @@ CREATE TABLE IF NOT EXISTS `engine4_forum_lists` (
   `child_count` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`list_id`),
   KEY `owner_id` (`owner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

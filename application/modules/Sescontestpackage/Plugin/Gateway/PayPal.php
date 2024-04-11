@@ -101,12 +101,13 @@ class Sescontestpackage_Plugin_Gateway_PayPal extends Engine_Payment_Plugin_Abst
       $desc = @iconv("UTF-8", "ISO-8859-1//TRANSLIT", $desc);
     }
  
-    $currentCurrency = Engine_Api::_()->sescontestpackage()->getCurrentCurrency();
-    $defaultCurrency = Engine_Api::_()->sescontestpackage()->defaultCurrency();
+    $currentCurrency = Engine_Api::_()->payment()->getCurrentCurrency();
+    $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
     $settings = Engine_Api::_()->getApi('settings', 'core');
     $currencyValue = 1;
     if ($currentCurrency != $defaultCurrency) {
-      $currencyValue = $settings->getSetting('sesmultiplecurrency.' . $currentCurrency);
+      $currencyData = Engine_Api::_()->getDbTable('currencies', 'payment')->getCurrency($currentCurrency);
+      $currencyValue = $currencyData->change_rate;
     }
     $price = @round(($params['amount'] * $currencyValue), 2);
     // This is a one-time fee
@@ -314,7 +315,7 @@ class Sescontestpackage_Plugin_Gateway_PayPal extends Engine_Payment_Plugin_Abst
       $rate = $session->change_rate;
       if (!$rate)
         $rate = 1;
-      $defaultCurrency = Engine_Api::_()->sescontestpackage()->defaultCurrency();
+      $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
       $settings = Engine_Api::_()->getApi('settings', 'core');
       $currencyValue = 1;
       if ($currency != $defaultCurrency)
@@ -524,7 +525,7 @@ class Sescontestpackage_Plugin_Gateway_PayPal extends Engine_Payment_Plugin_Abst
       $rate = $session->change_rate;
       if (!$rate)
         $rate = 1;
-      $defaultCurrency = Engine_Api::_()->sescontestpackage()->defaultCurrency();
+      $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
       $settings = Engine_Api::_()->getApi('settings', 'core');
       $currencyValue = 1;
       if ($currency != $defaultCurrency) {

@@ -13,11 +13,9 @@
  
 ?>
 <?php include APPLICATION_PATH .  '/application/modules/Sesmember/views/scripts/dismiss_message.tpl';?>
-
 <p>
   <?php echo $this->translate("The members of your social network are listed here. If you need to search for a specific member, enter your search criteria in the fields below.") ?>
 </p>
-<br />
 <?php $baseURL = $this->layout()->staticBaseUrl;?>
 <script type="text/javascript">
   var currentOrder = '<?php echo $this->order ?>';
@@ -33,12 +31,9 @@
     scriptJquery('#filter_form').trigger('submit');
   }
 </script>
-
 <div class='admin_search sesbasic_search_form'>
   <?php echo $this->formFilter->render($this) ?>
 </div>
-<br />
-
 <div class='admin_results'>
   <div>
     <?php $count = $this->paginator->getTotalItemCount() ?>
@@ -53,8 +48,6 @@
     )); ?>
   </div>
 </div>
-
-<br />
 <?php if(engine_count($this->paginator) > 0):?>
 <div class="admin_table_form">
 <form>
@@ -82,9 +75,9 @@
           ?>
           <tr>
             <td><?php echo $item->user_id ?></td>
-            <td class='admin_table_bold'>
+            <td class="admin_table_name">
               <?php echo $this->htmlLink($user->getHref(),
-                  $this->string()->truncate($user->getTitle(), 16),
+                  $user->getTitle(),
                   array('target' => '_blank'))?>
             </td>
             <td class='admin_table_user'><?php echo $this->htmlLink($this->item('user', $item->user_id)->getHref(), $this->item('user', $item->user_id)->username, array('target' => '_blank')) ?></td>
@@ -136,7 +129,6 @@
       <?php endif; ?>
     </tbody>
   </table>
-  <br />
 </form>
 </div>
 <?php else:?>

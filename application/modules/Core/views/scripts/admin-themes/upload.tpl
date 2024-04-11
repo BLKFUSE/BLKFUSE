@@ -10,6 +10,11 @@
  * @author     Steve
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_layout", 'parentMenuItemName' => 'core_admin_main_layout_themes', 'lastMenuItemName' => 'Upload New Theme')); ?>
 <div class="settings">
 <?php echo $this->form->render($this) ?>
 </div>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_layout').parent().addClass('active');
+  scriptJquery('.core_admin_main_layout_themes').addClass('active');
+</script>

@@ -32,7 +32,7 @@ class Sesvideo_Installer extends Engine_Package_Installer_Module {
 				`video_id` int(11) NOT NULL,
 				PRIMARY KEY  (`rating_id`),
 				UNIQUE KEY `uniqueKey` (`user_id`,`resource_type`,`resource_id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
 			//SE video plugin check
 			$select = new Zend_Db_Select($db);

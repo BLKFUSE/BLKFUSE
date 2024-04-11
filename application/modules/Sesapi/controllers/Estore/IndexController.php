@@ -66,7 +66,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
             $result['cartData'][$counter]['productData'][$productsCounter]['title'] = $item->getTitle();
             $result['cartData'][$counter]['productData'][$productsCounter]['quantity'] = $quantity;
             if(!empty($price)){
-              $result['cartData'][$counter]['productData'][$productsCounter]['price'] = Engine_Api::_()->sesproduct()->getCurrencyPrice(round($price,2)) ;
+              $result['cartData'][$counter]['productData'][$productsCounter]['price'] = Engine_Api::_()->payment()->getCurrencyPrice(round($price,2)) ;
             } else {
               $result['cartData'][$counter]['productData'][$productsCounter]['price'] = 'FREE';
             }
@@ -94,7 +94,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
             $result['cartData'][$counter]['productData'][$productsCounter]['buttons'] = $menuoptions;
             $productsCounter++;
           }
-          $result['cartData'][$counter]['sub_total'] = Engine_Api::_()->sesproduct()->getCurrencyPrice(round($totalPrice,2));
+          $result['cartData'][$counter]['sub_total'] = Engine_Api::_()->payment()->getCurrencyPrice(round($totalPrice,2));
           
           if(engine_count($cart['stores'])) { 
             $storeArray[$cart['stores']->getTitle()] = $totalPrice;
@@ -107,7 +107,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
         $extraParams['checkout'] = $this->view->translate('Checkout');
         $result['extraParams'] = $extraParams;
         
-        $result['grand_total'] = Engine_Api::_()->sesproduct()->getCurrencyPrice(round($cartData['totalPrice'],2));
+        $result['grand_total'] = Engine_Api::_()->payment()->getCurrencyPrice(round($cartData['totalPrice'],2));
 
         $result['checkout'] = $this->view->translate("Proceed to Checkout");
       }
@@ -205,7 +205,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
             $result['cartData'][$counter]['productData'][$productsCounter]['product_id'] = $itemCart["cartproduct_id"];
             $result['cartData'][$counter]['productData'][$productsCounter]['quantity'] = $itemCart["quantity"];
             if(!empty($price)){
-              $result['cartData'][$counter]['productData'][$productsCounter]['price'] = Engine_Api::_()->sesproduct()->getCurrencyPrice(round($price,2)) ;
+              $result['cartData'][$counter]['productData'][$productsCounter]['price'] = Engine_Api::_()->payment()->getCurrencyPrice(round($price,2)) ;
             } else {
               $result['cartData'][$counter]['productData'][$productsCounter]['price'] = 'FREE';
             }
@@ -239,7 +239,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
             $result['cartData'][$counter]['productData'][$productsCounter]['buttons'] = $menuoptions;
             $productsCounter++;
           }
-          $result['cartData'][$counter]['sub_total'] = Engine_Api::_()->sesproduct()->getCurrencyPrice(round($totalPrice,2));
+          $result['cartData'][$counter]['sub_total'] = Engine_Api::_()->payment()->getCurrencyPrice(round($totalPrice,2));
           
           if(engine_count($cart['stores'])) { 
             $storeArray[$cart['stores']->getTitle()] = $totalPrice;
@@ -260,7 +260,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
         if(engine_count($storeArray) > 1){
           foreach($storeArray as $key=>$storePrice){
             $priceDetails[$priceDetailsCounter]['title'] = $this->view->translate("Net Amount Subtotal of %s store",$key);
-            $priceDetails[$priceDetailsCounter]['price'] = Engine_Api::_()->sesproduct()->getCurrencyPrice(round($storePrice,2));
+            $priceDetails[$priceDetailsCounter]['price'] = Engine_Api::_()->payment()->getCurrencyPrice(round($storePrice,2));
             $priceDetailsCounter++;
           }
           $result['price_title'] = $this->view->translate("Price Details");
@@ -270,7 +270,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
           $result['order_total_title'] = $this->view->translate("Order Total");
         }
         $cartData = Engine_Api::_()->sesproduct()->cartTotalPrice();
-        $result['order_total'] = Engine_Api::_()->sesproduct()->getCurrencyPrice(round($cartData['totalPrice'],2));
+        $result['order_total'] = Engine_Api::_()->payment()->getCurrencyPrice(round($cartData['totalPrice'],2));
 
         $result['checkout'] = $this->view->translate("Proceed to Checkout");
         $result['checkouturl'] = $this->view->url(array('action'=>'checkout'),'sesproduct_cart',true);
@@ -777,7 +777,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
         $result['shipping'] = $shippingArray;
         
 //         $result['order_number'] = $this->view->translate("Order Id:#").$order->order_id;
-//         $result['total_amount'] = '['.$this->view->translate('Total:') . $order->total <= 0 ? $this->view->translate("FREE") : Engine_Api::_()->estore()->getCurrencyPrice($order->total,$order->currency_symbol,$order->change_rate) .']';
+//         $result['total_amount'] = '['.$this->view->translate('Total:') . $order->total <= 0 ? $this->view->translate("FREE") : Engine_Api::_()->payment()->getCurrencyPrice($order->total,$order->currency_symbol,$order->change_rate) .']';
         
         $otherDetails = array();
         $otherDetailsCounter = 0;
@@ -823,19 +823,19 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
         $orderproduct = Engine_Api::_()->getItem('sesproduct_orderproduct', $order->order_id);
         if($order->total_admintax_cost > 0) {
           $otherDetails[$otherDetailsCounter]['name'] = $this->view->translate('Admin Tax Amount :');
-          $otherDetails[$otherDetailsCounter]['label'] = Engine_Api::_()->sesproduct()->getCurrencyPrice($order->total_admintax_cost,$order->currency_symbol,$order->change_rate);
+          $otherDetails[$otherDetailsCounter]['label'] = Engine_Api::_()->payment()->getCurrencyPrice($order->total_admintax_cost,$order->currency_symbol,$order->change_rate);
           $otherDetailsCounter++;
         }
         
         if($order->total_shippingtax_cost > 0){
           $otherDetails[$otherDetailsCounter]['name'] = $this->view->translate('Shipping Amount :');
-          $otherDetails[$otherDetailsCounter]['label'] = Engine_Api::_()->sesproduct()->getCurrencyPrice($order->total_shippingtax_cost,$order->currency_symbol,$order->change_rate);
+          $otherDetails[$otherDetailsCounter]['label'] = Engine_Api::_()->payment()->getCurrencyPrice($order->total_shippingtax_cost,$order->currency_symbol,$order->change_rate);
           $otherDetailsCounter++;
         }
         
         if($order->total_billingtax_cost > 0){
           $otherDetails[$otherDetailsCounter]['name'] = $this->view->translate('Store Tax Amount:');
-          $otherDetails[$otherDetailsCounter]['label'] = $order->total_billingtax_cost > 0 ? Engine_Api::_()->estore()->getCurrencyPrice($order->total_billingtax_cost,$order->currency_symbol,$order->change_rate) : "-";
+          $otherDetails[$otherDetailsCounter]['label'] = $order->total_billingtax_cost > 0 ? Engine_Api::_()->payment()->getCurrencyPrice($order->total_billingtax_cost,$order->currency_symbol,$order->change_rate) : "-";
           $otherDetailsCounter++;
         }
         
@@ -865,8 +865,8 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
         foreach($orderedProduct as $product) {
           $productItem = Engine_Api::_()->getItem('sesproduct', $product->product_id);
           $products['productsData'][$productCounter] = $product->toArray();
-          $products['productsData'][$productCounter]['price'] = Engine_Api::_()->estore()->getCurrencyPrice($product->price/$product->quantity,$order->currency_symbol,$order->change_rate);
-          $products['productsData'][$productCounter]['subtotal'] = Engine_Api::_()->estore()->getCurrencyPrice($product->price,$order->currency_symbol, $order->change_rate);
+          $products['productsData'][$productCounter]['price'] = Engine_Api::_()->payment()->getCurrencyPrice($product->price/$product->quantity,$order->currency_symbol,$order->change_rate);
+          $products['productsData'][$productCounter]['subtotal'] = Engine_Api::_()->payment()->getCurrencyPrice($product->price,$order->currency_symbol, $order->change_rate);
           $products['productsData'][$productCounter]['images']['main']= Engine_Api::_()->sesapi()->getPhotoUrls($productItem->photo_id, '', ""); //$this->getBaseUrl(true, $product->getPhotoUrl());
           $productCounter++;
         }
@@ -877,18 +877,18 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
         $footerCount = 0;
         if($order->total_shippingtax_cost > 0){ 
           $footer[$footerCount]['name'] = $this->view->translate('Shipping cost :');
-          $footer[$footerCount]['label'] = $order->total_shippingtax_cost > 0 ? Engine_Api::_()->estore()->getCurrencyPrice($order->total_shippingtax_cost,$order->currency_symbol,$order->change_rate) : "-";
+          $footer[$footerCount]['label'] = $order->total_shippingtax_cost > 0 ? Engine_Api::_()->payment()->getCurrencyPrice($order->total_shippingtax_cost,$order->currency_symbol,$order->change_rate) : "-";
           $footerCount++;
         }
         if($totalTaxAmount > 0){
           $footer[$footerCount]['name'] = $this->view->translate('Total Tax :');
-          $footer[$footerCount]['label'] = $totalTaxAmount > 0 ? Engine_Api::_()->estore()->getCurrencyPrice($totalTaxAmount,$order->currency_symbol,$order->change_rate) : "-";
+          $footer[$footerCount]['label'] = $totalTaxAmount > 0 ? Engine_Api::_()->payment()->getCurrencyPrice($totalTaxAmount,$order->currency_symbol,$order->change_rate) : "-";
           $footerCount++;
         }
         
         $footer[$footerCount]['name'] = $this->view->translate('Grand Total :');
         $groundTotal = $product->total;
-        $footer[$footerCount]['label'] = $groundTotal <= 0  ? $this->view->translate("FREE") : Engine_Api::_()->estore()->getCurrencyPrice($groundTotal, $order->currency_symbol, $order->change_rate);
+        $footer[$footerCount]['label'] = $groundTotal <= 0  ? $this->view->translate("FREE") : Engine_Api::_()->payment()->getCurrencyPrice($groundTotal, $order->currency_symbol, $order->change_rate);
         
         
         $result['footer'] = $footer;
@@ -1787,7 +1787,7 @@ class Estore_IndexController extends Sesapi_Controller_Action_Standard {
       $result['orders'][$counter]['store_title'] = $store_item->title;
       $result["orders"][$counter]['store_custom_url'] = $store_item->custom_url;
       $result["orders"][$counter]["images"]["main"] = $this->getBaseUrl(true, $store_item->getPhotoUrl());;
-      $result["orders"][$counter]['currency_symbol'] = Engine_Api::_()->sesproduct()->getCurrencyPrice($order->total,$order->currency_symbol);
+      $result["orders"][$counter]['currency_symbol'] = Engine_Api::_()->payment()->getCurrencyPrice($order->total,$order->currency_symbol);
       $result['orders'][$counter]['owner_name'] = $user->getTitle();
       $counter++;
     }
@@ -3998,7 +3998,7 @@ function getNavigation($store,$viewer){
       }
       foreach($paginator as $member){
         $result['notification'][$counterLoop]['user_id'] = $member->getIdentity();
-        $result['notification'][$counterLoop]['title'] = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
+        $result['notification'][$counterLoop]['title'] = $member->getTitle();//preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
         if(!empty($member->location))
            $result['notification'][$counterLoop]['location'] =   $member->location;
        //follow
@@ -6554,7 +6554,7 @@ protected function setPhoto($photo, $id) {
           $result[$counter] = $store;
           $result[$counter]['owner_title'] = $stores->getOwner()->getTitle();
 
-          $result[$counter]['price'] = Engine_Api::_()->sesproduct()->getCurrencyPrice($result[$counter]['price'],'','',true);
+          $result[$counter]['price'] = Engine_Api::_()->payment()->getCurrencyPrice($result[$counter]['price'],'','',true);
           
           $result[$counter]['currency'] = Engine_Api::_()->sesproduct()->getCurrencySymbol(Engine_Api::_()->estore()->getCurrentCurrency());
           if ($stores->category_id) {
@@ -6626,16 +6626,16 @@ protected function setPhoto($photo, $id) {
             if($stores->discount && $priceDiscount = Engine_Api::_()->sesproduct()->productDiscountPrice($stores)){
             
               $result[$counter]["price_with_discount"] = $priceDiscount;
-              $result[$counter]['product_price'] = $price = Engine_Api::_()->sesproduct()->getCurrencyPrice($priceDiscount);
+              $result[$counter]['product_price'] = $price = Engine_Api::_()->payment()->getCurrencyPrice($priceDiscount);
               $afterDiscount = Engine_Api::_()->sesproduct()->getCurrencySymbol(Engine_Api::_()->sesproduct()->getCurrentCurrency()) . '<strike>' . $stores->price . '</strike>';
               $result[$counter]['discount_price'] = $afterDiscount;
               if($stores->discount_type == 0) {
                 $result[$counter]['product_price'] = $this->view->translate("%s%s OFF",str_replace('.00','', $stores->percentage_discount_value),"%");
               } else {
-                $result[$counter]['product_price'] = $this->view->translate("%s OFF",Engine_Api::_()->sesproduct()->getCurrencyPrice($stores->fixed_discount_value));
+                $result[$counter]['product_price'] = $this->view->translate("%s OFF",Engine_Api::_()->payment()->getCurrencyPrice($stores->fixed_discount_value));
               }
             } else {
-              $result[$counter]['product_price'] = $price = $stores->price > 0 ? Engine_Api::_()->sesproduct()->getCurrencyPrice($stores->price) : $this->view->translate('FREE');
+              $result[$counter]['product_price'] = $price = $stores->price > 0 ? Engine_Api::_()->payment()->getCurrencyPrice($stores->price) : $this->view->translate('FREE');
             }
 
           if ($stores->is_approved) {
@@ -6806,7 +6806,7 @@ protected function setPhoto($photo, $id) {
 		//Create video
 		$table = Engine_Api::_()->getDbtable('videos', 'estorevideo');
 		if($values['type'] == 'iframely') {
-			$information = $this->handleIframelyInformation($values['url']);
+			$information = Engine_Api::_()->sesbasic()->handleIframelyInformation($values['url']);
 			if (empty($information)) {
 				$form->addError('We could not find a video there - please check the URL and try again.');
 			}

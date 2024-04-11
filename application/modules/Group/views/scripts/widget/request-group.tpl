@@ -10,60 +10,32 @@
  * @author	   John
  */
 ?>
-<script type="text/javascript">
-  var groupWidgetRequestSend = function(action, group_id, notification_id)
-  {
-    var url;
-    if( action == 'accept' )
-    {
-      url = '<?php echo $this->url(array('controller' => 'member', 'action' => 'accept'), 'group_extended', true) ?>';
-    }
-    else if( action == 'reject' )
-    {
-      url = '<?php echo $this->url(array('controller' => 'member', 'action' => 'reject'), 'group_extended', true) ?>';
-    }
-    else
-    {
-      return false;
-    }
+<script src='<?php echo $this->layout()->staticBaseUrl . 'application/modules/Group/externals/scripts/core.js'; ?>'></script>
+<?php $notification = $this->notification; ?>
 
-    (scriptJquery.ajax({
-      'url' : url,
-      'method': 'post',
-      'data' : {
-        'group_id' : group_id,
-        'format' : 'json'
-        //'token' : '<?php //echo $this->token() ?>'
-      },
-      success : function(responseJSON)
-      {
-        if( !responseJSON.status )
-        {
-          document.getElementById('group-widget-request-' + notification_id).innerHTML = responseJSON.error;
-        }
-        else
-        {
-          document.getElementById('group-widget-request-' + notification_id).innerHTML = responseJSON.message;
-        }
-      }
-    }));
-  }
-</script>
-
-<li id="group-widget-request-<?php echo $this->notification->notification_id ?>">
-  <?php echo $this->itemBackgroundPhoto($this->notification->getObject(), 'thumb.icon') ?>
-  <div>
-    <div>
-      <?php echo $this->translate('%1$s has invited you to the group %2$s', $this->htmlLink($this->notification->getSubject()->getHref(), $this->notification->getSubject()->getTitle()), $this->htmlLink($this->notification->getObject()->getHref(), $this->notification->getObject()->getTitle())); ?>
+<li <?php if( !$notification->read ): ?> class="notifications_unread"<?php endif; ?> id="notifications_<?php echo $notification->getIdentity();?>" value="<?php echo $notification->getIdentity();?>">
+  <div class="notification_item_photo">
+    <?php $user = Engine_Api::_()->getItem('user', $notification->subject_id);?>
+    <?php if($notification->getContentObject() && ($notification->getContentObject() instanceof Core_Model_Item_Abstract)): ?>
+      <?php echo $this->htmlLink($user->getHref(), $this->itemBackgroundPhoto($user, 'thumb.icon',$notification->getContentObject()->getTitle(),array("class"=>"notification_subject_icon"))) ?>
+    <?php endif; ?>
+  </div>
+  <div class="notification_item_content">
+    <div class="notification_item_title">
+      <?php echo $notification->__toString() ?>
     </div>
-    <div>
-      <button type="submit" onclick='groupWidgetRequestSend("accept", <?php echo $this->string()->escapeJavascript($this->notification->getObject()->getIdentity()) ?>, <?php echo $this->notification->notification_id ?>)'>
-        <?php echo $this->translate('Join Group');?>
-      </button>
-      <?php echo $this->translate('or');?>
-      <a href="javascript:void(0);" onclick='groupWidgetRequestSend("reject", <?php echo $this->string()->escapeJavascript($this->notification->getObject()->getIdentity()) ?>, <?php echo $this->notification->notification_id ?>)'>
-        <?php echo $this->translate('ignore request');?>
-      </a>
+    <div class="notification_item_date notification_item_general notification_type_<?php echo $notification->type ?>">
+      <?php echo $this->timestamp($notification->date); ?>
+    </div>
+    <div class="notification_item_buttons">
+      <a data-class="notifications_donotclose" href="javascript:void(0);" class="button" type="submit" onclick='groupWidgetRequestSend("accept", <?php echo $this->string()->escapeJavascript($notification->getObject()->getIdentity()) ?>, <?php echo $notification->notification_id ?>)'><?php echo $this->translate('Join Group');?></a>
+      <a data-class="notifications_donotclose" href="javascript:void(0);" class="button" onclick='groupWidgetRequestSend("reject", <?php echo $this->string()->escapeJavascript($notification->getObject()->getIdentity()) ?>, <?php echo $notification->notification_id ?>)'><?php echo $this->translate('Ignore Request');?></a>
+    </div>
+  </div>
+  <div class="notifications_item_delete">
+    <a href="javascript:void(0);" class="notifications_delete_show"><i class="fa fa-ellipsis-h"></i></a>
+    <div class="notifications_delete_dropdown" id="notifications_delete_dropdown" style="display:none;">
+      <a id="remove_notification_update" data-class="notifications_donotclose" href="javascript:void(0);" onclick="removenotification('<?php echo $notification->getIdentity(); ?>');"><i id="remove_notification_update" data-class="notifications_donotclose" class="far fa-times-circle"></i><?php echo $this->translate("Remove this Notification"); ?></a>
     </div>
   </div>
 </li>

@@ -30,18 +30,19 @@ return array(
     'type' => 'module',
     'name' => 'sestutorial',
     //'sku' => 'sestutorial',
-    'version' => '6.4.4p4',
+    'version' => '6.5.1',
 	'dependencies' => array(
             array(
                 'type' => 'module',
                 'name' => 'core',
-                'minVersion' => '6.2.0',
+                'minVersion' => '6.5.1',
             ),
         ),
     'path' => 'application/modules/Sestutorial',
     'title' => 'SNS - Multi - Use Tutorials Plugin',
     'description' => 'SNS - Multi - Use Tutorials Plugin',
     'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	'thumb' => 'application/modules/Sestutorial/externals/images/thumb.png',
     'callback' => array(
         'path' => 'application/modules/Sestutorial/settings/install.php',
         'class' => 'Sestutorial_Installer',

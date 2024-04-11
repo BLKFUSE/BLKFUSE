@@ -280,8 +280,8 @@ class Install_Import_Phpfox_CoreSettings extends Install_Import_Phpfox_Abstract
 
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_core_settings` (
-  `name` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `value` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  */

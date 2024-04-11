@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `se_forumusers` (
 *  `forumuser_user_id` int(9) NOT NULL default '0',
 *  `forumuser_totalposts` smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (`forumuser_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  *
  */
 
@@ -40,6 +40,6 @@ CREATE TABLE IF NOT EXISTS `engine4_forum_signatures` (
 *  `post_count` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`signature_id`),
   UNIQUE KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
  *
  */

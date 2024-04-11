@@ -37,13 +37,28 @@
       $lastposter = $topic->getLastPoster();
       ?>
       <li>
-        <div class="group_discussions_replies"> <span> <?php echo $this->locale()->toNumber($topic->post_count - 1) ?> </span> <?php echo $this->translate(array('reply', 'replies', $topic->post_count - 1)) ?> </div>
+        <div class="group_discussions_thumb">
+          <?php echo $this->htmlLink($topic->getOwner()->getHref(), $this->itemBackgroundPhoto($topic->getOwner(), 'thumb.icon')) ?>
+        </div>
         <div class="group_discussions_lastreply"> <?php echo $this->htmlLink($lastposter->getHref(), $this->itemBackgroundPhoto($lastposter, 'thumb.icon')) ?>
           <div class="group_discussions_lastreply_info"> <?php echo $this->htmlLink($lastpost->getHref(), $this->translate('Last Post')) ?> <?php echo $this->translate('by');?> <?php echo $lastposter->__toString() ?> <br />
             <?php echo $this->timestamp(strtotime($topic->modified_date), array('tag' => 'div', 'class' => 'group_discussions_lastreply_info_date')) ?> </div>
         </div>
         <div class="group_discussions_info">
-          <h3 <?php if( $topic->sticky ): ?> class='group_discussions_sticky'<?php endif; ?>> <?php echo $this->htmlLink($topic->getHref(), $topic->getTitle()) ?> </h3>
+          <h3>
+            <?php if( $topic->sticky ): ?>📌<?php endif; ?>
+            <?php echo $this->htmlLink($topic->getHref(), $topic->getTitle()) ?>
+          </h3>
+          <div class="group_discussions_stats">
+            <span><?php echo $this->htmlLink($topic->getOwner()->getHref(), $topic->getOwner()->getTitle()); ?></span>
+            <span class="sep">-</span>
+            <span><?php echo $this->timestamp($topic->creation_date) ?></span>
+            <span class="sep">-</span>
+            <span>
+              <?php echo $this->locale()->toNumber($topic->post_count - 1) ?>
+              <?php echo $this->translate(array('reply', 'replies', $topic->post_count - 1)) ?>
+            </span>
+          </div>
           <div class="group_discussions_blurb"> <?php echo $this->viewMore(strip_tags($topic->getDescription())) ?> </div>
         </div>
       </li>

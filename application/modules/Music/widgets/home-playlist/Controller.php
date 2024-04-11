@@ -28,6 +28,8 @@ class Music_Widget_HomePlaylistController extends Engine_Content_Widget_Abstract
     if( !$playlist ) {
       return $this->setNoRender();
     }
+    if(!$playlist->approved)
+      return $this->setNoRender();
 
     $viewer = Engine_Api::_()->user()->getViewer();
     if( !Engine_Api::_()->authorization()->isAllowed($playlist, $viewer, 'view') ) {

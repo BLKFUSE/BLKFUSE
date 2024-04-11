@@ -95,7 +95,7 @@ class Sesmusic_Form_Admin_Category_Songadd extends Engine_Form {
         'label' => 'Upload Icon',
         'description' => 'Upload an icon. (The Recommended dimensions of the icon: 40px * 40px.]'
     ));
-    $this->cat_icon->addValidator('Extension', false, 'jpg,jpeg,png,gif,PNG,GIF,JPG,JPEG');
+    $this->cat_icon->addValidator('Extension', false, 'jpg,jpeg,png,gif,webp');
 
     if (isset($category) && $category->cat_icon) {
       $iconObject = Engine_Api::_()->storage()->get($category->cat_icon, '');
@@ -123,7 +123,7 @@ class Sesmusic_Form_Admin_Category_Songadd extends Engine_Form {
         'label' => 'Upload Colored Icon',
         'description' => 'Upload colored icon. (The Recommended dimensions of the icon: 40px * 40px.]'
     ));
-    $this->cat_icon->addValidator('Extension', false, 'jpg,jpeg,png,gif,PNG,GIF,JPG,JPEG');
+    $this->cat_icon->addValidator('Extension', false, 'jpg,jpeg,png,gif,webp');
 
     if (isset($category) && $category->colored_icon) {
       $iconObject = Engine_Api::_()->storage()->get($category->colored_icon, '');
@@ -145,13 +145,13 @@ class Sesmusic_Form_Admin_Category_Songadd extends Engine_Form {
         ));
       }
     }
-    $this->colored_icon->addValidator('Extension', false, 'jpg,jpeg,png,gif,PNG,GIF,JPG,JPEG');
+    $this->colored_icon->addValidator('Extension', false, 'jpg,jpeg,png,gif,webp');
 
     $this->addElement('File', 'thumbnail', array(
         'label' => 'Upload Thumbnail',
         'description' => 'Upload a thumbnail. (The Recommended dimensions of the thumbnail: 500px * 300px.]'
     ));
-    $this->cat_icon->addValidator('Extension', false, 'jpg,jpeg,png,gif,PNG,GIF,JPG,JPEG');
+    $this->cat_icon->addValidator('Extension', false, 'jpg,jpeg,png,gif,webp');
 
     if (isset($category) && $category->thumbnail) {
       $iconObject = Engine_Api::_()->storage()->get($category->thumbnail, '');

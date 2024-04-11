@@ -52,7 +52,7 @@ class Sesiosapp_Form_Admin_Background extends Engine_Form {
 
     //New File System Code
     $default_photos_main = array();
-    $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png')));
+    $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png', 'webp')));
     foreach( $files as $file ) {
       $default_photos_main[$file->storage_path] = $file->name;
     }

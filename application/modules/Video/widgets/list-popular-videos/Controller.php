@@ -33,6 +33,7 @@ class Video_Widget_ListPopularVideosController extends Engine_Content_Widget_Abs
             $select = Engine_Api::_()->getDbTable('videos','video')->select();
             $select->where('search =?',1);
         }
+        $select->where('approved = ?', 1)->where('parent_type = ?', 'user');
         $select->where('status = ?', 1)
             ->order($popularType . ' DESC');
 

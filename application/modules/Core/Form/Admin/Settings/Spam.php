@@ -89,14 +89,14 @@ class Core_Form_Admin_Settings_Spam extends Engine_Form
       'value' => 1,
     ));
 
-    $this->addElement('Radio', 'email_antispam_login', array(
-      'label' => 'Enable anti-spamming technique in login form?',
-      'multiOptions' => array(
-          1 => 'Yes, enable anti-spamming technique in login form for email field.',
-          0 => 'No, do not enable anti-spamming technique in login form for email field.',
-      ),
-      'value' => 1,
-    ));
+//     $this->addElement('Radio', 'email_antispam_login', array(
+//       'label' => 'Enable anti-spamming technique in login form?',
+//       'multiOptions' => array(
+//           1 => 'Yes, enable anti-spamming technique in login form for email field.',
+//           0 => 'No, do not enable anti-spamming technique in login form for email field.',
+//       ),
+//       'value' => 1,
+//     ));
 
     $this->addElement('Radio', 'signup', array(
       'label' => 'Require new users to enter validation code when signing up?',

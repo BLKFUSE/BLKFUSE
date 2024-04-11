@@ -19,7 +19,10 @@
 class Activity_AdminSettingsController extends Core_Controller_Action_Admin
 {
     public function indexAction()
-    {
+    {   
+        // Get navigation
+        $this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_settings_activity', array(), 'core_admin_settings_activity');
+    
         // Make form
         $this->view->form = $form = new Activity_Form_Admin_Settings_General();
 
@@ -57,7 +60,10 @@ class Activity_AdminSettingsController extends Core_Controller_Action_Admin
     }
 
     public function typesAction()
-    {
+    {   
+        // Get navigation
+        $this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_settings_activity', array(), 'core_admin_settings_activitytypes');
+        
         $selectedType = $this->_getParam('type');
         $selectedModule = $this->_getParam('plugin');
         // Make form
@@ -88,6 +94,7 @@ class Activity_AdminSettingsController extends Core_Controller_Action_Admin
         $form->populate(array(
             'plugin' => $selectedModule,
         ));
+        
 
         $typeOptions = $moduleBaseActionTypes[$selectedModule];
 
@@ -101,6 +108,7 @@ class Activity_AdminSettingsController extends Core_Controller_Action_Admin
             if( $actionType->type == $selectedType ) {
                 $selectedTypeObject = $actionType;
                 $form->populate($actionType->toArray());
+                
                 // Process mulitcheckbox
                 $displayable = array();
                 if( 4 & (int) $actionType->displayable ) {
@@ -114,6 +122,7 @@ class Activity_AdminSettingsController extends Core_Controller_Action_Admin
                 }
                 $form->populate(array(
                     'displayable' => $displayable,
+                    'shareable' => !empty($actionType) ? 1 : 0,
                 ));
             }
         }

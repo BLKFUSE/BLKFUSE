@@ -33,5 +33,32 @@ class User_Widget_ProfilePhotoController extends Engine_Content_Widget_Abstract
     //}
 
     $this->view->user = $subject;
+    
+    $this->view->photo = '';
+    if (isset($subject->coverphoto)) {
+      $this->view->photo = $photo = Engine_Api::_()->getItem('storage_file', $subject->coverphoto);
+    }
+    
+    // Multiple friend mode
+    $select = $viewer->membership()->getMembersOfSelect();
+    $this->view->friends = $friends = $paginator = Zend_Paginator::factory($select);  
+
+    // Set item count per page and current page number
+    $paginator->setItemCountPerPage(5);
+    $paginator->setCurrentPageNumber($this->_getParam('page', 1));
+    
+    // Get stuff
+    $ids = array();
+    foreach( $friends as $friend ) {
+      $ids[] = $friend->resource_id;
+    }
+    $this->view->friendIds = $ids;
+
+    // Get the items
+    $friendUsers = array();
+    foreach( Engine_Api::_()->getItemTable('user')->find($ids) as $friendUser ) {
+      $friendUsers[$friendUser->getIdentity()] = $friendUser;
+    }
+    $this->view->friendUsers = $friendUsers;
   }
 }

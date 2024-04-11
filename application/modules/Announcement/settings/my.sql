@@ -21,16 +21,16 @@ DROP TABLE IF EXISTS `engine4_announcement_announcements`;
 CREATE TABLE IF NOT EXISTS `engine4_announcement_announcements` (
   `announcement_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `body` text COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `creation_date` datetime NOT NULL,
   `modified_date` datetime DEFAULT NULL,
-  `networks` text COLLATE utf8_unicode_ci,
-  `member_levels` text COLLATE utf8_unicode_ci,
-  `profile_types` text COLLATE utf8_unicode_ci,
+  `networks` text COLLATE utf8mb4_unicode_ci,
+  `member_levels` text COLLATE utf8mb4_unicode_ci,
+  `profile_types` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`announcement_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------

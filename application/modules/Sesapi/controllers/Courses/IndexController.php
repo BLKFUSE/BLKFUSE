@@ -2350,11 +2350,11 @@ class Courses_IndexController extends Sesapi_Controller_Action_Standard {
             $result[$counter]['is_content_wishlist'] = true;
           }
           $priceDiscount = Engine_Api::_()->courses()->courseDiscountPrice($course);
-          $result[$counter]['course_price'] = $priceDiscount['discountPrice'] > 0 ? Engine_Api::_()->courses()->getCurrencyPrice($priceDiscount['discountPrice']) : $this->view->translate('FREE');
+          $result[$counter]['course_price'] = $priceDiscount['discountPrice'] > 0 ? Engine_Api::_()->payment()->getCurrencyPrice($priceDiscount['discountPrice']) : $this->view->translate('FREE');
           if($priceDiscount['discountPrice'] > 0){
             if($priceDiscount['discount']){
-              $result[$counter]["price_with_discount"] = Engine_Api::_()->courses()->getCurrencyPrice($course->price);
-              $result[$counter]['discount_price'] = Engine_Api::_()->courses()->getCurrencyPrice($priceDiscount['discount']);
+              $result[$counter]["price_with_discount"] = Engine_Api::_()->payment()->getCurrencyPrice($course->price);
+              $result[$counter]['discount_price'] = Engine_Api::_()->payment()->getCurrencyPrice($priceDiscount['discount']);
             }
           }
           
@@ -2794,7 +2794,7 @@ class Courses_IndexController extends Sesapi_Controller_Action_Standard {
 			$optionCounter++;
 		}
     $priceDiscount = Engine_Api::_()->courses()->courseDiscountPrice($course);
-    $coursedata['course_price'] = $priceDiscount['discountPrice'] > 0 ? Engine_Api::_()->courses()->getCurrencyPrice($priceDiscount['discountPrice']) : $this->view->translate('FREE');
+    $coursedata['course_price'] = $priceDiscount['discountPrice'] > 0 ? Engine_Api::_()->payment()->getCurrencyPrice($priceDiscount['discountPrice']) : $this->view->translate('FREE');
 		$paymentGateways = Engine_Api::_()->courses()->checkPaymentGatewayEnable();
 		$paymentMethods = $paymentGateways['methods'];
 		$paymentMethodsCounter = 0;
@@ -3450,7 +3450,7 @@ class Courses_IndexController extends Sesapi_Controller_Action_Standard {
       $result['cartData'][$counter]['productData'][$productsCounter]['title'] = $course->getTitle();
       $result['cartData'][$counter]['productData'][$productsCounter]['quantity'] = $quantity;
       if(!empty($priceData['discountPrice'])){
-        $result['cartData'][$counter]['productData'][$productsCounter]['price'] = Engine_Api::_()->courses()->getCurrencyPrice(round($priceData['discountPrice'],2)) ;
+        $result['cartData'][$counter]['productData'][$productsCounter]['price'] = Engine_Api::_()->payment()->getCurrencyPrice(round($priceData['discountPrice'],2)) ;
       } else {
         $result['cartData'][$counter]['productData'][$productsCounter]['price'] = 'FREE';
       }
@@ -3478,7 +3478,7 @@ class Courses_IndexController extends Sesapi_Controller_Action_Standard {
     $extraParams['checkout'] = $this->view->translate('Checkout');
     $extraParams['cart_total'] = $cartData['cartCoursesCount'];
     $result['extraParams'] = $extraParams;
-    $result['grand_total'] = Engine_Api::_()->courses()->getCurrencyPrice(round(array_sum($_SESSION['courses_cart_checkout']['cart_total_price']),2));
+    $result['grand_total'] = Engine_Api::_()->payment()->getCurrencyPrice(round(array_sum($_SESSION['courses_cart_checkout']['cart_total_price']),2));
     $result['checkout'] = $this->view->translate("Proceed to Checkout");
     if($result <= 0)
       Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=> $this->view->translate('No Course Exists.'), 'result' => array()));
@@ -3604,7 +3604,7 @@ class Courses_IndexController extends Sesapi_Controller_Action_Standard {
       if (isset($_FILES['Filedata']) && !empty($_FILES['Filedata']['name']))
           $_POST['id'] = $this->uploadVideoAction();
       if($values['type'] == 'external') {
-          $information = $this->handleIframelyInformation($_POST['url']);
+          $information = Engine_Api::_()->sesbasic()->handleIframelyInformation($_POST['url']);
           if (empty($information)) {
              Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'1','error_message'=>$form->getMessages(), 'result' => array()));
           }
@@ -4976,7 +4976,7 @@ class Courses_IndexController extends Sesapi_Controller_Action_Standard {
     foreach ($paginator as $order) {
       $user = Engine_Api::_()->getItem('user', $order->user_id);
       $result['orders'][$counter] = $order->toArray();
-      $result['orders'][$counter]["total"] = Engine_Api::_()->courses()->getCurrencyPrice(round($order->total,2));
+      $result['orders'][$counter]["total"] = Engine_Api::_()->payment()->getCurrencyPrice(round($order->total,2));
       $result['orders'][$counter]['status'] = $order->state;
       $menuoptions= array();
       $menucounter = 0;

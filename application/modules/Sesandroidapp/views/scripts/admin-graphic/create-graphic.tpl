@@ -16,19 +16,19 @@
       $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesapi/externals/scripts/jscolor/jscolor.js');
 ?>
 <?php include APPLICATION_PATH .  '/application/modules/Sesandroidapp/views/scripts/dismiss_message.tpl';?>
-<h2>
+<h2 class="page_heading">
   <?php echo $this->translate("Native Android Mobile App") ?>
 </h2>
-<?php if(is_countable($this->navigation) && engine_count($this->navigation) ): ?>
+<?php if( engine_count($this->navigation) ): ?>
   <div class='tabs'>
     <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render() ?>
   </div>
 <?php endif; ?>
-<div class="sesandroidapp_search_result">
+<div class="sesandroidapp_search_result sesbasic_btn_space">
 	<?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesandroidapp', 'controller' => 'slideshow', 'action' => 'index'), $this->translate("Back to Manage Photo") , array('class'=>'sesandroidapp_icon_back buttonlink')); ?>
 </div>
 <div class='clear'>
-  <div class='settings sesbasic_admin_form'>
+  <div class='settings sesandroidapp_admin_form'>
     <?php echo $this->form->render($this); ?>
   </div>
 </div>

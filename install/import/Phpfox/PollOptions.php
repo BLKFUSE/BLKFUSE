@@ -56,9 +56,9 @@ class Install_Import_Phpfox_PollOptions extends Install_Import_Phpfox_Abstract
  * CREATE TABLE IF NOT EXISTS `engine4_poll_options` (
   `poll_option_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `poll_id` int(11) unsigned NOT NULL,
-  `poll_option` text COLLATE utf8_unicode_ci NOT NULL,
+  `poll_option` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `votes` smallint(4) unsigned NOT NULL,
   PRIMARY KEY (`poll_option_id`),
   KEY `poll_id` (`poll_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
  */

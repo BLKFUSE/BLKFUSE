@@ -81,15 +81,15 @@ class Sesiosapp_Form_Admin_Global extends Engine_Form {
         'value' => $settings->getSetting('sesiosapp_sitetitle', ''),
       ));
 
-      $this->addElement('Radio', 'sesiosapp_display_loggedinuserphoto', array(
-        'label' => 'Display Logged-in Member’s Photo',
-        'description' => 'Do you want to display current logged-in member’s photo in the Top Right corner of your app header after global search or site title? (If you choose Yes, then a small photo will show in circle and clicking on this photo will send users to their member profile page.)',
-        'multiOptions' => array(
-            1 => 'Yes',
-            0 => 'No',
-        ),
-        'value' => $settings->getSetting('sesiosapp_display_loggedinuserphoto', 1),
-      ));
+      // $this->addElement('Radio', 'sesiosapp_display_loggedinuserphoto', array(
+      //   'label' => 'Display Logged-in Member’s Photo',
+      //   'description' => 'Do you want to display current logged-in member’s photo in the Top Right corner of your app header after global search or site title? (If you choose Yes, then a small photo will show in circle and clicking on this photo will send users to their member profile page.)',
+      //   'multiOptions' => array(
+      //       1 => 'Yes',
+      //       0 => 'No',
+      //   ),
+      //   'value' => $settings->getSetting('sesiosapp_display_loggedinuserphoto', 1),
+      // ));
 
       $this->addElement('Radio', 'sesiosapp_headerfixed', array(
         'label' => 'Fix Header on Home Page',
@@ -224,12 +224,18 @@ class Sesiosapp_Form_Admin_Global extends Engine_Form {
       ));
 
     } else {
+      $enabledSesbasic = Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesbasic');
+      $fields = array(
+          'label' => 'Activate This Plugin',
+          'type' => 'submit',
+          'ignore' => true
+      );
+      if(!$enabledSesbasic){
+        $fields['disable'] = true;
+        $fields['title'] = 'To Activate this plugin, please first install all dependent plugins as show in the tips above.';
+      }
       //Add submit button
-      $this->addElement('Button', 'submit', array(
-        'label' => 'Activate Your Plugin',
-        'type' => 'submit',
-        'ignore' => true
-      ));
+      $this->addElement('Button', 'submit',$fields);
     }
   }
 }

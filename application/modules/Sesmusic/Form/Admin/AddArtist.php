@@ -39,7 +39,7 @@ class Sesmusic_Form_Admin_AddArtist extends Engine_Form {
     $this->addElement('File', 'artist_photo', array(
         'label' => 'Upload Artist Photo.',
     ));
-    $this->artist_photo->addValidator('Extension', false, 'jpg,jpeg,png,gif,PNG,GIF,JPG,JPEG');
+    $this->artist_photo->addValidator('Extension', false, 'jpg,jpeg,png,gif,webp');
 
     $artist_id = Zend_Controller_Front::getInstance()->getRequest()->getParam('artist_id');
     if ($artist_id) {

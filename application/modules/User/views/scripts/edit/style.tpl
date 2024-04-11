@@ -10,30 +10,22 @@
  * @author     John
  */
 ?>
-<div class="layout_middle">
-  <div class="generic_layout_container">
-<div class="headline">
-  <h2>
-    <?php if ($this->viewer->isSelf($this->user)):?>
-      <?php echo $this->translate('Edit My Profile');?>
-    <?php else:?>
-      <?php echo $this->translate('%1$s\'s Profile', $this->htmlLink($this->user->getHref(), $this->user->getTitle()));?>
-    <?php endif;?>
-  </h2>
-  <div class="tabs">
-    <?php
-      // Render the menu
-      echo $this->navigation()
-        ->menu()
-        ->setContainer($this->navigation)
-        ->render();
-    ?>
+<div class="generic_layout_container layout_top">
+  <div class="generic_layout_container layout_middle">
+    <?php echo $this->content()->renderWidget('user.user-setting-cover-photo'); ?>
   </div>
 </div>
-</div>
-</div>
-<div class="layout_middle">
-  <div class="generic_layout_container">
-<?php echo $this->form->render($this) ?>
-</div>
+<div class="generic_layout_container layout_main user_setting_main_page_main">
+  <div class="generic_layout_container layout_left">
+    <div class="theiaStickySidebar">
+      <?php echo $this->content()->renderWidget('user.settings-menu'); ?>
+    </div>
+  </div>
+  <div class="generic_layout_container layout_middle user_setting_main_middle">
+    <div class="theiaStickySidebar">
+      <div class="user_setting_global_form">
+        <?php echo $this->form->render($this) ?>
+      </div>
+    </div>
+  </div>
 </div>

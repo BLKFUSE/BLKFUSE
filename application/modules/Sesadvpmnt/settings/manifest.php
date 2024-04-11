@@ -16,18 +16,19 @@
     'type' => 'module',
     'name' => 'sesadvpmnt',
     //'sku' => 'sesadvpmnt',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
 	'dependencies' => array(
             array(
                 'type' => 'module',
                 'name' => 'core',
-                'minVersion' => '6.2.0',
+                'minVersion' => '6.5.1',
             ),
         ),
     'path' => 'application/modules/Sesadvpmnt',
     'title' => 'SNS - Stripe Payment Gateway Plugin',
     'description' => 'Socialenginesolutions',
     'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	'thumb' => 'application/modules/Sesadvpmnt/externals/images/thumb.png',
     'callback' => array(
       'path' => 'application/modules/Sesadvpmnt/settings/install.php',
       'class' => 'Sesadvpmnt_Installer',

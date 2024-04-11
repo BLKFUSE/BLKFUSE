@@ -352,7 +352,7 @@
                   <?php if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('videovod')): ?>
                     <iframe src="<?php echo  $this->baseUrl();  ?>/videovod/Iframe/index?video_id=<?php echo $this->v_id; ?>&smoothbox=1" width="480"  ></iframe>
                   <?php else: ?>
-                    <video id="video" controls preload="auto" width="480" height="386">
+                    <video id="video" controls preload="auto" width="480" height="386" controlsList="nodownload">
                       <source type='video/mp4' src="<?php echo $this->video_location ?>">
                     </video>
                   <?php endif ?>

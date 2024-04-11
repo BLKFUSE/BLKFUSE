@@ -77,7 +77,7 @@ EOF;
         <li id="field_option_select_{$key}_{$optionId}" class="{$optionClass}">
           <span class="field_extraoptions_choices_options">
             <a href="javascript:void(0);" onclick="void(0);">{$translate->_('edit')}</a>
-            | <a href="javascript:void(0);" onclick="void(0);">X</a>
+            | <a href="javascript:void(0);" onclick="void(0);" class="text-danger">X</a>
           </span>
           <span class="field_extraoptions_choices_label" onclick="void(0);">
             {$optionLabel} {$dependentFieldCountString}
@@ -114,7 +114,7 @@ EOF;
       </div>
       <div class='item_options'>
         <a href='javascript:void(0);' onclick='void(0);' onmousedown="void(0);">{$translate->_('edit')}</a>
-        | <a href='javascript:void(0);' onclick='void(0);' onmousedown="void(0);">{$translate->_('delete')}</a>
+        | <a href='javascript:void(0);' onclick='void(0);' class="text-danger" onmousedown="void(0);">{$translate->_('delete')}</a>
       </div>
       <div class='item_title'>
         {$label}

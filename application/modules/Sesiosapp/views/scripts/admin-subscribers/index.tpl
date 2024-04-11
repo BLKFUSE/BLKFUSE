@@ -12,7 +12,7 @@
  */
  
 ?>
-<?php include APPLICATION_PATH .  '/application/modules/Sesapi/views/scripts/dismiss_message.tpl';?>
+<?php include APPLICATION_PATH .  '/application/modules/Sesiosapp/views/scripts/dismiss_message.tpl';?>
 <h2>
   <?php echo $this->translate('Native iOS Mobile App'); ?>
 </h2>
@@ -29,7 +29,7 @@ Entering criteria into the filter fields will help you find specific subscriber.
 </div>
 <br />
 <?php $counter = $this->paginator->getTotalItemCount(); ?> 
-<?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
+<?php if( engine_count($this->paginator) ): ?>
   <div class="sesiosapp_search_result">
     <?php echo $this->translate(array('%s token found.', '%s tokens found.', $counter), $this->locale()->toNumber($counter)) ?>
   </div>

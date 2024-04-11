@@ -1,5 +1,5 @@
-ALTER TABLE `engine4_authorization_permissions` CHANGE `type` `type` VARCHAR(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL, CHANGE `name` `name` VARCHAR(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL;
-ALTER TABLE `engine4_core_menuitems` CHANGE `menu` `menu` VARCHAR(64) CHARACTER SET latin1 COLLATE latin1_general_ci NULL DEFAULT NULL;
+ALTER TABLE `engine4_authorization_permissions` CHANGE `type` `type` VARCHAR(32) NOT NULL, CHANGE `name` `name` VARCHAR(32) NOT NULL;
+ALTER TABLE `engine4_core_menuitems` CHANGE `menu` `menu` VARCHAR(64) NULL DEFAULT NULL;
 
 INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES 
 ("egifts_admin_main_level", "egifts", "Member Level Settings", "", '{"route":"admin_default","module":"egifts","controller":"level"}', "egifts_admin_main", "", 4),
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `engine4_egifts_remainingpayments` (
 	`remaining_payment` FLOAT DEFAULT 0,
 	PRIMARY KEY (`remainingpayment_id`),
 	KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS `engine4_egifts_userpayrequests`;
 CREATE TABLE IF NOT EXISTS `engine4_egifts_userpayrequests` (
@@ -40,18 +40,18 @@ CREATE TABLE IF NOT EXISTS `engine4_egifts_userpayrequests` (
 	`total_commission_amount` FLOAT NULL DEFAULT "0",
 	PRIMARY KEY (`userpayrequest_id`),
 	KEY `owner_id` (`owner_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `engine4_egifts_usergateways`;
 CREATE TABLE IF NOT EXISTS `engine4_egifts_usergateways` (
   `usergateway_id` int(11) unsigned NOT NULL auto_increment,
   `user_id` int(11) unsigned NOT NULL,
   `title` varchar(128) NOT NULL,
-  `description` text COLLATE utf8_unicode_ci,
+  `description` text COLLATE utf8mb4_unicode_ci,
   `enabled` tinyint(1) unsigned NOT NULL DEFAULT "0",
-  `plugin` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `plugin` varchar(128) NOT NULL,
   `config` mediumblob,
   `test_mode` tinyint(1) unsigned NOT NULL DEFAULT "0",
   `gateway_type` varchar(64) NOT NULL,
   PRIMARY KEY (`usergateway_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;

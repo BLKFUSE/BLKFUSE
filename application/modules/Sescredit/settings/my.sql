@@ -10,7 +10,7 @@
  */
 
 INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
-('core_admin_main_plugins_sescredit', 'sescredit', 'SNS - Credits & Activity Poin...', '', '{"route":"admin_default","module":"sescredit","controller":"settings"}', 'core_admin_main_plugins', '', 999),
+('core_admin_main_plugins_sescredit', 'sescredit', 'SNS - Credits & Activity / Reward Points Plugin', '', '{"route":"admin_default","module":"sescredit","controller":"settings"}', 'core_admin_main_plugins', '', 999),
 ('sescredit_admin_main_settings', 'sescredit', 'Global Settings', '', '{"route":"admin_default","module":"sescredit","controller":"settings"}', 'sescredit_admin_main', '', 1);
 
 
@@ -30,7 +30,7 @@ CREATE TABLE `engine4_sescredit_managemodules` (
 `enabled` tinyint(1) NOT NULL default "1",
 PRIMARY KEY (`managemodule_id`),
 KEY (`type`,`module`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 INSERT IGNORE INTO `engine4_sescredit_managemodules` ( `module`,`type`, `title`, `min_credit`, `min_checkout_price`, `limit_use`, `enabled`) VALUES ('estore','sesproduct_order', 'SNS - Stores Marketplace Plugin', 0, 0, '0', 1);

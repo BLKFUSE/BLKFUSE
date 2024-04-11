@@ -39,6 +39,7 @@ class Ewebstories_Widget_AllStoriesController extends Engine_Content_Widget_Abst
         }
         unset($_SESSION['story_id']);
     }
+    if($this->view->isAjax)
     $this->view->story = Engine_Api::_()->sesstories()->userData($highlight,$userarchivedstories,$user_id,$this->view);
   }
 }

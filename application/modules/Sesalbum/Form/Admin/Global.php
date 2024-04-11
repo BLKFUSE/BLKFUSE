@@ -184,7 +184,7 @@ class Sesalbum_Form_Admin_Global extends Engine_Form {
               1 => 'Yes',
               0 => 'No'
           ),
-          'onclick' => 'rating_album(this.value)',
+          'onchange' => 'rating_album(this.value)',
           'value' => $settings->getSetting('sesalbum.album.rating', 1),
       ));
       $this->addElement('Radio', 'sesalbum_ratealbum_own', array(
@@ -221,7 +221,7 @@ class Sesalbum_Form_Admin_Global extends Engine_Form {
               1 => 'Yes',
               0 => 'No'
           ),
-          'onclick' => 'rating_photo(this.value)',
+          'onchange' => 'rating_photo(this.value)',
           'value' => $settings->getSetting('sesalbum.photo.rating', 1),
       ));
       $this->addElement('Radio', 'sesalbum_ratephoto_own', array(
@@ -240,7 +240,7 @@ class Sesalbum_Form_Admin_Global extends Engine_Form {
               1 => 'Yes',
               0 => 'No'
           ),
-          'value' => $settings->getSetting('sesalbum.ratephoto.own', 1),
+          'value' => $settings->getSetting('sesalbum.ratephoto.again', 1),
       ));
       $this->addElement('Radio', 'sesalbum_ratephoto_show', array(
           'label' => 'Show Previous Rating on Photos',
@@ -291,7 +291,7 @@ class Sesalbum_Form_Admin_Global extends Engine_Form {
 				//default photos
 //New File System Code
 $default_photos_main = array();
-$files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png')));
+$files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png', 'webp')));
 foreach( $files as $file ) {
   $default_photos_main[$file->storage_path] = $file->name;
 }
@@ -342,12 +342,19 @@ foreach( $files as $file ) {
           'ignore' => true
       ));
     } else {
-      //Add submit button
-      $this->addElement('Button', 'submit', array(
+      
+      $enabledSesbasic = Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesbasic');
+      $fields = array(
           'label' => 'Activate This Plugin',
           'type' => 'submit',
           'ignore' => true
-      ));
+      );
+      if(!$enabledSesbasic){
+        $fields['disable'] = true;
+        $fields['title'] = 'To Activate this plugin, please first install all dependent plugins as show in the tips above.';
+      }
+      //Add submit button
+      $this->addElement('Button', 'submit',$fields);
     }
   }
 

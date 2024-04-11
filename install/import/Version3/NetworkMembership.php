@@ -28,6 +28,6 @@ CREATE TABLE `engine4_network_membership` (
   `resource_approved` tinyint(1) NOT NULL default '0',
   `user_approved` tinyint(1) NOT NULL default '0',
   PRIMARY KEY (`resource_id`, `user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

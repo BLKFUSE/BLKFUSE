@@ -21,36 +21,17 @@
     <?php echo $this->htmlLink($item->getHref(), $this->translate($item->getLabel()), $attribs) ?>
   <?php endforeach; ?>
 </div>
-<?php if( 1 !== engine_count($this->languageNameList) ): ?>
-    <form method="post" action="<?php echo $this->url(array('controller' => 'utility', 'action' => 'locale'), 'default', true) ?>" style="display:inline-block" id="footer_language_<?php echo $this->identity; ?>">
-      <?php $selectedLanguage = $this->translate()->getLocale() ?>
-      <?php echo $this->formSelect('language', $selectedLanguage, array('onchange' => "setLanguage()"), $this->languageNameList) ?>
-      <?php echo $this->formHidden('return', $this->url()) ?>
-    </form>
-<?php endif; ?>
-<script>
-  function setLanguage() {
-    scriptJquery('#footer_language_<?php echo $this->identity; ?>').submit();
-  }
-</script>
-<?php if( !empty($this->affiliateCode) ): ?>
-  <div class="affiliate_banner">
-    <?php 
-      echo $this->translate('Powered by %1$s', 
-        $this->htmlLink('http://www.socialengine.com/?source=v4&aff=' . urlencode($this->affiliateCode), 
-        $this->translate('SocialEngine Community Software'),
-        array('target' => '_blank')))
-    ?>
-  </div>
-<?php endif; ?>
+
+<?php //Languages ?>
+<?php echo $this->partial('_languages.tpl', 'core', array('languageNameList' => $this->languageNameList)); ?>
 
 <?php if(!empty($this->viewer_id)) { ?>
-<?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('core.sell.info')): ?>
-  <div class="footer_donotsell">
-    <input type="checkbox" id="donosellinfo" onclick="donotSellInfo()" <?php if($this->viewer->donotsellinfo == 1) { ?> checked <?php } ?>> <?php echo $this->translate("Do Not Sell My Personal Information."); ?>
-  </div>
-<?php endif; ?>
-  <script>
+  <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('core.sell.info')): ?>
+    <div class="footer_donotsell">
+      <input type="checkbox" id="donosellinfo" onclick="donotSellInfo()" <?php if($this->viewer->donotsellinfo == 1) { ?> checked <?php } ?>> <?php echo $this->translate("Do Not Sell My Personal Information."); ?>
+    </div>
+  <?php endif; ?>
+  <script type="application/javascript">
     function donotSellInfo() {
       var checkBox = document.getElementById("donosellinfo");
       (scriptJquery.ajax({

@@ -361,27 +361,13 @@ class Group_CoverphotoController extends Core_Controller_Action_Standard {
     $path = APPLICATION_PATH . DIRECTORY_SEPARATOR . 'temporary';
 
     $filesTable = Engine_Api::_()->getDbtable('files', 'storage');
-    $coreSettings = Engine_Api::_()->getApi('settings', 'core');
-    $mainHeight = $coreSettings->getSetting('main.photo.height', 1600);
-    $mainWidth = $coreSettings->getSetting('main.photo.width', 1600);
 
     // Resize image (main)
     $mainPath = $path . DIRECTORY_SEPARATOR . $base . '_m.' . $extension;
     $image = Engine_Image::factory();
     $image->open($file)
-      ->resize($mainWidth, $mainHeight)
+      ->resize(1600, 1600)
       ->write($mainPath)
-      ->destroy();
-
-    $normalHeight = $coreSettings->getSetting('normal.photo.height', 375);
-    $normalWidth = $coreSettings->getSetting('normal.photo.width', 375);
-    // Resize image (normal)
-
-    $normalPath = $path . DIRECTORY_SEPARATOR . $base . '_in.' . $extension;
-    $image = Engine_Image::factory();
-    $image->open($file)
-      ->resize($normalWidth, $normalHeight)
-      ->write($normalPath)
       ->destroy();
 
     $coverPath = $path . DIRECTORY_SEPARATOR . $base . '_c.' . $extension;
@@ -401,17 +387,13 @@ class Group_CoverphotoController extends Core_Controller_Action_Standard {
 
       try {
         $iMain = $filesTable->createFile($mainPath, $params);
-        $iIconNormal = $filesTable->createFile($normalPath, $params);
-        $iMain->bridge($iIconNormal, 'thumb.normal');
         $iCover = $filesTable->createFile($coverPath, $params);
         $iMain->bridge($iCover, 'thumb.cover');
       } catch (Exception $e) {
         @unlink($mainPath);
-        @unlink($normalPath);
         @unlink($coverPath);
       }
       @unlink($mainPath);
-      @unlink($normalPath);
       @unlink($coverPath);
       $photoObject->modified_date = date('Y-m-d H:i:s');
       $photoObject->file_id = $iMain->file_id;
@@ -423,13 +405,10 @@ class Group_CoverphotoController extends Core_Controller_Action_Standard {
     } else {
       try {
         $iMain = $filesTable->createSystemFile($mainPath);
-        $iIconNormal = $filesTable->createSystemFile($normalPath);
-        $iMain->bridge($iIconNormal, 'thumb.normal');
         $iCover = $filesTable->createSystemFile($coverPath);
         $iMain->bridge($iCover, 'thumb.cover');
       } catch (Exception $e) {
         @unlink($mainPath);
-        @unlink($normalPath);
         @unlink($coverPath);
         if ($e->getCode() == Storage_Model_DbTable_Files::SPACE_LIMIT_REACHED_CODE) {
           throw new Album_Model_Exception($e->getMessage(), $e->getCode());
@@ -480,65 +459,44 @@ class Group_CoverphotoController extends Core_Controller_Action_Standard {
 
     // Save
     $filesTable = Engine_Api::_()->getDbtable('files', 'storage');
-    $coreSettings = Engine_Api::_()->getApi('settings', 'core');
-    $mainHeight = $coreSettings->getSetting('main.photo.height', 1600);
-    $mainWidth = $coreSettings->getSetting('main.photo.width', 1600);
+    
     // Resize image (main)
     $mainPath = $path . DIRECTORY_SEPARATOR . $base . '_m.' . $extension;
     $image = Engine_Image::factory();
     $image->open($file)
-      ->resize($mainWidth, $mainHeight)
+      ->resize(720, 720)
       ->write($mainPath)
       ->destroy();
-
-    $normalHeight = $coreSettings->getSetting('normal.photo.height', 375);
-    $normalWidth = $coreSettings->getSetting('normal.photo.width', 375);
-    // Resize image (normal)
-    $normalPath = $path . DIRECTORY_SEPARATOR . $base . '_in.' . $extension;
-
+      
+		// Resize image (main)
+    $profilePath = $path . DIRECTORY_SEPARATOR . $base . '_p.' . $extension;
     $image = Engine_Image::factory();
     $image->open($file)
-      ->resize($normalWidth, $normalHeight)
-      ->write($normalPath)
+      ->resize(400, 400)
+      ->write($profilePath)
       ->destroy();
 
-    $normalLargeHeight = $coreSettings->getSetting('normallarge.photo.height', 720);
-    $normalLargeWidth = $coreSettings->getSetting('normallarge.photo.width', 720);
-    // Resize image (normal)
-    $normalLargePath = $path . DIRECTORY_SEPARATOR . $base . '_inl.' . $extension;
-
-    $image = Engine_Image::factory();
-    $image->open($file)
-      ->resize($normalLargeWidth, $normalLargeHeight)
-      ->write($normalLargePath)
-      ->destroy();
-    // Resize image (icon)
-    $squarePath = $path . DIRECTORY_SEPARATOR . $base . '_is.' . $extension;
-    $image = Engine_Image::factory();
-    $image->open($file);
-
-    $size = min($image->height, $image->width);
-    $x = ($image->width - $size) / 2;
-    $y = ($image->height - $size) / 2;
-
-    $image->resample($x, $y, $size, $size, 48, 48)
-      ->write($squarePath)
-      ->destroy();
+//     // Resize image (icon)
+//     $squarePath = $path . DIRECTORY_SEPARATOR . $base . '_is.' . $extension;
+//     $image = Engine_Image::factory();
+//     $image->open($file);
+// 
+//     $size = min($image->height, $image->width);
+//     $x = ($image->width - $size) / 2;
+//     $y = ($image->height - $size) / 2;
+// 
+//     $image->resample($x, $y, $size, $size, 48, 48)
+//       ->write($squarePath)
+//       ->destroy();
         // Store
     try {
       $iMain = $filesTable->createFile($mainPath, $params);
-      $iIconNormal = $filesTable->createFile($normalPath, $params);
-      $iMain->bridge($iIconNormal, 'thumb.normal');
-      $iIconNormalLarge = $filesTable->createFile($normalLargePath, $params);
-      $iMain->bridge($iIconNormalLarge, 'thumb.large');
-      $iSquare = $filesTable->createFile($squarePath, $params);
-      $iMain->bridge($iSquare, 'thumb.icon');
+      $iProfile = $filesTable->createFile($profilePath, $params);
+      $iMain->bridge($iProfile, 'thumb.profile');
     } catch (Exception $e) {
         // Remove temp files
       @unlink($mainPath);
-      @unlink($normalPath);
-      @unlink($normalLargePath);
-      @unlink($squarePath);
+      @unlink($profilePath);
       // Throw
       if ($e->getCode() == Storage_Model_DbTable_Files::SPACE_LIMIT_REACHED_CODE) {
         throw new Album_Model_Exception($e->getMessage(), $e->getCode());

@@ -10,8 +10,9 @@
  * @author     John Boehr <j@webligo.com>
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_monetization", 'parentMenuItemName' => 'core_admin_main_payment', 'childMenuItemName' => 'core_admin_main_payment_gateways')); ?>
 
-<h2>
+<h2 class="page_heading">
   <?php echo $this->translate("Billing") ?>
 </h2>	
 <?php if( count($this->navigation) ): ?>
@@ -23,21 +24,22 @@
     ?>
 </div>
 <?php endif; ?>
-<h3>
-  <?php echo $this->translate("Manage Payment Gateways") ?>
-</h3>
-<p>
-  <?php echo $this->translate("PAYMENT_VIEWS_ADMIN_GATEWAYS_INDEX_DESCRIPTION") ?>
-</p>
-
-<?php
-$settings = Engine_Api::_()->getApi('settings', 'core');
-if( $settings->getSetting('user.support.links', 0) == 1 ) {
-	echo 'More info: <a href="https://community.socialengine.com/blogs/597/76/gateways" target="_blank">See KB article</a>.';
-} 
-?>
-<br />
-<br />
+<div class="admin_common_top_section">
+  <h3>
+    <?php echo $this->translate("Manage Payment Gateways") ?>
+  </h3>
+  <p>
+    <?php echo $this->translate("PAYMENT_VIEWS_ADMIN_GATEWAYS_INDEX_DESCRIPTION") ?>
+  </p>
+  <p>
+    <?php
+    $settings = Engine_Api::_()->getApi('settings', 'core');
+    if( $settings->getSetting('user.support.links', 0) == 1 ) {
+      echo 'More info: <a href="https://community.socialengine.com/blogs/597/76/gateways" target="_blank">See KB article</a>.';
+    } 
+    ?>
+  </p>
+</div>
 
 <?php if( !empty($this->error) ): ?>
   <ul class="form-errors">
@@ -45,8 +47,6 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
       <?php echo $this->error ?>
     </li>
   </ul>
-  
-  <br />
 <?php endif; ?>
 
 
@@ -59,28 +59,33 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
     <?php echo $this->paginationControl($this->paginator); ?>
   </div>
 </div>
-
-<br />
-
-
-<table class='admin_table admin_responsive_table' style='width: 40%;'>
+<table class='admin_table admin_responsive_table'>
   <thead>
     <tr>
       <th style='width: 1%;'><?php echo $this->translate("ID") ?></th>
       <th><?php echo $this->translate("Title") ?></th>
-      <th style='width: 1%;' class='admin_table_centered'><?php echo $this->translate("Enabled") ?></th>
-      <th style='width: 1%;' class='admin_table_options'><?php echo $this->translate("Options") ?></th>
+      <th><?php echo $this->translate("Icon") ?></th>
+      <th class='admin_table_centered'><?php echo $this->translate("Enabled") ?></th>
+      <th style='width: 1%;'><?php echo $this->translate("Options") ?></th>
     </tr>
   </thead>
   <tbody>
     <?php if( engine_count($this->paginator) ): ?>
-      <?php foreach( $this->paginator as $item ): ?>
+      <?php foreach( $this->paginator as $item ): 
+          $config = (array) $item['config'];
+      ?>
         <tr>
           <td data-label="ID">
             <?php echo $item->gateway_id ?>
           </td>
           <td data-label="<?php echo $this->translate("Title") ?>" class='admin_table_bold'>
             <?php echo $item->title ?>
+          </td>
+          <td data-label="<?php echo $this->translate("Icon") ?>" class='admin_table_bold'>
+            <?php if(isset($config['icon']) && !empty($config['icon'])) { ?>
+              <?php $path = Engine_Api::_()->core()->getFileUrl($config['icon']); ?>
+              <img src="<?php echo $path; ?>" class="table_img" alt="img" />
+            <?php } else { echo "---"; }  ?>
           </td>
           <td data-label="<?php echo $this->translate("Enabled") ?>" class='admin_table_centered'>
             <?php echo ( $item->enabled ? $this->translate('Yes') : $this->translate('No') ) ?>
@@ -95,3 +100,7 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
     <?php endif; ?>
   </tbody>
 </table>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_monetization').parent().addClass('active');
+  scriptJquery('.core_admin_main_payment').addClass('active');
+</script>

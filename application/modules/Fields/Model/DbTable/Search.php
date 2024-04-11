@@ -555,7 +555,7 @@ class Fields_Model_DbTable_Search extends Fields_Model_DbTable_Abstract
       // Column charset
       if( !empty($params['charset']) ) {
         if( $params['charset'] == 'default' || $params['charset'] === true ) {
-          $sql .= ' CHARACTER SET utf8';
+          $sql .= ' CHARACTER SET utf8mb4';
         } else if( is_string($params['charset']) ) {
           $sql .= ' CHARACTER SET ' . $params['charset'];
         }
@@ -564,7 +564,7 @@ class Fields_Model_DbTable_Search extends Fields_Model_DbTable_Abstract
       // Column collate
       if( !empty($params['collate']) ) {
         if( $params['collate'] == 'default' || $params['collate'] === true ) {
-          $sql .= ' COLLATE utf8_unicode_ci';
+          $sql .= ' COLLATE utf8mb4_unicode_ci';
         } else if( is_string($params['collate']) ) {
           $sql .= ' COLLATE ' . $params['collate'];
         }

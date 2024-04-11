@@ -56,7 +56,25 @@ class User_EditController extends Core_Controller_Action_User
     {
         $this->view->user = $user = Engine_Api::_()->core()->getSubject();
         $this->view->viewer = $viewer = Engine_Api::_()->user()->getViewer();
-
+            
+        // Element: profile_type
+        $this->view->editProfileType = false;
+        $topStructure = Engine_Api::_()->fields()->getFieldStructureTop('user');
+        if( engine_count($topStructure) == 1 && $topStructure[0]->getChild()->type == 'profile_type' ) {
+          $profileTypeField = $topStructure[0]->getChild();
+          $options = $optionsIds = $profileTypeField->getOptions(array('profiletypeshow' => 1));
+          $options = $profileTypeField->getElementParams('user');
+          unset($options['options']['order']);
+          unset($options['options']['multiOptions']['']);
+          if($options['type'] == 'ProfileType') {
+            unset($options['options']['multiOptions']['5']);
+            unset($options['options']['multiOptions']['9']);
+          }
+          if( engine_count($options['options']['multiOptions']) > 1 ) { 
+            $this->view->editProfileType = true;
+          }
+        }
+  
         // General form w/o profile type
         $profileTypesArray = [];
         $aliasedFields = $user->fields()->getFieldsObjectsByAlias();
@@ -78,9 +96,12 @@ class User_EditController extends Core_Controller_Action_User
         if ($changeUserProfileType) {
           $profileTypesArray = Engine_Api::_()->getDbtable('mapProfileTypeLevels', 'authorization')
             ->getMappedProfileTypeIds($user->level_id);
-          if (engine_count($profileTypesArray) == 1) {
+            
+          $profileTypeValue = Engine_Api::_()->user()->getProfileFieldValue(array('user_id' => $user->getIdentity(), 'field_id' => 1));
+          
+          if (!empty($profileTypeValue)) {
             $this->view->topLevelId = $topLevelId = 1;
-            $this->view->topLevelValue = $topLevelValue = $profileTypesArray[0]['profile_type_id'];
+            $this->view->topLevelValue = $topLevelValue = $profileTypeValue; //$profileTypesArray[0]['profile_type_id'];
           }
         }
 
@@ -101,25 +122,19 @@ class User_EditController extends Core_Controller_Action_User
         // Get form
         $form = $this->view->form = new Fields_Form_Standard($params);
 
-        if (!empty($profileTypesArray) && engine_count($profileTypesArray) == 1) {
+        if (!empty($profileTypeValue)) {
           $form->addElement('Hidden', '0_0_1', array(
-            'value' => $profileTypesArray[0]['profile_type_id']
+            'value' => $profileTypeValue, //$profileTypesArray[0]['profile_type_id']
           ));
         }
 
         if (empty($topLevelValue) && $changeUserProfileType) {
           $profileTypes = Engine_Api::_()->getDbtable('options', 'authorization')->getAllProfileTypes();
+          
           $profileTypeOptions = array('' => '');
           foreach ($profileTypes as $profileType) {
-            $showOption  = false;
-            foreach($profileTypesArray as $value) {
-              if ($profileType->option_id == $value['profile_type_id']) {
-                $showOption = true;
-              }
-            }
-            if ($showOption) {
+              if(in_array($profileType->option_id, array(5,9))) continue;
               $profileTypeOptions[$profileType->option_id] = $profileType->label;
-            }
           }
           $form->getElement('0_0_1')->setMultiOptions($profileTypeOptions);
         }
@@ -167,61 +182,61 @@ class User_EditController extends Core_Controller_Action_User
             $db->beginTransaction();
 
             try {
-                // if album not enable remove old photo.
-                if(!Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('album')){
-                    // if user photo_id column is empty.
-                    if(!empty($user['photo_id'])){
-                        $file = Engine_Api::_()->getItem('storage_file', $user['photo_id']);
-                        $getParentChilds = $file->getChildren($file->getIdentity());
-                        foreach ($getParentChilds as $child) {
-                            // remove child file.
-                            $this->unlinkFile(APPLICATION_PATH . DIRECTORY_SEPARATOR . $child['storage_path']);
-                            // remove child directory.
-                            $childPhotoDir = $this->getDirectoryPath($child['storage_path']);
-                            $this->removeDir($childPhotoDir);
-                            // remove child row from db.
-                            $child->remove();
-                        }
-                        // remove parent file.
-                        $this->unlinkFile(APPLICATION_PATH . DIRECTORY_SEPARATOR . $file['storage_path']);
-                        // remove directory.
-                        $parentPhotoDir = $this->getDirectoryPath($file['storage_path']);
-                        $this->removeDir($parentPhotoDir);
-                        if ($file) {
-                            // remove parent form db.
-                            $file->remove();
-                        }
-                    }
-                }
-                $form->coordinates->setValue('');  //reset coordinates value
-                $fileElement = $form->Filedata;
+							// if album not enable remove old photo.
 
-                $user->setPhoto($fileElement);
+								// if user photo_id column is empty.
+								if(!empty($user['photo_id'])){
+									$file = Engine_Api::_()->getItem('storage_file', $user['photo_id']);
+									$getParentChilds = $file->getChildren($file->getIdentity());
+									foreach ($getParentChilds as $child) {
+										// remove child file.
+										$this->unlinkFile(APPLICATION_PATH . DIRECTORY_SEPARATOR . $child['storage_path']);
+										// remove child directory.
+										$childPhotoDir = $this->getDirectoryPath($child['storage_path']);
+										$this->removeDir($childPhotoDir);
+										// remove child row from db.
+										$child->remove();
+									}
+									// remove parent file.
+									$this->unlinkFile(APPLICATION_PATH . DIRECTORY_SEPARATOR . $file['storage_path']);
+									// remove directory.
+									$parentPhotoDir = $this->getDirectoryPath($file['storage_path']);
+									$this->removeDir($parentPhotoDir);
+									if ($file) {
+										// remove parent form db.
+										$file->remove();
+									}
+								}
 
-                $iMain = Engine_Api::_()->getItem('storage_file', $user->photo_id);
+							$form->coordinates->setValue('');  //reset coordinates value
+							$fileElement = $form->Filedata;
 
-                // Insert activity
-                $action = Engine_Api::_()->getDbtable('actions', 'activity')->addActivity($user, $user, 'profile_photo_update',
-                    '{item:$subject} added a new profile photo.');
+							$user->setPhoto($fileElement);
 
-                // Hooks to enable albums to work
-                if ($action) {
-                    $event = Engine_Hooks_Dispatcher::_()
-                        ->callEvent('onUserPhotoUpload', array(
-                            'user' => $user,
-                            'file' => $iMain,
-                        ));
+							$iMain = Engine_Api::_()->getItem('storage_file', $user->photo_id);
 
-                    $attachment = $event->getResponse();
-                    if (!$attachment) {
-                        $attachment = $iMain;
-                    }
+							// Insert activity
+							$action = Engine_Api::_()->getDbtable('actions', 'activity')->addActivity($user, $user, 'profile_photo_update',
+									'{item:$subject} added a new profile photo.');
 
-                    // We have to attach the user himself w/o album plugin
-                    Engine_Api::_()->getDbtable('actions', 'activity')->attachActivity($action, $attachment);
-                }
+							// Hooks to enable albums to work
+							if ($action) {
+								$event = Engine_Hooks_Dispatcher::_()
+										->callEvent('onUserPhotoUpload', array(
+												'user' => $user,
+												'file' => $iMain,
+										));
 
-                $db->commit();
+								$attachment = $event->getResponse();
+								if (!$attachment) {
+										$attachment = $iMain;
+								}
+
+								// We have to attach the user himself w/o album plugin
+								Engine_Api::_()->getDbtable('actions', 'activity')->attachActivity($action, $attachment);
+							}
+
+							$db->commit();
             } catch (Exception $e) {
                 return $this->exceptionWrapper($e, $form, $db);
             }
@@ -231,7 +246,7 @@ class User_EditController extends Core_Controller_Action_User
         elseif ($form->getValue('coordinates') !== '') {
             $storage = Engine_Api::_()->storage();
 
-            $iProfile = $storage->get($user->photo_id, 'thumb.profile');
+            $iProfile = $storage->get($user->photo_id);
             if (!$iProfile) {
                 return;   // don't do anything
             }
@@ -259,10 +274,11 @@ class User_EditController extends Core_Controller_Action_User
             $iProfile->store($pName);
             // Remove temp files
             @unlink($iName);
+            @unlink($pName);
         } else {
             $storage = Engine_Api::_()->storage();
 
-            $iProfile = $storage->get($user->photo_id, 'thumb.profile');
+            $iProfile = $storage->get($user->photo_id);
             if (!$iProfile) {
                 return;   // don't do anything
             }
@@ -303,8 +319,8 @@ class User_EditController extends Core_Controller_Action_User
         @unlink($filePath);
     }
 
-    protected function whenRemove($user,$deleteType = null){
-    if(!Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('album')){
+	protected function whenRemove($user,$deleteType = null){
+
       if(!empty($user[$deleteType])){
         $file = Engine_Api::_()->getItem('storage_file', $user[$deleteType]);
         $getParentChilds = $file->getChildren($file->getIdentity());
@@ -327,33 +343,30 @@ class User_EditController extends Core_Controller_Action_User
           $file->remove();
         }
       }
-    }
   }
 
-    public function removePhotoAction()
-    {
-        // Get form
-        $this->view->form = $form = new User_Form_Edit_RemovePhoto();
+  public function removePhotoAction() {
+    // Get form
+    $this->view->form = $form = new User_Form_Edit_RemovePhoto();
 
-        if (!$this->getRequest()->isPost() || !$form->isValid($this->getRequest()->getPost())) {
-            return;
-        }
-
-
-        $user = Engine_Api::_()->core()->getSubject();
-        $this->whenRemove($user,"photo_id");
-        $user->photo_id = 0;
-        $user->save();
-
-        $this->view->status = true;
-        $this->view->message = Zend_Registry::get('Zend_Translate')->_('Your photo has been removed.');
-
-        $this->_forward('success', 'utility', 'core', array(
-            'smoothboxClose' => true,
-            'parentRefresh' => true,
-            'messages' => array(Zend_Registry::get('Zend_Translate')->_('Your photo has been removed.'))
-        ));
+    if (!$this->getRequest()->isPost() || !$form->isValid($this->getRequest()->getPost())) {
+        return;
     }
+
+    $user = Engine_Api::_()->core()->getSubject();
+    $this->whenRemove($user,"photo_id");
+    $user->photo_id = 0;
+    $user->save();
+
+    $this->view->status = true;
+    $this->view->message = Zend_Registry::get('Zend_Translate')->_('Your photo has been removed.');
+
+    $this->_forward('success', 'utility', 'core', array(
+        'smoothboxClose' => true,
+        'parentRefresh' => true,
+        'messages' => array(Zend_Registry::get('Zend_Translate')->_('Your photo has been removed.'))
+    ));
+  }
 
     public function styleAction()
     {
@@ -362,8 +375,7 @@ class User_EditController extends Core_Controller_Action_User
         if (!$this->_helper->requireAuth()->setAuthParams('user', null, 'style')->isValid()) {
             return;
         }
-
-
+        
         // Get form
         $this->view->form = $form = new User_Form_Edit_Style();
 
@@ -472,55 +484,6 @@ class User_EditController extends Core_Controller_Action_User
                 $photoParent->owner_id == $photoOwnerId &&
                 $photoParent->type == 'profile') {
 
-                // ensure thumb.icon and thumb.profile exist
-//                 $newStorageFile = Engine_Api::_()->getItem('storage_file', $photo->file_id);
-//                 $filesTable = Engine_Api::_()->getDbtable('files', 'storage');
-//                 if ($photo->file_id == $filesTable->lookupFile($photo->file_id, 'thumb.profile')) {
-//                     try {
-//                         $tmpFile = $newStorageFile->temporary();
-//                         $image = Engine_Image::factory();
-//                         $image->open($tmpFile)
-//                             ->resize(200, 400)
-//                             ->write($tmpFile)
-//                             ->destroy();
-//                         $iProfile = $filesTable->createFile($tmpFile, array(
-//                             'parent_type' => $user->getType(),
-//                             'parent_id' => $user->getIdentity(),
-//                             'user_id' => $user->getIdentity(),
-//                             'name' => basename($tmpFile),
-//                         ));
-//                         $newStorageFile->bridge($iProfile, 'thumb.profile');
-//                         @unlink($tmpFile);
-//                     } catch (Exception $e) {
-//                         echo $e;
-//                         die();
-//                     }
-//                 }
-//                 if ($photo->file_id == $filesTable->lookupFile($photo->file_id, 'thumb.icon')) {
-//                     try {
-//                         $tmpFile = $newStorageFile->temporary();
-//                         $image = Engine_Image::factory();
-//                         $image->open($tmpFile);
-//                         $size = min($image->height, $image->width);
-//                         $x = ($image->width - $size) / 2;
-//                         $y = ($image->height - $size) / 2;
-//                         $image->resample($x, $y, $size, $size, 48, 48)
-//                             ->write($tmpFile)
-//                             ->destroy();
-//                         $iSquare = $filesTable->createFile($tmpFile, array(
-//                             'parent_type' => $user->getType(),
-//                             'parent_id' => $user->getIdentity(),
-//                             'user_id' => $user->getIdentity(),
-//                             'name' => basename($tmpFile),
-//                         ));
-//                         $newStorageFile->bridge($iSquare, 'thumb.icon');
-//                         @unlink($tmpFile);
-//                     } catch (Exception $e) {
-//                         echo $e;
-//                         die();
-//                     }
-//                 }
-
                 // Set it
                 $user->photo_id = $photo->file_id;
                 $user->save();
@@ -590,12 +553,7 @@ class User_EditController extends Core_Controller_Action_User
             $viewer = Engine_Api::_()->user()->getViewer();
             $viewer->status = '';
             $viewer->status_date = '00-00-0000';
-            // twitter-style handling
-            // $lastStatus = $viewer->status()->getLastStatus();
-            // if( $lastStatus ) {
-            //   $viewer->status = $lastStatus->body;
-            //   $viewer->status_date = $lastStatus->creation_date;
-            // }
+
             $viewer->save();
 
             $this->view->status = true;
@@ -673,4 +631,69 @@ class User_EditController extends Core_Controller_Action_User
             'action' => 'profile-photos',
         ), 'user_extended', true);
     }
+    
+  public function editProfileTypeAction() {
+    
+    $this->view->user = $user = Engine_Api::_()->core()->getSubject();
+    
+    $profileTypeValue = Engine_Api::_()->user()->getProfileFieldValue(array('user_id' => $user->getIdentity(), 'field_id' => 1));
+    
+    $this->view->form = $form = new User_Form_Edit_ProfileType();
+    $form->profile_type->setValue($profileTypeValue);
+    
+    if (!$this->getRequest()->isPost() || !$form->isValid($this->getRequest()->getPost())) {
+      return;
+    }
+    
+    $values = $form->getValues();
+    $profileTypeId = $values['profile_type'];
+  
+    if ($profileTypeValue == $profileTypeId) {
+      $form->addError($this->view->translate("Please select different profile type."));
+      return;
+    }
+
+    $mapLevelId = Engine_Api::_()->getDbtable('mapProfileTypeLevels', 'authorization')->getMappedLevelId($profileTypeId);
+    
+    $this->_helper->redirector->gotoRoute(array(
+      'action' => 'update-member-profiletype',
+      'controller' => 'edit',
+      'id' => $user->getIdentity(),
+      'profile_type_id' => $profileTypeId,
+      'level_id' => $mapLevelId ? $mapLevelId : '',
+    ), 'user_extended', false);
+  }
+  
+  public function updateMemberProfiletypeAction() {
+
+    $this->_helper->layout->setLayout('default-simple');
+    if (!$this->getRequest()->isPost()) {
+      $this->view->id = $id =  $this->_getParam('id', null);
+      $this->view->profile_type_id = $profileTypeId =  $this->_getParam('profile_type_id', null);
+      $this->view->member_level_id = $levelId =  $this->_getParam('level_id', null);
+    }
+
+    if ($this->getRequest()->isPost()) {
+      if(!empty($_POST['profile_type_id'])) {
+        $db = Zend_Db_Table_Abstract::getDefaultAdapter();
+        $user_id = $_POST['id'];
+        try {
+          $db->query("DELETE FROM `engine4_user_fields_values` WHERE `engine4_user_fields_values`.`item_id` = '".$user_id."';");
+          $db->query("INSERT IGNORE INTO `engine4_user_fields_values` (`item_id`, `field_id`, `index`, `value`, `privacy`) VALUES ('".$user_id."', 1, 0, '".$_POST['profile_type_id']."', NULL);");
+          $user = Engine_Api::_()->getItem('user', $user_id);
+          if (Engine_Api::_()->authorization()->getPermission($user, 'user', 'editprotylevel') && isset($_POST['level_id']) && !empty($_POST['level_id'])) {
+            $user->level_id = $_POST['level_id'];
+            $user->save();
+          }
+        } catch (Exception $ex) {
+          throw $ex;
+        }
+      }
+      $this->_forward('success', 'utility', 'core', array(
+        'smoothboxClose' => true,
+        'parentRefresh'=> true,
+        'messages' => Array(Zend_Registry::get('Zend_Translate')->_('The profile type has been successfully edited.'))
+      ));
+    }
+  }
 }

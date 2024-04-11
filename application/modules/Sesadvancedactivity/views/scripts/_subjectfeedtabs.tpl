@@ -77,7 +77,7 @@ var filterResultrequest;
   <ul class="sesadvancedactivity_filter_tabs sesbasic_clearfix">
     <li style="display:none;" class="sesadvancedactivity_filter_img"><i class='fas fa-circle-notch fa-spin'></i></li>
     
-    <li class="sesadvancedactivity_filter_tabsli"><a href="javascript:;" data-src="<?php echo 'own'; ?>"><?php echo strlen($this->subject()->getTitle()) > 20 ? $this->string()->truncate($this->subject()->getTitle(),20).'...' : $this->subject()->getTitle(); ?></a></li>
+    <li class="sesadvancedactivity_filter_tabsli"><a href="javascript:;" data-src="<?php echo 'own'; ?>"><?php echo strlen($this->subject()->getTitle(false)) > 20 ? $this->string()->truncate($this->subject()->getTitle(false),20).'...' : $this->subject()->getTitle(false); ?></a></li>
     
     <?php 
      $counter = 1;

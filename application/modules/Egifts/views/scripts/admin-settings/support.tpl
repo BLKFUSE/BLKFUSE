@@ -64,19 +64,19 @@
 	<ul>
   	<li class="_facebook">
     	<a href="https://www.facebook.com/SocialNetworkingDOTSolutions" target="_blank">
-        <i class="fa fa-facebook"></i>
+        <i class="fab fa-facebook"></i>
         <span>Facebook</span>
     	</a>
     </li>
     <li class="_twitter">
     	<a href="https://twitter.com/SocialNetSols" target="_blank">
-        <i class="fa fa-twitter"></i>
+        <i class="fab fa-twitter"></i>
         <span>Twitter</span>
     	</a>
     </li>
     <li class="_youtube">
     	<a href=" https://www.youtube.com/channel/UCZNb_NwWG6lURapht7AehsQ" target="_blank">
-        <i class="fa fa-youtube"></i>
+        <i class="fab fa-youtube"></i>
         <span>YouTube Tutorial</span>
     	</a>
     </li>
@@ -91,7 +91,7 @@
 <div class="sesbasic_support_contact_links">
 	<ul>
   	<li>
-    	<i class="fa fa-skype"></i>
+    	<i class="fab fa-skype"></i>
     	<span>vaibhav.sesolutions</span>
     </li>
     <li>
@@ -99,7 +99,7 @@
     	<span>+1-213-267-7939 (USA)</span>
     </li>
     <li>
-    	<i class="fa fa-whatsapp"></i>
+    	<i class="fab fa-whatsapp"></i>
     	<span>+91-9950682999</span>
     </li>
     <li>

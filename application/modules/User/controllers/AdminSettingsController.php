@@ -153,7 +153,6 @@ class User_AdminSettingsController extends Core_Controller_Action_Admin
         if( empty($values['appid']) || empty($values['secret']) ) {
             $values['appid'] = '';
             $values['secret'] = '';
-            $values['enable'] = 'none';
         }
 
         Engine_Api::_()->getApi('settings', 'core')->core_facebook = $values;

@@ -36,6 +36,8 @@ abstract class Core_Controller_Action_Admin extends Core_Controller_Action_User
          ->_setInvokeArgs($invokeArgs);
     $this->_helper = new Zend_Controller_Action_HelperBroker($this);
     $this->init();
+    
+    defined('_ENGINE_ADMIN_PANEL') || define('_ENGINE_ADMIN_PANEL', TRUE);
 
     // Normal
     $this->_helper->contextSwitch->setLayout('smoothbox', 'admin-simple');

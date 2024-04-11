@@ -100,12 +100,13 @@ class Sescredit_Plugin_Gateway_PayPal extends Engine_Payment_Plugin_Abstract {
 
   public function createPageTransaction(User_Model_User $user, array $params = array()) {
 
-    $currentCurrency = Engine_Api::_()->sescredit()->getCurrentCurrency();
-    $defaultCurrency = Engine_Api::_()->sescredit()->defaultCurrency();
+    $currentCurrency = Engine_Api::_()->payment()->getCurrentCurrency();
+    $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
     $settings = Engine_Api::_()->getApi('settings', 'core');
     $currencyValue = 1;
     if ($currentCurrency != $defaultCurrency) {
-      $currencyValue = $settings->getSetting('sesmultiplecurrency.' . $currentCurrency);
+      $currencyData = Engine_Api::_()->getDbTable('currencies', 'payment')->getCurrency($currentCurrency);
+      $currencyValue = $currencyData->change_rate;
     }
     $orderId = $params['vendor_order_id'];
     $orderTable = Engine_Api::_()->getDbTable('orders', 'payment');

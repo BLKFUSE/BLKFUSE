@@ -67,7 +67,7 @@ if ($this->getRequest()->isPost()) {
         ("sescredit_admin_main_sendpoint", "sescredit", "Send Credit Points", "", \'{"route":"admin_default","module":"sescredit","controller":"credits", "action":"send-points"}\', "sescredit_admin_main", "", 10),
         ("sescredit_admin_main_managewidgetizepage", "sescredit", "Widgetized Pages", "", \'{"route":"admin_default","module":"sescredit","controller":"settings", "action":"manage-widgetize-page"}\', "sescredit_admin_main", "", 11),
         ("sescredit_admin_main_statstics", "sescredit", "Statstics", "", \'{"route":"admin_default","module":"sescredit","controller":"settings", "action":"statstics"}\', "sescredit_admin_main", "", 12),
-        ("core_main_sescredit", "sescredit", "Credits", "", \'{"route":"sescredit_general"}\', "core_main", "", 999),
+        ("core_main_sescredit", "sescredit", "Credits", "", \'{"route":"sescredit_general","icon":"fas fa-money-bill-wave"}\', "core_main", "", 999),
         ("sescredit_main_manage", "sescredit", "My Credits", "Sescredit_Plugin_Menus", \'{"route":"sescredit_general","action":"manage"}\', "sescredit_main", "", 1),
         ("sescredit_main_transactions", "sescredit", "My Transactions", "Sescredit_Plugin_Menus", \'{"route":"sescredit_general","action":"transaction"}\', "sescredit_main", "", 2),
         ("sescredit_main_earncredit", "sescredit", "Earn Credits", "Sescredit_Plugin_Menus", \'{"route":"sescredit_general","action":"earn-credit"}\', "sescredit_main", "", 3),
@@ -100,7 +100,7 @@ if ($this->getRequest()->isPost()) {
         `credit_value` int(11) unsigned NOT NULL default "0",
         `enabled` tinyint(1) NOT NULL default "1",
         PRIMARY KEY (`badge_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescredit_userbadges`;');
         $db->query('CREATE TABLE `engine4_sescredit_userbadges` (
         `userbadge_id` int(11) unsigned NOT NULL auto_increment,
@@ -111,7 +111,7 @@ if ($this->getRequest()->isPost()) {
         `modified_date` datetime NOT NULL,
         PRIMARY KEY (`userbadge_id`),
         UNIQUE KEY (`badge_id`,`user_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescredit_values`;');
         $db->query('CREATE TABLE `engine4_sescredit_values` (
         `value_id` int(11) unsigned NOT NULL auto_increment,
@@ -128,7 +128,7 @@ if ($this->getRequest()->isPost()) {
         `modified_date` datetime NOT NULL,
         PRIMARY KEY (`value_id`),
         KEY `type` (`type`, `member_level`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescredit_credits`;');
         $db->query('CREATE TABLE `engine4_sescredit_credits` (
         `credit_id` int(11) unsigned NOT NULL auto_increment,
@@ -142,7 +142,7 @@ if ($this->getRequest()->isPost()) {
         `creation_date` datetime NOT NULL,
         `modified_date` datetime NOT NULL,
         PRIMARY KEY (`credit_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescredit_details`;');
         $db->query('CREATE TABLE `engine4_sescredit_details` (
         `detail_id` int(11) unsigned NOT NULL auto_increment,
@@ -151,7 +151,7 @@ if ($this->getRequest()->isPost()) {
         `first_activity_date` datetime NOT NULL,
         `progress` tinyint(1) NOT NULL default "0",
         PRIMARY KEY (`detail_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescredit_modulesettings`;');
         $db->query('CREATE TABLE `engine4_sescredit_modulesettings` (
         `modulesetting_id` int(11) unsigned NOT NULL auto_increment,
@@ -162,14 +162,14 @@ if ($this->getRequest()->isPost()) {
         `status` tinyint(1) NOT NULL default "0",
         PRIMARY KEY (`modulesetting_id`),
         UNIQUE KEY (`module`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescredit_affiliates`;');
         $db->query('CREATE TABLE `engine4_sescredit_affiliates` (
         `affiliate_id` int(11) unsigned NOT NULL auto_increment,
         `user_id` int(11) NOT NULL,
         `affiliate` varchar(256) NOT NULL,
         PRIMARY KEY (`affiliate_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescredit_offers`;');
         $db->query('CREATE TABLE `engine4_sescredit_offers` (
         `offer_id` int(11) unsigned NOT NULL auto_increment,
@@ -182,7 +182,7 @@ if ($this->getRequest()->isPost()) {
         `endtime` datetime default NULL,
         `enable` tinyint(1) NOT NULL default "0",
         PRIMARY KEY (`offer_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescredit_transactions`;');
         $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescredit_transactions` (
         `transaction_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -202,7 +202,7 @@ if ($this->getRequest()->isPost()) {
         `creation_date` datetime NOT NULL,
         `modified_date` datetime NOT NULL,
         PRIMARY KEY (`transaction_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT = 1 ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT = 1 ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescredit_orderdetails`;');
         $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescredit_orderdetails` (
         `orderdetail_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -212,7 +212,7 @@ if ($this->getRequest()->isPost()) {
         `owner_id` int(11) DEFAULT NULL,
         `transaction_id` int(11) NOT NULL default "0",
         PRIMARY KEY (`orderdetail_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescredit_upgradeusers`;');
         $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescredit_upgradeusers` (
         `upgradeuser_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -222,7 +222,7 @@ if ($this->getRequest()->isPost()) {
         `creation_date` datetime NOT NULL,
         PRIMARY KEY (`upgradeuser_id`),
         KEY (`owner_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
 
         $db->query('DROP TABLE IF EXISTS `engine4_sescredit_levelpoints`;');
         $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescredit_levelpoints` (
@@ -231,7 +231,7 @@ if ($this->getRequest()->isPost()) {
         `point` int(11) NOT NULL default "0",
         PRIMARY KEY (`levelpoint_id`),
         UNIQUE KEY (`level_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescredit_rewardpoints`;');
         $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescredit_rewardpoints` (
         `rewardpoint_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -242,7 +242,7 @@ if ($this->getRequest()->isPost()) {
         `reason` varchar(128) NOT NULL,
         `creation_date` datetime NOT NULL,
         PRIMARY KEY (`rewardpoint_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
         $db->query('INSERT IGNORE INTO `engine4_core_tasks` (`title`, `module`, `plugin`, `timeout`) VALUES
         ("Credits & Activity / Reward Points Validity Check", "sescredit", "Sescredit_Plugin_Task_Jobs", 60);');
 

@@ -182,7 +182,7 @@ $commonCriteria = array(
     'followButton' => 'Follow Button',
     'message' => 'Message Button',
     'likemainButton' => 'Like Button',
-    'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+    'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
     'title' => 'Display Name',
     'location' => 'Location',
     'like' => 'Likes Count',
@@ -209,7 +209,7 @@ $showCustomData = array(
             'friendButton' => 'Friend Button',
             'followButton' => 'Follow Button',
             'likeButton' => 'Like Button',
-            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
             'like' => 'Likes Count (Not Supported in Grid View)',
             'follow' => 'Followers Count (Not Supported in Grid View)',
             'location' => 'Location',
@@ -615,32 +615,32 @@ return array(
                         'value' => '0',
                     ),
                 ),
-                $titleTruncationList,
-                $titleTruncationGrid,
-                array(
-                    'Text',
-                    'advgrid_title_truncation',
-                    array(
-                        'label' => 'Title truncation limit for Advanced Grid View.',
-                        'value' => 45,
-                        'validators' => array(
-                            array('Int', true),
-                            array('GreaterThan', true, array(0)),
-                        )
-                    )
-                ),
-                array(
-                    'Text',
-                    'pinboard_title_truncation',
-                    array(
-                        'label' => 'Title truncation limit for Pinboard View.',
-                        'value' => 45,
-                        'validators' => array(
-                            array('Int', true),
-                            array('GreaterThan', true, array(0)),
-                        )
-                    )
-                ),
+//                 $titleTruncationList,
+//                 $titleTruncationGrid,
+//                 array(
+//                     'Text',
+//                     'advgrid_title_truncation',
+//                     array(
+//                         'label' => 'Title truncation limit for Advanced Grid View.',
+//                         'value' => 45,
+//                         'validators' => array(
+//                             array('Int', true),
+//                             array('GreaterThan', true, array(0)),
+//                         )
+//                     )
+//                 ),
+//                 array(
+//                     'Text',
+//                     'pinboard_title_truncation',
+//                     array(
+//                         'label' => 'Title truncation limit for Pinboard View.',
+//                         'value' => 45,
+//                         'validators' => array(
+//                             array('Int', true),
+//                             array('GreaterThan', true, array(0)),
+//                         )
+//                     )
+//                 ),
                 array(
                     'Text',
                     'main_width',
@@ -1360,8 +1360,8 @@ return array(
                         'escape' => false,
                     ),
                 ),
-                $titleTruncationGrid,
-                $titleTruncationList,
+//                 $titleTruncationGrid,
+//                 $titleTruncationList,
                 array(
                     'Text',
                     'height',
@@ -1423,7 +1423,7 @@ return array(
                             'rating' => 'Ratings',
                             'featuredLabel' => 'Featured Label',
                             'verifiedLabel' => 'Verified Label',
-                            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+                            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
                             'likeButton' => 'Like Button',
                         ),
                         'escape' => false,
@@ -1547,8 +1547,8 @@ return array(
                 ),
                 $socialshare_enable_plusicon,
                 $socialshare_icon_limit,
-                $titleTruncationGrid,
-                $titleTruncationList,
+//                 $titleTruncationGrid,
+//                 $titleTruncationList,
                 array(
                     'Text',
                     'height',
@@ -1638,7 +1638,7 @@ return array(
                 ),
                 $socialshare_enable_plusicon,
                 $socialshare_icon_limit,
-                $titleTruncationList,
+                //$titleTruncationList,
                 array(
                     'Text',
                     'height',
@@ -1689,8 +1689,8 @@ return array(
                 ),
                 $socialshare_enable_plusicon,
                 $socialshare_icon_limit,
-                $titleTruncationGrid,
-                $titleTruncationList,
+//                 $titleTruncationGrid,
+//                 $titleTruncationList,
                 array(
                     'Select',
                     'showLimitData',
@@ -1791,8 +1791,8 @@ return array(
                 ),
                 $socialshare_enable_plusicon,
                 $socialshare_icon_limit,
-                $titleTruncationGrid,
-                $titleTruncationList,
+//                 $titleTruncationGrid,
+//                 $titleTruncationList,
                 array(
                     'Text',
                     'height',
@@ -1868,8 +1868,8 @@ return array(
                 ),
                 $socialshare_enable_plusicon,
                 $socialshare_icon_limit,
-                $titleTruncationGrid,
-                $titleTruncationList,
+//                 $titleTruncationGrid,
+//                 $titleTruncationList,
                 array(
                     'Text',
                     'height',
@@ -1946,8 +1946,8 @@ return array(
                 ),
                 $socialshare_enable_plusicon,
                 $socialshare_icon_limit,
-                $titleTruncationGrid,
-                $titleTruncationList,
+//                 $titleTruncationGrid,
+//                 $titleTruncationList,
                 array(
                     'Text',
                     'height',
@@ -2051,8 +2051,8 @@ return array(
                 ),
                 $socialshare_enable_plusicon,
                 $socialshare_icon_limit,
-                $titleTruncationGrid,
-                $titleTruncationList,
+//                 $titleTruncationGrid,
+//                 $titleTruncationList,
                 array(
                     'Text',
                     'height',
@@ -2156,8 +2156,8 @@ return array(
                 ),
                 $socialshare_enable_plusicon,
                 $socialshare_icon_limit,
-                $titleTruncationGrid,
-                $titleTruncationList,
+//                 $titleTruncationGrid,
+//                 $titleTruncationList,
                 array(
                     'Text',
                     'height',
@@ -2249,7 +2249,7 @@ return array(
                             'friendButton' => 'Friend Button',
                             'followButton' => 'Follow Button',
                             'message' => 'Message Button',
-                            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+                            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
                             'like' => 'Likes Count',
                             'location' => 'Location',
                             'rating' => 'Ratings Count',
@@ -2265,7 +2265,7 @@ return array(
                 ),
                 $socialshare_enable_plusicon,
                 $socialshare_icon_limit,
-                $titleTruncationList,
+                //$titleTruncationList,
                 array(
                     'Text',
                     'slideheight',
@@ -2367,8 +2367,8 @@ return array(
                 ),
                 $socialshare_enable_plusicon,
                 $socialshare_icon_limit,
-                $titleTruncationGrid,
-                $titleTruncationList,
+//                 $titleTruncationGrid,
+//                 $titleTruncationList,
                 array(
                     'Text',
                     'height',
@@ -2739,8 +2739,8 @@ return array(
                 ),
                 $socialshare_enable_plusicon,
                 $socialshare_icon_limit,
-                $titleTruncationGrid,
-                $titleTruncationList,
+//                 $titleTruncationGrid,
+//                 $titleTruncationList,
                 array(
                     'Select',
                     'showLimitData',
@@ -2817,7 +2817,7 @@ return array(
                             'friendButton' => 'Friend Button',
                             'followButton' => 'Follow Button',
                             'message' => 'Message Button',
-                            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+                            'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
                             'title' => 'Display Name',
                             'location' => 'Location',
                             'like' => 'Likes Count',

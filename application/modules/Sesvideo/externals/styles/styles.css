@@ -86,7 +86,7 @@
 .sesvideo_listing_grid:hover .sesvideo_grid_bottom > div:first-child{
 	opacity:1;
 }
-.sesvideo_grid_bottom > div:first-child {
+.sesvideo_grid_bottom > div:first-child{
 	position:absolute;
 	top:-36px;
 	left:5px;
@@ -94,6 +94,10 @@
 	padding:5px 10px;
 	border-radius:4px;
 	opacity:0;
+}
+[dir="rtl"] .sesvideo_grid_bottom > div:first-child{
+ left:auto;
+ right:5px;
 }
 .sesvideo_grid_bottom > div:first-child a,
 .sesvideo_grid_bottom > div:first-child span{
@@ -113,7 +117,11 @@
 	right:auto;
 	border-radius:4px;
 }
-.sesvideo_listing_grid .sesvideo_watch_later_btn {
+[dir="rtl"] .sesvideo_listing_grid .sesvideo_length{
+	left:auto;
+	right:5px;
+}
+.sesvideo_listing_grid .sesvideo_watch_later_btn{
 	right:5px;
 	left:auto;
 	bottom:5px;
@@ -122,6 +130,10 @@
 	line-height:20px;
 	background-size:13px auto;
 	border-radius:4px;
+}
+[dir="rtl"] .sesvideo_listing_grid .sesvideo_watch_later_btn{
+	right:auto;
+	left:5px;
 }
 .sesvideo_grid_info{
   padding:15px;
@@ -142,6 +154,12 @@
 	margin-top:5px;
 	overflow:hidden;
 	padding:0 1px;
+}
+.sesvideo_listing_grid .sesvideo_thumb_btns,
+.sesvideo_listing_list .sesvideo_thumb_btns{
+	display:flex;
+	align-items:center;
+	justify-content:center;
 }
 /*List View*/
 .sesvideo_listing_list{
@@ -218,8 +236,9 @@
 /*STATICS:Common Statics CSS Code for All listins*/
 .sesvideo_list_stats > span{
   float:left;
-	display: inline-flex;
-	align-items: center;
+	display:inline-flex;
+	align-items:center;
+	flex-wrap:wrap;
 }
 [dir="rtl"] .sesvideo_list_stats > span{
   float:right;
@@ -934,7 +953,7 @@ div.sesvideo_listing_options_pulldown a{
 .sesvideo_view_embed{
 	/*background-color:#000;*/
   margin-bottom:10px;
-	text-align:center;
+	text-align:center !important;
 }
 .sesvideo_view_embed > div{
   max-width:100% !important;
@@ -952,12 +971,16 @@ div.sesvideo_listing_options_pulldown a{
 	float:right;
 	margin-top:-5px;
 }
+[dir="rtl"] .sesvideo_view_links{
+	float:left;
+}
 .sesvideo_view_links a{
 	margin-left:10px;
 	text-decoration:none !important;
 }
 .sesvideo_view_links a:before{
 	margin-right:5px;
+	display:inline-block;
 }
 [dir="rtl"] .sesvideo_view_links a:before{
 	margin-left:5px;
@@ -1169,6 +1192,8 @@ div.sesvideo_listing_options_pulldown a{
 }
 [dir="rtl"] .sesvideo_create_channel_tabs ul li{
   float:right;
+	border-right-width:0px;
+	border-left-width:1px;
 }
 .sesvideo_create_channel_tabs ul li a{
   display:block;
@@ -1203,8 +1228,10 @@ div.sesvideo_listing_options_pulldown a{
 	margin:4px 3px 0 0;
 }
 [dir="rtl"] .sesvideo_create_channel_tabs ul li.sesvideo_create_channel_tabs_btns{
-	float:right;
+	float:left;
 	margin:4px 0 0 3px;
+	border-right-width:0px;
+	border-left-width:1px;
 }
 .sesvideo_create_channel_tabs ul li.sesvideo_create_channel_tabs_btns a{
 	float:left;
@@ -1778,6 +1805,9 @@ div.sesvideo_listing_options_pulldown a{
 [dir="rtl"] .sesvideo_browse_artist_info{
 	padding:10px;
 }
+[dir="rtl"] .sesvideo_browse_artist_info .sesvideo_browse_artist_stats  > span{
+	float:none;
+}
 .sesvideo_browse_artist_title{
 	text-align:center !important;
 }
@@ -1876,7 +1906,7 @@ div.sesvideo_listing_options_pulldown a{
 	margin-bottom:10px;
 	width:33%;
 }
-[dir="rtl"].sesvideo_channel_followers_list{
+[dir="rtl"] .sesvideo_channel_followers_list{
 	float:right;
 }
 .sesvideo_channel_followers_list > div{
@@ -2048,7 +2078,38 @@ html[dir="rtl"] .sesvideo_profile_fields > ul > li > span{
 .sesvideo_order_list:before{
 	content:"\f1c8" !important;
 }
+[dir="rtl"] .layout_sesvideo_tabbed_widget_video .tabs_alt > ul > li > a{
+	text-align:right;
+}
+/*Video Listing*/
+.sesvideo_video_listing .sesbasic_pinboard_list_btns{
+	left:0 !important;
+	right:0 !important;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+/*sesvideo_video_listing*/
+.layout_sesvideo_tabbed_widget_video [id^='ses_pagging_']{
+	width:100% !important;
+	top:auto !important;
+	left:0 !important;
+	bottom:-15px !important;
+	right:0 !important;
+}
+
+
 /*RESPONSIVE CSS*/
+@media only screen and (max-width:991px){
+	.sesvideo_heighted_view .sesvideo_listing_in_grid{
+		width:33.33% !important;
+	}
+	.layout_sesvideo_featured_sponsored_lp_widget .sesvideo_heighted_view .sesvideo_listing_in_grid 
+	.sesvideo_listing_in_grid_title{
+		font-size:15px !important;
+	}
+}
+
 @media only screen and (max-width:767px){
 	.sesvideo_video_form #LocationGroup-wrapper #LocationGroup-label{
 		display:none;
@@ -2081,12 +2142,23 @@ html[dir="rtl"] .sesvideo_profile_fields > ul > li > span{
 	.sesalbum_photo_view_bottom_right{display:none;}
 	div.sesvideo_view_embed iframe, 
 	div.sesvideo_view_embed object{min-height:210px !important;height:auto;}
+	.layout_page_sesvideo_index_view .layout_main{display:flex;flex-wrap:wrap;}
+	.layout_page_sesvideo_index_view .layout_main .layout_middle,
+	.layout_page_sesvideo_index_view .layout_main .layout_left,
+	.layout_page_sesvideo_index_view .layout_main .layout_right{width:100%;}
+	.layout_page_sesvideo_index_view .layout_main .layout_middle{order:1;}
+	.layout_page_sesvideo_index_view .layout_main .layout_left{order:2;}
+	.layout_page_sesvideo_index_view .layout_main .layout_right{order:3;}
 	/*Welcome Page*/
 	#global_page_sesvideo-index-welcome .layout_sesbasic_simple_html_block > div{font-size:24px !important;}
 	/*Fixed Widget*/
-	.sesvideo_heighted_view .sesvideo_listing_in_grid:first-child{height:200px !important;}
+	.sesvideo_heighted_view .sesvideo_listing_in_grid:first-child{height:270px !important;}
 	.sesvideo_list_channel_videos_listing .sesvideo_listing_grid{height:80px !important;}
 	.sesvideo_list_channel_videos_listing .sesvideo_listing_grid .sesvideo_grid_thumb{height:100% !important;width:100% !important;}
+	.sesvideo_heighted_view .sesvideo_listing_in_grid{
+		width:50% !important;
+	}
+
 }
 @media only screen and (max-width:600px){
 	/*CATEGORY GRID LISTING*/
@@ -2098,6 +2170,15 @@ html[dir="rtl"] .sesvideo_profile_fields > ul > li > span{
 	
 	/*Grid View / Out side*/
 	.sesvideo_listing_grid .sesvideo_grid_thumb{height:200px !important;}
+	.sesvideo_heighted_view .sesvideo_listing_in_grid{
+		width:100% !important;
+	}
+	.sesvideo_playlist_popup .global_form input[type=text], 
+	.sesvideo_playlist_popup .global_form input[type=email], 
+	.sesvideo_playlist_popup .global_form input[type=password], 
+	.sesvideo_playlist_popup .global_form textarea{
+		font-size:14px !important;
+	}
 }
 @media only screen and (max-width:480px){
 	/*CATEGORY COVER*/
@@ -2128,8 +2209,11 @@ html[dir="rtl"] .sesvideo_profile_fields > ul > li > span{
 	/*Channel View Page*/
 	.sesvideo_profile_fields > ul > li > span{clear:both;width:100%;}
 	.sesvideo_channel_followers_list{width:49%;}
-	
 	.sesvideo_list_channel_videos_listing .sesvideo_listing_grid{height:80px !important;}
+}
+@media only screen and (max-width:600px){
+	.layout_sesvideo_playlist_view_page .sesvideo_item_view_artwork{height:150px;margin:0 0 10px;width:100%;}
+	.layout_sesvideo_playlist_view_page .sesvideo_item_view_info{clear:both;}
 }
 @media only screen and (max-width:400px){
 	/*Grid View / Out side*/
@@ -2150,7 +2234,11 @@ html[dir="rtl"] .sesvideo_profile_fields > ul > li > span{
 	/*Artist View Page*/
 	.sesvideo_item_view_artwork{height:150px;margin:0 0 10px;width:100%;}
 	.sesvideo_item_view_info{clear:both;}
-	
+	.layout_sesvideo_playlist_view_page .sesbasic_icon_btn{width:25px;height:25px;}
+	.layout_sesvideo_playlist_view_page .sesbasic_icon_btn_count i:before, 
+	.layout_sesvideo_playlist_view_page .sesbasic_icon_btn_count span{line-height: 25px;font-size: 13px;}
+	.layout_sesvideo_playlist_view_page .sesbasic_icon_btn_count span,
+	.layout_sesvideo_playlist_view_page .sesbasic_icon_btn i:before{font-size: 12px;}
 	/*Channel View Page*/
 	.sesvideo_channel_followers_list{width:99%;}
 }
@@ -2242,9 +2330,27 @@ html[dir="rtl"] .sesvideo_profile_fields > ul > li > span{
 .sesvideo_clist_carousel .owl-nav > div.owl-prev {
   left:0;
 }
-.sesvideo_clist_carousel .owl-nav > div.owl-next {
+[dir="rtl"] .sesvideo_clist_carousel .owl-nav > div.owl-prev{
+  left:auto;
+	right:0;
+}
+[dir="rtl"] .sesvideo_popular_playlist_carousel .owl-nav > .owl-prev .fa-angle-left:before{
+	content:"\f105";
+ }
+.sesvideo_clist_carousel .owl-nav > div.owl-next{
   right:0;
 }
+[dir="rtl"] .sesvideo_clist_carousel .owl-nav > div.owl-next{
+  right:auto;
+	left:0;
+}
+[dir="rtl"] .sesvideo_popular_playlist_carousel .owl-nav > .owl-next .fa-angle-right:before{
+	content:"\f104";
+ }
+ .sesvideo_popular_playlist_carousel .owl-nav div.disabled,
+ .sesvideo_popular_playlist_carousel .owl-nav.disabled{
+	display:none;
+ }
 .sesvideo_clist_carousel:hover .owl-nav > div {
   opacity:.8 !important;
 }
@@ -2277,6 +2383,9 @@ html[dir="rtl"] .sesvideo_profile_fields > ul > li > span{
 .sesvideo_carousel_h_wrapper .owl-item{
 	float:left;
 }
+[dir="rtl"] .sesvideo_carousel_h_wrapper .owl-item{
+	float:right;
+}
 .sesvideo_carousel_h_wrapper .owl-nav > div {
 	position:absolute;
 	cursor:pointer;
@@ -2287,11 +2396,28 @@ html[dir="rtl"] .sesvideo_profile_fields > ul > li > span{
 	text-align:center;
 	border-width:1px;
 }
+.sesvideo_carousel_h_wrapper .owl-nav > div.disabled{
+	display:none;
+}
 .sesvideo_carousel_h_wrapper .owl-nav > .owl-prev{
   left:0;	
 }
+[dir="rtl"] .sesvideo_carousel_h_wrapper .owl-nav > .owl-prev{
+  left:auto;
+	right:0;	
+}
+[dir="rtl"] .sesvideo_carousel_h_wrapper .owl-nav > .owl-prev i:before{
+	content:"\f054";
+}
 .sesvideo_carousel_h_wrapper .owl-nav > .owl-next{
   right:0;	
+}
+[dir="rtl"] .sesvideo_carousel_h_wrapper .owl-nav > .owl-next{
+	right:auto;
+	left:0;	
+}
+[dir="rtl"] .sesvideo_carousel_h_wrapper .owl-nav > .owl-next i:before{
+	content:"\f053";
 }
 .layout_left .sesvideo_popular_playlist_carousel .owl-nav > div,
 .layout_right .sesvideo_popular_playlist_carousel .owl-nav > div{
@@ -2303,6 +2429,11 @@ html[dir="rtl"] .sesvideo_profile_fields > ul > li > span{
 .layout_left .sesvideo_popular_playlist_carousel .owl-nav > .owl-next,
 .layout_right .sesvideo_popular_playlist_carousel .owl-nav > .owl-next{
 	right:0;
+}
+[dir="rtl"] .layout_left .sesvideo_popular_playlist_carousel .owl-nav > .owl-next,
+[dir="rtl"] .layout_right .sesvideo_popular_playlist_carousel .owl-nav > .owl-next{
+	right:auto;
+	left:0;
 }
 .sesvideo_view_bottom ._form_container button {
   margin:5px 0;

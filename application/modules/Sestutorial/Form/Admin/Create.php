@@ -44,24 +44,9 @@ class Sestutorial_Form_Admin_Create extends Engine_Form {
     }
     
     //UPLOAD PHOTO URL
-    $upload_url = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'sestutorial', 'controller' => 'manage', 'action' => "upload-image"), 'admin_default', true);
-
-    $allowed_html = 'strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr';
     $editorOptions = array(
-        'upload_url' => $upload_url,
-        'html' => (bool) $allowed_html,
+      'uploadUrl' => Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'index', 'action' => 'upload-photo'), 'default', true),
     );
-    if (!empty($upload_url)) {
-      $editorOptions['plugins'] = array(
-          'table', 'fullscreen', 'media', 'preview', 'paste',
-          'code', 'image', 'textcolor', 'jbimages', 'link'
-      );
-      $editorOptions['toolbar1'] = array(
-          'undo', 'redo', 'removeformat', 'pastetext', '|', 'code',
-          'media', 'image', 'jbimages', 'link', 'fullscreen',
-          'preview'
-      );
-    }
 
     $this->addElement('TinyMce', 'description', array(
         'label' => 'Description (Answer)',

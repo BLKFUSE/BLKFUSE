@@ -16,8 +16,6 @@
 if($this->codeEnable == 'socialeShare') {
 	$baseUrl = $this->layout()->staticBaseUrl;
 	$this->headLink()->appendStylesheet($baseUrl . 'application/modules/Sesbasic/externals/styles/social.css');
-  
-  $this->headScript()->appendFile($baseUrl . 'externals/jQuery/jquery-ui.js');
   $this->headScript()->appendFile($baseUrl . 'application/modules/Sesbasic/externals/scripts/socialbars.js');
 }else { ?>
 	<!-- JiaThis Button BEGIN -->

@@ -29,19 +29,13 @@ class Messages_Form_Reply extends Engine_Form
       ->getAllowed('messages', $user->level_id, 'editor');
 
     if ($editor === 'editor') {
-      $uploadUrl = "";
-      if (Engine_Api::_()->authorization()->isAllowed('album', $user, 'create')) {
-        $uploadUrl = Zend_Controller_Front::getInstance()->getRouter()->assemble(
-          array('action' => 'upload-photo'),
-          'messages_general',
-          true
-        );
-      }
+
+      $uploadUrl = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'index', 'action' => 'upload-photo'), 'default', true);
 
       $editorOptions = array(
         'uploadUrl' => $uploadUrl,
-        'bbcode' => false,
-        'html' => true,
+        //'bbcode' => false,
+        //'html' => true,
       );
 
       $this->addElement('TinyMce', 'body', array(
@@ -54,7 +48,7 @@ class Messages_Form_Reply extends Engine_Form
             'Label',
             array('HtmlTag', array('style' => 'display: block;'))),
         'filters' => array(
-          new Engine_Filter_HtmlSpecialChars(),
+          //new Engine_Filter_HtmlSpecialChars(),
           new Engine_Filter_Censor(),
         ),
       ));

@@ -21,6 +21,8 @@ class Group_Model_Post extends Core_Model_Item_Abstract
 
   protected $_owner_type = 'user';
   
+  protected $_searchTriggers = false;
+  
   function getTitle() {
 		return Engine_Api::_()->getItem('group_topic', $this->topic_id);
 	}
@@ -141,7 +143,7 @@ class Group_Model_Post extends Core_Model_Item_Abstract
     $topic->post_count--;
 
     if( $topic->post_count == 0 ) {
-      $topic->delete();
+      $topic->disableHooks()->delete();
     } else {
       $topic->save();
     }

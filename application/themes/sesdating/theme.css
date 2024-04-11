@@ -410,7 +410,6 @@ html #core_menu_mini_menu{
 .layout_core_menu_mini #core_menu_mini_menu > ul > li a.show_icons {
   display:inline-block;
 	text-decoration:none;
-	overflow:hidden;
 	border-radius:50px;
 	background:$theme_topbar_minimenu_icon_background_color;
 }
@@ -436,6 +435,8 @@ html .layout_core_menu_mini #core_menu_mini_menu > ul > li .show_icons i:before{
 html .layout_core_menu_mini #core_menu_mini_menu > ul > li .menu_core_mini.core_mini_auth.show_icons i,
 html .layout_core_menu_mini #core_menu_mini_menu > ul > li .core_mini_signup i{
 	font-weight: 600;
+	width:auto;
+	height:auto;
 }
 #core_menu_mini_menu > ul > li > a{
 	color:$theme_topbar_minimenu_icon_color;
@@ -522,13 +523,7 @@ html .core_mini_profile > .bg_item_photo{
 #core_menu_mini_menu > ul > li > .core_mini_auth > i{
   display:none;
 }
-.core_settings_dropdown {
-	margin-top:0;
-	right: inherit;
-}
-html .core_settings_dropdown:before{
-  left:55px;	
-}
+
 .core_mini_messages .pulldown_contents_wrapper {
   top:19px;
 	right:0;
@@ -547,7 +542,10 @@ html .core_settings_dropdown:before{
 	content:"\\f07a";
 	font-weight: 600;
 }
-
+#core_menu_mini_menu > ul > li.core_mini_menu_profile > a > .bg_thumb_icon{
+	overflow:hidden;
+	margin:0;
+}
 .minimenu_update_count_bubble_active, 
 .minimenu_message_count_bubble{
 	background-color:#f00;
@@ -560,7 +558,6 @@ html .core_settings_dropdown:before{
 	height:15px;
 	min-width:15px;
 	text-align:center;
-	line-height:15px;
 	z-index:1;
 	display:block !important;
 }
@@ -1806,7 +1803,6 @@ TABS (TAB STYLE, NON-DEFAULT)
 	border-radius:0;
 }
 .profile_cover_photo_tabs .tabs_alt > ul > li.active > a{
-	color:$theme_tabs_background_color_active;
 	border-bottom-color:$theme_tabs_background_color_active;
 }
 .profile_cover_photo_tabs .tabs_alt > ul > li > a:focus-visible{
@@ -1982,6 +1978,34 @@ html .user_login_page #submit-element button{
 	border:0 !important;
 }
 /*Edit Profile*/
+.layout_middle .user_setting_global_form form.global_form,
+.layout_middle .user_setting_global_form form.global_form {
+	margin:0px;
+}
+.user_setting_global_form .global_form div {
+	padding: 0;
+}
+.user_setting_global_form .global_form > div > div h3 {
+	padding: 0 0 10px;
+	margin: 0;
+}
+.user_setting_global_form .global_form div.form-label{
+	width:100%;
+	display: block;
+}
+.user_setting_global_form .global_form input[type=text],
+.user_setting_global_form .global_form input[type=email],
+.user_setting_global_form .global_form input[type=password],
+.user_setting_global_form .global_form textarea,
+.user_setting_global_form .global_form select{
+	width:100%;
+}
+.user_setting_global_form #pswd_info > ul {
+	width: 100%;
+}
+.user_setting_global_form #passwordroutine-label{
+	display: none;
+}
 div.field-privacy-selector > span.caret{
 	float:none;
 }
@@ -2346,6 +2370,7 @@ div.sesblog_welcome_text_block_buttons a:nth-child(2){
 }
 .footer_help_links ul li {
   display:inline-block;
+	vertical-align:middle;
 }
 .footer_help_links ul li a {
 	font-size:$theme_font_size_small;
@@ -2608,24 +2633,12 @@ html #signup_account_form .user_showhidepassword{
   left:40%;
   top:32%;
 }
-[dir="rtl"] html #signup_account_form .user_showhidepassword, 
-[dir="rtl"] html #global_page_user-settings-password .user_showhidepassword {
+[dir="rtl"] html #signup_account_form .user_showhidepassword{
   right:40%;
   left:auto;
 }
-html #global_page_user-settings-password .user_showhidepassword{
-	top:14%;
-	left:40%;
-	right:auto;
-}
 #signup_account_form .user_showhidepassword > i {
   margin-top:-20px;
-}
-html #global_page_user-settings-password #oldpassword_settings_group-wrapper .user_showhidepassword {
-  top:30%;
-}
-html #global_page_user-settings-password #password_confirm_settings_group-wrapper .user_showhidepassword {
-  top:15%;
 }
 html #passwordroutine-label,
 html #global_page_user-auth-reset #resetalldevice-label, 
@@ -2635,10 +2648,10 @@ html #global_page_core-error-requireuser .layout_core_content #user_form_login #
   display:inline-block;
 }
 html #global_page_core-error-requireuser .user_showhidepassword > i {
-  margin-top:-32px;
+  margin-top:-42px;
 }
 #global_page_user-settings-password .user_showhidepassword > i {
-  margin-top:-2px;
+  top:43px;
 }
 #global_page_user-profile-index .layout_top + .layout_main{
 	padding:0 !important;
@@ -2651,7 +2664,6 @@ html #global_page_core-error-requireuser .user_showhidepassword > i {
 html .emoticons-activator{
   bottom:0.5em;
 }
-
 .layout_activity_feed ul.feed > li {
 	padding: 15px !important;
 }
@@ -2892,7 +2904,118 @@ html .emoticons-activator{
 .layout_middle .generic_layout_container.layout_sesbasic_simple_html_block > div {
 	margin-top: 0px !important;
 }
+/*Required Login Page*/
 
+#global_page_core-error-requireuser .layout_middle > div > form.global_form,
+#global_page_core-error-requireuser .layout_middle > div > div > form.global_form{
+	margin: 0;
+}
+#global_page_core-error-requireuser .global_form input[type=text],
+#global_page_core-error-requireuser .global_form input[type=email],
+#global_page_core-error-requireuser .global_form input[type=password]{
+	width: 100%;
+}
+/*Edit Pages*/
+.user_setting_global_form .global_form div{
+	margin-top:0 !important;
+}
+.user_settings_page .layout_top > .layout_middle > div,
+#global_wrapper .user_setting_main_page_main .layout_left > div,
+#global_page_user-support-index #global_wrapper .layout_top .layout_middle > div{
+	background-color:transparent !important;
+	padding:0 !important;
+	border-width:0px !important;
+}
+.user_setting_global_form .global_form > div > div h3{
+	border-width:0;
+}
+.user_setting_global_form .global_form div.form-wrapper-heading > span,
+.user_setting_global_form #current-label label{
+	margin-bottom:10px;
+	font-size:0.9rem;
+}
+.user_setting_global_form .global_form div{
+	margin-top:10px;
+}
+.user_setting_global_form #preview-thumbnail{
+	margin-bottom:10px;
+}
+.user_setting_global_form .global_form #resetalldevice-label{
+	display:none;
+}
+.user_setting_global_form .global_form .form-wrapper div#publishTypes-label{
+	width:100%;
+	display:block;
+}
+#global_page_user-settings-privacy .form-elements .form-element .description{
+	margin-bottom:0;
+	margin-top:0;
+}
+#global_page_user-settings-general .user_setting_global_form .global_form #submit-label{
+	display:none;
+}
+#global_page_user-settings-password .user_showhidepassword{
+	left:auto !important;
+	top:43px !important;
+	position:absolute;
+	right:15px !important;
+}
+[dir="rtl"]  #global_page_user-settings-password .global_form div.form-label{
+	padding:0 ;
+}
+[dir="rtl"] #global_page_user-settings-password .user_showhidepassword{
+  left:15px !important;
+	right:auto !important;
+}
+#global_page_user-settings-password .user_setting_global_form .user_showhidepassword i {
+	position:relative;
+	top:auto !important;
+	right:auto !important;
+	left:auto !important;
+}
+#global_page_user-settings-password .user_setting_global_form .global_form div.form-label{
+	width:100%;
+	display:block;
+}
+.netwroks_main_section > .networks_left .form-elements input[type=text]{
+	height:42px;
+	padding:0 10px;
+}
+#global_page_user-settings-general .user_setting_global_form .global_form div {
+	margin-top: 0;
+}
+#global_page_user-settings-general .user_setting_global_form .global_form #submit-element{
+	margin-top:20px;
+}
+.user_setting_global_form .global_form div#resetalldevice-wrapper div#resetalldevice-label{
+	display: none;
+}
+.user_setting_global_form .global_form div#submit-wrapper div#submit-label{
+	display:none;
+}
+.user_setting_global_form .global_form div#submit-wrapper div#submit-element{
+	margin-top:20px !important;
+}
+.profile_photos_table tbody.profile_photos{
+	position:relative;
+}
+.profile_photos_table tbody.profile_photos .admin_file_preview{
+	top:auto;
+	bottom:0;
+}
+#global_page_sesavatar-index-avatars .layout_middle > div > .global_form,
+#global_page_sesavatar-index-avatars .layout_middle > div > div > .global_form{
+	margin:0;
+}
+#global_page_sesavatar-index-avatars .global_form > div > div h3{
+	padding:0px;
+}
+.user_setting_main_page_main .layout_middle > .user_invite_tabs{
+	padding:10px !important;
+}
+.core_settings_dropdown > ul > li > a i.menuicon span.bg_thumb_icon{
+  border-radius:50px;
+}
 /*Media Queries for RESPONSIVE DESIGN*/
 $theme_responsive_layout;
 

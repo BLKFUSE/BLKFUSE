@@ -332,15 +332,21 @@ class Sesbasic_SubscriptionController extends Core_Controller_Action_Standard
     $transaction = $plugin->createSubscriptionTransaction($this->_user,
         $subscription, $package, $params);
     
-    // Pull transaction params
-    $this->view->transactionUrl = $transactionUrl = $gatewayPlugin->getGatewayUrl();
-    $this->view->transactionMethod = $transactionMethod = $gatewayPlugin->getGatewayMethod();
-    $this->view->transactionData = $transactionData = $transaction->getData();
+    $this->view->transaction = $transaction;
+    $this->view->publishKey = $gateway->config['sesadvpmnt_stripe_publish']; 
+    $this->view->session = $transaction;
+    
+    if($gateway->plugin  == "Payment_Plugin_Gateway_PayPal") {
+      // Pull transaction params
+      $this->view->transactionUrl = $transactionUrl = $gatewayPlugin->getGatewayUrl();
+      $this->view->transactionMethod = $transactionMethod = $gatewayPlugin->getGatewayMethod();
+      $this->view->transactionData = $transactionData = $transaction->getData();
 
-    // Handle redirection
-    if( $transactionMethod == 'GET' ) {
-      $transactionUrl .= '?' . http_build_query($transactionData);
-      return $this->_helper->redirector->gotoUrl($transactionUrl, array('prependBase' => false));
+      // Handle redirection
+      if( $transactionMethod == 'GET' ) {
+        $transactionUrl .= '?' . http_build_query($transactionData);
+        return $this->_helper->redirector->gotoUrl($transactionUrl, array('prependBase' => false));
+      }
     }
 
     // Post will be handled by the view script

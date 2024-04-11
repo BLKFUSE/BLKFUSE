@@ -37,7 +37,7 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
              continue;
          }
        $result['notification'][$counterLoop]['user_id'] = $member->getIdentity();
-       $result['notification'][$counterLoop]['title'] = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
+       $result['notification'][$counterLoop]['title'] = $member->getTitle();
        $result['notification'][$counterLoop]['user_image'] = $this->userImage($member->getIdentity(),"thumb.profile");
        $block = Engine_Api::_()->getDbTable("blocks",'eticktokclone')->isBlocked(array("user_id"=>$member->getIdentity()));
        if($block){
@@ -275,23 +275,20 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
         $db->rollBack();
         Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $e->getMessage(), 'result' => array()));
       }
-       //Send notification and activity feed work.
-       $selectUser = $itemTable->select()->where('user_id =?', $item_id);
-       $item = $itemTable->fetchRow($selectUser);
-       $subject = $item;
-       $owner = $subject->getOwner();
-       if ($owner->getType() == 'user' && $owner->getIdentity() != $viewer_id) {
-           $activityTable = Engine_Api::_()->getDbtable('actions', 'activity');
-           Engine_Api::_()->getDbtable('notifications', 'activity')->delete(array('type =?' => 'eticktokclone_follow', "subject_id =?" => $viewer_id, "object_type =? " => $subject->getType(), "object_id = ?" => $subject->getIdentity()));
-           Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($owner, $viewer, $subject, 'eticktokclone_follow');
-          //  $result = $activityTable->fetchRow(array('type =?' => 'tickvideo_follow', "subject_id =?" => $viewer_id, "object_type =? " => $subject->getType(), "object_id = ?" => $subject->getIdentity()));
-          //  if (!$result) {
-          //  $action = $activityTable->addActivity($viewer, $subject, 'tickvideo_follow');
-          //  }
-           //follow mail to another user
-           Engine_Api::_()->getApi('mail', 'core')->sendSystem($subject->email, 'eticktokclone_follow', array('sender_title' => $viewer->getTitle(), 'object_link' => $viewer->getHref(), 'host' => $_SERVER['HTTP_HOST']));
-       }
-       Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => array("is_content_follow"=>true)));
+			//Send notification and activity feed work.
+			$selectUser = $itemTable->select()->where('user_id =?', $item_id);
+			$item = $itemTable->fetchRow($selectUser);
+			$subject = $item;
+			$owner = $subject->getOwner();
+			if ($owner->getType() == 'user' && $owner->getIdentity() != $viewer_id) {
+				$viewer = Engine_Api::_()->getItem("eticktokclone_user", $viewer_id);
+				Engine_Api::_()->getDbtable('notifications', 'activity')->delete(array('type =?' => 'eticktokclone_follow', "subject_id =?" => $viewer_id, "object_type =? " => $subject->getType(), "object_id = ?" => $subject->getIdentity()));
+				Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($owner, $viewer, $subject, 'eticktokclone_follow');
+
+				//follow mail to another user
+				Engine_Api::_()->getApi('mail', 'core')->sendSystem($subject->email, 'eticktokclone_follow', array('sender_title' => $viewer->getTitle(), 'object_link' => $viewer->getHref(), 'host' => $_SERVER['HTTP_HOST']));
+			}
+			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => array("is_content_follow"=>true)));
     }
   }
 
@@ -382,6 +379,7 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
         // }
         $values["is_tickvideo"] = 1;
         $video_type = $_POST['type'] =3;
+        $values["networks"] = !empty($values["networks"]) ? implode(",", $values["networks"]) : "";
 
         $validateVideo = empty($_FILES['video']['name']) ?  0 : 1;
 
@@ -645,7 +643,69 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
             Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>"", 'result' => $result));
         }
     }
-
+    protected function setPhoto($photo, $id) {
+        if ($photo instanceof Zend_Form_Element_File) {
+          $file = $photo->getFileName();
+          $fileName = $file;
+        } else if ($photo instanceof Storage_Model_File) {
+          $file = $photo->temporary();
+          $fileName = $photo->name;
+        } else if ($photo instanceof Core_Model_Item_Abstract && !empty($photo->file_id)) {
+          $tmpRow = Engine_Api::_()->getItem('storage_file', $photo->file_id);
+          $file = $tmpRow->temporary();
+          $fileName = $tmpRow->name;
+        } else if (is_array($photo) && !empty($photo['tmp_name'])) {
+          $file = $photo['tmp_name'];
+          $fileName = $photo['name'];
+        } else if (is_string($photo) && file_exists($photo)) {
+          $file = $photo;
+          $fileName = $photo;
+        } else {
+          throw new User_Model_Exception('invalid argument passed to setPhoto');
+        }
+        if (!$fileName) {
+          $fileName = $file;
+        }
+        $name = basename($file);
+        $extension = ltrim(strrchr($fileName, '.'), '.');
+        $base = rtrim(substr(basename($fileName), 0, strrpos(basename($fileName), '.')), '.');
+        $path = APPLICATION_PATH . DIRECTORY_SEPARATOR . 'temporary';
+        $params = array(
+            'parent_type' => 'video',
+            'parent_id' => $id,
+            'user_id' => Engine_Api::_()->user()->getViewer()->getIdentity(),
+            'name' => $fileName,
+        );
+        // Save
+        $filesTable = Engine_Api::_()->getDbtable('files', 'storage');
+        $mainPath = $path . DIRECTORY_SEPARATOR . $base . '_main.' . $extension;
+        $image = Engine_Image::factory();
+        $image->open($file)
+                ->resize(500, 500)
+                ->write($mainPath)
+                ->destroy();
+        // Store
+        try {
+          $iMain = $filesTable->createFile($mainPath, $params);
+        } catch (Exception $e) {
+          // Remove temp files
+          @unlink($mainPath);
+          // Throw
+          if ($e->getCode() == Storage_Model_DbTable_Files::SPACE_LIMIT_REACHED_CODE) {
+            throw new Sesvideo_Model_Exception($e->getMessage(), $e->getCode());
+          } else {
+            throw $e;
+          }
+        }
+        // Remove temp files
+        @unlink($mainPath);
+        // Update row
+        // Delete the old file?
+        if (!empty($tmpRow)) {
+          $tmpRow->delete();
+        }
+        return $iMain->file_id;
+      }
     protected function setVideo($params) {
         // create video item
         $file = $_FILES['video'];
@@ -1283,7 +1343,7 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
         foreach($paginator as $videos){
 
             if(!$videos->authorization()->isAllowed($this->view->viewer(), 'view')){
-                //continue;
+                continue;
             }
 
             if ($videos->type != 3 && $videos->type != 'upload') {
@@ -1496,7 +1556,7 @@ class Tickvideo_IndexController extends Sesapi_Controller_Action_Standard{
 
 
 	  
-	  $users[$counterLoop]['title'] = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
+	  $users[$counterLoop]['title'] = $member->getTitle();//preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
 	  $users[$counterLoop]['user_image'] = $this->userImage($member->getIdentity(), "thumb.profile");
         if($this->friendRequest($member)) {
         $users[$counterLoop]['membership'] = $this->friendRequest($member);

@@ -25,6 +25,21 @@ class Activity_NotificationsController extends Core_Controller_Action_Standard
     $this->_helper->requireUser();
   }
   
+  public function indexAction() {
+  
+		$this->view->isAjax = $isAjax = $this->_getParam('isAjax', 0);
+    $viewer = Engine_Api::_()->user()->getViewer();
+		$page = $this->_getParam('page');
+    $this->view->notifications = $notifications = Engine_Api::_()->getDbtable('notifications', 'activity')->getNotificationsPaginator($viewer);
+    $notifications->setCurrentPageNumber($page);
+
+    // Force rendering now
+    $this->_helper->viewRenderer->postDispatch();
+    $this->_helper->viewRenderer->setNoRender(true);
+
+    $this->view->hasunread = false;
+  }
+  
   public function removeNotificationAction() {
     $notification_id = $this->_getParam('notification_id', null);
     $notification = Engine_Api::_()->getItem('activity_notification', $notification_id);
@@ -119,29 +134,6 @@ class Activity_NotificationsController extends Core_Controller_Action_Standard
     }
   }
 
-  public function indexAction() {
-  
-		$this->view->isAjax = $isAjax = $this->_getParam('isAjax', 0);
-    $viewer = Engine_Api::_()->user()->getViewer();
-		$page = $this->_getParam('page');
-    $this->view->notifications = $notifications = Engine_Api::_()->getDbtable('notifications', 'activity')->getNotificationsPaginator($viewer);
-    $this->view->requests = Engine_Api::_()->getDbtable('notifications', 'activity')->getRequestsPaginator($viewer);
-    $notifications->setCurrentPageNumber($page);
-    
-    // Force rendering now
-    $this->_helper->viewRenderer->postDispatch();
-    $this->_helper->viewRenderer->setNoRender(true);
-
-    $this->view->hasunread = false;
-
-    // Now mark them all as read
-//     $ids = array();
-//     foreach( $notifications as $notification ) {
-//       $ids[] = $notification->notification_id;
-//     }
-    //Engine_Api::_()->getDbtable('notifications', 'activity')->markNotificationsAsRead($viewer, $ids);
-  }
-
   public function hideAction()
   {
     $viewer = Engine_Api::_()->user()->getViewer();
@@ -189,7 +181,6 @@ class Activity_NotificationsController extends Core_Controller_Action_Standard
     $this->view->notificationOnly = $request->getParam('notificationOnly', false);
 
     // @todo locale()->tonumber
-    // array('%s update', '%s updates', $this->notificationCount), $this->locale()->toNumber($this->notificationCount));
     $this->view->text = $this->view->translate(array('%s Update', '%s Updates', $notificationCount), $notificationCount);
   }
 
@@ -204,6 +195,7 @@ class Activity_NotificationsController extends Core_Controller_Action_Standard
       $this->_helper->viewRenderer->setNoRender(true);
       return;
     }
+    Engine_Api::_()->getDbtable('notifications', 'activity')->markNotificationsAsRead($viewer);
 
     // Force rendering now
     $this->_helper->viewRenderer->postDispatch();

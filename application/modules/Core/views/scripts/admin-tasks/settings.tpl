@@ -1,5 +1,5 @@
-
-<h2><?php echo $this->translate("Task Scheduler") ?></h2>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_settings", 'parentMenuItemName' => 'core_admin_main_settings_tasks', 'lastMenuItemName' => 'Task Scheduler Settings')); ?>
+<h2 class="page_heading"><?php echo $this->translate("Task Scheduler") ?></h2>
 
 <?php if( engine_count($this->navigation) ): ?>
   <div class='tabs'>
@@ -16,9 +16,6 @@
     'CORE_VIEWS_SCRIPTS_ADMINTASKS_SETTINGS_DESCRIPTION' !== ($desc = $this->translate("CORE_VIEWS_SCRIPTS_ADMINTASKS_SETTINGS_DESCRIPTION")) ?
     $desc : '' ) ?>
 </p>
-
-<br />
-
 
 <script type="text/javascript">
   window.addEventListener('load', function() {
@@ -48,3 +45,7 @@
 <div class='settings'>
   <?php echo $this->form->render($this) ?>
 </div>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_settings').parent().addClass('active');
+  scriptJquery('.core_admin_main_settings_tasks').addClass('active');
+</script>

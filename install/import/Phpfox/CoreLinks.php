@@ -92,13 +92,13 @@ CREATE TABLE IF NOT EXISTS `phpfox_link` (
 /*
 CREATE TABLE IF NOT EXISTS `engine4_core_links` (
   `link_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `uri` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `uri` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `photo_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `parent_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `parent_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `parent_id` int(11) unsigned NOT NULL,
-  `owner_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `owner_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner_id` int(11) unsigned NOT NULL,
   `view_count` mediumint(6) unsigned NOT NULL DEFAULT '0',
   `creation_date` datetime NOT NULL,
@@ -106,5 +106,5 @@ CREATE TABLE IF NOT EXISTS `engine4_core_links` (
   PRIMARY KEY (`link_id`),
   KEY `owner` (`owner_type`,`owner_id`),
   KEY `parent` (`parent_type`,`parent_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */

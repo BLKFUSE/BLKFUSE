@@ -4310,7 +4310,7 @@ class Courses_ClassroomController extends Sesapi_Controller_Action_Standard
           continue;
       $resource = $member->toArray();
       if ($classroom->isOwner($member)){
-        $resource['displayname'] = $resource['displayname'] . " (owner)";
+        $resource['displayname'] = $member->getTitle() . " (owner)";
       }
       unset($resource['lastlogin_ip']);
       unset($resource['creation_ip']);
@@ -4469,7 +4469,7 @@ class Courses_ClassroomController extends Sesapi_Controller_Action_Standard
     }
     foreach($paginator as $member){
       $result['notification'][$counterLoop]['user_id'] = $member->getIdentity();
-      $result['notification'][$counterLoop]['title'] = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
+      $result['notification'][$counterLoop]['title'] = $member->getTitle();//preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
       if(!empty($member->location))
           $result['notification'][$counterLoop]['location'] =   $member->location;
       //follow

@@ -17,11 +17,12 @@ return array (
       'type' => 'module',
       'name' => 'sescomadbanr',
       //'sku' => 'sescomadbanr',
-      'version' => '5.4.0',
+      'version' => '6.5.1',
       'path' => 'application/modules/Sescomadbanr',
       'title' => '<span style="color:#DDDDDD">SNS - Community Advertisements Banner Extension</span>',
       'description' => '<span style="color:#DDDDDD">SNS - Community Advertisements Banner Extension</span>',
       'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	  'thumb' => 'application/modules/Sescomadbanr/externals/images/thumb.png',
       'callback' => array(
           'path' => 'application/modules/Sescomadbanr/settings/install.php',
           'class' => 'Sescomadbanr_Installer',

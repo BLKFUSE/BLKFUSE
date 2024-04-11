@@ -21,18 +21,21 @@
   $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/selectize/js/selectize.js'); 
 ?>
 <script type="text/javascript">
-	var updateTextFields = function()
-	{
+	function updateTextFields() {
 		var fieldToggleGroup = ['#title-wrapper', '#category_id-wrapper', '#description-wrapper','#country-wrapper','#state-wrapper','#city-wrapper','#zip-wrapper','#latValue-wrapper','#lngValue-wrapper', '#search-wrapper','#auth_view-wrapper',  '#auth_comment-wrapper', '#auth_tag-wrapper','#location-wrapper','#mapcanvas-wrapper','#tags-wrapper','#art_cover-wrapper','#is_locked-wrapper','#adult-wrapper'];
-				fieldToggleGroup = scriptJquery(fieldToggleGroup.join(','))
+    fieldToggleGroup = scriptJquery(fieldToggleGroup.join(','))
 		if (document.getElementById('album').value == 0) {
 			fieldToggleGroup.show();
+			
+      scriptJquery('#mapcanvas-wrapper').css('display' , 'none');
+      scriptJquery('#mapcanvas-element').attr('id','map-canvas-list');
+      
 			if((scriptJquery('#subcat_id option').length > 1 && scriptJquery('#category_id').val() > 0) || (scriptJquery('#subcat_id').val() != 0 && scriptJquery('#subcat_id').val() != '' && scriptJquery('#subcat_id').val() != null ))
 				scriptJquery('#subcat_id-wrapper').show();
 			if((scriptJquery('#subsubcat_id option').length > 1  && scriptJquery('#subcat_id').val() > 0 ) || (scriptJquery('#subsubcat_id').val() != 0 && scriptJquery('#subsubcat_id').val() != '' && scriptJquery('#subsubcat_id').val() != null))
 				scriptJquery('#subsubcat_id-wrapper').show();
 				showFields(scriptJquery('#category_id').val(),1);
-		}else {
+		} else {
 			fieldToggleGroup.hide();
 			scriptJquery('#subsubcat_id-wrapper').hide();
 			scriptJquery('#subcat_id-wrapper').hide();
@@ -40,9 +43,13 @@
 		}
 	}
 	
-	if (document.getElementById('album').value != 0) {
-		en4.core.runonce.add(updateTextFields);
-  }
+	<?php if(!empty($this->album_id)) { ?>
+    en4.core.runonce.add(function() {
+      if (document.getElementById('album') && document.getElementById('album').value != 0) {
+        updateTextFields();
+      }
+    });
+  <?php } ?>
   
   var changeCatFieldsList = function(){
     if(scriptJquery('#sesact_popup_cat_fields').length){
@@ -452,7 +459,7 @@ function handleFileUploadsesalbum(files,obj)
    {
 			var url = files[i].name;
     	var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-			if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif' || ext == 'GIF')){
+			if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif' || ext == 'GIF' || ext == "webp")){
 				var status = new createStatusbarsesalbum(obj,files[i]); //Using this we can set progress.
 				status.setFileNameSize(files[i].name,files[i].size);
 				statusArray[countUploadSes] =status;
@@ -647,7 +654,7 @@ scriptJquery(document).on('click','#upload_from_url',function(e){
 	var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
 	var name = url.split('/').pop();
 	name = name.substr(0, name.lastIndexOf('.'));
-		if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif' || ext == 'GIF')){
+		if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif' || ext == 'GIF' || ext == "webp")){
 			var status = new createStatusbarsesalbum(scriptJquery('.dragandrophandler'),url,'url'); //Using this we can set progress.
 			var fd = new FormData();
 			fd.append('Filedata', url);

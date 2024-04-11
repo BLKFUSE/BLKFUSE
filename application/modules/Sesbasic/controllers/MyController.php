@@ -188,6 +188,8 @@ class Sesbasic_MyController extends Core_Controller_Action_Standard {
 
       $viewer = Engine_Api::_()->user()->getViewer();
       $values = $form->getValues();
+      unset($values['body']);
+      $values['body'] = $_POST['body'];
 
       // Prepopulated
       if( $toObject instanceof User_Model_User ) {

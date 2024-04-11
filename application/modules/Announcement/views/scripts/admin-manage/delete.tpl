@@ -10,7 +10,7 @@
  * @author     Jung
  */
 ?>
-
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_manage", 'parentMenuItemName' => 'core_admin_main_manage_announcements', 'lastMenuItemName' => 'Delete Announcement')); ?>
 <div class="settings">
 <div class='global_form'>
   <form method="post">

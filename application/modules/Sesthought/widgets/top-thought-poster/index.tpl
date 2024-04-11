@@ -34,7 +34,7 @@
 <script type="application/javascript">
 function getLikeData(value,title){
 	if(value){
-		url = en4.core.staticBaseUrl+'sesthought/index/top-thought-posters/title/'+title;
+		url = en4.core.baseUrl+'sesthought/index/top-thought-posters/title/'+title;
 		openURLinSmoothBox(url);	
 		return;
 	}

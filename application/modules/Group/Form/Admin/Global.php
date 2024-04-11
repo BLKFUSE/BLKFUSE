@@ -30,31 +30,31 @@ class Group_Form_Admin_Global extends Engine_Form
       'value' => 12,
     ));
     
-   // Create Elements
-    $bbcode = new Engine_Form_Element_Radio('bbcode');
-    $bbcode
-      ->addMultiOptions(array(
-        1 => 'Yes, members can use BBCode tags.',
-        0 => 'No, do not let members use BBCode.'
-      ));
-    $bbcode->setValue(1);
-    $bbcode->setLabel("Enable BBCode");
-
-    $html = new Engine_Form_Element_Radio('html');
-
-    $html
-      ->addMultiOptions(array(
-        1 => 'Yes, members can use HTML in their posts.',
-        0 => 'No, strip HTML from posts.'
-      ));
-    $html->setValue(0);
-    $html->setLabel("Enable HTML");
-
-    // Add elements
-    $this->addElements(array(
-      $bbcode,
-      $html
-    ));
+//    // Create Elements
+//     $bbcode = new Engine_Form_Element_Radio('bbcode');
+//     $bbcode
+//       ->addMultiOptions(array(
+//         1 => 'Yes, members can use BBCode tags.',
+//         0 => 'No, do not let members use BBCode.'
+//       ));
+//     $bbcode->setValue(1);
+//     $bbcode->setLabel("Enable BBCode");
+// 
+//     $html = new Engine_Form_Element_Radio('html');
+// 
+//     $html
+//       ->addMultiOptions(array(
+//         1 => 'Yes, members can use HTML in their posts.',
+//         0 => 'No, strip HTML from posts.'
+//       ));
+//     $html->setValue(0);
+//     $html->setLabel("Enable HTML");
+// 
+//     // Add elements
+//     $this->addElements(array(
+//       $bbcode,
+//       $html
+//     ));
       $this->addElement('Radio', 'group_allow_unauthorized', array(
           'label' => 'Make unauthorized groups searchable?',
           'description' => 'Do you want to make a unauthorized groups searchable? (If set to no, groups that are not authorized for the current user will not be displayed in the group search results and widgets.)',

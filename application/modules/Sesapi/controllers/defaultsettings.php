@@ -95,14 +95,14 @@ $db->query("INSERT IGNORE INTO `engine4_sesapi_menus`(`label`, `module`, `type`,
 $db->query("INSERT IGNORE INTO `engine4_sesapi_menus`(`label`, `module`, `type`, `status`, `order`, `file_id`,`class`, `device`, `is_delete`, `visibility`, `module_name`, `version`) VALUES  ('Credit','sescredit','1','1','60','0','core_main_sescredit','2','0','0','sescredit','');");
 
 
-$db->query("ALTER TABLE `engine4_sesapi_menus` CHARACTER SET utf8 COLLATE utf8_general_ci;");
-$db->query("ALTER TABLE `engine4_sesapi_menus` CHANGE `label` `label` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;");
-$db->query("ALTER TABLE `engine4_sesapi_menus` CHANGE `module` `module` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL;");
-$db->query("ALTER TABLE `engine4_sesapi_menus` CHANGE `url` `url` VARCHAR(1024) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL;");
-$db->query("ALTER TABLE `engine4_sesapi_menus` CHANGE `class` `class` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL;");
-$db->query("ALTER TABLE `engine4_sesapi_menus` CHANGE `module_name` `module_name` VARCHAR(1024) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL;");
-$db->query("ALTER TABLE `engine4_sesapi_menus` CHANGE `module_name` `module_name` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL;");
-$db->query("ALTER TABLE `engine4_sesapi_menus` CHANGE `version` `version` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL;");
+$db->query("ALTER TABLE `engine4_sesapi_menus` CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;");
+$db->query("ALTER TABLE `engine4_sesapi_menus` CHANGE `label` `label` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;");
+$db->query("ALTER TABLE `engine4_sesapi_menus` CHANGE `module` `module` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;");
+$db->query("ALTER TABLE `engine4_sesapi_menus` CHANGE `url` `url` VARCHAR(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;");
+$db->query("ALTER TABLE `engine4_sesapi_menus` CHANGE `class` `class` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;");
+$db->query("ALTER TABLE `engine4_sesapi_menus` CHANGE `module_name` `module_name` VARCHAR(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;");
+$db->query("ALTER TABLE `engine4_sesapi_menus` CHANGE `module_name` `module_name` VARCHAR(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;");
+$db->query("ALTER TABLE `engine4_sesapi_menus` CHANGE `version` `version` VARCHAR(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;");
 
 
 $db->query('INSERT IGNORE INTO `engine4_sesapi_menus` (`label`, `module`, `type`, `status`, `order`, `file_id`, `url`, `class`, `device`, `is_delete`, `visibility`, `module_name`, `version`) VALUES

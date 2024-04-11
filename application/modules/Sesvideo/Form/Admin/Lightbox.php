@@ -32,7 +32,7 @@ class Sesvideo_Form_Admin_Lightbox extends Engine_Form {
     $this->sesvideo_enable_lightbox->addDecorator('Description', array('placement' => Zend_Form_Decorator_Abstract::PREPEND, 'escape' => false));
     //New File System Code
     $banner_options = array('' => '');
-    $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png')));
+    $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png', 'webp')));
     foreach( $files as $file ) {
       $banner_options[$file->storage_path] = $file->name;
     }

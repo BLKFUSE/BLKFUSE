@@ -199,12 +199,10 @@
 	margin-top:3px;
 }
 .sesthoughts_sidebar_listing ._owner_info ._social > a{
-	float:none !important;
-	display:inline-block;
 	border-radius:50%;
-	height:25px;
-	width:25px;
-	padding:2px 0px;
+	float:none !important;
+	display:inline-flex;
+	vertical-align:middle
 }
 .sesthoughts_sidebar_listing .sesbasic_icon_btn_count i:before,
 .sesthoughts_sidebar_listing .sesbasic_icon_btn_count span{

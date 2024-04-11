@@ -514,8 +514,15 @@ class Sesapi_Api_Core extends Core_Api_Abstract {
     $baseUrl =  $_SERVER['HTTP_HOST'];
     if(Zend_Registry::get('StaticBaseUrl') != "/")
     $url = str_replace(Zend_Registry::get('StaticBaseUrl'),'',$url);
-    //if($staticBaseUrl){
+
+    if(strpos(Zend_Registry::get('StaticBaseUrl'),'http') !== false){
+      $baseUrl = $baseUrl;
+    }else{
       $baseUrl = $baseUrl."/".Zend_Registry::get('StaticBaseUrl');
+    }
+
+    //if($staticBaseUrl){
+      // $baseUrl = $baseUrl."/".Zend_Registry::get('StaticBaseUrl');
     //}
     return $http.str_replace('//','/',$baseUrl.$url);
   }
@@ -670,6 +677,7 @@ class Sesapi_Api_Core extends Core_Api_Abstract {
 
     // Check if friendship is allowed in the network
     $eligible = (int) Engine_Api::_()->getApi('settings', 'core')->getSetting('user.friends.eligible', 2);
+    
     if( !$eligible ) {
       return '';
     }
@@ -697,6 +705,7 @@ class Sesapi_Api_Core extends Core_Api_Abstract {
 
     // One-way mode
     $direction = (int) Engine_Api::_()->getApi('settings', 'core')->getSetting('user.friends.direction', 1);
+    
     if( !$direction )
     {
       $viewerRow = $viewer->membership()->getRow($subject);
@@ -706,7 +715,7 @@ class Sesapi_Api_Core extends Core_Api_Abstract {
       // Viewer?
       if( null === $subjectRow ) {
         // Follow
-        return array(
+        $params[] = array(
           'label' => $view->translate('Follow'),
           'name'=>'add',
           'params' => array(
@@ -715,8 +724,8 @@ class Sesapi_Api_Core extends Core_Api_Abstract {
         );
       } else if( $subjectRow->resource_approved == 0 ) {
         // Cancel follow request
-       return array(
-          'label' => $view->translate('Cancel Follow'),
+       $params[] = array(
+          'label' => $view->translate('Cancel Follow Request'),
           'name'=>'cancel',
           'params' => array(
               'user_id' => $subject->getIdentity()
@@ -724,7 +733,7 @@ class Sesapi_Api_Core extends Core_Api_Abstract {
         );
       } else {
         // Unfollow
-        return array(
+        $params[] = array(
           'label' => $view->translate('Unfollow'),
           'name' => 'remove',
           'params' => array(
@@ -732,13 +741,14 @@ class Sesapi_Api_Core extends Core_Api_Abstract {
             ),
         );
       }
+      
       // Subject?
       if( null === $viewerRow ) {
         // Do nothing
       } else if( $viewerRow->resource_approved == 0 ) {
         // Approve follow request
-        return array(
-          'label' => $view->translate('Approve Follow'),
+        $params[] = array(
+          'label' => $view->translate('Approve Follow Request'),
           'name' => 'confirm',
           'params' => array(
               'user_id' => $subject->getIdentity()
@@ -746,8 +756,8 @@ class Sesapi_Api_Core extends Core_Api_Abstract {
         );
       } else {
         // Remove as follower?
-        return array(
-          'label' => $view->translate('Unfollow'),
+        $params[] = array(
+          'label' => $view->translate('Remove as Follower'),
           'name' => 'remove',
           'params' => array(
               'user_id' => $subject->getIdentity()
@@ -937,7 +947,7 @@ class Sesapi_Api_Core extends Core_Api_Abstract {
     $precisionValue = $settings->getSetting('sesmultiplecurrency.precision', 2);
     $defaultParams['precision'] = $precisionValue;
     if(!empty($_SESSION['ses_multiple_currency']['multipleCurrencyPluginActivated'])){
-      return Engine_Api::_()->sesmultiplecurrency()->getCurrencyPrice($price ? $price : 0, $givenSymbol, $change_rate,$returnValue);
+      return Engine_Api::_()->payment()->getCurrencyPrice($price ? $price : 0, $givenSymbol, $change_rate,$returnValue);
     }else{
         return Zend_Registry::get('Zend_View')->locale()->toCurrency($price ? $price : 0, $this->getCurrentCurrency(), $defaultParams);
     }
@@ -945,7 +955,7 @@ class Sesapi_Api_Core extends Core_Api_Abstract {
   function getCurrentCurrency(){
     $settings = Engine_Api::_()->getApi('settings', 'core');
     if(!empty($_SESSION['ses_multiple_currency']['multipleCurrencyPluginActivated'])){
-      return Engine_Api::_()->sesmultiplecurrency()->getCurrentCurrency();
+      return Engine_Api::_()->payment()->getCurrentCurrency();
     }else{
       return $settings->getSetting('payment.currency', 'USD');
     }

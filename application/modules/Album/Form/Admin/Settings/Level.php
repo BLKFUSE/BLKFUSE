@@ -86,6 +86,27 @@ class Album_Form_Admin_Settings_Level extends Authorization_Form_Admin_Level_Abs
                 unset($this->delete->options[2]);
             }
 
+						//Element: approve
+						$this->addElement('Radio', 'approve', array(
+							'description' => 'Do you want photo albums created by members of this level to be auto-approved?',
+							'label' => 'Auto Approve Albums',
+							'multiOptions' => array(
+								1 => 'Yes, auto-approve photo albums.',
+								0 => 'No, do not auto-approve photo albums.'
+							),
+							'value' => 1,
+						));
+						
+						$this->addElement('Radio', 'photoapprove', array(
+							'description' => 'Do you want photo uploaded by members of this level to be auto-approved?',
+							'label' => 'Auto Approve Photos',
+							'multiOptions' => array(
+								1 => 'Yes, auto-approve photos.',
+								0 => 'No, do not auto-approve photos.'
+							),
+							'value' => 1,
+						));
+
             // Element: comment
             $this->addElement('Radio', 'comment', array(
                 'label' => 'Allow Commenting on Photo Albums?',

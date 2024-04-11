@@ -552,7 +552,7 @@ function getImageViewerObjectDataVideo(imageURL,requestedURL){
 									openPhotoSwipeVideo('','','',scriptJquery('#video_data_lightbox').find('.sesbasic_view_embed_lightbox').html());
 									//check flashembed object exists on page or not ,if not incluse it
 									if(!(typeof flashembed == 'function')){
-										new Asset.javascript( en4.core.staticBaseUrl+'externals/flowplayer/flashembed-1.0.1.pack.js',{
+										new Asset.javascript( en4.core.baseUrl+'externals/flowplayer/flashembed-1.0.1.pack.js',{
 												onLoad :flashembedAttach
 										});
 									} else {

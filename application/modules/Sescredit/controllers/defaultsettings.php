@@ -722,8 +722,8 @@ foreach ($siteOffers as $siteOffer) {
 $db->query("ALTER TABLE `engine4_sescredit_transactions` ADD `ordercoupon_id` INT NULL DEFAULT '0';");
 
 //Cash credit work
-$db->query("ALTER TABLE `engine4_authorization_permissions` CHANGE `type` `type` VARCHAR(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL, CHANGE `name` `name` VARCHAR(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL;");
-$db->query("ALTER TABLE `engine4_core_menuitems` CHANGE `menu` `menu` VARCHAR(64) CHARACTER SET latin1 COLLATE latin1_general_ci NULL DEFAULT NULL;");
+$db->query("ALTER TABLE `engine4_authorization_permissions` CHANGE `type` `type` VARCHAR(32) NOT NULL, CHANGE `name` `name` VARCHAR(32) NOT NULL;");
+$db->query("ALTER TABLE `engine4_core_menuitems` CHANGE `menu` `menu` VARCHAR(64) NULL DEFAULT NULL;");
 $db->query('INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES ("sescredit_main_managecashcredit", "sescredit", "Manage Cash Credits", "Sescredit_Plugin_Menus", \'{"route":"sescredit_general","action":"payment-requests"}\', "sescredit_main", "", 99),
 ("sescredit_admin_main_paymentrequest", "sescredit", "Manage Payments", "", \'{"route":"admin_default","module":"sescredit","controller":"payment"}\', "sescredit_admin_main", "", 99),
 ("sescredit_admin_main_paymentrequestsub", "sescredit", "Payment Requests", "", \'{"route":"admin_default","module":"sescredit","controller":"payment"}\', "sescredit_admin_main_paymentrequest", "", 1),
@@ -752,19 +752,19 @@ $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescredit_userpayrequests` (
 	`total_commission_amount` FLOAT NULL DEFAULT "0",
 	PRIMARY KEY (`userpayrequest_id`),
 	KEY `owner_id` (`owner_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
 $db->query("DROP TABLE IF EXISTS `engine4_sescredit_usergateways`;");
 $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescredit_usergateways` (
   `usergateway_id` int(11) unsigned NOT NULL auto_increment,
   `user_id` int(11) unsigned NOT NULL,
   `title` varchar(128) NOT NULL,
-  `description` text COLLATE utf8_unicode_ci,
+  `description` text COLLATE utf8mb4_unicode_ci,
   `enabled` tinyint(1) unsigned NOT NULL DEFAULT "0",
-  `plugin` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `plugin` varchar(128) NOT NULL,
   `config` mediumblob,
   `test_mode` tinyint(1) unsigned NOT NULL DEFAULT "0",
   `gateway_type` varchar(64) NOT NULL,
   PRIMARY KEY (`usergateway_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
 

@@ -50,7 +50,7 @@ class Group_Model_DbTable_Categories extends Engine_Db_Table
             ->from($tableName, $column)
             ->where($tableName . '.subcat_id = ?', 0)
             ->where($tableName . '.subsubcat_id = ?', 0)
-            ->order('title ASC');
+            ->order('order DESC');
     return $this->fetchAll($select);
   }
   

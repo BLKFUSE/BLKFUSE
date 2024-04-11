@@ -2701,6 +2701,11 @@ ul.feed .feed_attachment_core_link.sesact_attachement_gif > div{
 .sesact_feed ul.feed{
   padding:0 !important;
 }
+
+.sesadv_content_load_img .feed > li{
+  padding:15px;
+  margin:0 0 15px;
+}
 .sesact_feed ul.feed > li{
   border-width:0 !important;
   padding:0;
@@ -3147,6 +3152,9 @@ ul.feed .feed_attachment_core_link.sesact_attachement_gif > div{
 }
 .sesact_feed_usercover{
   border-width:1px;
+  position:inherit !important;
+  background-color: transparent!important;
+  padding:0 !important;
   width:100%;
 }
 html .sesact_feed ul.feed .sesact_feed_usercover ._cover{

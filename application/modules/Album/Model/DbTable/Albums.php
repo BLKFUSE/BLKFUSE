@@ -50,6 +50,12 @@ class Album_Model_DbTable_Albums extends Core_Model_Item_DbTable_Abstract
             if( $type == 'message' ) {
                 $album->search = 0;
             }
+            
+            //approve setting work
+            $approved = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('album', $user, 'approve');
+            $album->approved = $approved;
+            if($approved)
+              $album->resubmit = 1;
 
             $album->save();
 
@@ -89,10 +95,19 @@ class Album_Model_DbTable_Albums extends Core_Model_Item_DbTable_Abstract
                       ->joinRight($tablePhotoName, "$tablePhotoName.album_id = $tableAlbumName.album_id",null)
                       ->where($tableAlbumName.'.album_id <> ?', 0)
                       ->group($tablePhotoName.'.album_id');
-
+       
+        if(isset($options['orderby']) && $options['orderby'] == 'admin_id') {
+          $select->order($tableAlbumName.'.album_id DESC');
+        }
+        
         if( !empty($options['search']) && is_numeric($options['search']) && !$isOwnerOrAdmin ) {
             $select->where($tableAlbumName.'.search = ?', $options['search']);
         }
+        
+        if(!isset($options['showalbum']) && empty($options['showalbum'])) {
+					$select->where($tableAlbumName.'.approved =?', 1);
+				}
+				
         $select = Engine_Api::_()->network()->getNetworkSelect($this->info('name'), $select);
         if (Engine_Api::_()->getApi('settings', 'core')->getSetting('album.allow.unauthorized', 0)){
             return $select;

@@ -51,6 +51,7 @@ class Core_UtilityController extends Core_Controller_Action_Standard
   public function localeAction()
   {
     $locale = $this->_getParam('locale');
+    $admin = $this->_getParam('admin', false);
     $language = $this->_getParam('language');
     $return = $this->_getParam('return', $this->_helper->url->url(array(), 'default', true));
     $viewer = Engine_Api::_()->user()->getViewer();
@@ -84,8 +85,12 @@ class Core_UtilityController extends Core_Controller_Action_Standard
         $viewer->save();
       }
     }
-
-    return $this->_helper->redirector->gotoUrl($return, array('prependBase' => false));
+    if(!$admin) {
+      return $this->_helper->redirector->gotoUrl($return, array('prependBase' => false));
+    } else {
+      echo true;die;
+    }
+    
   }
 
   public function tasksAction()
@@ -126,6 +131,9 @@ class Core_UtilityController extends Core_Controller_Action_Standard
 
   public function advertisementAction()
   {
+		if ('json' != $this->_getParam('format', null)) {
+			return $this->_forward('notfound', 'error', 'core');
+		}
     $table = Engine_Api::_()->getDbtable('adcampaigns', 'core');
     $db = $table->getAdapter();
     $db->beginTransaction();

@@ -23,10 +23,15 @@ class Chat_Model_Message extends Engine_Db_Table_Row
 
   public function toRemoteArray()
   {
+    $user = Engine_Api::_()->getItem('user', $this->user_id);
+    $verified_tiptext = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $user, 'verified_tiptext');
+    $verified_tiptext = !empty($verified_tiptext) ? $verified_tiptext : 'Verified';
     $return = array(
       'type' => 'groupchat',
       'message_id' => $this->message_id,
       'user_id' => $this->user_id,
+      'icon' => $user->verifiedIcon(),
+      'verified_tiptext' => $verified_tiptext,
       'room_id' => $this->room_id,
       'body' => $this->body,
       'date' => $this->date,

@@ -11,36 +11,38 @@
  */
 ?>
 
-<div class="content sdk">
+<div class="sdk">
+  <h3><?php echo $this->translate("SocialEngine SDK")?></h3>
+  <p><?php echo $this->translate("The SocialEngine PHP SDK allows you to create packages for distribution.")?></p>
+  <p><?php echo $this->translate("More info: ")?><a href="https://community.socialengine.com/blogs/597/99/socialengine-sdk" target="_blank"><?php echo $this->translate("See KB article")?></a>.</p>
 
-
-  <h3>SocialEngine SDK</h3>
-
-  <p>The SocialEngine PHP SDK allows you to create packages for distribution.</p>
-  <p>More info: <a href="https://community.socialengine.com/blogs/597/99/socialengine-sdk" target="_blank">See KB article</a>.</p>
-  <br />
-  <a class="buttonlink sdk_packages_add" href="<?php echo $this->url(array('action' => 'create')) ?>">
-    Create a Package
-  </a>
-  <p class="buttontext">
-    Sets up bare-bones modules, widgets, and more for your local development
-    environment.
-  </p>
-  
-  <a class="buttonlink sdk_packages_build" href="<?php echo $this->url(array('action' => 'build')) ?>">
-    Build Packages
-  </a>
-  <p class="buttontext">
-    Turns your packages into files that are installable and ready for
-    distribution.
-  </p>
-
-  <a class="buttonlink sdk_packages_manage" href="<?php echo $this->url(array('action' => 'manage')) ?>">
-    Manage Package Files
-  </a>
-  <p class="buttontext">
-    Download package files you've built, combine packages, or delete ones you
-    don't want.
-  </p>
-  
+  <ul class="sdk_inner">
+    <li>
+      <a class="buttonlink sdk_packages_add" href="<?php echo $this->url(array('action' => 'create')) ?>">
+        <?php echo $this->translate("Create a Package")?>
+      </a>
+      <p class="buttontext">
+        <?php echo $this->translate("Sets up bare-bones modules, widgets, and more for your local development
+        environment.")?>
+      </p>
+    </li>
+    <li>
+      <a class="buttonlink sdk_packages_build" href="<?php echo $this->url(array('action' => 'build')) ?>">
+        <?php echo $this->translate("Build Packages")?>
+      </a>
+      <p class="buttontext">
+        <?php echo $this->translate("Turns your packages into files that are installable and ready for
+        distribution.")?>
+      </p>
+    </li>
+    <li>
+      <a class="buttonlink sdk_packages_manage" href="<?php echo $this->url(array('action' => 'manage')) ?>">
+        <?php echo $this->translate("Manage Package Files")?>
+      </a>
+      <p class="buttontext">
+        <?php echo $this->translate("Download package files you've built, combine packages, or delete ones you
+        don't want.")?>
+      </p>
+    </li>
+  </ul>
 </div>

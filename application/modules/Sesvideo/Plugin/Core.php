@@ -29,6 +29,9 @@ class Sesvideo_Plugin_Core {
   }
 	
   public function onRenderLayoutDefault($event,$mode=null) {
+    
+    if( defined('_ENGINE_ADMIN_NEUTER') && _ENGINE_ADMIN_NEUTER ) return;
+    
     $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
 		$view->headTranslate(array(
 		'Quick share successfully', 'Video removed successfully from watch later', 'Video successfully added to watch later', 'Video added as Favourite successfully', 'Video Unfavorited successfully', 'Video Liked successfully', 'Video Unliked successfully', 'Playlist Liked successfully', 'Playlist Unliked successfully', 'Playlist added as Favourite successfully', 'Playlist Unfavorited successfully', 'Channel added as Favourite successfully','Channel Unfavorited successfully','Channel Liked successfully','Channel Unliked successfully','Artist added as Favourite successfully','Artist Unfavorited successfully','Channel un-follow successfully','Channel follow successfully','Artist Rated successfully','Video Rated successfully','Channel Rated successfully'
@@ -81,6 +84,7 @@ class Sesvideo_Plugin_Core {
       $level = $viewer;
 		$headScript = new Zend_View_Helper_HeadScript();
     $type = Engine_Api::_()->authorization()->getPermission($level, 'sesbasic_video', 'videoviewer');
+    $headScript->appendFile(Zend_Registry::get('StaticBaseUrl') . 'application/modules/Sesvideo/externals/scripts/core.js');
     if ($type == 1) {
       $headScript->appendFile(Zend_Registry::get('StaticBaseUrl')
                       . 'application/modules/Sesbasic/externals/scripts/SesLightbox/photoswipe.min.js')
@@ -95,7 +99,7 @@ class Sesvideo_Plugin_Core {
       $headScript->appendFile($loadImageViewerFile);
       $view->headLink()->appendStylesheet($view->layout()->staticBaseUrl
               . 'application/modules/Sesbasic/externals/styles/medialightbox.css');
-    }    
+    }
     $script = '';
     if ($moduleName == 'sesvideo') {
       $script .=

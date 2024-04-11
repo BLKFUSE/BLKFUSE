@@ -91,7 +91,7 @@
         <?php } ?>
         <?php if(isset($this->locationActive) && isset($item->location) && $item->location && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesnews.enable.location', 1)){ ?>
           <div class="sesnews_sidebar_news_list_date">
-            <i class="fa fa-map-marker sesbasic_text_light"></i>
+            <i class="sesbasic_icon_map sesbasic_text_light"></i>
             <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?>
               <a href="<?php echo $this->url(array('resource_id' => $item->news_id,'resource_type'=>'sesnews_news','action'=>'get-direction'), 'sesbasic_get_direction', true) ;?>" class="opensmoothboxurl"><?php echo $item->location;?></a>
             <?php } else { ?>
@@ -190,7 +190,7 @@
             <?php if(isset($this->locationActive) && isset($item->location) && $item->location && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesnews.enable.location', 1)){ ?>
               <div class="sesnews_list_stats sesnews_list_location sesbasic_text_light">
                 <span>
-                  <i class="fa fa-map-marker"></i>
+                  <i class="sesbasic_icon_map"></i>
                   <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?>
                     <a href="<?php echo $this->url(array('resource_id' => $item->news_id,'resource_type'=>'sesnews_news','action'=>'get-direction'), 'sesbasic_get_direction', true) ;?>" class="opensmoothboxurl"><?php echo $item->location;?></a>
                   <?php } else { ?>

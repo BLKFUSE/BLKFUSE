@@ -15,10 +15,7 @@
 <?php $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sescontest/externals/scripts/core.js'); ?>
 
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sescontest/externals/styles/styles.css'); ?>
-<?php $addThisCode = Engine_Api::_()->getApi('settings', 'core')->getSetting('ses.addthis',0); ?>
-<?php if(is_array($this->allowAdvShareOptions) && $addThisCode && engine_in_array('addThis',$this->allowAdvShareOptions)){ ?>
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=<?php echo $addThisCode; ?>" async></script>
-<?php } ?>
+
 <div class="sescontest_sidebar_button">
  <a href="javascript:;" class="sesbasic_link_btn sesbasic_popup_slide_open sesbasic_bxs sesbasic_share_btn">
  	<i class="fas fa-share-alt"></i>
@@ -38,7 +35,7 @@
       <div class="sesbasic_share_popup_content_row clear sesbasic_clearfix">
       	<div class="sesbasic_share_popup_buttons clear">
         <?php if(Engine_Api::_()->user()->getViewer()->getIdentity() != 0){ ?>
-          <?php if(is_array($this->allowAdvShareOptions) && engine_in_array('privateMessage',$this->allowAdvShareOptions)){ ?>
+          <?php if(Engine_Api::_()->authorization()->getPermission(Engine_Api::_()->user()->getViewer()->level_id, 'messages', 'create') && is_array($this->allowAdvShareOptions) && engine_in_array('privateMessage',$this->allowAdvShareOptions)){ ?>
             <a href="javascript:void(0)" class="sesbasic_button" onClick="openSmoothBoxInUrl('<?php echo $this->url(array('module'=> 'sesbasic', 'controller' => 'index', 'action' => 'message','item_id' => $this->subject()->getIdentity(), 'type'=>$this->subject()->getType()),'default',true); ?>')"> <?php echo $this->translate("Private Message"); ?></a>
             <?php } ?>
              <?php if(is_array($this->allowAdvShareOptions) && engine_in_array('siteShare',$this->allowAdvShareOptions)){ ?>
@@ -53,14 +50,6 @@
           <?php } ?>
         </div>
       </div>
-      <?php if(is_array($this->allowAdvShareOptions) && $addThisCode && engine_in_array('addThis',$this->allowAdvShareOptions)){ ?>
-      	<div class="sesbasic_share_popup_content_row clear sesbasic_clearfix">
-          <div class="sesbasic_share_popup_content_field clear">
-            <!-- Go to www.addthis.com/dashboard to customize your tools -->
-            <div class="addthis_sharing_toolbox"></div>
-          </div>
-      	</div>
-    	<?php } ?>
       <div class="sesbasic_share_popup_content_row">
       	<div class="sesbasic_share_itme_preview sesbasic_clearfix">
         	<div class="sesbasic_share_itme_preview_img">

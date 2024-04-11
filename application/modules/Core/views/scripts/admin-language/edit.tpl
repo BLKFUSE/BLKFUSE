@@ -10,7 +10,7 @@
  * @author     John
  */
 ?>
-
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_layout", 'parentMenuItemName' => 'core_admin_main_layout_language', 'lastMenuItemName' => 'Edit Phrases')); ?>
 <?php
 $db = Engine_Db_Table::getDefaultAdapter();
 $translationAdapter = $db->select()
@@ -19,24 +19,18 @@ $translationAdapter = $db->select()
   ->query()
   ->fetchColumn();   
  ?>
-
-<h2>
-  <?php echo $this->htmlLink(array('route' => 'admin_default', 'controller' => 'language', 'action' => 'index'), $this->translate('Language Manager')) ?>
-  &#187; <?php echo $this->localeTranslation ?>
-</h2>
-<p>
-  <?php echo $this->translate("CORE_VIEWS_SCRIPTS_ADMINLANGUAGE_EDIT_DESCRIPTION") ?>
-</p>
-
-<br />
-
-<div class="admin_search">
+<div class="admin_common_top_section">
+  <h2 class="page_heading">
+    <?php echo $this->htmlLink(array('route' => 'admin_default', 'controller' => 'language', 'action' => 'index'), $this->translate('Language Manager')) ?>
+    &#187; <?php echo $this->localeTranslation ?>
+  </h2>
+  <p> <?php echo $this->translate("CORE_VIEWS_SCRIPTS_ADMINLANGUAGE_EDIT_DESCRIPTION") ?></p>
+</div>  
+  <div class="admin_search">
   <div class="search">
     <?php echo $this->filterForm->render($this) ?>
   </div>
 </div>
-
-<br />
 <?php
   $url = $this->url() . $this->query;
   if( $this->page ){
@@ -53,7 +47,7 @@ $translationAdapter = $db->select()
     <div class="admin_language_editor">
       <div class="admin_language_editor_top">
         <div class="admin_language_editor_addphrase">
-          <a class="buttonlink" href="javascript:void(0);" onclick="addPhrase()">Add New Phrase</a>
+          <a class="admin_link_btn smoothbox" href="<?php echo $this->url(array('action' => 'add-phrase')) ?>">Add New Phrase</a>
         </div>
         <div class="admin_language_editor_pages">
           <?php $pageInfo = $this->paginator->getPages(); if ($pageInfo->totalItemCount):  ?>
@@ -134,27 +128,7 @@ $translationAdapter = $db->select()
   <a href="admin/core/settings/performance">Click Here</a> and check the "Translation Performance" performance box.  <br />
   Please note that the initial converstion may take longer that 30 seconds, but will improve future page loads.
 </p>
-<script type="text/javascript">
-//<![CDATA[
-var addPhrase = function() {
-  var url = '<?php echo $this->url(array('action' => 'add-phrase')) ?>';
-  var phrase = prompt('Type your new phrase below:');
-  var redirect = '<?php echo $this->url(array('action' => 'edit')) ?>?search=' + phrase;
-  if( !phrase || phrase === null || phrase === '' ) {
-    return;
-  }
-  scriptJquery.ajax({
-    url : url,
-    dataType: 'json',
-    method : 'post',
-    data : {
-      phrase : phrase,
-      format : 'json'
-    },
-    success : function() {
-      window.location.href = redirect;
-    }
-  });
-}
-//]]>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_layout').parent().addClass('active');
+  scriptJquery('.core_admin_main_layout_language').addClass('active');
 </script>

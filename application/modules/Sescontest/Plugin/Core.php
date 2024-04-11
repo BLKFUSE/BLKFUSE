@@ -17,7 +17,7 @@ class Sescontest_Plugin_Core {
   }
 
   public function onRenderLayoutDefault($event) {
-
+    if( defined('_ENGINE_ADMIN_NEUTER') && _ENGINE_ADMIN_NEUTER ) return;
     $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
     $viewer = Engine_Api::_()->user()->getViewer();
     $request = Zend_Controller_Front::getInstance()->getRequest(); 

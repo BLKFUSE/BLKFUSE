@@ -313,15 +313,17 @@ scriptJquery( window ).load(function() {
     }else{
       $canComment = true;
     } ?>
-    <?php if(Engine_Api::_()->user()->getViewer()->getIdentity() != ''){ 
+    <?php if(Engine_Api::_()->user()->getViewer()->getIdentity() != '') { 
     $urlencode = urlencode(((!empty($_SERVER["HTTPS"]) &&  strtolower($_SERVER["HTTPS"]) == 'on') ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . $this->photo->getHref());
     ?>
       <div class="sesbasic_clearfix sesalbum_photo_view_btns">
         <?php echo $this->partial('_socialShareIcons.tpl','sesbasic',array('resource' => $this->photo)); ?>
-        <a title="<?php echo $this->translate('Share'); ?>" href="<?php echo $this->url(array("action" => "share", "type" => "album_photo", "photo_id" => $this->photo->getIdentity(),"format" => "smoothbox"), 'sesalbum_general', true); ?>" class="sesalbum_photo_view_share_button smoothbox"><i class="fas fa-share-alt"></i></a>     
-        <a  title="<?php echo $this->translate('Message'); ?>" href="<?php echo $this->url(array('module'=> 'sesalbum', 'controller' => 'index', 'action' => 'message','photo_id' => $this->photo->getIdentity(), 'format' => 'smoothbox'),'sesalbum_extended',true); ?>" class="sesalbum_photo_view_msg_button smoothbox"><i class="fa fa-envelope"></i></a>
+        <a title="<?php echo $this->translate('Share'); ?>" href="<?php echo $this->url(array("action" => "share", "type" => "album_photo", "photo_id" => $this->photo->getIdentity(),"format" => "smoothbox"), 'sesalbum_general', true); ?>" class="sesalbum_photo_view_share_button smoothbox"><i class="fas fa-share-alt"></i></a>
+        <?php if(Engine_Api::_()->user()->getViewer()->getIdentity()) { ?>
+          <a  title="<?php echo $this->translate('Message'); ?>" href="<?php echo $this->url(array('module'=> 'sesalbum', 'controller' => 'index', 'action' => 'message','photo_id' => $this->photo->getIdentity(), 'format' => 'smoothbox'),'sesalbum_extended',true); ?>" class="sesalbum_photo_view_msg_button smoothbox"><i class="fa fa-envelope"></i></a>
+        <?php } ?>
         <?php if(isset($this->canDownload) && $this->canDownload){ ?>
-        <a title="<?php echo $this->translate('Download'); ?>" href="<?php echo $this->url(array('module' => 'sesalbum', 'action' => 'download', 'photo_id' => $this->photo->photo_id,'type'=>'photo'), 'sesalbum_general', true); ?>" class="sesalbum_photo_view_download_button"><i class="fa fa-download"></i></a>
+          <a title="<?php echo $this->translate('Download'); ?>" href="<?php echo $this->url(array('module' => 'sesalbum', 'action' => 'download', 'photo_id' => $this->photo->photo_id,'type'=>'photo'), 'sesalbum_general', true); ?>" class="sesalbum_photo_view_download_button"><i class="fa fa-download"></i></a>
         <?php } ?>
        <?php if($this->canComment){ ?>
        <?php $LikeStatus = Engine_Api::_()->sesalbum()->getLikeStatusPhoto($this->photo->photo_id); ?>
@@ -704,7 +706,7 @@ scriptJquery(document).ready(function(){
 <?php } ?>
 function getTagData(value){
 	if(value){
-		url = en4.core.staticBaseUrl+'albums/index/tag-photo/photo_id/'+value;
+		url = en4.core.baseUrl+'albums/index/tag-photo/photo_id/'+value;
 		openURLinSmoothBox(url);	
 		return;
 	}
@@ -734,7 +736,7 @@ function getTagData(value){
 <?php } ?>
 function getLikeData(value){
 	if(value){
-		url = en4.core.staticBaseUrl+'albums/index/like-photo/photo_id/'+value;
+		url = en4.core.baseUrl+'albums/index/like-photo/photo_id/'+value;
 		openURLinSmoothBox(url);	
 		return;
 	}

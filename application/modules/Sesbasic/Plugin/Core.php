@@ -12,6 +12,51 @@
  */
 class Sesbasic_Plugin_Core extends Zend_Controller_Plugin_Abstract {
 
+	public function routeShutdown(Zend_Controller_Request_Abstract $request) {
+
+		$module = $request->getModuleName();
+		$controller = $request->getControllerName();
+		$action = $request->getActionName();
+		$view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
+		
+		if(!Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sessociallogin') && $module == "user" && $action == "index" && $controller == "admin-signup") {
+			
+			$account = Engine_Api::_()->sesbasic()->getSignupId('Sessociallogin_Plugin_Signup_Account');
+			if($account) 
+				$view->headStyle()->appendStyle('#step_'.$account.'{display:none;}');
+			$fields = Engine_Api::_()->sesbasic()->getSignupId('Sessociallogin_Plugin_Signup_Fields');
+			if($fields) 
+				$view->headStyle()->appendStyle('#step_'.$fields.'{display:none;}');
+			$photo = Engine_Api::_()->sesbasic()->getSignupId('Sessociallogin_Plugin_Signup_Photo');
+			if($photo) 
+				$view->headStyle()->appendStyle('#step_'.$photo.'{display:none;}');
+		}
+	}
+	
+  public function onItemCreateAfter($event) {
+    $payload = $event->getPayload();
+    if(!empty($_POST['tinyMce']) && engine_count($_POST['tinyMce']) > 0) {
+      foreach($_POST['tinyMce'] as $tinyMce) {
+        //Save editor images
+        if(isset($payload->$tinyMce) && $payload->$tinyMce) {
+          Engine_Api::_()->core()->saveTinyMceImages($payload->$tinyMce, $payload);
+        }
+      }
+    }
+  }
+
+  public function onItemUpdateAfter($event) {
+    $payload = $event->getPayload();
+    if(!empty($_POST['tinyMce']) && engine_count($_POST['tinyMce']) > 0) {
+      foreach($_POST['tinyMce'] as $tinyMce) {
+        //Save editor images
+        if(isset($payload->$tinyMce) && $payload->$tinyMce) {
+          Engine_Api::_()->core()->saveTinyMceImages($payload->$tinyMce, $payload);
+        }
+      }
+    }
+  }
+
 	public function onRenderLayoutDefaultSimple($event) {
     return $this->onRenderLayoutDefault($event,'simple');
   }
@@ -25,7 +70,7 @@ class Sesbasic_Plugin_Core extends Zend_Controller_Plugin_Abstract {
   }
   
 	public function onRenderLayoutDefault($event) {
-
+    if( defined('_ENGINE_ADMIN_NEUTER') && _ENGINE_ADMIN_NEUTER ) return;
     $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
 		
 		//write code to hide header footer 
@@ -88,7 +133,7 @@ $script .=
     
     //Load google map
     if(Engine_Api::_()->getApi('settings', 'core')->getSetting('ses.mapApiKey', '') && Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) {
-      $headScript->prependFile('https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=' . Engine_Api::_()->getApi('settings', 'core')->getSetting('ses.mapApiKey', ''));
+      $headScript->prependFile('https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=' . Engine_Api::_()->getApi('settings', 'core')->getSetting('ses.mapApiKey', '').'&language='.$_COOKIE['en4_language']);
       $headScript->appendFile($view->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/scripts/richMarker.js');
     }
 
@@ -170,9 +215,73 @@ $script .=
         $contentAdultFiltering = '<li class="onoffswitch-wrapper"><div class="onoffswitch"><input id="myonoffswitch" name="onoffswitch"  class="onoffswitch-checkbox onoffswitch-checkbox-round" type="checkbox" '.$attr.'><label for="myonoffswitch"></label></div><span>Allow 18+ Content</span></li>';
         $script .= 'scriptJquery(document).ready(function(e){
         scriptJquery("#core_menu_mini_menu").find("ul").first().append(\''.$contentAdultFiltering.'\');
-        })';
+        });';
       }
     }
+
+    //hide email from email setting tab
+		if($viewer->getIdentity()) {
+			if($viewer->level_id != 1) {
+        if(Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sescrowdfunding'))) {
+          $script .= 'scriptJquery(document).ready(function() {
+						scriptJquery("#sescrowdfunding-sescrowdfundingpaymentrequestadmin").parent().remove();
+						scriptJquery("#sescrowdfunding-sescrowdfundingpaymentadminrequestapproved").parent().remove();
+						scriptJquery("#sescrowdfunding-sescrowdfundingpaymentadminrequestcancel").parent().remove();
+						scriptJquery("#sescrowdfunding-sescrowdfundingdonationadminemail").parent().remove();
+					});';
+        }
+        if(Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sescredit'))) {
+          $script .= 'scriptJquery(document).ready(function() {
+						scriptJquery("#sescredit-sescreditsendupgraderequest").parent().remove();
+						scriptJquery("#sescredit-sescreditpurchasepoint").parent().remove();
+						scriptJquery("#sescredit-sescreditadminpayaprov").parent().remove();
+						scriptJquery("#sescredit-sescreditadminpaycancl").parent().remove();
+						scriptJquery("#sescredit-sescreditpayrequest").parent().remove();
+					});';
+        }
+        
+        if(Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesgroup'))) {
+          $script .= 'scriptJquery(document).ready(function() {
+						scriptJquery("#sesgroupveroth-sesgroupverothadminverificationrequests").parent().remove();
+						scriptJquery("#sesgroup-notifysesgroupgroupsuperadmin").parent().remove();
+						scriptJquery("#sesgroup-notifysesgroupgroupadminapproval").parent().remove();
+						scriptJquery("#sesgroup-sesgroupverothadminverificationrequests").parent().remove();
+					});';
+        }
+
+        if(Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sesbusiness'))) {
+          $script .= 'scriptJquery(document).ready(function() {
+						scriptJquery("#sesbusinessveroth-sesbusinessverothadminverificationrequests").parent().remove();
+						scriptJquery("#sesbusiness-notifysesbusinessbusinesssuperadmin").parent().remove();
+						scriptJquery("#sesbusiness-notifysesbusinessbusinessadminapproval").parent().remove();
+					});';
+        }
+        
+        if(Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('sespage'))) {
+          $script .= 'scriptJquery(document).ready(function() {
+						scriptJquery("#sespageveroth-sespageverothadminverificationrequests").parent().remove();
+						scriptJquery("#sespage-notifysespagepagesuperadmin").parent().remove();
+						scriptJquery("#sespage-notifysespagepageadminapproval").parent().remove();
+						scriptJquery("#sespage-notifysespagepagepagesentforapproval").parent().remove();
+						scriptJquery("#sespagejoinfees-sespagejoinfeesentrypaymentrequestadmin").parent().remove();
+						scriptJquery("#sespage-sespageverothadminverificationrequests").parent().remove();
+					});';
+        }
+
+        if(Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('emultlist'))) {
+          $script .= 'scriptJquery(document).ready(function() {
+						scriptJquery("#emultlist-emultlistsiteownerforclaim1").parent().remove();
+						scriptJquery("#emultlist-emultlistsiteownerforclaim2").parent().remove();
+						scriptJquery("#emultlist-notifyemultlistsuperadmin1").parent().remove();
+						scriptJquery("#emultlist-notifyemultlistsuperadmin2").parent().remove();
+						scriptJquery("#emultlist-notifyemultlistadminapproval1").parent().remove();
+						scriptJquery("#emultlist-notifyemultlistadminapproval2").parent().remove();
+					});';
+        }
+				// $view->headScript()->appendScript($script);
+			}
+		}
+
     $view->headScript()->appendScript($script);
   }
 
@@ -194,9 +303,9 @@ $script .=
   public function onUserFormSettingsGeneralInitAfter($event) {
     $form = $event->getPayload();
     if($form->getElement('username') !== null) {
-	$bannedUsernameValidator = new Engine_Validate_Callback(array(new Sesbasic_Plugin_Core(), 'checkBannedUsernameEditProfile'), $form->getElement('username')->getvalue());
-    $bannedUsernameValidator->setMessage("This profile address is not available, please use another one.");
-    $form->username->addValidator($bannedUsernameValidator);
+      $bannedUsernameValidator = new Engine_Validate_Callback(array(new Sesbasic_Plugin_Core(), 'checkBannedUsernameEditProfile'), $form->getElement('username')->getvalue());
+      $bannedUsernameValidator->setMessage("This profile address is not available, please use another one.");
+      $form->username->addValidator($bannedUsernameValidator);
     }
   }
 }

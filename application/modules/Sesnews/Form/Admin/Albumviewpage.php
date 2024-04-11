@@ -51,7 +51,7 @@ class Sesnews_Form_Admin_Albumviewpage extends Engine_Form
 						'favouriteCount' => 'Favourites Count',
 						'title' => 'Title',
 						'by' => 'Owner\'s Name',
-						'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="admin/sesbasic/settings/faqwidget">[FAQ]</a>',
+						'socialSharing' => 'Social Share Buttons <a class="smoothbox" href="'._ENGINE_SITE_URL.'/admin/sesbasic/settings/faqwidget">[FAQ]</a>',
 						'likeButton' =>'Like Button',
 						'favouriteButton' => 'Favourite Button',
         ),

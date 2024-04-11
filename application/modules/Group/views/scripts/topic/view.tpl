@@ -108,7 +108,8 @@
               if( $type(body) == 'element' ) {
                   body = $(body).getParent('li').getElement('.group_discussions_thread_body_raw').get('html').trim();
               }
-              var value = '<blockquote>' + '[b][url=' + href + ']' + user + '[/url] <?php echo $this->translate('said');?>: [/b]\n' + htmlspecialchars_decode(body) + '</blockquote>\n\n';
+
+              var value = '<blockquote><strong>' + '<a href=' + href + '>' + user + '</a> <?php echo $this->translate('said');?>: </strong>\n' + htmlspecialchars_decode(body) + '</blockquote>\n\n';
               value = value.replace(/\s+/g,' ').trim()+"<br />";
           <?php if ( $this->form && ($this->form->body->getType() === 'Engine_Form_Element_TinyMce') ): ?>
               tinymce.activeEditor.execCommand('mceInsertContent', false, value);
@@ -189,8 +190,8 @@
                     
                     <?php //if( (($post->user_id == $this->viewer()->getIdentity() || $this->group->getOwner()->getIdentity() == $this->viewer()->getIdentity()) || $this->viewer()->isSuperAdmin()) && $this->canPostEdit): ?>
                     <?php if($this->canPostEdit) { ?>
-                    <?php echo $this->htmlLink(array('route' => 'group_extended', 'controller' => 'post', 'action' => 'edit', 'post_id' => $post->getIdentity(), 'format' => 'smoothbox'), $this->translate('Edit'), array(
-                    'class' => 'buttonlink smoothbox icon_group_post_edit'
+                    <?php echo $this->htmlLink(array('route' => 'group_extended', 'controller' => 'post', 'action' => 'edit', 'post_id' => $post->getIdentity()), $this->translate('Edit'), array(
+                    'class' => 'buttonlink icon_group_post_edit'
                     )) ?>
                     <?php } ?>
                     <?php //endif; ?>
@@ -251,3 +252,11 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+// Add parant element to table
+  scriptJquery('.rich_content_body table').each(function() {                            
+    scriptJquery(this).addClass('table');
+    scriptJquery(this).wrap('<div class="table_wrap"></div>');
+  });
+</script>

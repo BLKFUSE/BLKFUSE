@@ -72,9 +72,9 @@ CREATE TABLE IF NOT EXISTS `engine4_user_membership` (
   `active` tinyint(1) NOT NULL DEFAULT '0',
   `resource_approved` tinyint(1) NOT NULL DEFAULT '0',
   `user_approved` tinyint(1) NOT NULL DEFAULT '0',
-  `message` text COLLATE utf8_unicode_ci,
-  `description` text COLLATE utf8_unicode_ci,
+  `message` text COLLATE utf8mb4_unicode_ci,
+  `description` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`resource_id`,`user_id`),
   KEY `REVERSE` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  */

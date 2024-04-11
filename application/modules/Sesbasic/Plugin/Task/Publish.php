@@ -13,7 +13,9 @@
 class Sesbasic_Plugin_Task_Publish extends Core_Plugin_Task_Abstract {
 
   public function execute() {
-
+		
+		$db = Engine_Db_Table::getDefaultAdapter();
+		
     //Blog plugin
     if (Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesblog') && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesblog.pluginactivated')) {
       Engine_Api::_()->sesblog()->checkBlogStatus();
@@ -32,6 +34,14 @@ class Sesbasic_Plugin_Task_Publish extends Core_Plugin_Task_Abstract {
     //Product plugin
     if (Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesproduct') && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesproduct.pluginactivated')) {
       Engine_Api::_()->sesproduct()->checkProductStatus();
+      //Delete one day before cart entries
+      $db->query("DELETE FROM engine4_sesproduct_carts WHERE creation_date < DATE_SUB(NOW() , INTERVAL 1 DAY);");
+    }
+    
+    //Courses plugin
+    if (Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('courses') && Engine_Api::_()->getApi('settings', 'core')->getSetting('courses.pluginactivated')) {
+      //Delete one day before cart entries
+      $db->query("DELETE FROM engine4_courses_carts WHERE creation_date < DATE_SUB(NOW() , INTERVAL 1 DAY);");
     }
     
     //Article plugin
@@ -62,8 +72,9 @@ class Sesbasic_Plugin_Task_Publish extends Core_Plugin_Task_Abstract {
     
     //Activity plugin for cleanup
     if (Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('sesadvancedactivity') && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.pluginactivated')) {
-      $db = Engine_Db_Table::getDefaultAdapter();
+      
       $db->query('DELETE from engine4_activity_stream WHERE action_id NOT IN (SELECT action_id FROM engine4_activity_actions);');
+      $db->query('DELETE from `engine4_activity_attachments` WHERE action_id NOT IN (SELECT action_id FROM `engine4_activity_actions`);');
       
       $db->query('DELETE from engine4_activity_notifications WHERE object_id NOT IN (SELECT comment_id FROM engine4_activity_comments) AND object_type = "activity_comment";');
       

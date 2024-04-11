@@ -38,7 +38,7 @@ class Group_AdminManageController extends Core_Controller_Action_Admin
     
     $page = $this->_getParam('page',1);
     $this->view->paginator = Engine_Api::_()->getItemTable('group')->getGroupPaginator(array(
-      'orderby' => 'admin_id',
+      'orderby' => 'admin_id', 'showgroup' => 1,
     ));
     $this->view->paginator->setItemCountPerPage(25);
     $this->view->paginator->setCurrentPageNumber($page);
@@ -77,5 +77,27 @@ class Group_AdminManageController extends Core_Controller_Action_Admin
     }
     // Output
     $this->renderScript('admin-manage/delete.tpl');
+  }
+
+  //Approved Action
+  public function approvedAction() {
+  
+    $id = $this->_getParam('id');
+    if (!empty($id)) {
+    
+      $item = Engine_Api::_()->getItem('group', $id);
+      $item->approved = !$item->approved;
+      $item->save();
+
+      // Re-index
+      Engine_Api::_()->getApi('search', 'core')->index($item);
+      
+      if ($item->approved) {
+        Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($item->getOwner(), $item->getOwner(), $item, 'group_approvedbyadmin', array('group_title' => $item->getTitle(), 'groupowner_title' => $item->getOwner()->getTitle(), 'object_link' => $item->getHref(), 'host' => $_SERVER['HTTP_HOST']));
+      } else {
+        Engine_Api::_()->getDbTable('notifications', 'activity')->addNotification($item->getOwner(), $item->getOwner(), $item, 'group_disapprovedbyadmin', array('group_title' => $item->getTitle(), 'groupowner_title' => $item->getOwner()->getTitle(), 'object_link' => $item->getHref(), 'host' => $_SERVER['HTTP_HOST']));
+      }
+    }
+    $this->_redirect('admin/group/manage');
   }
 }

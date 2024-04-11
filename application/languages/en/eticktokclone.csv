@@ -1,3 +1,4 @@
+"SNS - TikTok Clone";"TikTok Clone"
 "Add Friend";"Add Friend"
 "Cancel Friend Request";"Cancel Friend Request"
 "Accept Friend Request";"Accept Friend Request"
@@ -36,3 +37,18 @@
 "Search your Interests.";"Search your Interests."
 "Share your Ideas with others.";"Share your Ideas with others."
 "If you already have an account, please enter your details below. If you don't have one yet, please <a href=''%s''>sign up</a> first.";"If you already have an account, please enter your details below. If you don't have one yet, please <a href=''%s''>sign up</a> first."
+
+
+"ACTIVITY_TYPE_ETICKTOKCLONE_FOLLOW";"When someone follow you"
+
+# ETICKTOKCLONE_FOLLOW
+"_EMAIL_ETICKTOKCLONE_FOLLOW_TITLE";"TikTok Clone - Follow"
+"_EMAIL_ETICKTOKCLONE_FOLLOW_DESCRIPTION";"This is the email that gets sent to a member when another member starts following them."
+"_EMAIL_ETICKTOKCLONE_FOLLOW_SUBJECT";"[sender_title] has started following you."
+"_EMAIL_ETICKTOKCLONE_FOLLOW_BODY";"[header]
+
+[sender_title] has started following you. Please click the following link to view the member:
+
+http://[host][object_link]
+
+[footer]"

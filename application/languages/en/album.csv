@@ -134,7 +134,7 @@
 
 "Thumbnails Per Page";"Thumbnails Per Page"
 "How many albums will be shown per page?";"How many albums will be shown per page?"
-"View Albums";"View Albums"
+"Manage Albums";"Manage Albums"
 
 "Delete Photo Album?";"Delete Photo Album?"
 "ALBUM_VIEWS_SCRIPTS_ADMINMANAGE_DELETE_DESCRIPTION";"Are you sure that you want to delete this photo album? It will not be recoverable after being deleted."
@@ -189,7 +189,6 @@
 "This plugin gives your users their own personal photo albums. These albums can be configured to store photos, videos, or any other file types you choose to allow. Users can interact by commenting on each others photos and viewing their friends' recent updates.";"This plugin gives your users their own personal photo albums. These albums can be configured to store photos, videos, or any other file types you choose to allow. Users can interact by commenting on each others photos and viewing their friends' recent updates."
 "Get started by %1$screating%2$s your first album!";"Get started by %1$screating%2$s your first album!"
 
-"ALBUM_VIEW_SCRIPTS_ADMINSETTINGS_CATEGORIES_DESCRIPTION";"If you want to allow your users to categorize their photo albums, create the categories below. This feature is useful if you want to list all your users' photo albums that If you have no categories, your users will not be given the option of assigning a category."
 "Edit Category";"Edit Category"
 "Category Name";"Category Name"
 "Add Category";"Add Category"
@@ -246,7 +245,7 @@
 "Default Photo Album Order";"Default Photo Album Order"
 "Choose from the below dropdown the default order of photo album which is shown on the Photo View Page.";"Choose from the below dropdown the default order of photo album which is shown on the Photo View Page."
 "Edit Category";"Edit Category"
-"Here, you can edit the category title. If you do want to change the parent category then do not choose any category from the parent category dropdown.";"Here, you can edit the category title. If you do want to change the parent category then do not choose any category from the parent category dropdown."
+"Here, you can edit the category title. If you do not want to change the parent category then do not choose any category from the parent category dropdown.";"Here, you can edit the category title. If you do not want to change the parent category then do not choose any category from the parent category dropdown."
 
 
 "{item:$subject} has rated your album {item:$object}.";"{item:$subject} has rated your album {item:$object}."
@@ -281,3 +280,5 @@ Please click the following link to view it:
 http://[host][object_link]
 
 [footer]"
+
+"PAGETITLE-ALBUM-INDEX-ADMIN-MANAGE-PHOTOS";"Manage Photos"

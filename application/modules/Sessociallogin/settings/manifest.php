@@ -15,18 +15,19 @@ return array(
 	'package' => array(
 			'type' => 'module',
 			'name' => 'sessociallogin',
-			'version' => '6.4.0',
+			'version' => '6.5.1',
             'dependencies' => array(
                 array(
                     'type' => 'module',
                     'name' => 'core',
-                    'minVersion' => '6.2.0',
+                    'minVersion' => '6.5.1',
                 ),
             ),
 			'path' => 'application/modules/Sessociallogin',
 			'title' => 'SNS - Social Media Login - 1 Click Social Connect Plugin',
 			'description' => 'SNS - Social Media Login - 1 Click Social Connect Plugin',
 			'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+			'thumb' => 'application/modules/Sessociallogin/externals/images/thumb.png',
 			'actions' => array(
 					'install',
 					'upgrade',

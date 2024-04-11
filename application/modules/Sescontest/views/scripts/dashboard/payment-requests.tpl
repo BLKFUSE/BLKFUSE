@@ -5,7 +5,7 @@ if(!$this->is_ajax){
 <div class="sesbasic_dashboard_content sesbm sesbasic_clearfix">
 <?php } 
 ?>
-<?php $defaultCurrency = Engine_Api::_()->sescontestjoinfees()->defaultCurrency(); ?>
+<?php $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency(); ?>
 <div class="sesbasic_dashboard_content_header sesbasic_clearfix">	
   <h3><?php echo $this->translate("Make Payment Request"); ?></h3>
   <p>
@@ -13,7 +13,7 @@ if(!$this->is_ajax){
 Note : You will be able to "Make Payment Request" only if the "Total Remaining Amount" is greater than or equal to "Threshold Amount."'); ?>
   </p>
     <?php if($this->thresholdAmount > 0){ ?>
-    <div class="sescontest_db_dashboard_threshold_amt"><?php echo $this->translate("Threshold Amount:"); ?> <b><?php echo Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($this->thresholdAmount,$defaultCurrency); ?></b></div>
+    <div class="sescontest_db_dashboard_threshold_amt"><?php echo $this->translate("Threshold Amount:"); ?> <b><?php echo Engine_Api::_()->payment()->getCurrencyPrice($this->thresholdAmount,$defaultCurrency); ?></b></div>
     <?php } ?>
 </div>
 <?php if(!($this->userGateway)){ ?>
@@ -34,19 +34,19 @@ Note : You will be able to "Make Payment Request" only if the "Total Remaining A
 	<div class="sescontest_db_sale_stats">
   	<section>
       <span><?php echo $this->translate("Total Amount"); ?></span>
-      <span><?php echo Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($orderDetails['totalAmountSale'],$defaultCurrency); ?></span>
+      <span><?php echo Engine_Api::_()->payment()->getCurrencyPrice($orderDetails['totalAmountSale'],$defaultCurrency); ?></span>
   	</section>
   </div>
   <div class="sescontest_db_sale_stats">
 		<section>
       <span><?php echo $this->translate("Total Commission Amount"); ?></span>
-      <span><?php echo Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($orderDetails['commission_amount'],$defaultCurrency); ?></span>
+      <span><?php echo Engine_Api::_()->payment()->getCurrencyPrice($orderDetails['commission_amount'],$defaultCurrency); ?></span>
 		</section>
   </div>
   <div class="sescontest_db_sale_stats">
 		<section>
       <span><?php echo $this->translate("Total Remaining Amount"); ?></span>
-      <span><?php echo Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($this->remainingAmount,$defaultCurrency); ?></span>
+      <span><?php echo Engine_Api::_()->payment()->getCurrencyPrice($this->remainingAmount,$defaultCurrency); ?></span>
 		</section>
 	</div>
 </div>
@@ -76,9 +76,9 @@ Note : You will be able to "Make Payment Request" only if the "Total Remaining A
           foreach ($this->paymentRequests as $item): ?>
         <tr>
           <td class="centerT"><?php echo $item->userpayrequest_id; ?></td>
-          <td class="centerT"><?php echo Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($item->requested_amount,$defaultCurrency); ?></td>
+          <td class="centerT"><?php echo Engine_Api::_()->payment()->getCurrencyPrice($item->requested_amount,$defaultCurrency); ?></td>
           <td><?php echo Engine_Api::_()->sesbasic()->dateFormat($item->creation_date	); ?></td> 
-          <td class="centerT"><?php echo $item->state != 'pending' ? Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($item->release_amount	,$defaultCurrency) :  "-"; ?></td>
+          <td class="centerT"><?php echo $item->state != 'pending' ? Engine_Api::_()->payment()->getCurrencyPrice($item->release_amount	,$defaultCurrency) :  "-"; ?></td>
           <td><?php echo $item->release_date && (bool)strtotime($item->release_date) && $item->state != 'pending' ? Engine_Api::_()->sescontestjoinfees()->dateFormat($item->release_date) :  '-'; ?></td> 
           <td><?php echo ucfirst($item->state); ?></td>
           <td class="table_options">

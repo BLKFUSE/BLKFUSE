@@ -13,14 +13,14 @@
  
 ?>
 <?php include APPLICATION_PATH .  '/application/modules/Sesapi/views/scripts/dismiss_message.tpl';?>
-<h2>
+<h2 class="page_heading">
   <?php echo $this->translate("SocialEngine REST APIs Plugin") ?>
 </h2>
 <div class="sesapi_nav_btns">
   <a href="<?php echo $this->url(array('module' => 'sesapi', 'controller' => 'settings', 'action' => 'support'),'admin_default',true); ?>" target = "_blank" class="help-btn">Help</a>
 </div>
 <?php if(is_countable($this->navigation) && engine_count($this->navigation) ): ?>
-  <div class='sesapi-admin-navgation'>
+  <div class='tabs'>
     <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render() ?>
   </div>
 <?php endif; ?>

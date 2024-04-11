@@ -87,15 +87,15 @@ CREATE TABLE IF NOT EXISTS `se_eventmedia` (
 *  `eventmedia_eventalbum_id` int(10) unsigned NOT NULL default '0',
 *  `eventmedia_user_id` int(10) unsigned NOT NULL default '0',
 *  `eventmedia_date` int(10) unsigned NOT NULL default '0',
-*  `eventmedia_title` varchar(50) collate utf8_unicode_ci default NULL,
-*  `eventmedia_desc` text collate utf8_unicode_ci,
--  `eventmedia_ext` varchar(8) collate utf8_unicode_ci default NULL,
+*  `eventmedia_title` varchar(50) collate utf8mb4_unicode_ci default NULL,
+*  `eventmedia_desc` text COLLATE utf8mb4_unicode_ci,
+-  `eventmedia_ext` varchar(8) collate utf8mb4_unicode_ci default NULL,
 -  `eventmedia_filesize` int(10) unsigned NOT NULL default '0',
 *  `eventmedia_totalcomments` smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (`eventmedia_id`),
   KEY `INDEX` (`eventmedia_eventalbum_id`),
   KEY `USER` (`eventmedia_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -116,6 +116,6 @@ CREATE TABLE `engine4_event_photos` (
   KEY (`album_id`),
   KEY (`event_id`),
   KEY (`collection_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

@@ -9,5 +9,5 @@
  * @author     Steve
  */
 ALTER TABLE  `engine4_authorization_levels`
-  CHANGE  `flag`  `flag` ENUM(  'default',  'superadmin',  'public' ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL;
+  CHANGE  `flag`  `flag` ENUM(  'default',  'superadmin',  'public' ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;
 UPDATE  `engine4_authorization_levels` SET  `flag` =  'public' WHERE  `engine4_authorization_levels`.`level_id` = 5;

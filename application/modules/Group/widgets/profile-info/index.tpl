@@ -59,11 +59,12 @@
       <li><i class="far fa-user"></i><?php echo $this->translate(array('%s total member', '%s Total members', $this->group->member_count), $this->locale()->toNumber($this->group->member_count)) ?></li>
       <li><i class="far fa-clock"></i><span><?php echo $this->translate('Last updated %s', $this->timestamp($this->group->modified_date)) ?></span></li>
     </ul>
-    <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('group.enable.rating', 1)) { ?>
-      <?php echo $this->partial('_rating.tpl', 'core', array('rated' => $this->rated, 'param' => 'create', 'module' => 'group')); ?>
-    <?php } ?>
-    <br/>
   </li>
+  <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('group.enable.rating', 1)) { ?>
+    <li>
+      <?php echo $this->partial('_rating.tpl', 'core', array('rated' => $this->rated, 'param' => 'create', 'module' => 'group')); ?>
+    </li>
+  <?php } ?>
 </ul>
 
 <script type="text/javascript">

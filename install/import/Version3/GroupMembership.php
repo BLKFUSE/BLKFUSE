@@ -29,10 +29,10 @@ CREATE TABLE IF NOT EXISTS `se_groupmembers` (
 *  `groupmember_status` int(1) NOT NULL default '0',
 *  `groupmember_approved` int(1) NOT NULL default '0',
   `groupmember_rank` int(1) NOT NULL default '0',
-*  `groupmember_title` varchar(50) collate utf8_unicode_ci NOT NULL default '',
+*  `groupmember_title` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL default '',
   PRIMARY KEY  (`groupmember_id`),
   KEY `INDEX` (`groupmember_user_id`,`groupmember_group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -47,6 +47,6 @@ CREATE TABLE IF NOT EXISTS `engine4_group_membership` (
 *  `title` text NULL,
   PRIMARY KEY  (`resource_id`, `user_id`),
   KEY `REVERSE` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

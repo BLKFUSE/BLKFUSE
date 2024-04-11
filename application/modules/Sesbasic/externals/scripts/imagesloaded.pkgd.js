@@ -599,7 +599,7 @@ function factory( window, EventEmitter, eventie ) {
 
 
 
-var $ = window.jQuery;
+var $ = window.scriptJquery;
 var console = window.console;
 var hasConsole = typeof console !== 'undefined';
 
@@ -700,7 +700,13 @@ function makeArray( obj ) {
       if ( !nodeType || !( nodeType === 1 || nodeType === 9 || nodeType === 11 ) ) {
         continue;
       }
-      var childElems = elem.querySelectorAll('li > div > div > div > a  > img');
+      
+			var parentItem = scriptJquery(elem).children();
+			var type = false;
+			if(parentItem.length > 0) {
+				type = scriptJquery(elem).eq(0)[0].nodeName == 'UL';
+			}
+      var childElems = type ? elem.querySelectorAll('li > div > div > div > a  > img') : elem.querySelectorAll('div > div > div > div > a  > img');
       // concat childElems to filterFound array
       for ( var j=0, jLen = childElems.length; j < jLen; j++ ) {
         var img = childElems[j];

@@ -20,9 +20,9 @@
   function albumCover(value) {
     if (value == 1) {
       if (document.getElementById('sesmusic_albumcover_photo-wrapper'))
-        document.getElementById('sesmusic_albumcover_photo-wrapper').style.display = 'block';
+        document.getElementById('sesmusic_albumcover_photo-wrapper').style.display = 'flex';
             if(document.getElementById('album_cover-wrapper'))
-        document.getElementById('album_cover-wrapper').style.display = 'block';
+        document.getElementById('album_cover-wrapper').style.display = 'flex';
     } else {
       if (document.getElementById('sesmusic_albumcover_photo-wrapper'))
         document.getElementById('sesmusic_albumcover_photo-wrapper').style.display = 'none';
@@ -55,11 +55,11 @@
 <script>
   function rating_album(value) {
     if (value == 1) {
-      document.getElementById('sesmusic_ratealbum_own-wrapper').style.display = 'block';
-      document.getElementById('sesmusic_ratealbum_again-wrapper').style.display = 'block';
+      document.getElementById('sesmusic_ratealbum_own-wrapper').style.display = 'flex';
+      document.getElementById('sesmusic_ratealbum_again-wrapper').style.display = 'flex';
       document.getElementById('sesmusic_ratealbum_show-wrapper').style.display = 'none';
     } else {
-      document.getElementById('sesmusic_ratealbum_show-wrapper').style.display = 'block';
+      document.getElementById('sesmusic_ratealbum_show-wrapper').style.display = 'flex';
       document.getElementById('sesmusic_ratealbum_own-wrapper').style.display = 'none';
       document.getElementById('sesmusic_ratealbum_again-wrapper').style.display = 'none';
     }
@@ -68,7 +68,7 @@
   if (document.querySelector('[name="sesmusic_album_rating"]:checked').value == 0) {
     document.getElementById('sesmusic_ratealbum_own-wrapper').style.display = 'none';
     document.getElementById('sesmusic_ratealbum_again-wrapper').style.display = 'none';
-    document.getElementById('sesmusic_ratealbum_show-wrapper').style.display = 'block';
+    document.getElementById('sesmusic_ratealbum_show-wrapper').style.display = 'flex';
   } else {
     document.getElementById('sesmusic_ratealbum_show-wrapper').style.display = 'none';
   }

@@ -64,17 +64,17 @@
 
     if(value == 1) {
 
-      document.getElementById('sessociallogin_linkedin_quick_signup-wrapper').style.display = 'block';
+      document.getElementById('sessociallogin_linkedin_quick_signup-wrapper').style.display = 'flex';
 
       if(params == 'form') {
 
         if('<?php echo $linkedin_quick ?>' == 1) {
 
-          document.getElementById('sessociallogin_linkedin_profile_type-wrapper').style.display = 'block';
+          document.getElementById('sessociallogin_linkedin_profile_type-wrapper').style.display = 'flex';
 
-          document.getElementById('sessociallogin_linkedin_member_level-wrapper').style.display = 'block';
+          document.getElementById('sessociallogin_linkedin_member_level-wrapper').style.display = 'flex';
 
-          document.getElementById('sessociallogin_linkedin_redirect_user-wrapper').style.display = 'block';
+          document.getElementById('sessociallogin_linkedin_redirect_user-wrapper').style.display = 'flex';
 
         } else {
 
@@ -130,11 +130,11 @@
 
     if(value == 1) {
 
-      document.getElementById('sessociallogin_linkedin_profile_type-wrapper').style.display = 'block';
+      document.getElementById('sessociallogin_linkedin_profile_type-wrapper').style.display = 'flex';
 
-      document.getElementById('sessociallogin_linkedin_member_level-wrapper').style.display = 'block';
+      document.getElementById('sessociallogin_linkedin_member_level-wrapper').style.display = 'flex';
 
-      document.getElementById('sessociallogin_linkedin_redirect_user-wrapper').style.display = 'block';
+      document.getElementById('sessociallogin_linkedin_redirect_user-wrapper').style.display = 'flex';
 
     } else {
 

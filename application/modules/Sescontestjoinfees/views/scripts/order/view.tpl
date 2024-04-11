@@ -34,7 +34,7 @@
         </div>
         <div class="floatR">
           <?php $totalAmount = $this->order->total_amount; ?>
-          [<?php echo $this->translate('Total:'); ?><?php echo $totalAmount <= 0 ? $this->translate("FREE") : Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($totalAmount,$this->order->currency_symbol,$this->order->change_rate); ?>]
+          [<?php echo $this->translate('Total:'); ?><?php echo $totalAmount <= 0 ? $this->translate("FREE") : Engine_Api::_()->payment()->getCurrencyPrice($totalAmount,$this->order->currency_symbol,$this->order->change_rate); ?>]
         </div>
       </div>
       <div class="sescontest_invoice_content_wrap sesbm sesbasic_clearfix clear">
@@ -84,23 +84,23 @@
           <tr>
             <td><?php echo $this->contest->getTitle(); ?></td>
             <td class="rightT">
-                <?php echo $this->order->total_amount <= 0 ? $this->translate("FREE") : Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($this->order->total_amount,$this->order->currency_symbol,$this->order->change_rate); ?><br />
+                <?php echo $this->order->total_amount <= 0 ? $this->translate("FREE") : Engine_Api::_()->payment()->getCurrencyPrice($this->order->total_amount,$this->order->currency_symbol,$this->order->change_rate); ?><br />
             </td>
             <td class="rightT">
               <?php $price= $this->order->total_amount; ?>
-              <?php echo $price <= 0 ? $this->translate("FREE") : Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice(round($price,2),$this->order->currency_symbol,$this->order->change_rate); ?><br />
+              <?php echo $price <= 0 ? $this->translate("FREE") : Engine_Api::_()->payment()->getCurrencyPrice(round($price,2),$this->order->currency_symbol,$this->order->change_rate); ?><br />
             </td>
            </tr>
         </table>
         <div class="sescontest_invoice_total_price_box sesbm">
           <div>
             <span><?php echo $this->translate("Subtotal:"); ?></span>
-            <span><?php echo $this->order->total_amount <= 0 ? $this->translate("FREE") : Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($this->order->total_amount,$this->order->currency_symbol,$this->order->change_rate); ?></span>
+            <span><?php echo $this->order->total_amount <= 0 ? $this->translate("FREE") : Engine_Api::_()->payment()->getCurrencyPrice($this->order->total_amount,$this->order->currency_symbol,$this->order->change_rate); ?></span>
           </div>
          
           <div class="sescontest_invoice_total_price_box_total">
             <span><?php echo $this->translate("Grand Total :"); ?></span>
-            <span><?php echo $totalAmount <= 0  ? $this->translate("FREE") : Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($totalAmount,$this->order->currency_symbol,$this->order->change_rate); ?></span>
+            <span><?php echo $totalAmount <= 0  ? $this->translate("FREE") : Engine_Api::_()->payment()->getCurrencyPrice($totalAmount,$this->order->currency_symbol,$this->order->change_rate); ?></span>
           </div>
         </div>
       </div>

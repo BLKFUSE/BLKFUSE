@@ -76,10 +76,10 @@ CREATE TABLE IF NOT EXISTS `phpfox_im_text` (
 `whisper_id` bigint(20) NOT NULL,
   `recipient_id` int(11) NOT NULL,
   `sender_id` int(11) NOT NULL,
-  `body` text COLLATE utf8_unicode_ci NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
   `recipient_deleted` tinyint(1) NOT NULL DEFAULT '0',
   `sender_deleted` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
  */

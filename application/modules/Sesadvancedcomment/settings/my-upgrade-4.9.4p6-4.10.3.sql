@@ -12,4 +12,4 @@ CREATE TABLE `engine4_sesadvancedcomment_voteupdowns` (
   `user_type` VARCHAR(100) NOT NULL,
   `user_id` int(11) NOT NULL,
   `creation_date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;

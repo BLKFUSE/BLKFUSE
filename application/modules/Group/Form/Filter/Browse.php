@@ -35,19 +35,6 @@ class Group_Form_Filter_Browse extends Engine_Form
       'label' => 'Search Groups:',
     ));
     
-//     $this->addElement('Select', 'category_id', array(
-//       'label' => 'Category:',
-//       'multiOptions' => array(
-//         '' => 'All Categories',
-//       ),
-//       'decorators' => array(
-//         'ViewHelper',
-//         array('HtmlTag', array('tag' => 'dd')),
-//         array('Label', array('tag' => 'dt', 'placement' => 'PREPEND'))
-//       ),
-//       'onchange' => 'this.form.submit();',
-//     ));
-    
     $categories = Engine_Api::_()->getDbtable('categories', 'group')->getCategoriesAssoc();
     if (engine_count($categories) > 0) {
       $categories = array('0' => 'All Categories') + $categories;
@@ -87,12 +74,18 @@ class Group_Form_Filter_Browse extends Engine_Form
       'onchange' => 'this.form.submit();',
     ));
 
-    $orderby = array(
-      'creation_date DESC' => 'Recently Created',
-      'member_count DESC' => 'Most Popular',
-    );
+		$orderby = array(
+			'creation_date' => 'Most Recent',
+			'modified_date' => 'Recently Updated',
+			'view_count' => 'Most Viewed',
+			'like_count' => 'Most Liked',
+			'comment_count' => 'Most Commented',
+			'member_count' => 'Most Popular',
+			'atoz' => 'A to Z',
+			'ztoa' => 'Z to A',
+		);
     if(Engine_Api::_()->getApi('settings', 'core')->getSetting('group.enable.rating', 1)) {
-      $orderby['rating DESC'] = 'Highest Rated';
+      $orderby['rating'] = 'Highest Rated';
     }
     $this->addElement('Select', 'order', array(
       'label' => 'List By:',
@@ -102,7 +95,7 @@ class Group_Form_Filter_Browse extends Engine_Form
         array('HtmlTag', array('tag' => 'dd')),
         array('Label', array('tag' => 'dt', 'placement' => 'PREPEND'))
       ),
-      'value' => 'creation_date DESC',
+      'value' => 'creation_date',
       'onchange' => 'this.form.submit();',
     ));
 

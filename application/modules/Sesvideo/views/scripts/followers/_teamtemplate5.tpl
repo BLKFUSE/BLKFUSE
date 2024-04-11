@@ -14,9 +14,11 @@
 ?>
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sesteam/externals/styles/styles.css'); ?>
 <?php $viewer = Engine_Api::_()->user()->getViewer();?>
-
+<?php if(!$this->is_ajax){ ?>  
 <div class="sesteam_temp5_wrap">
-  <div class="sesteam_temp5_list sesbasic_clearfix<?php if ($this->center_block): ?> iscenter<?php endif; ?>">
+  <div class="sesteam_temp5_list sesbasic_clearfix<?php if ($this->center_block): ?> iscenter<?php endif; ?>"
+    id="browsemembers_ul<?php echo $randonNumber; ?>">
+<?php } ?>      
     <?php foreach( $this->users as $user ): ?>
       <?php $user = Engine_Api::_()->getItem('user', $user->owner_id); ?>
       <div class="team_box">
@@ -36,7 +38,6 @@
                 <?php echo $memberType; ?>
               </p>
             <?php endif; ?>
-            
             <?php if($this->age): $age = 0; ?>  
             <?php $getFieldsObjectsByAlias = Engine_Api::_()->fields()->getFieldsObjectsByAlias($user); 
             if (!empty($getFieldsObjectsByAlias['birthdate'])) {
@@ -93,5 +94,7 @@
         </div>
       </div>
     <?php endforeach; ?>
+<?php if(!$this->is_ajax){ ?>      
   </div>
 </div>
+<?php } ?> 

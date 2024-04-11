@@ -30,7 +30,7 @@
 ?>
 <?php if(!$viewmore){ ?>
 <li id="comment-<?php echo $comment->comment_id ?>" class="sesadvancedcomment_cnt_li">
-  <template class="owner-info"><?php echo $this->getUserInfo($comment->getOwner()); ?></template>
+  <template class="owner-info"><?php echo $this->getUserInfo($this->item($comment->poster_type, $comment->poster_id)); ?></template>
   <div class="comments_author_photo">
     <?php echo $this->htmlLink($this->item($comment->poster_type, $comment->poster_id)->getHref(),
       $this->itemPhoto($this->item($comment->poster_type, $comment->poster_id), 'thumb.icon', $actionBody->getSubject()->getTitle())
@@ -118,7 +118,7 @@
             <?php echo $this->htmlLink('javascript:void(0);', $this->translate('View more replies'), array(
               'onclick' => 'sesadvancedcommentactivitycommentreply("'.$actionBody->getIdentity().'","'.$comment->getIdentity().'", "'.($commentReply->getCurrentPageNumber() - 1).'",this,"'.$module.'")'
             )) ?>
-          </div>
+          </div> 
         </li>
       <?php endif; ?>
         <?php foreach($commentReply as $commentreply){ ?>
@@ -134,7 +134,7 @@
      </ul>
      <?php if(Engine_Api::_()->user()->getViewer()->getIdentity() != 0){ ?>
      <div class="comment_reply_form" style="display:none;">
-      <template class="owner-info"><?php echo $this->getUserInfo($comment->getOwner()); ?></template>
+      <template class="owner-info"><?php echo $this->getUserInfo($this->item($comment->poster_type, $comment->poster_id)); ?></template>
       <form class="sesadvancedactivity-comment-form-reply advcomment_form" method="post" style="display:none;">
         <div class="comment_usr_img comments_author_photo">        
         <?php echo $this->itemPhoto($isPageSubject, 'thumb.icon', $isPageSubject->getTitle()); ?>

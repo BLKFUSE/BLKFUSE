@@ -41,8 +41,8 @@ CREATE TABLE IF NOT EXISTS `se_classifiedalbums` (
 *  `classifiedalbum_classified_id` int(10) unsigned NOT NULL default '0',
 *  `classifiedalbum_datecreated` int(11) NOT NULL default '0',
 *  `classifiedalbum_dateupdated` int(11) NOT NULL default '0',
-*  `classifiedalbum_title` varchar(64) collate utf8_unicode_ci default NULL,
-*  `classifiedalbum_desc` text collate utf8_unicode_ci,
+*  `classifiedalbum_title` varchar(64) collate utf8mb4_unicode_ci default NULL,
+*  `classifiedalbum_desc` text COLLATE utf8mb4_unicode_ci,
 *  `classifiedalbum_search` tinyint(3) unsigned NOT NULL default '0',
 ?  `classifiedalbum_privacy` tinyint(3) unsigned NOT NULL default '0',
 ?  `classifiedalbum_comments` tinyint(3) unsigned NOT NULL default '0',
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `se_classifiedalbums` (
 -  `classifiedalbum_totalspace` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`classifiedalbum_id`),
   KEY `INDEX` (`classifiedalbum_classified_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -71,6 +71,6 @@ CREATE TABLE `engine4_classified_albums` (
 *  `collectible_count` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY (`album_id`),
   KEY `classified_id` (`classified_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

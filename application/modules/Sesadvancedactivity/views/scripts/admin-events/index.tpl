@@ -21,14 +21,13 @@
   #date{display:block !important;}
 </style>
 <h3><?php echo "Custom Feed Notification Settings"; ?></h3>
-<p><?php echo "Here, you can create custom notifications which will display in feed on your website. You can create new custom notification by clicking on “Create New Custom Notification” link below. These notifications will display in the feed on Member Home Page only."; ?></p><br />
+<p><?php echo "Here, you can create custom notifications which will display in feed on your website. You can create new custom notification by clicking on “Create New Custom Notification” link below. These notifications will display in the feed on Member Home Page only."; ?></p>
 <div class="sesbasic_search_reasult">
 	<?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesadvancedactivity', 'controller' => 'events', 'action' => 'create'), $this->translate("Create New Custom Notification"), array('class'=>'sesbasic_icon_add buttonlink smoothbox')) ?>
 </div>
 <div class='admin_search sesbasic_search_form'>
   <?php echo $this->formFilter->render($this) ?>
 </div>
-<br />
 <script type="text/javascript">
 function multiDelete()
 {
@@ -127,9 +126,7 @@ function multiDelete()
           </div>
         <?php endif;?>
       </div>
-  <br />
   </form>
-  <br />
   <div>
   </div>
   <script type="text/javascript">

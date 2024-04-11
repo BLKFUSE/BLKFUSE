@@ -34,10 +34,10 @@
   function rating_artist(value) {
     if (value == 1) {
       //document.getElementById('sesmusic_rateartist_own-wrapper').style.display = 'block';
-      document.getElementById('sesmusic_rateartist_again-wrapper').style.display = 'block';
+      document.getElementById('sesmusic_rateartist_again-wrapper').style.display = 'flex';
       document.getElementById('sesmusic_rateartist_show-wrapper').style.display = 'none';
     } else {
-      document.getElementById('sesmusic_rateartist_show-wrapper').style.display = 'block';
+      document.getElementById('sesmusic_rateartist_show-wrapper').style.display = 'flex';
       //document.getElementById('sesmusic_rateartist_own-wrapper').style.display = 'none';
       document.getElementById('sesmusic_rateartist_again-wrapper').style.display = 'none';
     }
@@ -46,7 +46,7 @@
   if (document.querySelector('[name="sesmusic_artist_rating"]:checked').value == 0) {
     //document.getElementById('sesmusic_rateartist_own-wrapper').style.display = 'none';
     document.getElementById('sesmusic_rateartist_again-wrapper').style.display = 'none';
-    document.getElementById('sesmusic_rateartist_show-wrapper').style.display = 'block';
+    document.getElementById('sesmusic_rateartist_show-wrapper').style.display = 'flex';
   } else {
     document.getElementById('sesmusic_rateartist_show-wrapper').style.display = 'none';
   }

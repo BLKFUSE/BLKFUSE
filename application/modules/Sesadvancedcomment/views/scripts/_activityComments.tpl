@@ -216,7 +216,7 @@
               $emoji = Engine_Api::_()->getApi('emoji','sesbasic')->getEmojisArray();
               $content = str_replace(array_keys($emoji),array_values($emoji),$action->body);
             ?>
-            <?php if(strlen(preg_replace("/(\\\u[0-9a-f]{4})+?|\s+/","",strip_tags($content))) && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.translate', 0)){
+            <?php if($action->type != "friends" && strlen(preg_replace("/(\\\u[0-9a-f]{4})+?|\s+/","",strip_tags($content))) && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.translate', 0)){
               $languageTranslate = Engine_Api::_()->getApi('settings', 'core')->getSetting('sesadvancedactivity.language', 'en');
              ?>
               <li class="feed_item_option_translate">

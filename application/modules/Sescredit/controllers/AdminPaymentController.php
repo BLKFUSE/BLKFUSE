@@ -66,7 +66,7 @@ class Sescredit_AdminPaymentController extends Core_Controller_Action_Admin {
       $this->view->disable_gateway = false;	
  
       $this->view->form = $form = new Sescredit_Form_Admin_Payment_Approve(array('userId' => $user->getIdentity()));
-      $defaultCurrency = Engine_Api::_()->sesbasic()->defaultCurrency();
+      $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
       
       //set value to form
       if($this->_getParam('id',false)){
@@ -74,7 +74,7 @@ class Sescredit_AdminPaymentController extends Core_Controller_Action_Admin {
         if($item) {
           $itemValue = $item->toArray();
           $value = $itemValue;
-          $value['requested_amount'] = Engine_Api::_()->sesbasic()->getCurrencyPrice($itemValue['requested_amount'],$defaultCurrency);
+          $value['requested_amount'] = Engine_Api::_()->payment()->getCurrencyPrice($itemValue['requested_amount'],$defaultCurrency);
           $value['release_amount'] = $itemValue['requested_amount'];
         } else {
           return $this->_forward('requireauth', 'error', 'core');	

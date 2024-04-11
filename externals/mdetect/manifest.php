@@ -2,12 +2,12 @@
   'package' => array(
     'type' => 'external',
     'name' => 'mdetect',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 7593 $',
     'path' => 'externals/mdetect',
     'repository' => 'socialengine.com',
     'title' => 'mDetect',
-    'author' => 'Webligo Developments',
+    'author' => 'SocialEngine Core',
     'directories' => array(
       'externals/mdetect',
     )

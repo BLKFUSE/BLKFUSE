@@ -26,7 +26,7 @@
 ?>
 <?php if(empty($this->likeOptions)){ ?>
 <li id="comment-<?php echo $commentreply->comment_id; ?>">
-  <template class="owner-info"><?php echo $this->getUserInfo($commentreply->getOwner()); ?></template>
+  <template class="owner-info"><?php echo $this->getUserInfo($this->item($commentreply->poster_type, $commentreply->poster_id)); ?></template>
   <div class="comments_author_photo">
   <?php echo $this->htmlLink($this->item($commentreply->poster_type, $commentreply->poster_id)->getHref(),
     $this->itemPhoto($this->item($commentreply->poster_type, $commentreply->poster_id), 'thumb.icon', $action->getSubject()->getTitle())
@@ -112,7 +112,7 @@
    <ul class="comments_reply_date comments_date" id="comments_reply_<?php echo $commentreply->comment_id; ?>_<?php echo $action->getIdentity(); ?>" style="display:block;">
 
     <?php if( $canComment ): ?>
-          <template class="owner-info"><?php echo $this->getUserInfo($commentreply->getOwner()); ?></template>
+          <template class="owner-info"><?php echo $this->getUserInfo($this->item($commentreply->poster_type, $commentreply->poster_id)); ?></template>
     <?php $isLiked = $commentreply->likes()->isLike($isPageSubject); ?>
     <?php if( $this->viewer()->getIdentity() && $this->canComment ):
       if($likeRow =  $commentreply->likes()->getLike($isPageSubject)){

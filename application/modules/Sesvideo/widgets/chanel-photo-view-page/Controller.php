@@ -54,7 +54,7 @@ class Sesvideo_Widget_chanelPhotoViewPageController extends Engine_Content_Widge
       // Get like paginator
       $this->view->photo_id = $paramData['id'] = $photo->getIdentity();
       $paramData['type'] = 'chanelphoto';
-      $this->view->paginator_like = $paginator_like = Engine_Api::_()->sesalbum()->likeItemCore($paramData);
+      $this->view->paginator_like = $paginator_like = Engine_Api::_()->sesvideo()->likeItemCore($paramData);
       $this->view->data_show_like = $view_more_like;
       // Set item count per page and current page number
       $paginator_like->setItemCountPerPage($view_more_like);

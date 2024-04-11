@@ -30,12 +30,12 @@ class Tickvideo_Form_Admin_Createmusic extends Authorization_Form_Admin_Level_Ab
             'allowEmpty' => false,
             'required' => true,
         ));
-        $this->addElement('Textarea', 'description', array(
-            'label' => 'Music Descritpion',
-            'description' => 'Enter the description for this music.',
-            'allowEmpty' => true,
-            'required' => false,
-        ));
+//         $this->addElement('Textarea', 'description', array(
+//             'label' => 'Music Descritpion',
+//             'description' => 'Enter the description for this music.',
+//             'allowEmpty' => true,
+//             'required' => false,
+//         ));
 
         $this->addElement('File', 'image', array(
             'label' => 'Image for Music',

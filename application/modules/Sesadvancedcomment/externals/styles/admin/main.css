@@ -20,7 +20,7 @@
 	overflow:hidden;
 }
 .sescmt_stickers_list_item{
-	background-color:#f8f8f8;
+	background-color:var(--theme-box-background-alt-color);
 	border-radius:5px;
 	float:left;
 	margin:0 5px 10px;
@@ -28,6 +28,7 @@
 	width:180px;
 	box-sizing:border-box;
 	position:relative;
+	transition:0.5s;
 }
 .sescmt_stickers_list_item_select{
 	position:absolute;
@@ -35,7 +36,7 @@
 	top: 5px;
 }
 .sescmt_stickers_list_item:hover{
-	background-color:#f3f1f1;
+	background-color:var(--theme-box-background-alt-color);
 }
 .sescmt_stickers_list_item_img{
 	height:100px;

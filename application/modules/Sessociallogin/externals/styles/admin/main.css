@@ -20,7 +20,7 @@
   font-weight:bold;
 }
 .sessociallogin_stats_table > div.sessociallogin_stats_total{
-  background-color:#fdfdfd;
+  background-color:var(--theme-box-background-alt-color);
   padding:10px;
   border-width:0 0 1px 0;
   font-size:15px;

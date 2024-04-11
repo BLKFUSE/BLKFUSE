@@ -31,7 +31,7 @@
 # payment.admin-gateway
 "Manage Payment Gateways";"Manage Payment Gateways"
 "PAYMENT_VIEWS_ADMIN_GATEWAYS_INDEX_DESCRIPTION";"Browse and manage payment
-gateways."
+gateways. <br /> Note: After turning on a gateway here, make sure to also turn it on in the Manage Currency settings. Go to your currency preferences, where you can edit and activate the right gateways."
 "%s gateway found";"%s gateway found";"%s gateways found"
 "PayPal";"PayPal"
 "Payment Gateway: PayPal";"Payment Gateway: PayPal"
@@ -109,7 +109,7 @@ order ID. PayPal or other gateway transactions may not show right away and could
 "Yes, members may select this plan.";"Yes, members may select this plan."
 "No, members may not select this plan.";"No, members may not select this plan."
 "Yes, show this plan on signup.";"Yes, show this plan on signup."
-"No, only show this plan after signup.";"No, only show this plan after signup."
+"No, do not show this plan on signup.";"No, do not show this plan on signup."
 "Day";"Day"
 "Week";"Week"
 "Month";"Month"
@@ -430,3 +430,317 @@ New [gateway_type] payment has been received for the subscription of membership 
 "{item:$subject} has subscribe with payment method {var:$payment_method} on this {var:$adminsidelink}.";"{item:$subject} has subscribe with payment method {var:$payment_method} on this {var:$adminsidelink}."
 
 "ACTIVITY_TYPE_PAYMENT_MANUAL_SUBSCRIBE";"When people subscribes with a manual payment method (cash, check, free, bank)."
+
+"%1$s: Choose Subscription";"%1$s: Choose Subscription"
+"Choose Subscription Plan";"Choose Subscription Plan"
+"Do you want your users to be able to choose a subscription plan upon signup?";"Do you want your users to be able to choose a subscription plan upon signup?"
+"Yes, give users the option to choose upon signup.";"Yes, give users the option to choose upon signup."
+"No, do not allow users to choose upon signup.";"No, do not allow users to choose upon signup."
+
+"Transaction History";"Transaction History"
+"Below you can view the transaction history of your orders towards membership payments. Entering criteria into the filter fields will help you find specific order.";"Below you can view the transaction history of your orders towards membership payments. Entering criteria into the filter fields will help you find specific order."
+"Order Date";"Order Date"
+"Status";"Status"
+"Plan Name";"Plan Name"
+
+
+# payment_verification_active
+"_EMAIL_PAYMENT_VERIFICATION_ACTIVE_TITLE";"User Verification Activated"
+"_EMAIL_PAYMENT_VERIFICATION_ACTIVE_DESCRIPTION";"This is the email that gets sent to a member when their user profile verification is activated."
+"_EMAIL_PAYMENT_VERIFICATION_ACTIVE_SUBJECT";"Congatulations, your profile verification is activated."
+"_EMAIL_PAYMENT_VERIFICATION_ACTIVE_BODY";"[header]
+
+Your user profile verification is activated. You are now a verified member of this site.
+
+[subscription_terms]
+
+Please click the following link to view it:
+
+[object_link]
+
+[footer]"
+
+# payment_verification_pending
+"_EMAIL_PAYMENT_VERIFICATION_PENDING_TITLE";"User Verification Pending"
+"_EMAIL_PAYMENT_VERIFICATION_PENDING_DESCRIPTION";"This is the email that gets sent to a member when their user profile verification is pending."
+"_EMAIL_PAYMENT_VERIFICATION_PENDING_SUBJECT";"Your profile verification is pending."
+"_EMAIL_PAYMENT_VERIFICATION_PENDING_BODY";"[header]
+
+Your profile verification is pending until the transaction is completed. We'll notify you by email once it's activated.
+
+Thank you for your patience.
+
+[subscription_terms]
+
+[footer]"
+
+
+# payment_verification_overdue
+"_EMAIL_PAYMENT_VERIFICATION_OVERDUE_TITLE";"User Verification Payment Overdue"
+"_EMAIL_PAYMENT_VERIFICATION_OVERDUE_DESCRIPTION";"This is the email that gets sent to a member when their user profile verification payment is overdue."
+"_EMAIL_PAYMENT_VERIFICATION_OVERDUE_SUBJECT";"Your profile verification payment is overdue."
+"_EMAIL_PAYMENT_VERIFICATION_OVERDUE_BODY";"[header]
+
+Your profile verification payment is overdue due to a failed or missed payment.
+
+[subscription_terms]
+
+Please follow the link below to renew your verification.
+
+[object_link]
+
+[footer]"
+
+
+# payment_verification_refunded
+"_EMAIL_PAYMENT_VERIFICATION_REFUNDED_TITLE";"User Verification Payment Refunded"
+"_EMAIL_PAYMENT_VERIFICATION_REFUNDED_DESCRIPTION";"This is the email that gets sent to a member when their user profile verification payment is refunded."
+"_EMAIL_PAYMENT_VERIFICATION_REFUNDED_SUBJECT";"Your profile verification payment has been refunded."
+"_EMAIL_PAYMENT_VERIFICATION_REFUNDED_BODY";"[header]
+
+Your profile verification payment has been refunded, and your verification status is no longer active.
+
+[subscription_terms]
+
+You may follow the link below to sign in.
+
+[object_link]
+
+[footer]"
+
+# payment_verification_recurrence
+"_EMAIL_PAYMENT_VERIFICATION_RECURRENCE_TITLE";"User Verification Recurring Payment Billed from Members"
+"_EMAIL_PAYMENT_VERIFICATION_RECURRENCE_DESCRIPTION";"This email is sent to members when they are billed for recurring user verification payments."
+"_EMAIL_PAYMENT_VERIFICATION_RECURRENCE_SUBJECT";"Recurring Payment Billed for Profile Verification"
+"_EMAIL_PAYMENT_VERIFICATION_RECURRENCE_BODY";"[header]
+
+Payment for your profile verification has been billed. You should receive an email from the payment gateway regarding this charge.
+
+[subscription_terms]
+
+You may follow the link below:
+
+[object_link]
+
+[footer]"
+
+
+# payment_manual_verification
+"_EMAIL_PAYMENT_MANUAL_VERIFICATION_TITLE";"User Verification Payment Received"
+"_EMAIL_PAYMENT_MANUAL_VERIFICATION_DESCRIPTION";"This email is sent to the admin when there is a new payment for user verification and that might be pending or requiring admin action."
+"_EMAIL_PAYMENT_MANUAL_VERIFICATION_SUBJECT";"New [payment_method] Payment Received"
+"_EMAIL_PAYMENT_MANUAL_VERIFICATION_BODY";"[header]
+
+New [payment_method] payment has been received for the user verification on your website. 
+
+[sender_name] has made the payment. Please click the following link to take the appropriate action if needed:
+
+[admin_link]
+
+[footer]"
+
+
+# payment_verification_cancelled
+"_EMAIL_PAYMENT_VERIFICATION_CANCELLED_TITLE";"User Verification Payment Rejected"
+"_EMAIL_PAYMENT_VERIFICATION_CANCELLED_DESCRIPTION";"This is the email that gets sent to a member when their user verification payment is rejected."
+"_EMAIL_PAYMENT_VERIFICATION_CANCELLED_SUBJECT";"Your user verification payment has been rejected."
+"_EMAIL_PAYMENT_VERIFICATION_CANCELLED_BODY";"[header]
+
+Your user verification payment has been rejected.
+
+You may follow the link below:
+
+[object_link]
+
+[footer]"
+
+
+"Your verification request has been rejected by {item:$subject}.";"Your verification request has been rejected by {item:$subject}."
+"Your verification request has been approved by {item:$subject}. You are verified member.";"Your verification request has been approved by {item:$subject}. You are verified member."
+"{item:$subject} has send verification request and is waiting for approval.";"{item:$subject} has send verification request and is waiting for approval."
+"{item:$subject} has verification with payment method {var:$payment_method} on this {var:$adminsidelink}.";"{item:$subject} has verification with payment method {var:$payment_method} on this {var:$adminsidelink}."
+
+"ACTIVITY_TYPE_PAYMENT_MANUAL_VERIFICATION";"When members make payment for user verification."
+
+"ACTIVITY_TYPE_USER_VERIFIED";"When my profile is verified."
+"ACTIVITY_TYPE_USER_VERIREQUESTTO_SUPERADMIN";"When member has send user Verification request and is waiting for approval."
+"ACTIVITY_TYPE_USER_VERIREQUEST_APPROVED";"When user verification request has been approved."
+"ACTIVITY_TYPE_USER_VERIREQUEST_REJECT";"When user verification request has been rejected"
+
+"Membership Subscription";"Membership Subscription"
+"Verification Subscription";"Verification Subscription"
+"Manage Verifications";"Manage Verifications"
+"Verification Settings";"Verification Settings"
+"Manage Verification Requests";"Manage Verification Requests"
+"This page offers User Verification Settings, allowing you to customize user verification on your website. Additionally, you can choose a verified icon image to display alongside the names of verified users on your site.<br /><br />These settings are applied individually to different member levels. Start by selecting the member level you wish to modify, and then adjust the settings for that level below.<br /><br />Note: You can also manually adjust the verification status of specific users by editing them in the '<a href=""%1$s"" target=""_blank"">Manage Member</a>' section.<br /><br />You can approve or reject payments made via Bank, Cash or Cheque from <a href=""%2$s"" target=""_blank"">Trasactions</a> section.";"This page offers User Verification Settings, allowing you to customize user verification on your website. Additionally, you can choose a verified icon image to display alongside the names of verified users on your site.<br /><br />These settings are applied individually to different member levels. Start by selecting the member level you wish to modify, and then adjust the settings for that level below.<br /><br />Note: You can also manually adjust the verification status of specific users by editing them in the '<a href=""%1$s"" target=""_blank"">Manage Member</a>' section.<br /><br />You can approve or reject payments made via Bank, Cash or Cheque from <a href=""%2$s"" target=""_blank"">Transactions</a> section."
+"Choose the image to be shown alongside verified users on your site. This image will show in both user panel and admin panel of your site. [Note: You can add a new image from the ""<a href=""%1$s"" target=""_blank"">File & Media Manager</a>"" section. If you leave the field blank then nothing will show.]";"Choose the image to be shown alongside verified users on your site. This image will show in both user panel and admin panel of your site. [Note: You can add a new image from the ""<a href=""%1$s"" target=""_blank"">File & Media Manager</a>"" section. If you leave the field blank then nothing will show.]"
+"Tip text on Badge Icon";"Tip text on Badge Icon"
+"Enter the text which you want to show when users mouseover on verification badge for this member level.";"Enter the text which you want to show when users mouseover on verification badge for this member level."
+"Choose Verified Icon";"Choose Verified Icon"
+"There are currently no images in the <a href=""%1$s"" target=""_blank""> File & Media Manager </a> section of your site. Please begin by uploading an image to get started.";"There are currently no images in the <a href=""%1$s"" target=""_blank""> File & Media Manager </a> section of your site. Please begin by uploading an image to get started."
+"Allow User Verification";"Allow User Verification"
+"Do you want to enable user verification for members of this level? Below you can choose how members can be verified.";"Do you want to enable user verification for members of this level? Below you can choose how members can be verified."
+"Yes, auto verify users.";"Yes, auto verify users."
+"Yes, allow users to request verification. If you choose this, then users will be able to request for verification from their Settings page.";"Yes, allow users to request verification. If you choose this, then users will be able to request for verification from their Settings page."
+"Yes, verify users on Payment basis. If you choose this, then you can configure payment settings below. Users will be able to manage verification on their Settings page.";"Yes, verify users on Payment basis. If you choose this, then you can configure payment settings below. Users will be able to manage verification on their Settings page."
+"No, do not allow user verification.";"No, do not allow user verification."
+"There are currently no enabled payment gateways. You must %1$sadd one%2$s before this page is available.";"There are currently no enabled payment gateways. You must %1$sadd one%2$s before this page is available."
+"Enter Price for Verified Member";"Enter Price for Verified Member"
+"Enter the price for verified member that you want to charge.";"Enter the price for verified member that you want to charge."
+"How often should members in this be billed?";"How often should members in this be billed?"
+"Verify Existing Users";"Verify Existing Users"
+"Do you want to verify existing users of this member level?";"Do you want to verify existing users of this member level?"
+"Currently, there are no verification requests.";"Currently, there are no verification requests."
+"Existing users have been successfully verified.";"Existing users have been successfully verified."
+"Verifications Requests are not required for administrators and moderators.";"Verifications Requests are not required for administrators and moderators."
+"Congratulations, you are a verified member of this site.";"Congratulations, you are a verified member of this site."
+"At present, your membership on this site is not verified. To initiate the verification process for your profile, please click the 'Request Verification' button below.";"At present, your membership on this site is not verified. To initiate the verification process for your profile, please click the 'Request Verification' button below."
+"Request Verification";"Request Verification"
+"Your verification request is being processed. To cancel the request, click 'Cancel Request' below.";"Your verification request is being processed. To cancel the request, click 'Cancel Request' below."
+"Cancel Request";"Cancel Request"
+
+"Thank you for your payment. We'll review it promptly. You'll receive a notification once your payment is approved, and your user profile is verified.";"Thank you for your payment. We'll review it promptly. You'll receive a notification once your payment is approved, and your user profile is verified."
+"Visit Verification Settings";"Visit Verification Settings"
+"Your user profile verification is currently suspended.";"Your user profile verification is currently suspended."
+"{item:$subject} has made {var:$payment_method} payment for user verification. You can take appropriate action in {var:$adminsidelink}.";"{item:$subject} has made {var:$payment_method} payment for user verification. You can take appropriate action in {var:$adminsidelink}."
+
+
+"PAYMENT_FORM_ADMIN_GATEWAY_STRIPE_DESCRIPTION";"Steps to generate Stripe API Keys:<br />
+1) If you haven't already created any account, you will need to establish a <a target=""_blank"" href=""%1$s"">Stripe account</a>.<br />
+2) If you have created earlier, then log in to your Stripe dashboard.<br />
+3) Click your account name in the top left.<br />
+4) Click API in the left menu.<br />
+5) Your secret and publishable keys should be on this page.<br />
+Note: You may be promoted to enter your password to receive the secret key.<br />
+6) Enable <a target=""_blank"" href=""%2$s"">Instant Payment Notifications</a> via: <em>Developers &gt; Webhooks &gt;</em>.  The <em>IPN messages</em> should be <strong>enabled</strong>, and the <em>Notification URL</em> should be set to:<br /><strong>%3$s</strong>"
+
+"PAGETITLE-PAYMENT-SETTINGS-ADMIN-PACKAGE";"Membership Global Settings"
+"PAGETITLE-PAYMENT-CREATE-ADMIN-PACKAGE";"Create Subscription Plan"
+"PAGETITLE-PAYMENT-CURRENCY-ADMIN-SETTINGS";"Manage Currency"
+"PAGETITLE-PAYMENT-DETAIL-ADMIN-SUBSCRIPTION";"Subscription Details"
+"PAGETITLE-PAYMENT-FEATURES-ADMIN-PACKAGE";"Manage Features"
+"PAGETITLE-PAYMENT-CHANGE-STYLES-ADMIN-PACKAGE";"Change Style of This Plan"
+"pagetitle-payment-finish-subscription";"Payment Complete"
+"pagetitle-payment-confirm-settings";"Confirm Subscription"
+
+"Publishable key";"Publishable key"
+"Secret key";"Secret key"
+"Webhook Signing Secret";"Webhook Signing Secret"
+"Icon";"Icon"
+"Choose an icon to show with this gateway. This icon will show in both user panel and admin panel of your site. [Note: You can add a new icon from the ""<a href=""%1$s"" target=""_blank"">File & Media Manager</a>"" section. If you leave the field blank then nothing will show.]";"Choose an icon to show with this gateway. This icon will show in both user panel and admin panel of your site. [Note: You can add a new icon from the ""<a href=""%1$s"" target=""_blank"">File & Media Manager</a>"" section. If you leave the field blank then nothing will show.]"
+"There are currently no icons in the <a href=""%1$s"" target=""_blank""> File & Media Manager </a> section of your site. Please begin by uploading an icon to get started.";"There are currently no icons in the <a href=""%1$s"" target=""_blank""> File & Media Manager </a> section of your site. Please begin by uploading an icon to get started."
+"Enable Test Mode?";"Enable Test Mode?"
+"Enable?";"Enable?"
+"Choose an image to show with this plan. This image will show with this plan at the user panel of your site. [Note: You can add a new image from the ""<a href=""%1$s"" target=""_blank"">File & Media Manager</a>"" section. If you leave the field blank then nothing will show.]";"Choose an image to show with this plan. This image will show with this plan at the user panel of your site. [Note: You can add a new image from the ""<a href=""%1$s"" target=""_blank"">File & Media Manager</a>"" section. If you leave the field blank then nothing will show.]"
+"Choose an icon to show with this currency. This icon will show in both user panel and admin panel of your site. [Note: You can add a new icon from the ""<a href=""%1$s"" target=""_blank"">File & Media Manager</a>"" section. If you leave the field blank then nothing will show.]";"Choose an icon to show with this currency. This icon will show in both user panel and admin panel of your site. [Note: You can add a new icon from the ""<a href=""%1$s"" target=""_blank"">File & Media Manager</a>"" section. If you leave the field blank then nothing will show.]"
+
+
+"Enter Currency Converter API Key";"Enter Currency Converter API Key"
+"Automatically Update Currency Exchange Rates";"Automatically Update Currency Exchange Rates"
+"Enter the currency converter API key. %s to create a free license key.";"Enter the currency converter API key. %s to create a free license key."
+
+"Edit Currency";"Edit Currency"
+"Add New Currency";"Add New Currency"
+"Currency Code";"Currency Code"
+"Change Rate";"Change Rate"
+"Currency Symbol";"Currency Symbol"
+"Thousand Seprator";"Thousand Seprator"
+"Comma (,)";"Comma (,)"
+"Decimal (.)";"Decimal (.)"
+"Symbol Placement";"Symbol Placement"
+"Note: This setting doesn''t work with RTL languages.";"Note: This setting doesn''t work with RTL languages."
+"Pre (for eg: $5)";"Pre (for eg: $5)"
+"Post (for eg: 5$)";"Post (for eg: 5$)"
+"Choose an icon to show with this currency. This icon will show in both user panel and admin panel of your site. [Note: You can add a new icon from the ""<a href=""%1$s"" target=""_blank"">File & Media Manager</a>"" section. If you leave the field blank then nothing will show.]";"Choose an icon to show with this currency. This icon will show in both user panel and admin panel of your site. [Note: You can add a new icon from the ""<a href=""%1$s"" target=""_blank"">File & Media Manager</a>"" section. If you leave the field blank then nothing will show.]"
+"Currency Icon (This will show up in the currency dropdown next to the currency code.)";"Currency Icon (This will show up in the currency dropdown next to the currency code.)"
+"There are currently no icons in the <a href=""%1$s"" target=""_blank""> File & Media Manager </a> section of your site. Please begin by uploading an icon to get started.";"There are currently no icons in the <a href=""%1$s"" target=""_blank""> File & Media Manager </a> section of your site. Please begin by uploading an icon to get started."
+"Do you want enable this currency?";"Do you want enable this currency?"
+"Manage Currency";"Manage Currency"
+"This page list all the currencies you can enable on your website.";"This page list all the currencies you can enable on your website."
+"The price of the content will be saved in Default currency in the database and will be shown in different currencies according to the Currency Rate below. You can manually enter the currency rates with below given formula or click on "Update Currency Rates" button to update the currencies.";"The price of the content will be saved in Default currency in the database and will be shown in different currencies according to the Currency Rate below. You can manually enter the currency rates with below given formula or click on "Update Currency Rates" button to update the currencies."
+"<strong class=""bold"">Formula:</strong><br>To enter currency rates:
+1 Default Currency = Desired Currency Value";"<strong class=""bold"">Formula:</strong><br>To enter currency rates:
+1 Default Currency = Desired Currency Value"
+"<strong class=""bold"">For example:</strong><br> If US Dollar is default currency and 1 US Dollar = 1.33 Australian Dollar<br />Then the Currency rate will be 1.33 for the Australian Dollar.";"<strong class=""bold"">For example:</strong><br> If US Dollar is default currency and 1 US Dollar = 1.33 Australian Dollar<br />Then the Currency rate will be 1.33 for the Australian Dollar."
+"Update Currency Rates";"Update Currency Rates"
+"You haven''t added the currency converter API key yet. Enter the API key from the <a href='admin/payment/settings'>Global Settings</a> page to enable automatic updates for currency rates.";"You haven''t added the currency converter API key yet. Enter the API key from the <a href='admin/payment/settings'>Global Settings</a> page to enable automatic updates for currency rates."
+"Add New Currency";"Add New Currency"
+"Currency Name";"Currency Name"
+"This currency code already exists.";"This currency code already exists."
+"You have successfully add new currency.";"You have successfully add new currency."
+"You have successfully edit currency.";"You have successfully edit currency."
+"Choose an image to show with this plan. This image will show in the user panel of your site. [Note: You can add a new image from the ""<a href=""%1$s"" target=""_blank"">File & Media Manager</a>"" section. If you leave the field blank then nothing will show.]";"Choose an image to show with this plan. This image will show in the user panel of your site. [Note: You can add a new image from the ""<a href=""%1$s"" target=""_blank"">File & Media Manager</a>"" section. If you leave the field blank then nothing will show.]"
+
+"Subscription Plans";"Subscription Plans"
+"Please choose a subscription plan from the options below.";"Please choose a subscription plan from the options below."
+
+"Membership Subscription Membership Table Settings";"Membership Subscription Membership Table Settings"
+"Membership Table Title";"Membership Table Title"
+"Enter the title of the membership subscription table on your website.";"Enter the title of the membership subscription table on your website."
+"Membership Table Description";"Membership Table Description"
+"Enter the description of the membership subscription table on your website.";"Enter the description of the membership subscription table on your website."
+"Enable Footer Note";"Enable Footer Note"
+"Do you want to show a note in the Footer of the membership pricing table?";"Do you want to show a note in the Footer of the membership pricing table?"
+"Footer Note Text";"Footer Note Text"
+"Enter the text for the note which will be displayed in the footer of the membership pricing table.";"Enter the text for the note which will be displayed in the footer of the membership pricing table."
+"Membership Table Container Background Color";"Membership Table Container Background Color"
+"Membership Table Header Background Color";"Membership Table Header Background Color"
+"Membership Table Header Font Color";"Membership Table Header Font Color"
+"Overlap Container Over Header";"Overlap Container Over Header"
+"Do you want to overlap the membership table container over the table header?";"Do you want to overlap the membership table container over the table header?"
+"Edit Style";"Edit Style"
+"Edit Style of This Plan";"Edit Style of This Plan"
+"Features Rows Height (in pixels)";"Features Rows Height (in pixels)"
+"Features Rows Border Color";"Features Rows Border Color"
+"Features Rows Background Color";"Features Rows Background Color"
+"Features Rows Font Color";"Features Rows Font Color"
+"Select Text Alignment";"Select Text Alignment"
+"Show Side Label";"Show Side Label"
+"Do you want to show side label for this plan? If you choose “Yes”, then you will be able to configure details for the highlight side label.";"Do you want to show side label for this plan? If you choose “Yes”, then you will be able to configure details for the highlight side label."
+"Label Font Color";"Label Font Color"
+"Column Header of This Plan";"Column Header of This Plan"
+"From here you can change the display style of this subscription plan.";"From here you can change the display style of this subscription plan."
+"General";"General"
+"Column Width (in pixels)";"Column Width (in pixels)"
+"Column Space";"Column Space"
+"This name is for your indication only and will not be shown at the user side.";"This name is for your indication only and will not be shown at the user side."
+"Highlight This Column";"Highlight This Column"
+"Do you want to highlight this column?";"Do you want to highlight this column?"
+"Label Text";"Label Text"
+"Label Background Color";"Label Background Color"
+"Enter the text for the label which will be shown as titled strip.";"Enter the text for the label which will be shown as titled strip."
+"Label Alignment";"Label Alignment"
+"Right";"Right"
+"Left";"Left"
+"Plan Description Height";"Plan Description Height"
+"Column Header Background Color";"Column Header Background Color"
+"Column Header Font Color";"Column Header Font Color"
+"Button Background Color";"Button Background Color"
+"Button Font Color";"Button Font Color"
+"Enter the margin space to the right of this column in pixels.";"Enter the margin space to the right of this column in pixels."
+"Back to Plans";"Back to Plans"
+"Center";"Center"
+"From here, you can manage content for all the features of this subscription plans on your website.";"From here, you can manage content for all the features of this subscription plans on your website."
+"Feature 1";"Feature 1"
+"Feature 2";"Feature 2"
+"Feature 3";"Feature 3"
+"Feature 4";"Feature 4"
+"Feature 5";"Feature 5"
+"Feature 6";"Feature 6"
+"Feature 7";"Feature 7"
+"Feature 8";"Feature 8"
+"Feature 9";"Feature 9"
+"Feature 10";"Feature 10"
+"Feature 11";"Feature 11"
+"Feature 12";"Feature 12"
+"Feature 13";"Feature 13"
+"Feature 14";"Feature 14"
+"Feature 15";"Feature 15"
+"Description";"Description"
+"Enter the description of this feature.";"Enter the description of this feature."
+"Hint";"Hint"
+"Enter the hint text. [A question-mark icon will be shown to display this text on mouse-over of the icon.]";"Enter the hint text. [A question-mark icon will be shown to display this text on mouse-over of the icon.]"
+"Font Icon";"Font Icon"
+"Enter the font icon.";"Enter the font icon."
+"Manage Features";"Manage Features"
+"Manage Features - %s";"Manage Features - %s"

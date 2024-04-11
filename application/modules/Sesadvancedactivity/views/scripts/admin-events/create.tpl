@@ -63,9 +63,9 @@ function choosedate(value) {
       document.getElementById('endtime-wrapper').style.display = 'none';
   } else {
     if(document.getElementById('starttime-wrapper'))
-      document.getElementById('starttime-wrapper').style.display = 'block';
+      document.getElementById('starttime-wrapper').style.display = 'flex';
     if(document.getElementById('endtime-wrapper'))
-      document.getElementById('endtime-wrapper').style.display = 'block';
+      document.getElementById('endtime-wrapper').style.display = 'flex';
   }
 }
 </script>

@@ -47,7 +47,7 @@ tr td {
     </tr>
   </thead>
   <tbody>
-    <?php foreach ($this->top_inviters as $invitee): ?>
+    <?php foreach ($this->top_invites as $invitee): ?>
     <tr><td><?php echo $invitee['username'] ?></td>
         <td><?php echo $invitee['invited'] ?></td>
         <td><?php echo $invitee['recruited'] ?></td>

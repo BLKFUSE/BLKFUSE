@@ -180,8 +180,13 @@ class Classified_IndexController extends Core_Controller_Action_Standard
         if( !$this->_helper->requireAuth()->setAuthParams($classified, null, 'view')->isValid() ) {
             return;
         }
-
-
+        
+        if( !$classified || !$classified->getIdentity() || ((!$classified->approved) && !$classified->isOwner($viewer)) ) {
+					if(!empty($viewer->getIdentity()) && $viewer->isAdmin()) {
+					} else
+            return $this->_helper->requireSubject->forward();
+        }
+        
         // Network check
         $networkPrivacy = Engine_Api::_()->network()->getViewerNetworkPrivacy($classified);
         if(empty($networkPrivacy))
@@ -237,10 +242,7 @@ class Classified_IndexController extends Core_Controller_Action_Standard
         $this->view->rated = Engine_Api::_()->getDbTable('ratings', 'classified')->checkRated($classified->getIdentity(), $viewer->getIdentity());
         
         // Render
-        $this->_helper->content
-            //->setNoRender()
-            ->setEnabled()
-        ;
+        $this->_helper->content->setEnabled();
     }
 
     // USER SPECIFIC METHODS
@@ -298,7 +300,10 @@ class Classified_IndexController extends Core_Controller_Action_Standard
             }
         }
         $customFieldValues = $tmp;
+        $values['showclassified'] = 1;
+        $values['orderby'] = !empty($_GET['orderby']) ? $_GET['orderby']: "creation_date";
         // Get paginator
+        
         $this->view->paginator = $paginator = Engine_Api::_()->getItemTable('classified')->getClassifiedsPaginator($values, $customFieldValues);
         $itemsCount = (int) Engine_Api::_()->getApi('settings', 'core')->getSetting('classified.page', 10);
         $paginator->setItemCountPerPage($itemsCount);
@@ -401,6 +406,9 @@ class Classified_IndexController extends Core_Controller_Action_Standard
                 'owner_id' => $viewer->getIdentity(),
                 'view_privacy' => $values['auth_view'],
             ));
+            
+            //approve setting work
+            $values['approved'] = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('classified', $viewer, 'approve');
 
             $classified = $table->createRow();
             
@@ -412,6 +420,9 @@ class Classified_IndexController extends Core_Controller_Action_Standard
               
             $classified->setFromArray($values);
             $classified->save();
+            
+            //Save editor images
+            Engine_Api::_()->core()->saveTinyMceImages($values['body'], $classified);
 
             // Set photo
             if( !empty($values['photo']) ) {
@@ -445,20 +456,25 @@ class Classified_IndexController extends Core_Controller_Action_Standard
         } catch( Exception $e ) {
             return $this->exceptionWrapper($e, $form, $db);
         }
+        
+        //if($values['approved'] == 1) {
+          $db->beginTransaction();
+          try {
 
-        $db->beginTransaction();
-        try {
+              $action = Engine_Api::_()->getDbtable('actions', 'activity')->addActivity($viewer, $classified, 'classified_new', '', array('privacy' => isset($values['networks'])? $network_privacy : null));
 
-            $action = Engine_Api::_()->getDbtable('actions', 'activity')->addActivity($viewer, $classified, 'classified_new', '', array('privacy' => isset($values['networks'])? $network_privacy : null));
-
-            if( $action != null ) {
-                Engine_Api::_()->getDbtable('actions', 'activity')->attachActivity($action, $classified);
-            }
-            $db->commit();
-        } catch( Exception $e ) {
-            $db->rollBack();
-            throw $e;
-        }
+              if( $action != null ) {
+                  Engine_Api::_()->getDbtable('actions', 'activity')->attachActivity($action, $classified);
+              }
+              $db->commit();
+          } catch( Exception $e ) {
+              $db->rollBack();
+              throw $e;
+          }
+        //}
+        
+        //Start Send Approval Request to Admin
+        Engine_Api::_()->core()->contentApprove($classified, 'classified');
 
         // Redirect
         $allowedUpload = Engine_Api::_()->authorization()->getPermission($viewer->level_id, 'classified', 'photo');
@@ -505,7 +521,7 @@ class Classified_IndexController extends Core_Controller_Action_Standard
         // Prepare form
         $this->view->form = $form = new Classified_Form_Edit($params);
 
-        $form->removeElement('photo');
+        //$form->removeElement('photo');
 
         /*
         if( isset($classified->photo_id) &&
@@ -598,8 +614,16 @@ class Classified_IndexController extends Core_Controller_Action_Standard
 
             $classified->tags()->setTagMaps($viewer, $tags);
             $classified->save();
+            
+            //Save editor images
+            Engine_Api::_()->core()->saveTinyMceImages($values['body'], $classified);
 
             $cover = $values['cover'];
+            
+            // Set photo
+            if( !empty($values['photo']) ) {
+                $classified->setPhoto($form->photo);
+            }
 
             // Process
             foreach( $paginator as $photo ) {

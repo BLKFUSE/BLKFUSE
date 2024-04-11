@@ -156,7 +156,7 @@ if ($attachUserTags) {
         <li id="comment-<?php echo $comment->comment_id ?>">
           <div class="comments_author_photo">
             <?php echo $this->htmlLink($poster->getHref(),
-              $this->itemBackgroundPhoto($poster, 'thumb.icon', $poster->getTitle())
+              $this->itemBackgroundPhoto($poster, 'thumb.icon', $poster->getTitle(false))
             ) ?>
           </div>
           <div class="comments_info">

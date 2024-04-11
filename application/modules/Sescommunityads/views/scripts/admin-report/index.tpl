@@ -14,7 +14,6 @@
  ?>
 
 <?php include APPLICATION_PATH .  '/application/modules/Sescommunityads/views/scripts/dismiss_message.tpl';?>
-
 <script type="text/javascript">
   en4.core.runonce.add(function() {
     scriptJquery('th.admin_table_short input[type=checkbox]').on('click', function(event) {
@@ -22,23 +21,16 @@
       scriptJquery('input[type=checkbox]').prop('checked', el.prop('checked'));
     });
   });
-  
   var multiDelete = function() {
     return confirm("<?php echo $this->translate('Are you sure you want to delete selected Ads?');?>");    
   }
-
 </script>
-
 <h3>
   <?php echo $this->translate("Abuse Reports") ?>
 </h3>
 <p>
   <?php echo $this->translate("This page lists all of the reports your users have sent in regarding inappropriate advertisements.") ?>
 </p>
-	
-<br />
-<br />
-
 <?php if( $this->paginator->getTotalItemCount() > 0 ): ?>
   <script type="text/javascript">
     var currentOrder = '<?php echo $this->filterValues['order'] ?>';
@@ -54,16 +46,10 @@
       scriptJquery('#filter_form').trigger('submit');
     }
   </script>
-
   <div class='admin_search'>
     <?php echo $this->formFilter->render($this) ?>
   </div>
-
-  <br />
 <?php endif; ?>
-
-
-
 <div class='admin_results'>
   <div>
     <?php $count = $this->paginator->getTotalItemCount() ?>
@@ -76,11 +62,6 @@
     )); ?>
   </div>
 </div>
-
-<br />
-
-
-
 <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
 <form id='multidelete_form' method="post" action="<?php echo $this->url();?>" onSubmit="return multiDelete()">
 <div class="admin_table_form">
@@ -147,19 +128,14 @@
       <?php endforeach; ?>
     </tbody>
   </table>
-  <br/>
   <div class='buttons'>
     <button type='submit'><?php echo $this->translate("Delete Selected") ?></button>
   </div>
 </div>
 </form>
 <?php else:?>
-
   <div class="tip">
     <span><?php echo $this->translate("There are currently no outstanding abuse reports.") ?></span>
   </div>
-
 <?php endif; ?>
-
-
 </div>

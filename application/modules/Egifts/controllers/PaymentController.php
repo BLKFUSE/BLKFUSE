@@ -143,7 +143,8 @@ class Egifts_PaymentController extends Core_Controller_Action_Standard
       $this->_session->order_id = $order_id = $ordersTable->getAdapter()->lastInsertId();
       $this->_session->currency = $currentCurrency = Engine_Api::_()->getApi('settings', 'core')->getSetting('payment.currency');
       $settings = Engine_Api::_()->getApi('settings', 'core');
-      $this->_session->change_rate = $settings->getSetting('sesmultiplecurrency.' . $currentCurrency) ;
+      $currencyData = Engine_Api::_()->getDbTable('currencies', 'payment')->getCurrency($currentCurrency);
+      $this->_session->change_rate = $currencyData->change_rate;
       // Unset certain keys
       unset($this->_session->gateway_id);
       // Get gateway plugin
@@ -225,7 +226,6 @@ class Egifts_PaymentController extends Core_Controller_Action_Standard
   {
     $orderId = $this->_getParam('order_id',$this->_session->order_id);
     $order = Engine_Api::_()->getItem('payment_order', $orderId);
-    
     // Get order
     if( ((!$this->_user || $order->user_id != $this->_user->getIdentity())) ||
         !($orderId) ||

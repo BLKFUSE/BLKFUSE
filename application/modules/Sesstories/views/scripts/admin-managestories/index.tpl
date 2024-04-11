@@ -94,7 +94,6 @@ function multiDelete()
   <div>
     <h3><?php echo "Manage Background Images for Text Stories"; ?></h3>
     <p><?php echo $this->translate("This page lists all the background images uploaded by you. You can add new background images individually or in zip folder for multiple images. To reorder the background images, click on and drag them up or down.<br />") ?></p>
-    <br />
     <div>
     <div class="sesbasic_search_reasult">
       <?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesstories', 'controller' => 'managestories', 'action' => 'create'), $this->translate("<i style='vertical-align:middle' class='fa fa-plus'></i> Upload Image"), array('class'=>'sesbasic_button smoothbox')); ?>

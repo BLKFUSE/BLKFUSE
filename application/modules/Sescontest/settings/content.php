@@ -808,7 +808,7 @@ return array(
                             'siteShare' => 'Site Share',
                             'quickShare' => 'Quick Share',
                             'tellAFriend' => 'Tell A Friend',
-                            'addThis' => 'Add This Share Links',
+                            
                         ),
                     )
                 ),

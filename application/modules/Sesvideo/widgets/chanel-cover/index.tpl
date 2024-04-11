@@ -395,7 +395,7 @@ scriptJquery(document).on('click','#uploadCoverPhoto',function(){
 function readImageUrl(input){
 	var url = input.files[0].name;
 	var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-	if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif' || ext == 'GIF')){
+	if((ext == "png" || ext == "jpeg" || ext == "jpg" || ext == 'PNG' || ext == 'JPEG' || ext == 'JPG' || ext == 'gif' || ext == 'GIF' || ext == "webp")){
 		var formData = new FormData();
 		formData.append('webcam', input.files[0]);
 		formData.append('chanel_id', '<?php echo $this->subject->chanel_id; ?>');
@@ -416,7 +416,7 @@ function readImageUrl(input){
 		}
 		return xhrobj;
 		},
-    url:  en4.core.staticBaseUrl+'sesvideo/chanel/edit-coverphoto/',
+    url:  en4.core.baseUrl+'sesvideo/chanel/edit-coverphoto/',
     type: "POST",
     contentType:false,
     processData: false,
@@ -455,7 +455,7 @@ function take_snapshot() {
 		scriptJquery('#sesvideo_popup_cam_upload').hide();
 		scriptJquery('#sesvideo_cover_photo_loading').show();
 		// upload results
-		 Webcam.upload( data_uri, en4.core.staticBaseUrl+'sesvideo/chanel/edit-coverphoto/chanel_id/<?php echo $this->subject->chanel_id; ?>' , function(code, text) {
+		 Webcam.upload( data_uri, en4.core.baseUrl+'sesvideo/chanel/edit-coverphoto/chanel_id/<?php echo $this->subject->chanel_id; ?>' , function(code, text) {
 			 	text = JSON.parse(text);
 				if(text.status == 'true'){
 					if(text.src != ''){
@@ -474,7 +474,7 @@ scriptJquery('#removeCover').click(function(){
 		scriptJquery('#sesvideo_cover_id').css('background-image', 'url()');
 		scriptJquery('#sesvideo_cover_default').show();
 		var chanel_id = '<?php echo $this->subject->chanel_id; ?>';
-		uploadURL = en4.core.staticBaseUrl+'sesvideo/chanel/remove-cover/chanel_id/'+chanel_id;
+		uploadURL = en4.core.baseUrl+'sesvideo/chanel/remove-cover/chanel_id/'+chanel_id;
 		var jqXHR=scriptJquery.ajax({
 			url: uploadURL,
 			type: "POST",

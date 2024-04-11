@@ -58,12 +58,13 @@ class Sescommunityads_Plugin_Gateway_Cashfree extends Engine_Payment_Plugin_Abst
   public function createAdTransaction(User_Model_User $user,Zend_Db_Table_Row_Abstract $subscription,
       Zend_Db_Table_Row_Abstract $package,array $params = array())
   {
-    $currentCurrency = Engine_Api::_()->sescommunityads()->getCurrentCurrency();
-    $defaultCurrency = Engine_Api::_()->sescommunityads()->defaultCurrency();
+    $currentCurrency = Engine_Api::_()->payment()->getCurrentCurrency();
+    $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
     $settings = Engine_Api::_()->getApi('settings', 'core');
     $currencyValue = 1;
     if ($currentCurrency != $defaultCurrency) {
-      $currencyValue = $settings->getSetting('sesmultiplecurrency.' . $currentCurrency);
+      $currencyData = Engine_Api::_()->getDbTable('currencies', 'payment')->getCurrency($currentCurrency);
+      $currencyValue = $currencyData->change_rate;
     }
     $settings = Engine_Api::_()->getApi('settings', 'core');
     $currency = $settings->getSetting('payment.currency', 'USD');
@@ -192,7 +193,7 @@ class Sescommunityads_Plugin_Gateway_Cashfree extends Engine_Payment_Plugin_Abst
       $rate = $session->change_rate;
       if (!$rate)
         $rate = 1;
-      $defaultCurrency = Engine_Api::_()->sescommunityads()->defaultCurrency();
+      $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
       $settings = Engine_Api::_()->getApi('settings', 'core');
       $currencyValue = 1;
       if ($currency != $defaultCurrency)
@@ -385,7 +386,7 @@ class Sescommunityads_Plugin_Gateway_Cashfree extends Engine_Payment_Plugin_Abst
       $rate = $session->change_rate;
       if (!$rate)
         $rate = 1;
-      $defaultCurrency = Engine_Api::_()->sescommunityads()->defaultCurrency();
+      $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
       $settings = Engine_Api::_()->getApi('settings', 'core');
       $currencyValue = 1;
       if ($currency != $defaultCurrency) {

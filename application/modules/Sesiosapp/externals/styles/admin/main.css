@@ -30,12 +30,20 @@
 .sesiosapp_themes_form .form-label{
 	margin-bottom:5px;
 }
+.sesiosapp_themes_form .global_form .form-elements > div{
+	display:block;
+}
 .sesiosapp_themes_form #theme_color-label{
 	border-bottom-width:1px;
 	font-size:15px;
 	padding-bottom:15px;
 	text-align:center;
 	width:100%;
+}
+.sesiosapp_themes_form #theme_color-wrapper .form-element ul.form-options-wrapper{
+	width: 100%;
+	max-width: 1000px;
+	margin: 0 auto;
 }
 .sesiosapp_themes_form #theme_color-wrapper .form-element{
 	clear:both;
@@ -76,6 +84,8 @@
 	padding-top:20px;
   margin-top:20px;
 	width:340px;
+	margin-left:auto;
+	margin-right:auto;
 }
 .sesiosapp_themes_form #theme_color-wrapper .form-element li:last-child:before{
   content:"Make your own theme (make sure the site is in Development Mode, before you make any changes)";
@@ -119,6 +129,9 @@
 	display:inline-block;
 	width:30%;
 }
+.sesiosapp_themes_form .global_form .form-elements fieldset > div{
+	display: inline-block;
+}
 .sesiosapp_themes_form .sesiosapp_bundle > fieldset > div > div{
 	width:100%;
 }
@@ -128,20 +141,29 @@
 }
 /*Loading Message*/
 .sesiosapp_waiting_msg_box{
-	background-color:rgba(255, 255, 255, 0.8);
 	height:100%;
 	left:0;
 	position:fixed;
 	top:0;
 	width:100%;
 }
-.sesiosapp_waiting_msg_box_cont{
-	background-color:rgba(255, 255, 255, 0.8);
-	border:5px solid #43bbef;
+.sesiosapp_waiting_msg_box::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--theme-box-background-color);
+	opacity: 0.8;
+}
+.sesiosapp_waiting_msg_box_cont {
+	background-color: var(--theme-box-background-color);
+	border: 5px solid var(--theme-base-color);
 	box-shadow:0 0 5px rgba(0, 0, 0, 0.5);
 	font-size:20px;
 	font-weight:bold;
-	height:100px;
+	height:180px;
 	left:50%;
 	margin:-50px 0 0 -300px;
 	padding:20px;
@@ -161,6 +183,39 @@
 	width:100%;
 }
 /*Tabs*/
+.sesiosapp-admin-navgation{
+	display: block;
+	margin: 10px 0 0;
+	border-top: 1px solid #ddd;
+	overflow: hidden;
+	padding: 10px 0;
+}
+.sesiosapp-admin-navgation *{
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box;
+}
+.sesiosapp-admin-navgation ul{
+	margin:0 -5px;
+}
+.sesiosapp-admin-navgation ul li{
+  float:left;
+	margin:5px;
+}
+.sesiosapp-admin-navgation ul li a{
+	color: var(--theme-button-background-color);
+	display: block;
+	font-weight: bold;
+	padding: 10px 20px;
+	border-radius: 20px;
+	border: 1px solid var(--theme-button-background-color);
+}
+.sesiosapp-admin-navgation ul li a:hover,
+.sesiosapp-admin-navgation ul li.active a{
+	background-color:var(--theme-button-background-color);
+	text-decoration:none;
+	color:#fff;
+}
 .sesiosapp_nav_btns{
 	float:right;
 	margin-top:-40px;
@@ -218,7 +273,7 @@
 	text-align:justify;
 }
 .sesiosapp_support_links a p span._btn{
-	background-color:#0DC7F1;
+	background-color:var(--theme-button-background-color);
 	color:#fff;
 	float:right;
 	padding:3px 10px;
@@ -264,8 +319,8 @@
   box-sizing:border-box;
 }
 .sesiosapp_manage_table_head{
-	background-color:#f5f5f5;
-	border-bottom:1px solid #aaa;
+	background-color:var(--theme-box-background-alt-color);
+	border-bottom:1px solid var(--theme-border-color);
 	display:block;
 	overflow:hidden;
 }
@@ -282,16 +337,16 @@
 	width:100% !important;
 }
 .sesiosapp_manage_table_list li{
-	border-bottom:1px solid #eee;
+	border-bottom:1px solid var(--theme-border-color);
 	cursor:move;
 	clear:both;
 	overflow:hidden;
 }
 .sesiosapp_manage_table_list li:nth-child(odd){
-	background-color:#fff;
+	background-color:var(--theme-box-background-color);;
 }
 .sesiosapp_manage_table_list li:nth-child(even){
-	background-color:#f8f8f8;
+	background-color:var(--theme-box-background-alt-color);
 }
 .sesiosapp_manage_table_list li > div{
 	padding:10px;
@@ -333,6 +388,9 @@ div .sesiosapp_admin_form label.required:after{
 /*Popup Form*/
 .sesiosapp_popup_form{
 	margin:15px 0 0 15px;
+}
+.sesiosapp_popup_form form > div > div{
+	width:600px;
 }
 .sesiosapp_popup_form form > div > div .form-element input[type="text"],
 .sesiosapp_popup_form form > div > div .form-element textarea{

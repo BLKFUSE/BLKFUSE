@@ -10,6 +10,8 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_layout", 'childMenuItemName' => 'core_admin_main_layout_files')); ?>
+
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . '/externals/uploader/uploader.css'); ?>
 
 <script type="text/javascript">
@@ -129,32 +131,26 @@ en4.core.runonce.add(function () {
 function multiDelete() {
   return confirm("<?php echo $this->translate("Are you sure you want to delete the selected files ?") ?>");
 }
-
 function selectAll(obj)
 {
   scriptJquery('.checkbox').each(function(){
     scriptJquery(this).prop("checked",scriptJquery(obj).prop("checked"))
   });
 }
-
 </script>
-
-<h2><?php echo $this->translate("File & Media Manager") ?></h2>
-<p><?php echo $this->translate('You may want to quickly upload images, icons, or other media for use in your layout, announcements, blog entries, etc. You can upload and manage these files here. Move your mouse over a filename to preview an image.') ?></p>
-<?php
-$settings = Engine_Api::_()->getApi('settings', 'core');
-if( $settings->getSetting('user.support.links', 0) == 1 ) {
-	echo 'More info: <a href="https://community.socialengine.com/blogs/597/64/file-media-manager" target="_blank">See KB article</a>';
-} 
-?>	
-<br />	
-
-<br />
-
+<div class="admin_common_top_section">
+  <h2 class="page_heading"><?php echo $this->translate("File & Media Manager") ?></h2>
+  <p><?php echo $this->translate('You may want to quickly upload images, icons, or other media for use in your layout, announcements, blog entries, etc. You can upload and manage these files here. Move your mouse over a filename to preview an image.') ?></p>
+  <?php
+  $settings = Engine_Api::_()->getApi('settings', 'core');
+  if( $settings->getSetting('user.support.links', 0) == 1 ) {
+    echo 'More info: <a href="https://community.socialengine.com/blogs/597/64/file-media-manager" target="_blank">See KB article</a>';
+  } 
+  ?>	
+</div>  
 <div>
-  <?php echo $this->htmlLink('javascript:void(0);', $this->translate('Upload New Files'), array('id' => 'demo-browse', 'class' => 'buttonlink admin_files_upload', 'onclick' => 'uploadFile();')) ?>
+  <?php echo $this->htmlLink('javascript:void(0);', $this->translate('Upload New Files'), array('id' => 'demo-browse', 'class' => 'admin_link_btn admin_files_upload', 'onclick' => 'uploadFile();')) ?>
 </div>
-
 <div id="file-status">
   <div id="files-status-overall" style="display: none;">
     <div class="overall-title">Overall Progress</div>
@@ -172,18 +168,13 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
     <?php echo $this->htmlLink(array('reset' => false), 'Refresh the page to display new files') ?>
   </div>
 </div>
-<br />
-
 <div class='admin_search'>
   <?php echo $this->formFilter->render($this) ?>
 </div>
-<br />
-
 <?php if( engine_count($this->paginator) ): ?>
   <div>
     <?php echo $this->translate(array('%s file found.', '%s files found.', $this->paginator->getTotalItemCount()), $this->locale()->toNumber($this->paginator->getTotalItemCount())) ?>
   </div>
-  
   <?php if($this->existingFiles > 0) { ?>
     <a href="<?php echo $this->url(array('action' => 'sink')) ?>" class="smoothbox sink_fmm_files"><?php echo $this->translate('Sink Existing Files') ?></a>
   <?php } ?>
@@ -193,6 +184,7 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
   <ul class="fmm_media_list">
       <?php foreach ($this->paginator as $item): ?>
         <?php $storage = Engine_Api::_()->getItem('storage_file', $item->storage_file_id);
+        if($storage) {
         $path = $storage->map();
         $copyPath = ($storage->service_id == 2) ?  $path : (_ENGINE_SSL ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $path; 
         ?>
@@ -226,22 +218,23 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
           <div class="fmm_file_name"><?php echo $item->name . '.'.$item->extension; ?></div>
           </div>
         </li>
-      <?php endforeach; ?>
+      <?php } endforeach; ?>
       </ul>
-  <br />
   <div class='buttons'>
     <button type='submit'><?php echo $this->translate("Delete Selected") ?></button>
   </div>
   </form>
-  <br />
   <div>
     <?php echo $this->paginationControl($this->paginator); ?>
   </div>
 <?php else: ?>
-  <br />
   <div class="tip">
     <span>
       <?php echo $this->translate("There are no files uploaded by you yet.") ?>
     </span>
   </div>
 <?php endif; ?> 
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_layout').parent().addClass('active');
+  scriptJquery('.core_admin_main_layout_files').addClass('active');
+</script>

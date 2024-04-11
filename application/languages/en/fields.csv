@@ -12,6 +12,7 @@
 "Question Label";"Question Label"
 "Description";"Description"
 "Inline CSS";"Inline CSS"
+"You can provide a CSS class to the question so that you can style specific questions differently. You will need to define this class either in the source code or one of the CSS files editable in the Theme Editor.";"You can provide a CSS class to the question so that you can style specific questions differently. You will need to define this class either in the source code or one of the CSS files editable in the Theme Editor."
 "Custom Error Message";"Custom Error Message"
 "Required?";"Required?"
 
@@ -56,7 +57,7 @@
 "cannot toggle, no event or element";"cannot toggle, no event or element"
 "unable to find option_id";"unable to find option_id"
 "Are you sure you want to delete this option?";"Are you sure you want to delete this option?"
-"Are you sure you want to delete the current profile type?";"Are you sure you want to delete the current profile type?"
+"Are you sure you want to delete the Profile Type?";"Are you sure you want to delete the Profile Type?"
 "unable to find option_id for field";"unable to find option_id for field"
 "Are you sure you want to delete this field?";"Are you sure you want to delete this field?"
 
@@ -123,3 +124,8 @@
 
 "Special Characters are not allowed in the first name.";"Special Characters are not allowed in the first name."
 "Special Characters are not allowed in the last name.";"Special Characters are not allowed in the last name."
+
+"Min";"Min"
+"Max";"Max"
+
+"Choose a new Profile Type for users to associate with. If you choose 'None' users can select their own profile type when editing their profiles. When you confirm the deletion of this profile type, all associated data will be permanently removed and cannot be recovered.";"Choose a new Profile Type for users to associate with. If you choose 'None' users can select their own profile type when editing their profiles. When you confirm the deletion of this profile type, all associated data will be permanently removed and cannot be recovered."

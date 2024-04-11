@@ -67,15 +67,15 @@ class Egifts_AdminPaymentController extends Core_Controller_Action_Admin {
  
       $this->view->form = $form = new Egifts_Form_Admin_Payment_Approve(array('userId' => $user->getIdentity()));
       
-      $defaultCurrency = Engine_Api::_()->sesbasic()->defaultCurrency();
+      $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
       
 //       $remainingAmount  =  Engine_Api::_()->getDbtable('remainingpayments', 'egifts')->getRemainingAmount(array('owner_id' => $user->getIdentity()));
 //       $orderDetails  =  Engine_Api::_()->getDbtable('transactions', 'egifts')->statistics(array('owner_id' => $user->getIdentity()));
 //       $value = array();
-//       $value['total_amount'] = Engine_Api::_()->sesbasic()->getCurrencyPrice($orderDetails['totalAmountSale'],$defaultCurrency);
-//       $value['total_tax_amount'] = Engine_Api::_()->sesbasic()->getCurrencyPrice($orderDetails['totalTaxAmount'],$defaultCurrency);
-//       $value['total_commission_amount'] = Engine_Api::_()->sesbasic()->getCurrencyPrice($orderDetails['commission_amount'],$defaultCurrency);
-//       $value['remaining_amount'] = Engine_Api::_()->sesbasic()->getCurrencyPrice($remainingAmount->remaining_payment,$defaultCurrency);
+//       $value['total_amount'] = Engine_Api::_()->payment()->getCurrencyPrice($orderDetails['totalAmountSale'],$defaultCurrency);
+//       $value['total_tax_amount'] = Engine_Api::_()->payment()->getCurrencyPrice($orderDetails['totalTaxAmount'],$defaultCurrency);
+//       $value['total_commission_amount'] = Engine_Api::_()->payment()->getCurrencyPrice($orderDetails['commission_amount'],$defaultCurrency);
+//       $value['remaining_amount'] = Engine_Api::_()->payment()->getCurrencyPrice($remainingAmount->remaining_payment,$defaultCurrency);
       
       //set value to form
       if($this->_getParam('id',false)){
@@ -83,7 +83,7 @@ class Egifts_AdminPaymentController extends Core_Controller_Action_Admin {
         if($item) {
           $itemValue = $item->toArray();
           $value = $itemValue;
-          $value['requested_amount'] = Engine_Api::_()->sesbasic()->getCurrencyPrice($itemValue['requested_amount'],$defaultCurrency);
+          $value['requested_amount'] = Engine_Api::_()->payment()->getCurrencyPrice($itemValue['requested_amount'],$defaultCurrency);
           $value['release_amount'] = $itemValue['requested_amount'];
         } else {
           return $this->_forward('requireauth', 'error', 'core');	
@@ -199,7 +199,7 @@ class Egifts_AdminPaymentController extends Core_Controller_Action_Admin {
       
     //Process transaction
     if($gateway->plugin == "Egifts_Plugin_Gateway_Event_Stripe") {
-        $params['currency'] = Engine_Api::_()->sesbasic()->getCurrentCurrency();
+        $params['currency'] = Engine_Api::_()->payment()->getCurrentCurrency();
         $this->view->publishKey = $gateway->config['sesadvpmnt_stripe_publish']; 
         $this->view->session =  $plugin->createOrderTransaction($item,$owner,$params);  
         $this->renderScript('/application/modules/Sesadvpmnt/views/scripts/payment/index.tpl');

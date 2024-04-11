@@ -194,7 +194,7 @@
         	<?php if($package->price < 1){
           	echo "FREE";
           }else{ 
-          	$currentCurrency = Engine_Api::_()->sesnews()->getCurrentCurrency();
+          	$currentCurrency = Engine_Api::_()->payment()->getCurrentCurrency();
             echo $package->getPackageDescription();
           } ?>
         </td>

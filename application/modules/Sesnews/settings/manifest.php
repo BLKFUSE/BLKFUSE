@@ -33,18 +33,19 @@ return array(
     'type' => 'module',
     'name' => 'sesnews',
     //'sku' => 'sesnews',
-    'version' => '6.4.0p2',
+    'version' => '6.5.1',
     'dependencies' => array(
         array(
             'type' => 'module',
             'name' => 'core',
-            'minVersion' => '6.2.0',
+            'minVersion' => '6.5.1',
         ),
     ),
     'path' => 'application/modules/Sesnews',
     'title' => 'SNS - News / RSS Importer & Aggregator Plugin',
     'description' => 'SNS - News / RSS Importer & Aggregator Plugin',
     'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	'thumb' => 'application/modules/Sesnews/externals/images/thumb.png',
     'actions' => array(
        'install',
        'upgrade',

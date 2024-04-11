@@ -439,7 +439,7 @@ NotificationUpdateHandler = class {
     // Firefox is dumb and causes problems sometimes with console
     try {
       if( typeof(console) && $type(console) ) {
-        console.log(object);
+        //console.log(object);
       }
     } catch( e ) {
       // Silence
@@ -677,7 +677,7 @@ ActivityUpdateHandler = function(options){
     }
     try {
       if( 'console' in window && typeof(console) && 'log' in console ) {
-        console.log(object);
+        //console.log(object);
       }
     } catch( e ) {
       // Silence

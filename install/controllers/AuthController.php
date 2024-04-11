@@ -35,6 +35,12 @@ class AuthController extends Zend_Controller_Action
     }
 
     $this->view->form = $form = new Install_Form_Auth();
+    
+    // Try to pull from settings table
+    $table = new Zend_Db_Table(array(
+      'name' => 'engine4_core_settings',
+    ));
+    $this->view->sitetitle = $row = $table->fetchRow(array('name = ?' => 'core.general.site.title'));
 
     if( !$this->getRequest()->isPost() ) {
       return;
@@ -156,10 +162,6 @@ class AuthController extends Zend_Controller_Action
       return $this->_helper->redirector->gotoUrl($return);
     }
   }
-
-
-
-
 
   protected function _authDb($identity, $credential)
   {

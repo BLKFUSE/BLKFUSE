@@ -11,9 +11,9 @@
  */
 ?>
 
-<h2>
+<h3>
   <?php echo $this->translate("Log Browser") ?>
-</h2>
+</h3>
 <p>System logs are helpful for troubleshooting and debugging. Select the log you would like to view below.</p>
 <p>More info: <a href="http://support.socialengine.com/questions/216/Admin-Panel-Stats-Log-Browser" target="_blank">See KB article</a>.</p>	
 <br />
@@ -103,7 +103,7 @@
           <a href="<?php echo $this->url() ?>?<?php echo http_build_query(array(
             'file' => $this->logFile,
           )) ?>">
-            Back to End
+            Back
           </a>
         </span>
       <?php endif; ?>

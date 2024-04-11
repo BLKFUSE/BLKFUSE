@@ -29,7 +29,7 @@ var sescommunityIsEditForm = "<?php echo $this->editName; ?>";
     <div class="sescmads_create_fields">
       <div class="sescommunityads_post_descbox" style="display:none;">
         <label><?php echo $this->translate('SESCOMMText'); ?></label>
-        <textarea class="form-control required sescommunityads_carousel_title_text" name="main_heading_title"></textarea>
+        <textarea class="required sescommunityads_carousel_title_text" name="main_heading_title"></textarea>
       </div>
       <div class="sescmads_create_cont_nav">
         <ul class="sesbasic_clearfix" id="sescomm_ad_car_li">
@@ -128,7 +128,7 @@ var sescommunityIsEditForm = "<?php echo $this->editName; ?>";
         <div class="sescmads_create_field_row sesbasic_clearfix">
           <div class="sescmads_create_field_label"><label><?php echo $this->translate('Call to Action'); ?></label></div>
             <div class="sescmads_create_field_element">
-              <select class="form-control sesbasic_button sescomm_call_to_action" name="call_to_action"><?php echo $this->callToAction; ?></select>
+              <select class="sesbasic_button sescomm_call_to_action" name="call_to_action"><?php echo $this->callToAction; ?></select>
               <div id="sescomm_calltoaction_url" style="display:none;">
                 <input type="text" name="calltoaction_url" class="url">
               </div>
@@ -158,7 +158,7 @@ var sescommunityIsEditForm = "<?php echo $this->editName; ?>";
       <div class="sescmads_create_field_row sesbasic_clearfix">
         <div class="sescmads_create_field_label"><label><?php echo $this->translate('Overlay'); ?></label></div>
         <div class="sescmads_create_field_element">
-         <select class="form-control sesbasic_button sescomm_call_to_action_overlay" name="call_to_action_overlay">
+         <select class="sesbasic_button sescomm_call_to_action_overlay" name="call_to_action_overlay">
             <?php 
               foreach($overlay as $key=>$val){ 
                 $select = "";
@@ -180,7 +180,7 @@ var sescommunityIsEditForm = "<?php echo $this->editName; ?>";
       <div class="sescmads_create_fields">
             <div class="sescommunityads_post_descbox" style="display:none;">
               <label><?php echo $this->translate('SESCOMMText'); ?></label>
-              <textarea class="form-control required sescommunityads_carousel_title_text sescommunity_content_text" name="main_heading_title"></textarea>
+              <textarea class="required sescommunityads_carousel_title_text sescommunity_content_text" name="main_heading_title"></textarea>
             </div>
             <div class="sescmads_create_field_row sesbasic_clearfix">
               <div class="sescmads_create_field_label"><label class="required"><?php echo $this->translate('SESCOMMImage'); ?></label></div>
@@ -207,7 +207,7 @@ var sescommunityIsEditForm = "<?php echo $this->editName; ?>";
             <div class="sescmads_create_field_row sesbasic_clearfix">
               <div class="sescmads_create_field_label"><label><?php echo $this->translate('Call to Action'); ?></label></div>
               <div class="sescmads_create_field_element">
-                <select class="form-control sesbasic_button sescomm_call_to_action" name="call_to_action">
+                <select class="sesbasic_button sescomm_call_to_action" name="call_to_action">
                   <?php echo $this->callToAction; ?>
                 </select>
               </div>
@@ -228,7 +228,7 @@ var sescommunityIsEditForm = "<?php echo $this->editName; ?>";
       <div class="sescmads_create_fields">
             <div class="sescommunityads_post_descbox" style="display:none;">
               <label><?php echo $this->translate('SESCOMMText'); ?></label>
-              <textarea class="form-control required sescommunityads_carousel_title_text sescommunity_content_text" name="main_heading_title"></textarea>
+              <textarea class="required sescommunityads_carousel_title_text sescommunity_content_text" name="main_heading_title"></textarea>
             </div>
 						<div class="sescmads_create_field_row sesbasic_clearfix">
               <div class="sescmads_create_field_label"><label class="required"><?php echo $this->translate('Ad Title'); ?> </label></div>
@@ -254,7 +254,7 @@ var sescommunityIsEditForm = "<?php echo $this->editName; ?>";
 							<div id="banner_size" class="sescmads_create_field_row sesbasic_clearfix">
 								<div class="sescmads_create_field_label"><label class="required"><?php echo $this->translate('Banner Sizes'); ?></label></div>
 								<div class="sescmads_create_field_element">
-									<select class="form-control sesbasic_button sescomm_banner_size" onchange="changeHeightWidth(this.value);" name="banner_id">
+									<select class="sesbasic_button sescomm_banner_size" onchange="changeHeightWidth(this.value);" name="banner_id">
 										<?php echo $this->getBannerSizes; ?>
 									</select>
 								</div>
@@ -288,7 +288,7 @@ var sescommunityIsEditForm = "<?php echo $this->editName; ?>";
 						<div id="banner_html_code" class="sescommunityads_post_descbox" style="display:none;">
 							<div class="sescmads_create_field_label"><label class="required"><?php echo $this->translate('Html Code'); ?></label></div>
               <div class="sescmads_create_field_element">
-  							<textarea class="form-control required sescommunityads_carousel_title_text" name="html_code"><?php echo !empty($this->ad->html_code) ? $this->ad->html_code : ''; ?></textarea>
+  							<textarea class="required sescommunityads_carousel_title_text" name="html_code"><?php echo !empty($this->ad->html_code) ? $this->ad->html_code : ''; ?></textarea>
               </div>
             </div>
       </div>
@@ -305,7 +305,7 @@ var sescommunityIsEditForm = "<?php echo $this->editName; ?>";
         
           <div class="sescommunityads_post_descbox" style="display:none;">
             <label><?php echo $this->translate('SESCOMMText'); ?></label>
-            <textarea class="form-control required sescommunityads_carousel_title_text" name="main_heading_title"></textarea>
+            <textarea class="required sescommunityads_carousel_title_text" name="main_heading_title"></textarea>
           </div>
           
           <div class="sescmads_create_field_row sesbasic_clearfix">
@@ -337,7 +337,7 @@ var sescommunityIsEditForm = "<?php echo $this->editName; ?>";
             <div class="sescmads_create_field_row sesbasic_clearfix">
               <div class="sescmads_create_field_label"><label><?php echo $this->translate('Call to Action'); ?></label></div>
               <div class="sescmads_create_field_element">
-                <select class="form-control sesbasic_button sescomm_call_to_action" name="call_to_action">
+                <select class="sesbasic_button sescomm_call_to_action" name="call_to_action">
                   <?php echo $this->callToAction; ?>
                 </select>
               </div>

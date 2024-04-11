@@ -40,7 +40,7 @@ class Install_Form_Auth extends Engine_Form
 
     // Submit
     $this->addElement('Button', 'submit', array(
-      'label' => 'Continue',
+      'label' => 'Login',
       'type' => 'submit',
       'ignore' => true,
     ));

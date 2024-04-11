@@ -233,24 +233,6 @@ class Core_Form_Admin_Settings_General extends Engine_Form
           'or stylesheet, be sure to use the <script> or <link> tag.'
     ));
 
-    $kbText = '';
-    $links = array('http://www.addthis.com/');
-    if( $settings->getSetting('user.support.links', 0) == 1 ) {
-      $kbText = ' More Info: <a href="%2$s" target="_blank">KB Article</a>';
-      $links[] = 'https://community.socialengine.com/blogs/597/96/add-this';
-    }
-    // Social share code
-    $description = vsprintf('Below you can enter the code generated from: '.
-          '<a href="%1$s" target="_blank">http://www.addthis.com</a> '.
-          'for displaying social sharing buttons. Leaving this field empty will '.
-          'not display those buttons.' . $kbText,
-          $links);
-    $this->addElement('Textarea', 'social_code', array(
-      'label' => 'Social Share Block Code',
-      'description' => $description,
-    ));
-    $this->social_code->getDecorator('Description')->setOption('escape', false);
-
     $Favicons = array(''=>'');
     $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('ico')));
     foreach( $files as $file ) {

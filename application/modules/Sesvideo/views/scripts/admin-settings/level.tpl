@@ -36,13 +36,13 @@
 <script type="application/javascript">
 function setVideoType(value){
 	if(value == 1) {
-   document.getElementById('video_approvety-wrapper').style.display = 'block';
+   document.getElementById('video_approvety-wrapper').style.display = 'flex';
 	}else{
 		 document.getElementById('video_approvety-wrapper').style.display = 'none';
 	}
 }
 if(document.getElementById('video_approve').value == 1) {
-   document.getElementById('video_approvety-wrapper').style.display = 'block';
+   document.getElementById('video_approvety-wrapper').style.display = 'flex';
 }else{
 	 document.getElementById('video_approvety-wrapper').style.display = 'none';
 }

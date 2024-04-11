@@ -53,10 +53,10 @@ class Install_Import_Phpfox_UserLists extends Install_Import_Phpfox_Abstract
  * 
 CREATE TABLE IF NOT EXISTS `engine4_user_lists` (
   `list_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `owner_id` int(11) unsigned NOT NULL,
   `child_count` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`list_id`),
   KEY `owner_id` (`owner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */

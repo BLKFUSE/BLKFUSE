@@ -20,7 +20,7 @@ class Payment_AdminSubscriptionController extends Core_Controller_Action_Admin
 {
   public function indexAction()
   {
-    $this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_payment', array(), 'core_admin_main_payment_subscriptions');
+    $this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_membership', array(), 'core_admin_main_payment_subscriptions');
     // Test curl support
     if( !function_exists('curl_version') ||
         !($info = curl_version()) ) {
@@ -143,6 +143,8 @@ class Payment_AdminSubscriptionController extends Core_Controller_Action_Admin
 
   public function detailAction()
   {
+    $this->view->navigation = Engine_Api::_()->getApi('menus', 'core')->getNavigation('core_admin_main_membership', array(), 'core_admin_main_payment_subscriptions');
+    
     if( !($subscription_id = $this->_getParam('subscription_id')) ||
         !($subscription = Engine_Api::_()->getItem('payment_subscription', $subscription_id)) ) {
       return;

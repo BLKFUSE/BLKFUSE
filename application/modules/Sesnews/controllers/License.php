@@ -52,11 +52,11 @@ if ($this->getRequest()->isPost()) {
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesnews_favourites` (
       `favourite_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
       `user_id` int(11) unsigned NOT NULL,
-      `resource_type` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+      `resource_type` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
       `resource_id` int(11) NOT NULL,
       PRIMARY KEY (`favourite_id`),
       KEY `user_id` (`user_id`,`resource_type`,`resource_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
       $db->query('DROP TABLE IF EXISTS `engine4_sesnews_roles`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesnews_roles` (
       `role_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -64,39 +64,39 @@ if ($this->getRequest()->isPost()) {
       `news_id` int(11) unsigned NOT NULL,
       PRIMARY KEY (`role_id`),
       KEY `user_id` (`news_id`,`user_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
       $db->query('DROP TABLE IF EXISTS `engine4_sesnews_news`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesnews_news` (
       `news_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-      `custom_url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+      `custom_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
       `parent_id` int(11) DEFAULT "0",
       `photo_id` int(11) DEFAULT "0",
-      `title` varchar(224) COLLATE utf8_unicode_ci NOT NULL,
-      `body` longtext COLLATE utf8_unicode_ci NOT NULL,
-      `location` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-      `owner_type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+      `title` varchar(224) COLLATE utf8mb4_unicode_ci NOT NULL,
+      `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+      `location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+      `owner_type` varchar(64) NOT NULL,
       `owner_id` int(11) unsigned NOT NULL,
       `category_id` int(11) unsigned NOT NULL DEFAULT "0",
       `subcat_id` int(11) DEFAULT "0",
       `subsubcat_id` int(11) DEFAULT "0",
       `creation_date` datetime NOT NULL,
       `modified_date` datetime NOT NULL,
-      `publish_date` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-      `starttime` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-      `endtime` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+      `publish_date` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+      `starttime` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+      `endtime` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
       `news_link` VARCHAR(255) NOT NULL,
       `view_count` int(11) unsigned NOT NULL DEFAULT "0",
       `comment_count` int(11) unsigned NOT NULL DEFAULT "0",
       `like_count` int(11) unsigned NOT NULL DEFAULT "0",
-      `news_contact_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-      `news_contact_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-      `news_contact_phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-      `news_contact_website` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-      `news_contact_facebook` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-      `parent_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-      `seo_title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-      `seo_keywords` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-      `seo_description` text COLLATE utf8_unicode_ci,
+      `news_contact_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+      `news_contact_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+      `news_contact_phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+      `news_contact_website` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+      `news_contact_facebook` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+      `parent_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+      `seo_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+      `seo_keywords` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+      `seo_description` text COLLATE utf8mb4_unicode_ci,
       `featured` tinyint(1) NOT NULL DEFAULT "0",
       `sponsored` tinyint(1) NOT NULL DEFAULT "0",
       `hot` TINYINT(1) NOT NULL DEFAULT "0",
@@ -123,7 +123,7 @@ if ($this->getRequest()->isPost()) {
       KEY `search` (`search`,`creation_date`),
       KEY `owner_id` (`owner_id`,`draft`),
       KEY `draft` (`draft`,`search`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
       $db->query('DROP TABLE IF EXISTS `engine4_sesnews_albums`;');
       $db->query('CREATE TABLE `engine4_sesnews_albums` (
       `album_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -139,12 +139,12 @@ if ($this->getRequest()->isPost()) {
       `comment_count` int(11) unsigned NOT NULL default "0",
       `collectible_count` int(11) unsigned NOT NULL default "0",
       `like_count` int(11) NOT NULL DEFAULT "0",
-      `position_cover` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+      `position_cover` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
       `art_cover` int(11) NOT NULL DEFAULT "0",
       `favourite_count` int(11) UNSIGNED NOT NULL DEFAULT "0",
       PRIMARY KEY (`album_id`),
       KEY `news_id` (`news_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
       $db->query('DROP TABLE IF EXISTS `engine4_sesnews_photos`;');
       $db->query('CREATE TABLE `engine4_sesnews_photos` (
       `photo_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -161,35 +161,35 @@ if ($this->getRequest()->isPost()) {
       `comment_count` int(11) UNSIGNED NOT NULL DEFAULT "0",
       `like_count` int(11) UNSIGNED NOT NULL DEFAULT "0",
       `order` int(11) NOT NULL DEFAULT "0",
-      `position_cover` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+      `position_cover` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
       `art_cover` int(11) NOT NULL DEFAULT "0",
       `favourite_count` int(11) UNSIGNED NOT NULL DEFAULT "0",
       PRIMARY KEY (`photo_id`),
       KEY `album_id` (`album_id`),
       KEY `news_id` (`news_id`),
       KEY `user_id` (`user_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
       $db->query('DROP TABLE IF EXISTS `engine4_sesnews_categories`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesnews_categories` (
       `category_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
       `user_id` int(11) unsigned NOT NULL,
-      `category_name` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-      `description` text COLLATE utf8_unicode_ci,
+      `category_name` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+      `description` text COLLATE utf8mb4_unicode_ci,
       `order` int(11) NOT NULL DEFAULT "0",
-      `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-      `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+      `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+      `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
       `subcat_id` int(11) DEFAULT "0",
       `subsubcat_id` int(11) DEFAULT "0",
       `thumbnail` int(11) NOT NULL DEFAULT "0",
       `cat_icon` int(11) NOT NULL DEFAULT "0",
       `colored_icon` int(11) NOT NULL,
-      `color` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+      `color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
       `profile_type_review` int(11) DEFAULT NULL,
       `profile_type` int(11) DEFAULT NULL,
       `senews_categoryid` INT(11) NULL,
       `member_levels` VARCHAR(255) NULL DEFAULT NULL,
       PRIMARY KEY (`category_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
       $db->query("INSERT IGNORE INTO `engine4_sesnews_categories` (`category_id`, `user_id`, `category_name`, `description`, `order`, `title`, `slug`, `subcat_id`, `subsubcat_id`, `thumbnail`, `cat_icon`, `colored_icon`, `color`, `profile_type_review`, `profile_type`) VALUES (1, 1, 'Arts & Culture', '', 11, 'Arts & Culture', 'arts-culture', 0, 0, 0, 0, 0, NULL, 0, 0),(2, 1, 'Business', '', 10, 'Business', 'business', 0, 0, 0, 0, 0, NULL, NULL, 0),(3, 1, 'Entertainment', '', 9, 'Entertainment', 'entertainment', 0, 0, 0, 0, 0, NULL, NULL, 0),(5, 1, 'Family & Home', '', 8, 'Family & Home', 'family-home', 0, 0, 0, 0, 0, NULL, NULL, 0),(6, 1, 'Health', '', 7, 'Health', 'health', 0, 0, 0, 0, 0, NULL, NULL, 0),(7, 1, 'Recreation', '', 6, 'Recreation', 'recreation', 0, 0, 0, 0, 0, NULL, NULL, 0),(8, 1, 'Personal', '', 5, 'Personal', 'personal', 0, 0, 0, 0, 0, NULL, NULL, 0),(9, 1, 'Shopping', '', 4, 'Shopping', 'shopping', 0, 0, 0, 0, 0, NULL, NULL, 0),(10, 1, 'Society', '', 3, 'Society', 'society', 0, 0, 0, 0, 0, NULL, NULL, 0),(11, 1, 'Sports', '', 2, 'Sports', 'sports', 0, 0, 0, 0, 0, NULL, NULL, 0),(12, 1, 'Technology', '', 1, 'Technology', 'technology', 0, 0, 0, 0, 0, NULL, NULL, 0),(13, 1, 'Other', '', 0, 'Other', 'other', 0, 0, 0, 0, 0, NULL, NULL, 0)");
       $db->query('DROP TABLE IF EXISTS `engine4_sesnews_dashboards` ;');
       $db->query('CREATE TABLE `engine4_sesnews_dashboards` (
@@ -199,7 +199,7 @@ if ($this->getRequest()->isPost()) {
       `enabled` tinyint(1) NOT NULL default "1",
       `main` tinyint(1) NOT NULL default "0",
       PRIMARY KEY (`dashboard_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
       $db->query('INSERT IGNORE INTO `engine4_sesnews_dashboards` (`type`, `title`, `enabled`, `main`) VALUES
       ("manage_news", "Manage News", "1", "1"),
       ("edit_news", "Edit News", "1", "0"),
@@ -219,7 +219,7 @@ if ($this->getRequest()->isPost()) {
       `child_id` int(11) NOT NULL,
       `order` smallint(6) NOT NULL,
       PRIMARY KEY (`field_id`,`option_id`,`child_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
       $db->query('INSERT IGNORE INTO `engine4_sesnews_news_fields_maps` (`field_id`, `option_id`, `child_id`, `order`) VALUES (0, 0, 1, 1);');
       $db->query('DROP TABLE IF EXISTS `engine4_sesnews_news_fields_meta`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesnews_news_fields_meta` (
@@ -235,12 +235,12 @@ if ($this->getRequest()->isPost()) {
       `show` tinyint(1) unsigned DEFAULT "0",
       `order` smallint(3) unsigned NOT NULL DEFAULT "999",
       `config` text NOT NULL,
-      `validators` text COLLATE utf8_unicode_ci,
-      `filters` text COLLATE utf8_unicode_ci,
-      `style` text COLLATE utf8_unicode_ci,
-      `error` text COLLATE utf8_unicode_ci,
+      `validators` text COLLATE utf8mb4_unicode_ci,
+      `filters` text COLLATE utf8mb4_unicode_ci,
+      `style` text COLLATE utf8mb4_unicode_ci,
+      `error` text COLLATE utf8mb4_unicode_ci,
       PRIMARY KEY (`field_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
       $db->query('INSERT IGNORE INTO `engine4_sesnews_news_fields_meta` (`field_id`, `type`, `label`, `description`, `alias`, `required`, `display`, `publish`, `search`, `show`, `order`, `config`, `validators`, `filters`, `style`, `error`) VALUES (1, "profile_type", "Profile Type", "", "profile_type", 1, 0, 0, 2, 0, 999, "", NULL, NULL, NULL, NULL);');
       $db->query('DROP TABLE IF EXISTS `engine4_sesnews_news_fields_options`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesnews_news_fields_options` (
@@ -251,7 +251,7 @@ if ($this->getRequest()->isPost()) {
       `type` tinyint(1) NOT NULL DEFAULT "0",
       PRIMARY KEY (`option_id`),
       KEY `field_id` (`field_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
       $db->query('INSERT IGNORE INTO `engine4_sesnews_news_fields_options` (`option_id`, `field_id`, `label`, `order`) VALUES (1, 1, "Rock News", 0);');
       $db->query('DROP TABLE IF EXISTS `engine4_sesnews_news_fields_search`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesnews_news_fields_search` (
@@ -259,7 +259,7 @@ if ($this->getRequest()->isPost()) {
       `profile_type` smallint(11) unsigned DEFAULT NULL,
       PRIMARY KEY (`item_id`),
       KEY `profile_type` (`profile_type`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
       $db->query('DROP TABLE IF EXISTS `engine4_sesnews_news_fields_values`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesnews_news_fields_values` (
       `item_id` int(11) NOT NULL,
@@ -267,7 +267,7 @@ if ($this->getRequest()->isPost()) {
       `index` smallint(3) NOT NULL DEFAULT "0",
       `value` text NOT NULL,
       PRIMARY KEY (`item_id`,`field_id`,`index`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci; ');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci; ');
       $db->query('DROP TABLE IF EXISTS `engine4_sesnews_parameters`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesnews_parameters` (
       `parameter_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -275,7 +275,7 @@ if ($this->getRequest()->isPost()) {
       `title` VARCHAR(255) NOT NULL,
       `rating` float NOT NULL,
       PRIMARY KEY (`parameter_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
       $db->query('INSERT IGNORE INTO `engine4_core_jobtypes` (`title`, `type`, `module`, `plugin`, `priority`) VALUES
       ("SNS - News / RSS Importer & Aggregator - Rebuild Privacy", "sesnews_maintenance_rebuild_privacy", "sesnews", "Sesnews_Plugin_Job_Maintenance_RebuildPrivacy", 50);');
       $db->query('INSERT IGNORE INTO `engine4_core_menus` (`name`, `type`, `title`) VALUES
@@ -289,7 +289,7 @@ if ($this->getRequest()->isPost()) {
       ("sesnewsreview_profile_delete", "sesnews", "Delete Review", "Sesnews_Plugin_Menus", "", "sesnewsreview_profile", "", 2),
       ("sesnewsreview_profile_report", "sesnews", "Report", "Sesnews_Plugin_Menus", "", "sesnewsreview_profile", "", 3),
       ("sesnewsreview_profile_share", "sesnews", "Share", "Sesnews_Plugin_Menus", "", "sesnewsreview_profile", "", 4),
-      ("core_main_sesnews", "sesnews", "News", "", \'{"route":"sesnews_general"}\', "core_main", "", 4),
+      ("core_main_sesnews", "sesnews", "News", "", \'{"route":"sesnews_general","icon":"fas fa-newspaper"}\', "core_main", "", 4),
       ("core_sitemap_sesnews", "sesnews", "News", "", \'{"route":"sesnews_general"}\', "core_sitemap", "", 4),
       ("mobi_browse_sesnews", "sesnews", "News", "", \'{"route":"sesnews_general"}\', "mobi_browse", "", 3),
       ("sesnews_main_browsehome", "sesnews", "News Home", "", \'{"route":"sesnews_general","action":"home"}\', "sesnews_main", "", 1),
@@ -352,14 +352,14 @@ if ($this->getRequest()->isPost()) {
       `profile_type` varchar(255) NOT NULL,
       PRIMARY KEY (`categorymapping_id`),
       KEY `category_id` (`category_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
       $db->query('DROP TABLE IF EXISTS `engine4_sesnews_reviews`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesnews_reviews` (
       `review_id` int(11) NOT NULL AUTO_INCREMENT,
-      `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-      `pros` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-      `cons` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-      `description` text COLLATE utf8_unicode_ci NOT NULL,
+      `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+      `pros` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+      `cons` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+      `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
       `recommended` tinyint(1) NOT NULL DEFAULT "1",
       `owner_id` int(11) unsigned NOT NULL,
       `news_id` int(11) unsigned NOT NULL DEFAULT "0",
@@ -376,7 +376,7 @@ if ($this->getRequest()->isPost()) {
       `starttime` datetime DEFAULT NULL,
       `endtime` datetime DEFAULT NULL,
       PRIMARY KEY (`review_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
       $db->query('DROP TABLE IF EXISTS `engine4_sesnews_review_fields_maps`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesnews_review_fields_maps` (
       `field_id` int(11) NOT NULL,
@@ -384,7 +384,7 @@ if ($this->getRequest()->isPost()) {
       `child_id` int(11) NOT NULL,
       `order` smallint(6) NOT NULL,
       PRIMARY KEY (`field_id`,`option_id`,`child_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
       $db->query('INSERT IGNORE INTO `engine4_sesnews_review_fields_maps` (`field_id`, `option_id`, `child_id`, `order`) VALUES (0, 0, 1, 1);');
       $db->query('DROP TABLE IF EXISTS `engine4_sesnews_review_fields_meta`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesnews_review_fields_meta` (
@@ -400,12 +400,12 @@ if ($this->getRequest()->isPost()) {
       `show` tinyint(1) unsigned DEFAULT "0",
       `order` smallint(3) unsigned NOT NULL DEFAULT "999",
       `config` text NOT NULL,
-      `validators` text COLLATE utf8_unicode_ci,
-      `filters` text COLLATE utf8_unicode_ci,
-      `style` text COLLATE utf8_unicode_ci,
-      `error` text COLLATE utf8_unicode_ci,
+      `validators` text COLLATE utf8mb4_unicode_ci,
+      `filters` text COLLATE utf8mb4_unicode_ci,
+      `style` text COLLATE utf8mb4_unicode_ci,
+      `error` text COLLATE utf8mb4_unicode_ci,
       PRIMARY KEY (`field_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
       $db->query('INSERT IGNORE INTO `engine4_sesnews_review_fields_meta` (`field_id`, `type`, `label`, `description`, `alias`, `required`, `display`, `publish`, `search`, `show`, `order`, `config`, `validators`, `filters`, `style`, `error`) VALUES (1, "profile_type", "Profile Type", "", "profile_type", 1, 0, 0, 2, 0, 999, "", NULL, NULL, NULL, NULL);');
       $db->query('DROP TABLE IF EXISTS `engine4_sesnews_review_fields_options`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesnews_review_fields_options` (
@@ -416,7 +416,7 @@ if ($this->getRequest()->isPost()) {
       `type` tinyint(1) NOT NULL DEFAULT "0",
       PRIMARY KEY (`option_id`),
       KEY `field_id` (`field_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
       $db->query('INSERT IGNORE INTO `engine4_sesnews_review_fields_options` (`option_id`, `field_id`, `label`, `order`) VALUES (1, 1, "Default", 0);');
       $db->query('DROP TABLE IF EXISTS `engine4_sesnews_review_fields_search`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesnews_review_fields_search` (
@@ -424,7 +424,7 @@ if ($this->getRequest()->isPost()) {
       `profile_type` smallint(11) unsigned DEFAULT NULL,
       PRIMARY KEY (`item_id`),
       KEY `profile_type` (`profile_type`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
       $db->query('DROP TABLE IF EXISTS `engine4_sesnews_review_fields_values`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesnews_review_fields_values` (
       `item_id` int(11) NOT NULL,
@@ -432,7 +432,7 @@ if ($this->getRequest()->isPost()) {
       `index` smallint(3) NOT NULL DEFAULT "0",
       `value` text NOT NULL,
       PRIMARY KEY (`item_id`,`field_id`,`index`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
       $db->query('DROP TABLE IF EXISTS `engine4_sesnews_review_parametervalues`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesnews_review_parametervalues` (
       `parametervalue_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -443,19 +443,19 @@ if ($this->getRequest()->isPost()) {
       `content_id` INT(11) NOT NULL,
       PRIMARY KEY (`parametervalue_id`),
       UNIQUE KEY `uniqueKey` (`parameter_id`,`user_id`,`resources_id`,`content_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesnews_rss` (
       `rss_id` int(11) unsigned NOT NULL auto_increment,
       `rss_link` varchar(128) NOT NULL,
       `title` varchar(128) NOT NULL,
       `body` longtext NOT NULL,
-      `owner_type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+      `owner_type` varchar(64) NOT NULL,
       `owner_id` int(11) unsigned NOT NULL,
       `category_id` int(11) unsigned NOT NULL DEFAULT "0",
       `subcat_id` int(11) DEFAULT "0",
       `subsubcat_id` int(11) DEFAULT "0",
-      `publish_date` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+      `publish_date` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
       `photo_id` int(11) unsigned NOT NULL default "0",
       `creation_date` datetime NOT NULL,
       `modified_date` datetime NOT NULL,
@@ -475,7 +475,7 @@ if ($this->getRequest()->isPost()) {
       KEY `search` (`search`, `creation_date`),
       KEY `owner_id` (`owner_id`, `draft`),
       KEY `draft` (`draft`, `search`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesnews_rsssubscriptions` (
       `rsssubscription_id` int(10) unsigned NOT NULL auto_increment,
@@ -484,7 +484,7 @@ if ($this->getRequest()->isPost()) {
       PRIMARY KEY  (`rsssubscription_id`),
       UNIQUE KEY `rss_id` (`rss_id`,`subscriber_user_id`),
       KEY `subscriber_user_id` (`subscriber_user_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
 
       $db->query('INSERT IGNORE INTO `engine4_core_tasks` (`title`, `module`, `plugin`, `timeout`) VALUES
       ("SNS - News Plugin - Fetched News from RSS Feed", "sesnews", "Sesnews_Plugin_Task_Fetchenews", 172800);');
@@ -505,7 +505,7 @@ if ($this->getRequest()->isPost()) {
       PRIMARY KEY (`integrateothermodule_id`),
       UNIQUE KEY `content_type` (`content_type`,`content_id`),
       KEY `module_name` (`module_name`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
       
       $db->query('INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
       ("sesnews_admin_manageblackurl", "sesnews", "Blacklist URL", "", \'{"route":"admin_default","module":"sesnews","controller":"manage-blacklist"}\', "sesnews_admin_main", "", 88);');
@@ -517,7 +517,7 @@ if ($this->getRequest()->isPost()) {
         `creation_date` datetime NOT NULL,
         `modified_date` datetime NOT NULL,
         PRIMARY KEY (`url_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
 
       include_once APPLICATION_PATH . "/application/modules/Sesnews/controllers/defaultsettings.php";
 

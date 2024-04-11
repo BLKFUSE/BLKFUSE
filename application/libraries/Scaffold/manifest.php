@@ -2,12 +2,12 @@
   'package' => array(
     'type' => 'library',
     'name' => 'scaffold',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 10171 $',
     'path' => 'application/libraries/Scaffold',
     'repository' => 'socialengine.com',
     'title' => 'CSS Scaffold',
-    'author' => 'Webligo Developments',
+    'author' => 'SocialEngine Core',
     'directories' => array(
       'application/libraries/Scaffold',
     )

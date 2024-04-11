@@ -46,7 +46,7 @@ class Engine_Filter_Censor implements Zend_Filter_Interface
 
     public function filter($value)
     {
-        $value = Engine_Text_Emoji::encode($value);
+        // $value = Engine_Text_Emoji::encode($value);
 
         if (empty($value) || empty($this->_forbiddenWords) || !is_array($this->_forbiddenWords)) {
             return $value;

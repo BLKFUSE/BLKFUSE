@@ -254,12 +254,18 @@ ul.videos_manage .video_author {
 	display:block;
 }
 ul.videos_manage .video_stats {
-	margin-top:2px;
+	margin-top:5px;
 	padding:0;
 }
 ul.videos_manage .video_stats > span {
 	font-size:1em;
   color:$theme_font_color_light;
+}
+ul.videos_manage .video_info .content_approval_msg span{
+	margin:10px 0 0;
+}
+ul.videos_manage .video_info .tip span{
+	margin-top:10px;
 }
 /*
 VIEW VIDEO
@@ -454,45 +460,67 @@ Used for the attachment composer above the main feed.
 }
 /* ---------- Responsive CSS -------------*/
 @media (max-width:600px) {
-ul.videos_manage .video_info {
-	clear:both;
-	padding-top:5px;
-	padding-left:0;
-}
+	ul.videos_manage .video_info {
+		clear:both;
+		padding-top:5px;
+		padding-left:0;
+	}
 }
 @media(max-width:767px) {
-.video_view .video_embed video {
-	width:100%;
-}
-html ul.videos_manage .video_thumb_wrapper {
-	width:100%;
-	height:150px;
-}
-html ul.videos_manage .video_options {
-	width:100%;
-	padding-left:0;
-}
-html ul.videos_manage .video_options a {
-	display:inline-block;
-}
+	.video_view .video_embed video {
+		width:100%;
+	}
+	.video_view_container .video_embed iframe{
+		height:auto;
+		aspect-ratio: 9/6;
+	}
+	html ul.videos_manage .video_thumb_wrapper {
+		width:100%;
+		height:150px;
+	}
+	html ul.videos_manage .video_options {
+		width:100%;
+		padding-left:0;
+	}
+	html ul.videos_manage .video_options a {
+		display:inline-block;
+	}
+	.layout_page_video_index_view .layout_main{
+		display:flex;
+		flex-wrap:wrap;
+	}
+	.layout_page_video_index_view .layout_main .layout_middle,
+	.layout_page_video_index_view .layout_main .layout_left,
+	.layout_page_video_index_view .layout_main .layout_right{
+		width:100%;
+	}
+	.layout_page_video_index_view .layout_main .layout_middle{
+		order:1;
+	}
+	.layout_page_video_index_view .layout_main .layout_left{
+		order:2;
+	}
+	.layout_page_video_index_view .layout_main .layout_right{
+		order:3;
+	}
 }
 @media (min-width:980px) {
-.vimeo_iframe_big {
-	width:640px;
-	height:360px;
-}
-.vimeo_iframe_small {
-	width:400px;
-	height:230px;
-}
-.youtube_iframe_big {
-	width:560px;
-	height:340px;
-}
-.youtube_iframe_small {
-	width:425px;
-	height:344px;
-}
+	.vimeo_iframe_big {
+		width:640px;
+		height:360px;
+	}
+	.vimeo_iframe_small {
+		width:400px;
+		height:230px;
+	}
+	.youtube_iframe_big {
+		width:560px;
+		height:340px;
+	}
+	.youtube_iframe_small {
+		width:425px;
+		height:344px;
+	}
 }
 /* BREADCRUMB */
 .video_breadcrumb > p {

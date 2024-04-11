@@ -65,7 +65,7 @@ DEFAULT STYLES FOR THIS THEME
   */
   theme_font_family:$elpis_body_fontfamily;
   theme_font_size:15px;
-	theme_font_size_small:13px;
+	theme_font_size_small:90%;
   theme_font_color:$elpis_font_color;
   theme_font_color_light:$elpis_font_color_light;
   theme_text_align:left;
@@ -75,7 +75,7 @@ DEFAULT STYLES FOR THIS THEME
   theme_link_decoration_hover:none;
   theme_headline_color:$elpis_headline_color;
   theme_headline_size_large:165%;
-  theme_headline_size_medium:120%;
+  theme_headline_size_medium:140%;
 
   /*
   BORDER COLORS

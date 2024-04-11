@@ -10,57 +10,43 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_manage", 'childMenuItemName' => 'core_admin_main_manage_tags')); ?>
 
-<h2>
-  <?php echo $this->translate("Manage Tags") ?>
-</h2>
-<p>
-  <?php echo $this->translate("This page lists all of the tags your users have posted. You can use this page to monitor these tags and delete offensive material if necessary. Entering criteria into the filter fields will help you find specific tags. Leaving the filter fields blank will show all of the tags on your social network.") ?>
-</p>
-<?php
-$settings = Engine_Api::_()->getApi('settings', 'core');
-if( $settings->getSetting('user.support.links', 0) == 1 ) {
-echo 'More info: <a href="https://community.socialengine.com/blogs/597/47/tag-management" target="_blank">See KB article</a>.';
-}
-?>
-<br />
-<br />
+<div class="admin_common_top_section">
+  <h2 class="page_heading"><?php echo $this->translate("Manage Tags") ?></h2>
+  <p><?php echo $this->translate("This page lists all of the tags your users have posted. You can use this page to monitor these tags and delete offensive material if necessary. Entering criteria into the filter fields will help you find specific tags. Leaving the filter fields blank will show all of the tags on your social network.") ?> </p>
+  <?php
+  $settings = Engine_Api::_()->getApi('settings', 'core');
+  if( $settings->getSetting('user.support.links', 0) == 1 ) {
+  echo 'More info: <a href="https://community.socialengine.com/blogs/597/47/tag-management" target="_blank">See KB article</a>.';
+  }
+  ?>
+</div>  
 <script type="text/javascript">
-
-
-function multiModify()
-{
+function multiModify(){
   var multimodify_form = scriptJquery('#multimodify_form');
   if (multimodify_form.submit_button.value == 'delete')
   {
     return confirm('<?php echo $this->string()->escapeJavascript($this->translate("Are you sure you want to delete the selected tags?")) ?>');
   }
 }
-
-function selectAll(obj)
-{
+function selectAll(obj){
   scriptJquery('.checkbox').each(function(){
     scriptJquery(this).prop("checked",scriptJquery(obj).prop("checked"))
   });
 }
 </script>
-<div>
-  <a class='smoothbox buttonlink icon_tag' href='<?php echo $this->url(array('action' => 'add'));?>'><?php echo $this->translate("Add Tags") ?></a>
+<div class="">
+  <a class='smoothbox admin_link_btn' href='<?php echo $this->url(array('action' => 'add'));?>'><?php echo $this->translate("Add Tags") ?></a>
 </div>
-<br />
-<div class='admin_search'>
+<div class='admin_search admin_common_search'>
   <?php echo $this->formFilter->render($this) ?>
 </div>
-
-<br />
 <?php $count = $this->paginator->getTotalItemCount() ?>
-
 <?php if($count > 0) { ?>
   <div class='admin_results'>
     <div>
-      
-      <?php echo $this->translate(array("%s tag found.", "%s tags found.", $count),
-          $this->locale()->toNumber($count)) ?>
+      <?php echo $this->translate(array("%s tag found.", "%s tags found.", $count), $this->locale()->toNumber($count)) ?>
     </div>
     <div>
       <?php echo $this->paginationControl($this->paginator, null, null, array(
@@ -69,7 +55,7 @@ function selectAll(obj)
       )); ?>
     </div>
   </div>
-  <br />
+
   <div class="admin_table_form">
     <form id='multimodify_form' method="post" action="<?php echo $this->url(array('action'=>'multi-modify'));?>" onSubmit="multiModify()">
       <table class='admin_table admin_responsive_table'>
@@ -78,7 +64,7 @@ function selectAll(obj)
             <th style='width: 1%;'><input onclick="selectAll(this)" type='checkbox' class='checkbox'></th>
             <th style='width: 1%;'><?php echo $this->translate("ID") ?></th>
             <th><?php echo $this->translate("Tag Name") ?></th>
-            <th style='width: 1%;' class='admin_table_options'><?php echo $this->translate("Options") ?></th>
+            <th style='width: 150px;' class='admin_table_options'><?php echo $this->translate("Options") ?></th>
           </tr>
         </thead>
         <tbody>
@@ -104,12 +90,14 @@ function selectAll(obj)
           <?php endif; ?>
         </tbody>
       </table>
-      <br />
       <div class='buttons'>
-        <button type='submit' name="submit_button" value="delete"><?php echo $this->translate("Delete Selected") ?></button>
+        <button type='submit' name="submit_button" value="delete">
+          <?php echo $this->translate("Delete Selected") ?>
+        </button>
       </div>
     </form>
   </div>
+
 <?php } else { ?>
   <div class="tip">
     <span>
@@ -117,3 +105,7 @@ function selectAll(obj)
     </span>
   </div>
 <?php } ?>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_manage').parent().addClass('active');
+  scriptJquery('.core_admin_main_manage_tags').addClass('active');
+</script>

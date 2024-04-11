@@ -479,7 +479,7 @@ class Sescontest_Model_Contest extends Core_Model_Item_Abstract {
     if ($transaction && $orderPackageId) {
       $this->is_approved = $approved;
       $this->save();
-      Engine_Api::_()->getDbtable('contests', 'sescontest')->update(array('is_approved' => $approved), array('orderspackage_id' => $orderPackageId));
+      //Engine_Api::_()->getDbtable('contests', 'sescontest')->update(array('is_approved' => $approved), array('orderspackage_id' => $orderPackageId));
       if ($approved) {
         $activityApi = Engine_Api::_()->getDbtable('actions', 'activity');
         $action = $activityApi->addActivity(Engine_Api::_()->user()->getViewer(), $this, 'sescontest_create');
@@ -643,5 +643,7 @@ class Sescontest_Model_Contest extends Core_Model_Item_Abstract {
     }
     return $this;
   }
-
+  public function getPackageOrder() {
+    return Engine_Api::_()->getItem('sescontestpackage_orderspackage', $this->orderspackage_id);
+  }
 }

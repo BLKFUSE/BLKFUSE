@@ -217,14 +217,14 @@ class Sescommunityads_Model_Sescommunityad extends Core_Model_Item_Abstract {
         //featured
         $this->featured = $package->featured;
         if($package->featured_days){
-            $this->featured_date = date('Y-m-d H:i:s',strtotime(date('Y-m-d H:i:s') + "+ ".$package->featured_days." days"));
+            $this->featured_date = date('Y-m-d H:i:s',strtotime(date('Y-m-d H:i:s') . "+ ".$package->featured_days." days"));
         }else{
             $this->featured_date = NULL;
         }
         //sponsored
         $this->sponsored = $package->sponsored;
         if($package->sponsored_days){
-            $this->sponsored_date = date('Y-m-d H:i:s',strtotime(date('Y-m-d H:i:s') + "+ ".$package->sponsored_days." days"));
+            $this->sponsored_date = date('Y-m-d H:i:s',strtotime(date('Y-m-d H:i:s') . "+ ".$package->sponsored_days." days"));
         }else{
             $this->sponsored_date = NULL;
         }
@@ -232,7 +232,7 @@ class Sescommunityads_Model_Sescommunityad extends Core_Model_Item_Abstract {
         $this->ad_type = $package->click_type;
         if($package->click_limit) {
           if($package->click_type == "perday"){
-            $this->ad_expiration_date = date('Y-m-d H:i:s',strtotime(date('Y-m-d H:i:s') + "+ ".$package->click_limit." days"));
+            $this->ad_expiration_date = date('Y-m-d H:i:s',strtotime(date('Y-m-d H:i:s') . "+ ".$package->click_limit." days"));
             $this->ad_limit = $package->click_limit;
           }else{
              $this->ad_limit = $package->click_limit;

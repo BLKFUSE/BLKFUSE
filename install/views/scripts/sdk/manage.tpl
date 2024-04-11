@@ -11,43 +11,42 @@
  */
 ?>
 
-<div class="content sdk manage" id="content4">
+<div class="sdk manage" id="content4">
   
-  <div class="tip" id="package-created"><span>Package(s) successfully created. Download below.</span></div>
+  <div class="tip" id="package-created"><span><?php echo $this->translate("Package(s) successfully created. Download below.") ?></span></div>
   
 
-  <h3>Manage Package Files</h3>
+  <h3><?php echo $this->translate("Manage Package Files") ?></h3>
 
   <p>
-    These are the built package files we found on your system at
-    <i>temporary/package/sdk</i>
+    <?php echo $this->translate("These are the built package files we found on your system at") ?>
+    <i><?php echo $this->translate("temporary/package/sdk") ?></i>
   </p>
 
   <?php if( empty($this->packages) ): ?>
 
     <div class="tip">
-      No packages were found.
+      <?php echo $this->translate("No packages were found.") ?>
     </div>
   
   <?php else: ?>
-
-    <div class="button-container">
-      <button onclick="scriptJquery('#sdk_manage_form').attr('action', '<?php echo $this->url(array('action' => 'combine')) ?>').submit();">Combine</button>
-      <button onclick="scriptJquery('#sdk_manage_form').attr('action', '<?php echo $this->url(array('action' => 'delete')) ?>').submit();">Delete</button>
-    </div>
-
-    <form action="<?php echo $this->url() ?>" method="get" id="sdk_manage_form">
-    
+    <script type="text/javascript">
+      function selectAll(obj){
+        scriptJquery('.checkbox').each(function(){
+          scriptJquery(this).prop("checked",scriptJquery(obj).prop("checked"))
+        });
+      }
+    </script>
+    <form action="<?php echo $this->url() ?>" method="get" id="sdk_manage_form">    
       <table class="sdk_table manage">
         <thead>
           <tr>
-            <th><input type='checkbox' class='checkbox' onclick="toggle(this);" /></th>
-            <th class="package-file"><a href="javascript:void(0);">Package File</a></th>
-            <th class="package-date"><a href="javascript:void(0);">Date Built</a></th>
+            <th><input type='checkbox' class='checkbox' onclick="selectAll(this);" /></th>
+            <th class="package-file"><?php echo $this->translate("Package File") ?></th>
+            <th class="package-date"><?php echo $this->translate("Date Built") ?></th>
           </tr>
         </thead>
         <tbody>
-
           <?php foreach( $this->packages as $index => $package ): ?>
             <tr>
               <td>
@@ -63,19 +62,13 @@
               </td>
             </tr>
           <?php endforeach; ?>
-
         </tbody>
       </table>
-
     </form>
-    <script type="text/javascript">
-      function toggle(source) {
-          var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-          for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i] != source)
-              checkboxes[i].checked = source.checked;
-          }
-      }
-    </script>
+    <div class="button-container">
+      <button onclick="scriptJquery('#sdk_manage_form').attr('action', '<?php echo $this->url(array('action' => 'combine')) ?>').submit();"><?php echo $this->translate("Combine") ?></button>
+      <button onclick="scriptJquery('#sdk_manage_form').attr('action', '<?php echo $this->url(array('action' => 'delete')) ?>').submit();"><?php echo $this->translate("Delete") ?></button>
+    </div>
+
   <?php endif; ?>
 </div>

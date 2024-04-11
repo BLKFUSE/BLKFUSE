@@ -94,7 +94,8 @@ class Payment_Model_Transaction extends Core_Model_Item_Abstract
       $tmpRow->delete();
     }
     return $this;
-	} 
+	}
+	
   public function getPhotoUrl($type = null) {
     if ($this->file_id) {
       $file = Engine_Api::_()->getItemTable('storage_file')->getFile($this->file_id, $type);

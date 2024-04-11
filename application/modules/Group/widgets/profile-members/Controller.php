@@ -39,6 +39,9 @@ class Group_Widget_ProfileMembersController extends Engine_Content_Widget_Abstra
     $this->view->page = $page = $this->_getParam('page', 1);
     $this->view->search = $search = $this->_getParam('search');
     $this->view->waiting = $waiting = $this->_getParam('waiting', false);
+    
+    if(isset($search))
+      $this->getElement()->removeDecorator('Container');
 
     // Prepare data
     $this->view->group = $group = Engine_Api::_()->core()->getSubject();

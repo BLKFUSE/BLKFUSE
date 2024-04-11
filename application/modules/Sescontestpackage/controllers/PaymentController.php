@@ -173,9 +173,10 @@ class Sescontestpackage_PaymentController extends Core_Controller_Action_Standar
       'source_id' => $this->_item->getIdentity(),
     ));
     $this->_session->order_id = $order_id = $ordersTable->getAdapter()->lastInsertId();
-		$this->_session->currency = $currentCurrency = Engine_Api::_()->sescontestpackage()->getCurrentCurrency();
+		$this->_session->currency = $currentCurrency = Engine_Api::_()->payment()->getCurrentCurrency();
 		$settings = Engine_Api::_()->getApi('settings', 'core');
-		$this->_session->change_rate = $settings->getSetting('sesmultiplecurrency.' . $currentCurrency) ;
+		$currencyData = Engine_Api::_()->getDbTable('currencies', 'payment')->getCurrency($currentCurrency);
+    $this->_session->change_rate = $currencyData->change_rate;
     // Unset certain keys
     unset($this->_session->package_id);
     unset($this->_session->contest_id);
@@ -207,7 +208,7 @@ class Sescontestpackage_PaymentController extends Core_Controller_Action_Standar
     $params['amount'] = $this->getPrice($this->_item,$package,$package->price);
      // Process transaction
     if($gateway->plugin == "Sesadvpmnt_Plugin_Gateway_Stripe") {
-          $params['currency'] =  $currentCurrency = Engine_Api::_()->sescontestpackage()->getCurrentCurrency();
+          $params['currency'] =  $currentCurrency = Engine_Api::_()->payment()->getCurrentCurrency();
           $this->view->publishKey = $gateway->config['sesadvpmnt_stripe_publish'];
           $this->view->session = $plugin->createContestTransaction($this->_user,
             $this->_item, $package, $params); 

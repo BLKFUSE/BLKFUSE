@@ -28,7 +28,7 @@
         </div>
         <div class="floatR">
           <?php $totalAmount = $this->order->total_amount; ?>
-          [<?php //echo $this->translate('Total:'); ?><?php //echo $totalAmount <= 0 ? $this->translate("FREE") : Engine_Api::_()->sesbasic()->getCurrencyPrice($totalAmount,$this->order->currency_symbol,$this->order->change_rate); ?>]
+          [<?php //echo $this->translate('Total:'); ?><?php //echo $totalAmount <= 0 ? $this->translate("FREE") : Engine_Api::_()->payment()->getCurrencyPrice($totalAmount,$this->order->currency_symbol,$this->order->change_rate); ?>]
         </div>
       </div>
       <div class="egifts_invoice_content_wrap sesbm sesbasic_clearfix clear">
@@ -96,18 +96,18 @@
           <tr>
             <td><?php echo $this->joinfees->getTitle(); ?></td>
             <td class="rightT">
-              <?php echo $this->order->total_amount <= 0 ? $this->translate("FREE") : Engine_Api::_()->sesbasic()->getCurrencyPrice($this->order->total_amount - $this->order->total_admintax_cost,$this->order->currency_symbol,$this->order->change_rate); ?><br />
+              <?php echo $this->order->total_amount <= 0 ? $this->translate("FREE") : Engine_Api::_()->payment()->getCurrencyPrice($this->order->total_amount - $this->order->total_admintax_cost,$this->order->currency_symbol,$this->order->change_rate); ?><br />
             </td>
             <td class="rightT">
               <?php $price= $this->order->total_amount  - $this->order->total_admintax_cost; ?>
-              <?php echo $price <= 0 ? $this->translate("FREE") : Engine_Api::_()->sesbasic()->getCurrencyPrice(round($price,2),$this->order->currency_symbol,$this->order->change_rate); ?><br />
+              <?php echo $price <= 0 ? $this->translate("FREE") : Engine_Api::_()->payment()->getCurrencyPrice(round($price,2),$this->order->currency_symbol,$this->order->change_rate); ?><br />
             </td>
            </tr>
         </table>
         <div class="egifts_invoice_total_price_box sesbm">
           <div>
             <span><?php echo $this->translate("Subtotal:"); ?></span>
-            <span>  <b> <?php echo $this->order->total_amount <= 0 ? $this->translate("FREE") : Engine_Api::_()->sesbasic()->getCurrencyPrice($this->order->total_amount - $this->order->total_admintax_cost,$this->order->currency_symbol,$this->order->change_rate); ?>  </b> </span>
+            <span>  <b> <?php echo $this->order->total_amount <= 0 ? $this->translate("FREE") : Engine_Api::_()->payment()->getCurrencyPrice($this->order->total_amount - $this->order->total_admintax_cost,$this->order->currency_symbol,$this->order->change_rate); ?>  </b> </span>
           </div>
 
           <?php if(!empty($this->order->admin_taxes)){ ?>
@@ -116,14 +116,14 @@
             ?>
           <div>
             <span><?php echo $tax['title'].' '.$this->translate(":"); ?></span>
-            <span>  <b> <?php echo $tax['price'] <= 0 ? $this->translate("0") : Engine_Api::_()->sesbasic()->getCurrencyPrice($tax['price'],$this->order->currency_symbol,$this->order->change_rate); ?>  </b> </span>
+            <span>  <b> <?php echo $tax['price'] <= 0 ? $this->translate("0") : Engine_Api::_()->payment()->getCurrencyPrice($tax['price'],$this->order->currency_symbol,$this->order->change_rate); ?>  </b> </span>
           </div>
             <?php } ?>
 
           <?php } ?>
           <div class="egifts_invoice_total_price_box_total">
             <span><?php echo $this->translate("Grand Total :"); ?></span>
-            <span> <b> <?php echo $totalAmount <= 0  ? $this->translate("FREE") : Engine_Api::_()->sesbasic()->getCurrencyPrice($totalAmount,$this->order->currency_symbol,$this->order->change_rate); ?> </b> </span>
+            <span> <b> <?php echo $totalAmount <= 0  ? $this->translate("FREE") : Engine_Api::_()->payment()->getCurrencyPrice($totalAmount,$this->order->currency_symbol,$this->order->change_rate); ?> </b> </span>
           </div>
         </div>
       </div>

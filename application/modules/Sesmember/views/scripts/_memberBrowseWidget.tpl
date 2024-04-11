@@ -72,24 +72,9 @@
 <?php if( engine_count($this->paginator) > 0 ): ?>
   <?php foreach( $this->paginator as $member ): ?>
     <?php 
-      if(strlen($member->getTitle()) > $this->list_title_truncation)
-      $listViewTitle = mb_substr($member->getTitle(),0,($this->list_title_truncation-3)).'...';
-      else
       $listViewTitle = $member->getTitle();
-      
-      if(strlen($member->getTitle()) > $this->grid_title_truncation) 
-      $gridViewTitle = mb_substr($member->getTitle(),0,($this->grid_title_truncation-3)).'...';
-      else
       $gridViewTitle = $member->getTitle();
-      
-      if(strlen($member->getTitle()) > $this->advgrid_title_truncation) 
-      $advGridViewTitle = mb_substr($member->getTitle(),0,($this->advgrid_title_truncation-3)).'...';
-      else
       $advGridViewTitle = $member->getTitle();
-      
-      if(strlen($member->getTitle()) > $this->pinboard_title_truncation) 
-      $pinboardViewTitle = mb_substr($member->getTitle(),0,($this->pinboard_title_truncation-3)).'...';
-      else
       $pinboardViewTitle = $member->getTitle();
     ?> 
     <?php $customFileds = $customFileds = $message = $memberType = $colorCategory = $userEmail = $email = $friendCount = $mutualFriendCount = '';?>
@@ -192,16 +177,16 @@
     
     if(isset($this->titleActive)){
       $memberListTitle .= "<span class=\"sesmember_list_title\">
-      ".$this->htmlLink($member->getHref(), $listViewTitle,array('class'=>'ses_tooltip','id'=>'member_title_'.$member->getGuid(),'data-src'=>$member->getGuid()))."
+      ".$this->htmlLink($member->getHref(), $listViewTitle,array('id'=>'member_title_'.$member->getGuid(),'data-src'=>$member->getGuid()))."
       </span>";
       $memberGridTitle = "<div class=\"sesmember_list_title\">
-      ".$this->htmlLink($member->getHref(), $gridViewTitle,array('class'=>'ses_tooltip','data-src'=>$member->getGuid()))."</div>";
+      ".$this->htmlLink($member->getHref(), $gridViewTitle,array('data-src'=>$member->getGuid()))."</div>";
       
       $memberPinboardTitle = "<div class=\"sesbasic_pinboard_list_item_title\">
-      ".$this->htmlLink($member->getHref(), $pinboardViewTitle,array('class'=>'ses_tooltip','data-src'=>$member->getGuid()))."</div>";
+      ".$this->htmlLink($member->getHref(), $pinboardViewTitle,array('data-src'=>$member->getGuid()))."</div>";
       
        $memberAdvGridTitle = "<div class=\"sesmember_member_grid_title sesbasic_clearfix\">
-      ".$this->htmlLink($member->getHref(), $advGridViewTitle,array('class'=>'ses_tooltip sesbasic_linkinherit','data-src'=>$member->getGuid()))."</div>";
+      ".$this->htmlLink($member->getHref(), $advGridViewTitle,array('class'=>'sesbasic_linkinherit','data-src'=>$member->getGuid()))."</div>";
     }
     
     if(isset($this->verifiedLabelActive) && $member->user_verified == 1) {
@@ -896,7 +881,11 @@
 			wookmark<?php echo $randonNumber ?> = new Wookmark('#sesmember_pinboard_view_<?php echo $randonNumber;?>', {
 			itemWidth:  <?php echo isset($this->pinboard_width) ? str_replace(array('px','%'),array(''),$this->pinboard_width) : '300'; ?>, // Optional min width of a grid item
 			outerOffset: 0, // Optional the distance from grid to parent
-			align:'left',
+      <?php if($orientation = ($this->layout()->orientation == 'right-to-left')){ ?>
+        align:'right',
+      <?php }else{ ?>
+        align:'left',
+      <?php } ?>
 			flexibleWidth: function () {
 				// Return a maximum width depending on the viewport
 				return getWindowWidth_<?php echo $randonNumber; ?>() < 1024 ? '100%' : '40%';

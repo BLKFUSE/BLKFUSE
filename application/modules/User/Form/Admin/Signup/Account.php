@@ -42,13 +42,36 @@ class User_Form_Admin_Signup_Account extends Engine_Form
 
     // Element: username
     $this->addElement('Radio', 'username', array(
-      'label' => 'Enable Profile Address?',
+      'label' => 'Enable Profile Address (Username)?',
       'description' => 'USER_FORM_ADMIN_SIGNUP_USERNAME_DESCRIPTION',
       'multiOptions' => array(
-        1 => 'Yes, allow members to choose a profile address.',
-        0 => 'No, do not allow profile addresses.'
+        1 => 'Yes, allow members to choose a profile address (username).',
+        0 => 'No, do not allow profile addresses (username).'
       ),
       'value' => 1,
+      'onchange' => "showUserName(this.value)",
+    ));
+    
+    // Element: username
+    $this->addElement('Radio', 'showusername', array(
+      'label' => 'Show Username as Display Name',
+      'description' => 'Do you want to show the username as the display name of users instead of their first name and last name? If you choose Yes, this username will be displayed for the user everyplace the user\'s name is shown. If you choose No, the First Name and Last Name configured for their profile will display everyplace the user\'s name is shown.',
+      'multiOptions' => array(
+        1 => 'Yes',
+        0 => 'No'
+      ),
+      'value' => 0,
+    ));
+    
+    // Element: username
+    $this->addElement('Radio', 'allowloginusername', array(
+      'label' => 'Allow Login via Username',
+      'description' => 'Do you want to allow users to login by entering their usernames in the Email field?',
+      'multiOptions' => array(
+        1 => 'Yes',
+        0 => 'No'
+      ),
+      'value' => 0,
     ));
 
     
@@ -127,30 +150,30 @@ class User_Form_Admin_Signup_Account extends Engine_Form
     ));
 
     // Element: inviteonly
-    $this->addElement('Radio', 'inviteonly', array(
-      'label' => 'Invite Only?',
-      'description' => 'USER_FORM_ADMIN_SIGNUP_INVITEONLY_DESCRIPTION',
-      'multiOptions' => array(
-        2 => 'Yes, admins and members must invite new members before they can signup.',
-        1 => 'Yes, admins must invite new members before they can signup.',
-        0 => 'No, disable the invite only feature.',
-      ),
-      'value' => 0,
-    ));
+//     $this->addElement('Radio', 'inviteonly', array(
+//       'label' => 'Invite Only?',
+//       'description' => 'USER_FORM_ADMIN_SIGNUP_INVITEONLY_DESCRIPTION',
+//       'multiOptions' => array(
+//         2 => 'Yes, admins and members must invite new members before they can signup.',
+//         1 => 'Yes, admins must invite new members before they can signup.',
+//         0 => 'No, disable the invite only feature.',
+//       ),
+//       'value' => 0,
+//     ));
 
     // Element: checkemail
-    $this->addElement('Radio', 'checkemail', array(
-      'label' => 'Check Invite Email?',
-      'description' => 'USER_FORM_ADMIN_SIGNUP_CHECKEMAIL_DESCRIPTION',
-      'multiOptions' => array(
-        1 => "Yes, check that a member's email address was invited.",
-        0 => "No, anyone with an invite code can signup.",
-      ),
-      'value' => 1,
-    ));
-
-    $this->getElement('inviteonly')->getDecorator('HtmlTag')
-        ->setOption('style', 'max-width: 450px;');
+//     $this->addElement('Radio', 'checkemail', array(
+//       'label' => 'Check Invite Email?',
+//       'description' => 'USER_FORM_ADMIN_SIGNUP_CHECKEMAIL_DESCRIPTION',
+//       'multiOptions' => array(
+//         1 => "Yes, check that a member's email address was invited.",
+//         0 => "No, anyone with an invite code can signup.",
+//       ),
+//       'value' => 1,
+//     ));
+// 
+//     $this->getElement('inviteonly')->getDecorator('HtmlTag')
+//         ->setOption('style', 'max-width: 450px;');
     /*
     $this->getElement('terms')->getDecorator('HtmlTag2')->setOption('style', 'border-top:none;clear: right;padding-top:0px;padding-bottom:0px;');
 

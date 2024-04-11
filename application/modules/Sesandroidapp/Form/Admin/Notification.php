@@ -56,7 +56,7 @@ class Sesandroidapp_Form_Admin_Notification extends Engine_Form
       'value' => '',
 		));
    }
-   if(engine_count($networks)){
+   if(engine_count($networks) > 0) {
     $this->addElement('Select', "network", array(
       'label' => 'Choose Network',
       'description' => 'Choose Network from below',

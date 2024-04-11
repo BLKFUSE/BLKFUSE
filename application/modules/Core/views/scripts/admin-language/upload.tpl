@@ -10,7 +10,12 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_layout", 'parentMenuItemName' => 'core_admin_main_layout_language', 'lastMenuItemName' => 'Upload New Pack')); ?>
 
 <div class='settings'>
   <?php echo $this->form->render($this); ?>
 </div>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_layout').parent().addClass('active');
+  scriptJquery('.core_admin_main_layout_language').addClass('active');
+</script>

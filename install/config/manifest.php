@@ -14,13 +14,13 @@ return array(
   'package' => array(
     'type' => 'core',
     'name' => 'install',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 10271 $',
     'path' => '/',
     'repository' => 'socialengine.com',
     'title' => 'Package Manager',
     'description' => 'Package Manager',
-    'author' => 'Webligo Developments',
+    'author' => 'SocialEngine Core',
     'dependencies' => array(
       array(
         'type' => 'library',

@@ -33,10 +33,16 @@ class Album_Form_Search extends Engine_Form
       'label' => 'Search Albums:'
     ));
 
-    $orderby = array(
-      'recent' => 'Most Recent',
-      'popular' => 'Most Popular',
-    );
+		$orderby = array(
+			'creation_date' => 'Most Recent',
+			'modified_date' => 'Recently Updated',
+			'view_count' => 'Most Viewed',
+			'like_count' => 'Most Liked',
+			'comment_count' => 'Most Commented',
+			'atoz' => 'A to Z',
+			'ztoa' => 'Z to A',
+		);
+
     if(Engine_Api::_()->getApi('settings', 'core')->getSetting('album.enable.rating', 1)) {
       $orderby['rating'] = 'Highest Rated';
     }

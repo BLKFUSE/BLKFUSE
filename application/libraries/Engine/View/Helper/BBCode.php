@@ -25,8 +25,8 @@ class Engine_View_Helper_BBCode extends Zend_View_Helper_Abstract
   protected $_filters = array(
     'Basic',
     'Extended',
-    'Links',
-    'Images',
+    //'Links',
+    //'Images',
     'Lists',
     'Email'
   );

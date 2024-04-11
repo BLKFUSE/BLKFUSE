@@ -347,18 +347,18 @@ class Install_Import_Phpfox_EventEvents extends Install_Import_Phpfox_Abstract
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_event_events` (
   `event_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
-  `parent_type` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `parent_type` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `parent_id` int(11) unsigned NOT NULL,
   `search` tinyint(1) NOT NULL DEFAULT '1',
   `creation_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL,
   `starttime` datetime NOT NULL,
   `endtime` datetime NOT NULL,
-  `host` varchar(115) COLLATE utf8_unicode_ci NOT NULL,
-  `location` varchar(115) COLLATE utf8_unicode_ci NOT NULL,
+  `host` varchar(115) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `location` varchar(115) COLLATE utf8mb4_unicode_ci NOT NULL,
   `view_count` int(11) unsigned NOT NULL DEFAULT '0',
   `member_count` int(11) unsigned NOT NULL DEFAULT '0',
   `approval` tinyint(1) NOT NULL DEFAULT '0',
@@ -370,7 +370,7 @@ class Install_Import_Phpfox_EventEvents extends Install_Import_Phpfox_Abstract
   KEY `parent_type` (`parent_type`,`parent_id`),
   KEY `starttime` (`starttime`),
   KEY `search` (`search`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */
 
 /*
@@ -380,20 +380,20 @@ class Install_Import_Phpfox_EventEvents extends Install_Import_Phpfox_Abstract
   `active` tinyint(1) NOT NULL DEFAULT '0',
   `resource_approved` tinyint(1) NOT NULL DEFAULT '0',
   `user_approved` tinyint(1) NOT NULL DEFAULT '0',
-  `message` text COLLATE utf8_unicode_ci,
+  `message` text COLLATE utf8mb4_unicode_ci,
   `rsvp` tinyint(3) NOT NULL DEFAULT '3',
-  `title` text COLLATE utf8_unicode_ci,
+  `title` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`resource_id`,`user_id`),
   KEY `REVERSE` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  */
 
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_event_albums` (
   `album_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `event_id` int(11) unsigned NOT NULL,
-  `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `creation_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL,
   `search` tinyint(1) NOT NULL DEFAULT '1',
@@ -404,7 +404,7 @@ class Install_Import_Phpfox_EventEvents extends Install_Import_Phpfox_Abstract
   PRIMARY KEY (`album_id`),
   KEY `event_id` (`event_id`),
   KEY `search` (`search`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */
 
 /*
@@ -414,8 +414,8 @@ CREATE TABLE IF NOT EXISTS `engine4_event_photos` (
   `album_id` int(11) unsigned NOT NULL,
   `event_id` int(11) unsigned NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
-  `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `collection_id` int(11) unsigned NOT NULL,
   `file_id` int(11) unsigned NOT NULL,
   `creation_date` datetime NOT NULL,
@@ -426,5 +426,5 @@ CREATE TABLE IF NOT EXISTS `engine4_event_photos` (
   KEY `album_id` (`album_id`),
   KEY `event_id` (`event_id`),
   KEY `collection_id` (`collection_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */

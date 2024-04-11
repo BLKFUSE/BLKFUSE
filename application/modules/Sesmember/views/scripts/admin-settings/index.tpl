@@ -38,9 +38,9 @@
 
 	function showfollowtext(value){
 		if(value == 1){
-      document.getElementById('sesmember_follow_followtext-wrapper').style.display = 'block';	
-      document.getElementById('sesmember_follow_unfollowtext-wrapper').style.display = 'block';
-      document.getElementById('sesmember_autofollow-wrapper').style.display = 'block';	
+      document.getElementById('sesmember_follow_followtext-wrapper').style.display = 'flex';	
+      document.getElementById('sesmember_follow_unfollowtext-wrapper').style.display = 'flex';
+      document.getElementById('sesmember_autofollow-wrapper').style.display = 'flex';	
     } else{
       document.getElementById('sesmember_follow_followtext-wrapper').style.display = 'none';	
       document.getElementById('sesmember_follow_unfollowtext-wrapper').style.display = 'none';
@@ -49,7 +49,7 @@
 	}
   function show_type(value){
     if(value == 1){
-      document.getElementById('sesmember_approve_criteria-wrapper').style.display = 'block';	
+      document.getElementById('sesmember_approve_criteria-wrapper').style.display = 'flex';	
       showCriteria(document.getElementById('sesmember_approve_criteria').value);
     } else{
       document.getElementById('sesmember_approve_criteria-wrapper').style.display = 'none';
@@ -60,11 +60,11 @@
   
   function showCriteria(value){
     if(value == 1){
-      document.getElementById('sesmember_like_count-wrapper').style.display = 'block';	
+      document.getElementById('sesmember_like_count-wrapper').style.display = 'flex';	
       document.getElementById('sesmember_view_count-wrapper').style.display = 'none';
     } else{
       document.getElementById('sesmember_like_count-wrapper').style.display = 'none';	
-      document.getElementById('sesmember_view_count-wrapper').style.display = 'block';
+      document.getElementById('sesmember_view_count-wrapper').style.display = 'flex';
     }
   } 
 
@@ -76,3 +76,10 @@
 
   });
 </script>
+<style> 
+	button[disabled] { 
+	  background:#bdbdbd; 
+	  border-color:#bdbdbd; 
+	  cursor:not-allowed; 
+  }
+</style>

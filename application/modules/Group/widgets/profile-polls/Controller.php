@@ -43,7 +43,9 @@ class Group_Widget_ProfilePollsController extends Engine_Content_Widget_Abstract
     $this->getElement()->removeDecorator('Title');
 
     // Get paginator
-    $this->view->paginator = $paginator = $group->getPollsPaginator();
+    $params['user_id'] = $viewer->getIdentity();
+    $params['owner_id'] = $group->user_id;
+    $this->view->paginator = $paginator = $group->getPollsPaginator($params);
     $this->view->canAdd = $canAdd = $group->authorization()->isAllowed(null,  'poll') && Engine_Api::_()->authorization()->isAllowed('poll', null, 'create');
 
     // Set item count per page and current page number

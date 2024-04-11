@@ -117,38 +117,17 @@ class Sesmember_Form_Review_Create extends Engine_Form {
     }
     if (Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.review.summary', 1)) {
       if (Engine_Api::_()->getApi('settings', 'core')->getSetting('sesmember.show.tinymce', 1)) {
-        $upload_url = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'sesbasic', 'controller' => 'index', 'action' => "upload-image"), 'default', true);
-
-    $allowed_html = 'strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr';
-
-    $editorOptions = array(
-      'upload_url' => $upload_url,
-      'html' => (bool) $allowed_html,
-    );
-
-    if (!empty($upload_url)) {
-      $editorOptions['editor_selector'] = 'tinymce';
-      $editorOptions['mode'] = 'specific_textareas';
-      $editorOptions['plugins'] = array(
-          'table', 'fullscreen', 'preview', 'paste',
-          'code', 'textcolor', 'jbimages', 'link'
-      );
-
-      $editorOptions['toolbar1'] = array(
-          'undo', 'redo', 'removeformat', 'pastetext', '|', 'code',
-          'media', 'image', 'jbimages', 'link', 'fullscreen',
-          'preview'
-      );
-    }
-
-    $this->addElement('TinyMce', 'description', array(
-        'label' => 'Description',
-        'editorOptions' => $editorOptions,
-        'class' => 'tinymce',
-        'allowEmpty' => false,
-        'required' => true,
-        'maxlength' => "300",
-    ));
+        //UPLOAD PHOTO URL
+        $editorOptions = array(
+          'uploadUrl' => Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'index', 'action' => 'upload-photo'), 'default', true),
+        );
+        $this->addElement('TinyMce', 'description', array(
+            'label' => 'Description',
+            'editorOptions' => $editorOptions,
+            'allowEmpty' => false,
+            'required' => true,
+            'maxlength' => "300",
+        ));
        }
       else{
         $this->addElement('Textarea', 'description', array(

@@ -18,13 +18,13 @@ class Sesbasic_Model_Gateway extends Payment_Model_Gateway
   {
     if( null === $this->_plugin ) {
       $class = $this->plugin;
-      if($this->plugin == "Sesadvpmnt_Plugin_Gateway_Stripe"):
-        $class = str_replace('Sesadvpmnt','Sespagepackage',$class);
-      elseif($this->plugin == "Epaytm_Plugin_Gateway_Paytm"):
-        $class = str_replace('Epaytm','Sespagepackage',$class);
-      else:
+      // if($this->plugin == "Sesadvpmnt_Plugin_Gateway_Stripe"):
+      //   $class = str_replace('Sesadvpmnt','Sespagepackage',$class);
+      // elseif($this->plugin == "Epaytm_Plugin_Gateway_Paytm"):
+      //   $class = str_replace('Epaytm','Sespagepackage',$class);
+      // else:
         $class = str_replace('Payment','Sesbasic',$class);
-      endif;
+      // endif;
       Engine_Loader::loadClass($class);
       $plugin = new $class($this);
       if( !($plugin instanceof Engine_Payment_Plugin_Abstract) ) {

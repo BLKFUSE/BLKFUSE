@@ -17,6 +17,9 @@
 	-o-transition:all 0.3s ease-out;
 	transition:all 0.3s ease-out;
 } 
+[dir="rtl"] .sesbasic_pinboard_list_item_wrap{
+	float:right;
+}
 .sesbasic_pinboard_list_item{
 	box-shadow:0 0 2px 1px #ddd;
 	border-width:1px;

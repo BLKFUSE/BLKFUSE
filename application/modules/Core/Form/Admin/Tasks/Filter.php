@@ -29,16 +29,21 @@ class Core_Form_Admin_Tasks_Filter extends Engine_Form
         'class' => 'global_form_box',
       ));
 
-    
-    $this
-      ->clearDecorators()
+    $this->clearDecorators()
       ->addDecorator('FormElements')
       ->addDecorator('Form')
       ->addDecorator('HtmlTag', array('tag' => 'div', 'class' => 'search'))
-      ->addDecorator('HtmlTag2', array('tag' => 'div', 'class' => 'clear'))
-      ;
+      ->addDecorator('HtmlTag2', array('tag' => 'div', 'class' => 'clear'));
 
 
+    $this->addElement('Text', 'task_id', array(
+        'label' => 'ID',
+        'decorators' => array(
+            'ViewHelper',
+            array('Label', array('tag' => null, 'placement' => 'PREPEND')),
+            array('HtmlTag', array('tag' => 'div'))
+        ),
+    ));
     
     // Element: moduleName
     $tasksTable = Engine_Api::_()->getDbtable('tasks', 'core');

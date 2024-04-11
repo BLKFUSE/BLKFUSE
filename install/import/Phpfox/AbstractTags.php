@@ -92,26 +92,26 @@ abstract class Install_Import_Phpfox_AbstractTags extends Install_Import_Phpfox_
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_core_tagmaps` (
   `tagmap_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `resource_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `resource_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `resource_id` int(11) unsigned NOT NULL,
-  `tagger_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `tagger_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tagger_id` int(11) unsigned NOT NULL,
-  `tag_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `tag_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tag_id` int(11) unsigned NOT NULL,
   `creation_date` datetime DEFAULT NULL,
-  `extra` text COLLATE utf8_unicode_ci,
+  `extra` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`tagmap_id`),
   KEY `resource_type` (`resource_type`,`resource_id`),
   KEY `tagger_type` (`tagger_type`,`tagger_id`),
   KEY `tag_type` (`tag_type`,`tag_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
  */
 
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_core_tags` (
   `tag_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `text` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `text` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`tag_id`),
   UNIQUE KEY `text` (`text`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */

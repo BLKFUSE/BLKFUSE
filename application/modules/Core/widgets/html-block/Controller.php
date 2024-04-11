@@ -16,10 +16,14 @@
  * @copyright  Copyright 2006-2020 Webligo Developments
  * @license    http://www.socialengine.com/license/
  */
-class Core_Widget_HtmlBlockController extends Engine_Content_Widget_Abstract
-{
-  public function indexAction()
-  {
-    $this->view->data = $this->_getParam('data');
+class Core_Widget_HtmlBlockController extends Engine_Content_Widget_Abstract {
+
+  public function indexAction() {
+  
+    $localLanguage = $this->view->locale()->getLocale()->__toString();
+    $local_language = explode('_', $localLanguage);
+    $column = !empty($local_language[0] && $local_language[0] == 'en') ? 'data' : $localLanguage . '_data';
+    $data = $this->_getParam($column, null);
+    $this->view->data = (isset($data) && !empty($data)) ? $data : $this->_getParam('data', null);
   }
 }

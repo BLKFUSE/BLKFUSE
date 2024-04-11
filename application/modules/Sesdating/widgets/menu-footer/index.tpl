@@ -61,23 +61,12 @@
           <?php endif;?>
         </div>
       <?php } ?>
-     <?php if (is_countable($this->languageNameList) && 1 !== engine_count($this->languageNameList)): ?>
-      <div class="footer_lang">
-        <form id="footer_language_<?php echo $this->identity; ?>" method="post" action="<?php echo $this->url(array('controller' => 'utility', 'action' => 'locale'), 'default', true) ?>" style="display:inline-block">
-          <?php $selectedLanguage = $this->translate()->getLocale() ?>
-          <?php echo $this->formSelect('language', $selectedLanguage, array('onchange' => "setLanguage()"), $this->languageNameList) ?>
-          <?php echo $this->formHidden('return', $this->url()) ?>
-        </form>
-      </div>
-    <?php endif; ?>
-  </div>
-	
+    </div>
   <?php  if($this->quicklinksenable) { ?>
     <div class="clearfix footer_column" style="display:none;">
       <div class="footer_column_heading">
         <?php echo $this->translate($this->quicklinksheading);?>
       </div>
-      
     </div>
     <?php } ?>
     <?php  if($this->helpenable) { ?>
@@ -85,21 +74,9 @@
       <div class="footer_column_heading">
         <?php echo $this->translate($this->helpheading);?>
       </div>
-      
     </div>
   <?php } ?>
-
 </div>
-<?php if	( !empty($this->affiliateCode) ): ?>
-  <div class="footer_affiliate_banner">
-    <?php 
-      echo $this->translate('Powered by %1$s', 
-        $this->htmlLink('http://www.socialengine.com/?source=v4&aff=' . urlencode($this->affiliateCode), 
-        $this->translate('SocialEngine Community Software'),
-        array('target' => '_blank')))
-    ?>
-  </div>
-<?php endif; ?>
 <div class="footer_help_links clearfix">
        <?php  if($this->helpenable) { ?>
         <ul class="sesbasic_clearfix">
@@ -113,14 +90,14 @@
               <?php echo $this->htmlLink($item->getHref(), $this->translate($item->getLabel()), $attribs) ?>
             </li>
           <?php endforeach; ?>
+          <li>
+            <?php if (is_countable($this->languageNameList) && 1 !== engine_count($this->languageNameList)): ?>
+               <?php echo $this->partial('_languages.tpl', 'core', array('languageNameList' => $this->languageNameList)); ?>
+            <?php endif; ?>
+          </li>
         </ul>
         <?php } ?>
       <!--  <div class="footer_copy sesbasic_bxs">
           <?php echo $this->translate('Copyright &copy;%s', date('Y')) ?>
         </div>-->
 </div>
-<script>
-  function setLanguage() {
-    scriptJquery('#footer_language_<?php echo $this->identity; ?>').submit();
-  }
-</script>

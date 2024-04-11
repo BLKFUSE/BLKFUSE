@@ -49,7 +49,7 @@ class Payment_Form_Admin_Gateway_Abstract extends Engine_Form
 
     // Element: enabled
     $this->addElement('Radio', 'enabled', array(
-      'label' => 'Enabled?',
+      'label' => 'Enable?',
       'multiOptions' => array(
         '1' => 'Yes',
         '0' => 'No',
@@ -59,7 +59,7 @@ class Payment_Form_Admin_Gateway_Abstract extends Engine_Form
 
     // Element: test_mode
     $this->addElement('Radio', 'test_mode', array(
-      'label' => 'Enabled Test Mode?',
+      'label' => 'Enable Test Mode?',
       'multiOptions' => array(
         '1' => 'Yes',
         '0' => 'No',

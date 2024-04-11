@@ -28,9 +28,19 @@ class User_Form_Settings_Delete extends Engine_Form
       ->setAction(Zend_Controller_Front::getInstance()->getRouter()->assemble(array()))
       ;
     
+    $code = Zend_Controller_Front::getInstance()->getRequest()->getParam('code', 0);
     $otpfeatures = Engine_Api::_()->getApi('settings', 'core')->getSetting('core.spam.otpfeatures', 1);
     if(!empty($otpfeatures)) {
-
+      
+      if(!empty($code)) {
+        $this->addElement('Dummy', 'codesent', array(
+        'content' => '<div class="tip"><span>Verification code sent successfully. Please check your email.</span></div>',
+        'decorators' => array(
+          'ViewHelper',
+        ),
+        ));
+      }
+      
       $this->addElement('Button', 'send', array(
         'label' => 'Send Verification Code',
         'decorators' => array(

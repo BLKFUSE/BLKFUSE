@@ -18,10 +18,15 @@ function selectfeedbgimage(background_id) {
   scriptJquery(".background_img").removeClass('_selected');
   scriptJquery("#background_"+background_id).addClass('_selected');
   scriptJquery('#background_id').val(background_id);
+
+  // set image
+  let imageUrl = scriptJquery("#background_"+background_id).find("img").attr("src");
+  scriptJquery(".sestories_previewimg").css('background-image', 'url(' + imageUrl + ')');
 }
 
 function handleFileUploadsesstories(files)
 {
+	let isValid = false;
 	for (var i = 0; i < files.length; i++)
 	{
 		if(scriptJquery('.multi_upload_sesstories').find(".filename")){
@@ -35,16 +40,48 @@ function handleFileUploadsesstories(files)
 			if(FileSize > post_max_size_sesstory){
 				alert("The size of the file exceeds the limits of "+post_max_size_sesstory+"MB.");
 				return;
+			}else{
+				isValid = true;
+				scriptJquery('#story_type').val('imagevideo');
+				var $source = scriptJquery('.sestories_previewvideo').find("source");
+				$source[0].src = URL.createObjectURL(files[i]);
+				$source.parent()[0].load();
+				$source.parent()[0].play();
+				scriptJquery('#sesstories_previewtext').html("");
+				scriptJquery('#sesstories_add_bg_images').hide();
+				scriptJquery('.sestories_previewimg').hide();
+				scriptJquery('.sestories_previewvideo').show();
 			}
 		}
-		if(scriptJquery('#story_type').val() == 'imagevideo' && (ext == "png" || ext == "jpeg" || ext == "jpg" ||  ext == 'gif' || ext == 'mp4' || ext == 'mpeg' || ext == 'mov' || ext == 'ogg' || ext == 'ogv' || ext == 'avi' || ext == 'flv' || ext == 'mpg' || ext == 'WMV')){
-			scriptJquery(".sesstories_btn_submit").removeAttr('disabled');
-			scriptJquery(".multi_upload_sesstories").append('<span class="filename">'+url+'</span>');
-			scriptJquery("#multi_upload_sesstories").css("border",'');
+		scriptJquery('#story_type').val('imagevideo');
+		if(scriptJquery('#story_type').val() == 'imagevideo' && (ext == "png" || ext == "jpeg" || ext == "jpg" ||  ext == 'gif' || ext == 'mp4' || ext == 'mpeg' || ext == 'mov' || ext == 'ogg' || ext == 'ogv' || ext == 'avi' || ext == 'flv' || ext == 'mpg' || ext == 'WMV' || ext == 'webp')){
+			
+			if(!isValid){
+				isValid = true;
+				let imageUrl = URL.createObjectURL(files[i]);
+				scriptJquery(".sestories_previewimg").css('background-image', 'url(' + imageUrl + ')');
+				scriptJquery('#sesstories_add_bg_images').hide();
+				scriptJquery('.sestories_previewimg').show();
+				scriptJquery('.sestories_previewvideo').hide();
+			}
 		}else{
 			// scriptJquery(".sesstories_btn_submit").attr('disabled',true);
 			files.value = "";
 		}
+	}
+
+	if(isValid){
+		scriptJquery(".sesstories_btn_submit").removeAttr('disabled');
+		// scriptJquery(".multi_upload_sesstories").append('<span class="filename">'+url+'</span>');
+		scriptJquery("#multi_upload_sesstories").css("border",'');
+
+		scriptJquery(".sesstories_story_uploader_main").hide();
+		scriptJquery(".sesstories_story_uploader_preview").show();
+		scriptJquery(".stories_description").show();
+		scriptJquery(".sesstories_add_bg_images").hide();
+		scriptJquery('#sesstories_previewtext').html("");
+		scriptJquery('#sesstories_description').val("");
+		scriptJquery('.stories_footer').show();
 	}
 }
 
@@ -64,7 +101,7 @@ scriptJquery(document).on('submit','.submit_stories',function (e) {
 		var name = "attachmentVideo[0]";
 		var url = scriptJquery("#file_multi_sesstories").val();
 		var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-		if((ext == "png" || ext == "jpeg" || ext == "jpg" ||  ext == 'gif')){
+		if((ext == "png" || ext == "jpeg" || ext == "jpg" ||  ext == 'gif' || ext == 'webp')){
 			name = "attachmentImage[0]";
 		}
 		formData.append(name, scriptJquery('#file_multi_sesstories')[0].files[0]);
@@ -106,40 +143,82 @@ scriptJquery(document).on('submit','.submit_stories',function (e) {
 			scriptJquery(".sesstories_loading_image").remove();
 			response = scriptJquery.parseJSON(response);
 			if (response.message) {
-				alert(response.message);
+				// alert(response.message);
+				scriptJquery("#success_sesstories_cnt").addClass('_show');
+				scriptJquery("#success_stories_create").html(response.message);
 				setTimeout(function () {
 					sessmoothboxclose();
 				},10);
+        		getSesStories();
 			}else{
 				alert('Something went wrong, please try again later.');
 			}
 		}
 	});
 })
-
+ 
 function readImageUrlsesstories(input) {
 	handleFileUploadsesstories(input.files);
 }
+scriptJquery(document).on('click','#confirm_success_sesstories',function(e){
+	scriptJquery("#success_sesstories_cnt").removeClass('_show');
+});
+scriptJquery(document).on('click','#cancel_discard_sesstories',function(e){
+	scriptJquery("#discard_sesstories_cnt").removeClass('_show');
+});
+scriptJquery(document).on('click','.discard_sesstories_btn',function(e){
+	scriptJquery("#discard_sesstories_cnt").addClass('_show');
+});
+scriptJquery(document).on('click','#confirm_discard_sesstories',function(e){
+	scriptJquery("#discard_sesstories_cnt").removeClass('_show');
+	scriptJquery(".sesstories_story_uploader_main").show();
+	scriptJquery(".sesstories_story_uploader_preview").hide();
+	scriptJquery(".stories_description").hide();
+	scriptJquery(".sesstories_add_bg_images").hide();
+    scriptJquery('#sesstories_add_bg_images').hide();
+	scriptJquery('#sesstories_previewtext').html("");
+	scriptJquery('#sesstories_description').val("");
+	scriptJquery('.stories_footer').hide();
+	scriptJquery('.sestories_previewimg').hide();
+	scriptJquery('.sestories_previewvideo').hide();
+    scriptJquery('#story_type').val('');
+});
+
 scriptJquery(document).on('click','.multi_upload_sesstories, .text_sesstories',function(e){
+	scriptJquery('#sesstories_previewtext').html("");
   if(scriptJquery(this).attr('data-type') == 'text') {
+	scriptJquery(".sesstories_story_uploader_main").hide();
+	scriptJquery(".sesstories_story_uploader_preview").show();
+	scriptJquery(".stories_description").show();
+	scriptJquery(".sesstories_add_bg_images").show();
     scriptJquery('#sesstories_add_bg_images').show();
+	scriptJquery('#sesstories_previewtext').html("");
+	scriptJquery('#sesstories_description').val("");
+	scriptJquery('.stories_footer').show();
+	scriptJquery('.sestories_previewimg').show();
+	scriptJquery('.sestories_previewvideo').hide();
+	scriptJquery("#sesstories_add_bg_images").children().eq(1).trigger("click");
+
+
     scriptJquery('#story_type').val('text');
 	if(scriptJquery("#sesstories_description").val())
 		scriptJquery(".sesstories_btn_submit").removeAttr('disabled');
   } else if(scriptJquery(this).attr('data-type') == 'imagevideo') {
-    scriptJquery('#story_type').val('imagevideo');
-    scriptJquery('#sesstories_add_bg_images').hide();
+    
     document.getElementById('file_multi_sesstories').click();
   }
 });
 scriptJquery(document).on("keyup","#sesstories_description",function(e){
-	if(scriptJquery("#story_type").val() == "imagevideo"){
-		return;
+	// if(scriptJquery("#story_type").val() == "imagevideo"){
+	// 	return;
+	// }
+	if(scriptJquery("#story_type").val() != "imagevideo"){
+		scriptJquery('#sesstories_add_bg_images').show();
 	}
-	scriptJquery('#sesstories_add_bg_images').show();
-	if(!scriptJquery("#background_id").val()){
-		scriptJquery("#sesstories_add_bg_images").find("a").eq(0).trigger("click");
-	}
+	// if(!scriptJquery("#background_id").val()){
+	// 	scriptJquery("#sesstories_add_bg_images").find("a").eq(0).trigger("click");
+	// }
+	scriptJquery(".sesstories_previewtext").html(scriptJquery(this).val());
 	if(scriptJquery(this).val()){
 		scriptJquery(".sesstories_btn_submit").removeAttr('disabled');
 	}else{
@@ -233,12 +312,13 @@ scriptJquery(document).on('click','.sesstories_option_elm',function (e) {
 				storyData.stories.splice(index, 1);
 				storiesData = storyData;
 				selectedStoryId = 0;
-				if (storyData.stories.length >= index + 1){
+				if (storyData.stories.length >= index + 1 && index > -1){
 					selectedStoryUserId = storyData.stories[index].user_id
+					callNextStory();
 				}else{
 					scriptJquery(".sesstories_story_view_close_btn").trigger("click");
 				}
-				callNextStory();
+				getSesStories();
 			}
 		})
 	}else{
@@ -255,6 +335,7 @@ function storyDeleted(){
 	callNextStory();
 	storyData.my_story.story_content.splice(index, 1);
 	storiesData = storyData;
+	getSesStories();
 }
 scriptJquery(document).on('click','.sesstory_play_mute',function (e) {
 	e.preventDefault();
@@ -340,6 +421,18 @@ function createSliders(rel,id,data,index = 0){
 				}else{
 					scriptJquery(".sesstories_message_cnt").show();
 				}
+				scriptJquery('.sesstories_story_item_caption').removeClass("_photo");
+				scriptJquery('.sesstories_story_item_caption').removeClass("_video");
+				scriptJquery('.sesstories_media_content').removeClass("_isphoto");
+				scriptJquery('.sesstories_media_content').removeClass("_isvideo");
+				
+				if(data.story_content[index].is_video){
+					scriptJquery('.sesstories_media_content').addClass("_isvideo");
+					scriptJquery('.sesstories_story_item_caption').addClass("_video");
+				} else if(story_type == 'imagevideo') {
+					scriptJquery('.sesstories_story_item_caption').addClass("_photo");
+					scriptJquery('.sesstories_media_content').addClass("_isphoto");
+				}
 				scriptJquery(".sesstories_time").html(timeSince(new Date(data.story_content[index].creation_date).getTime()));
 				scriptJquery(".sesstories_story_item_caption").html(data.story_content[index].comment);
 				scriptJquery(".sesstoriescommentlike").attr('data-storyid',data.story_content[index].story_id);
@@ -347,12 +440,14 @@ function createSliders(rel,id,data,index = 0){
           //Text Story Work
           if(story_type == 'text') {
             scriptJquery('.sesstories_content_text').show();
-            scriptJquery('.sesstories_content').hide();
+            scriptJquery('.sesstories_content_text_reaction').show();
+						scriptJquery('.sesstories_content').hide();
             scriptJquery(".sesstories_content_text").css("background-image", "url(" + data.story_content[index].media_url + ")");
             scriptJquery(".sesstories_contenttext").html(data.story_content[index].comment);
             scriptJquery(".sesstories_content_bg_image").attr('src',data.story_content[index].media_url);
           } else if(story_type == 'imagevideo') {
             scriptJquery('.sesstories_content_text').hide();
+						scriptJquery('.sesstories_content_text_reaction').hide();
             scriptJquery('.sesstories_content').show();
             scriptJquery(".sesstories_content_bg_image").attr('src',data.story_content[index].media_url);
           }
@@ -360,11 +455,13 @@ function createSliders(rel,id,data,index = 0){
           if(story_type == 'text') {
             scriptJquery('.sesstories_content').hide();
             scriptJquery('.sesstories_content_text').show();
+						scriptJquery('.sesstories_content_text_reaction').show();
             scriptJquery(".sesstories_content_text").css("background-image", "url(" + data.story_content[index].media_url + ")");
             scriptJquery(".sesstories_contenttext").html(data.story_content[index].comment);
             scriptJquery(".sesstories_content_bg_image").attr('src',data.story_content[index].media_url);
           } else if(story_type == 'imagevideo') {
             scriptJquery('.sesstories_content_text').hide();
+						scriptJquery('.sesstories_content_text_reaction').hide();
             scriptJquery('.sesstories_content').show();
             scriptJquery(".sesstories_content_bg_image").attr('src',data.story_content[index].photo);
           }
@@ -811,7 +908,7 @@ scriptJquery(document).on('click','.sestrories_highlight',function (e) {
 		scriptJquery(this).addClass('_active')
 	}
 	scriptJquery.post(en4.core.baseUrl + 'sesstories/index/highlight',{story_id:id},function (e) {
-
+		getSesStories();
 	})
 })
 
@@ -819,14 +916,14 @@ scriptJquery(document).on('click','.sesstories_unmute',function (e) {
 	var id = scriptJquery(this).attr('rel');
 	scriptJquery(this).closest('li').remove();
 	scriptJquery.post(en4.core.baseUrl + 'sesstories/index/unmute',{mute_id:id},function (e) {
-
+		getSesStories();
 	})
 });
 scriptJquery(document).on('submit','#sesstories_form_create',function (e) {
 	e.preventDefault();
 	scriptJquery.post(en4.core.baseUrl + 'sesstories/index/save-form',{story_privacy:scriptJquery("input[name='story_privacy']:checked").val()
 		,story_comment:scriptJquery("input[name='story_comment']:checked").val()},function (response) {
-		alert(response)
+		getSesStories();
 	})
 });
 scriptJquery(document).on('keypress','.sesstories_message_cnt_input',function (e) {

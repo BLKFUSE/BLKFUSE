@@ -46,3 +46,10 @@ scriptJquery(document).on('change','input:radio[name="sescommunityads_category_e
     hideShow(this.value);
 });
 </script>
+<style> 
+	button[disabled] { 
+	  background:#bdbdbd; 
+	  border-color:#bdbdbd; 
+	  cursor:not-allowed; 
+  }
+</style>

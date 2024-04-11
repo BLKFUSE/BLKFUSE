@@ -69,7 +69,7 @@ if($pageName == 'sesmember_index_browse') {
     'page_id' => $page_id,
     'parent_content_id' => $main_middle_id,
     'order' => $widgetOrder++,
-    'params' => '{"enableTabs":["list","advlist","grid","advgrid","pinboard","map"],"openViewType":"advlist","show_criteria":["featuredLabel","sponsoredLabel","verifiedLabel","vipLabel","message","friendButton","followButton","viewDetailsLink","likemainButton","socialSharing","like","location","rating","view","title","friendCount","mutualFriendCount","profileType","age","pinboardSlideshow"],"limit_data":"12","pagging":"button","order":"mostSPviewed","show_item_count":"1","list_title_truncation":"45","grid_title_truncation":"45","advgrid_title_truncation":"45","pinboard_title_truncation":"45","main_height":"350","main_width":"180","height":"220","width":"300","photo_height":"350","info_height":"315","advgrid_height":"180","pinboard_width":"350","title":"","nomobile":"0","name":"sesmember.browse-members"}',
+    'params' => '{"enableTabs":["list","advlist","grid","advgrid","pinboard","map"],"openViewType":"advlist","show_criteria":["featuredLabel","sponsoredLabel","verifiedLabel","vipLabel","message","friendButton","followButton","viewDetailsLink","likemainButton","socialSharing","like","location","rating","view","title","friendCount","mutualFriendCount","profileType","age","pinboardSlideshow"],"limit_data":"12","pagging":"button","order":"mostSPviewed","show_item_count":"1","main_height":"350","main_width":"180","height":"220","width":"300","photo_height":"350","info_height":"315","advgrid_height":"180","pinboard_width":"350","title":"","nomobile":"0","name":"sesmember.browse-members"}',
 
   ));
 }
@@ -134,7 +134,7 @@ if($pageName == 'sesmember_index_nearest-member') {
     'page_id' => $page_id,
     'parent_content_id' => $main_middle_id,
     'order' => $widgetOrder++,
-    'params' => '{"enableTabs":["map"],"openViewType":"list","show_criteria":"","limit_data":"20","profileFieldCount":"5","pagging":"auto_load","order":null,"show_item_count":"0","list_title_truncation":"45","grid_title_truncation":"45","advgrid_title_truncation":"45","pinboard_title_truncation":"45","main_height":"224","main_width":"250","height":"160","width":"250","photo_height":"160","photo_width":"282","info_height":"200","advgrid_height":"260","advgrid_width":"282","pinboard_width":"250","title":"","nomobile":"0","name":"sesmember.browse-members"}',
+    'params' => '{"enableTabs":["map"],"openViewType":"list","show_criteria":"","limit_data":"20","profileFieldCount":"5","pagging":"auto_load","order":null,"show_item_count":"0","main_height":"224","main_width":"250","height":"160","width":"250","photo_height":"160","photo_width":"282","info_height":"200","advgrid_height":"260","advgrid_width":"282","pinboard_width":"250","title":"","nomobile":"0","name":"sesmember.browse-members"}',
   ));
 }
 if($pageName == 'sesmember_index_top-members') {
@@ -210,7 +210,7 @@ if($pageName == 'sesmember_index_top-members') {
     'page_id' => $page_id,
     'parent_content_id' => $main_middle_id,
     'order' => $widgetOrder++,
-    'params' => '{"show_criteria":["featuredLabel","sponsoredLabel","verifiedLabel","vipLabel","likeButton","friendButton","followButton","message","socialSharing","title","location","like","rating","view","friendCount","mutualFriendCount","profileType","age"],"socialshare_enable_plusicon":"1","socialshare_icon_limit":"2","rating_graph":"1","list_title_truncation":"45","height":"185","width":"200","pagging":"button","limit_data":"12","title":"Top Rated Members","nomobile":"0","name":"sesmember.top-rated-members"}',
+    'params' => '{"show_criteria":["featuredLabel","sponsoredLabel","verifiedLabel","vipLabel","likeButton","friendButton","followButton","message","socialSharing","title","location","like","rating","view","friendCount","mutualFriendCount","profileType","age"],"socialshare_enable_plusicon":"1","socialshare_icon_limit":"2","rating_graph":"1","height":"185","width":"200","pagging":"button","limit_data":"12","title":"Top Rated Members","nomobile":"0","name":"sesmember.top-rated-members"}',
   ));
 
   $db->insert('engine4_core_content', array(
@@ -219,7 +219,7 @@ if($pageName == 'sesmember_index_top-members') {
     'page_id' => $page_id,
     'parent_content_id' => $right_id,
     'order' => $widgetOrder++,
-    'params' => '{"info":"featured","imageType":"square","showLimitData":"1","show_criteria":["title","description","by"],"list_title_truncation":"45","review_description_truncation":"80","limit_data":"3","title":"Featured Reviews","nomobile":"0","name":"sesmember.popular-featured-verified-reviews"}',
+    'params' => '{"info":"featured","imageType":"square","showLimitData":"1","show_criteria":["title","description","by"],"review_description_truncation":"80","limit_data":"3","title":"Featured Reviews","nomobile":"0","name":"sesmember.popular-featured-verified-reviews"}',
   ));
   $db->insert('engine4_core_content', array(
     'type' => 'widget',
@@ -227,7 +227,7 @@ if($pageName == 'sesmember_index_top-members') {
     'page_id' => $page_id,
     'parent_content_id' => $right_id,
     'order' => $widgetOrder++,
-    'params' => '{"info":"most_rated","imageType":"rounded","showLimitData":"1","show_criteria":["title","like","view","comment","rating","description","by"],"list_title_truncation":"45","review_description_truncation":"45","limit_data":"3","title":"Most Rated Members","nomobile":"0","name":"sesmember.popular-featured-verified-reviews"}',
+    'params' => '{"info":"most_rated","imageType":"rounded","showLimitData":"1","show_criteria":["title","like","view","comment","rating","description","by"],"review_description_truncation":"45","limit_data":"3","title":"Most Rated Members","nomobile":"0","name":"sesmember.popular-featured-verified-reviews"}',
   ));
 
   $db->insert('engine4_core_content', array(
@@ -236,7 +236,7 @@ if($pageName == 'sesmember_index_top-members') {
     'page_id' => $page_id,
     'parent_content_id' => $right_id,
     'order' => $widgetOrder++,
-    'params' => '{"viewType":"list","imageType":"square","order":"","criteria":"6","info":"creation_date","showLimitData":"0","show_star":"0","show_criteria":["verifiedLabel","title","like","rating","view"],"grid_title_truncation":"45","list_title_truncation":"45","height":"180","width":"180","photo_height":"160","photo_width":"250","limit_data":"5","title":"Verified Members","nomobile":"0","name":"sesmember.featured-sponsored"}',
+    'params' => '{"viewType":"list","imageType":"square","order":"","criteria":"6","info":"creation_date","showLimitData":"0","show_star":"0","show_criteria":["verifiedLabel","title","like","rating","view"],"height":"180","width":"180","photo_height":"160","photo_width":"250","limit_data":"5","title":"Verified Members","nomobile":"0","name":"sesmember.featured-sponsored"}',
   ));
 
   $db->insert('engine4_core_content', array(
@@ -245,7 +245,7 @@ if($pageName == 'sesmember_index_top-members') {
     'page_id' => $page_id,
     'parent_content_id' => $right_id,
     'order' => $widgetOrder++,
-    'params' => '{"viewType":"list","imageType":"square","show_criteria":["title","rating"],"grid_title_truncation":"45","list_title_truncation":"45","showLimitData":"0","height":"180","width":"180","photo_height":"160","photo_width":"250","limit_data":"5","title":"Top Reviewers","nomobile":"0","name":"sesmember.top-reviewers"}',
+    'params' => '{"viewType":"list","imageType":"square","show_criteria":["title","rating"],"showLimitData":"0","height":"180","width":"180","photo_height":"160","photo_width":"250","limit_data":"5","title":"Top Reviewers","nomobile":"0","name":"sesmember.top-reviewers"}',
   ));
 
   $db->insert('engine4_core_content', array(
@@ -262,7 +262,7 @@ if($pageName == 'sesmember_index_top-members') {
     'page_id' => $page_id,
     'parent_content_id' => $right_id,
     'order' => $widgetOrder++,
-    'params' => '{"info":"most_commented","imageType":"rounded","showLimitData":"1","show_criteria":["title","like","view","comment","rating","verifiedLabel","featuredLabel","description","by"],"list_title_truncation":"45","review_description_truncation":"45","limit_data":"2","title":"Most Commented Reviews","nomobile":"0","name":"sesmember.popular-featured-verified-reviews"}',
+    'params' => '{"info":"most_commented","imageType":"rounded","showLimitData":"1","show_criteria":["title","like","view","comment","rating","verifiedLabel","featuredLabel","description","by"],"review_description_truncation":"45","limit_data":"2","title":"Most Commented Reviews","nomobile":"0","name":"sesmember.popular-featured-verified-reviews"}',
   ));
 }
 if($pageName == 'sesmember_review_browse') {
@@ -329,7 +329,7 @@ if($pageName == 'sesmember_review_browse') {
     'page_id' => $page_id,
     'parent_content_id' => $main_left_id,
     'order' => $widgetOrder++,
-    'params' => '{"viewType":"gridOutside","show_criteria":["title","like","view","rating","featuredLabel","verifiedLabel","socialSharing","likeButton"],"grid_title_truncation":"45","list_title_truncation":"45","height":"180","width":"180","photo_height":"160","photo_width":"250","title":"Review of the Day","nomobile":"0","name":"sesmember.review-of-the-day"}',
+    'params' => '{"viewType":"gridOutside","show_criteria":["title","like","view","rating","featuredLabel","verifiedLabel","socialSharing","likeButton"],"height":"180","width":"180","photo_height":"160","photo_width":"250","title":"Review of the Day","nomobile":"0","name":"sesmember.review-of-the-day"}',
   ));
 
   $db->insert('engine4_core_content', array(
@@ -356,7 +356,7 @@ if($pageName == 'sesmember_review_browse') {
     'page_id' => $page_id,
     'parent_content_id' => $main_left_id,
     'order' => $widgetOrder++,
-    'params' => '{"viewType":"list","imageType":"rounded","show_criteria":["title","like","rating","view"],"grid_title_truncation":"45","list_title_truncation":"45","showLimitData":"0","height":"180","width":"180","photo_height":"160","photo_width":"250","limit_data":"5","title":"Top Reviewers","nomobile":"0","name":"sesmember.top-reviewers"}',
+    'params' => '{"viewType":"list","imageType":"rounded","show_criteria":["title","like","rating","view"],"showLimitData":"0","height":"180","width":"180","photo_height":"160","photo_width":"250","limit_data":"5","title":"Top Reviewers","nomobile":"0","name":"sesmember.top-reviewers"}',
   ));
 
   $db->insert('engine4_core_content', array(
@@ -365,7 +365,7 @@ if($pageName == 'sesmember_review_browse') {
     'page_id' => $page_id,
     'parent_content_id' => $main_left_id,
     'order' => $widgetOrder++,
-    'params' => '{"viewType":"thumbView","imageType":"square","order":"","criteria":"5","info":"most_rated","showLimitData":"1","show_star":"0","show_criteria":["title"],"grid_title_truncation":"45","list_title_truncation":"45","height":"84","width":"84","photo_height":"160","photo_width":"250","limit_data":"18","title":"Most Rated Members","nomobile":"0","name":"sesmember.featured-sponsored"}',
+    'params' => '{"viewType":"thumbView","imageType":"square","order":"","criteria":"5","info":"most_rated","showLimitData":"1","show_star":"0","show_criteria":["title"],"height":"84","width":"84","photo_height":"160","photo_width":"250","limit_data":"18","title":"Most Rated Members","nomobile":"0","name":"sesmember.featured-sponsored"}',
   ));
 
   $db->insert('engine4_core_content', array(
@@ -374,7 +374,7 @@ if($pageName == 'sesmember_review_browse') {
     'page_id' => $page_id,
     'parent_content_id' => $main_left_id,
     'order' => $widgetOrder++,
-    'params' => '{"info":"featured","imageType":"rounded","showLimitData":"1","show_criteria":["title","like","view","comment","rating","verifiedLabel","featuredLabel","description","by"],"list_title_truncation":"45","review_description_truncation":"45","limit_data":"3","title":"Featured Reviews","nomobile":"0","name":"sesmember.popular-featured-verified-reviews"}',
+    'params' => '{"info":"featured","imageType":"rounded","showLimitData":"1","show_criteria":["title","like","view","comment","rating","verifiedLabel","featuredLabel","description","by"],"review_description_truncation":"45","limit_data":"3","title":"Featured Reviews","nomobile":"0","name":"sesmember.popular-featured-verified-reviews"}',
   ));
 
   $db->insert('engine4_core_content', array(
@@ -383,7 +383,7 @@ if($pageName == 'sesmember_review_browse') {
     'page_id' => $page_id,
     'parent_content_id' => $main_left_id,
     'order' => $widgetOrder++,
-    'params' => '{"info":"verified","imageType":"rounded","showLimitData":"1","show_criteria":["title","like","view","comment","rating","verifiedLabel","featuredLabel","description","by"],"list_title_truncation":"45","review_description_truncation":"45","limit_data":"2","title":"Verfied Reviews","nomobile":"0","name":"sesmember.popular-featured-verified-reviews"}',
+    'params' => '{"info":"verified","imageType":"rounded","showLimitData":"1","show_criteria":["title","like","view","comment","rating","verifiedLabel","featuredLabel","description","by"],"review_description_truncation":"45","limit_data":"2","title":"Verfied Reviews","nomobile":"0","name":"sesmember.popular-featured-verified-reviews"}',
   ));
 
   $db->insert('engine4_core_content', array(
@@ -524,7 +524,7 @@ if($pageName == 'sesmember_index_pinborad-view-members') {
     'page_id' => $page_id,
     'parent_content_id' => $main_middle_id,
     'order' => $widgetOrder++,
-    'params' => '{"enableTabs":["pinboard"],"openViewType":"pinboard","show_criteria":["featuredLabel","sponsoredLabel","verifiedLabel","vipLabel","message","friendButton","followButton","likemainButton","viewDetailsLink","socialSharing","like","location","rating","view","title","friendCount","mutualFriendCount","profileType","age","pinboardSlideshow"],"limit_data":"18","pagging":"auto_load","order":"mostSPviewed","show_item_count":"1","list_title_truncation":"45","grid_title_truncation":"45","advgrid_title_truncation":"45","pinboard_title_truncation":"45","main_height":"160","main_width":"250","height":"160","width":"250","photo_height":"160","photo_width":"250","info_height":"160","advgrid_height":"322","advgrid_width":"322","pinboard_width":"250","title":"","nomobile":"0","name":"sesmember.browse-members"}',
+    'params' => '{"enableTabs":["pinboard"],"openViewType":"pinboard","show_criteria":["featuredLabel","sponsoredLabel","verifiedLabel","vipLabel","message","friendButton","followButton","likemainButton","viewDetailsLink","socialSharing","like","location","rating","view","title","friendCount","mutualFriendCount","profileType","age","pinboardSlideshow"],"limit_data":"18","pagging":"auto_load","order":"mostSPviewed","show_item_count":"1","main_height":"160","main_width":"250","height":"160","width":"250","photo_height":"160","photo_width":"250","info_height":"160","advgrid_height":"322","advgrid_width":"322","pinboard_width":"250","title":"","nomobile":"0","name":"sesmember.browse-members"}',
 
   ));
 }

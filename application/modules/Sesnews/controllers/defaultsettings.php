@@ -1667,7 +1667,7 @@ if( !$page_id ) {
     'page_id' => $page_id,
     'parent_content_id' => $right_id,
     'order' => $widgetOrder++,
-    'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare","addThis"],"title":"","nomobile":"0","name":"sesnews.advance-share"}',
+    'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare"],"title":"","nomobile":"0","name":"sesnews.advance-share"}',
   ));
   $db->insert('engine4_core_content', array(
     'type' => 'widget',
@@ -1768,7 +1768,7 @@ if( !$page_id ) {
     'page_id' => $page_id,
     'parent_content_id' => $left_id,
     'order' => $widgetOrder++,
-    'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare","addThis"],"title":"","nomobile":"0","name":"sesnews.advance-share"}',
+    'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare"],"title":"","nomobile":"0","name":"sesnews.advance-share"}',
   ));
   $db->insert('engine4_core_content', array(
     'type' => 'widget',
@@ -1932,7 +1932,7 @@ if( !$page_id ) {
     'page_id' => $page_id,
     'parent_content_id' => $left_id,
     'order' => $widgetOrder++,
-    'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare","addThis"],"title":"","nomobile":"0","name":"sesnews.advance-share"}',
+    'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare"],"title":"","nomobile":"0","name":"sesnews.advance-share"}',
   ));
   $db->insert('engine4_core_content', array(
     'type' => 'widget',
@@ -2104,7 +2104,7 @@ if( !$page_id ) {
     'page_id' => $page_id,
     'parent_content_id' => $left_id,
     'order' => $widgetOrder++,
-    'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare","addThis"],"title":"","nomobile":"0","name":"sesnews.advance-share"}',
+    'params' => '{"advShareOptions":["privateMessage","siteShare","quickShare"],"title":"","nomobile":"0","name":"sesnews.advance-share"}',
   ));
   $db->insert('engine4_core_content', array(
     'type' => 'widget',

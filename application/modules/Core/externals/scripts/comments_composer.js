@@ -299,7 +299,7 @@ CommentsComposer = function(element, options){
 
   this.setContent = function(newContent) {
     if( this._supportsContentEditable() ) {
-      if(!newContent.trim()) newContent = '<br />';
+      if(!newContent || !newContent.trim()) newContent = '<br />';
         this.elements.body.html(newContent.replace(/&nbsp;/g, ' '));
     } else {
       this.elements.body.val(newContent);

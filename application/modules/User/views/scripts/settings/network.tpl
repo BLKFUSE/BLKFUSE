@@ -59,65 +59,72 @@
     // });
   });
 </script>
-
-<div class='layout_middle'>
-  <div class='networks_left'>
-  <h3><?php echo $this->translate('Available Networks');?></h3>
-
-
-  <?php if(!empty($this->network_suggestions)):?>
-  <p>
-    <?php echo $this->translate('To add a new network, begin typing its name below.');?>
-  </p>
-  <div id='avaliable_networks'>
-    <br/>
-    <?php echo $this->form->render($this) ?>
+<div class="generic_layout_container layout_top">
+  <div class="generic_layout_container layout_middle">
+    <?php echo $this->content()->renderWidget('user.user-setting-cover-photo'); ?>
   </div>
-
-    
-  <?php if(false):?>
-    <ul class='networks'>
-    <?php foreach ($this->network_suggestions as $network): ?>
-      <li>
-        <div>
-          <?php echo $network->title ?> <span>(<?php echo $this->translate(array('%s member.', '%s members.', $network->membership()->getMemberCount()),$this->locale()->toNumber($network->membership()->getMemberCount())) ?>)</span>
-        </div>
-        <?php if( $network->assignment == 0 ): ?>
-          <a href='javascript:void(0);' onclick="joinNetwork(<?php echo $network->network_id;?>)"><?php echo $this->translate('Join Network');?></a>
-        <?php endif; ?>
-      </li>
-    <?php endforeach; ?>
-    </ul>
-  <?php endif;?>
-
-  <?php else:?>
-    <div class="tip">
-      <span><?php echo $this->translate('There are currently no avaliable networks to join.');?></span>
+</div>
+<div class="generic_layout_container layout_main user_setting_main_page_main">
+  <div class="generic_layout_container layout_left">
+    <div class="theiaStickySidebar">
+      <?php echo $this->content()->renderWidget('user.settings-menu'); ?>
     </div>
-    
-    <div style='display:none;'>
-      <?php echo $this->form->render($this) ?>
-    </div>
-  <?php endif; ?>
   </div>
-  <div class='networks_right'>
-    <h3><?php echo $this->translate('My Networks');?></h3>
-    <p>
-      <?php echo $this->translate(array('You belong to %s network.', 'You belong to %s networks.', engine_count($this->networks)),$this->locale()->toNumber(engine_count($this->networks))) ?>
-    </p>
-
-    <ul id='current_networks' class='networks'>
-      <?php foreach ($this->networks as $network): ?>
-        <?php if(empty($network->network_id)) continue; ?>
-        <li>
-          <div>
-            <?php echo $this->translate($network->title) ?> <span>(<?php echo $this->translate(array('%s member.', '%s members.', $network->membership()->getMemberCount()),$this->locale()->toNumber($network->membership()->getMemberCount())) ?>)</span>
+  <div class="generic_layout_container layout_middle user_setting_main_middle">
+    <div class="theiaStickySidebar">
+      <div class='netwroks_main_section'>
+        <div class='networks_left'>
+          <h3><?php echo $this->translate('Available Networks');?></h3>
+          <?php if(!empty($this->network_suggestions)):?>
+          <p>
+            <?php echo $this->translate('To add a new network, begin typing its name below.');?>
+          </p>
+          <div id='avaliable_networks'>
+            <?php echo $this->form->render($this) ?>
           </div>
-          <?php if( $network->assignment == 0 ): ?>
-            <a href='javascript:void(0);' onclick="leaveNetwork(<?php echo $network->network_id;?>)"><?php echo $this->translate('Leave Network');?></a>
+          <?php if(false):?>
+            <ul class='networks'>
+            <?php foreach ($this->network_suggestions as $network): ?>
+              <li>
+                <div>
+                  <?php echo $network->title ?> <span>(<?php echo $this->translate(array('%s member.', '%s members.', $network->membership()->getMemberCount()),$this->locale()->toNumber($network->membership()->getMemberCount())) ?>)</span>
+                </div>
+                <?php if( $network->assignment == 0 ): ?>
+                  <a href='javascript:void(0);' onclick="joinNetwork(<?php echo $network->network_id;?>)"><?php echo $this->translate('Join Network');?></a>
+                <?php endif; ?>
+              </li>
+            <?php endforeach; ?>
+            </ul>
+          <?php endif;?>
+          <?php else:?>
+            <div class="tip">
+              <span><?php echo $this->translate('There are currently no avaliable networks to join.');?></span>
+            </div>
+            <div style='display:none;'>
+              <?php echo $this->form->render($this) ?>
+            </div>
           <?php endif; ?>
-        </li>
-      <?php endforeach; ?>
-    </ul>
+        </div>
+        <div class='networks_right'>
+          <h3><?php echo $this->translate('My Networks');?></h3>
+          <p>
+            <?php echo $this->translate(array('You belong to %s network.', 'You belong to %s networks.', engine_count($this->networks)),$this->locale()->toNumber(engine_count($this->networks))) ?>
+          </p>
+          <ul id='current_networks' class='networks'>
+            <?php foreach ($this->networks as $network): ?>
+              <?php if(empty($network->network_id)) continue; ?>
+              <li>
+                <div>
+                  <?php echo $this->translate($network->title) ?> <span>(<?php echo $this->translate(array('%s member.', '%s members.', $network->membership()->getMemberCount()),$this->locale()->toNumber($network->membership()->getMemberCount())) ?>)</span>
+                </div>
+                <?php if( $network->assignment == 0 ): ?>
+                  <a href='javascript:void(0);' onclick="leaveNetwork(<?php echo $network->network_id;?>)"><?php echo $this->translate('Leave Network');?></a>
+                <?php endif; ?>
+              </li>
+            <?php endforeach; ?>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

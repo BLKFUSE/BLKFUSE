@@ -15,15 +15,6 @@ class Sesnews_Form_Admin_Share extends Engine_Form {
   public function init() {
 			$view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
     	$fileLink = $view->baseUrl() . '/admin/sesbasic/settings/global';
-			$headScript = new Zend_View_Helper_HeadScript();
-			
-			$script='
-			scriptJquery(document).ready(function(){
-        var text = scriptJquery("#advShareOptions-addThis").parent().find("label").html().replace(/\&lt;/g,"<");
-        text = text.replace(/\&gt;/g,">");
-        scriptJquery("#advShareOptions-addThis").parent().find("label").html(text);
-			})';
-		$view->headScript()->appendScript($script);
       $this->addElement(
 					'MultiCheckbox',
 					'advShareOptions',
@@ -33,7 +24,6 @@ class Sesnews_Form_Admin_Share extends Engine_Form {
 							'privateMessage' => 'Send as Message [Private Message]',
 							'siteShare' => 'Share via Activity Feed [with Message]',
 							'quickShare' => 'Quick AJAX Share via Activity Feed',
-							'addThis' => 'Add This Share Options [Enter your "Add This Publisher Id" from <a target="_blank" href="' . $fileLink . '">here</a> to enable this option.]',
 						),
 					)
 				);

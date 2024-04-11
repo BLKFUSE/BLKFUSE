@@ -18,20 +18,17 @@ class Sescontest_Form_Dashboard_Rules extends Engine_Form {
             ->setAction(Zend_Controller_Front::getInstance()->getRouter()->assemble(array()))
             ->setMethod('POST');
     $settings = Engine_Api::_()->getApi('settings', 'core');
-    $upload_url = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'sesbasic', 'controller' => 'index', 'action' => "upload-image"), 'default', true);
 
-    $allowed_html = 'strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr';
-
+    //UPLOAD PHOTO URL
     $editorOptions = array(
-        'upload_url' => $upload_url,
-        'html' => (bool) $allowed_html,
+      'uploadUrl' => Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'index', 'action' => 'upload-photo'), 'default', true),
     );
+    
     if ($settings->getSetting('sescontest.rules.editor', 1)) {
       $this->addElement('TinyMce', 'rules', array(
           'label' => 'Rules',
           'allowEmpty' => false,
           'required' => true,
-          'class' => 'tinymce',
           'editorOptions' => $editorOptions,
       ));
     } else {

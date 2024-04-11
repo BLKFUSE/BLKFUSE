@@ -10,16 +10,37 @@
  * @author     Steve
  */
 ?>
-
-<?php if( $this->isSuperAdmin ):?>
-  <div class="tip">
-    <span>
-      <?php echo $this->translate('Super Admins can\'t be deleted.'); ?>
-    </span>
+<div class="generic_layout_container layout_top">
+  <div class="generic_layout_container layout_middle">
+    <?php echo $this->content()->renderWidget('user.user-setting-cover-photo'); ?>
   </div>
-<?php return; endif; ?>
+</div>
+<div class="generic_layout_container layout_main user_setting_main_page_main">
+  <div class="generic_layout_container layout_left">
+    <div class="theiaStickySidebar">
+      <?php echo $this->content()->renderWidget('user.settings-menu'); ?>
+    </div>
+  </div>
 
-<?php echo $this->form->setAttrib('id', 'user_form_settings_delete')->render($this) ?>
+  <div class="generic_layout_container layout_middle user_setting_main_middle">
+    <div class="theiaStickySidebar">
+			<?php if( $this->isSuperAdmin ):?>
+				<div class="tip">
+					<span>
+						<?php echo $this->translate('Super Admins can\'t be deleted.'); ?>
+					</span>
+				</div>
+			<?php return; endif; ?>
+			<div class="user_setting_global_form user_delete_page">
+				<?php echo $this->form->setAttrib('id', 'user_form_settings_delete')->render($this) ?>
+			</div>
+    </div>
+  </div>
+
+
+
+</div>
+
 
 <script type="text/javascript">
 	scriptJquery("#send").click(function(e){

@@ -48,7 +48,13 @@
     }
   });
 </script>
-<?php echo $this->form/*->setAttrib('class', 'global_form_popup')*/->render($this) ?>
+
+<?php echo $this->partial('_approved_tip.tpl', 'core', array('item' => $this->subject())); ?>
+<div class="layout_middle">
+  <div class="generic_layout_container layout_core_content">
+    <?php echo $this->form/*->setAttrib('class', 'global_form_popup')*/->render($this) ?>
+  </div>
+</div>
 <script type="text/javascript">
   scriptJquery('.core_main_group').parent().addClass('active');
 </script>

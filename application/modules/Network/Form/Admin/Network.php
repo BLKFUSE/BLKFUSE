@@ -80,6 +80,11 @@ class Network_Form_Admin_Network extends Engine_Form
     // init fields
     $fieldsMeta = Engine_Api::_()->fields()->getFieldsMeta("user");
     $fieldTypes = array();
+    
+    $getOptionValue = '';
+    $mapsTable = Engine_Api::_()->fields()->getTable('user', 'maps');
+    $optionsTable = Engine_Api::_()->fields()->getTable('user', 'options');
+    
     foreach( $fieldsMeta as $meta ) {
       $info = Engine_Api::_()->fields()->getFieldInfo($meta->type);
       $genericType = $meta->type;
@@ -88,7 +93,12 @@ class Network_Form_Admin_Network extends Engine_Form
       }
       $id = 'field_pattern_' . $meta->field_id;
       $pattern_type = null;
-
+      
+      $optionId = $mapsTable->getOptionId(array('child_id' => $meta->field_id));
+      if(!empty($optionId)) {
+        if(in_array($optionId, array(5,9))) continue;
+        $optionValue = $optionsTable->getOptionValue(array('option_id' => $optionId));
+      }
       switch( $genericType ) {
         // Select
         case 'select':
@@ -106,6 +116,9 @@ class Network_Form_Admin_Network extends Engine_Form
             //die('whoops');
             $elOpt = $meta->getElementParams(null);
             $multiOptions = $elOpt['options']['multiOptions'];
+            //Hide Super admin and Admin profile type
+            unset($multiOptions['5']);
+            unset($multiOptions['9']);
           } else {
             foreach( $meta->getOptions() as $option ) {
               $multiOptions[$option->option_id] = $option->label;
@@ -189,7 +202,8 @@ class Network_Form_Admin_Network extends Engine_Form
       }
       
       $fieldTypes[$meta->field_id] = $pattern_type;
-      $this->field_id->addMultiOption($meta->field_id, $meta->label);
+      $label = !empty($label) ? $meta->label . ' (' . $optionValue . ')' : $meta->label;
+      $this->field_id->addMultiOption($meta->field_id, $label);
     }
 
     // Field types

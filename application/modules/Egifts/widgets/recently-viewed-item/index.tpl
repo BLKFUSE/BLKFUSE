@@ -50,7 +50,7 @@
           <?php } ?>
           <?php if(isset($this->priceActive)){ ?>
           	<div class="egifts_sidebar_listing_item_price">
-            	<span class="_price sesbasic_text_hl"><?php echo Engine_Api::_()->egifts()->getCurrencyPrice($item->price); ?></span>
+            	<span class="_price sesbasic_text_hl"><?php echo Engine_Api::_()->payment()->getCurrencyPrice($item->price); ?></span>
           	</div>
           <?php } ?>
           <?php if(isset($this->descriptionActive)): ?>

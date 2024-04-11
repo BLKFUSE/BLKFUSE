@@ -219,8 +219,6 @@ class Sesadvancedactivity_IndexController extends Core_Controller_Action_Standar
       }
       
       //Insert GIF Image
-      //https://github.com/Vaibhav-Agarwal06/sedev/issues/364
-      //https://github.com/Vaibhav-Agarwal06/sedev/issues/344
       if(!empty($_POST['image_id'])) {
         $gifImageUrl = $_POST['image_id'];
         $context = "";

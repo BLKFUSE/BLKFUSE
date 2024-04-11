@@ -14,6 +14,16 @@ class Sesalbum_Model_Photo extends Core_Model_Item_Abstract
   protected $_searchTriggers = array('title', 'description', 'search');
   protected $_type = 'album_photo';
   public $skipAlbumDeleteHook;
+  
+  /**
+   * Get a generic media type. Values:
+   * photo
+   *
+   * @return string
+   */
+  public function getMediaType() {
+    return 'photo';
+  }
 
   public function getHref($params = array())
   {
@@ -47,7 +57,7 @@ class Sesalbum_Model_Photo extends Core_Model_Item_Abstract
     }
   }
   
-  public function getRichContent1($view = false, $params = array()) {
+  public function getRichContent($view = false, $params = array()) {
 		if(!Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('epaidcontent')))
 			return null;
     $albumFeed = '';

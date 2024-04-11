@@ -53,7 +53,7 @@ $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'applicatio
 				<?php  if(isset($this->locationActive) && $item->location && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesnews.enable.location', 1)): ?>
 					<div class="sesnews_list_stats sesnews_list_location">
 						<span class="widthfull">
-							<i class="fa fa-map-marker sesbasic_text_light" title="<?php echo $this->translate('Location');?>"></i>
+							<i class="sesbasic_icon_map sesbasic_text_light" title="<?php echo $this->translate('Location');?>"></i>
 							<span title="<?php echo $item->location; ?>"><?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?><a href="<?php echo $this->url(array('resource_id' => $item->news_id,'resource_type'=>'sesnews_news','action'=>'get-direction'), 'sesbasic_get_direction', true); ?>" class="openSmoothbox"><?php echo $item->location ?></a><?php } else { ?><?php echo $item->location ?><?php } ?></span>
 						</span>
 					</div>
@@ -218,7 +218,7 @@ $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'applicatio
 					<?php if(isset($this->locationActive) && $item->location && Engine_Api::_()->getApi('settings', 'core')->getSetting('sesnews.enable.location', 1)):?>
 						<div class="sesnews_list_location">
 							<span class="widthfull">
-							<i class="fa fa-map-marker sesbasic_text_light" title="<?php echo $this->translate('Location');?>"></i>
+							<i class="sesbasic_icon_map sesbasic_text_light" title="<?php echo $this->translate('Location');?>"></i>
 								<span title="<?php echo $item->location; ?>"><?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('enableglocation', 1)) { ?><a href="<?php echo $this->url(array('resource_id' => $item->news_id,'resource_type'=>'sesnews_news','action'=>'get-direction'), 'sesbasic_get_direction', true); ?>" class="openSmoothbox"><?php echo $item->location ?></a><?php } else { ?><?php echo $item->location ?><?php } ?></span>
 							</span>
 						</div>

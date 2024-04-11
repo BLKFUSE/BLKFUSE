@@ -633,9 +633,10 @@ class InstallController extends Zend_Controller_Action
       'tests' => array(
         array(
           'type' => 'MysqlServer',
-          'name' => 'MySQL 5.7',
+          'name' => 'MySQL 8.0 / MariaDB 10.6',
           'adapter' => $adapter,
-          'minVersion' => '5.7',
+          'minVersion' => '8.0',
+          'minMariaDBVersion' => '10.6',
         ),
         array(
           'type' => 'MysqlEngine',
@@ -963,9 +964,9 @@ class InstallController extends Zend_Controller_Action
         ));
         $fieldValuesTable->insert(array(
           'item_id' => 1,
-          'field_id' => 5,
+          'field_id' => 1,
           'index' => 0,
-          'value' => 1,
+          'value' => 5,
         ));
       } catch( Exception $e ) {}
 
@@ -1010,7 +1011,7 @@ class InstallController extends Zend_Controller_Action
         'username' => null,
         'password' => null,
         'dbname' => null,
-        'charset' => 'UTF8',
+        'charset' => 'utf8mb4',
         'adapterNamespace' => ( $adapter == 'mysql' ? 'Engine_Db_Adapter' : 'Zend_Db_Adapter' ),
       ),
       'isDefaultTableAdapter' => true,

@@ -85,6 +85,17 @@ class Music_Form_Admin_Settings_Level extends Authorization_Form_Admin_Level_Abs
             if( !$this->isModerator() ) {
                 unset($this->delete->options[2]);
             }
+            
+            //Element: approve
+						$this->addElement('Radio', 'approve', array(
+							'description' => 'Do you want playlists created by members of this level to be auto-approved?',
+							'label' => 'Auto Approve Playlists',
+							'multiOptions' => array(
+								1 => 'Yes, auto-approve playlists.',
+								0 => 'No, do not auto-approve playlists.'
+							),
+							'value' => 1,
+						));
 
             // Element: comment
             $this->addElement('Radio', 'comment', array(

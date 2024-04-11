@@ -13,9 +13,9 @@ CREATE TABLE IF NOT EXISTS `se_mediacomments` (
   `mediacomment_media_id` int(10) unsigned NOT NULL default '0',
   `mediacomment_authoruser_id` int(10) unsigned NOT NULL default '0',
   `mediacomment_date` int(14) NOT NULL default '0',
-  `mediacomment_body` text collate utf8_unicode_ci,
+  `mediacomment_body` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY  (`mediacomment_id`),
   KEY `INDEX` (`mediacomment_media_id`,`mediacomment_authoruser_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */

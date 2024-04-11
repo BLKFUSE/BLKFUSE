@@ -1,0 +1,15 @@
+"_EMAIL_SESBASIC_TELLAFRIEND_EMAIL_TITLE";"Tell a Friend Email"
+"_EMAIL_SESBASIC_TELLAFRIEND_EMAILL_DESCRIPTION";"This is the email that gets sent to friends."
+"_EMAIL_SESBASIC_TELLAFRIEND_EMAILL_SUBJECT";"[sender] wants you to visit this [item_type]"
+"_EMAIL_SESBASIC_TELLAFRIEND_EMAILL_BODY";"[header]
+
+Your friend [sender] with email id: [email] wants you to look at the [item_type]: [title].
+
+To view and explore this [item_type], click on the link below, or copy-paste it in your browser:
+[object_link]
+
+Your friend has also sent a message:
+
+[message]
+
+[footer]"

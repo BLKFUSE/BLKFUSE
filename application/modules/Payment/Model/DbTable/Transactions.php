@@ -53,4 +53,40 @@ class Payment_Model_DbTable_Transactions extends Engine_Db_Table
 
     return false;
   }
+
+  public function getTransaction($params = array()) {
+    $tableName = $this->info('name');
+    $select = $this->select()
+          ->from($tableName)
+          ->where('user_id <> ?', 0)
+          ->where('user_id =?', $params['user_id'])
+          ->where('expiration_date >= ?', date("Y-m-d H:i:s"))
+          //->where('gateway_transaction_id !=?', '')
+          ->where('state = "complete" || state = "okay" || state = "active" ')
+          ->order('transaction_id DESC')
+          ->limit(1);
+    if(isset($params['type']) && !empty($params['type'])) {
+      $select->where('type =?', $params['type']);
+    }
+    return $this->fetchRow($select);
+  }
+  
+  public function createTransaction($order, $subscription, $user, $params = array()) {
+  
+    $this->insert(array(
+      'user_id' => $order->user_id,
+      'gateway_id' => $order->gateway_id, //$this->_gatewayInfo->gateway_id,
+      'timestamp' => new Zend_Db_Expr('NOW()'),
+      'order_id' => $order->order_id,
+      'type' => $params['type'], //'payment verification', //'payment',
+      'state' => $params['state'], //$paymentStatus,
+      'gateway_transaction_id' => $params['gateway_transaction_id'] ? $params['gateway_transaction_id'] : $subscription->gateway_profile_id, //$rdata['PAYMENTINFO'][0]['TRANSACTIONID'],
+      'amount' => $params['amount'],  //$rdata['AMT'], // @todo use this or gross (-fee)?
+      'currency' => $params['currency'], //$rdata['PAYMENTINFO'][0]['CURRENCYCODE'],
+      'expiration_date' => $params['expiration_date'],
+      'change_rate' => !empty($params['change_rate']) ? $params['change_rate'] : 1,
+      'current_currency' => !empty($params['current_currency']) ? $params['current_currency'] : $params['currency'],
+    ));
+    return $this->getAdapter()->lastInsertId();
+  }
 }

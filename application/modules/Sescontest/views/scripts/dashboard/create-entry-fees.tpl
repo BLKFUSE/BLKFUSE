@@ -16,7 +16,7 @@ scriptJquery('#currency-wrapper').hide();
 	scriptJquery('#entry_fees-element').append('<span class="fa fa-retweet sescontest_convert_icon sesbasic_link_btn" id="sescontest_currency_coverter" title="<?php echo $this->translate("Convert to %s",Engine_Api::_()->getApi("settings","core")->getSetting("sesmultiplecurrency.defaultcurrency","USD"));?>"></span>');
 	scriptJquery('#entry_fees-label').append('<span> (<?php echo Engine_Api::_()->getApi("settings","core")->getSetting("sesmultiplecurrency.defaultcurrency","USD"); ?>)</span>');
 <?php }else{ ?>
-	scriptJquery('#entry_fees-label').append('<span> (<?php echo Engine_Api::_()->sescontestjoinfees()->defaultCurrency(); ?>)</span>');
+	scriptJquery('#entry_fees-label').append('<span> (<?php echo Engine_Api::_()->payment()->defaultCurrency(); ?>)</span>');
 <?php } ?>
 
 </script>

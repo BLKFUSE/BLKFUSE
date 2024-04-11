@@ -32,8 +32,8 @@
 
   function enableContent(value){
     if(value == 1){
-      document.getElementById('sesbday_birthday_subject-wrapper').style.display = 'block';
-      document.getElementById('sesbday_birthday_content-wrapper').style.display = 'block';
+      document.getElementById('sesbday_birthday_subject-wrapper').style.display = 'flex';
+      document.getElementById('sesbday_birthday_content-wrapper').style.display = 'flex';
     }else{
       document.getElementById('sesbday_birthday_subject-wrapper').style.display = 'none';	
       document.getElementById('sesbday_birthday_content-wrapper').style.display = 'none';

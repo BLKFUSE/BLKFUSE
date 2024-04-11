@@ -20,8 +20,7 @@ class Group_Form_Post_Edit extends Engine_Form
 {
   public function init()
   {
-    $this
-      ->setTitle('Edit Post');
+    //$this->setTitle('Edit Post');
     $viewer = Engine_Api::_()->user()->getViewer();
     $settings = Engine_Api::_()->getApi('settings', 'core');
     
@@ -38,10 +37,7 @@ class Group_Form_Post_Edit extends Engine_Form
     }
     
     if( $allowHtml || $allowBbcode ) {
-      $uploadUrl = "";
-      if( Engine_Api::_()->authorization()->isAllowed('album', $viewer, 'create') ) {
-        $uploadUrl = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('controller'=>'index', 'action'=>'upload-photo'), 'group_extended', true);
-      }
+      $uploadUrl = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'index', 'action' => 'upload-photo'), 'default', true);
       $editorOptions = array(
         'uploadUrl' => $uploadUrl
       );
@@ -79,26 +75,24 @@ class Group_Form_Post_Edit extends Engine_Form
       ));
     }
     
+    // Buttons
     $this->addElement('Button', 'submit', array(
       'label' => 'Edit Post',
-      'ignore' => true,
       'type' => 'submit',
-      'decorators' => array(
-        'ViewHelper',
-      ),
+      'ignore' => true,
+      'decorators' => array('ViewHelper')
     ));
 
     $this->addElement('Cancel', 'cancel', array(
       'label' => 'cancel',
-      'prependText' => ' or ',
-      'type' => 'link',
       'link' => true,
-      'onclick' => 'parent.Smoothbox.close();',
+      'prependText' => ' or ',
       'decorators' => array(
-        'ViewHelper',
-      ),
+        'ViewHelper'
+      )
     ));
-
     $this->addDisplayGroup(array('submit', 'cancel'), 'buttons');
+    $buttonGroup = $this->getDisplayGroup('buttons');
+    $buttonGroup->addDecorator('DivDivDivWrapper');
   }
 }

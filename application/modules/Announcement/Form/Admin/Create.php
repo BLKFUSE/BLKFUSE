@@ -110,12 +110,15 @@ class Announcement_Form_Admin_Create extends Engine_Form
     foreach ($languageList as $key => $language) {
 			if(!in_array($key, array('auto', 'en')))
 				continue;
-
+      
+      $uploadUrl = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'index', 'action' => 'upload-photo'), 'default', true);
+      
       $this->addElement('TinyMce', 'body', array(
 				'label' => 'Body',
 				'required' => true,
 				'editorOptions' => array(
-					'html' => true,
+					//'html' => true,
+					'uploadUrl' => $uploadUrl,
 				),
 				'allowEmpty' => false,
       ));

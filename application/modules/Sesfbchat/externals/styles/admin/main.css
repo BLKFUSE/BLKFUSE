@@ -1,0 +1,14 @@
+body#global_page_sesfbchat-admin-settings-index div#sesfbchat_starttime-element,
+body#global_page_sesfbchat-admin-settings-index div#sesfbchat_endtime-element{
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+body#global_page_sesfbchat-admin-settings-index div#sesfbchat_starttime-element > *,
+body#global_page_sesfbchat-admin-settings-index div#sesfbchat_endtime-element > *{
+	width: 15% !important;
+}
+body#global_page_sesfbchat-admin-settings-index div#sesfbchat_starttime-element > * input#sesfbchat_starttime-date,
+body#global_page_sesfbchat-admin-settings-index div#sesfbchat_endttime-element > * input#sesfbchat_endtime-date{
+	height: 48px;
+}

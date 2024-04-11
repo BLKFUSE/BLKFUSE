@@ -405,7 +405,7 @@ class Sesnews_AlbumController extends Core_Controller_Action_Standard {
 
   public function removeAction() {
 
-    if(empty($_POST['photo_id']))
+    if(empty($_GET['photo_id']))
     die('error');
     //GET PHOTO ID AND ITEM
     $photo_id = (int) $this->_getParam('photo_id');
@@ -433,6 +433,7 @@ class Sesnews_AlbumController extends Core_Controller_Action_Standard {
     $title = $this->_getParam('title', null);
     $description = $this->_getParam('description', null);
     Engine_Api::_()->getDbTable('photos', 'sesnews')->update(array('title' => $title, 'description' => $description), array('photo_id = ?' => $photo_id));
+    echo json_encode(array('status'=>"true"));die;
   }
 		//update cover photo function
 	public function uploadCoverAction(){

@@ -21,8 +21,9 @@ class User_Model_DbTable_Users extends Engine_Db_Table
   protected $_name = 'users';
 
   protected $_rowClass = 'User_Model_User';
-  public function getAllAdmin()
-  {
+  
+  public function getAllAdmin() {
+  
   	$levelTable = Engine_Api::_()->getDbtable('levels', 'authorization');
   	$levelTableName = $levelTable->info("name");
   	$tableName = $this->info("name");
@@ -31,5 +32,57 @@ class User_Model_DbTable_Users extends Engine_Db_Table
   		->joinLeft($levelTableName, "$levelTableName.level_id = $tableName.level_id",null)
   		->where($levelTableName.".type = ?","admin");
   	return $this->fetchAll($select);
+  }
+  
+  public function isUserNameExist($username) {
+    $tableName = $this->info("name");
+    return $this->select()
+                      ->from($tableName, array('user_id'))
+                      ->where('username = ?', $username)
+                      ->query()
+                      ->fetchColumn();
+  }
+  
+  public function isEmailExist($email) {
+    $tableName = $this->info("name");
+    return $this->select()
+                      ->from($tableName, array('user_id'))
+                      ->where('email = ?', $email)
+                      ->query()
+                      ->fetchColumn();
+  }
+
+  public function countActiveMembers() {
+  
+    $levelIds = Engine_Api::_()->getDbtable('levels', 'authorization')->getLevelsAssoc(array('type' => array('admin', 'moderator')));
+    $select = $this->select()
+                ->from($this->info('name'), array("COUNT(user_id)"))
+                ->where('approved =?', 1)
+                ->where('enabled =?', 1);
+    if(engine_count($levelIds) > 0) {
+      $select->where("level_id NOT IN (?)", array_keys($levelIds));
+    }
+    return $select->query()
+                ->fetchColumn();
+  }
+  
+  public function getUserExist($userId = '', $referralCode = '') {
+  
+    if(empty($userId)) {
+      $viewer = Engine_Api::_()->user()->getViewer();
+      $userId = $viewer->getIdentity();
+    } 
+    
+    $select = $this->select()
+            ->from($this->info('name'), array('*'));
+    if($userId) {
+      $select->where('user_id = ?', $userId);
+    }
+
+    if(!empty($referralCode)) {
+      $select->where('referral_code =?', $referralCode);
+    }
+    
+    return $this->fetchRow($select);
   }
 }

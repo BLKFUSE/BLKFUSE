@@ -42,7 +42,7 @@ function showHidePanel(value) {
       document.getElementById('sesdating_sidepanel_showhide-wrapper').style.display = 'none';
   } else if(value == 2) {
     if(document.getElementById('sesdating_sidepanel_showhide-wrapper'))
-      document.getElementById('sesdating_sidepanel_showhide-wrapper').style.display = 'block';
+      document.getElementById('sesdating_sidepanel_showhide-wrapper').style.display = 'flex';
   }
 }
 
@@ -58,22 +58,22 @@ function showHeaderDesigns(value) {
     if(document.getElementById('sesdating_sidepanel_showhide-wrapper'))
       document.getElementById('sesdating_sidepanel_showhide-wrapper').style.display = 'none';
     if(document.getElementById('sesdating_limit-wrapper'))
-      document.getElementById('sesdating_limit-wrapper').style.display = 'block';
+      document.getElementById('sesdating_limit-wrapper').style.display = 'flex';
     if(document.getElementById('sesdating_moretext-wrapper'))
-      document.getElementById('sesdating_moretext-wrapper').style.display = 'block';
+      document.getElementById('sesdating_moretext-wrapper').style.display = 'flex';
   } else {
     if(document.getElementById('sesdating_menu_img-wrapper'))
-      document.getElementById('sesdating_menu_img-wrapper').style.display = 'block';
+      document.getElementById('sesdating_menu_img-wrapper').style.display = 'flex';
     if(document.getElementById('sesdating_sidepanel_effect-wrapper'))
-      document.getElementById('sesdating_sidepanel_effect-wrapper').style.display = 'block';   
+      document.getElementById('sesdating_sidepanel_effect-wrapper').style.display = 'flex';   
     if(document.getElementById('sesdating_menuinformation_img-wrapper'))
-      document.getElementById('sesdating_menuinformation_img-wrapper').style.display = 'block';
+      document.getElementById('sesdating_menuinformation_img-wrapper').style.display = 'flex';
     if(document.getElementById('sesdating_sidepanel_effect').value == 1){
       if(document.getElementById('sesdating_sidepanel_showhide-wrapper'))
         document.getElementById('sesdating_sidepanel_showhide-wrapper').style.display = 'none';
     } else {
       if(document.getElementById('sesdating_sidepanel_showhide-wrapper'))
-        document.getElementById('sesdating_sidepanel_showhide-wrapper').style.display = 'block';
+        document.getElementById('sesdating_sidepanel_showhide-wrapper').style.display = 'flex';
     }
     if(document.getElementById('sesdating_limit-wrapper'))
       document.getElementById('sesdating_limit-wrapper').style.display = 'none';
@@ -86,13 +86,13 @@ function showSocialShare(value) {
 
   if(value == 1) {
     if(document.getElementById('sesdating_facebookurl-wrapper'))
-      document.getElementById('sesdating_facebookurl-wrapper').style.display = 'block';
+      document.getElementById('sesdating_facebookurl-wrapper').style.display = 'flex';
     if(document.getElementById('sesdating_googleplusurl-wrapper'))
-      document.getElementById('sesdating_googleplusurl-wrapper').style.display = 'block';
+      document.getElementById('sesdating_googleplusurl-wrapper').style.display = 'flex';
     if(document.getElementById('sesdating_twitterurl-wrapper'))
-      document.getElementById('sesdating_twitterurl-wrapper').style.display = 'block';
+      document.getElementById('sesdating_twitterurl-wrapper').style.display = 'flex';
     if(document.getElementById('sesdating_pinteresturl-wrapper'))
-      document.getElementById('sesdating_pinteresturl-wrapper').style.display = 'block';
+      document.getElementById('sesdating_pinteresturl-wrapper').style.display = 'flex';
   } else {
     if(document.getElementById('sesdating_facebookurl-wrapper'))
       document.getElementById('sesdating_facebookurl-wrapper').style.display = 'none';

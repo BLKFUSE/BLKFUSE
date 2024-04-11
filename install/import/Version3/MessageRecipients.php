@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `se_pmconvoops` (
   KEY `total_outbox` (`pmconvoop_user_id`,`pmconvoop_deleted_outbox`,`pmconvoop_read`),
   KEY `last_pm_date` (`pmconvoop_pmdate`),
   KEY `total_inbox` (`pmconvoop_user_id`,`pmconvoop_deleted_inbox`,`pmconvoop_read`,`pmconvoop_pmdate`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -84,6 +84,6 @@ CREATE TABLE `engine4_messages_recipients` (
   PRIMARY KEY  (`user_id`,`conversation_id`),
   KEY `INBOX_UPDATED` (`user_id`,`conversation_id`,`inbox_updated`),
   KEY `OUTBOX_UPDATED` (`user_id`,`conversation_id`,`outbox_updated`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

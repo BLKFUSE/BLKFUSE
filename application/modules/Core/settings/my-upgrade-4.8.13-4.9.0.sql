@@ -14,15 +14,15 @@ UPDATE `engine4_core_settings` SET `value`='HTML5' WHERE `name`='core.doctype';
 DROP TABLE IF EXISTS `engine4_core_banners`;
 CREATE TABLE IF NOT EXISTS `engine4_core_banners` (
   `banner_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `module` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `module` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(64) NOT NULL,
   `body` varchar(255) NOT NULL,
   `photo_id` int(11) unsigned NOT NULL default '0',
   `params` text NOT NULL,
   `custom` tinyint(1) NOT NULL default '0',
   PRIMARY KEY (`banner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `engine4_core_menuitems`
@@ -50,8 +50,7 @@ ALTER TABLE `engine4_core_links` ADD `params` TEXT NULL DEFAULT NULL AFTER `sear
 --
 INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
 ('core_admin_main_settings_iframely', 'core', 'Iframely Integration', '', '{"route":"admin_default","controller":"iframely"}', 'core_admin_main_settings', '', 11),
-('core_mini_update', 'activity', 'Updates', 'Activity_Plugin_Menus', '', 'core_mini', '', 100)
-;
+('core_mini_update', 'activity', 'Updates', 'Activity_Plugin_Menus', '', 'core_mini', '', 1);
 
 --
 -- Reverse mini menu items ordering

@@ -116,7 +116,7 @@
                 <?php } ?>
                 </td>
                  <td><?php  echo $sub_category->profile_type_review && isset($this->profiletypes[$sub_category->profile_type_review]) ? $this->profiletypes[$sub_category->profile_type_review] : '-' ; ?></td>
-                <td><?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesnews', 'controller' => 'review-categories', 'action' => 'edit-category', 'id' => $sub_category->category_id), $this->translate('Edit'), array()) ?> 	| <?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesnews', 'controller' => 'review-categories', 'action' => 'review-parameter', 'id' => $sub_category->category_id), $this->translate($titleEASC.' Parameter'), array('class'=>smoothbox)) ?>  	</td>
+                <td><?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesnews', 'controller' => 'review-categories', 'action' => 'edit-category', 'id' => $sub_category->category_id), $this->translate('Edit'), array()) ?> 	| <?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesnews', 'controller' => 'review-categories', 'action' => 'review-parameter', 'id' => $sub_category->category_id), $this->translate($titleEASC.' Parameter'), array('class'=> 'smoothbox')) ?>  	</td>
               </tr>
               <?php 
                 		//SubSubcategory Work
@@ -151,7 +151,7 @@
                 <?php } ?>
                 </td>
                  <td><?php  echo $subsub_category->profile_type_review && isset($this->profiletypes[$subsub_category->profile_type_review]) ? $this->profiletypes[$subsub_category->profile_type_review] : '-' ; ?></td>
-                <td><?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesnews', 'controller' => 'review-categories', 'action' => 'edit-category', 'id' => $subsub_category->category_id), $this->translate('Edit'), array()) ?> | <?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesnews', 'controller' => 'review-categories', 'action' => 'review-parameter', 'id' => $subsub_category->category_id), $this->translate($titleEASSC.' Parameter'), array('class'=>smoothbox)) ?>  
+                <td><?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesnews', 'controller' => 'review-categories', 'action' => 'edit-category', 'id' => $subsub_category->category_id), $this->translate('Edit'), array()) ?> | <?php echo $this->htmlLink(array('route' => 'admin_default', 'module' => 'sesnews', 'controller' => 'review-categories', 'action' => 'review-parameter', 'id' => $subsub_category->category_id), $this->translate($titleEASSC.' Parameter'), array('class'=> 'smoothbox')) ?>  
               </tr>
               <?php endforeach; ?>
               <?php endforeach; ?>

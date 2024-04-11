@@ -24,7 +24,7 @@ class Elpis_Form_Admin_Settings_Global extends Engine_Form {
         '2' => 'Yes, Landing Page Design 2',
         '0' => 'No',
       ),
-      'value' => $settings->getSetting('elpis.changelanding', 0),
+      'value' => Engine_Api::_()->getDbTable('settings', 'core')->getDbSettings('elpis.changelanding') ? Engine_Api::_()->getDbTable('settings', 'core')->getDbSettings('elpis.changelanding'): 0,
     ));
 
     $this->addElement('MultiCheckbox', 'elpis_headerloggedinoptions', array(
@@ -56,8 +56,13 @@ class Elpis_Form_Admin_Settings_Global extends Engine_Form {
       'description' => 'Enter the corner radius of widgets on your website in px.',
       'value' => $settings->getSetting('theme.widget.radius', 10), //Engine_Api::_()->elpis()->getContantValueXML('theme_widget_radius'),
     ));
-
-
+    
+    $this->addElement('Select', 'accessibility_options', array(
+      'label' => 'Show Accessibility Options',
+      'multiOptions' => array('1'=>'Yes','0'=>'No'),
+      'value'=> $settings->getSetting("accessibility_options",1)
+    ));
+    
     $this->addElement('Button', 'submit', array(
       'label' => 'Save Changes',
       'type' => 'submit',

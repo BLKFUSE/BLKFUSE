@@ -45,11 +45,9 @@
 <?php include APPLICATION_PATH .  '/application/modules/Sescontest/views/scripts/dismiss_message.tpl';?>
 <h3><?php echo $this->translate("Manage Contest Entries") ?></h3>
 <p><?php echo $this->translate('This page lists all of the contest entries your users have submitted. You can use this page to monitor these contest entries and delete offensive material if necessary. Entering criteria into the filter fields will help you find specific contest entries. Leaving the filter fields blank will show all the contests on your social network. <br /> Below, you can also choose any number of contest entries as Entries of the Day.'); ?></p>
-<br />
 <div class='admin_search sesbasic_search_form'>
   <?php echo $this->formFilter->render($this) ?>
 </div>
-<br />
 <?php $counter = $this->paginator->getTotalItemCount(); ?> 
 <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
   <div class="sesbasic_search_reasult">
@@ -77,8 +75,8 @@
           <tr>
             <td><input type='checkbox' class='checkbox' name='delete_<?php echo $item->participant_id;?>' value="<?php echo $item->participant_id; ?>" /></td>
             <td><?php echo $item->participant_id ?></td>
-            <td><?php echo $this->htmlLink($item->getHref(), $this->translate(Engine_Api::_()->sesbasic()->textTruncation($item->getTitle(),16)), array('title' => $item->getTitle(), 'target' => '_blank')) ?></td>
-            <td><?php echo $this->htmlLink($item->getOwner()->getHref(), $this->translate(Engine_Api::_()->sesbasic()->textTruncation($item->getOwner()->getTitle(),16)), array('title' => $this->translate($item->getOwner()->getTitle()), 'target' => '_blank')) ?></td>
+            <td><?php echo $this->htmlLink($item->getHref(), $this->translate($item->getTitle()), array('title' => $item->getTitle(), 'target' => '_blank')) ?></td>
+            <td><?php echo $this->htmlLink($item->getOwner()->getHref(), $this->translate($item->getOwner()->getTitle()), array('title' => $this->translate($item->getOwner()->getTitle()), 'target' => '_blank')) ?></td>
             <td><?php echo $this->htmlLink($contest->getHref(), $this->translate(Engine_Api::_()->sesbasic()->textTruncation($contest->getTitle(),16)), array('title' => $contest->getTitle(), 'target' => '_blank')) ?></td>
             <td><?php echo $item->vote_count; ?></td>
             <td class="admin_table_centered">
@@ -108,12 +106,10 @@
         </tbody>
       </table>
       </div>
-    <br />
     <div class='buttons'>
       <button type='submit'><?php echo $this->translate("Delete Selected") ?></button>
     </div>
   </form>
-  <br/>
   <div>
     <?php echo $this->paginationControl($this->paginator,null,null,$this->urlParams); ?>
   </div>

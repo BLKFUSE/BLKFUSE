@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `engine4_storage_chunks` (
   `data` blob NOT NULL,
   PRIMARY KEY  (`chunk_id`),
   KEY `file_id` (`file_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -37,9 +37,9 @@ DROP TABLE IF EXISTS `engine4_storage_files`;
 CREATE TABLE `engine4_storage_files` (
   `file_id` int(10) unsigned NOT NULL auto_increment,
   `parent_file_id` int(10) unsigned NULL,
-  `type` varchar(16) CHARACTER SET latin1 COLLATE latin1_general_ci NULL,
+  `type` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
 
-  `parent_type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci default NULL,
+  `parent_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci default NULL,
   `parent_id` int(10) unsigned default NULL,
   `user_id` int(10) unsigned default NULL,
   `creation_date` datetime NOT NULL,
@@ -52,14 +52,15 @@ CREATE TABLE `engine4_storage_files` (
   `mime_major` varchar(64) NOT NULL,
   `mime_minor` varchar(64) NOT NULL,
   `size` bigint(20) unsigned NOT NULL,
-  `hash` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-
+  `hash` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `resource_type` VARCHAR(128) NULL DEFAULT NULL, 
+  `resource_id` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY  (`file_id`),
   UNIQUE KEY  (`parent_file_id`,`type`),
   KEY `PARENT` (`parent_type`,`parent_id`),
   KEY `user_id` (`user_id`),
   KEY `service_id` (`service_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -74,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `engine4_storage_mirrors` (
   `service_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`file_id`,`service_id`),
   KEY `service_id` (`service_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -87,11 +88,11 @@ DROP TABLE IF EXISTS `engine4_storage_services`;
 CREATE TABLE IF NOT EXISTS `engine4_storage_services` (
   `service_id` int(10) unsigned NOT NULL auto_increment,
   `servicetype_id` int(10) unsigned NOT NULL,
-  `config` text CHARACTER SET latin1 COLLATE latin1_general_ci default NULL,
+  `config` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci default NULL,
   `enabled` tinyint(1) unsigned NOT NULL default '0',
   `default` tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (`service_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_storage_services`
@@ -111,12 +112,12 @@ DROP TABLE IF EXISTS `engine4_storage_servicetypes`;
 CREATE TABLE IF NOT EXISTS `engine4_storage_servicetypes` (
   `servicetype_id` int(10) unsigned NOT NULL auto_increment,
   `title` varchar(128) NOT NULL,
-  `plugin` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `form` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci default NULL,
+  `plugin` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `form` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci default NULL,
   `enabled` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`servicetype_id`),
   UNIQUE KEY `plugin` (`plugin`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_storage_servicetypes`
@@ -199,3 +200,7 @@ ALTER TABLE `engine4_storage_services` ADD INDEX(`default`);
 -- indexing for table `engine4_storage_servicetypes`
 --
 ALTER TABLE `engine4_storage_servicetypes` ADD INDEX(`enabled`);
+
+
+ALTER TABLE `engine4_storage_files` ADD INDEX(`resource_type`);
+ALTER TABLE `engine4_storage_files` ADD INDEX(`resource_id`);

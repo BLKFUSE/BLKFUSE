@@ -22,6 +22,7 @@ class Group_Model_Topic extends Core_Model_Item_Abstract
   protected $_owner_type = 'user';
 
   protected $_children_types = array('group_post');
+  protected $_searchTriggers = false;
   
   public function isSearchable()
   {
@@ -127,7 +128,10 @@ class Group_Model_Topic extends Core_Model_Item_Abstract
     // Delete all child posts
     $postTable = Engine_Api::_()->getItemTable('group_post');
     $postSelect = $postTable->select()->where('topic_id = ?', $this->getIdentity());
+    $storageFilesTable = Engine_Api::_()->getItemTable('storage_file');
     foreach( $postTable->fetchAll($postSelect) as $groupPost ) {
+      //Delete tinymce files
+      $storageFilesTable->deleteTinyMceFiles($groupPost);
       $groupPost->disableHooks()->delete();
     }
     

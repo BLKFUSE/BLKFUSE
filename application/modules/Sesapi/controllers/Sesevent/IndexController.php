@@ -1764,16 +1764,12 @@ class Sesevent_IndexController extends Sesapi_Controller_Action_Standard
                 Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate("Custom Url not available.Please select other."), 'result' => array()));
             }
         }
-        if ($_GET['sesapi_platform'] != 1) {
-            // Process
-            //$starttime = isset($_POST['start_date']) ? date('Y-m-d H:i:s', strtotime($_POST['start_date'] . ' ' . $_POST['start_time'])) : '';
-            //$endtime = isset($_POST['end_date']) ? date('Y-m-d H:i:s', strtotime($_POST['end_date'] . ' ' . $_POST['end_time'])) : '';
-            
+        if ($_GET['sesapi_platform'] == 1) {
             $starttime = isset($_POST['start_time']) ? date('Y-m-d H:i:s', strtotime($_POST['start_time'])) : '';
             $endtime = isset($_POST['end_time']) ? date('Y-m-d H:i:s', strtotime($_POST['end_time'])) : '';
         } else {
-            $starttime = isset($_POST['start_time']) ? date('Y-m-d H:i:s', strtotime($_POST['start_time'])) : '';
-            $endtime = isset($_POST['end_time']) ? date('Y-m-d H:i:s', strtotime($_POST['end_time'])) : '';
+            $starttime = isset($_POST['start_time']) ? date('Y-m-d H:i:s', strtotime($_POST["start_date"].' '.$_POST['start_time'])) : '';
+            $endtime = isset($_POST['end_time']) ? date('Y-m-d H:i:s', strtotime($_POST["end_date"].' '.$_POST['end_time'])) : '';
         }
         $values = $form->getValues();
         if(empty($values['draft'])){

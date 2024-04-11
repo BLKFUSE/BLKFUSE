@@ -89,13 +89,13 @@ function selectAll()
 				        <tr>
 				          <td><input type='checkbox' class='checkbox' name='delete_<?php echo $item->review_id;?>' value="<?php echo $item->review_id; ?>" /></td>
 				          <td><?php echo $item->review_id ?></td>
-				          <td><?php echo $this->htmlLink($item->getHref(), $this->translate(Engine_Api::_()->sesbasic()->textTruncation($item->getTitle(),16)), array('title' => $item->getTitle(), 'target' => '_blank')) ?></td>
+				          <td><?php echo $this->htmlLink($item->getHref(), $this->translate($item->getTitle()), array('title' => $item->getTitle(), 'target' => '_blank')) ?></td>
 				          
 				          <td>
 				            <?php $contentItem = Engine_Api::_()->getItem($item->content_type, $item->content_id); ?>
-				            <?php echo $this->htmlLink($contentItem->getHref(), $this->translate(Engine_Api::_()->sesbasic()->textTruncation($contentItem->getTitle(),16)), array('title' => $contentItem->getTitle(), 'target' => '_blank')) ?></td>
+				            <?php echo $this->htmlLink($contentItem->getHref(), $this->translate($contentItem->getTitle()), array('title' => $contentItem->getTitle(), 'target' => '_blank')) ?></td>
 				          
-				          <td><?php echo $this->htmlLink($item->getOwner()->getHref(), $this->translate(Engine_Api::_()->sesbasic()->textTruncation($item->getOwner()->getTitle(),16)), array('title' => $this->translate($item->getOwner()->getTitle()), 'target' => '_blank')) ?></td>
+				          <td><?php echo $this->htmlLink($item->getOwner()->getHref(), $this->translate($item->getOwner()->getTitle()), array('title' => $this->translate($item->getOwner()->getTitle()), 'target' => '_blank')) ?></td>
 				          <td>
 				            <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'sesnews', 'controller' => 'admin-manage-review', 'action' => 'view', 'id' => $item->review_id), $this->translate("View Details"), array('class' => 'smoothbox')) ?>
 				            |

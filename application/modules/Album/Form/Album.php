@@ -224,7 +224,8 @@ class Album_Form_Album extends Engine_Form
     }
 
     public function saveValues()
-    {
+    {   
+        $viewer = Engine_Api::_()->user()->getViewer();
         $setCover = false;
         $values = $this->getValues();        
         $params = Array();
@@ -266,6 +267,9 @@ class Album_Form_Album extends Engine_Form
             }
 
             $params['view_privacy'] = $values['auth_view'];
+            
+            //approve setting work
+            $params['approved'] = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('album', $viewer, 'approve');
 
             $album = Engine_Api::_()->getDbtable('albums', 'album')->createRow();
             if (is_null($values['subcat_id']))
@@ -300,15 +304,16 @@ class Album_Form_Album extends Engine_Form
                 $album = Engine_Api::_()->getItem('album', $values['album']);
             }
         }
-
+        
         // Add action and attachments
         $api = Engine_Api::_()->getDbtable('actions', 'activity');
         $countFiles = is_countable($values['file']) ? engine_count($values['file']) : 0;
         $action = $api->addActivity(Engine_Api::_()->user()->getViewer(), $album, 'album_photo_new', null, array('count' => $countFiles, 'privacy' => isset($values['networks'])? $network_privacy : null));
-        $viewer = Engine_Api::_()->user()->getViewer();
+        
         $photoTable = Engine_Api::_()->getDbtable('photos', 'album');
         // Do other stuff
         $count = 0;
+        
         foreach( $values['file'] as $photoId )
         {
             $path = $photoTable->getTemPhoto($photoId,1);
@@ -334,12 +339,33 @@ class Album_Form_Album extends Engine_Form
 
             $photo->album_id = $album->album_id;
             $photo->order = $photo->photo_id;
+            
+            $photo->approved = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('album', $viewer, 'photoapprove');
             $photo->save();
+            if($photo->approved) {
+              $photo->resubmit = 1;
+              $photo->save();
+            } elseif($values['album'] != 0) {
+              //Start Send Approval Request to Admin
+              Engine_Api::_()->core()->contentApprove($photo, 'photo');
+            }
             @unlink($path);
+            
             if( $action instanceof Activity_Model_Action && $count < 100 ) {
-                $api->attachActivity($action, $photo, Activity_Model_Action::ATTACH_MULTI);
+              $api->attachActivity($action, $photo, Activity_Model_Action::ATTACH_MULTI);
             }
             $count++;
+        }
+        
+//         if($values['album'] != 0) {
+//           if(!Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('album', $viewer, 'photoapprove')) {
+//             Engine_Api::_()->core()->contentApprove($album, 'album photo');
+//           }
+//         }
+
+        //Start Send Approval Request to Admin
+        if($values['album'] == 0) {
+          Engine_Api::_()->core()->contentApprove($album, 'album');
         }
 
         return $album;

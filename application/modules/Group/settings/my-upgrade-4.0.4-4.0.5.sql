@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `engine4_group_topicwatches` (
   `watch` tinyint(1) unsigned NOT NULL default '1',
   PRIMARY KEY  (`resource_id`,`topic_id`,`user_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 INSERT IGNORE INTO `engine4_group_topicwatches` (
   SELECT DISTINCT

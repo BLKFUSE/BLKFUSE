@@ -33,11 +33,9 @@ function selectAll()
 <p>
 	<?php echo $this->translate('This page lists all of the playlists your users have created. You can use this page to monitor these playlists and delete offensive material if necessary. Entering criteria into the filter fields will help you find specific playlist. Leaving the filter fields blank will show all the playlists on your social network. <br /> Below, you can also choose any number of playlists as Playlists of the Day. These playlists will be displayed randomly in the "Videos / Channels / Playlists of the Day" widget.'); ?>
 </p>
-<br />
 <div class='admin_search sesbasic_search_form'>
   <?php echo $this->formFilter->render($this) ?>
 </div>
-<br />
 <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
   <div class="sesbasic_search_reasult">
     <?php echo $this->translate(array('%s playlist found.', '%s playlists found.', $this->paginator->getTotalItemCount()), $this->locale()->toNumber($this->paginator->getTotalItemCount())) ?>
@@ -89,7 +87,7 @@ function selectAll()
               <?php echo $this->htmlLink(array('route' => 'default', 'module' => 'sesvideo', 'controller' => 'admin-manage', 'action' => 'oftheday', 'id' => $item->playlist_id, 'type' => 'sesvideo_playlist', 'param' => 1), $this->htmlImage($this->layout()->staticBaseUrl . 'application/modules/Sesbasic/externals/images/icons/error.png', '', array('title'=> $this->translate('Make Playlist of the Day'))), array('class' => 'smoothbox')) ?>
             <?php endif; ?>
           </td>
-          <td>
+          <td class="nowrap">
           	<?php echo $this->htmlLink(array('route' => 'default', 'module' => 'sesvideo', 'controller' => 'admin-manage', 'action' => 'view', 'type'=> 'sesvideo_playlist', 'id' => $item->playlist_id), $this->translate("View Details"), array('class' => 'smoothbox')) ?>
             |
             <a href="<?php echo $item->getHref(); ?>"><?php echo $this->translate("View") ?></a>
@@ -103,18 +101,14 @@ function selectAll()
       <?php endforeach; ?>
     </tbody>
   </table>
-  <br />
   <div class='buttons'>
     <button type='submit'><?php echo $this->translate("Delete Selected") ?></button>
   </div>
   </form>
-  <br />
   <div>
     <?php echo $this->paginationControl($this->paginator); ?>
   </div>
-
 <?php else: ?>
-  <br />
   <div class="tip">
     <span>
       <?php echo $this->translate("There are currently no playlists created by your members yet.") ?>

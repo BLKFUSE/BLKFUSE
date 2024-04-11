@@ -48,6 +48,7 @@ class Core_Form_Admin_Settings_Password extends Engine_Form
 
     // Mode
     $this->addElement('Radio', 'mode', array(
+      'label' => "Reauthentication to Access Admin Panel",
       'multiOptions' => array(
         'none' => 'Do not require reauthentication.',
         'user' => 'Require admins to re-enter their password when they try to access the admin panel.',

@@ -84,6 +84,17 @@ class Classified_Form_Admin_Settings_Level extends Authorization_Form_Admin_Leve
             if( !$this->isModerator() ) {
                 unset($this->delete->options[2]);
             }
+            
+						//Element: approve
+						$this->addElement('Radio', 'approve', array(
+							'description' => 'Do you want classifieds created by members of this level to be auto-approved?',
+							'label' => 'Auto Approve Classifieds',
+							'multiOptions' => array(
+								1 => 'Yes, auto-approve classifieds.',
+								0 => 'No, do not auto-approve classifieds.'
+							),
+							'value' => 1,
+						));
 
             // Element: comment
             $this->addElement('Radio', 'comment', array(
@@ -154,11 +165,11 @@ class Classified_Form_Admin_Settings_Level extends Authorization_Form_Admin_Leve
             ));
 
             // Element: auth_html
-            $this->addElement('Text', 'auth_html', array(
-                'label' => 'HTML in Classified Listings?',
-                'description' => 'If you want to allow specific HTML tags, you can enter them below (separated by commas). Example: b, img, a, embed, font',
-                'value' => 'strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr'
-            ));
+//             $this->addElement('Text', 'auth_html', array(
+//                 'label' => 'HTML in Classified Listings?',
+//                 'description' => 'If you want to allow specific HTML tags, you can enter them below (separated by commas). Example: b, img, a, embed, font',
+//                 'value' => 'strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr'
+//             ));
 
             // Element: max
             $this->addElement('Text', 'max', array(

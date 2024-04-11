@@ -52,11 +52,10 @@ class Eticktokclone_IndexController extends Core_Controller_Action_Standard {
       try {
         $result->delete();
 
-            $user = Engine_Api::_()->getItem('user', $item_id);
-            //Unfollow notification Work: Delete follow notification and feed
-            Engine_Api::_()->getDbtable('notifications', 'activity')->delete(array('type =?' => "eticktokclone_follow", "subject_id =?" => $viewer->getIdentity(), "object_type =? " => $user->getType(), "object_id = ?" => $user->getIdentity()));
-            // Engine_Api::_()->getDbtable('actions', 'activity')->delete(array('type =?' => "tickvideo_follow", "subject_id =?" => $viewer->getIdentity(), "object_type =? " => $user->getType(), "object_id = ?" => $user->getIdentity()));
-
+				$user = Engine_Api::_()->getItem('user', $item_id);
+				//Unfollow notification Work: Delete follow notification and feed
+				Engine_Api::_()->getDbtable('notifications', 'activity')->delete(array('type =?' => "eticktokclone_follow", "subject_id =?" => $viewer->getIdentity(), "object_type =? " => $user->getType(), "object_id = ?" => $user->getIdentity()));
+				
         $db->commit();
       } catch (Exception $e) {
         $db->rollBack();
@@ -87,21 +86,22 @@ class Eticktokclone_IndexController extends Core_Controller_Action_Standard {
         $db->rollBack();
         throw $e;
       }
-       //Send notification and activity feed work.
-       $selectUser = $itemTable->select()->where('user_id =?', $item_id);
-       $item = $itemTable->fetchRow($selectUser);
-       $subject = $item;
-       $owner = $subject->getOwner();
-       if ($owner->getType() == 'user' && $owner->getIdentity() != $viewer_id) {
-           $activityTable = Engine_Api::_()->getDbtable('actions', 'activity');
-           Engine_Api::_()->getDbtable('notifications', 'activity')->delete(array('type =?' => 'eticktokclone_follow', "subject_id =?" => $viewer_id, "object_type =? " => $subject->getType(), "object_id = ?" => $subject->getIdentity()));
-           Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($owner, $viewer, $subject, 'eticktokclone_follow');
+      
+			//Send notification and activity feed work.
+			$selectUser = $itemTable->select()->where('user_id =?', $item_id);
+			$item = $itemTable->fetchRow($selectUser);
+			$subject = $item;
+			$owner = $subject->getOwner();
+			if ($owner->getType() == 'user' && $owner->getIdentity() != $viewer_id) {
+				$viewer = Engine_Api::_()->getItem("eticktokclone_user", $viewer_id);
+				
+				Engine_Api::_()->getDbtable('notifications', 'activity')->delete(array('type =?' => 'eticktokclone_follow', "subject_id =?" => $viewer_id, "object_type =? " => $subject->getType(), "object_id = ?" => $subject->getIdentity()));
+				Engine_Api::_()->getDbtable('notifications', 'activity')->addNotification($owner, $viewer, $subject, 'eticktokclone_follow');
 
-           //follow mail to another user
-           Engine_Api::_()->getApi('mail', 'core')->sendSystem($subject->email, 'eticktokclone_follow', array('sender_title' => $viewer->getTitle(), 'object_link' => $viewer->getHref(), 'host' => $_SERVER['HTTP_HOST']));
-       }
-       echo json_encode(array('status' => 'true', 'error' => '', 'condition' => 'increment', 'count' => $followCount, 'autofollow' => 1));
-       die;
+				//follow mail to another user
+				Engine_Api::_()->getApi('mail', 'core')->sendSystem($subject->email, 'eticktokclone_follow', array('sender_title' => $viewer->getTitle(), 'object_link' => $viewer->getHref(), 'host' => $_SERVER['HTTP_HOST']));
+			}
+			echo json_encode(array('status' => 'true', 'error' => '', 'condition' => 'increment', 'count' => $followCount, 'autofollow' => 1)); die;
     }
   }
 

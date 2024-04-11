@@ -56,9 +56,15 @@ class Classified_Model_DbTable_Classifieds extends Core_Model_Item_DbTable_Abstr
         $searchTableName = $searchTable->info('name');
 
         $select = $this->select()
-            ->from($this)
-            ->order(!empty($params['orderby']) ? $tableName . '.' . $params['orderby'] . ' DESC'
-                : $tableName . '.creation_date DESC' );
+            ->from($this);
+            
+				if(!empty($params['orderby']) && $params['orderby'] == 'atoz') {
+					$select->order($tableName .'.title ASC');
+				} else if(!empty($params['orderby']) && $params['orderby'] == 'ztoa') {
+					$select->order($tableName .'.title DESC');
+				} else  {
+					$select->order( !empty($params['orderby']) ? $tableName.'.'.$params['orderby'].' DESC' : $tableName.'.creation_date DESC' );
+				}
 
         if( !empty($params['user_id']) && is_numeric($params['user_id']) ) {
             $owner = Engine_Api::_()->getItem('user', $params['user_id']);
@@ -122,6 +128,10 @@ class Classified_Model_DbTable_Classifieds extends Core_Model_Item_DbTable_Abstr
             $select->where($tableName . ".title LIKE ? OR " . $tableName . ".body LIKE ?",
                 '%' . $params['search'] . '%');
         }
+        
+        if(!isset($params['showclassified']) && empty($params['showclassified'])) {
+					$select->where('approved =?', 1);
+				}
 
         if( !empty($params['start_date']) ) {
             $select->where($tableName . ".creation_date > ?",

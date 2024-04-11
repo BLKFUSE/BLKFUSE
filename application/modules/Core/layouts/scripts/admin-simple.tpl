@@ -12,7 +12,7 @@
 ?>
 <?php echo $this->doctype()->__toString() ?>
 <?php $locale = $this->locale()->getLocale()->__toString(); $orientation = ( $this->layout()->orientation == 'right-to-left' ? 'rtl' : 'ltr' ); ?>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $locale ?>" lang="<?php echo $locale ?>" dir="<?php echo $orientation ?>">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $locale ?>" lang="<?php echo $locale ?>" dir="<?php echo $orientation ?>" <?php if(!empty($_COOKIE['adminmode_theme']) && $_COOKIE['adminmode_theme'] == 'dark'): ?> class="dark_mode" <?php endif; ?>>
 <head>
   <base href="<?php echo rtrim('//' . $_SERVER['HTTP_HOST'] . $this->baseUrl(), '/'). '/' ?>" />
 
@@ -68,7 +68,7 @@
       'PREPEND');
     if( APPLICATION_ENV != 'development' ) {
       $this->headLink()
-        ->prependStylesheet('application/css.php?request=application/modules/Core/externals/styles/admin/main.css');
+        ->prependStylesheet($staticBaseUrl.'application/css.php?request=application/modules/Core/externals/styles/admin/main.css');
     } else {
       $this->headLink()
         ->prependStylesheet(rtrim($this->baseUrl(), '/') . '/application/css.php?request=application/modules/Core/externals/styles/admin/main.css');
@@ -168,7 +168,7 @@
     }
   </style>
 </head>
-<body id="global_page_<?php echo $identity ?>">
+<body id="global_page_<?php echo $identity ?>" class="smoothbox_body">
   <span id="global_content_simple">
     <?php echo $this->layout()->content ?>
   </span>

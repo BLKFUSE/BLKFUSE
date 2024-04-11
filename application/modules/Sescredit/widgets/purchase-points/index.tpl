@@ -15,7 +15,7 @@
 <?php $this->headScript()->appendFile(Zend_Registry::get('StaticBaseUrl') . 'application/modules/Sescredit/externals/scripts/core.js'); ?>
 
 <?php $this->headLink()->appendStylesheet($this->layout()->staticBaseUrl . 'application/modules/Sescredit/externals/styles/styles.css'); ?>
-<?php $givenSymbol = Engine_Api::_()->sescredit()->getCurrentCurrency(); $random = rand(20000,100000); ?>
+<?php $givenSymbol = Engine_Api::_()->payment()->getCurrentCurrency(); $random = rand(20000,100000); ?>
 <div id="sescredit_show_purchase_form" class="sescredit_purchase_points_form sesbasic_bxs">
   <?php echo $this->form->render($this); ?>
 </div>
@@ -30,6 +30,7 @@
     <div id="buttons-wrapper" class="form-wrapper">
       <?php foreach( $this->gateways as $gatewayInfo ):
         $gateway = $gatewayInfo['gateway'];
+        if($gateway->plugin == "Payment_Plugin_Gateway_Stripe") continue;
         $plugin = $gatewayInfo['plugin'];
         $first = ( !isset($first) ? true : false );
         $gatewayObject = $gateway->getGateway();

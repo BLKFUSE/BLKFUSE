@@ -122,17 +122,17 @@ class Engine_Form_Element_Duration extends Zend_Form_Element_Select
       if (null !== $translator) {
           $message = $translator->translate($message);
       }
-//      if (($this->isArray() || is_array($value))
-//          && !empty($value)
-//      ) {
-//          $aggregateMessages = array();
-//          foreach ($value as $val) {
-//              $aggregateMessages[] = str_replace('%value%', $val, $message);
-//          }
-//          $messages[$key] = implode($this->getErrorMessageSeparator(), $aggregateMessages);
-//      } else {
-          $messages[$key] = str_replace('%value%', $value, $message);
-//      }
+			if (($this->isArray() || is_array($value))
+					&& !empty($value)
+			) {
+					$aggregateMessages = array();
+					foreach ($value as $val) {
+							$aggregateMessages[] = str_replace('%value%', $val, $message);
+					}
+					$messages[$key] = implode($this->getErrorMessageSeparator(), $aggregateMessages);
+			} else {
+						$messages[$key] = str_replace('%value%', $value, $message);
+			}
     }
     return $messages;
   }

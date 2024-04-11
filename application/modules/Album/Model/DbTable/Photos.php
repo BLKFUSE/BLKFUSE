@@ -19,24 +19,45 @@
 class Album_Model_DbTable_Photos extends Core_Model_Item_DbTable_Abstract
 {
   protected $_rowClass = 'Album_Model_Photo';
+  
   protected $_temporyPath = DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR . 'temporary'. DIRECTORY_SEPARATOR .'album_photos';
+  
   public function getPhotoSelect(array $params)
   {
+    $viewer = Engine_Api::_()->user()->getViewer();
+    $viewer_id = $viewer->getIdentity();
+    
     $tablePhotoName = $this->info('name');
     $tableAlbum = Engine_Api::_()->getItemTable('album');
     $tableAlbumName = $tableAlbum->info('name');
     $select = $this->select()
       ->from($this->info('name'));
+//     if(isset($params['albumview']) && !empty($params['albumview']) && $viewer_id != $params['owner_id']) {
+//       $select->where($tablePhotoName.'.approved =?', 1);
+//     }
     if( !empty($params['album']) && $params['album'] instanceof Album_Model_Album ) {
-      $select->where('album_id = ?', $params['album']->getIdentity());
+      $select->where($tablePhotoName.'.album_id = ?', $params['album']->getIdentity());
     } else if( !empty($params['album_id']) && is_numeric($params['album_id']) ) {
-      $select->where('album_id = ?', $params['album_id']);
+      $select->where($tablePhotoName.'.album_id = ?', $params['album_id']);
     } else if (!empty($params['album_ids']) && is_array($params['album_ids'])) {
-      $select->where('album_id IN (?)', $params['album_ids']);
+      $select->where($tablePhotoName.'.album_id IN (?)', $params['album_ids']);
     }
     if(empty($params['showprivatephoto'])) {
       $select->where($tableAlbum->select()
         ->from($tableAlbumName,new Zend_Db_Expr('COUNT(*) > 0'))->where($tableAlbumName.".album_id = ".$tablePhotoName.".album_id")->where("type NOT IN ('group','event') OR type IS NULL"));
+    }
+    
+    if(isset($params['action']) && $params['action'] == 'browsephoto') {
+      //$select->where($tablePhotoName.'.approved =?', 1);
+      $select->where("CASE WHEN " .$tablePhotoName .".owner_id = '".$viewer_id."' THEN true ELSE ".$tablePhotoName.".approved = 1 END ");
+    }
+    
+    if(!$viewer->isAdmin() && $viewer->getIdentity()) {
+      $select->setIntegrityCheck(false)->joinLeft($tableAlbumName, "$tableAlbumName.album_id = $tablePhotoName.album_id", NULL);
+      $select->where("CASE WHEN " .$tablePhotoName .".owner_id = '".$viewer_id."' THEN true ELSE ".$tableAlbumName.".approved = 1 END ");
+    } else if(!$viewer->getIdentity()) {
+      $select->setIntegrityCheck(false)->joinLeft($tableAlbumName, "$tableAlbumName.album_id = $tablePhotoName.album_id", NULL);
+      $select->where($tableAlbumName.'.approved =?', 1);
     }
 
     if(isset($params['albumvieworder'])) {
@@ -47,15 +68,18 @@ class Album_Model_DbTable_Photos extends Core_Model_Item_DbTable_Abstract
       else
         $select->order('order ASC');
     } else {
-      if( !isset($params['order']) ) {
-        $select->order('order DESC');
-      } else if( is_string($params['order']) ) {
-        $select->order($params['order'] . ' DESC');
-      }
+
+			if(!empty($params['order']) && $params['order'] == 'atoz') {
+				$select->order($tablePhotoName .'.title ASC');
+			} else if(!empty($params['order']) && $params['order'] == 'ztoa') {
+				$select->order($tablePhotoName .'.title DESC');
+			} else  {
+				$select->order( !empty($params['order']) ? $tablePhotoName.'.'.$params['order'].' DESC' : $tablePhotoName.'.creation_date DESC' );
+			}
     }
 
     if (!empty($params['search'])) {
-      $select->where('title LIKE ? OR description LIKE ?', '%' . $params['search'] . '%');
+      $select->where($tablePhotoName.'.title LIKE ? OR '.$tablePhotoName.'. description LIKE ?', '%' . $params['search'] . '%');
     }
 
     if(!empty($params['tag'])) {

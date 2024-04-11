@@ -133,6 +133,8 @@ class Sesbasic_LightboxController extends Core_Controller_Action_Standard {
       $getParams['module'] = 'sesrecipe';
 		} else if($getParams['id'] == 'Sesblogs') {
       $getParams['module'] = 'sesblog';
+		} else if($getParams['module'] == 'sesevent') {
+      $getParams['module'] = 'sesevent';
 		}
 		$getModuleData = Engine_Api::_()->getDbTable('integrateothermodules', 'sesbasic')->getResults(array('column_name'=>'*','module_name'=>$getParams['module'],'type'=>'lightbox'));
 

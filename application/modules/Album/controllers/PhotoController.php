@@ -36,6 +36,17 @@ class Album_PhotoController extends Core_Controller_Action_Standard
         $viewer = Engine_Api::_()->user()->getViewer();
         $this->view->photo = $photo = Engine_Api::_()->core()->getSubject();
         $this->view->album = $album = $photo->getAlbum();
+        
+        if( !$album || !$album->getIdentity() || ((!$album->approved) && !$album->isOwner($viewer)) ) {
+					if(!empty($viewer->getIdentity()) && $viewer->isAdmin()) {
+					} else
+            return $this->_helper->requireSubject->forward();
+        }
+        if( !$photo || !$photo->getIdentity() || ((!$photo->approved) && !$photo->isOwner($viewer)) ) {
+					if(!empty($viewer->getIdentity()) && $viewer->isAdmin()) {
+					} else
+            return $this->_helper->requireSubject->forward();
+        }
 
         if( !$viewer || !$viewer->getIdentity() || !$album->isOwner($viewer) ) {
             $photo->view_count = new Zend_Db_Expr('view_count + 1');
@@ -127,14 +138,12 @@ class Album_PhotoController extends Core_Controller_Action_Standard
         try {
             // delete files from server
             $filesDB = Engine_Api::_()->getDbtable('files', 'storage');
+            
+            $thumbPath = $filesDB->fetchRow($filesDB->select()->where('parent_file_id = ?', $photo->file_id))->storage_path;
+            Engine_Api::_()->storage()->deleteExternalsFiles($thumbPath);
 
             $filePath = $filesDB->fetchRow($filesDB->select()->where('file_id = ?', $photo->file_id))->storage_path;
             Engine_Api::_()->storage()->deleteExternalsFiles($filePath);
-            unlink($filePath);
-
-            $thumbPath = $filesDB->fetchRow($filesDB->select()->where('parent_file_id = ?', $photo->file_id))->storage_path;
-            Engine_Api::_()->storage()->deleteExternalsFiles($thumbPath);
-            unlink($thumbPath);
 
             // Delete image and thumbnail
             $filesDB->delete(array('file_id = ?' => $photo->file_id));
@@ -150,6 +159,7 @@ class Album_PhotoController extends Core_Controller_Action_Standard
                 $attachDB->delete(array('type = ?' => 'album_photo', 'id = ?' => $photo->photo_id));
 
                 $action =  $actionsDB->fetchRow($actionsDB->select()->where('action_id = ?', $action_id));
+								if(is_array($action->params))
                 $count = $action->params['count'];
                 if( !is_null($count) && ($count > 1) ) {
                     $action->params = array('count' => (integer)$count-1);

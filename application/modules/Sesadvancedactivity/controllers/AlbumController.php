@@ -23,6 +23,7 @@ class Sesadvancedactivity_AlbumController extends Core_Controller_Action_Standar
     $description = $this->_getParam('description', null);
     $photoTable = Engine_Api::_()->getItemTable('photo');
     $photoTable->update(array('title' => $title, 'description' => $description), array('photo_id = ?' => $photo_id));
+    echo json_encode(array('status'=>"true"));die;
   }
   //album constructor function
   public function init() {
@@ -107,7 +108,7 @@ class Sesadvancedactivity_AlbumController extends Core_Controller_Action_Standar
   }
   //ACTION FOR PHOTO DELETE
   public function removeAction() {
-			if(empty($_POST['photo_id']))
+			if(empty($_GET['photo_id']))
 				die('error');
       //GET PHOTO ID AND ITEM
 			$photo_id = (int) $this->_getParam('photo_id');

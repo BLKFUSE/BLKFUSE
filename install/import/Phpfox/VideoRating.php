@@ -57,5 +57,5 @@ class Install_Import_Phpfox_VideoRating extends Install_Import_Phpfox_Abstract
   `rating` tinyint(1) unsigned DEFAULT NULL,
   PRIMARY KEY (`video_id`,`user_id`),
   KEY `INDEX` (`video_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  */

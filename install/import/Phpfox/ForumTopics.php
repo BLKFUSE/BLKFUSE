@@ -272,8 +272,8 @@ class Install_Import_Phpfox_ForumTopics extends Install_Import_Phpfox_Abstract
   `topic_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `forum_id` int(11) unsigned NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
-  `title` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `creation_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL,
   `sticky` tinyint(4) NOT NULL DEFAULT '0',
@@ -285,7 +285,7 @@ class Install_Import_Phpfox_ForumTopics extends Install_Import_Phpfox_Abstract
   PRIMARY KEY (`topic_id`),
   KEY `forum_id` (`forum_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
  */
 
 /*
@@ -294,7 +294,7 @@ class Install_Import_Phpfox_ForumTopics extends Install_Import_Phpfox_Abstract
   `topic_id` int(11) unsigned NOT NULL,
   `last_view_date` datetime NOT NULL,
   PRIMARY KEY (`user_id`,`topic_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  */
 
 /*
@@ -305,5 +305,5 @@ class Install_Import_Phpfox_ForumTopics extends Install_Import_Phpfox_Abstract
   `watch` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`resource_id`,`topic_id`,`user_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  */

@@ -11,7 +11,7 @@
  */
 ?>
 <div class="user_showhidepassword">
-  <i class="fa fa-eye" id="confirmtogglePassword"></i>
+  <i id="confirmtogglePassword"></i>
 </div>
 <script>
   var confirmtogglePassword = document.querySelector('#confirmtogglePassword');
@@ -21,6 +21,8 @@
     var passconf = document.querySelector('#passwordConfirm');
   } else if(document.getElementById('password_confirm')) {
     var passconf = document.querySelector('#password_confirm');
+  } else if(document.getElementById('password_conf')) {
+    var passconf = document.querySelector('#password_conf');
   }
   
   confirmtogglePassword.addEventListener('click', function (e) {
@@ -28,6 +30,6 @@
       var type = passconf.getAttribute('type') === 'password' ? 'text' : 'password';
       passconf.setAttribute('type', type);
       // toggle the eye / eye slash icon
-      this.classList.toggle('fa-eye-slash');
+      this.classList.toggle('showpassword');
   });
 </script>

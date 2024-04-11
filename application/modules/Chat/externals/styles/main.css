@@ -536,8 +536,8 @@ html[dir="rtl"] .chat_header_menu{
 }
 .chat_main{
   overflow:hidden;
-  background-color:#fff;
-  border:1px solid #ccc;
+  background-color:$theme_list_background_color;
+  border-width:1px;
 }
 .chat_rooms_wrapper{
   padding:5px;

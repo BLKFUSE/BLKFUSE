@@ -13,6 +13,10 @@
   
 class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard {
 	public function init(){
+
+		if (!$this->_helper->requireAuth()->setAuthParams('crowdfunding', null, 'view')->isValid())
+      Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('permission_error'), 'result' => array()));
+
 		$crowdfunding_id = $this->_getParam('crowdfunding_id');
 		$crowdfunding = null;
 		$crowdfunding = Engine_Api::_()->getItem('crowdfunding', $crowdfunding_id);
@@ -90,33 +94,38 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
     $value['visible'] = "1";
 		if($this->_getParam('search'))
 			$value['text'] = $this->_getParam('search');
-		if ($this->_getParam('search')) {
-			switch ($this->_getParam('search')) {
-				case 'most_viewed':
-					$value['popularCol'] = 'view_count';
-					break;
-				case 'most_liked':
-					$value['popularCol'] = 'like_count';
-					break;
-				case 'most_commented':
-					$value['popularCol'] = 'comment_count';
-					break;
-                case 'most_donated':
-					$value['popularCol'] = 'donate_count';
-					break;
-				case 'featured':
-					$value['popularCol'] = 'featured';
-					$value['fixedData'] = 'featured';
-					break;
-				case 'most_rated':
-					$value['popularCol'] = 'rating';
-					break;
-				case 'recently_created':
-					default:
-					$value['popularCol'] = 'creation_date';
-					break;
-			}
-		}
+			if ($this->_getParam('sort')) {
+				$value['getParamSort'] = str_replace('SP', '_', $this->_getParam('sort'));
+			  } else
+				$value['getParamSort'] = 'creation_date';
+		  
+				  if (isset($value['getParamSort'])) {
+					  switch ($value['getParamSort']) {
+						  case 'most_viewed':
+							  $value['popularCol'] = 'view_count';
+							  break;
+						  case 'most_liked':
+							  $value['popularCol'] = 'like_count';
+							  break;
+						  case 'most_commented':
+							  $value['popularCol'] = 'comment_count';
+							  break;
+						  case 'most_donated':
+							  $value['popularCol'] = 'donate_count';
+							  break;
+						  case 'featured':
+							  $value['popularCol'] = 'featured';
+							  $value['fixedData'] = 'featured';
+							  break;
+						  case 'most_rated':
+							  $value['popularCol'] = 'rating';
+							  break;
+						  case 'recently_created':
+							  default:
+							  $value['popularCol'] = 'creation_date';
+							  break;
+					  }
+				  }
 		if($this->_getParam('show'))
 			$value['show'] = $this->_getParam('show');
 		if($this->_getParam('category_id'))
@@ -127,6 +136,16 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 			$value['subsubcat_id'] = $this->_getParam('subsubcat_id');
 		$user_id = $this->_getParam('user_id');
 		$value["user_id"] = $user_id;
+
+		if (!empty($_POST['location'])) {
+            $latlng = Engine_Api::_()->sesapi()->getCoordinates($_POST['location']);
+            if ($latlng) {
+				$value["miles"]= $_POST["miles"];
+				$value["location"] = $_POST['location'];
+                $value['lat'] = $latlng['lat'];
+                $value['lng'] = $latlng['lng'];
+            }
+        }
 		$paginator = Engine_Api::_()->getDbtable('crowdfundings', 'sescrowdfunding')->getSescrowdfundingsPaginator($value);
 		
 		$paginator->setItemCountPerPage($this->_getParam('limit','10'));
@@ -137,12 +156,12 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 			$categories = Engine_Api::_()->getDbTable('categories', 'sescrowdfunding')->getCategory($value);
 			$category_counter = 0;
 			foreach ($categories as $category) {
-				if ($category->thumbnail)
-						$result_category[$category_counter]['category_images'] = Engine_Api::_()->sesapi()->getPhotoUrls($category->thumbnail, '', "");
-				if ($category->cat_icon)
-						$result_category[$category_counter]['icon'] = Engine_Api::_()->sesapi()->getPhotoUrls($category->cat_icon, '', "");
-				if ($category->colored_icon)
-						$result_category[$category_counter]['icon_colored'] = Engine_Api::_()->sesapi()->getPhotoUrls($category->colored_icon, '', "");
+				// if ($category->thumbnail)
+					$result_category[$category_counter]['category_images']['main'] = $this->getBaseUrl(false,$category->getPhotoUrl());
+				// if ($category->cat_icon)
+					$result_category[$category_counter]['icon']['main'] = $this->getBaseUrl(false,$category->getCategoryIconUrl());
+				// if ($category->colored_icon)
+					$result_category[$category_counter]['icon_colored']['main'] = $this->getBaseUrl(false,$category->getPhotoUrl());
 				$result_category[$category_counter]['slug'] = $category->slug;
 				$result_category[$category_counter]['category_name'] = $category->category_name;
 				$result_category[$category_counter]['total_crowdfundings_categories'] = $category->total_crowdfundings_categories;
@@ -255,12 +274,12 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 				$result[$counter]['is_content_like'] = $LikeStatus?true:false;
 			}
 			
-			$currency = Engine_Api::_()->sescrowdfunding()->getCurrentCurrency();
+			$currency = Engine_Api::_()->payment()->getCurrentCurrency();
 			$totalGainAmount = Engine_Api::_()->getDbTable('orders', 'sescrowdfunding')->getCrowdfundingTotalAmount(array('crowdfunding_id' => $campaign->crowdfunding_id));
 			$getDoners = Engine_Api::_()->getDbTable('orders', 'sescrowdfunding')->getDoners(array('crowdfunding_id' => $campaign->crowdfunding_id));
-			$totalGainAmountwithCu = Engine_Api::_()->sescrowdfunding()->getCurrencyPrice($totalGainAmount,$currency);
+			$totalGainAmountwithCu = Engine_Api::_()->payment()->getCurrencyPrice($totalGainAmount,$currency);
 			$result[$counter]['gain_price'] = $totalGainAmount ? $totalGainAmount : 0;
-			$totalAmount = Engine_Api::_()->sescrowdfunding()->getCurrencyPrice($campaign->price,$currency);
+			$totalAmount = Engine_Api::_()->payment()->getCurrencyPrice($campaign->price,$currency);
 			$totalPerAmountGain = (($totalGainAmount * 100) / $campaign->price);
 			if($totalPerAmountGain > 100) {
 				$totalPerAmountGain = 100;
@@ -303,12 +322,12 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 			$category_counter = 0;
 			$menu_counter = 0;
 			foreach ($categories as $category) {
-				if ($category->thumbnail)
-					$result_category[$category_counter]['category_images'] = Engine_Api::_()->sesapi()->getPhotoUrls($category->thumbnail, '', "");
-				if ($category->cat_icon)
-					$result_category[$category_counter]['icon'] = Engine_Api::_()->sesapi()->getPhotoUrls($category->cat_icon, '', "");
-				if ($category->colored_icon)
-					$result_category[$category_counter]['icon_colored'] = Engine_Api::_()->sesapi()->getPhotoUrls($category->colored_icon, '', "");
+				// if ($category->thumbnail)
+					$result_category[$category_counter]['category_images']['main'] = $this->getBaseUrl(false,$category->getPhotoUrl());
+				// if ($category->cat_icon)
+					$result_category[$category_counter]['icon']['main'] = $this->getBaseUrl(false,$category->getCategoryIconUrl());
+				// if ($category->colored_icon)
+					$result_category[$category_counter]['icon_colored']['main'] = $this->getBaseUrl(false,$category->getPhotoUrl());
 				$result_category[$category_counter]['slug'] = $category->slug;
 				$result_category[$category_counter]['category_name'] = $category->category_name;
 				$result_category[$category_counter]['total_crowdfundings_categories'] = $category->total_crowdfundings_categories;
@@ -393,13 +412,13 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 	public function getDonations($paginator,$received = false){
 		$counter= 0;
 		$result = array();
-		$currency = Engine_Api::_()->sescrowdfunding()->getCurrentCurrency();
+		$currency = Engine_Api::_()->payment()->getCurrentCurrency();
 		foreach($paginator as $donation){
 			$crowdfunding = Engine_Api::_()->getItem('crowdfunding', $donation->crowdfunding_id);
 			if(!$crowdfunding)	continue;
 			$result[$counter] = $donation->toArray();
 			$result[$counter]['title'] = $crowdfunding->getTitle();
-			$donationAmount = Engine_Api::_()->sescrowdfunding()->getCurrencyPrice($donation->total_useramount);
+			$donationAmount = Engine_Api::_()->payment()->getCurrencyPrice($donation->total_useramount);
 			$result[$counter]['images']['main'] = $this->getBaseUrl(false, $crowdfunding->getPhotoUrl());
 			$result[$counter]['owner_title'] = $crowdfunding->getOwner()->getTitle();
 			if($crowdfunding->category_id){
@@ -459,11 +478,10 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 		$progressBackgroundColor = Engine_Api::_()->getApi('settings', 'core')->getSetting('sescrowdfunding.outercolor', 'fbfbfb');
 		$progressFillColor = Engine_Api::_()->getApi('settings', 'core')->getSetting('sescrowdfunding.fillcolor', 'fbfbfb');
 		if((!$id || !$this->_helper->requireSubject()->isValid()) || !$this->_helper->requireAuth()->setAuthParams($sescrowdfunding, $viewer, 'view')->isValid()){
-			print_r(!$this->_helper->requireAuth()->setAuthParams(null, null, 'view')->isValid());
-			die;
+			
 			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('permission_error'), 'result' => array()));
 		}
-			
+		
 
 		//Prepare data
 		$result = array();
@@ -471,20 +489,20 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 		$result['images']['main'] = $this->getBaseUrl(false, $sescrowdfunding->getPhotoUrl());
 		$category = Engine_Api::_()->getItem('sescrowdfunding_category', $sescrowdfunding->category_id);
 		$result['category_title'] = $category->getTitle();
-		/*$currency = Engine_Api::_()->sescrowdfunding()->getCurrentCurrency();
+		/*$currency = Engine_Api::_()->payment()->getCurrentCurrency();
 		$totalGainAmount = Engine_Api::_()->getDbTable('orders', 'sescrowdfunding')->getCrowdfundingTotalAmount(array('crowdfunding_id' => $sescrowdfunding->crowdfunding_id)); 
-		$totalGainAmount = Engine_Api::_()->sescrowdfunding()->getCurrencyPrice($totalGainAmount,$currency);
+		$totalGainAmount = Engine_Api::_()->payment()->getCurrencyPrice($totalGainAmount,$currency);
 		$result['total_donated_amount'] = $totalGainAmount;
-		$goal = Engine_Api::_()->sescrowdfunding()->getCurrencyPrice($sescrowdfunding->price,$currency);		
+		$goal = Engine_Api::_()->payment()->getCurrencyPrice($sescrowdfunding->price,$currency);		
     $result['total_goal_amount'] = $goal;*/
 		
-		$currency = Engine_Api::_()->sescrowdfunding()->getCurrentCurrency();
+		$currency = Engine_Api::_()->payment()->getCurrentCurrency();
 		$totalGainAmount = Engine_Api::_()->getDbTable('orders', 'sescrowdfunding')->getCrowdfundingTotalAmount(array('crowdfunding_id' => $sescrowdfunding->crowdfunding_id));
 		$getDoners = Engine_Api::_()->getDbTable('orders', 'sescrowdfunding')->getDoners(array('crowdfunding_id' => $sescrowdfunding->crowdfunding_id));
-		$totalGainAmountwithCu = Engine_Api::_()->sescrowdfunding()->getCurrencyPrice($totalGainAmount,$currency);
+		$totalGainAmountwithCu = Engine_Api::_()->payment()->getCurrencyPrice($totalGainAmount,$currency);
 		$result['gain_price'] = $totalGainAmount ? $totalGainAmount : 0;
 		
-		$totalAmount = Engine_Api::_()->sescrowdfunding()->getCurrencyPrice($sescrowdfunding->price,$currency);
+		$totalAmount = Engine_Api::_()->payment()->getCurrencyPrice($sescrowdfunding->price,$currency);
 		$totalPerAmountGain = (($totalGainAmount * 100) / $sescrowdfunding->price);
 		if($totalPerAmountGain > 100) {
 			$totalPerAmountGain = 100;
@@ -579,6 +597,7 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 		}
 		
 		$enableShare = Engine_Api::_()->getApi('settings', 'core')->getSetting('sescrowdfunding.enable.sharing', 1);
+		$result['social_share_option'] = $enableShare;
 		if($enableShare){
 			$result["share"]["imageUrl"] = $this->getBaseUrl(false, $sescrowdfunding->getPhotoUrl());
 			$result["share"]["url"] = $this->getBaseUrl(false,$sescrowdfunding->getHref());
@@ -600,6 +619,22 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
             $data['buttons'][$buttoncounter]['name'] = 'edit';
             $data['buttons'][$buttoncounter]['label'] = $this->view->translate('Edit');
             $buttoncounter++;
+
+			$data['buttons'][$buttoncounter]['name'] = 'dashboard';
+            $data['buttons'][$buttoncounter]['label'] = $this->view->translate('Dashboard');
+            
+
+			$baseurl = $this->getBaseUrl();
+			$custumurl = $sescrowdfunding->custom_url;
+			$pluralurl = Engine_Api::_()->getApi('settings', 'core')->getSetting('sescrowdfunding_crowdfundings_manifest', 'crowdfundings');
+			if ($pluralurl) {
+				$url = $baseurl . $pluralurl . '/dashboard/edit/' . $custumurl;
+			} else {
+				$url = $baseurl . $pluralurl . '/dashboard/edit/' . $custumurl;
+			}
+			$data['buttons'][$buttoncounter]['url'] = $url;
+			$buttoncounter++;
+
         }
         if($sescrowdfunding->authorization()->isAllowed(Engine_Api::_()->user()->getViewer(), 'delete')) {
             $data['buttons'][$buttoncounter]['name'] = 'delete';
@@ -639,12 +674,16 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 		$tabcounter++;
 		$values = array('crowdfunding_id' => $sescrowdfunding->crowdfunding_id,'order' => 'recent', 'fetchAll' => true);
 		
-    $donors = Engine_Api::_()->getDbTable('orders', 'sescrowdfunding')->getAllDoners($values);
+    	$donors = Engine_Api::_()->getDbTable('orders', 'sescrowdfunding')->getAllDoners($values);
 		if(engine_count($donors)>0){
 			$data['menus'][$tabcounter]['name'] = 'donors';
 			$data['menus'][$tabcounter]['label'] = $this->view->translate('Donors');
 			$tabcounter++;
 		}
+
+
+
+
 		// if (Engine_Api::_()->getApi('settings', 'core')->getSetting('sescrowdfunding.enable.location', 1)) {
       	// 	$data['menus'][$tabcounter]['name'] = 'map';
 		// 	$data['menus'][$tabcounter]['label'] = $this->view->translate('Map');
@@ -846,8 +885,8 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 			} else { 
 				$result[$counter]['donor_photo'] = $photo = $this->getBaseUrl(false, '/application/modules/User/externals/images/nophoto_user_thumb_profile.png'); 
 			}
-			$currency = Engine_Api::_()->sescrowdfunding()->getCurrentCurrency();
-			$result[$counter]['total_donated_amount'] = $totalGainAmountwithCu = Engine_Api::_()->sescrowdfunding()->getCurrencyPrice($donor->total_amount,$currency);
+			$currency = Engine_Api::_()->payment()->getCurrentCurrency();
+			$result[$counter]['total_donated_amount'] = $totalGainAmountwithCu = Engine_Api::_()->payment()->getCurrencyPrice($donor->total_amount,$currency);
 			
 			$result[$counter]['crowdfunding_creation_date'] = $donor->creation_date;
 			
@@ -883,10 +922,10 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 		
 		$result = array();
 		$counter = 0 ;
-		$currency = Engine_Api::_()->sescrowdfunding()->getCurrentCurrency();
+		$currency = Engine_Api::_()->payment()->getCurrentCurrency();
 		foreach($paginator as $reward){
 			$result[$counter] = $reward->toArray();
-			$result[$counter]['minimum_donation_amount'] = $totalAmount = Engine_Api::_()->sescrowdfunding()->getCurrencyPrice($reward->doner_amount, $currency);
+			$result[$counter]['minimum_donation_amount'] = $totalAmount = Engine_Api::_()->payment()->getCurrencyPrice($reward->doner_amount, $currency);
 			$photo = Engine_Api::_()->storage()->get($reward->photo_id, '');
       if($photo) {
 				$result[$counter]['reward_photo'] = $this->getBaseUrl(false,$photo->getPhotoUrl());
@@ -1197,7 +1236,7 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 		$authorization = Engine_Api::_()->authorization();
 		$levelId = Engine_Api::_()->getItem('user',$crowdfunding->owner_id)->level_id;
 		$announce = $dashTable->getDashboardsItems(array('type' => 'announcement'));
-		if(@$announce->enabled && $authorization->isAllowed('crowdfunding', $levelId, 'auth_announce')){
+		if($crowdfunding->owner_id == $viewer_id && @$announce->enabled && $authorization->isAllowed('crowdfunding', $levelId, 'auth_announce')){
 			$buttonCounter = 0;
 			$result['button']['name'] = 'postanouncement';
 			$result['button']['label'] = $this->view->translate('Post New Announcement');
@@ -1206,10 +1245,10 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 		$counter = 0;
 		foreach($paginator as $announcement){
 			$result['announcements'][$counter] = $announcement->toArray();
-			if(@$announce->enabled && $authorization->isAllowed('crowdfunding', $levelId, 'auth_announce')){
+			if($crowdfunding->owner_id == $viewer_id && @$announce->enabled && $authorization->isAllowed('crowdfunding', $levelId, 'auth_announce')){
 				$optioncounter =0;
 				$result['announcements'][$counter]['options'][$optioncounter]['name'] = 'edit';
-				$result['announcements'][$counter]['options'][$optioncounter]['label'] = $this->view->translate('edit');
+				$result['announcements'][$counter]['options'][$optioncounter]['label'] = $this->view->translate('Edit');
 				$optioncounter++;
 				$result['announcements'][$counter]['options'][$optioncounter]['name'] = 'delete';
 				$result['announcements'][$counter]['options'][$optioncounter]['label'] = $this->view->translate('Delete');
@@ -1318,7 +1357,7 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
     if (!$this->getRequest()->isPost())
       Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('invalid_request'), 'result' => array()));
     $announcement->delete();
-		Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => array('success_message' => 'Changes saved.','crowdfunding_id' => $crowdfunding->crowdfunding_id)));
+		Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '0', 'error_message' => '', 'result' => array('success_message' => 'Announcement deleted successfully.','crowdfunding_id' => $crowdfunding->crowdfunding_id)));
   }
 	
 	public function postRewardAction() {
@@ -1419,11 +1458,13 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 
     
 
-    //$paginator = Engine_Api::_()->getDbtable('crowdfundings', 'sescrowdfunding')->getSescrowdfundingsPaginator($values);
-
-    $quota = Engine_Api::_()->authorization()->getPermission($viewer->level_id, 'sescrowdfunding', 'max');
-    $current_count = 0; //$paginator->getTotalItemCount();
-
+	$values["user_id"] = $viewer->getIdentity();
+	$paginator = Engine_Api::_()->getDbtable('crowdfundings', 'sescrowdfunding')->getSescrowdfundingsPaginator($values);
+    $quota = Engine_Api::_()->authorization()->getPermission($viewer->level_id, 'crowdfunding', 'count');
+    $current_count = $paginator->getTotalItemCount();
+	if (($current_count >= $quota) && !empty($quota)){
+		Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('You have already uploaded the maximum number of entries allowed. If you would like to upload a new entry, please delete an old one first.'), 'result' => array()));
+	}
     $categories = Engine_Api::_()->getDbtable('categories', 'sescrowdfunding')->getCategoriesAssoc();
 
     $form = new Sescrowdfunding_Form_Create(array('defaultProfileId' => 1));
@@ -1438,16 +1479,28 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 			$formFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->generateFormFields($form);
 			$this->generateFormFields($formFields, array('resources_type' => 'crowdfunding'));
 		}
+
+		
+
     //If not post or form not valid, return
     if(!$this->getRequest()->isPost())
      Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('invalid_request'), 'result' => array()));
 
-    if(!$form->isValid($this->getRequest()->getPost())){
-      $validateFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->validateFormFields($form);
-			if (is_countable($validateFields) && engine_count($validateFields))
-				$this->validateFormFields($validateFields);
-		}
 
+	 
+
+    if(!$form->isValid($this->getRequest()->getPost())){
+		$validateFields = Engine_Api::_()->getApi('FormFields', 'sesapi')->validateFormFields($form);
+		if (is_countable($validateFields) && engine_count($validateFields))
+			$this->validateFormFields($validateFields);
+	}
+	$mainPhotoEnable = Engine_Api::_()->getApi('settings', 'core')->getSetting('sescrowdfunding.photo.mandatory', '1');
+    $upload_mainphoto = Engine_Api::_()->authorization()->isAllowed('crowdfunding', $viewer, 'upload_mainphoto');
+    if ($mainPhotoEnable == 1) {
+        if($upload_mainphoto){
+			Engine_Api::_()->getApi('response', 'sesapi')->sendResponse(array('error' => '1', 'error_message' => $this->view->translate('Main Photo is a required field.'), 'result' => array()));
+		}
+    } 
     //Check custom url
     if (isset($_POST['custom_url']) && !empty($_POST['custom_url'])) {
       $custom_url = Engine_Api::_()->getDbtable('crowdfundings', 'sescrowdfunding')->checkCustomUrl($_POST['custom_url']);
@@ -1478,18 +1531,18 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
       if( !empty($values['photo_file']) ) {
         $sescrowdfunding->setPhoto($form->photo_file);
       }
-			if(isset($_POST['start_date']) && $_POST['start_date'] != '') {
-				$starttime = isset($_POST['start_date']) ? date('Y-m-d H:i:s',strtotime($_POST['start_date'].' '.$_POST['start_time'])) : '';
+			if(isset($_POST['crowdfunding_custom_datetimes']) && $_POST['crowdfunding_custom_datetimes'] != '') {
+				$starttime = isset($_POST['crowdfunding_custom_datetimes']) ? date('Y-m-d',strtotime($_POST['crowdfunding_custom_datetimes'])) : '';
 				$sescrowdfunding->publish_date =$starttime;
 			}
 
-			if(isset($_POST['start_date']) && $viewer->timezone && $_POST['start_date'] != ''){
+			if(isset($_POST['crowdfunding_custom_datetimes']) && $viewer->timezone && $_POST['crowdfunding_custom_datetimes'] != ''){
 				//Convert Time Zone
 				$oldTz = date_default_timezone_get();
 				date_default_timezone_set($viewer->timezone);
-				$start = strtotime($_POST['start_date'].' '.$_POST['start_time']);
+				$start = strtotime($_POST['crowdfunding_custom_datetimes'].' '.$_POST['start_time']);
 				date_default_timezone_set($oldTz);
-				$sescrowdfunding->publish_date = date('Y-m-d H:i:s', $start);
+				$sescrowdfunding->publish_date = date('Y-m-d', $start);
 			} else {
 				$sescrowdfunding->publish_date = date('Y-m-d H:i:s',strtotime("-2 minutes", time()));
 			}
@@ -1783,8 +1836,8 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
       $sescrowdfunding->setFromArray($values);
       $sescrowdfunding->modified_date = date('Y-m-d H:i:s');
 
-			if(isset($_POST['start_date']) && $_POST['start_date'] != ''){
-				$starttime = isset($_POST['start_date']) ? date('Y-m-d H:i:s',strtotime($_POST['start_date'].' '.$_POST['start_time'])) : '';
+			if(isset($_POST['crowdfunding_custom_datetimes']) && $_POST['crowdfunding_custom_datetimes'] != '') {
+				$starttime = isset($_POST['crowdfunding_custom_datetimes']) ? date('Y-m-d H:i:s',strtotime($_POST['start_date'])) : '';
       	$sescrowdfunding->publish_date =$starttime;
 			}
 			if(empty($sescrowdfunding->crowdfunding_contact_name))
@@ -1956,54 +2009,65 @@ class Sescrowdfunding_IndexController extends Sesapi_Controller_Action_Standard 
 		$authorization = Engine_Api::_()->authorization();
 		$levelId = Engine_Api::_()->getItem('user',$sescrowdfunding->owner_id)->level_id;
 		$contact_information = $dashTable->getDashboardsItems(array('type' => 'contact_information'));
-		if(!empty($contact_information) && $contact_information->enabled && $authorization->isAllowed('crowdfunding', $levelId, 'contactinfo')){
+		if($sescrowdfunding->owner_id == $viewer_id && !empty($contact_information) && $contact_information->enabled && $authorization->isAllowed('crowdfunding', $levelId, 'contactinfo')) {
 			$buttonCounter = 0 ;
 			$result['button']['name'] = 'edit';
 			$result['button']['label'] = $this->view->translate('Update Contact Information');
 		}
 		$counter = 0;
 		if($sescrowdfunding->crowdfunding_contact_name){
+			$result['aboutme'][$counter]['name'] = "name";
 			$result['aboutme'][$counter]['label'] = $this->view->translate('Full Name');
 			$result['aboutme'][$counter]['value'] = $sescrowdfunding->crowdfunding_contact_name;
 			$counter++;
 		}
 		if($sescrowdfunding->crowdfunding_contact_email){
+			$result['aboutme'][$counter]['name'] = "email";
 			$result['aboutme'][$counter]['label'] = $this->view->translate('Email:');
 			$result['aboutme'][$counter]['value'] = $sescrowdfunding->crowdfunding_contact_email;
 			$counter++;
 		}if($sescrowdfunding->crowdfunding_contact_country){
+			$result['aboutme'][$counter]['name'] = "country";
 			$result['aboutme'][$counter]['label'] = $this->view->translate('Country:');
 			$result['aboutme'][$counter]['value'] = $sescrowdfunding->crowdfunding_contact_country;
 			$counter++;
 		}if($sescrowdfunding->crowdfunding_contact_state){
+			$result['aboutme'][$counter]['name'] = "state";
 			$result['aboutme'][$counter]['label'] = $this->view->translate('State:');
 			$result['aboutme'][$counter]['value'] = $sescrowdfunding->crowdfunding_contact_state;
 			$counter++;
 		}if($sescrowdfunding->crowdfunding_contact_city){
+			$result['aboutme'][$counter]['name'] = "city";
 			$result['aboutme'][$counter]['label'] = $this->view->translate('City:');
 			$result['aboutme'][$counter]['value'] = $sescrowdfunding->crowdfunding_contact_city;
 			$counter++;
 		}if($sescrowdfunding->crowdfunding_contact_street){
+			$result['aboutme'][$counter]['name'] = "street";
 			$result['aboutme'][$counter]['label'] = $this->view->translate('Street:');
 			$result['aboutme'][$counter]['value'] = $sescrowdfunding->crowdfunding_contact_street;
 			$counter++;
 		}if($sescrowdfunding->crowdfunding_contact_phone){
+			$result['aboutme'][$counter]['name'] = "phone";
 			$result['aboutme'][$counter]['label'] = $this->view->translate('Phone:');
 			$result['aboutme'][$counter]['value'] = $sescrowdfunding->crowdfunding_contact_phone;
 			$counter++;
 		}if($sescrowdfunding->crowdfunding_contact_website){
+			$result['aboutme'][$counter]['name'] = "website";
 			$result['aboutme'][$counter]['label'] = $this->view->translate('Website URL:');
 			$result['aboutme'][$counter]['value'] = $sescrowdfunding->crowdfunding_contact_website;
 			$counter++;
 		}if($sescrowdfunding->crowdfunding_contact_facebook){
+			$result['aboutme'][$counter]['name'] = "facebook";
 			$result['aboutme'][$counter]['label'] = $this->view->translate('Facebook URL:');
 			$result['aboutme'][$counter]['value'] = $sescrowdfunding->crowdfunding_contact_facebook;
 			$counter++;
 		}if($sescrowdfunding->crowdfunding_contact_twitter){
+			$result['aboutme'][$counter]['name'] = "twitter";
 			$result['aboutme'][$counter]['label'] = $this->view->translate('Twitter URL:');
 			$result['aboutme'][$counter]['value'] = $sescrowdfunding->crowdfunding_contact_twitter;
 			$counter++;
 		}if($sescrowdfunding->crowdfunding_contact_aboutme){
+			$result['aboutme'][$counter]['name'] = "about";
 			$result['aboutme'][$counter]['label'] = $this->view->translate('About Me');
 			$result['aboutme'][$counter]['value'] = $sescrowdfunding->crowdfunding_contact_aboutme;
 			$counter++;

@@ -47,21 +47,6 @@ if ($this->getRequest()->isPost()) {
     if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('sescommunityads.pluginactivated')) {
         $db = Zend_Db_Table_Abstract::getDefaultAdapter();
 
-        $db->query('INSERT IGNORE INTO `engine4_activity_notificationtypes` (`type`, `module`, `body`, `is_request`, `handler`, `default`) VALUES
-        ("sescommunityads_adsapprove", "sescommunityads", \'{var:$adsLink} advertisement has been approved.\', "0", "", "1"),
-        ("sescommunityads_adsdisapprove", "sescommunityads", \'{var:$adsLink} advertisement has been disapproved.\', "0", "", "1"),
-        ("sescommunityads_pmtmadeadmin", "sescommunityads", \'Payment for an advertisement {var:$adsLink} is made.\', "0", "", "1"),
-        ("sescommunityads_paymentsuccessfull", "sescommunityads", \'Payment for your {var:$adsLink} advertisement is successful.\', "0", "", "1"),
-        ("sescommunityads_adsactivated", "sescommunityads", \'Your {var:$adsLink} advertisement has been activated.\', "0", "", "1"),
-        ("sescommunityads_paymentpending", "sescommunityads", \'Payment for your {var:$adsLink} advertisement is pending.\', "0", "", "1"),
-        ("sescommunityads_paymentrefunded", "sescommunityads", \'Payment for your {var:$adsLink} advertisement is refunded.\', "0", "", "1"),
-        ("sescommunityads_paymentcancel", "sescommunityads", \'Payment for your {var:$adsLink} advertisement is canceled.\', "0", "", "1"),
-        ("sescommunityads_newadscreateadmin", "sescommunityads", \'A new {item:$object} advertisement is created.\', "0", "", "1"),
-        ("sescommunityads_newadscreateadminapproval", "sescommunityads", \'A new {item:$object} advertisement is created & waiting approval.\', "0", "", "1"),
-        ("sescommunityads_adsexpired", "sescommunityads", \'{var:$adsLink} advertisement has expired.\', "0", "", "1"),
-        ("sescommunityads_adsoverdue", "sescommunityads", \'Payment for {var:$adsLink} advertisement is overdue.\', "0", "", "1"),
-        ("sescommunityads_adspending", "sescommunityads", \'Payment for {item:$object} advertisement is pending.\', "0", "", "1");');
-
         $db->query('INSERT IGNORE INTO `engine4_core_mailtemplates` (`type`, `module`, `vars`) VALUES
         ("sescommunityads_adsapprove", "sescommunityads", "[host],[email],[recipient_title],[recipient_link],[recipient_photo],[sender_title],[sender_link],[sender_photo],[object_title],[object_link],[object_photo],[object_description],[title],[description],[ad_link]"),
         ("sescommunityads_adsdisapprove", "sescommunityads", "[host],[email],[recipient_title],[recipient_link],[recipient_photo],[sender_title],[sender_link],[sender_photo],[object_title],[object_link],[object_photo],[object_description],[title],[description],[ad_link]"),
@@ -88,7 +73,7 @@ if ($this->getRequest()->isPost()) {
         ("sescommunityads_admin_main_categories", "sescommunityads", "Categories", "", \'{"route":"admin_default","module":"sescommunityads","controller":"categories"}\', "sescommunityads_admin_main", "", 10),
         ("sescommunityads_admin_main_activity", "sescommunityads", "Advanced Activity", "", \'{"route":"admin_default","module":"sescommunityads","controller":"settings","action":"activity"}\', "sescommunityads_admin_main", "", 12),
         ("sescommunityads_admin_main_feedactivity", "sescommunityads", "Feed Type Settings", "", \'{"route":"admin_default","module":"sescommunityads","controller":"settings","action":"feed-settings"}\', "sescommunityads_admin_main", "", 11),
-        ("core_main_sescommunityads", "sescommunityads", "Advertisements", "", \'{"route":"sescommunityads_general","action":"browse"}\', "core_main", "", 3),
+        ("core_main_sescommunityads", "sescommunityads", "Advertisements", "", \'{"route":"sescommunityads_general","icon":"fas fa-ad","action":"browse"}\', "core_main", "", 3),
         ("core_sitemap_sescommunityads", "sescommunityads", "Advertisements", "", \'{"route":"sescommunityads_general","action":"browse"}\', "core_sitemap", "", 3),
         ("sescommunityads_main_browse", "sescommunityads", "Browse Ads", "Sescommunityads_Plugin_Menus::canViewAds", \'{"route":"sescommunityads_general", "controller": "index", "action":"browse"}\', "sescommunityads_main", "", 1),
         ("sescommunityads_main_manage", "sescommunityads", "My Campaigns", "Sescommunityads_Plugin_Menus::canCreateAds", \'{"route":"sescommunityads_general", "controller": "index", "action":"manage"}\', "sescommunityads_main", "", 2),
@@ -137,7 +122,7 @@ if ($this->getRequest()->isPost()) {
         `creation_date` datetime NOT NULL,
         `modified_date` datetime NOT NULL,
         PRIMARY KEY (`package_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescommunityads_modules`;');
         $db->query('CREATE TABLE `engine4_sescommunityads_modules` (
         `module_id` int(11) unsigned NOT NULL auto_increment,
@@ -148,7 +133,7 @@ if ($this->getRequest()->isPost()) {
         `creation_date` datetime NOT NULL,
         `modified_date` datetime NOT NULL,
         PRIMARY KEY (`module_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescommunityads_campaigns`;');
         $db->query('CREATE TABLE `engine4_sescommunityads_campaigns` (
         `campaign_id` int(11) unsigned NOT NULL auto_increment,
@@ -160,7 +145,7 @@ if ($this->getRequest()->isPost()) {
         `creation_date` datetime NOT NULL,
         `modified_date` datetime NOT NULL,
         PRIMARY KEY (`campaign_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescommunityads_orderspackages`;');
         $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescommunityads_orderspackages` (
         `orderspackage_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -173,14 +158,14 @@ if ($this->getRequest()->isPost()) {
         `creation_date` datetime NOT NULL,
         `modified_date` datetime NOT NULL,
         PRIMARY KEY (`orderspackage_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescommunityads_targetads`;');
         $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescommunityads_targetads` (
         `targetad_id` int(11) NOT NULL AUTO_INCREMENT,
         `sescommunityad_id` int(11) unsigned NOT NULL,
         `interest_enable` VARCHAR(255) NULL,
         PRIMARY KEY (`targetad_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescommunityads_ads`;');
         $db->query('CREATE TABLE `engine4_sescommunityads_ads` (
         `sescommunityad_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -240,7 +225,7 @@ if ($this->getRequest()->isPost()) {
         `widgetid` INT(11) NOT NULL,
         `video_src` INT(11) NOT NULL DEFAULT "0",
         PRIMARY KEY (`sescommunityad_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=latin1;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
         $db->query('INSERT IGNORE INTO `engine4_core_tasks` (`title`, `module`, `plugin`, `timeout`, `processes`, `semaphore`, `started_last`, `started_count`, `completed_last`, `completed_count`, `failure_last`, `failure_count`, `success_last`, `success_count`) VALUES ("SNS - Community Advertisements Plugin", "sescommunityads", "Sescommunityads_Plugin_Task_Jobs", "100", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0");');
         $db->query('DROP TABLE IF EXISTS `engine4_sescommunityads_attachments`;');
         $db->query('CREATE TABLE `engine4_sescommunityads_attachments` (
@@ -253,7 +238,7 @@ if ($this->getRequest()->isPost()) {
         `creation_date` datetime NOT NULL,
         `modified_date` datetime NOT NULL,
         PRIMARY KEY (`attachment_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=latin1;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescommunityads_transactions`;');
         $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescommunityads_transactions` (
         `transaction_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -276,7 +261,7 @@ if ($this->getRequest()->isPost()) {
         `creation_date` datetime NOT NULL,
         `modified_date` datetime NOT NULL,
         PRIMARY KEY (`transaction_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT = 1 ;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT = 1 ;');
         $db->query('INSERT IGNORE INTO `engine4_activity_actiontypes` (`type`, `module`, `body`, `enabled`, `displayable`, `attachable`, `commentable`, `shareable`, `editable`, `is_generated`) VALUES
         ("sescommunityads_page_ad", "sescommunityads", "{item:$object}", 1, 5, 1, 3, 1, 0, 1);');
         $db->query('DROP TABLE IF EXISTS `engine4_sescommunityads_reports` ;');
@@ -289,7 +274,7 @@ if ($this->getRequest()->isPost()) {
         `ip` VARCHAR(45) DEFAULT NULL,
         `creation_date` datetime NOT NULL,
         PRIMARY KEY (`report_id`)
-        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescommunityads_usefulads` ;');
         $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescommunityads_usefulads` (
         `usefulad_id` int(11) unsigned NOT NULL auto_increment,
@@ -298,7 +283,7 @@ if ($this->getRequest()->isPost()) {
         `ip` VARCHAR(45) DEFAULT NULL,
         `creation_date` datetime NOT NULL,
         PRIMARY KEY (`usefulad_id`)
-        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescommunityads_feedsettings` ;');
         $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescommunityads_feedsettings` (
         `feedsetting_id` int(11) unsigned NOT NULL auto_increment,
@@ -306,7 +291,7 @@ if ($this->getRequest()->isPost()) {
         `type` VARCHAR(255) DEFAULT NULL,
         `creation_date` datetime NOT NULL,
         PRIMARY KEY (`feedsetting_id`)
-        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescommunityads_categories` ;');
         $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescommunityads_categories` (
         `category_id` int(11) unsigned NOT NULL auto_increment,
@@ -325,7 +310,7 @@ if ($this->getRequest()->isPost()) {
         PRIMARY KEY (`category_id`),
         KEY `category_id` (`category_id`,`category_name`),
         KEY `category_name` (`category_name`)
-        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescommunityads_viewstats` ;');
         $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescommunityads_viewstats` (
         `viewstat_id` int(11) unsigned NOT NULL auto_increment,
@@ -337,7 +322,7 @@ if ($this->getRequest()->isPost()) {
         INDEX (`campaign_id`),
         INDEX (`user_id`),
         INDEX (`sescommunityad_id`)
-        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescommunityads_campaignstats` ;');
         $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescommunityads_campaignstats` (
         `campaignstat_id` int(11) unsigned NOT NULL auto_increment,
@@ -352,7 +337,7 @@ if ($this->getRequest()->isPost()) {
         INDEX (`campaignstat_id`),
         INDEX (`user_id`),
         INDEX (`sescommunityad_id`)
-        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
         $db->query('DROP TABLE IF EXISTS `engine4_sescommunityads_clickstats` ;');
         $db->query('CREATE TABLE IF NOT EXISTS `engine4_sescommunityads_clickstats` (
         `clickstat_id` int(11) unsigned NOT NULL auto_increment,
@@ -364,7 +349,7 @@ if ($this->getRequest()->isPost()) {
         INDEX (`campaign_id`),
         INDEX (`user_id`),
         INDEX (`sescommunityad_id`)
-        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
         $db->query('INSERT INTO `engine4_sescommunityads_packages` (`package_id`, `title`, `description`, `price`, `recurrence`, `recurrence_type`, `duration`, `duration_type`, `default`, `enabled`, `click_type`, `click_limit`, `level_id`, `modules`, `package_type`, `is_renew_link`, `renew_link_days`, `featured`, `featured_days`, `sponsored`, `sponsored_days`, `boost_post`, `promote_page`, `promote_content`, `website_visitor`, `carousel`, `video`, `item_count`, `auto_approve`, `targetting`, `networking`, `creation_date`, `modified_date`) VALUES
         (1, "Default Plan", "This is a default plan", "0.00", 0, "day", 0, "day", 1, 1, "perday", "0", \'["1","2","3","4","6","7"]\', "", "nonRecurring", 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 5, 1, 0, 0, "NOW()", "NOW()");');
         $db->query('INSERT IGNORE INTO `engine4_authorization_permissions`

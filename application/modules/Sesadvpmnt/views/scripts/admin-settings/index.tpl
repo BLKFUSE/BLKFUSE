@@ -31,3 +31,10 @@
 		});
   </script>
 <?php } ?>
+<style> 
+	button[disabled] { 
+	  background:#bdbdbd; 
+	  border-color:#bdbdbd; 
+	  cursor:not-allowed; 
+  }
+</style>

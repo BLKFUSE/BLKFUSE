@@ -16,10 +16,10 @@ CREATE TABLE IF NOT EXISTS `se_eventmediatags` (
   `eventmediatag_y` int(10) unsigned NOT NULL default '0',
   `eventmediatag_height` int(10) unsigned NOT NULL default '0',
   `eventmediatag_width` int(10) unsigned NOT NULL default '0',
-  `eventmediatag_text` varchar(255) collate utf8_unicode_ci NOT NULL default '',
+  `eventmediatag_text` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL default '',
   `eventmediatag_date` bigint(20) NOT NULL default '0',
   PRIMARY KEY  (`eventmediatag_id`),
   KEY `INDEX` (`eventmediatag_eventmedia_id`,`eventmediatag_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */

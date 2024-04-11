@@ -317,4 +317,12 @@ class Core_Model_DbTable_Settings extends Engine_Db_Table
 
     return $settings;
   }
+  
+  public function getDbSettings($key) {
+    return $this->select()
+							->from($this->info('name'), 'value')
+							->where('name = ?', $key)
+							->query()
+							->fetchColumn();
+  }
 }

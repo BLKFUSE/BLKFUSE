@@ -34,18 +34,19 @@ return array(
         'type' => 'module',
         'name' => 'sesvideo',
         //'sku' => 'sesvideo',
-        'version' => '6.4.0',
+        'version' => '6.5.1',
         'dependencies' => array(
             array(
                 'type' => 'module',
                 'name' => 'core',
-                'minVersion' => '6.2.0',
+                'minVersion' => '6.5.1',
             ),
         ), 
         'path' => 'application/modules/Sesvideo',
         'title' => 'SNS - Advanced Videos & Channels Plugin',
         'description' => 'SNS - Advanced Videos & Channels Plugin',
         'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+		'thumb' => 'application/modules/Sesvideo/externals/images/thumb.png',
         'actions' => array(
             'install',
             'upgrade',

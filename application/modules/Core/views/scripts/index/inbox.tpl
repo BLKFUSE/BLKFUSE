@@ -57,15 +57,15 @@
               $this->locale()->toNumber($conversation->recipients)) ?></b>
           <?php endif; ?>
         </p>
-        <p class="pulldown_item_content_des msg_body">
+        <div class="pulldown_item_content_des msg_body">
           <?php
             ! ( isset($message) && '' != ($title = trim($message->getTitle())) ||
             ! isset($conversation) && '' != ($title = trim($conversation->getTitle())) ||
             $title = '<em>' . trim($conversation->getTitle()) ? $this->translate(trim($conversation->getTitle())) : $this->translate('(No Subject)') . '</em>' );
           ?>
-          <?php echo $this->htmlLink($conversation->getHref(), $title) ?>:
-          <?php echo html_entity_decode($message->body) ?>
-        </p>
+          <?php echo $this->htmlLink($conversation->getHref(), $title) ?>:<br />
+          <?php echo $this->string()->truncate(html_entity_decode($this->string()->stripTags($message->body)), 60) ?>
+        </div>
         <p class="pulldown_item_content_date">
           <?php echo $this->timestamp($message->date) ?>
         </p>

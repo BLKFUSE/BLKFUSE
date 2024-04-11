@@ -16,18 +16,19 @@ return array(
       'type' => 'module',
       'name' => 'sespymk',
       //'sku' => 'sespymk',
-      'version' => '6.4.0',
+      'version' => '6.5.1',
         'dependencies' => array(
             array(
                 'type' => 'module',
                 'name' => 'core',
-                'minVersion' => '6.2.0',
+                'minVersion' => '6.5.1',
             ),
         ),
       'path' => 'application/modules/Sespymk',
       'title' => 'SNS - People You May Know Plugin',
       'description' => 'SNS - People You May Know Plugin',
       'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	  'thumb' => 'application/modules/Sespymk/externals/images/thumb.png',
       'callback' => array(
           'path' => 'application/modules/Sespymk/settings/install.php',
           'class' => 'Sespymk_Installer',

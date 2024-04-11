@@ -22,7 +22,7 @@
 					<?php echo $this->translate('Posted by %1$s %2$s', $this->htmlLink($item->getOwner()->getHref(), $item->getOwner()->getTitle()), $this->timestamp($item->creation_date)) ?>
 				</span>
 			</div>
-			<div class="announcements_body">
+			<div class="announcements_body rich_content_body">
 				<?php $column = @$_COOKIE['en4_language'] . '_body'; ?>
 				<?php if(isset($item->$column) && !empty($item->$column)) { ?>
 						<?php echo $this->translate(Engine_Api::_()->core()->smileyToEmoticons($item->$column)); ?>
@@ -33,3 +33,11 @@
 		</li>
   <?php endforeach; ?>
 </ul>
+
+<script type="text/javascript">
+  // Add parant element to table
+  scriptJquery('.rich_content_body table').each(function() {                            
+    scriptJquery(this).addClass('table');
+    scriptJquery(this).wrap('<div class="table_wrap"></div>');
+  });
+</script>

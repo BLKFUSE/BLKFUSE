@@ -26,17 +26,16 @@ class User_Form_Admin_Twitter extends Engine_Form
       ->setAttrib('enctype', 'multipart/form-data')
       ->setAction(Zend_Controller_Front::getInstance()->getRouter()->assemble(array()))
       ->setMethod("POST");
-      ;
 
     $description = $this->getTranslator()->translate('USER_ADMIN_SETTINGS_TWITTER_DESCRIPTION');
-	$settings = Engine_Api::_()->getApi('settings', 'core');
-	if( $settings->getSetting('user.support.links', 0) == 1 ) {
-	$moreinfo = $this->getTranslator()->translate(
-        '<br>More Info: <a href="https://community.socialengine.com/blogs/597/32/twitter-integration" target="_blank"> KB Article</a>');
-	} else {
-	$moreinfo = $this->getTranslator()->translate(
-        '');
-	}
+    $settings = Engine_Api::_()->getApi('settings', 'core');
+    if( $settings->getSetting('user.support.links', 0) == 1 ) {
+    $moreinfo = $this->getTranslator()->translate(
+          '<br>More Info: <a href="https://community.socialengine.com/blogs/597/32/twitter-integration" target="_blank"> KB Article</a>');
+    } else {
+    $moreinfo = $this->getTranslator()->translate(
+          '');
+    }
     $description = vsprintf($description.$moreinfo, array(
       'https://apps.twitter.com',
       'https://' . $_SERVER['HTTP_HOST'] . Zend_Controller_Front::getInstance()->getRouter()->assemble(array(
@@ -66,15 +65,15 @@ class User_Form_Admin_Twitter extends Engine_Form
       ),
     ));
 
-//     $this->addElement('Radio', 'enable', array(
-//       'label' => 'Integrate Features',
-//       'description' => 'What features would you like to integrate?',
-//       'multiOptions' => array(
-//         'none'  => 'None',
-//         'login' => 'Login only',
-//       ),
-//       'value' => 'none'
-//     ));
+    $this->addElement('Radio', 'enable', array(
+      'label' => 'Enable',
+      'description' => '',
+      'multiOptions' => array(
+        'login' => 'Yes',
+        'none'  => 'No',
+      ),
+      'value' => 'none'
+    ));
 
 
     // Init submit

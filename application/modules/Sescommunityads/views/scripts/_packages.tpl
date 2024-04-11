@@ -20,7 +20,7 @@
       <?php if(engine_in_array('price',$showinfo)){ ?>
       <div class="_price">
         <?php if(!$package->isFree()){ ?>        
-          <span><?php echo Engine_Api::_()->sescommunityads()->getCurrencyPrice($package->price,'','',true); ?></span>
+          <span><?php echo Engine_Api::_()->payment()->getCurrencyPrice($package->price); ?></span>
           <small>
             <?php if($package->package_type == "nonRecurring"){
                       if($package->click_type == "perday"){
@@ -37,7 +37,7 @@
             <?php elseif($package->price && $package->recurrence_type != 'forever'):?>
               <?php echo $this->translate(ucfirst($package->recurrence_type).'ly');?>
             <?php elseif($package->recurrence_type == 'forever'): ?>
-              <?php echo sprintf($this->translate('One-time fee of %1$s'), Engine_Api::_()->sescommunityads()->getCurrencyPrice($package->price,'','',true)); ?>
+              <?php echo sprintf($this->translate('One-time fee of %1$s'), Engine_Api::_()->payment()->getCurrencyPrice($package->price)); ?>
             <?php else:?>
               <?php echo $this->translate('Free');?>
             <?php endif;?>

@@ -101,7 +101,7 @@ class Payment_Model_Subscription extends Core_Model_Item_Abstract
         }
         if(!Engine_Api::_()->getItem('authorization_level', $package->downgrade_level_id))
             return $this;
-        if($user->level_id != $package->downgrade_level_id ) {
+        if($user->level_id != $package->downgrade_level_id && (!$this->expiration_date || strtotime($this->expiration_date) <= time())) {
             $user->level_id = $package->downgrade_level_id;
         }
         $user->enabled = true; // This will get set correctly in the update hook
@@ -190,7 +190,7 @@ class Payment_Model_Subscription extends Core_Model_Item_Abstract
         return (bool) $this->_statusChanged;
     }
 
-    public function onPaymentSuccess()
+    public function onPaymentSuccess($param = '')
     {
         $this->_statusChanged = false;
         if( engine_in_array($this->status, array('initial', 'trial', 'pending', 'active')) ) {
@@ -208,9 +208,16 @@ class Payment_Model_Subscription extends Core_Model_Item_Abstract
             }
             // Update expiration to expiration + recurrence or to now + recurrence?
             $package = $this->getPackage();
-            $expiration = $package->getExpirationDate((strtotime($this->expiration_date) > time() ? strtotime($this->expiration_date): time()));
+            // It will only work for admin
+            if($param == 'fromadmin') {
+              $expiration = $package->getExpirationDate((strtotime($this->expiration_date) > time() ? strtotime($this->expiration_date): time()));
+            } else {
+              $expiration = $package->getExpirationDate();
+            }
             if( $expiration ) {
                 $this->expiration_date = date('Y-m-d H:i:s', $expiration);
+                //This is for subscription plan is expiring reminder email.
+                $this->email_reminder = 0;
             }
 
             // Change status

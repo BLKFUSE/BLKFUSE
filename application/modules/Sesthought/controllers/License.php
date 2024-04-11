@@ -55,7 +55,7 @@ if ($this->getRequest()->isPost()) {
       ("sesthought_admin_main_managepages", "sesthought", "Widgetized Pages", "", \'{"route":"admin_default","module":"sesthought","controller":"settings", "action":"manage-widgetize-page"}\', "sesthought_admin_main", "", 999);');
 
       $db->query('INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
-      ("core_main_sesthought", "sesthought", "Thoughts", "", \'{"route":"sesthought_general","icon":"fa-pencil"}\', "core_main", "", 4),
+      ("core_main_sesthought", "sesthought", "Thoughts", "", \'{"route":"sesthought_general","icon":"fas fa-hot-tub"}\', "core_main", "", 4),
       ("sesthought_main_browse", "sesthought", "Browse Thoughts", "", \'{"route":"sesthought_general"}\', "sesthought_main","", 1),
       ("sesthought_main_manage", "sesthought", "My Thoughts", "", \'{"route":"sesthought_general","action":"manage"}\', "sesthought_main", "", 2),
       ("sesthought_main_browsecategory", "sesthought", "Browse Categories", "", \'{"route":"sesthought_category"}\', "sesthought_main","", 8);');
@@ -79,7 +79,7 @@ if ($this->getRequest()->isPost()) {
         PRIMARY KEY (`category_id`),
         KEY `category_id` (`category_id`,`category_name`),
         KEY `category_name` (`category_name`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
 
       $db->query('INSERT IGNORE INTO `engine4_core_menus` (`name`, `type`, `title`) VALUES
       ("sesthought_main", "standard", "SNS - Thoughts Main Navigation Menu");');
@@ -103,7 +103,7 @@ if ($this->getRequest()->isPost()) {
         `action_id` INT(11) NOT NULL DEFAULT "0",
         PRIMARY KEY (`thought_id`),
         KEY `owner_type` (`owner_type`, `owner_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
       $db->query('INSERT IGNORE INTO `engine4_activity_actiontypes` (`type`, `module`, `body`, `enabled`, `displayable`, `attachable`, `commentable`, `shareable`, `is_generated`) VALUES
       ("sesthought_new", "sesthought", \'{item:$subject} wrote a new thought entry:\', 1, 5, 1, 3, 1, 1);');
       $db->query('DROP TABLE IF EXISTS `engine4_sesthought_recentlyviewitems`;');
@@ -114,9 +114,9 @@ if ($this->getRequest()->isPost()) {
         `owner_id` INT NOT NULL ,
         `creation_date` DATETIME NOT NULL,
         UNIQUE KEY `uniqueKey` (`resource_id`,`resource_type`, `owner_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
 
-      $db->query('ALTER TABLE `engine4_authorization_permissions` CHANGE `type` `type` VARCHAR(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL;');
+      $db->query('ALTER TABLE `engine4_authorization_permissions` CHANGE `type` `type` VARCHAR(32) NOT NULL;');
 
       $db->query('INSERT IGNORE INTO `engine4_authorization_permissions`
       SELECT

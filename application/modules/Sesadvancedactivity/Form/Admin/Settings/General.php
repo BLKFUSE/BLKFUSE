@@ -279,7 +279,7 @@ class Sesadvancedactivity_Form_Admin_Settings_General extends Engine_Form {
         }
         $title = $data['package']['title'];
         foreach( $data['composer'] as $type => $config ) {
-          if($type == 'facebook' || $type == 'twitter' || $type == 'link' || $type == 'tag' || $type == 'sesadvancedactivityfacebook' || $type == 'sesadvancedactivitytwitter')
+          if($type == 'link' || $type == 'tag')
             continue;
           $addType = 'Add '.ucfirst(str_replace('ses','',$type));
           if($type == 'sesadvancedactivitylink'){
@@ -354,7 +354,7 @@ class Sesadvancedactivity_Form_Admin_Settings_General extends Engine_Form {
         ));
       //New File System Code
       $default_photos = array('' => '');
-      $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png')));
+      $files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png', 'webp')));
       foreach( $files as $file ) {
         $default_photos[$file->storage_path] = $file->name;
       }
@@ -375,26 +375,26 @@ class Sesadvancedactivity_Form_Admin_Settings_General extends Engine_Form {
     }
     $this->sesadvancedactivity_whatsnewicon->addDecorator('Description', array('placement' => Zend_Form_Decorator_Abstract::PREPEND, 'escape' => false));
 
-      $this->addElement('Radio', 'sesadvancedactivity_linkedin_enable', array(
-        'label' => 'Publish to LinkedIn',
-        'description' => 'Do you want to enable members to choose to publish their posts on LinkedIn?',
-        'multiOptions' => array(
-            1 => 'Yes',
-            0 => 'No'
-        ),
-        'onchange'=>'linkedin(this.value)',
-        'value' => $settings->getSetting('sesadvancedactivity.linkedin.enable', 1),
-      ));
-      $this->addElement('Text', 'sesadvancedactivity_linkedin_access', array(
-        'label' => 'LinkedIn Access Key',
-        'description' => '',
-        'value' => $settings->getSetting('sesadvancedactivity.linkedin.access', ''),
-      ));
-      $this->addElement('Text', 'sesadvancedactivity_linkedin_secret', array(
-        'label' => 'LinkedIn Secret Key',
-        'description' => '',
-        'value' => $settings->getSetting('sesadvancedactivity.linkedin.secret', ''),
-      ));
+//     $this->addElement('Radio', 'sesadvancedactivity_linkedin_enable', array(
+//       'label' => 'Publish to LinkedIn',
+//       'description' => 'Do you want to enable members to choose to publish their posts on LinkedIn?',
+//       'multiOptions' => array(
+//           1 => 'Yes',
+//           0 => 'No'
+//       ),
+//       'onchange'=>'linkedin(this.value)',
+//       'value' => $settings->getSetting('sesadvancedactivity.linkedin.enable', 1),
+//     ));
+//     $this->addElement('Text', 'sesadvancedactivity_linkedin_access', array(
+//       'label' => 'LinkedIn Access Key',
+//       'description' => '',
+//       'value' => $settings->getSetting('sesadvancedactivity.linkedin.access', ''),
+//     ));
+//     $this->addElement('Text', 'sesadvancedactivity_linkedin_secret', array(
+//       'label' => 'LinkedIn Secret Key',
+//       'description' => '',
+//       'value' => $settings->getSetting('sesadvancedactivity.linkedin.secret', ''),
+//     ));
 
 //       $this->addElement('Radio', 'sesadvancedactivity_advancednotification', array(
 //         'label' => 'Advanced Notifications in Mini Menu',

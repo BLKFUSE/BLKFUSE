@@ -54,11 +54,9 @@ function selectAll()
 <p>
   <?php echo $this->translate('This page lists all of the stories your users have uploaded on your website. You can use this page to monitor these stories and delete offensive material if necessary. Entering criteria into the filter fields will help you find specific story. Leaving the filter fields blank will show all the stories on your social network.') ?>
 </p>
-<br />
 <div class='admin_search sesbasic_search_form'>
   <?php echo $this->formFilter->render($this) ?>
 </div>
-<br />
 <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
 <div class="sesbasic_search_reasult">
   <?php echo $this->translate(array('%s story found.', '%s stories found.', $this->paginator->getTotalItemCount()), $this->locale()->toNumber($this->paginator->getTotalItemCount())) ?>
@@ -137,19 +135,16 @@ function selectAll()
       </tbody>
     </table>
   </div>
-  <br />
   <div class='buttons'>
     <button type='submit'>
       <?php echo $this->translate("Delete Selected") ?>
     </button>
   </div>
 </form>
-<br />
 <div>
   <?php echo $this->paginationControl($this->paginator); ?>
 </div>
 <?php else: ?>
-<br />
 <div class="tip">
   <span>
     <?php echo $this->translate("There are no stories uploaded by your members yet.") ?>

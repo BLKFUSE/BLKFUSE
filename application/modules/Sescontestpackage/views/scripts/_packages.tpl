@@ -3,7 +3,7 @@
       <div class="_title sesbasic_clearfix">
       <h5><?php echo $this->translate($package->title); ?></h5>
       <?php if(!$package->isFree()){ ?>
-        <span><?php echo Engine_Api::_()->sescontestpackage()->getCurrencyPrice($package->price,'','',true); ?></span>
+        <span><?php echo Engine_Api::_()->payment()->getCurrencyPrice($package->price); ?></span>
       <?php }else{ ?>
         <span><?php echo $this->translate("FREE"); ?></span>
       <?php } ?>
@@ -32,7 +32,7 @@
             <?php elseif($package->price && $package->recurrence_type != 'forever'):?>
               <?php echo $this->translate(ucfirst($package->recurrence_type).'ly');?>
             <?php elseif($package->recurrence_type == 'forever'): ?>
-              <?php echo sprintf($this->translate('One-time fee of %1$s'), Engine_Api::_()->sescontestpackage()->getCurrencyPrice($package->price,'','',true)); ?>
+              <?php echo sprintf($this->translate('One-time fee of %1$s'), Engine_Api::_()->payment()->getCurrencyPrice($package->price)); ?>
             <?php else:?>
               <?php echo $this->translate('Free');?>
             <?php endif;?>

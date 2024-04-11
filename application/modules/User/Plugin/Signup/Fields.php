@@ -135,10 +135,10 @@ class User_Plugin_Signup_Fields extends Core_Plugin_FormSequence_Abstract
     {
       //decode values
       $values = $_POST;
-      foreach($values as $key=>$value){
-        if(!is_countable($value))
-        	$values[$key] = Engine_Text_Emoji::encode($value);
-      }
+      // foreach($values as $key=>$value){
+      //   if(!is_countable($value))
+      //   	$values[$key] = Engine_Text_Emoji::encode($value);
+      // }
       $this->getSession()->data = $values; //$this->getForm()->getProcessedValues();
       $this->getSession()->active = false;
       $this->onSubmitIsValid();
@@ -205,7 +205,7 @@ class User_Plugin_Signup_Fields extends Core_Plugin_FormSequence_Abstract
 
     $aliasValues = Engine_Api::_()->fields()->getFieldsValuesByAlias($user);
     $user->setDisplayName($aliasValues);
-    //$user->save();
+    $user->save();
     
     // Send Welcome E-mail
     if( isset($this->_registry->mailType) && $this->_registry->mailType ) {

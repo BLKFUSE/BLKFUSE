@@ -11,10 +11,11 @@
  * @author     SocialEngineSolutions
  */
 ?>
+<?php include APPLICATION_PATH .  '/application/modules/Sesbasic/views/scripts/dismiss_message.tpl';?>
 <?php  
   $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'externals/jscolor/jscolor.js');
 ?>
-<h2><?php echo $this->translate('SocialNetworking.Solutions (SNS) Basic Required Plugin'); ?></h2>
+<h2 class="page_heading"><?php echo $this->translate('SocialNetworking.Solutions (SNS) Basic Required Plugin'); ?></h2>
 <?php if (engine_count($this->navigation)): ?>
   <div class='tabs'>
     <?php

@@ -399,7 +399,7 @@ class Event_ProfileController extends Sesapi_Controller_Action_Standard
 
       //$resource = $item->toArray();
       $memberInfo = $event->membership()->getRow($item); 
-      $resource['displayname'] = $item->displayname;
+      $resource['displayname'] = $item->getTitle();
       $resource['user_id'] = $item->user_id;
       if( $memberInfo->rsvp == 0 ) {
         $resource['RSVP'] = $this->view->translate("Not Attending");

@@ -10,32 +10,25 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_stats", 'childMenuItemName' => 'core_admin_main_stats_statistics')); ?>
 
-<h2><?php echo $this->translate("Site-wide Statistics") ?></h2>
-<p>
-  <?php echo $this->translate("CORE_VIEWS_SCRIPTS_ADMINSTATS_INDEX_DESCRIPTION") ?>
-</p>
-
-<?php
-  $settings = Engine_Api::_()->getApi('settings', 'core');
-  if( $settings->getSetting('user.support.links', 0) == 1 ) {
-    echo 'More info: <a href="https://community.socialengine.com/blogs/597/79/site-wide-statistics" target="_blank">See KB article</a>.';
-  } 
-?>	
-
-<br />
-<br />
-
+<div class="admin_common_top_section">
+  <h2 class="page_heading"><?php echo $this->translate("Site-wide Statistics") ?></h2>
+  <p>
+    <?php echo $this->translate("CORE_VIEWS_SCRIPTS_ADMINSTATS_INDEX_DESCRIPTION") ?>
+  </p>
+  <?php
+    $settings = Engine_Api::_()->getApi('settings', 'core');
+    if( $settings->getSetting('user.support.links', 0) == 1 ) {
+      echo 'More info: <a href="https://community.socialengine.com/blogs/597/79/site-wide-statistics" target="_blank">See KB article</a>.';
+    } 
+  ?>	
+</div>  
 <div class="admin_search">
   <div class="search">
     <?php echo $this->filterForm->render($this) ?>
   </div>
 </div>
-
-<br />
-
-
-
 <div id="admin_statistics" class="admin_statistics">
   <div class="admin_statistics_nav">
     <a id="admin_stats_offset_previous" onclick="processStatisticsPage(-1);"><?php echo $this->translate("Previous") ?></a>
@@ -159,22 +152,34 @@
 
       var options = {
         title: response.title,
-        legend: { position: 'bottom' }
+        legend: { 
+          position: 'bottom',
+        },
+        <?php if(!empty($_COOKIE['adminmode_theme']) && $_COOKIE['adminmode_theme'] == 'dark'): ?>
+          titleTextStyle: {
+            color: '#fff',
+          },
+          backgroundColor: {
+            'fill': '#1D1D1F',
+          },
+        <?php endif; ?>
       };
       var chart = new google.visualization.PieChart(document.getElementById('my_chart'));
       chart.draw(data, options);
     }
   </script>
-    <div id="my_chart" class="my_chart"></div>
-      <div id="loading" style="display: none"></div>
-  </div>
+  <div id="my_chart" class="my_chart"></div>
+  <div id="loading" style="display: none"></div>
 </div>
 <style>
   .my_chart {
-    height: 450px;
-    width: 1000px
+    height:450px;
+    width:100%
   }
-
+  [dir="rtl"] .my_chart *{
+    text-align:left;
+    direction:ltr;
+  }
   #loading {
     width: inherit;
     height: inherit;
@@ -182,4 +187,8 @@
     background-repeat: no-repeat;
     background-image: url(application/modules/Core/externals/images/large-loading.gif);
   }
+  html.dark_mode div#my_chart svg g rect + g text{
+    fill:#fff !important;
+  }
+
 </style>

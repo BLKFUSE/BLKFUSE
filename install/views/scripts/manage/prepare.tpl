@@ -11,7 +11,7 @@
  */
 ?>
 
-<h3>Add Packages</h3>
+<h3><?php echo $this->translate("Add Packages") ?></h3>
 
 <?php
 // Install Navigation
@@ -32,11 +32,11 @@ echo $this->render('_installMenu.tpl')
 <div class="admin_packages_actions">
     <h3 class="sep">
     <span>
-      Actions
+      <?php echo $this->translate("Actions") ?>
     </span>
     </h3>
     <p>
-        These are the actions that will be performed during this installation:
+        <?php echo $this->translate("These are the actions that will be performed during this installation:") ?>
     </p>
     <ul>
         <?php if ($this->transaction) : ?>
@@ -74,11 +74,11 @@ echo $this->render('_installMenu.tpl')
     <div class="admin_packages_dependencies">
         <h3 class="sep">
       <span>
-        Dependency Check
+        <?php echo $this->translate("Dependency Check") ?>
       </span>
         </h3>
         <p>
-            These items must already be installed to continue with this installation:
+            <?php echo $this->translate("These items must already be installed to continue with this installation:") ?>
         </p>
         <?php if ($this->dependencies && count($this->dependencies) > 0) : ?>
             <ul>
@@ -150,11 +150,11 @@ echo $this->render('_installMenu.tpl')
     <div class="admin_packages_requirements">
         <h3 class="sep">
       <span>
-        System Requirements Check
+        <?php echo $this->translate("System Requirements Check") ?>
       </span>
         </h3>
         <p>
-            These system requirements must be correct to continue with this installation:
+            <?php echo $this->translate("These system requirements must be correct to continue with this installation:") ?>
         </p>
         <?php if ($this->tests && count($this->tests->getTests()) > 0): ?>
             <ul>
@@ -287,7 +287,7 @@ echo $this->render('_installMenu.tpl')
 <?php elseif (!$this->prepareError) : // Okay?>
     <div class="admin_packages_install_submit">
         <?php echo $this->formButton(null, 'Continue', array('onclick' => 'window.location.href = "'.$this->url(array('action' => 'prepare')).'?skip=0";')) ?>
-        or <a href="<?php echo $this->url(array('action' => 'index')) ?>">cancel installation</a>
+       <?php echo $this->translate(" or ") ?><a href="<?php echo $this->url(array('action' => 'index')) ?>"><?php echo $this->translate("cancel installation") ?></a>
     </div>
 <?php elseif ($this->diffErrorOnly): // Diff error only?>
     <div class="admin_packages_install_error">
@@ -300,7 +300,7 @@ echo $this->render('_installMenu.tpl')
             <?php echo $this->formButton(null, 'Continue & Overwrite', array('onclick' => 'if( confirm("Are you sure that you want to continue? If you do, you will lose any custom changes made to the files listed.") ) { window.location.href = "'.$this->url(array('action' => 'prepare')).'?skip=0"; }')) ?>
             or
             <?php echo $this->formButton(null, 'Continue & Skip', array('onclick' => 'if( confirm("Are you sure that you want to continue? If you do, your install may not work properly as not all of the files will be updated.") ) { window.location.href = "'.$this->url(array('action' => 'prepare')).'?skip=1"; }')) ?>
-            or <a href="<?php echo $this->url(array('action' => 'index')) ?>">cancel installation</a>
+           <?php echo $this->translate(" or ") ?><a href="<?php echo $this->url(array('action' => 'index')) ?>"><?php echo $this->translate("cancel installation") ?></a>
         </div>
     </div>
 <?php else: // Other errors?>

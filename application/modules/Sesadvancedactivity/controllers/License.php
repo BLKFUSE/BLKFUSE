@@ -103,14 +103,14 @@ if ($this->getRequest()->isPost()) {
       `user_id` int(11) unsigned NOT NULL,
       `action_id` int(11) unsigned NOT NULL,
       PRIMARY KEY  (`taguser_id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_files` (
       `file_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
       `user_id` int(11) unsigned NOT NULL,
       `item_id` int(11) unsigned NOT NULL,
       PRIMARY KEY  (`file_id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_buysells` (
       `buysell_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -123,14 +123,14 @@ if ($this->getRequest()->isPost()) {
       `is_sold` TINYINT(1) NOT NULL default "0",
       `buy` VARCHAR(1000) NULL,
       PRIMARY KEY  (`buysell_id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;');
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_hashtags` (
       `hashtag_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
       `action_id` int(11) unsigned NOT NULL,
       `title` varchar(255) NOT NULL,
       PRIMARY KEY  (`hashtag_id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;');
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_filterlists` (
       `filterlist_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -143,7 +143,7 @@ if ($this->getRequest()->isPost()) {
       PRIMARY KEY  (`filterlist_id`),
       UNIQUE( `filtertype`),
       `file_id` INT(11) NOT NULL DEFAULT "0"
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;');
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('INSERT IGNORE INTO `engine4_sesadvancedactivity_filterlists` (`filtertype`, `title`, `active`, `is_delete`, `order`,`module`) VALUES
       ("all", "All Updates", 1, 0, 1,"Core"),
@@ -160,7 +160,7 @@ if ($this->getRequest()->isPost()) {
       `action_id` int(11) unsigned NOT NULL,
       `user_id` int(11) unsigned NOT NULL,
       PRIMARY KEY  (`savefeed_id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;');
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_hides` (
       `hide_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -168,19 +168,19 @@ if ($this->getRequest()->isPost()) {
       `resource_type` VARCHAR(20) NOT NULL,
       `user_id` int(11) unsigned NOT NULL,
       PRIMARY KEY  (`hide_id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;');
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('INSERT IGNORE INTO `engine4_core_tasks` (`title`, `module`, `plugin`, `timeout`, `processes`, `semaphore`, `started_last`, `started_count`, `completed_last`, `completed_count`, `failure_last`, `failure_count`, `success_last`, `success_count`) VALUES ("SES : Advanced Activity - Schedule Post", "sesadvancedactivity", "Sesadvancedactivity_Plugin_Task_Jobs", "100", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0");');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_user_linkedin` (
       `user_id` int(11) UNSIGNED NOT NULL,
       `linkedin_uid` bigint(20) UNSIGNED NOT NULL,
-      `access_token` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT "",
-      `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT "",
+      `access_token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "",
+      `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "",
       `expires` bigint(20) UNSIGNED NOT NULL DEFAULT "0",
       PRIMARY KEY (`user_id`),
       UNIQUE KEY `linkedin_uid` (`linkedin_uid`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_targetpost` (
       `targetpost_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -197,7 +197,7 @@ if ($this->getRequest()->isPost()) {
       `lng` varchar(255)  NOT NULL DEFAULT "",
       PRIMARY KEY  (`targetpost_id`),
       UNIQUE KEY `action_id` (`action_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_welcomemessages` (
       `welcomemessage_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -205,7 +205,7 @@ if ($this->getRequest()->isPost()) {
       `creation_date` DATE DEFAULT NULL,
       PRIMARY KEY  (`welcomemessage_id`),
       UNIQUE KEY `user_id` (`user_id`,`creation_date`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_birthdaymessages` (
       `birthdaymessage_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -213,7 +213,7 @@ if ($this->getRequest()->isPost()) {
       `creation_date` DATE DEFAULT NULL,
       PRIMARY KEY  (`birthdaymessage_id`),
       UNIQUE KEY `user_id` (`user_id`,`creation_date`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_friendbirthdaymessages` (
       `friendbirthdaymessage_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -221,7 +221,7 @@ if ($this->getRequest()->isPost()) {
       `creation_date` DATE DEFAULT NULL,
       PRIMARY KEY  (`friendbirthdaymessage_id`),
       UNIQUE KEY `user_id` (`user_id`,`creation_date`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_events` (
       `event_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -237,7 +237,7 @@ if ($this->getRequest()->isPost()) {
       `starttime` DATE NOT NULL,
       `endtime` DATE NOT NULL,
       PRIMARY KEY  (`event_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_eventmessages` (
       `eventmessage_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -247,7 +247,7 @@ if ($this->getRequest()->isPost()) {
       `userclose` TINYINT(1) NOT NULL DEFAULT "0",
       PRIMARY KEY  (`eventmessage_id`),
       UNIQUE KEY `user_id` (`user_id`,`creation_date`, `event_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_textcolors` (
       `textcolor_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -256,7 +256,7 @@ if ($this->getRequest()->isPost()) {
       `active` TINYINT(1) NOT NULL DEFAULT "1",
       `animation` VARCHAR(255) NULL,
       PRIMARY KEY  (`textcolor_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('INSERT IGNORE INTO `engine4_activity_actiontypes` (`type`, `module`, `body`, `enabled`, `displayable`, `attachable`, `commentable`, `shareable`, `is_generated`) VALUES
       ("sesadvancedactivity_event_share", "sesadvancedactivity", \'{item:$subject} shared a {var:$type}. {body:$body}\', "1", "5", "1", "1", "0", "1");');
@@ -281,7 +281,7 @@ if ($this->getRequest()->isPost()) {
       PRIMARY KEY (`detail_id`),
       UNIQUE( `detail_id`, `action_id`),
       INDEX `Activity` (`action_id`) USING BTREE
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_activitylikes` (
       `activitylike_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -289,7 +289,7 @@ if ($this->getRequest()->isPost()) {
       `type` TINYINT(1) NOT NULL DEFAULT "1",
       PRIMARY KEY (`activitylike_id`),
       UNIQUE( `activity_like_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_corelikes` (
       `corelike_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -297,7 +297,7 @@ if ($this->getRequest()->isPost()) {
       `type` TINYINT(1) NOT NULL DEFAULT "1",
       PRIMARY KEY (`corelike_id`),
       UNIQUE( `core_like_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_activitycomments` (
       `activitycomment_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -313,7 +313,7 @@ if ($this->getRequest()->isPost()) {
       `vote_down_count` int(11) NOT NULL DEFAULT "0",
       PRIMARY KEY (`activitycomment_id`),
       UNIQUE( `activity_comment_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_corecomments` (
       `corecomment_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -329,7 +329,7 @@ if ($this->getRequest()->isPost()) {
       `vote_down_count` int(11) NOT NULL DEFAULT "0",
       PRIMARY KEY (`corecomment_id`),
       UNIQUE( `core_comment_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_pinposts` (
       `pinpost_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -337,7 +337,7 @@ if ($this->getRequest()->isPost()) {
       `resource_id` int(11) NOT NULL,
       `resource_type` varchar(255) NOT NULL,
       PRIMARY KEY (`pinpost_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_tagitems` (
       `tagitem_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -345,7 +345,7 @@ if ($this->getRequest()->isPost()) {
       `resource_type` VARCHAR(255) NOT NULL,
       `user_id` INT(11) NOT NULL,
       `action_id` INT(11) NOT NULL
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_links` (
       `link_id` int(11) unsigned NOT NULL auto_increment,
@@ -353,7 +353,7 @@ if ($this->getRequest()->isPost()) {
       `ses_aaf_gif` TINYINT(1) NOT NULL DEFAULT "0",
       PRIMARY KEY  (`link_id`),
       UNIQUE( `core_link_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
 
 
@@ -363,7 +363,7 @@ if ($this->getRequest()->isPost()) {
       `color` varchar(128) NOT NULL,
       `file_id` int(11) NOT NULL DEFAULT "0",
       PRIMARY KEY (`category_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedcomment_emotiongalleries` (
       `gallery_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -371,21 +371,21 @@ if ($this->getRequest()->isPost()) {
       `file_id` int(11) unsigned NOT NULL,
       `category_id` INT(11) NOT NULL,
       PRIMARY KEY  (`gallery_id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;');
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedcomment_emotionfiles` (
       `files_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
       `photo_id` int(11) unsigned NOT NULL,
       `gallery_id` int(11) unsigned NOT NULL,
       PRIMARY KEY  (`files_id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;');
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedcomment_useremotions` (
       `emotion_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
       `user_id` INT(11) unsigned NOT NULL,
       `gallery_id` int(11) unsigned NOT NULL,
       PRIMARY KEY  (`emotion_id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;');
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedcomment_commentfiles` (
       `commentfile_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -393,7 +393,7 @@ if ($this->getRequest()->isPost()) {
       `type` VARCHAR(255) NOT NULL,
       `file_id` int(11) unsigned NOT NULL,
       PRIMARY KEY  (`commentfile_id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;');
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('INSERT IGNORE INTO `engine4_sesadvancedcomment_emotioncategories` (`category_id`, `title`, `color`, `file_id`) VALUES
       (1, "Happy", "#FF4912", 26983),
@@ -421,7 +421,7 @@ if ($this->getRequest()->isPost()) {
       `order` INT(11) NOT NULL,
       `enabled` TINYINT(1) NOT NULL DEFAULT "1",
       PRIMARY KEY  (`background_id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;');
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesfeedgif_images` (
       `image_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -431,7 +431,7 @@ if ($this->getRequest()->isPost()) {
       `gifimage_code` VARCHAR(255) NULL,
       `user_count` INT(11) NOT NULL DEFAULT "0",
       PRIMARY KEY  (`image_id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;');
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesfeedgif_texts` (
       `text_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -439,7 +439,7 @@ if ($this->getRequest()->isPost()) {
       `text` VARCHAR(255) NOT NULL,
       `limit` INT(11) NOT NULL DEFAULT "0",
       PRIMARY KEY  (`text_id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;');
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesfeelingactivity_feelings` (
       `feeling_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -448,7 +448,7 @@ if ($this->getRequest()->isPost()) {
       `file_id` int(11) unsigned NOT NULL,
       `order` INT(11) NOT NULL,
       PRIMARY KEY  (`feeling_id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;');
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesfeelingactivity_feelingicons` (
       `feelingicon_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -459,7 +459,7 @@ if ($this->getRequest()->isPost()) {
       `resource_type` VARCHAR(255) NOT NULL,
       `order` INT(11) NOT NULL,
       PRIMARY KEY  (`feelingicon_id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;');
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesadvancedactivity_feelingposts` (
       `feelingpost_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -468,7 +468,7 @@ if ($this->getRequest()->isPost()) {
       `resource_type` varchar(255) DEFAULT NULL,
       `action_id` int(11) unsigned NOT NULL,
       PRIMARY KEY  (`feelingpost_id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;');
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;');
 
       $db->query('INSERT IGNORE INTO `engine4_sesfeelingactivity_feelings` (`feeling_id`, `title`, `type`, `file_id`, `order`) VALUES
       (1, "Feeling", "1", 0, 1),

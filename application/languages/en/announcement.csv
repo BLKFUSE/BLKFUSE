@@ -20,3 +20,5 @@
 "Please select an announcement to delete.";"Please select an announcement to delete."
 
 "ITEM_TYPE_ANNOUNCEMENT";"Announcements"
+"PAGETITLE-ANNOUNCEMENT-EDIT-ADMIN-MANAGE";"Edit Announcement"
+"PAGETITLE-ANNOUNCEMENT-DELETE-ADMIN-MANAGE";"Delete Announcement"

@@ -54,15 +54,15 @@ CREATE TABLE IF NOT EXISTS `se_forumtopics` (
 *  `forumtopic_forum_id` int(9) NOT NULL default '0',
 *  `forumtopic_creatoruser_id` int(9) NOT NULL default '0',
 *  `forumtopic_date` int(14) NOT NULL default '0',
-*  `forumtopic_subject` varchar(50) collate utf8_unicode_ci NOT NULL default '',
-*  `forumtopic_excerpt` varchar(100) collate utf8_unicode_ci NOT NULL default '',
+*  `forumtopic_subject` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL default '',
+*  `forumtopic_excerpt` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL default '',
 *  `forumtopic_views` int(9) NOT NULL default '0',
 *  `forumtopic_sticky` tinyint(1) unsigned NOT NULL default '0',
 *  `forumtopic_closed` tinyint(1) unsigned NOT NULL default '0',
 *  `forumtopic_totalreplies` smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (`forumtopic_id`),
   KEY `INDEX` (`forumtopic_forum_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -84,6 +84,6 @@ CREATE TABLE IF NOT EXISTS `engine4_forum_topics` (
   PRIMARY KEY  (`topic_id`),
   KEY `forum_id` (`forum_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  *
  */

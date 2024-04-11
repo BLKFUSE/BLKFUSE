@@ -15,18 +15,19 @@
   array (
     'type' => 'module',
     'name' => 'ewebstories',
-    'version' => '6.4.0p1',
+    'version' => '6.5.1',
     'dependencies' => array(
       array(
         'type' => 'module',
         'name' => 'core',
-        'minVersion' => '6.2.0',
+        'minVersion' => '6.5.1',
       ),
     ),
     'path' => 'application/modules/Ewebstories',
     'title' => 'SNS - Stories Feature in Website',
     'description' => 'SNS - Stories Feature in Website',
      'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	 'thumb' => 'application/modules/Ewebstories/externals/images/thumb.png',
     'callback' =>
     array (
         'path' => 'application/modules/Ewebstories/settings/install.php',

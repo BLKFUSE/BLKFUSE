@@ -1,6 +1,6 @@
 
 ALTER TABLE `engine4_core_menuitems` CHANGE COLUMN
-  `plugin` `plugin` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NULL;
+  `plugin` `plugin` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
 
 ALTER TABLE `engine4_core_menuitems` ADD COLUMN
   `enabled` tinyint(1) NOT NULL default '1';

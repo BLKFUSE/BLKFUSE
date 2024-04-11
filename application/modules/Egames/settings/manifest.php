@@ -33,18 +33,19 @@ return array(
   [
     'type' => 'module',
     'name' => 'egames',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
 	'dependencies' => array(
       array(
         'type' => 'module',
         'name' => 'core',
-        'minVersion' => '6.2.0',
+        'minVersion' => '6.5.1',
       ),
     ),
     'path' => 'application/modules/Egames',
     'title' => 'SNS - Games Plugin',
     'description' => 'SNS - Games Plugin',
      'author' => '<a href="http://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	 'thumb' => 'application/modules/Egames/externals/images/thumb.png',
      'actions' => [
           'install',
           'upgrade',

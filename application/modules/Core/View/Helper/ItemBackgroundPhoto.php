@@ -30,7 +30,7 @@ class Core_View_Helper_ItemBackgroundPhoto extends Core_View_Helper_ItemPhoto
 
         $this->setAttributes($item, $type, $attribs, 'bgphoto');
         if ($alt && empty($this->_attribs['title'])) {
-            $this->_attribs['title'] = $alt;
+            $this->_attribs['title'] = strip_tags($alt);
         }
 
         if (!empty($this->_attribs['style']) && is_string($this->_attribs['style'])) {

@@ -43,7 +43,7 @@ class Sesdating_Form_Admin_Global extends Engine_Form {
 			$allowed_html = 'strong, b, em, i, u, strike, sub, sup, p, div, pre, address, h1, h2, h3, h4, h5, h6, span, ol, li, ul, a, img, embed, br, hr';
 
 			$editorOptions = array(
-					'upload_url' => $upload_url,
+					'uploadUrl' => $upload_url,
 					'html' => (bool) $allowed_html,
 			);
 
@@ -85,7 +85,7 @@ class Sesdating_Form_Admin_Global extends Engine_Form {
 
 			//New File System Code
 			$banner_options = array('' => '');
-			$files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png')));
+			$files = Engine_Api::_()->getDbTable('files', 'core')->getFiles(array('fetchAll' => 1, 'extension' => array('gif', 'jpg', 'jpeg', 'png', 'webp')));
 			foreach( $files as $file ) {
 			  $banner_options[$file->storage_path] = $file->name;
 			}
@@ -185,12 +185,18 @@ class Sesdating_Form_Admin_Global extends Engine_Form {
 				));
 			}
 
-      //Add submit button
-      $this->addElement('Button', 'submit', array(
+      $enabledSesbasic = Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesbasic');
+      $fields = array(
           'label' => 'Activate This Plugin',
           'type' => 'submit',
           'ignore' => true
-      ));
+      );
+      if(!$enabledSesbasic){
+        $fields['disable'] = true;
+        $fields['title'] = 'To Activate this plugin, please first install all dependent plugins as show in the tips above.';
+      }
+      //Add submit button
+      $this->addElement('Button', 'submit',$fields);
     }
   }
 

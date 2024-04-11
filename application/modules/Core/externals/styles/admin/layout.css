@@ -15,6 +15,11 @@
   opacity: 0.4;
   visibility: hidden;
 }
+[dir="rtl"] .delete-theme,
+[dir="rtl"] .delete-theme:hover{
+  left:auto;
+  right:45px;
+}
 .delete-theme:hover {
   opacity: 1;
 }

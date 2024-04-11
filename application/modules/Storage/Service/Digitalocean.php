@@ -226,16 +226,9 @@ class Storage_Service_Digitalocean extends Storage_Service_Abstract
    */
   public function temporary(Storage_Model_File $model)
   {
-    try {
-      $rfh = fopen($this->_streamWrapperName . '://' . $model->storage_path, 'r');
-    } catch( Exception $e ) {
-      throw $e;
-    }
-
+    $rfh = $this->map($model);
     $tmp_file = APPLICATION_PATH . '/public/temporary/' . basename($model['storage_path']);
-    $fp = fopen($tmp_file, "w");
-    stream_copy_to_stream($rfh, $fp);
-    fclose($fp);
+    copy($rfh, $tmp_file);
     @chmod($tmp_file, 0777);
     return $tmp_file;
   }

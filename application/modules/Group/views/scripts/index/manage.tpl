@@ -51,6 +51,7 @@
           <div class="groups_desc">
             <?php echo $this->viewMore($group->getDescription()) ?>
           </div>
+          <?php echo $this->partial('_approved_tip.tpl', 'core', array('item' => $group)); ?>
         </div>
       </li>
     <?php endforeach; ?>

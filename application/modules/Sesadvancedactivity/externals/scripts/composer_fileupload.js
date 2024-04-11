@@ -44,7 +44,7 @@ Composer.Plugin.Fileupload = function(options){
 
     this.makeMenu();
     this.makeBody();    
-    scriptJquery(this.elements.body).html('<input id="fileupload-input-type" type="file" name="fileupload" value="" onchange="checkuploadfiletype(this,'+this.options.sesrverLimitDigits+')"><span class="sesbasic_text_light">(Max size '+this.options.serverLimit+')</span>');    
+    scriptJquery(this.elements.body).html('<input id="fileupload-input-type" type="file" name="fileupload" value="" onchange="checkuploadfiletype(this,'+this.options.sesrverLimitDigits+')"><span class="sesbasic_text_light">(Max size '+sesadvServerLimit+')</span>');    
   },
 
   this.deactivate = function() {

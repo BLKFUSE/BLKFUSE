@@ -58,7 +58,7 @@ class Sescontestjoinfees_Form_Admin_Payment_Approve extends Engine_Form {
 		$this->addElement('Textarea', 'admin_message', array(
           'label' => 'Response Message',
     ));
-    $givenSymbol = Engine_Api::_()->sescredit()->getCurrentCurrency();
+    $givenSymbol = Engine_Api::_()->payment()->getCurrentCurrency();
     $gateways = Engine_Api::_()->getDbtable('usergateways', 'sescontestjoinfees')->getUserGateway(array("enabled"=>true,'contest_id'=>$this->getContestId(),'fetchAll'=>true));
     foreach($gateways as $gateway) {
       $gatewayObject = $gateway->getGateway();

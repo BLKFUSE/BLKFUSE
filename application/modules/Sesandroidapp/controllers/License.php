@@ -61,28 +61,28 @@ if ($this->getRequest()->isPost()) {
       $db->query('DROP TABLE IF EXISTS `engine4_sesandroidapp_pushnotifications`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesandroidapp_pushnotifications` (
         `pushnotification_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-        `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT "",
-        `description` text COLLATE utf8_unicode_ci,
-        `criteria` varchar(244) COLLATE utf8_unicode_ci DEFAULT NULL,
-        `param` text COLLATE utf8_unicode_ci,
+        `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "",
+        `description` text COLLATE utf8mb4_unicode_ci,
+        `criteria` varchar(244) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+        `param` text COLLATE utf8mb4_unicode_ci,
         `sent` tinyint(1) DEFAULT "0",
         `creation_date` datetime DEFAULT NULL,
         PRIMARY KEY (`pushnotification_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
 
       $db->query('DROP TABLE IF EXISTS `engine4_sesandroidapp_slides`;');
       $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesandroidapp_slides` (
         `slide_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-        `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT "",
-        `description` text COLLATE utf8_unicode_ci,
-        `title_color` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT "FFFFFF",
-        `description_color` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT "FFFFFF",
-        `status` TINYINT(1) COLLATE utf8_unicode_ci DEFAULT "1",
+        `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "",
+        `description` text COLLATE utf8mb4_unicode_ci,
+        `title_color` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "FFFFFF",
+        `description_color` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "FFFFFF",
+        `status` TINYINT(1) COLLATE utf8mb4_unicode_ci DEFAULT "1",
         `file_id` INT(11) DEFAULT "0",
         `order` INT(11) DEFAULT "0",
         `creation_date` datetime DEFAULT NULL,
         PRIMARY KEY (`slide_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
 
       $activity_table_exist = $db->query('SHOW TABLES LIKE \'engine4_activity_notificationtypes\'')->fetch();
       if($activity_table_exist) {
@@ -97,7 +97,7 @@ if ($this->getRequest()->isPost()) {
         `theme_id` int(11) NOT NULL AUTO_INCREMENT,
         `name` varchar(255) NOT NULL,
         PRIMARY KEY (`theme_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
       $db->query("INSERT INTO `engine4_sesandroidapp_themes` (`theme_id`, `name`) VALUES
         (1, 'Theme 1'),
         (2, 'Theme 2'),
@@ -114,7 +114,7 @@ if ($this->getRequest()->isPost()) {
         `is_custom` TINYINT(1) NOT NULL DEFAULT "0" ,
         PRIMARY KEY (`customtheme_id`),
         UNIQUE KEY `UNIQUEKEY` (`column_key`,`theme_id`,`is_custom`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
 
 
        $db->query('INSERT IGNORE INTO `engine4_sesapi_menus` (`label`, `module`, `type`, `status`, `order`, `file_id`, `url`, `class`, `is_delete`, `device`, `visibility`, `module_name`) VALUES

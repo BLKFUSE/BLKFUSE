@@ -28,13 +28,13 @@ scriptJquery(document).ready(function() {
 function socialmedialinks(value){
   if(value == 1){
     if(document.getElementById('sesdating_facebookurl-wrapper'))
-      document.getElementById('sesdating_facebookurl-wrapper').style.display = 'block';
+      document.getElementById('sesdating_facebookurl-wrapper').style.display = 'flex';
     if(document.getElementById('sesdating_googleplusurl-wrapper'))
-      document.getElementById('sesdating_googleplusurl-wrapper').style.display = 'block';
+      document.getElementById('sesdating_googleplusurl-wrapper').style.display = 'flex';
     if(document.getElementById('sesdating_twitterurl-wrapper'))
-      document.getElementById('sesdating_twitterurl-wrapper').style.display = 'block';
+      document.getElementById('sesdating_twitterurl-wrapper').style.display = 'flex';
     if(document.getElementById('sesdating_pinteresturl-wrapper'))
-      document.getElementById('sesdating_pinteresturl-wrapper').style.display = 'block';
+      document.getElementById('sesdating_pinteresturl-wrapper').style.display = 'flex';
   } else {
     if(document.getElementById('sesdating_facebookurl-wrapper'))
       document.getElementById('sesdating_facebookurl-wrapper').style.display = 'none';

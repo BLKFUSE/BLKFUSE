@@ -169,10 +169,14 @@ class Sesmusic_Widget_OtherModulesProfileMusicalbumsController extends Engine_Co
     $this->view->showArtistRating = $showRating;
 
     if (empty($_POST['is_ajax'])) {
-      if ($subject->user_id != $viewer->getIdentity()) {
+      if (isset($subject->user_id) && $subject->user_id != $viewer->getIdentity()) {
         $userObject = Engine_Api::_()->getItem('user', $subject->user_id);
         $profile = 'other';
         $userId = $subject->user_id;
+      } elseif (isset($subject->owner_id) && $subject->owner_id != $viewer->getIdentity()) {
+        $userObject = Engine_Api::_()->getItem('user', $subject->owner_id);
+        $profile = 'other';
+        $userId = $subject->owner_id;
       } else {
         $userObject = Engine_Api::_()->getItem('user', $viewer->getIdentity());
         $profile = 'own';

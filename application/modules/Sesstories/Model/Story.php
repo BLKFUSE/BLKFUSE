@@ -19,7 +19,7 @@ class Sesstories_Model_Story extends Core_Model_Item_Abstract {
     return new Engine_ProxyObject($this, Engine_Api::_()->getDbtable('likes', 'core'));
   }
   public function getHref(){
-      return "sesstories/index/view/story_id/".$this->getIdentity();
+      return "members/home?story_id=".$this->getIdentity().'&owner_id='.$this->owner_id; //"sesstories/index/view/story_id/".$this->getIdentity();
   }
   protected function _delete()
   {

@@ -50,11 +50,8 @@
         $empty = false;
         ?>
         <li>
-          <div class="group_discussions_replies">
-            <span>
-              <?php echo $this->locale()->toNumber($topic->post_count - 1) ?>
-            </span>
-            <?php echo $this->translate(array('reply', 'replies', $topic->post_count - 1)) ?>
+          <div class="group_discussions_thumb">
+            <?php echo $this->htmlLink($topic->getOwner()->getHref(), $this->itemBackgroundPhoto($topic->getOwner(), 'thumb.icon')) ?>
           </div>
           <?php if( $lastpost && $lastposter ): ?>
           <div class="group_discussions_lastreply">
@@ -67,9 +64,20 @@
           </div>
           <?php endif; ?>
           <div class="group_discussions_info">
-            <h3<?php if( $topic->sticky ): ?> class='group_discussions_sticky'<?php endif; ?>>
+            <h3>
+              <?php if( $topic->sticky ): ?>📌<?php endif; ?>
               <?php echo $this->htmlLink($topic->getHref(), $topic->getTitle()) ?>
             </h3>
+            <div class="group_discussions_stats">
+              <span><?php echo $this->htmlLink($topic->getOwner()->getHref(), $topic->getOwner()->getTitle()); ?></span>
+              <span class="sep">-</span>
+              <span><?php echo $this->timestamp($topic->creation_date) ?></span>
+              <span class="sep">-</span>
+              <span>
+                <?php echo $this->locale()->toNumber($topic->post_count - 1) ?>
+                <?php echo $this->translate(array('reply', 'replies', $topic->post_count - 1)) ?>
+              </span>
+            </div>
             <div class="group_discussions_blurb">
               <?php echo $this->viewMore(strip_tags($topic->getDescription()), 255, 1027, 511, false); ?>
             </div>

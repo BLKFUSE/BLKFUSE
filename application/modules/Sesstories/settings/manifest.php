@@ -16,7 +16,7 @@
   array (
     'type' => 'module',
     'name' => 'sesstories',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
 		'dependencies' => array(
 			array(
 				'type' => 'module',
@@ -28,6 +28,7 @@
     'title' => 'SNS - Stories Feature in Website',
     'description' => 'SNS - Stories Feature in Android Mobile Apps',
     'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+	'thumb' => 'application/modules/Sesstories/externals/images/thumb.png',
     'callback' => array(
         'path' => 'application/modules/Sesstories/settings/install.php',
         'class' => 'Sesstories_Installer',

@@ -192,6 +192,7 @@ class Storage_Model_File extends Core_Model_Item_Abstract
   public function remove()
   {
     $this->getStorageService()->remove($this);
+    Engine_Api::_()->storage()->deleteExternalsFiles($this->file_id);
     $this->delete();
   }
 

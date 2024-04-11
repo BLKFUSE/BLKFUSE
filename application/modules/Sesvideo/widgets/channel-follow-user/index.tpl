@@ -23,7 +23,6 @@
   <div class="sesvideo_search_result">
   	<?php echo $this->translate(array('%s follower found.', '%s followers found.', $this->totalUsers),$this->locale()->toNumber($this->totalUsers)) ?>
 	</div>
-  <ul id="browsemembers_ul<?php echo $randonNumber; ?>">
 <?php } ?>
     <?php if(empty($this->showData)): ?>
       <?php if($this->template_settings == 1): ?>
@@ -40,6 +39,9 @@
       <?php include APPLICATION_PATH .  '/application/modules/Sesvideo/views/scripts/followers/_teamtemplate6.tpl'; ?>
       <?php endif; ?>
     <?php else: ?>
+    <?php if(!$this->is_ajax){ ?>
+      <ul id="browsemembers_ul<?php echo $randonNumber; ?>">
+    <?php } ?>
     <?php foreach( $this->users as $user ){ ?>
     	<?php $userDetail = Engine_Api::_()->getItem('user',$user->owner_id); ?>
       <li class="sesvideo_channel_followers_list sesbasic_clearfix sesbasic_bxs">
@@ -68,22 +70,24 @@
         </div>
       </li>
     <?php } ?>
-    <?php  if($this->paginator->getTotalItemCount() == 0){  ?>
-            <div class="tip">
-              <span>
-                <?php echo $this->translate("There are currently no followers.");?>
-              </span>
-            </div>    
-    			<?php } ?>
-    <?php endif; ?>
-<?php if(!$this->is_ajax){ ?>
-  </ul>
-</div>
-  <div class="sesbasic_view_more sesbasic_load_btn" style="display:none;" id="view_more_<?php echo $randonNumber; ?>" onclick="viewMore_<?php echo $randonNumber; ?>();" > <?php echo $this->htmlLink('javascript:void(0);', $this->translate('View More'), array('id' => "feed_viewmore_link_$randonNumber", 'class' => 'sesbasic_animation sesbasic_link_btn fa fa-sync')); ?> </div>
-  <div class="sesbasic_view_more_loading" id="loading_image_<?php echo $randonNumber; ?>" style="display: none;"> 
-  <span class="sesbasic_link_btn"><i class="fa fa-spinner fa-spin"></i></span>  
+    <?php if(!$this->is_ajax){ ?>
+      </ul>
+    <?php } ?>
+    <?php if($this->paginator->getTotalItemCount() == 0){  ?>
+      <div class="tip">
+        <span>
+          <?php echo $this->translate("There are currently no followers.");?>
+        </span>
+      </div>    
+    <?php } ?>
+  <?php endif; ?>
+  <?php if(!$this->is_ajax){ ?>
   </div>
-<?php } ?>
+    <div class="sesbasic_load_btn" style="display:none;" id="view_more_<?php echo $randonNumber; ?>" onclick="viewMore_<?php echo $randonNumber; ?>();" > <?php echo $this->htmlLink('javascript:void(0);', $this->translate('View More'), array('id' => "feed_viewmore_link_$randonNumber", 'class' => 'sesbasic_animation sesbasic_link_btn')); ?> </div>
+      <div class="sesbasic_load_btn" id="loading_image_<?php echo $randonNumber; ?>" style="display: none;"> 
+      <span class="sesbasic_link_btn"><i class="fa fa-spinner fa-spin"></i></span>  
+    </div>
+  <?php } ?>
 <script type="application/javascript">
 <?php if($this->loadOptionData == 'auto_load'){ ?>
 		scriptJquery( window ).load(function() {

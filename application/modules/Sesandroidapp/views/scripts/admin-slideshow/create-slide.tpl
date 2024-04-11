@@ -16,7 +16,7 @@
       $this->headScript()->appendFile($this->layout()->staticBaseUrl . 'application/modules/Sesapi/externals/scripts/jscolor/jscolor.js');
 ?>
 <?php include APPLICATION_PATH .  '/application/modules/Sesandroidapp/views/scripts/dismiss_message.tpl';?>
-<h2>
+<h2 class="page_heading">
   <?php echo $this->translate("Native Android Mobile App") ?>
 </h2>
 <?php if(is_countable($this->navigation) && engine_count($this->navigation) ): ?>

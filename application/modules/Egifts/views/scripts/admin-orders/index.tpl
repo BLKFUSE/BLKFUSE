@@ -52,12 +52,10 @@
 <div>
 <h3><?php echo $this->translate("Manage Orders") ?></h3>
 <p><?php echo $this->translate('This page lists all of the orders which are purchased from your website. You can use this page to monitor these orders. Entering criteria into the filter fields will help you find specific ticket order. Leaving the filter fields blank will show all the orders on your social network.'); ?></p>
-<br />
-    <?php $defaultCurrency = Engine_Api::_()->egifts()->defaultCurrency(); ?>
+    <?php $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency(); ?>
     <div class='admin_search egifts_search_form'>
       <?php echo $this->formFilter->render($this) ?>
     </div>
-    <br />
     <?php $counter = $this->paginator->getTotalItemCount(); ?>
     <?php if( engine_count($this->paginator)): ?>
       <div class="sesbasic_search_reasult">
@@ -89,7 +87,7 @@
               <?php echo $item->state ? $item->state : 'processing'; ?>
             </td>
             <td class="admin_table_centered">
-              <?php echo Engine_Api::_()->egifts()->getCurrencyPrice(round($item->total_amount,2),$defaultCurrency); ?>
+              <?php echo Engine_Api::_()->payment()->getCurrencyPrice(round($item->total_amount,2),$defaultCurrency); ?>
             </td>
             <td>
                 <?php echo $this->htmlLink($this->url(array('action'=>'print', "module" => 'egifts',"controller" => 'orders','giftpurchase_id'=>$item->giftpurchase_id), 'admin_default', true).'?order=view', $this->translate("View Order"), array('title' => $this->translate("View Order"), 'class' => 'smoothbox')); ?>
@@ -99,10 +97,9 @@
             </tr>
             <?php endforeach; ?>
           </tbody>
-        </table><br/>
+        </table>
    </form>
 </div>
-  <br/>
   <div>
     <?php echo $this->paginationControl($this->paginator); ?>
   </div>

@@ -22,7 +22,11 @@
 <?php if(!empty($iframely)) { ?>
 	<div class="item_core_link">
 		<div class="item_link_rich_html">
-			<?php echo $iframely['html']; ?>
+      <?php if(!empty($iframely['links']['player'])) { ?>
+        <?php echo $iframely['html']; ?>
+			<?php } else if($this->link->photo_id) { ?>
+        <a href="<?php echo $this->link->getHref(); ?>" target="_blank"><img src="<?php echo $this->link->getPhotoUrl(); ?>" /></a>
+			<?php } ?>
 		</div>
 		<div class="item_core_link_info">
 			<div class="item_link_title">

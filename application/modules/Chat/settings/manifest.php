@@ -14,13 +14,14 @@ return array(
   'package' => array(
     'type' => 'module',
     'name' => 'chat',
-    'version' => '6.2.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 10194 $',
     'path' => 'application/modules/Chat',
     'repository' => 'socialengine.com',
     'title' => 'Chat',
-    'description' => 'Chat',
-    'author' => 'Webligo Developments',
+    'description' => 'Instant Messenger (IM) gives members a way to have private conversations in real time. Chat rooms allow groups to get together to discuss various things in a real time setting. Each of these chatting options are included in one plugin for extra bang for your buck!',
+    'author' => '<a href="https://socialengine.com/" style="text-decoration:underline;" target="_blank">SocialEngine</a>',
+    'thumb' => 'application/modules/Chat/externals/images/thumb.png',
     'dependencies' => array(
       array(
         'type' => 'module',

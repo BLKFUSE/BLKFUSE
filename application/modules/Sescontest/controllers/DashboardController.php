@@ -322,6 +322,40 @@ class Sescontest_DashboardController extends Core_Controller_Action_Standard {
         throw $e;
       }
     }
+    // Resizing a photo
+    elseif ($form->getValue('coordinates') !== '') {
+      $storage = Engine_Api::_()->storage();
+
+      $iProfile = $storage->get($contest->photo_id);
+      if (!$iProfile) {
+          return;   // don't do anything
+      }
+      $iSquare = $storage->get($contest->photo_id, 'thumb.icon');
+
+      // Read into tmp file
+      $pName = $iProfile->getStorageService()->temporary($iProfile);
+      $iName = dirname($pName) . '/nis_' . basename($pName);
+
+      list($x, $y, $w, $h) = explode(':', $form->getValue('coordinates'));
+
+      $image = Engine_Image::factory();
+      $image->open($pName)
+          ->resample($x+.1, $y+.1, $w-.1, $h-.1, 48, 48)
+          ->write($iName)
+          ->destroy();
+
+      $iSquare->store($iName);
+
+      $image = Engine_Image::factory();
+      $image->open($pName)
+          ->resample($x+.1, $y+.1, $w-.1, $h-.1, 440, 440)
+          ->write($pName)
+          ->destroy();
+      $iProfile->store($pName);
+      // Remove temp files
+      @unlink($iName);
+      @unlink($pName);
+    }
   }
 
   public function removePhotoAction() {
@@ -884,13 +918,13 @@ class Sescontest_DashboardController extends Core_Controller_Action_Standard {
     } else {
       $this->view->remainingAmount = $remainingAmount->remaining_payment;
     }
-    $defaultCurrency = Engine_Api::_()->sescontestjoinfees()->defaultCurrency();
+    $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
     $orderDetails = Engine_Api::_()->getDbtable('orders', 'sescontestjoinfees')->getContestStats(array('contest_id' => $contest->contest_id));
     $this->view->form = $form = new Sescontestjoinfees_Form_Paymentrequest();
     $value = array();
-    $value['total_amount'] = Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($orderDetails['totalAmountSale'], $defaultCurrency);
-    $value['total_commission_amount'] = Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($orderDetails['commission_amount'], $defaultCurrency);
-    $value['remaining_amount'] = Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($remainingAmount->remaining_payment, $defaultCurrency);
+    $value['total_amount'] = Engine_Api::_()->payment()->getCurrencyPrice($orderDetails['totalAmountSale'], $defaultCurrency);
+    $value['total_commission_amount'] = Engine_Api::_()->payment()->getCurrencyPrice($orderDetails['commission_amount'], $defaultCurrency);
+    $value['remaining_amount'] = Engine_Api::_()->payment()->getCurrencyPrice($remainingAmount->remaining_payment, $defaultCurrency);
     $value['requested_amount'] = round($remainingAmount->remaining_payment, 2);
     //set value to form
     if ($this->_getParam('id', false)) {
@@ -1095,7 +1129,7 @@ class Sescontest_DashboardController extends Core_Controller_Action_Standard {
         $valueVal['Date of Purchase'] = Engine_Api::_()->sescontestjoinfees()->dateFormat($row['creation_date']);
         $valueVal['Quatity'] = $row['total_orders'];
         //$valueVal['Commission Amount'] = Engine_Api::_()->sesevent()->getCurrencyPrice($row['commission_amount'],$defaultCurrency);
-        $valueVal['Total Amount'] = Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($row['totalAmountSale'], $defaultCurrency);
+        $valueVal['Total Amount'] = Engine_Api::_()->payment()->getCurrencyPrice($row['totalAmountSale'], $defaultCurrency);
         $counter++;
         if (!$heading) {
           // output the column headings
@@ -1111,13 +1145,13 @@ class Sescontest_DashboardController extends Core_Controller_Action_Standard {
   protected function exportFile($records) {
     $heading = false;
     $counter = 1;
-    $defaultCurrency = Engine_Api::_()->sescontestjoinfees()->defaultCurrency();
+    $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
     if (!empty($records))
       foreach ($records as $row) {
         $valueVal['S.No'] = $counter;
         $valueVal['Date of Purchase'] = Engine_Api::_()->sescontestjoinfees()->dateFormat($row['creation_date']);
         $valueVal['Quatity'] = $row['total_orders'];
-        $valueVal['Total Amount'] = Engine_Api::_()->sescontestjoinfees()->getCurrencyPrice($row['totalAmountSale'], $defaultCurrency);
+        $valueVal['Total Amount'] = Engine_Api::_()->payment()->getCurrencyPrice($row['totalAmountSale'], $defaultCurrency);
         $counter++;
         if (!$heading) {
           // display field/column names as a first row
@@ -1168,7 +1202,7 @@ class Sescontest_DashboardController extends Core_Controller_Action_Standard {
   public function currencyConverterAction() {
     //default currency
     $settings = Engine_Api::_()->getApi('settings', 'core');
-    $defaultCurrency = Engine_Api::_()->sescontestjoinfees()->defaultCurrency();
+    $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency();
     $is_ajax = $this->view->is_ajax = $this->_getParam('is_ajax', null) ? $this->_getParam('is_ajax') : false;
     if ($is_ajax) {
       $curr = $this->_getParam('curr', 'USD');

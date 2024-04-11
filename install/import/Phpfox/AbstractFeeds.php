@@ -788,49 +788,49 @@ CREATE TABLE IF NOT EXISTS `phpfox_photo_info` (
  * /*
  * CREATE TABLE IF NOT EXISTS `engine4_activity_actions` (
   `action_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `subject_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subject_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `subject_id` int(11) unsigned NOT NULL,
-  `object_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `object_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `object_id` int(11) unsigned NOT NULL,
-  `body` text COLLATE utf8_unicode_ci,
-  `params` text COLLATE utf8_unicode_ci,
+  `body` text COLLATE utf8mb4_unicode_ci,
+  `params` text COLLATE utf8mb4_unicode_ci,
   `date` datetime NOT NULL,
   `attachment_count` smallint(3) unsigned NOT NULL DEFAULT '0',
   `comment_count` mediumint(5) unsigned NOT NULL DEFAULT '0',
   `like_count` mediumint(5) unsigned NOT NULL DEFAULT '0',
-  `privacy` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `privacy` varchar(500) collate utf8mb4_unicode_ci default NULL,
   `commentable` tinyint(1) NOT NULL DEFAULT '1',
   `shareable` tinyint(1) NOT NULL DEFAULT '1',
-  `user_agent` text COLLATE utf8_unicode_ci,
+  `user_agent` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`action_id`),
   KEY `SUBJECT` (`subject_type`,`subject_id`),
   KEY `OBJECT` (`object_type`,`object_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */
 
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_authorization_allow` (
-  `resource_type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `resource_type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `resource_id` int(11) unsigned NOT NULL,
-  `action` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `role` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `action` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `role_id` int(11) unsigned NOT NULL DEFAULT '0',
   `value` tinyint(1) NOT NULL DEFAULT '0',
-  `params` text COLLATE utf8_unicode_ci,
+  `params` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`resource_type`,`resource_id`,`action`,`role`,`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  */
 
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_activity_attachments` (
   `attachment_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `action_id` int(11) unsigned NOT NULL,
-  `type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `id` int(11) unsigned NOT NULL,
   `mode` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`attachment_id`),
   KEY `action_id` (`action_id`),
   KEY `type_id` (`type`,`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */

@@ -21,6 +21,7 @@ class Egames_Widget_ManageGamesController extends Engine_Content_Widget_Abstract
     $params['page'] = $this->view->page = $this->_getParam("page",1);
     $params['limit'] = $this->_getParam("limit",10);
     $params['owner_id'] = $viewer->getIdentity();
+    $params["managePage"] = true;
     $this->view->paginator = $paginator = Engine_Api::_()->getDbTable("games",'egames')->getGamesPaginator($params);
 
     $this->view->viewmore = $this->_getParam("viewmore",false);

@@ -25,10 +25,10 @@ CREATE TABLE `engine4_messages_conversations` (
   `recipients` int(11) unsigned NOT NULL,
   `modified` datetime NOT NULL,
   `locked` tinyint(1) NOT NULL default '0',
-  `resource_type` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci default '',
+  `resource_type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci default '',
   `resource_id` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`conversation_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -45,11 +45,11 @@ CREATE TABLE `engine4_messages_messages` (
   `title` varchar(255) NOT NULL,
   `body` text NOT NULL,
   `date` datetime NOT NULL,
-  `attachment_type` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_ci default '',
+  `attachment_type` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci default '',
   `attachment_id` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`message_id`),
   UNIQUE KEY `CONVERSATIONS` (`conversation_id`,`message_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -72,7 +72,7 @@ CREATE TABLE `engine4_messages_recipients` (
   PRIMARY KEY  (`user_id`,`conversation_id`),
   KEY `INBOX_UPDATED` (`user_id`,`conversation_id`,`inbox_updated`),
   KEY `OUTBOX_UPDATED` (`user_id`,`conversation_id`,`outbox_updated`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -82,7 +82,7 @@ CREATE TABLE `engine4_messages_recipients` (
 --
 
 INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
-('core_mini_messages', 'messages', 'Messages', 'Messages_Plugin_Menus', '{"icon":"far fa-envelope"}', 'core_mini', '', 4),
+('core_mini_messages', 'messages', 'Messages', 'Messages_Plugin_Menus', '{"icon":"far fa-envelope"}', 'core_mini', '', 2),
 ('user_profile_message', 'messages', 'Send Message', 'Messages_Plugin_Menus', '', 'user_profile', '', 2),
 
 ('authorization_admin_level_messages', 'messages', 'Messages', '', '{"route":"admin_default","module":"messages","controller":"settings","action":"level"}', 'authorization_admin_level', '', 3),

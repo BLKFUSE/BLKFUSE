@@ -12,23 +12,21 @@
  */
  
 ?>
-
-<?php include APPLICATION_PATH .  '/application/modules/Sesapi/views/scripts/dismiss_message.tpl';?>
-<h2>
+<?php include APPLICATION_PATH .  '/application/modules/Sesandroidapp/views/scripts/dismiss_message.tpl';?>
+<h2 class="page_heading">
   <?php echo $this->translate('Native Android Mobile App'); ?>
 </h2>
 <?php if( engine_count($this->navigation)): ?>
   <div class='tabs'> <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?> </div>
 <?php endif; ?>
-<h3>Manage Mobile App Subscribers</h3><br>
-<p>This page lists all the subscribers of your Android mobile app. You can also revoke users to suspend the current session of the app on their Phones or Tablets. After revoking, they will have to restart the app. This is normally done if you forcely want your users to restart their app in case you have done any changes to the splash screen or the welcome screen.<br><br>
+<h3>Manage Mobile App Subscribers</h3>
+<p>This page lists all the subscribers of your Android mobile app. You can also revoke users to suspend the current session of the app on their Phones or Tablets. After revoking, they will have to restart the app. This is normally done if you forcely want your users to restart their app in case you have done any changes to the splash screen or the welcome screen.<br>
 You can also delete  a user as per your requirements. 
 Entering criteria into the filter fields will help you find specific subscriber. Leaving the filter fields blank will show all the subscribers on your social network.
-</p><br>
+</p>
 <div class='admin_search sesandroidapp_search_form'>
   <?php echo $this->form->render($this) ?>
 </div>
-<br />
 <?php $counter = $this->paginator->getTotalItemCount(); ?> 
 <?php if(is_countable($this->paginator) &&  engine_count($this->paginator)): ?>
   <div class="sesandroidapp_search_result">
@@ -71,10 +69,7 @@ Entering criteria into the filter fields will help you find specific subscriber.
         <?php endforeach; ?>
     </tbody>
   </table>
-  <br/>
-  
 </form>
-<br />
 <div>
   <?php echo $this->paginationControl($this->paginator); ?>
 </div>

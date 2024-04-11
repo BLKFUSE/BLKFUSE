@@ -234,8 +234,14 @@ class Fields_Form_Search extends Engine_Form
           unset($params['options']['label']);
           unset($params['options']['order']);
           $params['options']['decorators'] = array('ViewHelper');
-          $subform->addElement($params['type'], 'min', $params['options']);
-          $subform->addElement($params['type'], 'max', $params['options']);
+          $minOptions = $maxOptions = $params;
+          if( $field->type == 'birthdate' ) {
+            unset($params['options']['multiOptions'][""]);
+            $minOptions["options"]["multiOptions"] = array(""=>Zend_Registry::get('Zend_Translate')->translate("Min"))+$params['options']['multiOptions'];
+            $maxOptions["options"]["multiOptions"] = array(""=>Zend_Registry::get('Zend_Translate')->translate("Max"))+$params['options']['multiOptions'];
+          }
+          $subform->addElement($params['type'], 'min', $minOptions["options"]);
+          $subform->addElement($params['type'], 'max', $maxOptions["options"]);
           $this->addSubForm($subform, $key);
 
           break;

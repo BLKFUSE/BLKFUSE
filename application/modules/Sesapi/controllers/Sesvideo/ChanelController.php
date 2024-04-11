@@ -1241,7 +1241,7 @@ class Sesvideo_ChanelController extends Sesapi_Controller_Action_Standard {
 
   //ACTION FOR PHOTO DELETE
   public function removeAction() {
-    if (empty($_POST['photo_id']))
+    if (empty($_GET['photo_id']))
       die('error');
     //GET PHOTO ID AND ITEM
     $photo_id = (int) $this->_getParam('photo_id');
@@ -1347,6 +1347,7 @@ class Sesvideo_ChanelController extends Sesapi_Controller_Action_Standard {
       $dbGetInsert->query('INSERT INTO engine4_sesbasic_locations (resource_id, lat, lng , resource_type) VALUES ("' . $photo_id . '", "' . $this->_getParam('lat') . '","' . $this->_getParam('lng') . '","sesvideo_chanelphoto")	ON DUPLICATE KEY UPDATE	lat = "' . $this->_getParam('lat') . '" , lng = "' . $this->_getParam('lng') . '"');
     }
     Engine_Api::_()->getDbTable('chanelphotos', 'sesvideo')->update(array('title' => $title, 'description' => $description, 'location' => $location), array('chanelphoto_id = ?' => $photo_id));
+    echo json_encode(array('status'=>"true"));die;
   }
 
   public function editAction() {
@@ -1812,7 +1813,7 @@ class Sesvideo_ChanelController extends Sesapi_Controller_Action_Standard {
         if(!$member)
           continue;
         $result['notification'][$counterLoop]['user_id'] = $member->getIdentity();
-        $result['notification'][$counterLoop]['title'] = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
+        $result['notification'][$counterLoop]['title'] = $member->getTitle();//preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
 
         $age = $this->userAge($member);
         if($age){

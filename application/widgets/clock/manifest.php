@@ -12,13 +12,13 @@ return array(
   'package' => array(
     'type' => 'widget',
     'name' => 'clock',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 9747 $',
     'path' => 'application/widgets/clock',
     'repository' => 'socialengine.com',
     'title' => 'Clock',
     'description' => 'Displays a clock.',
-    'author' => 'Webligo Developments',
+    'author' => 'SocialEngine Core',
     'directories' => array(
       'application/widgets/clock',
     ),
@@ -27,10 +27,10 @@ return array(
   // Backwards compatibility
   'type' => 'widget',
   'name' => 'clock',
-  'version' => '6.4.0',
+  'version' => '6.5.1',
   'revision' => '$Revision: 9747 $',
   'title' => 'Clock',
   'description' => 'Displays a clock.',
-  'author' => 'Webligo Developments',
+  'author' => 'SocialEngine Core',
   'category' => 'Widgets',
 ) ?>

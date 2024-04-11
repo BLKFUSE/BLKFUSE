@@ -419,7 +419,8 @@ div.sesact_tabs_wrapper ul li.active span{
 .sesact_feed ul.feed > li section,
 .sesact_feed ul.pinfeed li.sesact_ads_camp > div,
 .sesact_feed ul.pinfeed li.sesact_ads_pymk > div,
-.sesact_feed ul.feed li.sesact_ads_pymk > div{
+.sesact_feed ul.feed li.sesact_ads_pymk > div,
+.sesadv_content_load_img .feed > li{
 	background-color:$theme_list_background_color;
 }
 .sesact_compose_menu .composer_schedulepost_toggle{

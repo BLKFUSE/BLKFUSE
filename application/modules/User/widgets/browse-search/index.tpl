@@ -27,23 +27,23 @@ echo $this->form
             searchMembers();
         });
 
-        scriptJquery(window).on('onChangeFields', function () {
-            var firstSep = scriptJquery('li.browse-separator-wrapper');
-            var lastSep;
-            var nextEl = firstSep;
-            var allHidden = true;
-            do {
-                nextEl = nextEl.next();
-                if (nextEl.hasClass('browse-separator-wrapper')) {
-                    lastSep = nextEl;
-                    nextEl = false;
-                } else {
-                    allHidden = allHidden && (nextEl.css('display') == 'none');
-                }
-            } while (nextEl.length);
-            if (lastSep.length) {
-                lastSep.css('display', (allHidden ? 'none' : ''));
-            }
-        });
+        // scriptJquery(window).on('onChangeFields', function () {
+        //     var firstSep = scriptJquery('li.browse-separator-wrapper');
+        //     var lastSep;
+        //     var nextEl = firstSep;
+        //     var allHidden = true;
+        //     do {
+        //         nextEl = nextEl.next();
+        //         if (nextEl.hasClass('browse-separator-wrapper')) {
+        //             lastSep = nextEl;
+        //             nextEl = false;
+        //         } else {
+        //             allHidden = allHidden && (nextEl.css('display') == 'none');
+        //         }
+        //     } while (nextEl.length);
+        //     if (lastSep.length) {
+        //         lastSep.css('display', (allHidden ? 'none' : ''));
+        //     }
+        // });
     });
 </script>

@@ -167,18 +167,18 @@ class Sesfbchat_Form_Admin_Global extends Engine_Form {
       ));
       $this->getElement('sesfbchat_devices')->getDecorator('Description')->setOptions(array('placement' => 'PREPEND', 'escape' => false));
 
-      $this->addElement('Radio', "sesfbchat_position", array(
-          'label' => 'Position for FB Messenger Icon',
-          'description' => 'Choose the placement position of the FB Messenger icon on your website.',
-          'allowEmpty' => false,
-          'required' => true,
-          'multiOptions'=>array(
-            '0'=>'Bottom Right',
-            '1'=>'Bottom Left',
-          ),
-          'value' => $settings->getSetting('sesfbchat_position','0'),
-      ));
-      $this->getElement('sesfbchat_position')->getDecorator('Description')->setOptions(array('placement' => 'PREPEND', 'escape' => false));
+//       $this->addElement('Radio', "sesfbchat_position", array(
+//           'label' => 'Position for FB Messenger Icon',
+//           'description' => 'Choose the placement position of the FB Messenger icon on your website.',
+//           'allowEmpty' => false,
+//           'required' => true,
+//           'multiOptions'=>array(
+//             '0'=>'Bottom Right',
+//             '1'=>'Bottom Left',
+//           ),
+//           'value' => $settings->getSetting('sesfbchat_position','0'),
+//       ));
+//       $this->getElement('sesfbchat_position')->getDecorator('Description')->setOptions(array('placement' => 'PREPEND', 'escape' => false));
       // Add submit button
       $this->addElement('Button', 'submit', array(
         'label' => 'Save Changes',
@@ -186,12 +186,18 @@ class Sesfbchat_Form_Admin_Global extends Engine_Form {
         'ignore' => true
       ));
   } else {
-    // Add submit button
-    $this->addElement('Button', 'submit', array(
-      'label' => 'Activate This Plugin',
-      'type' => 'submit',
-      'ignore' => true
-    ));
-  }
+      $enabledSesbasic = Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('sesbasic');
+      $fields = array(
+          'label' => 'Activate This Plugin',
+          'type' => 'submit',
+          'ignore' => true
+      );
+      if(!$enabledSesbasic){
+        $fields['disable'] = true;
+        $fields['title'] = 'To Activate this plugin, please first install all dependent plugins as show in the tips above.';
+      }
+      //Add submit button
+      $this->addElement('Button', 'submit',$fields);
+    }
   }
 }

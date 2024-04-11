@@ -492,7 +492,7 @@
         </li>
         <?php }else if($this->view_type == 'grid' && $this->viewTypeStyle != 'mouseover'){ ?>
         <li class="col-lg-<?php echo $this->gridblock; ?> col-md-6 col-sm-6 col-12 ">
-        <div class="sesvideo_listing_grid<?php if((isset($this->my_videos) && $this->my_videos) || (isset($this->my_channel) && $this->my_channel)){ ?>isoptions<?php } ?> <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.sesvideo',1) && Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('epaidcontent')) && Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.allow',1) && Engine_Api::_()->epaidcontent()->isViewerPlanActive($item)) { ?> paid_content <?php } ?>">
+        <div class="sesvideo_listing_grid <?php if((isset($this->my_videos) && $this->my_videos) || (isset($this->my_channel) && $this->my_channel)){ ?>isoptions<?php } ?> <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.sesvideo',1) && Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('epaidcontent')) && Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.allow',1) && Engine_Api::_()->epaidcontent()->isViewerPlanActive($item)) { ?> paid_content <?php } ?>">
         <?php if(Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.sesvideo',1) && Engine_Api::_()->getApi('core', 'sesbasic')->isModuleEnable(array('epaidcontent')) && Engine_Api::_()->getApi('settings', 'core')->getSetting('epaidcontent.allow',1) && Engine_Api::_()->epaidcontent()->isViewerPlanActive($item)) { ?>
                 <?php echo $this->partial('application/modules/Epaidcontent/views/scripts/_paidContent.tpl', 'epaidcontent', array('item' => $item)); ?>
               <?php } ?>
@@ -1502,7 +1502,7 @@ scriptJquery(document).on('click','.selectView_<?php echo $randonNumber; ?>',fun
 				identity : '<?php echo $randonNumber; ?>',
       },
       success: function(responseHTML) {
-        document.getElementById('tabbed-widget_<?php echo $randonNumber; ?>').innerHTML = responseHTML;
+        scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').html(responseHTML);
         if(scriptJquery('.selectView_<?php echo $randonNumber; ?>.active').attr('rel') == 'grid') {
           scriptJquery('#tabbed-widget_<?php echo $randonNumber; ?>').addClass('row');
         } else {
@@ -1546,7 +1546,11 @@ scriptJquery(document).on('click','.selectView_<?php echo $randonNumber; ?>',fun
 				wookmark<?php echo $randonNumber ?> = new Wookmark('.sesbasic_pinboard_<?php echo $randonNumber; ?>', {
 					itemWidth: <?php echo isset($this->width_pinboard) ? str_replace(array('px','%'),array(''),$this->width_pinboard) : '300'; ?>, // Optional min width of a grid item
 					outerOffset: 0,
-					align:'left',
+           <?php if($orientation = ($this->layout()->orientation == 'right-to-left')){ ?>
+              align:'right',
+            <?php }else{ ?>
+              align:'left',
+            <?php } ?>
 					flexibleWidth: function () {
 						// Return a maximum width depending on the viewport
 						return getWindowWidth() < 1024 ? '100%' : '40%';
@@ -1659,7 +1663,6 @@ var identity<?php echo $randonNumber; ?>  = '<?php echo $randonNumber; ?>';
    });
   function viewMoreHide_<?php echo $randonNumber; ?>() {
     if (document.getElementById('view_more_<?php echo $randonNumber; ?>'))
-
       document.getElementById('view_more_<?php echo $randonNumber; ?>').style.display = "<?php echo ($this->paginator->count() == 0 ? 'none' : ($this->paginator->count() == $this->paginator->getCurrentPageNumber() ? 'none' : '' )) ?>";
   }
   function viewMore_<?php echo $randonNumber; ?> (){
@@ -1701,6 +1704,7 @@ var identity<?php echo $randonNumber; ?>  = '<?php echo $randonNumber; ?>';
         if(document.getElementById('view_more_<?php echo $randonNumber; ?>'))
         document.getElementById('view_more_<?php echo $randonNumber; ?>').style.display = "<?php echo ($this->paginator->count() == 0 ? 'none' : ($this->paginator->count() == $this->paginator->getCurrentPageNumber() + 1 ? 'none' : '' )) ?>";
 				pinboardLayout_<?php echo $randonNumber ?>();
+				viewMoreHide_<?php echo $randonNumber; ?>();
       }
     });
 		
@@ -1751,11 +1755,6 @@ var identity<?php echo $randonNumber; ?>  = '<?php echo $randonNumber; ?>';
 scriptJquery(document).on('click',function(){
 	scriptJquery('.sesvideo_list_option_toggle').removeClass('open');
 });
-</script>
-<?php } ?>
-<?php if($this->is_ajax){ ?>
-<script>
-document.getElementById('view_more_<?php echo $randonNumber; ?>').style.display = "<?php echo ($this->paginator->count() == 0 ? 'none' : ($this->paginator->count() == $this->paginator->getCurrentPageNumber() ? 'none' : '' )) ?>";
 </script>
 <?php } ?>
 <?php if(!empty($previousSubject)){ ?>

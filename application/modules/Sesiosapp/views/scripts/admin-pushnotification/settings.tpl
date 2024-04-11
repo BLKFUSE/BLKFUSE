@@ -12,14 +12,14 @@
  */
  
 ?>
-<?php include APPLICATION_PATH .  '/application/modules/Sesapi/views/scripts/dismiss_message.tpl';?>
+<?php include APPLICATION_PATH .  '/application/modules/Sesiosapp/views/scripts/dismiss_message.tpl';?>
 <h2>
   <?php echo $this->translate('Native iOS Mobile App'); ?>
 </h2>
 <?php if( engine_count($this->navigation)): ?>
   <div class='tabs'> <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?> </div>
 <?php endif; ?>
-<?php if(is_countable($this->subnavigation) &&  engine_count($this->subnavigation)): ?>
+<?php if( engine_count($this->subnavigation)): ?>
   <div class='tabs'> <?php echo $this->navigation()->menu()->setContainer($this->subnavigation)->render(); ?> </div>
 <?php endif; ?>
 <div class="settings sesiosapp_admin_form sesiosapp_notification">

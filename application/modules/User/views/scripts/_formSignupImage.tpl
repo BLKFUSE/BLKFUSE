@@ -19,7 +19,7 @@
 <div class="user_edit_photo_main">
   <?php 
     if (isset($_SESSION['TemporaryProfileImg'])){
-      echo '<img src="'.$_SESSION['TemporaryProfileImgProfile'].'" alt="" id="lassoImg"/>';
+      echo '<img src="'.$_SESSION['TemporaryProfileImg'].'" alt="" id="lassoImg"/>';
     }
     else
       echo '<span class="bg_item_photo bg_thumb_profile bg_item_photo_user bg_item_nophoto" id="lassoImg"></span>';

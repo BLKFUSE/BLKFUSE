@@ -17,13 +17,15 @@
 <h2>
   <?php echo $this->translate("Native iOS Mobile App") ?>
 </h2>
-<?php if(is_countable($this->navigation) && engine_count($this->navigation) ): ?>
+<?php if( engine_count($this->navigation) ): ?>
   <div class='tabs'>
     <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render() ?>
   </div>
 <?php endif; ?>
-<div class="settings">
-  <?php echo $this->form->render($this); ?>
+<div class="settings sesiosapp_admin_form">
+  <div class='settings'>
+    <?php echo $this->form->render($this); ?>
+  </div>
 </div>
 
 <script type="application/javascript">

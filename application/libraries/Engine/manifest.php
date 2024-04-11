@@ -12,12 +12,12 @@ return array(
   'package' => array(
     'type' => 'library',
     'name' => 'engine',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 10271 $',
     'path' => 'application/libraries/Engine',
     'repository' => 'socialengine.com',
     'title' => 'Engine',
-    'author' => 'Webligo Developments',
+    'author' => 'SocialEngine Core',
     'license' => 'http://www.socialengine.com/license/',
     'dependencies' => array(
       array(

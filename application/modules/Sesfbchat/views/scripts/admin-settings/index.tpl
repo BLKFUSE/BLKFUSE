@@ -49,7 +49,6 @@ scriptJquery(document).on('change','input[type=radio][name=sesfbchat_enable_mess
         scriptJquery('#sesfbchat_endtime-wrapper').show();        
         scriptJquery('#sesfbchat_theme_color-wrapper').show();
         scriptJquery('#sesfbchat_devices-wrapper').show();
-        scriptJquery('#sesfbchat_position-wrapper').show();
         scriptJquery('#sesfbchat_button_size-wrapper').show();
         scriptJquery('#sesfbchat_app_id-wrapper').show();
         scriptJquery('#sesfbchat_page_id-wrapper').show();
@@ -62,7 +61,6 @@ scriptJquery(document).on('change','input[type=radio][name=sesfbchat_enable_mess
         scriptJquery('#sesfbchat_endtime-wrapper').hide();        
         scriptJquery('#sesfbchat_theme_color-wrapper').hide();
         scriptJquery('#sesfbchat_devices-wrapper').hide();
-        scriptJquery('#sesfbchat_position-wrapper').hide();
         scriptJquery('#sesfbchat_button_size-wrapper').hide();
         scriptJquery('#sesfbchat_app_id-wrapper').hide();
         scriptJquery('#sesfbchat_page_id-wrapper').hide();
@@ -109,3 +107,10 @@ scriptJquery(document).on('change','input[type=radio][name=sesfbchat_enable_mess
   scriptJquery('#sesfbchat_endtime-minute').hide();
   scriptJquery('#sesfbchat_endtime-ampm').hide();
 </script>
+<style> 
+	button[disabled] { 
+	  background:#bdbdbd; 
+	  border-color:#bdbdbd; 
+	  cursor:not-allowed; 
+  }
+</style>

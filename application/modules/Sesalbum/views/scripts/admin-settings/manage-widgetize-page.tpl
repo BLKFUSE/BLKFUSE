@@ -12,14 +12,13 @@
  */
 
 ?>
-
-<h2>
+<?php include APPLICATION_PATH .  '/application/modules/Sesalbum/views/scripts/dismiss_message.tpl';?>
+<h2 class="page_heading">
     <?php echo $this->translate('Advanced Photos & Albums Plugin'); ?>
 </h2>
 <div class="sesbasic_nav_btns">
     <a href="<?php echo $this->url(array('module' => 'sesalbum', 'controller' => 'settings', 'action' => 'help'),'admin_default',true); ?>" class="request-btn">Help</a>
 </div>
-<?php include APPLICATION_PATH .  '/application/modules/Sesalbum/views/scripts/dismiss_message.tpl';?>
 <?php if (engine_count($this->navigation)): ?>
 <div class='tabs'>
     <?php echo $this->navigation()->menu()->setContainer($this->navigation)->render(); ?>

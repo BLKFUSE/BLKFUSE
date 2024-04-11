@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `engine4_video_categories` (
   `user_id` int(11) unsigned NOT NULL,
   `category_name` varchar(128) NOT NULL,
   PRIMARY KEY  (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 --
 -- Dumping data for table `engine4_video_categories`
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `engine4_video_ratings` (
   `rating` tinyint(1) unsigned default NULL,
   PRIMARY KEY  (`video_id`,`user_id`),
   KEY `INDEX` (`video_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -71,25 +71,25 @@ CREATE TABLE IF NOT EXISTS `engine4_video_ratings` (
 DROP TABLE IF EXISTS `engine4_video_videos`;
 CREATE TABLE IF NOT EXISTS `engine4_video_videos` (
   `video_id` int(11) unsigned NOT NULL auto_increment,
-  `title` varchar(100) NOT NULL,
-  `description` text NOT NULL,
+  `title` BLOB NOT NULL,
+  `description` BLOB NOT NULL,
   `search` tinyint(1) NOT NULL default '1',
-  `owner_type` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `owner_type` varchar(128) NULL DEFAULT NULL,
   `owner_id` int(11) NOT NULL,
-  `parent_type` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci default NULL,
+  `parent_type` varchar(128) default NULL,
   `parent_id` int(11) unsigned default NULL,
   `creation_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL,
   `view_count` int(11) unsigned NOT NULL default '0',
   `comment_count` int(11) unsigned NOT NULL default '0',
   `like_count` int(11) unsigned NOT NULL default '0',
-  `type` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `code` text COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(32) NOT NULL,
+  `code` text NOT NULL,
   `photo_id` int(11) unsigned default NULL,
-  `rating` float NOT NULL,
+  `rating` FLOAT NOT NULL DEFAULT '0',
   `category_id` int(11) unsigned NOT NULL default '0',
   `status` tinyint(1) NOT NULL,
-  `file_id` int(11) unsigned NOT NULL,
+  `file_id` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   `duration` int(9) unsigned NOT NULL,
   `rotation` smallint unsigned NOT NULL DEFAULT '0',
   `view_privacy` VARCHAR(24) NOT NULL default 'everyone',
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `engine4_video_videos` (
   KEY `search` (`search`),
   KEY `creation_date` (`creation_date`),
   KEY `view_count` (`view_count`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 
 
 -- --------------------------------------------------------
@@ -388,3 +388,29 @@ INSERT IGNORE INTO `engine4_activity_notificationtypes` (`type`, `module`, `body
 ("video_rating", "video", '{item:$subject} has rated your video {item:$object}.', 0, "");
 
 INSERT IGNORE INTO `engine4_core_mailtemplates` (`type`, `module`, `vars`) VALUES ("notify_video_rating", "video", "[host],[email],[recipient_title],[recipient_link],[recipient_photo],[sender_title],[sender_link],[sender_photo],[object_title],[object_link],[object_photo],[object_description]");
+
+
+
+ALTER TABLE `engine4_video_videos` ADD `approved` TINYINT(1) NOT NULL DEFAULT "1";
+ALTER TABLE `engine4_video_videos` ADD INDEX(`approved`);
+
+ALTER TABLE `engine4_video_videos` ADD `resubmit` TINYINT(1) NOT NULL DEFAULT "0";
+ALTER TABLE `engine4_video_videos` ADD INDEX(`resubmit`);
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'video' as `type`,
+    'approve' as `name`,
+    1 as `value`,
+    NULL as `params`
+FROM `engine4_authorization_levels` WHERE `type` IN('moderator', 'admin');
+
+INSERT IGNORE INTO `engine4_authorization_permissions`
+  SELECT
+    level_id as `level_id`,
+    'video' as `type`,
+    'approve' as `name`,
+    1 as `value`,
+    NULL as `params`
+FROM `engine4_authorization_levels` WHERE `type` IN('user');

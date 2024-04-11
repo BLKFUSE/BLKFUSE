@@ -132,8 +132,8 @@ CREATE TABLE IF NOT EXISTS `phpfox_poll_result` (
   `poll_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
   `is_closed` tinyint(1) NOT NULL DEFAULT '0',
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `creation_date` datetime NOT NULL,
   `view_count` int(11) unsigned NOT NULL DEFAULT '0',
   `comment_count` int(11) unsigned NOT NULL DEFAULT '0',
@@ -144,18 +144,18 @@ CREATE TABLE IF NOT EXISTS `phpfox_poll_result` (
   KEY `user_id` (`user_id`),
   KEY `is_closed` (`is_closed`),
   KEY `creation_date` (`creation_date`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  */
 
 /*
  * CREATE TABLE IF NOT EXISTS `engine4_poll_options` (
   `poll_option_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `poll_id` int(11) unsigned NOT NULL,
-  `poll_option` text COLLATE utf8_unicode_ci NOT NULL,
+  `poll_option` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `votes` smallint(4) unsigned NOT NULL,
   PRIMARY KEY (`poll_option_id`),
   KEY `poll_id` (`poll_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
  */
 
 /*
@@ -168,5 +168,5 @@ CREATE TABLE IF NOT EXISTS `phpfox_poll_result` (
   PRIMARY KEY (`poll_id`,`user_id`),
   KEY `poll_option_id` (`poll_option_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  */

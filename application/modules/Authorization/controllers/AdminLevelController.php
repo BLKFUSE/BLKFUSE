@@ -213,7 +213,7 @@ class Authorization_AdminLevelController extends Core_Controller_Action_Admin
       'admin' => ( engine_in_array($level->type, array('admin')) ),
     ));
     $this->view->permissionTable = $permissionsTable = Engine_Api::_()->getDbtable('permissions', 'authorization');
-    
+
     // Populate
     $form->populate($level->toArray());
     $form->populate($permissionsTable->getAllowed('user', $id, array_keys($form->getValues())));
@@ -543,7 +543,11 @@ class Authorization_AdminLevelController extends Core_Controller_Action_Admin
     }
 
     if ($this->getRequest()->isPost()) {
+      
+      $db = Zend_Db_Table_Abstract::getDefaultAdapter();
+      
       if(!empty($_POST['userids'])){
+        $profileTypeId =  $this->_getParam('profile_type_id', null);
         $profileTypesUsers = explode("," , $_POST['userids']);
         if (!empty($profileTypesUsers)) {
           $userTable = Engine_Api::_()->getItemTable('user');
@@ -554,6 +558,12 @@ class Authorization_AdminLevelController extends Core_Controller_Action_Admin
               'user_id = ?' => $value,
               'level_id != ?' => 1,
             ));
+            
+            $profileTypeValue = Engine_Api::_()->user()->getProfileFieldValue(array('user_id' => $value, 'field_id' => 1));
+            if($profileTypeValue != $profileTypeId) {
+              $db->query("DELETE FROM `engine4_user_fields_values` WHERE `engine4_user_fields_values`.`item_id` = '".$value."';");
+              $db->query("INSERT IGNORE INTO `engine4_user_fields_values` (`item_id`, `field_id`, `index`, `value`, `privacy`) VALUES ('".$value."', 1, 0, '".$profileTypeId."', NULL);");
+            }
           }
         }
       }

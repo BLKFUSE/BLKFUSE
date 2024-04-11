@@ -3,7 +3,7 @@
 	text-align:center;
 }
 .sesuserimport_import_buttons a{
-	border:2px solid #0DC7F1;
+	border:2px solid var(--theme-button-background-color);
 	padding:10px;
 	display:inline-block;
 	width:230px;
@@ -38,12 +38,6 @@
 .sesuserimport_add_form .form-wrapper .form-element{
 	width:60%;
 }
-.sesuserimport_add_form input[type=text],
-.sesuserimport_add_form input[type=email],
-.sesuserimport_add_form input[type=password],
-.sesuserimport_add_form textarea{
-	width:100% !important;
-}
 .sesuserimport_add_form .form-wrapper .form-element select{
 	margin-right:4px;
 	margin-left: 0;
@@ -61,9 +55,4 @@
 }
 .sesuserimport_add_form .form-wrapper .form-element select:last-child{
 	margin-right:0px;
-}
-.sesuserimport_add_form div#approved-wrapper div#approved-label,
-.sesuserimport_add_form div#verified-wrapper div#verified-label,
-.sesuserimport_add_form div#enabled-wrapper div#enabled-label{
-	display: none;
 }

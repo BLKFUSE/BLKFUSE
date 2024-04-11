@@ -17,18 +17,19 @@ return array (
         'type' => 'module',
         'name' => 'sesuserimport',
         //'sku' => 'sesuserimport',
-        'version' => '6.4.0',
+        'version' => '6.5.1',
 		'dependencies' => array(
             array(
                 'type' => 'module',
                 'name' => 'core',
-                'minVersion' => '6.2.0',
+                'minVersion' => '6.5.1',
             ),
         ),
         'path' => 'application/modules/Sesuserimport',
         'title' => 'SNS - Administration Tool: Bulk Importing, Creating New / Dummy Users Plugin',
         'description' => 'SNS - Administration Tool: Bulk Importing, Creating New / Dummy Users Plugin',
         'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+		'thumb' => 'application/modules/Sesuserimport/externals/images/thumb.png',
         'callback' => array(
             'path' => 'application/modules/Sesuserimport/settings/install.php',
             'class' => 'Sesuserimport_Installer',

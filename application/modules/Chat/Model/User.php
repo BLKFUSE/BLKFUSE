@@ -26,9 +26,13 @@ class Chat_Model_User extends Engine_Db_Table_Row
   public function toRemoteArray()
   {
     $user = $this->getUser();
+    $verified_tiptext = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $user, 'verified_tiptext');
+    $verified_tiptext = !empty($verified_tiptext) ? $verified_tiptext : 'Verified';
     $return = array(
       'identity' => $user->getIdentity(),
-      'title' => $user->getTitle(),
+      'title' => $user->getTitle(false),
+      'icon' => $user->verifiedIcon(),
+      'verified_tiptext' => $verified_tiptext,
       'href' => $user->getHref(),
       'photo' => $user->getPhotoUrl('thumb.icon'),
       'state' => $this->state,

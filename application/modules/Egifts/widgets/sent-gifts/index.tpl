@@ -57,7 +57,7 @@
               <div class="egifts_listing_item_title"><a href="<?php echo $item->getHref(); ?>"><?php echo $title; ?></a></div>
               <?php } ?>
               <?php if(isset($this->priceActive)){ ?>
-              <div class="egifts_listing_item_price"> <span class="_price sesbasic_text_hl"><?php echo Engine_Api::_()->egifts()->getCurrencyPrice($item->price); ?></span> </div>
+              <div class="egifts_listing_item_price"> <span class="_price sesbasic_text_hl"><?php echo Engine_Api::_()->payment()->getCurrencyPrice($item->price); ?></span> </div>
               <?php } ?>
               <?php if(isset($this->descriptionActive)): ?>
               <div class="egifts_listing_item_des"> <?php echo $description; ?> </div>

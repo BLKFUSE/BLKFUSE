@@ -56,6 +56,7 @@
             <div class="albums_manage_info_desc">
               <?php echo $album->getDescription() ?>
             </div>
+            <?php echo $this->partial('_approved_tip.tpl', 'core', array('item' => $album)); ?>
           </div>
         </li>
       <?php endforeach; ?>

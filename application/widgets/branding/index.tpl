@@ -10,5 +10,4 @@
  * @author     Charlotte
  */
 ?>
-
-<span id="branding" style="font-size: 0.8em; color: #999999;">Powered by <a href="http://www.socialengine.com">SocialEngine Community Software</a></span>
+<span id="branding" style="font-size: 0.8em; color: #999999;">Proudly Powered by <a href="http://www.socialengine.com" target="_blank">SocialEngine <?php if($this->version) { ?><?php echo " v".$this->version; ?><?php } ?></a></span>

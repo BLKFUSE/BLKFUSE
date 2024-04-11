@@ -10,21 +10,18 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_stats", 'childMenuItemName' => 'core_admin_main_stats_url')); ?>
 
-<h2><?php echo $this->translate("Top Referring Sites") ?></h2>
-<p>
-  <?php echo $this->translate("CORE_VIEWS_SCRIPTS_ADMINSTATS_REFERRERS_DESCRIPTION") ?>
-</p>
-
-<?php
-  $settings = Engine_Api::_()->getApi('settings', 'core');
-  if( $settings->getSetting('user.support.links', 0) == 1 ) {
-    echo 'More info: <a href="https://community.socialengine.com/blogs/597/81/referring-urls" target="_blank">See KB article</a>.';
-  } 
-?>	
-
-<br />
-<br />
+<div class="admin_common_top_section">
+  <h2 class="page_heading"><?php echo $this->translate("Top Referring Sites") ?></h2>
+  <p><?php echo $this->translate("CORE_VIEWS_SCRIPTS_ADMINSTATS_REFERRERS_DESCRIPTION") ?></p>
+  <?php
+    $settings = Engine_Api::_()->getApi('settings', 'core');
+    if( $settings->getSetting('user.support.links', 0) == 1 ) {
+      echo 'More info: <a href="https://community.socialengine.com/blogs/597/81/referring-urls" target="_blank">See KB article</a>.';
+    } 
+  ?>	
+</div>
 
 <script type="text/javascript">
   var clearReferrers = function() {
@@ -45,17 +42,13 @@
 </script>
 
 <?php if( engine_count($this->referrers) > 0 ): ?>
-
   <div>
     <?php echo $this->htmlLink('javascript:void(0);', 'Clear Referrer List', array(
-      'class' => 'buttonlink admin_referrers_clear',
+      'class' => ' admin_link_btn admin_referrers_clear',
       'onclick' => "clearReferrers();",
     )) ?>
   </div>
-
-  <br />
-
-  <table class='admin_table'>
+  <table class='admin_table stats_referrers'>
     <thead>
       <tr>
         <th><?php echo $this->translate("Hits") ?></th>
@@ -80,7 +73,6 @@
   </table>
 
 <?php else: ?>
-
   <div class="tip">
     <span>
       <?php echo $this->translate("There have not been any referrers logged yet.") ?>

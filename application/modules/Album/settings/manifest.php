@@ -13,13 +13,14 @@ return array(
   'package' => array(
     'type' => 'module',
     'name' => 'album',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 10271 $',
     'path' => 'application/modules/Album',
     'repository' => 'socialengine.com',
     'title' => 'Albums',
-    'description' => 'Albums',
-    'author' => 'Webligo Developments',
+    'description' => 'Create a visually engaging community with Photo Albums!',
+    'author' => '<a href="https://socialengine.com/" style="text-decoration:underline;" target="_blank">SocialEngine</a>',
+    'thumb' => 'application/modules/Album/externals/images/thumb.png',
     'dependencies' => array(
       array(
         'type' => 'module',

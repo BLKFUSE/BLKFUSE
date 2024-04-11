@@ -157,25 +157,25 @@ CREATE TABLE IF NOT EXISTS `se_videocomments` (
 *  `videocomment_video_id` int(10) unsigned NOT NULL,
 *  `videocomment_authoruser_id` int(9) unsigned default NULL,
 *  `videocomment_date` int(14) NOT NULL default '0',
-*  `videocomment_body` text collate utf8_unicode_ci,
+*  `videocomment_body` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY  (`videocomment_id`),
   KEY `INDEX` (`videocomment_video_id`,`videocomment_authoruser_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
 /*
 CREATE TABLE IF NOT EXISTS `engine4_core_comments` (
   `comment_id` int(11) unsigned NOT NULL auto_increment,
-*  `resource_type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+*  `resource_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
 *  `resource_id` int(11) unsigned NOT NULL,
-*  `poster_type` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+*  `poster_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
 *  `poster_id` int(11) unsigned NOT NULL,
 *  `body` text NOT NULL,
 *  `creation_date` datetime NOT NULL,
   PRIMARY KEY  (`comment_id`),
   KEY `resource_type` (`resource_type`,`resource_id`),
   KEY `poster_type` (`poster_type`, `poster_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
  * 
  */

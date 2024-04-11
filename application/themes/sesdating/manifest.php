@@ -16,7 +16,7 @@ return array (
   array (
     'type' => 'theme',
     'name' => 'Responsive Dating Theme',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'path' => 'application/themes/sesdating',
     'repository' => 'socialnetworking.solutions',
     'title' => '<span style="color:#DDDDDD">Responsive Vertical Theme</span>',

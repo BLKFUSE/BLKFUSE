@@ -432,7 +432,7 @@ class Sespage_IndexController extends Sesapi_Controller_Action_Standard
 
             $result[$counter]['currency'] = Engine_Api::_()->sespage()->getCurrencySymbol(Engine_Api::_()->sespage()->getCurrentCurrency());
                  
-            $result[$counter]['price'] = Engine_Api::_()->sesapi()->getCurrencyPrice($result[$counter]['price'],'','',true);
+            $result[$counter]['price'] = Engine_Api::_()->payment()->getCurrencyPrice($result[$counter]['price'],'','',true);
             $result[$counter]['owner_title'] = $pages->getOwner()->getTitle();
             if ($pages->category_id) {
                 $category = Engine_Api::_()->getItem('sespage_category', $pages->category_id);
@@ -1467,7 +1467,7 @@ class Sespage_IndexController extends Sesapi_Controller_Action_Standard
 
         $pagedata['currency'] = Engine_Api::_()->sespage()->getCurrencySymbol(Engine_Api::_()->sespage()->getCurrentCurrency());
 
-        $pagedata['price'] = Engine_Api::_()->sesapi()->getCurrencyPrice($pagedata['price'],'','',true);
+        $pagedata['price'] = Engine_Api::_()->payment()->getCurrencyPrice($pagedata['price'],'','',true);
 
 		    $pagedata['likeFollowIntegrate'] = $likeFollowIntegrate?true:false;
         if ($likeStatus && $viewer_id) {
@@ -2288,7 +2288,7 @@ function getNavigation($page,$viewer){
       }
       foreach($paginator as $member){
         $result['notification'][$counterLoop]['user_id'] = $member->getIdentity();
-        $result['notification'][$counterLoop]['title'] = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
+        $result['notification'][$counterLoop]['title'] = $member->getTitle();//preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
         if(!empty($member->location))
            $result['notification'][$counterLoop]['location'] =   $member->location;
        //follow
@@ -4676,7 +4676,7 @@ protected function setPhoto($photo, $id) {
 		//Create video
 		$table = Engine_Api::_()->getDbtable('videos', 'sespagevideo');
 		if($values['type'] == 'iframely') {
-			$information = $this->handleIframelyInformation($values['url']);
+			$information = Engine_Api::_()->sesbasic()->handleIframelyInformation($values['url']);
 			if (empty($information)) {
 				$form->addError('We could not find a video there - please check the URL and try again.');
 			}

@@ -87,7 +87,7 @@
         success: function( responseHTML) {
           //keep Silence
           //location.reload();
-          if(showCount == 1) {
+          if(responseHTML.showCount == 1) {
             var countType = scriptJquery('.sessocialshare_count_'+type).html();
             scriptJquery('.sessocialshare_count_'+type).html(++countType);
           }
@@ -95,8 +95,8 @@
     }));
     
     var message = encodeURIComponent(text) + " - " + encodeURIComponent(url);
-    var whatsapp_url = "whatsapp://send?text=" + message;
-    window.location.href = whatsapp_url;
+    var whatsapp_url = "https://web.whatsapp.com/send?text=" + message;
+    window.open(whatsapp_url, '_blank');
   });
 
   </script>

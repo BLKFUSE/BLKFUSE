@@ -26,13 +26,13 @@ class Sesalbum_Form_Admin_Tagcloudalbum extends Engine_Form {
     ));		
 		
 		$this->addElement('Text', "color", array(
-			'label' => sprintf('%s to choose the color of tag text.',  sprintf('%s', '<a href="' . $view->baseUrl() . "/admin/sesbasic/settings/color-chooser" . '" target="_blank">Click Here</a>')),
+			'label' => sprintf('%s to choose the color of tag text (Only for cloud view)',  sprintf('%s', '<a href="' . $view->baseUrl() . "/admin/sesbasic/settings/color-chooser" . '" target="_blank">Click Here</a>')),
 			'value' => '#00f',
     ));
 		
    	$this->getElement('color')->getDecorator('Label')->setOptions(array('placement' => 'PREPEND', 'escape' => false));
 		$this->addElement('Text', "text_height", array(
-			'label' => "Choose height of tag text.",
+			'label' => "Choose height of tag text (Only for cloud view)",
 			'value' => '15',
 			 'validators' => array(
             array('Int', true),
@@ -41,7 +41,7 @@ class Sesalbum_Form_Admin_Tagcloudalbum extends Engine_Form {
     ));
 		
 		$this->addElement('Text', "height", array(
-			'label' => "Choose height of tag container (in pixels).",
+			'label' => "Choose height of tag container (in pixels) (Only for cloud view)",
 			'value' => '300',
 			 'validators' => array(
             array('Int', true),

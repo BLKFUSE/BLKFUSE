@@ -40,7 +40,10 @@ class Payment_Form_Gateway_Cash extends Engine_Form
       'description' => '',
       'required' => $this->_settings['receipt'] ? true : false,
       'priority' => 99998,
+      'accept' => 'image/*',
     ));
+    $this->file->addValidator('Extension', false, 'jpg,png,gif,jpeg,webp');
+    
     $this->addElement('Button', 'submit', array(
       'label' => 'Proceed',
       'order'=>1001,

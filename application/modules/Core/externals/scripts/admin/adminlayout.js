@@ -1481,7 +1481,7 @@ var DOMEvent = this.DOMEvent = new Type('DOMEvent', function(event, win){
 	var target = event.target || event.srcElement;
 	while (target && target.nodeType == 3) target = target.parentNode;
 	this.target = document.id(target);
-
+  if(!type) return;
 	if (type.indexOf('key') == 0){
 		var code = this.code = (event.which || event.keyCode);
 		this.key = _keys[code]/*<1.3compat>*/ || Object.keyOf(Event.Keys, code)/*</1.3compat>*/;

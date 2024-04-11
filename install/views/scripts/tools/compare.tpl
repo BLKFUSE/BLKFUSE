@@ -26,11 +26,8 @@
 </script>
 
 
-<h2>
-  Modified Files
-</h2>
-
-<div>
+<h3>Modified Files</h3>
+<div class="_btn_mdifyed_files">
   <a class="buttonlink" href="<?php echo $this->url(array('controller' => 'manage', 'action' => 'select')) ?>">
     Upload Package to Diff
   </a>
@@ -38,9 +35,6 @@
     Flush Diff Cache
   </a>
 </div>
-<br />
-<br />
-
 <ul class="package_compare_list">
   <?php foreach( $this->diffs as $packageKey => $indexedOperations ):
     $hasCompare = in_array($packageKey, $this->oldPackages);

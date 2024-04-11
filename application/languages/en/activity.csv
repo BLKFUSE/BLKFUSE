@@ -80,7 +80,6 @@
 "ACTIVITY_FORM_ADMIN_SETTINGS_GENERAL_USERDELETE_DESCRIPTION";"Do you want to give members the option of deleting their own published feed items? This is generally an important freedom to give members since it helps them maintain their privacy."
 "Yes, allow members to delete their feed items.";"Yes, allow members to delete their feed items."
 "No, members may not delete their feed items.";"No, members may not delete their feed items."
-
 "Feed Content";"Feed Content"
 "ACTIVITY_FORM_ADMIN_SETTINGS_GENERAL_CONTENT_DESCRIPTION";"When a member is looking at the recent activity feed, whose actions should they see? For smaller networks, it may make more sense to show recent actions from ""All Members"" so the feed is quickly populated."
 "All Members";"All Members"
@@ -89,17 +88,14 @@
 "Friends & Networks";"Friends & Networks"
 "Multiple Networks";"Multiple Networks"
 "Choose Multiple Networks you want to share with:";"Choose Multiple Networks you want to share with:"
-
 "Feed Item Filtering";"Feed Item Filtering"
 "ACTIVITY_FORM_ADMIN_SETTINGS_GENERAL_FILTER_DESCRIPTION";"Do you want to allow members to decide which feed items they want to see in the main activity feed? If you enable this feature, members will be able specify which items types they do and do not want to see in their recent activity feed."
 "Yes, members can choose not to see certain feed item types.";"Yes, members can choose not to see certain feed item types."
 "No, members cannot customize their view of the feed.";"No, members cannot customize their view of the feed."
-
 "Item Publishing Option";"Item Publishing Option"
 "ACTIVITY_FORM_ADMIN_SETTINGS_GENERAL_PUBLISH_DESCRIPTION";"Do you want to allow members to prevent specific action types of theirs from being published? If yes, a setting will appear on your members' account settings page allowing them to choose which action types to NOT publish in the activity feed."
 "Yes, members may specify which item types will NOT be published about them.";"Yes, members may specify which item types will NOT be published about them."
 "No, members may not specify which actions will NOT be published about them.";"No, members may not specify which actions will NOT be published about them."
-
 "Share";"Share"
 "Recent Updates";"Recent Updates"
 "My Request (%d)";"My Request (%d)";"My Requests (%d)"
@@ -107,6 +103,21 @@
 "The page you have attempted to access could not be found.";"The page you have attempted to access could not be found."
 "Activity Item Not Found";"Activity Item Not Found"
 "%d new update is available - click this to show it.";"%d new update is available - click this to show it.";"%d new updates are available - click this to show them."
+"You cannot share this item because it has been removed.";"You cannot share this item because it has been removed."
+"Default Email Notifications";"Default Email Notifications"
+"This page allows you to specify the default email notifications for new users.";"This page allows you to specify the default email notifications for new users."
+"Delete All";"Delete All"
+"Remove this Notification";"Remove this Notification"
+"You are being invited to join our social network.";"You are being invited to join our social network."
+"Request Invite";"Request Invite"
+"Delete All Notifications";"Delete All Notifications"
+"Are you sure you want to delete all notifications?";"Are you sure you want to delete all notifications?"
+"Delete Notification";"Delete Notification"
+"Are you sure you want to delete notification?";"Are you sure you want to delete notification?"
+"You can not view this content at the moment";"You can not view this content at the moment"
+"When this happens, it's usually because the owner only shared it with a small people or changed who can see it, or it's been deleted.";"When this happens, it's usually because the owner only shared it with a small people or changed who can see it, or it's been deleted."
+"PAGETITLE-ACTIVITY-MANAGE-EMOTICONS-ADMIN-SETTINGS";"Emoticon"
+"pagetitle-activity-index-notifications";"Recent Updates"
 
 
 "ACTIVITY_TYPE_ACTIVITY_COMMENT";"When someone comments on something I have posted."
@@ -157,7 +168,6 @@
 "_ACTIVITY_ACTIONTYPE_EVENT_COVER_PHOTO_UPDATE";"When I update an Event cover photo."
 "_ACTIVITY_ACTIONTYPE_GROUP_COVER_PHOTO_UPDATE";"When I update a Group cover photo."
 "_ACTIVITY_ACTIONTYPE_COVER_PHOTO_UPDATE";"When I update my profile cover photo."
-
 "ACTIVITY_CATEGORY_TYPE_ACTIVITY";"General"
 
 # Activty Feed types
@@ -232,21 +242,5 @@ http://[host][object_link]
 
 [footer]"
 
-"You cannot share this item because it has been removed.";"You cannot share this item because it has been removed."
-
-
-"Default Email Notifications";"Default Email Notifications"
-"This page allows you to specify the default email notifications for new users.";"This page allows you to specify the default email notifications for new users."
-
-"Delete All";"Delete All"
-"Remove this Notification";"Remove this Notification"
-
-
-"You are being invited to join our social network.";"You are being invited to join our social network."
-"Request Invite";"Request Invite"
-
-
-"Delete All Notifications";"Delete All Notifications"
-"Are you sure you want to delete all notifications?";"Are you sure you want to delete all notifications?"
-"Delete Notification";"Delete Notification"
-"Are you sure you want to delete notification?";"Are you sure you want to delete notification?"
+"You do not have access to view this content.";"You do not have access to view this content."
+"This usually happens when owner has not shared this content with you or it''s been deleted.";"This usually happens when owner has not shared this content with you or it''s been deleted."

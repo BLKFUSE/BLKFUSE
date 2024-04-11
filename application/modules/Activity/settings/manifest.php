@@ -14,13 +14,14 @@ return array(
   'package' => array(
     'type' => 'module',
     'name' => 'activity',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 10267 $',
     'path' => 'application/modules/Activity',
     'repository' => 'socialengine.com',
     'title' => 'Activity',
     'description' => 'Activity',
-    'author' => 'Webligo Developments',
+    'author' => 'SocialEngine Core',
+    'thumb' => 'application/modules/Core/externals/images/thumb.png',
     'dependencies' => array(
       array(
         'type' => 'module',
@@ -90,6 +91,14 @@ return array(
         'controller' => 'notifications',
         'action' => 'index',
       )
-    )
+    ),
+    'activity_view' => array(
+      'route' => 'feed/:action_id/*',
+      'defaults' => array(
+        'module' => 'activity',
+        'controller' => 'index',
+        'action' => 'view'
+      ),
+    ),
   )
-) ?>
+);

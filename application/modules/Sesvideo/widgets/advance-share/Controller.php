@@ -16,6 +16,6 @@ class Sesvideo_Widget_AdvanceShareController extends Engine_Content_Widget_Abstr
     $coreApi = Engine_Api::_()->core();
       if (!$coreApi->hasSubject())
         return $this->setNoRender();
-    	$this->view->allowAdvShareOptions = $this->_getParam('advShareOptions',array('privateMessage','siteShare','quickShare','addThis'));
+    	$this->view->allowAdvShareOptions = $this->_getParam('advShareOptions',array('privateMessage','siteShare','quickShare'));
     }
 }

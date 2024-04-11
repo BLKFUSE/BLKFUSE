@@ -80,16 +80,18 @@ class Core_Api_Categories extends Core_Api_Abstract
   public function categories($params = array()) {
     
     $view = Zend_Registry::isRegistered('Zend_View') ? Zend_Registry::get('Zend_View') : null;
+    $type = !empty($params['type']) ? $params['type'] : '';
     $module = $params['module'];
     $route = $module.'_category';
     $categoryTable = Engine_Api::_()->getDbtable('categories', $module);
+    $controller = !empty($params['controller']) ? $params['controller'] : 'settings';
     
     if (isset($_POST['selectDeleted']) && $_POST['selectDeleted']) {
       if (isset($_POST['data']) && is_array($_POST['data'])) {
         $deleteCategoryIds = array();
         foreach ($_POST['data'] as $key => $valueSelectedcategory) {
           $categoryDelete = Engine_Api::_()->getItem($route, $valueSelectedcategory);
-          $deleteCategory = $categoryTable->deleteCategory($categoryDelete);
+          $deleteCategory = $categoryTable->deleteCategory($categoryDelete, $type);
           if ($deleteCategory) {
             $deleteCategoryIds[] = $categoryDelete->category_id;
             $categoryDelete->delete();
@@ -110,21 +112,22 @@ class Core_Api_Categories extends Core_Api_Abstract
           $seprator = '&nbsp;&nbsp;&nbsp;';
           $tableSeprator = '-&nbsp;';
           $parentId = $cat_id;
-          $value['order'] = $categoryTable->orderNext(array('subcat_id' => $cat_id));
+          $value['order'] = $categoryTable->orderNext(array('subcat_id' => $cat_id, 'type' => $type));
         } else {
           $value['subsubcat_id'] = $cat_id;
           $seprator = '3';
           $tableSeprator = '--&nbsp;';
-          $value['order'] = $categoryTable->orderNext(array('subsubcat_id' => $cat_id));
+          $value['order'] = $categoryTable->orderNext(array('subsubcat_id' => $cat_id, 'type' => $type));
           $parentId = $cat_id;
         }
       } else {
         $parentId = 0;
         $seprator = '';
-        $value['order'] = $categoryTable->orderNext(array('category_id' => true));
+        $value['order'] = $categoryTable->orderNext(array('category_id' => true, 'type' => $type));
         $tableSeprator = '';
       }
       $value['user_id'] = Engine_Api::_()->user()->getViewer()->getIdentity();
+      $value['type'] = $type;
       $db = Engine_Db_Table::getDefaultAdapter();
       $db->beginTransaction();
       try {
@@ -145,10 +148,10 @@ class Core_Api_Categories extends Core_Api_Abstract
 				$category_name = $category->title;
       }
         
-      $tableData = '<tr id="categoryid-' . $category->category_id . '"><td><input type="checkbox" name="delete_tag[]" class="checkbox" value="' . $category->getIdentity() . '" /></td><td>' . $tableSeprator . $category_name . ' <div class="hidden" style="display:none" id="inline_' . $category->category_id . '"><div class="parent">' . $parentId . '</div></div></td><td>' . $view->htmlLink(array("route" => "admin_default", "module" => $module, "controller" => "settings", "action" => "edit-category", "id" => $category->category_id, "catparam" => "subsub"), $view->translate("Edit"), array('class' => 'openSmoothbox')) . ' | ' . $view->htmlLink('javascript:void(0);', $view->translate("Delete"), array("class" => "deleteCat", "data-url" => $category->category_id)) . '</td></tr>';
+      $tableData = '<tr id="categoryid-' . $category->category_id . '"><td><input type="checkbox" name="delete_tag[]" class="checkbox" value="' . $category->getIdentity() . '" /></td><td>' . $tableSeprator . $category_name . ' <div class="hidden" style="display:none" id="inline_' . $category->category_id . '"><div class="parent">' . $parentId . '</div></div></td><td>' . $view->htmlLink(array("route" => "admin_default", "module" => $module, "controller" => $controller, "action" => "edit-category", "id" => $category->category_id, "catparam" => "subsub", "type" => $type), $view->translate("Edit"), array('class' => 'openSmoothbox')) . ' | ' . $view->htmlLink('javascript:void(0);', $view->translate("Delete"), array("class" => "deleteCat", "data-url" => $category->category_id)) . '</td></tr>';
       echo json_encode(array('seprator' => $seprator, 'tableData' => $tableData, 'id' => $category->category_id, 'name' => $category_name));
       die;
     }
-    $view->categories = $categoryTable->getCategory(array('column_name' => '*'));
+    $view->categories = $categoryTable->getCategory(array('column_name' => '*', 'type' => $type));
   }
 }

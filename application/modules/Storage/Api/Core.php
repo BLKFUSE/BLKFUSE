@@ -53,18 +53,26 @@ class Storage_Api_Core extends Core_Api_Abstract
   //$file_id is file id or storage path of image
   public function deleteExternalsFiles($file_id) {
   
-    if(is_int($file_id)) {
-      $file = Engine_Api::_()->getItem('storage_file', $file_id);
-      if($file && $file->service_id != 1) {
-        $service = Engine_Api::_()->getDbTable('services', 'storage')->getService($file->service_id);
+		if(is_string($file_id)) {
+			$file_id = Engine_Api::_()->getDbTable('files', 'storage')->getFileId($file_id);
+		}
+		
+		$file = Engine_Api::_()->getItem('storage_file', $file_id);
+		if($file) {
+			$service_id = $file->service_id;
+			if($service_id == 1) {
+				//Delete image
+				@unlink($file->storage_path);
+				
+				$dirPath = APPLICATION_PATH . DIRECTORY_SEPARATOR . str_replace(basename($file->storage_path),"",$file->storage_path);
+				if(@is_dir($dirPath)){
+					@rmdir($dirPath);
+				}
+				
+			} else if($service_id != 1) {
+				$service = Engine_Api::_()->getDbTable('services', 'storage')->getService($service_id);
         $service->removeFile($file->storage_path);
-      }
-    } else if(is_string($file_id)) {
-      $serviceId = Engine_Api::_()->getDbTable('files', 'storage')->getServiceId($file_id);
-      if($serviceId != '1') {
-        $service = Engine_Api::_()->getDbTable('services', 'storage')->getService($serviceId);
-        $service->removeFile($file_id);
-      }
-    }
+			}
+		}
   }
 }

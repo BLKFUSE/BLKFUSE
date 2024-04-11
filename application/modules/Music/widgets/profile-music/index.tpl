@@ -58,11 +58,15 @@
   <li>
     <div class='music_browse_info'>
       <div class="music_browse_info_title">
-        <?php echo $this->htmlLink($playlist->getHref(), $playlist->getTitle()) ?>
+        <h3><?php echo $this->htmlLink($playlist->getHref(), $playlist->getTitle()) ?></h3>
       </div>
-      <div class='music_browse_info_date'>
-        Posted <?php echo $this->timestamp($playlist->creation_date) ?>
-        <?php echo $this->partial('_rating.tpl', 'core', array('item' => $playlist, 'param' => 'show', 'module' => 'music')); ?>
+      <div class="music_info_top">
+        <div class="music_browse_info_date">
+          Posted <?php echo $this->timestamp($playlist->creation_date) ?>
+        </div>
+        <div class='music_playlist_stats'>
+          <?php echo $this->partial('_rating.tpl', 'core', array('item' => $playlist, 'param' => 'show', 'module' => 'music')); ?>
+        </div>
       </div>
       <div class='music_browse_info_desc'>
         <?php echo $playlist->description ?>

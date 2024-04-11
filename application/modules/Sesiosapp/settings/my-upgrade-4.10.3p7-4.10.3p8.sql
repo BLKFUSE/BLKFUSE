@@ -26,4 +26,4 @@ CREATE TABLE IF NOT EXISTS `engine4_sesiosapp_graphics` (
   `order` int(11) DEFAULT "0",
   `creation_date` datetime DEFAULT NULL,
   PRIMARY KEY (`graphic_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

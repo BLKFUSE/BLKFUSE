@@ -58,17 +58,17 @@ if($sesandroidapp_slides_table_exist) {
 
 $db->query("CREATE TABLE IF NOT EXISTS `engine4_sesiosapp_graphics` (
   `graphic_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `title_color` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'FFFFFF',
-  `description_color` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'FFFFFF',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `title_color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'FFFFFF',
+  `description_color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'FFFFFF',
   `background_color` VARCHAR(255) NOT NULL,
   `status` tinyint(1) DEFAULT '1',
   `file_id` int(11) DEFAULT '0',
   `order` int(11) DEFAULT '0',
   `creation_date` datetime DEFAULT NULL,
   PRIMARY KEY (`graphic_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 $db->query("INSERT IGNORE INTO `engine4_core_menuitems`(`name`, `module`, `label`, `params`, `menu`,  `enabled`,`order`) VALUES ('sesiosapp_admin_main_graphic','sesiosapp','Graphic Assets','{\"route\":\"admin_default\",\"module\":\"sesiosapp\",\"controller\":\"graphic\"}','sesiosapp_admin_main','1','5');");
 $db->query("INSERT IGNORE INTO `engine4_core_menuitems`(`name`, `module`, `label`, `params`, `menu`,  `enabled`,`order`) VALUES ('sesiosapp_admin_main_background','sesiosapp','Background Images','{\"route\":\"admin_default\",\"module\":\"sesiosapp\",\"controller\":\"settings\",\"action\":\"background\"}','sesiosapp_admin_main','1','5');");
 $db->query("INSERT IGNORE INTO `engine4_sesapi_menus`(`label`, `module`, `type`, `status`, `order`, `file_id`,`class`, `device`, `is_delete`, `visibility`, `module_name`, `version`) VALUES ('Groups','Sesgroup','1','1','21','0','core_main_sesgroup','1','0','0','sesgroup','1.5');");
@@ -86,4 +86,4 @@ $db->query("INSERT IGNORE INTO `engine4_sesapi_menus`(`label`, `module`, `type`,
 ('Polls','poll','1','1','9','0','core_main_poll','1','0','0','poll','0'),
 ('Forums','Forum','1','1','54','0','core_main_forum','1','0','0','forum','0');");
 
-$db->query('ALTER TABLE `engine4_activity_notificationtypes` ADD `sesios_enable_pushnotification` TINYINT(1) NOT NULL DEFAULT "1";');
+//$db->query('ALTER TABLE `engine4_activity_notificationtypes` ADD `sesios_enable_pushnotification` TINYINT(1) NOT NULL DEFAULT "1";');

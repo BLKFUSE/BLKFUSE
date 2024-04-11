@@ -83,7 +83,7 @@ if ($this->getRequest()->isPost()) {
         KEY `owner_type` (`owner_type`,`owner_id`),
         KEY `category_id` (`category_id`),
         KEY `search` (`search`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
             $db->query('DROP TABLE IF EXISTS `engine4_sesalbum_photos`');
                 $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesalbum_photos` (
@@ -114,7 +114,7 @@ if ($this->getRequest()->isPost()) {
                     PRIMARY KEY (`photo_id`),
                     KEY `album_id` (`album_id`),
                     KEY `owner_type` (`owner_type`,`owner_id`)
-                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
             $catgoryData = array('0' => array('Other', 'others.jpg', 'other.png','Vivamus in quam ullamcorper, blandit turpis sed, congue purus. Quisque ultricies diam arcu, id blandit ipsum feugiat ut. Maecenas tincidunt nibh lorem, vitae consequat enim blandit volutpat. Donec vel velit nulla. Duis nunc libero, pretium eu sollicitudin vel, molestie tempus erat. Nulla non velit eu eros vestibulum suscipit. Nulla eget pellentesque magna, at imperdiet odio. Ut quis malesuada sapien. Maecenas vitae augue elementum, blandit sapien ultricies, vulputate erat. Duis elementum faucibus augue id aliquam. Mauris iaculis leo quis nunc blandit hendrerit. Proin ut libero tristique, interdum diam ac, pharetra metus. Mauris rhoncus ipsum dignissim ex ullamcorper, sed fringilla augue euismod. In volutpat, sem venenatis tristique hendrerit, sem lorem molestie ipsum, vel lobortis dolor enim efficitur augue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.'),array('Technology', 'technology.jpg', 'technology.png','We can change the World with Technology !!<br><br>Pellentesque lacinia hendrerit leo, nec hendrerit magna porttitor at. Vestibulum pellentesque erat orci, non mollis purus ornare a. Ut a blandit dolor. Quisque ac pharetra ex. Aliquam pretium pharetra elementum. Phasellus nec mollis metus, non pellentesque purus. Vivamus in sem facilisis, dictum ex suscipit, imperdiet tortor. Sed varius massa ex, quis porta elit interdum non. Mauris at dictum nisi. Maecenas malesuada diam sit amet turpis porttitor, ut aliquam nibh facilisis. Ut sit amet ligula lacus.<br><br>In hac habitasse platea dictumst. Cras mollis sagittis feugiat. Nunc ac velit eu turpis congue lobortis. Pellentesque quam diam, feugiat vitae ipsum sit amet, aliquet vestibulum ligula. Sed nulla risus, malesuada blandit egestas vel, semper a risus. Pellentesque et tincidunt mauris. Nunc sodales diam dictum, sollicitudin leo nec, dapibus sapien. Suspendisse a fringilla urna. Quisque luctus neque tristique, cursus nulla ac, egestas felis. Proin dapibus condimentum posuere. Aenean lacinia volutpat convallis. In gravida, elit eu imperdiet venenatis, lacus risus venenatis quam, at consectetur tortor tortor malesuada enim. Nam hendrerit ipsum vel odio molestie rutrum. Vivamus vitae risus eget est vehicula consequat. In varius nec dolor eu aliquet. '),array('Entertainment', 'entertainment.jpg', 'entertaintment.png','The Entertainment is in the Presentation !!<br><br> Pellentesque lacinia hendrerit leo, nec hendrerit magna porttitor at. Vestibulum pellentesque erat orci, non mollis purus ornare a. Ut a blandit dolor. Quisque ac pharetra ex. Aliquam pretium pharetra elementum. Phasellus nec mollis metus, non pellentesque purus. Vivamus in sem facilisis, dictum ex suscipit, imperdiet tortor. Sed varius massa ex, quis porta elit interdum non. Mauris at dictum nisi. Maecenas malesuada diam sit amet turpis porttitor, ut aliquam nibh facilisis. Ut sit amet ligula lacus.<br><br>In hac habitasse platea dictumst. Cras mollis sagittis feugiat. Nunc ac velit eu turpis congue lobortis. Pellentesque quam diam, feugiat vitae ipsum sit amet, aliquet vestibulum ligula. Sed nulla risus, malesuada blandit egestas vel, semper a risus. Pellentesque et tincidunt mauris. Nunc sodales diam dictum, sollicitudin leo nec, dapibus sapien. Suspendisse a fringilla urna. Quisque luctus neque tristique, cursus nulla ac, egestas felis. Proin dapibus condimentum posuere. Aenean lacinia volutpat convallis. In gravida, elit eu imperdiet venenatis, lacus risus venenatis quam, at consectetur tortor tortor malesuada enim. Nam hendrerit ipsum vel odio molestie rutrum. Vivamus vitae risus eget est vehicula consequat. In varius nec dolor eu aliquet. '),array('Family & Home', 'family-home.jpg', 'home.png','Family - Where Life Begins & Love Never Ends !!<br><br>Vivamus in quam ullamcorper, blandit turpis sed, congue purus. Quisque ultricies diam arcu, id blandit ipsum feugiat ut. Maecenas tincidunt nibh lorem, vitae consequat enim blandit volutpat. Donec vel velit nulla. Duis nunc libero, pretium eu
 sollicitudin vel, molestie tempus erat. Nulla non velit eu eros vestibulum suscipit. Nulla eget pellentesque magna, at imperdiet odio. Ut quis malesuada sapien. Maecenas vitae augue elementum, blandit sapien ultricies, vulputate erat. Duis elementum faucibus augue id aliquam. Mauris iaculis leo quis nunc blandit hendrerit. Proin ut libero tristique, interdum diam ac, pharetra metus. Mauris rhoncus ipsum dignissim ex ullamcorper, sed fringilla augue euismod. In volutpat, sem venenatis tristique hendrerit, sem lorem molestie ipsum, vel lobortis dolor enim efficitur augue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.'),array('Recreation', 'recreation.jpg', 'Recreation.png','Vivamus in quam ullamcorper, blandit turpis sed, congue purus. Quisque ultricies diam arcu, id blandit ipsum feugiat ut. Maecenas tincidunt nibh lorem, vitae consequat enim blandit volutpat. Donec vel velit nulla. Duis nunc libero, pretium eu sollicitudin vel, molestie tempus erat. Nulla non velit eu eros vestibulum suscipit. Nulla eget pellentesque magna, at imperdiet odio. Ut quis malesuada sapien. Maecenas vitae augue elementum, blandit sapien ultricies, vulputate erat. Duis elementum faucibus augue id aliquam. Mauris iaculis leo quis nunc blandit hendrerit. Proin ut libero tristique, interdum diam ac, pharetra metus. Mauris rhoncus ipsum dignissim ex ullamcorper, sed fringilla augue euismod. In volutpat, sem venenatis tristique hendrerit, sem lorem molestie ipsum, vel lobortis dolor enim efficitur augue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.'),array('Personal', 'personal.jpg', 'personal.png','The authentic self is a soul made visible.<br><br>Vivamus in quam ullamcorper, blandit turpis sed, congue purus. Quisque ultricies diam arcu, id blandit ipsum feugiat ut. Maecenas tincidunt nibh lorem, vitae consequat enim blandit volutpat. Donec vel velit nulla. Duis nunc libero, pretium eu sollicitudin vel, molestie tempus erat. Nulla non velit eu eros vestibulum suscipit. Nulla eget pellentesque magna, at imperdiet odio. Ut quis malesuada sapien. Maecenas vitae augue elementum, blandit sapien ultricies, vulputate erat. Duis elementum faucibus augue id aliquam. Mauris iaculis leo quis nunc blandit hendrerit. Proin ut libero tristique, interdum diam ac, pharetra metus. Mauris rhoncus ipsum dignissim ex ullamcorper, sed fringilla augue euismod. In volutpat, sem venenatis tristique hendrerit, sem lorem molestie ipsum, vel lobortis dolor enim efficitur augue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. '),array('Health', 'health.jpg', 'health.png','The Greatest Wealth is HEALTH !!<br><br>Vivamus in quam ullamcorper, blandit turpis sed, congue purus. Quisque ultricies diam arcu, id blandit ipsum feugiat ut. Maecenas tincidunt nibh lorem, vitae consequat enim blandit volutpat. Donec vel velit nulla. Duis nunc libero, pretium eu sollicitudin vel, molestie tempus erat. Nulla non velit eu eros vestibulum suscipit. Nulla eget pellentesque magna, at imperdiet odio. Ut quis malesuada sapien. Maecenas vitae augue elementum, blandit sapien ultricies, vulputate erat. Duis elementum faucibus augue id aliquam. Mauris iaculis leo quis nunc blandit hendrerit. Proin ut libero tristique, interdum diam ac, pharetra metus. Mauris rhoncus ipsum dignissim ex ullamcorper, sed fringilla augue euismod. In volutpat, sem venenatis tristique hendrerit, sem lorem molestie ipsum, vel lobortis dolor enim efficitur augue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. '),array('Society', 'society.jpg', 'society.png','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pretium magna ut efficitur viverra. Etiam pellentesque vulputate mauris quis finibus. Vestibulum condimentum auctor mi, tincidunt molestie nunc. Aliquam nisi metus, ornare vel eros et, dictum luctus diam. Nunc orci massa, finibus consectetur leo vitae, sollicitudin vulputate orci. Donec et tortor varius, placerat tortor sit amet, vulputate justo. Etiam
@@ -145,7 +145,7 @@ pellentesque erat orci, non mollis purus ornare a. Ut a blandit dolor. Quisque a
           PRIMARY KEY (`category_id`),
           KEY `category_id` (`category_id`,`category_name`),
           KEY `category_name` (`category_name`)
-          ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+          ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1');
 
             $table_exist_categories = $db->query('SHOW TABLES LIKE \'engine4_album_categories\'')->fetch();
             if (empty($table_exist_categories)) {
@@ -286,7 +286,7 @@ pellentesque erat orci, non mollis purus ornare a. Ut a blandit dolor. Quisque a
 				UNIQUE KEY `uniqueKey` (`resource_id`,`album_id`),
         PRIMARY KEY (`relatedalbum_id`),
 				`modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-			)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+			)  ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
             $db->query('DROP TABLE IF EXISTS `engine4_sesalbum_favourites`;');
             $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesalbum_favourites` (
 				`favourite_id` int(11) unsigned NOT NULL auto_increment,
@@ -295,7 +295,7 @@ pellentesque erat orci, non mollis purus ornare a. Ut a blandit dolor. Quisque a
 				`resource_id` int(11) NOT NULL,
 				 PRIMARY KEY (`favourite_id`),
 				 KEY `user_id` (`user_id`,`resource_type`,`resource_id`)
-				) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+				) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
             $db->query('DROP TABLE IF EXISTS `engine4_sesalbum_ratings`;');
             $db->query('CREATE TABLE IF NOT EXISTS `engine4_sesalbum_ratings` (
 			`rating_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -304,7 +304,7 @@ pellentesque erat orci, non mollis purus ornare a. Ut a blandit dolor. Quisque a
       `user_id` int(11) unsigned NOT NULL,
       `rating` tinyint(1) unsigned DEFAULT NULL,
       UNIQUE KEY `uniqueKey` (`user_id`,`resource_type`,`resource_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
             $db->query('DROP TABLE IF EXISTS `engine4_sesalbum_recentlyviewitems`;');
             $db->query('CREATE TABLE IF NOT EXISTS  `engine4_sesalbum_recentlyviewitems` (
       `recentlyviewed_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -313,7 +313,7 @@ pellentesque erat orci, non mollis purus ornare a. Ut a blandit dolor. Quisque a
       `owner_id` INT NOT NULL ,
       `creation_date` DATETIME NOT NULL,
       UNIQUE KEY `uniqueKey` (`resource_id`,`resource_type`, `owner_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
             $db->query('DROP TABLE IF EXISTS `engine4_album_fields_maps`;');
             $db->query('CREATE TABLE IF NOT EXISTS `engine4_album_fields_maps` (
       `field_id` int(11) NOT NULL,
@@ -321,7 +321,7 @@ pellentesque erat orci, non mollis purus ornare a. Ut a blandit dolor. Quisque a
       `child_id` int(11) NOT NULL,
       `order` smallint(6) NOT NULL,
       PRIMARY KEY (`field_id`,`option_id`,`child_id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
             $db->query('INSERT IGNORE INTO `engine4_album_fields_maps` (`field_id`, `option_id`, `child_id`, `order`) VALUES (0, 0, 1, 1);');
             $db->query('DROP TABLE IF EXISTS `engine4_album_fields_meta`;');
             $db->query('CREATE TABLE IF NOT EXISTS `engine4_album_fields_meta` (
@@ -337,12 +337,12 @@ pellentesque erat orci, non mollis purus ornare a. Ut a blandit dolor. Quisque a
       `show` tinyint(1) unsigned DEFAULT "0",
       `order` smallint(3) unsigned NOT NULL DEFAULT "999",
       `config` text NOT NULL,
-      `validators` text COLLATE utf8_unicode_ci,
-      `filters` text COLLATE utf8_unicode_ci,
-      `style` text COLLATE utf8_unicode_ci,
-      `error` text COLLATE utf8_unicode_ci,
+      `validators` text COLLATE utf8mb4_unicode_ci,
+      `filters` text COLLATE utf8mb4_unicode_ci,
+      `style` text COLLATE utf8mb4_unicode_ci,
+      `error` text COLLATE utf8mb4_unicode_ci,
       PRIMARY KEY (`field_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;');
             $db->query('INSERT IGNORE INTO `engine4_album_fields_meta` (`field_id`, `type`, `label`, `description`, `alias`, `required`, `display`, `publish`, `search`, `show`, `order`, `config`, `validators`, `filters`, `style`, `error`) VALUES
       (1, "profile_type", "Profile Type", "", "profile_type", 1, 0, 0, 2, 0, 999, "", NULL, NULL, NULL, NULL);');
             $db->query('DROP TABLE IF EXISTS `engine4_album_fields_options`;');
@@ -354,7 +354,7 @@ pellentesque erat orci, non mollis purus ornare a. Ut a blandit dolor. Quisque a
       `type` tinyint(1) NOT NULL DEFAULT "0",
       PRIMARY KEY (`option_id`),
       KEY `field_id` (`field_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1 ;');
             $db->query('INSERT IGNORE INTO `engine4_album_fields_options` (`option_id`, `field_id`, `label`, `order`) VALUES (1, 1, "Rock Band", 0);');
             $db->query('DROP TABLE IF EXISTS `engine4_album_fields_search`;');
             $db->query('CREATE TABLE IF NOT EXISTS `engine4_album_fields_search` (
@@ -362,7 +362,7 @@ pellentesque erat orci, non mollis purus ornare a. Ut a blandit dolor. Quisque a
       `profile_type` smallint(11) unsigned DEFAULT NULL,
       PRIMARY KEY (`item_id`),
       KEY `profile_type` (`profile_type`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
             $db->query('DROP TABLE IF EXISTS `engine4_album_fields_values`;');
             $db->query('CREATE TABLE IF NOT EXISTS `engine4_album_fields_values` (
       `item_id` int(11) NOT NULL,
@@ -370,7 +370,7 @@ pellentesque erat orci, non mollis purus ornare a. Ut a blandit dolor. Quisque a
       `index` smallint(3) NOT NULL DEFAULT "0",
       `value` text NOT NULL,
       PRIMARY KEY (`item_id`,`field_id`,`index`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;');
             $db->query('INSERT IGNORE INTO `engine4_activity_actiontypes` (`type`, `module`, `body`, `enabled`, `displayable`, `attachable`, `commentable`, `shareable`, `is_generated`) VALUES
       ("album_photo_new", "sesalbum", \'{item:$subject} added {var:$count} photo(s) to the album {item:$object}:\', 1, 5, 1, 3, 1, 1),
       ("comment_album", "sesalbum", \'{item:$subject} commented on {item:$owner}\'\'s {item:$object:album}: {body:$body}\', 1, 1, 1, 1, 1, 0),
@@ -384,13 +384,13 @@ pellentesque erat orci, non mollis purus ornare a. Ut a blandit dolor. Quisque a
       ("sesalbum_quick", "standard", "SNS - Advanced Photos - Album Quick Navigation Menu");');
             $db->query('INSERT IGNORE INTO `engine4_core_jobtypes` (`title`, `type`, `module`, `plugin`, `priority`) VALUES ("Rebuild Album Privacy", "album_maintenance_rebuild_privacy", "sesalbum", "Sesalbum_Plugin_Job_Maintenance_RebuildPrivacy", 50);');
             $db->query('INSERT IGNORE INTO `engine4_core_menuitems` (`name`, `module`, `label`, `plugin`, `params`, `menu`, `submenu`, `order`) VALUES
-      ("core_main_sesalbum", "sesalbum", "Albums", "", \'{"route":"sesalbum_general","action":""}\', "core_main", "", 2),
+      ("core_main_sesalbum", "sesalbum", "Albums", "", \'{"route":"sesalbum_general", "icon":"fas fa-images","action":""}\', "core_main", "", 2),
       ("sesalbum_main_home", "sesalbum", "Albums Home", "", \'{"route":"sesalbum_general","action":"home"}\', "sesalbum_main", "", 1),
       ("sesalbum_main_browse", "sesalbum", "Browse Albums", "Sesalbum_Plugin_Menus::canViewAlbums", \'{"route":"sesalbum_general","action":"browse"}\', "sesalbum_main", "", 2),
 			("sesalbum_main_photohome", "sesalbum", "Photos Home", "Sesalbum_Plugin_Menus::canViewAlbums", \'{"route":"sesalbum_general","action":"photo-home"}\', "sesalbum_main", "", 3),
 			("sesalbum_main_photobrowse", "sesalbum", "Browse Photos", "Sesalbum_Plugin_Menus::canViewAlbums", \'{"route":"sesalbum_general","action":"browse-photo"}\', "sesalbum_main", "", 4),
 			("sesalbum_main_browsecategory", "sesalbum", "Browse Categories", "", \'{"route":"sesalbum_category"}\', "sesalbum_main","", 5),
-			("sesalbum_main_manage", "sesalbum", "My Albums", "", \'{"route":"sesalbum_general","action":"manage"}\', "sesalbum_main", "", 6),
+			("sesalbum_main_manage", "sesalbum", "My Albums", "Sesalbum_Plugin_Menus::isLoggedIn", \'{"route":"sesalbum_general","action":"manage"}\', "sesalbum_main", "", 6),
       ("sesalbum_main_upload", "sesalbum", "Add New Photos", "Sesalbum_Plugin_Menus::canCreateAlbums", \'{"route":"sesalbum_general","action":"create"}\', "sesalbum_main", "", 7),
       ("sesalbum_quick_upload", "sesalbum", "Add New Photos", "Sesalbum_Plugin_Menus::canCreateAlbums", \'{"route":"sesalbum_general","action":"create","class":"buttonlink sesalbum_icon_photos_new"}\', "sesalbum_quick", "", 1),
       ("sesalbum_admin_main_manage", "sesalbum", "Manage Albums", "", \'{"route":"admin_default","module":"sesalbum","controller":"manage"}\', "sesalbum_admin_main", "", 2),

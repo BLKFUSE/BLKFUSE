@@ -164,12 +164,20 @@ class Install_Form_Account extends Engine_Form
       )
     ));
 
+    // Back Button  
+    $content = Zend_Registry::get('Zend_Translate')->_('<a href="'.Zend_Controller_Front::getInstance()->getRouter()->assemble(array('action' => 'db-create')).'" class="install_back_btn">Back</a>');
+    $this->addElement('Dummy', 'back', array(
+      'content' => $content,
+     ));
+
     // Submit
     $this->addElement('Button', 'submit', array(
       'label' => 'Continue',
       'type' => 'submit',
       'ignore' => true,
     ));
+
+    $this->addDisplayGroup(array('buttons', 'back', 'submit'), 'buttons');
 
     //$this->addDisplayGroup(array('submit'), 'buttons');
 

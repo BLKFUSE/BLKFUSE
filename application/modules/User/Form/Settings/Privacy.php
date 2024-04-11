@@ -82,7 +82,7 @@ class User_Form_Settings_Privacy extends Engine_Form
     $view_options = (array) Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $user, 'auth_view');
     $view_options = array_intersect_key($availableLabels, array_flip($view_options));
 
-    $this->addElement('Radio', 'privacy', array(
+    $this->addElement('Select', 'privacy', array(
       'label' => 'Profile Privacy',
       'description' => 'Who can view your profile?',
       'multiOptions' => $view_options,
@@ -94,12 +94,12 @@ class User_Form_Settings_Privacy extends Engine_Form
       }
     }
 
-    if( $viewer->isAllowed('user', 'lastLoginShow') ) {
-    // Init Login Date
+    if( Engine_Api::_()->authorization()->getPermission($viewer, 'user', 'lastLoginShow') ) {
+      // Init Login Date
       $lastLoginDate_options = (array) Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $user, 'lastLoginDate');
       $lastLoginDate_options = array_intersect_key($availableLabels, array_flip($lastLoginDate_options));
 
-      $this->addElement('Radio', 'lastLoginDate', array(
+      $this->addElement('Select', 'lastLoginDate', array(
         'label' => 'Last Login Date',
         'description' => 'Who can view your Last Login Date?',
         'multiOptions' => $lastLoginDate_options,
@@ -112,12 +112,12 @@ class User_Form_Settings_Privacy extends Engine_Form
       }
     }
 
-    if ($viewer->isAllowed('user', 'lastUpdateShow')) {
+    if (Engine_Api::_()->authorization()->getPermission($viewer, 'user', 'lastUpdateShow')) {
       // Init Last Update
       $lastUpdateDate_options = (array) Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $user, 'lastUpdateDate');
       $lastUpdateDate_options = array_intersect_key($availableLabels, array_flip($lastUpdateDate_options));
 
-      $this->addElement('Radio', 'lastUpdateDate', array(
+      $this->addElement('Select', 'lastUpdateDate', array(
         'label' => 'Last Update Date',
         'description' => 'Who can view your Last Update Date?',
         'multiOptions' => $lastUpdateDate_options,
@@ -130,12 +130,12 @@ class User_Form_Settings_Privacy extends Engine_Form
       }
     }
 
-    if ($viewer->isAllowed('user', 'inviteeShow')) {
+    if (Engine_Api::_()->authorization()->getPermission($viewer, 'user', 'inviteeShow')) {
     // Init Invitee
       $inviteeName_options = (array) Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $user, 'inviteeName');
       $inviteeName_options = array_intersect_key($availableLabels, array_flip($inviteeName_options));
 
-      $this->addElement('Radio', 'inviteeName', array(
+      $this->addElement('Select', 'inviteeName', array(
         'label' => 'Name of Invitee',
         'description' => 'Who can view your Invitee Name?',
         'multiOptions' => $inviteeName_options,
@@ -148,12 +148,12 @@ class User_Form_Settings_Privacy extends Engine_Form
       }
     }
 
-    if ($viewer->isAllowed('user', 'profileTypeShow')) {
+    if (Engine_Api::_()->authorization()->getPermission($viewer, 'user', 'profileTypeShow')) {
     // Init profile view
       $profileType_options = (array) Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $user, 'profileType');
       $profileType_options = array_intersect_key($availableLabels, array_flip($profileType_options));
 
-      $this->addElement('Radio', 'profileType', array(
+      $this->addElement('Select', 'profileType', array(
         'label' => 'Profile Type',
         'description' => 'Who can view your Profile Type?',
         'multiOptions' => $profileType_options,
@@ -166,12 +166,12 @@ class User_Form_Settings_Privacy extends Engine_Form
       }
     }
 
-    if ($viewer->isAllowed('user', 'memberLevelShow')) {
+    if (Engine_Api::_()->authorization()->getPermission($viewer, 'user', 'memberLevelShow')) {
     // Init profile view
       $memberLevel_options = (array) Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $user, 'memberLevel');
       $memberLevel_options = array_intersect_key($availableLabels, array_flip($memberLevel_options));
 
-      $this->addElement('Radio', 'memberLevel', array(
+      $this->addElement('Select', 'memberLevel', array(
         'label' => 'Member Level',
         'description' => 'Who can view your Member Level?',
         'multiOptions' => $memberLevel_options,
@@ -184,12 +184,12 @@ class User_Form_Settings_Privacy extends Engine_Form
       }
     }
 
-    if ($viewer->isAllowed('user', 'profileViewsShow')) {
+    if (Engine_Api::_()->authorization()->getPermission($viewer, 'user', 'profileViewsShow')) {
     // Init Member Level
       $profileViews_options = (array) Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $user, 'profileViews');
       $profileViews_options = array_intersect_key($availableLabels, array_flip($profileViews_options));
 
-      $this->addElement('Radio', 'profileViews', array(
+      $this->addElement('Select', 'profileViews', array(
         'label' => 'Profile Views',
         'description' => 'Who can view your Profile Views?',
         'multiOptions' => $profileViews_options,
@@ -202,12 +202,12 @@ class User_Form_Settings_Privacy extends Engine_Form
       }
     }
 
-    if ($viewer->isAllowed('user', 'joinedDateShow')) {
+    if (Engine_Api::_()->authorization()->getPermission($viewer, 'user', 'joinedDateShow')) {
     // Init Joined Date Level
       $joinedDate_options = (array) Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $user, 'joinedDate');
       $joinedDate_options = array_intersect_key($availableLabels, array_flip($joinedDate_options));
 
-      $this->addElement('Radio', 'joinedDate', array(
+      $this->addElement('Select', 'joinedDate', array(
         'label' => 'Joined Date',
         'description' => 'Who can view your Joined Date?',
         'multiOptions' => $joinedDate_options,
@@ -220,12 +220,12 @@ class User_Form_Settings_Privacy extends Engine_Form
       }
     }
 
-    if ($viewer->isAllowed('user', 'friendsCountShow')) {
+    if (Engine_Api::_()->authorization()->getPermission($viewer, 'user', 'friendsCountShow')) {
       // Init Friends Count Level
       $friendsCount_options = (array) Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $user, 'friendsCount');
       $friendsCount_options = array_intersect_key($availableLabels, array_flip($friendsCount_options));
 
-      $this->addElement('Radio', 'friendsCount', array(
+      $this->addElement('Select', 'friendsCount', array(
         'label' => 'Friends Count',
         'description' => 'Who can view your Friends Count?',
         'multiOptions' => $friendsCount_options,
@@ -249,7 +249,7 @@ class User_Form_Settings_Privacy extends Engine_Form
     $commentOptions = (array) Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $user, 'auth_comment');
     $commentOptions = array_intersect_key($availableLabelsComment, array_flip($commentOptions));
 
-    $this->addElement('Radio', 'comment', array(
+    $this->addElement('Select', 'comment', array(
       'label' => 'Profile Posting Privacy',
       'description' => 'Who can post on your profile?',
       'multiOptions' => $commentOptions,
@@ -271,30 +271,48 @@ class User_Form_Settings_Privacy extends Engine_Form
     );
     $userMention_options = (array) Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $user, 'mention');
     $userMention_options = array_intersect_key($availableOptions, array_flip($userMention_options));
-    $this->addElement('Radio', 'mention', array(
+   
+    $this->addElement('Select', 'mention', array(
       'label' => 'User @ Mentions',
       'description' => 'Who can @ mention you?',
       'multiOptions' => $userMention_options,
     ));
+    foreach ($this->_roles as $role) {
+      if (1 === $auth->isAllowed($user, $role, 'mention')) {
+        $this->mention->setValue($role);
+      }
+    }
+    
+    if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('poke')) {
+      //Poke Privacy
+      $userPoke_options = (array) Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $user, 'pokeAction');
+      $userPoke_options = array_intersect_key($availableOptions, array_flip($userPoke_options));
+
+      $this->addElement('Select', 'pokeAction', array(
+        'label' => 'Poke Privacy',
+        'description' => 'Who can Poke or Send Action to you?',
+        'multiOptions' => $userPoke_options,
+      ));
+      foreach ($this->_roles as $role) {
+        if (1 === $auth->isAllowed($user, $role, 'pokeAction')) {
+          $this->pokeAction->setValue($role);
+        }
+      }
+    }
+    
     $birthdayOptions = array(
       'monthday' => 'Month/Day',
       'monthdayyear' => 'Month/Day/Year',
     );
     $birthday_options = (array) Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $user, 'birthday_options');
 
-    if ($viewer->isAllowed('user', 'allow_birthday') && engine_count($birthday_options) > 1) {
+    if (Engine_Api::_()->authorization()->getPermission($viewer, 'user', 'allow_birthday') && engine_count($birthday_options) > 1) {
       $birthday_options = array_intersect_key($birthdayOptions, array_flip($birthday_options));
-      $this->addElement('Radio', 'birthday_format', array(
+      $this->addElement('Select', 'birthday_format', array(
         'label' => 'Birthday Privacy Setting',
         'description' => 'How to show your Birthday?',
         'multiOptions' => $birthday_options,
       ));
-    }
-
-    foreach ($this->_roles as $role) {
-      if (1 === $auth->isAllowed($user, $role, 'mention')) {
-        $this->mention->setValue($role);
-      }
     }
 
     // Init publishtypes
@@ -475,5 +493,18 @@ class User_Form_Settings_Privacy extends Engine_Form
     $mention_max_role = array_search($mention_value, $this->_roles);
     foreach( $this->_roles as $i => $role )
       $auth->setAllowed($user, $role, 'mention', ($i <= $mention_max_role) );
+    
+    // Process member poke privacy
+    if(Engine_Api::_()->getDbTable('modules', 'core')->isModuleEnabled('poke')) {
+      $poke_action_value = $this->getValue('pokeAction');
+      if( empty($poke_action_value) ) {
+        $poke_action_setting = end(Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $user, 'pokeAction'));
+        $poke_action_value = empty($poke_action_setting) ? 'registered' : $poke_action_setting;
+      }
+
+      $poke_max_role = array_search($poke_action_value, $this->_roles);
+      foreach( $this->_roles as $i => $role )
+        $auth->setAllowed($user, $role, 'pokeAction', ($i <= $poke_max_role) );
+    }
   }
-} // end public function save()
+}

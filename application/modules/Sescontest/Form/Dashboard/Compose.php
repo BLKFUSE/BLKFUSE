@@ -41,13 +41,10 @@ class Sescontest_Form_Dashboard_Compose extends Engine_Form
     
     if( $editor == 'editor' ) {
       $uploadUrl = "";
-      if( Engine_Api::_()->authorization()->isAllowed('album', $user, 'create') ) {
-        $uploadUrl = Zend_Controller_Front::getInstance()->getRouter()->assemble(array('action' => 'upload-photo'), 'messages_general', true);
-      }
+      
+      //UPLOAD PHOTO URL
       $editorOptions = array(
-        'uploadUrl' => $uploadUrl,
-        'bbcode' => true,
-        'html' => true,
+        'uploadUrl' => Zend_Controller_Front::getInstance()->getRouter()->assemble(array('module' => 'core', 'controller' => 'index', 'action' => 'upload-photo'), 'default', true),
       );
 
       $this->addElement('TinyMce', 'body', array(

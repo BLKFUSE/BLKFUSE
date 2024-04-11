@@ -204,10 +204,15 @@
   <?php  } ?>
 </div>
 <script type="text/javascript">
-var valueTabData ;
+
  if("<?php echo $this->view_type ; ?>" == 'masonry'){
 	scriptJquery("#tabbed-widget_<?php echo $randonNumber; ?>").flexImages({rowHeight: <?php echo str_replace('px','',$this->height); ?>});
+	
+	scriptJquery(document).on('click','.tab_layout_sesvideo_chanel_photos',function(){
+		scriptJquery("#tabbed-widget_<?php echo $randonNumber; ?>").flexImages({rowHeight: <?php echo str_replace('px','',$this->height); ?>});
+	});
  }
+ 
 // globally define available tab array
 <?php if($this->load_content == 'auto_load'){ ?>
 		scriptJquery(document).ready(function() {

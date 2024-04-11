@@ -26,15 +26,15 @@ class Group_AdminSettingsController extends Core_Controller_Action_Admin
     $settings = Engine_Api::_()->getApi('settings', 'core');
     $this->view->form = $form = new Group_Form_Admin_Global();
 
-    $form->bbcode->setValue($settings->getSetting('group_bbcode', 1));
-    $form->html->setValue($settings->getSetting('group_html', 0));
+    //$form->bbcode->setValue($settings->getSetting('group_bbcode', 1));
+    //$form->html->setValue($settings->getSetting('group_html', 0));
     $form->group_page->setValue($settings->getSetting('group_page', 12));
     
     if( $this->getRequest()->isPost()&& $form->isValid($this->getRequest()->getPost()))
     {
       $values = $form->getValues();
-      $settings->setSetting('group_bbcode', $values['bbcode']);
-      $settings->setSetting('group_html', $values['html']);
+      //$settings->setSetting('group_bbcode', $values['bbcode']);
+      //$settings->setSetting('group_html', $values['html']);
       $settings->setSetting('group_allow_unauthorized', $values['group_allow_unauthorized']);
       $settings->setSetting('group_page', $values['group_page']);
       $settings->setSetting('group.enable.rating', $values['group_enable_rating']);

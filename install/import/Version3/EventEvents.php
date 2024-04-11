@@ -84,13 +84,13 @@ CREATE TABLE IF NOT EXISTS `se_events` (
 *  `event_datecreated` int(10) unsigned NOT NULL default '0',
 *  `event_dateupdated` int(10) unsigned NOT NULL default '0',
 *  `event_views` int(10) unsigned NOT NULL default '0',
-*  `event_title` varchar(128) collate utf8_unicode_ci default NULL,
-*  `event_desc` text collate utf8_unicode_ci,
+*  `event_title` varchar(128) collate utf8mb4_unicode_ci default NULL,
+*  `event_desc` text COLLATE utf8mb4_unicode_ci,
 *  `event_date_start` bigint(20) unsigned NOT NULL default '0',
 *  `event_date_end` bigint(20) unsigned NOT NULL default '0',
-*  `event_host` varchar(255) collate utf8_unicode_ci default NULL,
-*  `event_location` text collate utf8_unicode_ci,
-  `event_photo` varchar(16) collate utf8_unicode_ci default NULL,
+*  `event_host` varchar(255) collate utf8mb4_unicode_ci default NULL,
+*  `event_location` text COLLATE utf8mb4_unicode_ci,
+  `event_photo` varchar(16) collate utf8mb4_unicode_ci default NULL,
 *  `event_search` tinyint(3) unsigned NOT NULL default '0',
   `event_privacy` tinyint(3) unsigned NOT NULL default '0',
   `event_comments` tinyint(3) unsigned NOT NULL default '0',
@@ -100,10 +100,10 @@ CREATE TABLE IF NOT EXISTS `se_events` (
   `event_invite` tinyint(3) unsigned NOT NULL default '0',
   `event_totalcomments` smallint(5) unsigned NOT NULL default '0',
 *  `event_totalmembers` smallint(5) unsigned NOT NULL default '0',
-  `event_title_cleaned` varchar(128) collate utf8_unicode_ci default NULL,
+  `event_title_cleaned` varchar(128) collate utf8mb4_unicode_ci default NULL,
   PRIMARY KEY  (`event_id`),
   KEY `INDEX` (`event_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -133,7 +133,7 @@ CREATE TABLE `engine4_event_events` (
   KEY `parent_type` (`parent_type`, `parent_id`),
   KEY `starttime` (`starttime`),
   KEY `search` (`search`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */
 
@@ -155,10 +155,10 @@ CREATE TABLE `engine4_event_events` (
 CREATE TABLE IF NOT EXISTS `se_eventstyles` (
   `eventstyle_id` int(10) unsigned NOT NULL auto_increment,
   `eventstyle_event_id` int(10) unsigned NOT NULL default '0',
-  `eventstyle_css` text collate utf8_unicode_ci,
+  `eventstyle_css` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY  (`eventstyle_id`),
   KEY `INDEX` (`eventstyle_event_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -194,20 +194,20 @@ CREATE TABLE IF NOT EXISTS `se_eventfields` (
   `eventfield_desc` int(10) unsigned NOT NULL default '0',
   `eventfield_error` int(10) unsigned NOT NULL default '0',
   `eventfield_type` tinyint(3) unsigned NOT NULL default '0',
-  `eventfield_style` varchar(255) collate utf8_unicode_ci default NULL,
+  `eventfield_style` varchar(255) collate utf8mb4_unicode_ci default NULL,
   `eventfield_maxlength` smallint(5) unsigned NOT NULL default '0',
-  `eventfield_link` varchar(255) collate utf8_unicode_ci default NULL,
-  `eventfield_options` longtext collate utf8_unicode_ci,
+  `eventfield_link` varchar(255) collate utf8mb4_unicode_ci default NULL,
+  `eventfield_options` longtext COLLATE utf8mb4_unicode_ci,
   `eventfield_required` tinyint(3) unsigned NOT NULL default '0',
-  `eventfield_regex` varchar(255) collate utf8_unicode_ci default NULL,
-  `eventfield_html` varchar(255) collate utf8_unicode_ci default NULL,
+  `eventfield_regex` varchar(255) collate utf8mb4_unicode_ci default NULL,
+  `eventfield_html` varchar(255) collate utf8mb4_unicode_ci default NULL,
   `eventfield_search` tinyint(3) unsigned NOT NULL default '0',
   `eventfield_signup` tinyint(3) unsigned NOT NULL default '0',
   `eventfield_display` tinyint(3) unsigned NOT NULL default '0',
   `eventfield_special` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`eventfield_id`),
   KEY `INDEX` (`eventfield_eventcat_id`,`eventfield_dependency`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */
 
@@ -218,6 +218,6 @@ CREATE TABLE IF NOT EXISTS `se_eventvalues` (
   `eventvalue_event_id` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`eventvalue_id`),
   KEY `INDEX` (`eventvalue_event_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
  *
  */

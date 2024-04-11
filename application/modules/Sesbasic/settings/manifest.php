@@ -15,18 +15,19 @@ return array(
         'type' => 'module',
         'name' => 'sesbasic',
         'sku' => 'sesbasic',
-        'version' => '6.4.0',
+        'version' => '6.5.1p1',
         'dependencies' => array(
             array(
                 'type' => 'module',
                 'name' => 'core',
-                'minVersion' => '6.2.0',
+                'minVersion' => '6.5.1',
             ),
         ),
         'path' => 'application/modules/Sesbasic',
         'title' => 'SocialNetworking.Solutions (SNS) Basic Required Plugin',
         'description' => 'SocialNetworking.Solutions (SNS) Basic Required Plugin',
         'author' => '<a href="https://socialnetworking.solutions" style="text-decoration:underline;" target="_blank">SocialNetworking.Solutions</a>',
+        'thumb' => 'application/modules/Sesbasic/externals/images/thumb.png',
         'actions' => array(
             'install',
             'upgrade',
@@ -43,10 +44,19 @@ return array(
         ),
         'files' => array(
             'application/languages/en/sesbasic.csv',
+            'externals/autocompleter/autocomplete.js',
         ),
     ),
     // Hooks ---------------------------------------------------------------------
     'hooks' => array(
+        array(
+          'event' => 'onItemCreateAfter',
+          'resource' => 'Sesbasic_Plugin_Core',
+        ),
+        array(
+          'event' => 'onItemUpdateAfter',
+          'resource' => 'Sesbasic_Plugin_Core',
+        ),
         array(
             'event' => 'onRenderLayoutDefault',
             'resource' => 'Sesbasic_Plugin_Core',
@@ -60,16 +70,16 @@ return array(
             'resource' => 'Sesbasic_Plugin_Core'
         ),
 				array(
-            'event' => 'onRenderLayoutMobileDefaultSimple',
-            'resource' => 'Sesbasic_Plugin_Core'
+          'event' => 'onRenderLayoutMobileDefaultSimple',
+          'resource' => 'Sesbasic_Plugin_Core'
         ),
-		array(
-            'event' => 'onUserFormSignupAccountInitAfter',
-            'resource' => 'Sesbasic_Plugin_Core',
+        array(
+          'event' => 'onUserFormSignupAccountInitAfter',
+          'resource' => 'Sesbasic_Plugin_Core',
         ),
-		array(
-            'event' => 'onUserFormSettingsGeneralInitAfter',
-            'resource' => 'Sesbasic_Plugin_Core',
+        array(
+          'event' => 'onUserFormSettingsGeneralInitAfter',
+          'resource' => 'Sesbasic_Plugin_Core',
         ),
     ),
     // Items ---------------------------------------------------------------------

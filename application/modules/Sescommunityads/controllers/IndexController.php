@@ -222,21 +222,21 @@ class Sescommunityads_IndexController extends Core_Controller_Action_Standard
       //check package exists for this member level
       $packageMemberLevel = Engine_Api::_()->getDbTable('packages', 'sescommunityads')->getPackage(array('member_level' => $viewer->level_id));
         if(engine_count($packageMemberLevel) == 1){
-            return $this->_helper->redirector->gotoRoute(array('action' => 'create','package_id'=>$packageMemberLevel[0]['package_id']), 'sescommunityads_general', true);
+            return $this->_helper->redirector->gotoRoute(array('action' => 'create','package_id'=>$packageMemberLevel[0]['package_id'],'action_id'=>$action_id), 'sescommunityads_general', true);
         }else if (engine_count($packageMemberLevel)) {
         //redirect to package page
         return $this->_helper->redirector->gotoRoute(array('action' => 'package','action_id'=>$action_id), 'sescommunityads_general', true);
       }else{
          //getDefaultPlan
          $defaultPlan = Engine_Api::_()->getDbTable('packages', 'sescommunityads')->getDefaultPackage();
-         return $this->_helper->redirector->gotoRoute(array('action' => 'create','package_id'=>$defaultPlan), 'sescommunityads_general', true);
+         return $this->_helper->redirector->gotoRoute(array('action' => 'create','package_id'=>$defaultPlan,'action_id'=>$action_id), 'sescommunityads_general', true);
       }
     }
 
     if ($existingpackage){
       $canCreate = Engine_Api::_()->getDbTable('orderspackages', 'sescommunityads')->checkUserPackage($this->_getParam('existing_package_id', 0), $this->view->viewer()->getIdentity());
       if (!$canCreate)
-        return $this->_helper->redirector->gotoRoute(array('action' => 'package'), 'sescommunityads_general', true);
+        return $this->_helper->redirector->gotoRoute(array('action' => 'package','action_id'=>$action_id), 'sescommunityads_general', true);
     }
     //End Package Work
     $this->view->callToAction = $this->callToActionBtn();

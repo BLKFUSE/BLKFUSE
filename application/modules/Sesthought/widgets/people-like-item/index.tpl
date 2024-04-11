@@ -34,7 +34,7 @@
 <script type="application/javascript">
 function getLikeData(value,title){
 	if(value){
-		url = en4.core.staticBaseUrl+'sesthought/index/like-item/item_id/'+value+'/title/'+title+'/item_type/<?php echo $this->subject()->getType(); ?>';
+		url = en4.core.baseUrl+'sesthought/index/like-item/item_id/'+value+'/title/'+title+'/item_type/<?php echo $this->subject()->getType(); ?>';
 		openURLinSmoothBox(url);	
 		return;
 	}

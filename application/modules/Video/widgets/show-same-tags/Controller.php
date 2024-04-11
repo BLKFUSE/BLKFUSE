@@ -54,9 +54,11 @@ class Video_Widget_ShowSameTagsController extends Engine_Content_Widget_Abstract
         // Get other with same tag
         if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('video.allow.unauthorized', 0)) {
             $select = $video->getItemsSelect($itemTable->select(), $params);
+            $select->where('approved = ?', 1)->where('parent_type = ?', 'user');
         }else{
             $select = Engine_Api::_()->getDbTable('videos','video')->select();
             $select->where('search =?',1);
+            $select->where('approved = ?', 1)->where('parent_type = ?', 'user');
         }
         $select->distinct(true)
             ->from($itemTable)
@@ -64,8 +66,7 @@ class Video_Widget_ShowSameTagsController extends Engine_Content_Widget_Abstract
             ->where('resource_type = ?', $subject->getType())
             ->where('resource_id != ?', $subject->getIdentity())
             ->where('tag_id IN(?)', $tags)
-            ->where('status = ?', 1)
-        ;
+            ->where('status = ?', 1);
 
         $select = Engine_Api::_()->network()->getNetworkSelect($itemTable->info('name'), $select);
         if (!Engine_Api::_()->getApi('settings', 'core')->getSetting('video.allow.unauthorized', 0)) {

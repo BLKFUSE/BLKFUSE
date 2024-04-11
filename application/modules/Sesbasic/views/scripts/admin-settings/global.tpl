@@ -11,8 +11,8 @@
  * @author     SocialEngineSolutions
  */
 ?>
-
-<h2><?php echo $this->translate('SocialNetworking.Solutions (SNS) Basic Required Plugin'); ?></h2>
+<?php include APPLICATION_PATH .  '/application/modules/Sesbasic/views/scripts/dismiss_message.tpl';?>
+<h2 class="page_heading"><?php echo $this->translate('SocialNetworking.Solutions (SNS) Basic Required Plugin'); ?></h2>
 <?php include APPLICATION_PATH .  '/application/modules/Sesbasic/views/scripts/_mapKeyTip.tpl';?>
 <?php if (engine_count($this->navigation)): ?>
   <div class='tabs'>
@@ -36,11 +36,11 @@
   
   function enablelocation(value) {
     if(value == 1) {
-			document.getElementById('ses_mapApiKey-wrapper').style.display = 'block';
+			document.getElementById('ses_mapApiKey-wrapper').style.display = 'flex';
 			document.getElementById('optionsenableglotion-wrapper').style.display = 'none';
 		} else {
 			document.getElementById('ses_mapApiKey-wrapper').style.display = 'none';
-			document.getElementById('optionsenableglotion-wrapper').style.display = 'block';
+			document.getElementById('optionsenableglotion-wrapper').style.display = 'flex';
     }
   }
 </script>

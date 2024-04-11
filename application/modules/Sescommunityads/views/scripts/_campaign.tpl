@@ -25,7 +25,7 @@
               <label><?php echo $this->translate('Select Campaign'); ?></label>
             </div>
             <div class="sescmads_create_campaign_element">
-              <select class="form-control" name="campaign" id="communityAds_campaign">
+              <select name="campaign" id="communityAds_campaign">
                 <option value="0"><?php echo $this->translate('Create New Campaign'); ?></option>
                 <?php foreach($this->campaign as $campaign){ ?>
                 <option value="<?php echo $campaign->getIdentity(); ?>" <?php echo !empty($this->ad) && $this->ad->campaign_id == $campaign->getIdentity() ? 'selected' : ''; ?>><?php echo $campaign->getTitle(); ?></option>
@@ -38,7 +38,7 @@
               <label><?php echo $this->translate('Campaign Name'); ?></label>
             </div>
             <div class="sescmads_create_campaign_element">
-              <input type="text" class="form-control" id="campaign_name" name="campaign_name" style="" />
+              <input type="text" id="campaign_name" name="campaign_name" style="" />
             </div>
           </div>
         </form>
@@ -59,7 +59,7 @@
               <label class="<?php echo $manCat ? 'required' : "" ?>"><?php echo $this->translate('Category'); ?></label>
             </div>
             <div class="sescmads_create_campaign_element">
-              <select class="cat form-control cat <?php echo $manCat ? 'mandatory' : "" ?>" name="category_id" id="category_id">
+              <select class="cat cat <?php echo $manCat ? 'mandatory' : "" ?>" name="category_id" id="category_id">
                 <option value="0"><?php echo $this->translate('Select category'); ?></option>
                 <?php foreach($categories as $category){ ?>
                 <option value="<?php echo $category->getIdentity(); ?>" <?php echo !empty($this->ad) && $this->ad->category_id == $category->getIdentity() ? 'selected' : ''; ?>><?php echo $category->category_name; ?></option>
@@ -81,7 +81,7 @@
               <label><?php echo $this->translate('Sub Category'); ?></label>
             </div>
             <div class="sescmads_create_campaign_element">
-              <select class="form-control cat" name="subcat_id" id="subcat_id">
+              <select class="cat" name="subcat_id" id="subcat_id">
                 <option></option>
                 <?php foreach($subcat as $category){ ?>
                 <option value="<?php echo $category->getIdentity(); ?>" <?php echo !empty($this->ad) && $this->ad->subcat_id == $category->getIdentity() ? 'selected' : ''; ?>><?php echo $category->category_name; ?></option>
@@ -99,7 +99,7 @@
               <label><?php echo $this->translate('Sub Sub Category'); ?></label>
             </div>
             <div class="sescmads_create_campaign_element">
-              <select class="form-control" name="subsubcat_id" id="subsubcat_id">
+              <select name="subsubcat_id" id="subsubcat_id">
                  <option></option>
                 <?php foreach($subsubcat as $category){ ?>
                 <option value="<?php echo $category->getIdentity(); ?>" <?php echo !empty($this->ad) && $this->ad->subsubcat_id == $category->getIdentity() ? 'selected' : ''; ?>><?php echo $category->category_name; ?></option>

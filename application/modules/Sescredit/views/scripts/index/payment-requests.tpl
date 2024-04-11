@@ -1,6 +1,6 @@
 <?php ?>
 
-<?php $defaultCurrency = Engine_Api::_()->sesbasic()->defaultCurrency(); ?>
+<?php $defaultCurrency = Engine_Api::_()->payment()->defaultCurrency(); ?>
 <?php echo $this->partial('index/left-bar.tpl', 'sescredit', array("navigation" => $this->navigation)); ?>
   <div class="sescredit_dashboard_content sesbm sesbasic_clearfix">
 		<div class="sescredit_dashboard_content_header sesbasic_clearfix">
@@ -10,7 +10,7 @@
 			<?php if ($this->thresholdAmount > 0) { ?>
 				<div class="sescredit_dashboard_threshold_amt">
 					<?php echo $this->translate("Threshold for payout: "); ?> <b>
-						<?php echo Engine_Api::_()->sesbasic()->getCurrencyPrice($this->thresholdAmount, $defaultCurrency); ?>
+						<?php echo Engine_Api::_()->payment()->getCurrencyPrice($this->thresholdAmount, $defaultCurrency); ?>
 					</b>
 				</div>
 			<?php } ?>
@@ -37,7 +37,7 @@
 					<?php echo $this->translate("Total Commission"); ?>
 				</span>
 				<span>
-					<?php echo Engine_Api::_()->sesbasic()->getCurrencyPrice($this->adminTotalCommission, $defaultCurrency); ?>
+					<?php echo Engine_Api::_()->payment()->getCurrencyPrice($this->adminTotalCommission, $defaultCurrency); ?>
 				</span>
 			</div>
 			<div class="sescredit_dashboard_stat">
@@ -97,9 +97,9 @@
 							foreach ($this->paymentRequests as $item): ?>
 								<tr>
 									<td data-label="<?php echo $this->translate("Request Id") ?>" class="centerT"><?php echo $item->userpayrequest_id; ?></td>
-									<td data-label="<?php echo $this->translate("Amount Requested") ?>" class="centerT"><?php echo Engine_Api::_()->sesbasic()->getCurrencyPrice($item->requested_amount, $defaultCurrency); ?></td>
+									<td data-label="<?php echo $this->translate("Amount Requested") ?>" class="centerT"><?php echo Engine_Api::_()->payment()->getCurrencyPrice($item->requested_amount, $defaultCurrency); ?></td>
 									<td data-label="<?php echo $this->translate("Requested Date") ?>"><?php echo $item->creation_date; ?></td>
-									<td data-label="<?php echo $this->translate("Release Amount") ?>" class="centerT"><?php echo $item->state != 'pending' ? Engine_Api::_()->sesbasic()->getCurrencyPrice($item->release_amount, $defaultCurrency) : "-"; ?>
+									<td data-label="<?php echo $this->translate("Release Amount") ?>" class="centerT"><?php echo $item->state != 'pending' ? Engine_Api::_()->payment()->getCurrencyPrice($item->release_amount, $defaultCurrency) : "-"; ?>
 									</td>
 									<td data-label="<?php echo $this->translate("Request Message") ?>">
 										<div class="_msg"><?php echo $item->user_message; ?></div>

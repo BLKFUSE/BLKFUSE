@@ -29,7 +29,7 @@
     <tr>
     	 <td><?php echo $this->translate('Album Title') ?>:</td>
        <?php $album = Engine_Api::_()->getItem('album',$this->item->album_id) ?>
-      <td><?php echo $this->htmlLink( Engine_Api::_()->sesalbum()->getHref($album->getIdentity()), $this->string()->truncate($album->getTitle(),30)); ?></td>
+      <td><?php echo $album->getTitle(); ?></td>
     </tr>
      <?php } ?>
   	<tr>
@@ -43,7 +43,7 @@
     </tr>
     <tr>
       <td><?php echo $this->translate('Owner') ?>:</td>
-      <td><?php echo  $this->item->getOwner(); ?></td>
+      <td><?php echo  $this->item->getOwner()->getTitle(); ?></td>
     </tr>
     <tr>
       <td><?php echo $this->translate('Rating') ?>:</td>

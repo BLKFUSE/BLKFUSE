@@ -15,7 +15,7 @@ class Sesvideo_Widget_VideoViewPageController extends Engine_Content_Widget_Abst
 
 	public function indexAction() {
 		$this->view->allowOptions = $this->_getParam('advSearchOptions',array('likeCount','commentCount','favouriteCount','rateCount','openVideoLightbox','editVideo','deleteVideo','shareAdvance','reportVideo','addToPlaylist','watchLater','favouriteCount'));
-		$this->view->allowAdvShareOptions = $this->_getParam('advShareOptions',array('privateMessage','siteShare','quickShare','addThis','embed'));
+		$this->view->allowAdvShareOptions = $this->_getParam('advShareOptions',array('privateMessage','siteShare','quickShare','embed'));
 		$this->view->limitLike = $this->_getParam('likelimit_data',11);
 		$this->view->limitArtist = $this->_getParam('artistlimit_data',11);
 		$this->view->limitFavourite = $this->_getParam('favouritelimit_data',11);

@@ -36,6 +36,7 @@ class Group_Form_Invite extends Engine_Form
       'label' => 'Members',
       'required' => true,
       'allowEmpty' => 'false',
+      'escape' => false,
     ));
 
     $this->addElement('Button', 'submit', array(

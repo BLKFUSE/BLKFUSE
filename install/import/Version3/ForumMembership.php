@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `se_forumlevels` (
   `forumlevel_level_id` int(10) unsigned NOT NULL default '0',
   `forumlevel_post` tinyint(1) unsigned NOT NULL default '0',
   UNIQUE KEY `unique` (`forumlevel_forum_id`,`forumlevel_level_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  *
  */
 
@@ -37,6 +37,6 @@ CREATE TABLE IF NOT EXISTS `engine4_forum_membership` (
   `resource_approved` tinyint(1) NOT NULL default '0',
   `moderator` tinyint(1) NOT NULL default '0',
   PRIMARY KEY(`resource_id`, `user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
  *
  */

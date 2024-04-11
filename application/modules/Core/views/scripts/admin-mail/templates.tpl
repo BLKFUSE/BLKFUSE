@@ -10,6 +10,7 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_settings", 'childMenuItemName' => 'core_admin_main_settings_mailtemplates')); ?>
 
 <div class='settings'>
   <?php echo $this->form->render($this); ?>
@@ -29,4 +30,8 @@
     window.location.href = url + '/language/' + mailTemplateLanguage + '/template/' + template_id;
   }
 
+</script>
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_settings').parent().addClass('active');
+  scriptJquery('.core_admin_main_settings_mailtemplates').addClass('active');
 </script>

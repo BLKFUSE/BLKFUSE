@@ -20,7 +20,7 @@
     <section class="_bg_content_post">
       <div class="sescommunityads_select_content">
         <label><?php echo $this->translate('Content Type'); ?></label>
-        <select class="form-control">
+        <select>
          <option vlaue="0">Content 1</option>
          <option vlaue="1">Content 2</option>
          <option vlaue="2">Content 3</option>
@@ -29,7 +29,7 @@
       </div>
       <div class="sescommunityads_select_content">
        <label>><?php echo $this->trnalsate('Select Content'); ?></label>
-       <select class="form-control">
+       <select>
          <option vlaue="0">Content 1</option>
          <option vlaue="1">Content 2</option>
          <option vlaue="2">Content 3</option>

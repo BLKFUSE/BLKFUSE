@@ -126,9 +126,10 @@ class Sescredit_PaymentController extends Core_Controller_Action_Standard {
         'source_id' => $orderDetailId,
     ));
     $this->_session->order_id = $order_id = $ordersTable->getAdapter()->lastInsertId();
-    $currentCurrency = Engine_Api::_()->sescredit()->getCurrentCurrency();
+    $currentCurrency = Engine_Api::_()->payment()->getCurrentCurrency();
     $settings = Engine_Api::_()->getApi('settings', 'core');
-    $this->_session->change_rate = $settings->getSetting('sesmultiplecurrency.' . $currentCurrency);
+    $currencyData = Engine_Api::_()->getDbTable('currencies', 'payment')->getCurrency($currentCurrency);
+    $this->_session->change_rate = $currencyData->change_rate;
     $gatewayType = Engine_Api::_()->getItem('payment_gateway',$gateway->gateway_id);
     // Unset certain keys
     unset($this->_session->package_id);

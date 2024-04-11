@@ -239,12 +239,14 @@
 	border-radius:0;
 	height:40px;
 	float:left;
-	margin:0;
+	margin:0 !important;
 	padding:11px 0;
 	width:40px;
 }
 [dir="rtl"] .sesvideo_channel_cover_buttons .sesbasic_icon_btn{
 	float:right;
+	border-right:1px solid rgba(255, 255, 255, 0.1);
+	border-left:0;
 }
 .sesvideo_channel_cover_buttons .sesbasic_icon_btn:hover{background-color:rgba(0, 0, 0, 0.9);}
 .sesvideo_channel_cover_buttons .sesbasic_icon_btn{border-left:1px solid rgba(255, 255, 255, 0.1);}

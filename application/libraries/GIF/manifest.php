@@ -3,12 +3,12 @@ return array(
   'package' => array(
     'type' => 'library',
     'name' => 'gif',
-    'version' => '6.4.0',
+    'version' => '6.5.1',
     'revision' => '$Revision: 10171 $',
     'path' => 'application/libraries/GIF',
     'repository' => 'socialengine.com',
     'title' => 'GIF',
-    'author' => 'Webligo Developments',
+    'author' => 'SocialEngine Core',
     'directories' => array(
       'application/libraries/GIF',
     )

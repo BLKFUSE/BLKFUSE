@@ -18,3 +18,4 @@ system services. The storage system is used to handle file uploads for your
 site. You can configure this to use Amazon's S3 or CloudFront service or any
 CDN that uses FTP or SCP."
 "STORAGE_VIEWS_ADMIN_MANAGE_INDEX_DESCRIPTION";"View and manage uploaded files."
+"PAGETITLE-STORAGE-DELETE-ADMIN-SERVICES";"Delete Storage Service"

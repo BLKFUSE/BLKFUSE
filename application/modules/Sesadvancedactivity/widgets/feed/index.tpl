@@ -28,7 +28,14 @@
   
   $this->headTranslate(array('More','Close','Permalink of this Post','Copy link of this feed:','Go to this feed','You won\'t see this post in Feed.',"Undo","Hide all from",'You won\'t see',"post in Feed.","Select","It is a long established fact that a reader will be distracted","If you find it offensive, please","file a report.", "Choose Feeling or activity...", "How are you feeling?", "ADD POST", "Schedule Post"));
 ?>
-
+<?php 
+  if(engine_in_array('music',$enabledModuleNames)) { 
+    $this->headScript()
+      ->appendFile($this->layout()->staticBaseUrl . 'externals/audio/audio.min.js')
+      ->appendFile($this->layout()->staticBaseUrl . 'application/modules/Music/externals/scripts/core.js')
+      ->appendFile($this->layout()->staticBaseUrl . 'application/modules/Music/externals/scripts/player.js');
+  } 
+?>
 <?php if(engine_in_array('sesfeelingactivity',$enabledModuleNames)) { ?>
   <?php $getFeelings = Engine_Api::_()->getDbTable('feelings', 'sesfeelingactivity')->getFeelings(array('fetchAll' => 1, 'admin' => 0)); ?>
 <?php } ?>
@@ -459,12 +466,11 @@ endif; ?>
  #scheduled_post, #datetimepicker_edit{display:block !important;}
  </style>
 <?php if($this->design == 2){ ?>
-<style>
-.sesact_post_container_wrapper:not(._sesadv_composer_active) #compose-container .jqueryHashtags{
-  height:60px;
-}
+  <style>
+  .sesact_post_container_wrapper:not(._sesadv_composer_active) #compose-container .jqueryHashtags{
+    height:60px;
+  }
 </style>
-
 <?php } ?>
 <?php if( $this->enableComposer && !$this->isOnThisDayPage): ?>
 <script type="application/javascript">
@@ -508,13 +514,13 @@ var composeInstance;
           //silence  
         }else if(pluginName != 'buysell' && pluginName != 'quote' && pluginName != 'wishe' && pluginName != 'prayer' && pluginName != 'thought' && pluginName != 'text' && pluginName != 'sespagepoll' && pluginName != 'sesbusinesspoll' && pluginName != 'sesgrouppoll'){
           if( composeInstance.pluginReady ) {
-            if( !composeInstance.options.allowEmptyWithAttachment && composeInstance.getContent() == '' ) {
+            if( !composeInstance.options.allowEmptyWithAttachment && composeInstance.getContent().trim() == '' ) {
               scriptJquery('.sesact_post_box').addClass('_blank');
               e.preventDefault();
               return;
             }
           } else {
-            if( !composeInstance.options.allowEmptyWithoutAttachment && composeInstance.getContent() == '' ) {
+            if( !composeInstance.options.allowEmptyWithoutAttachment && composeInstance.getContent().trim() == '' ) {
               e.preventDefault();
               scriptJquery('.sesact_post_box').addClass('_blank');
               return;
@@ -729,7 +735,6 @@ var composeInstance;
               foreach($getFeaturedBackgrounds as $getFeaturedBackground) {
                 $featured[] = $getFeaturedBackground->background_id;
               }
-              //https://github.com/Vaibhav-Agarwal06/sedev/issues/378
               // if featured images are available show in first then rest of images are come according to member level.
               // featured + member_level
               if(engine_count($featured) > 5) {
@@ -807,7 +812,7 @@ var composeInstance;
               </div>
             <?php } ?>
           <?php } ?>
-          <?php if(engine_in_array('tagUseses',$this->composerOptions)){ ?>
+          <?php if($this->isMemberHomePage && engine_in_array('tagUseses',$this->composerOptions)){ ?>
             <span class="sesact_post_tool_i tool_i_tag">
               <a href="javascript:;" id="sesadvancedactivity_tag" class="sesadv_tooltip" title="<?php echo $this->translate('Tag People'); ?>">&nbsp;</a>
             </span>
@@ -856,7 +861,7 @@ var composeInstance;
             </span>
           <?php endif; ?>
         <?php } else { 
-        if(engine_in_array('emotions', $enableattachement)): ?>
+        if(engine_in_array('smilesses',$this->composerOptions) && engine_in_array('emotions', $enableattachement)): ?>
           <span class="sesact_post_tool_i tool_i_emoji">
             <a href="javascript:;" id="sesadvancedactivityemoji-statusbox"  class="sesadv_tooltip" title="<?php echo $this->translate('Emoticons'); ?>">&nbsp;</a>
             <div id="sesadvancedactivityemoji_statusbox" class="ses_emoji_container sesbasic_bxs">
@@ -983,7 +988,7 @@ var composeInstance;
               </div>
             <?php } ?>
           <?php } ?>
-          <?php if(engine_in_array('tagUseses',$this->composerOptions)){ ?>
+          <?php if($this->isMemberHomePage && engine_in_array('tagUseses',$this->composerOptions)){ ?>
             <span class="sesact_post_media_options_icon tool_i_tag" style="display:none;">
               <a href="javascript:;" id="sesadvancedactivity_tag" class="sesadv_tooltip" title="<?php echo $this->translate('Tag People'); ?>"><span><?php echo $this->translate('Tag People'); ?></span></a>
             </span>
@@ -1165,11 +1170,12 @@ var composeInstance;
         function hideshowfeedbgcont() {
 
           if(!scriptJquery('#feedbg_content').hasClass('sesfeedbg_feedbg_small_content')) {
-            //document.getElementById('feedbg_content').style.display = 'none';
+            // document.getElementById('feedbg_main_continer').style.display = 'none';
             scriptJquery('#feedbg_content').addClass('sesfeedbg_feedbg_small_content');
             scriptJquery('#hideshowfeedbgcont').html('<i onclick="hideshowfeedbgcont();" class="fa fa-angle-right right_img"></i>');
           } else {
             //document.getElementById('feedbg_content').style.display = 'block';
+            // document.getElementById('feedbg_main_continer').style.display = 'block';
             scriptJquery('#feedbg_content').removeClass('sesfeedbg_feedbg_small_content');
             scriptJquery('#hideshowfeedbgcont').html('<i onclick="hideshowfeedbgcont();" class="fa fa-angle-left"></i>');
           }
@@ -1290,7 +1296,7 @@ var composeInstance;
               scriptJquery('#feedbgid_isphoto').val(0);
               scriptJquery('.sesact_post_box').css('background-image', 'none');
               scriptJquery('#activity-form').removeClass('feed_background_image');
-              scriptJquery('#feedbg_content').css('display','none');
+              scriptJquery('#feedbg_main_continer').css('display','none');
             }
           });
           
@@ -1390,7 +1396,7 @@ var composeInstance;
                   if(document.getElementById('feedbgid') && document.getElementById('feelingactivity_type').value == 2) {
                     var feedbgid = scriptJquery('#feedbgid').val();
                     document.getElementById('hideshowfeedbgcont').style.display = 'block';
-                    scriptJquery('#feedbg_content').css('display','block');
+                    scriptJquery('#feedbg_main_continer').css('display','block');
                     var feedagainsrcurl = scriptJquery('#feed_bg_image_'+feedbgid).attr('src');
                     scriptJquery('.sesact_post_box').css("background-image","url("+ feedagainsrcurl +")");
                     scriptJquery('#feedbgid_isphoto').val(1);
@@ -1466,7 +1472,7 @@ var composeInstance;
               if(document.getElementById('feedbgid') && document.getElementById('feelingactivity_type').value == 2) {
                 var feedbgid = scriptJquery('#feedbgid').val();
                 document.getElementById('hideshowfeedbgcont').style.display = 'block';
-                scriptJquery('#feedbg_content').css('display','block');
+                scriptJquery('#feedbg_main_continer').css('display','block');
                 var feedagainsrcurl = scriptJquery('#feed_bg_image_'+feedbgid).attr('src');
                 scriptJquery('.sesact_post_box').css("background-image","url("+ feedagainsrcurl +")");
                 scriptJquery('#feedbgid_isphoto').val(1);
@@ -1617,7 +1623,7 @@ var composeInstance;
               scriptJquery('#feedbgid_isphoto').val(0);
               scriptJquery('.sesact_post_box').css('background-image', 'none');
               scriptJquery('#activity-form').removeClass('feed_background_image');
-              scriptJquery('#feedbg_content').css('display','none');
+              scriptJquery('#feedbg_main_continer').css('display','none');
             }
           }
           scriptJquery(document).on('click','._sesadvgif_gif > img',function(e) {
@@ -1644,7 +1650,7 @@ var composeInstance;
             if(document.getElementById('feedbgid') && scriptJquery('#image_id').val() == '') {
               var feedbgid = scriptJquery('#feedbgid').val();
               document.getElementById('hideshowfeedbgcont').style.display = 'block';
-              scriptJquery('#feedbg_content').css('display','block');
+              scriptJquery('#feedbg_main_continer').css('display','block');
               var feedagainsrcurl = scriptJquery('#feed_bg_image_'+feedbgid).attr('src');
               scriptJquery('.sesact_post_box').css("background-image","url("+ feedagainsrcurl +")");
               scriptJquery('#feedbgid_isphoto').val(1);
@@ -2307,7 +2313,21 @@ array('identity'=>$this->identity,'lists'=>$this->lists)
   <?php endif; ?>
 <?php endif; ?>
 <?php if(!$this->action_id): ?>
-  <div class="sesadv_content_load_img sesbasic_loading_container">
+  <div class="sesadv_content_load_img">
+    <ul class="feed mt-2">
+      <?php for($i=1;$i<=($this->action_id ? 1 : 4);$i++) { ?>
+        <li>
+          <div class="feed_content_loader">
+            <div class="photo_box"></div>
+            <div class="cont_line _title"></div>
+            <div class="cont_line _date"></div>
+            <div class="_cont"><div class="cont_line"></div><div class="cont_line"></div><div class="cont_line"></div></div>
+            <div class="_footer"><div class="cont_line"></div><div class="cont_line"></div><div class="cont_line"></div></div>
+            <div class="loader_animation"></div>
+          </div>
+        </li>
+      <?php } ?>
+    </ul>
   </div>
 <?php endif; ?>
 <div class="sesadv_tip sesact_tip_box sesadv_noresult_tip" style="display:<?php echo !sprintf('%d', $this->activityCount) && $this->getUpdates ? 'block' : 'none'; ?>;">
@@ -2453,7 +2473,11 @@ initSesadvAnimation();
 					wookmark<?php echo $randonNumber ?> = new Wookmark('.sesbasic_pinboard_<?php echo $randonNumber; ?>', {
 						itemWidth: <?php echo isset($this->sesact_pinboard_width) ? str_replace(array('px','%'),array(''),$this->sesact_pinboard_width) : '300'; ?>, // Optional min width of a grid item
 						outerOffset: 0, // Optional the distance from grid to parent
-						align:'left',
+           <?php if($orientation = ($this->layout()->orientation == 'right-to-left')){ ?>
+              align:'right',
+            <?php }else{ ?>
+              align:'left',
+            <?php } ?>
 						flexibleWidth: function () {
 							// Return a maximum width depending on the viewport
 							return getWindowWidth() < 1024 ? '100%' : '40%';
@@ -2508,3 +2532,13 @@ scriptJquery('.selectedTabClick').click(function(e){
   unset($enabledModuleNames);
   unset($settings);
  ?>
+ <style>
+@keyframes placeHolderShimmer {
+	0% {
+	background-position:-800px 0;
+	}
+	100% {
+	background-position:800px 0;
+	}
+}
+</style>

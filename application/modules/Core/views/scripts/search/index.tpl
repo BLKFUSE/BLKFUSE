@@ -42,13 +42,13 @@
       </div>
       <div class="search_info">
         <?php if( '' != $this->query ): ?>
-          <?php echo $this->htmlLink($item->getHref(), $this->highlightText($item->getTitle(), $this->query), array('class' => 'search_title')) ?>
+          <?php echo $this->htmlLink($item->getHref(), $this->highlightText(strip_tags($item->getTitle()), $this->query), array('class' => 'search_title')) ?>
         <?php else: ?>
           <?php echo $this->htmlLink($item->getHref(), $item->getTitle(), array('class' => 'search_title')) ?>
         <?php endif; ?>
         <p class="search_description">
           <?php if( '' != $this->query ): ?>
-            <?php echo $this->highlightText($this->viewMore($item->getDescription()), $this->query); ?>
+            <?php echo $this->highlightText($this->viewMore(strip_tags($item->getDescription())), $this->query); ?>
           <?php else: ?>
             <?php echo $this->viewMore($item->getDescription()); ?>
           <?php endif; ?>

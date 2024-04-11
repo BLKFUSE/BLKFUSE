@@ -10,6 +10,7 @@
  * @author     John
  */
 ?>
+<?php echo $this->partial('_admin_breadcrumb.tpl', 'core', array('parentMenu' => "core_admin_main_manage", 'childMenuItemName' => 'core_admin_main_settings_fields')); ?>
 
 <?php
   $option_id = Zend_Controller_Front::getInstance()->getRequest()->getParam('option_id', null);
@@ -20,9 +21,9 @@
   echo $this->render('_jsAdmin.tpl')
 ?>
 
-<h2>Profile Questions</h2>
+<h2 class="page_heading"><?php echo $this->translate("Profile Questions") ?></h2>
 <p>
-  Your members will be asked to provide some information about themselves when joining the community or editing their profile. Create some profile questions that allow them to describe themselves in a way that relates to the theme of your community. To reorder the profile questions, click on their names and drag them up or down. If you want to show different sets of questions to different types of members, you can create multiple "profile types". This is useful, for example, if you want your community to have "fans" and "musicians", each with a different set of profile questions.
+  <?php echo $this->translate('Your members will be asked to provide some information about themselves when joining the community or editing their profile. Create some profile questions that allow them to describe themselves in a way that relates to the theme of your community. To reorder the profile questions, click on their names and drag them up or down. If you want to show different sets of questions to different types of members, you can create multiple "profile types". This is useful, for example, if you want your community to have "fans" and "musicians", each with a different set of profile questions.<br /> You can allow your members to change their profile types from <a href="admin/authorization/level">Member Level Settings</a>. You can also change individual user\'s profile type from <a href="admin/user/manage">Manage Members</a> settings.') ?>
 </p>
 <?php
 $settings = Engine_Api::_()->getApi('settings', 'core');
@@ -34,46 +35,28 @@ if( $settings->getSetting('user.support.links', 0) == 1 ) {
 <br />	
 
 <div class="admin_fields_type">
-  <h3>Editing Profile Type:</h3>
+  <h3><?php echo $this->translate("Editing Profile Type:") ?></h3>
   <?php echo $this->formSelect('profileType', $this->topLevelOption->option_id, array(), $this->topLevelOptions) ?>
 </div>
-
-<br />
-
 <div class="admin_fields_options">
-  <a href="javascript:void(0);" onclick="void(0);" class="buttonlink admin_fields_options_addquestion">Add Question</a>
-  <a href="javascript:void(0);" onclick="void(0);" class="buttonlink admin_fields_options_addheading">Add Heading</a>
-  <a href="javascript:void(0);" onclick="void(0);" class="buttonlink admin_fields_options_renametype">Rename Profile Type</a>
+  <a href="javascript:void(0);" onclick="void(0);" class="buttonlink admin_fields_options_addquestion"><?php echo $this->translate("Add Question") ?></a>
+  <a href="javascript:void(0);" onclick="void(0);" class="buttonlink admin_fields_options_addheading"><?php echo $this->translate("Add Heading") ?></a>
+  
   <?php if( engine_count($this->topLevelOptions) > 1 && @$getProfileTypeData == 0): ?>
-    <a href="javascript:void(0);" onclick="void(0);" class="buttonlink admin_fields_options_deletetype">Delete Profile Type</a>
+    <a href="javascript:void(0);" onclick="void(0);" class="buttonlink admin_fields_options_renametype"><?php echo $this->translate("Rename Profile Type") ?></a>
+    <a href="javascript:void(0);" onclick="void(0);" class="buttonlink admin_fields_options_deletetype"><?php echo $this->translate("Delete Profile Type") ?></a>
   <?php endif; ?>
-  <a href="javascript:void(0);" onclick="void(0);" class="buttonlink admin_fields_options_addtype">Create New Profile Type</a>
-  <?php echo $this->htmlLink(
-    array(
-      'module' => 'authorization',
-      'controller' => 'level',
-      'action' => 'map-profile-type',
-      'profileTypeId' => $this->topLevelOptionId,
-      'option_id' => $option_id,
-      'reset' => false),
-    $this->translate('Map with Member Level'),
-    array(
-      'class' => 'smoothbox buttonlink',
-      'style' => 'background-image: url(application/modules/Network/externals/images/admin/add.png);'
-  )) ?>
-  <a href="javascript:void(0);" onclick="void(0);" class="buttonlink admin_fields_options_saveorder" style="display:none;">Save Order</a>
+  <a href="javascript:void(0);" onclick="void(0);" class="buttonlink admin_fields_options_addtype"><?php echo $this->translate("Create New Profile Type") ?></a>
+  <?php echo $this->htmlLink(array('module' => 'authorization', 'controller' => 'level', 'action' => 'map-profile-type', 'profileTypeId' => $this->topLevelOptionId, 'option_id' => $option_id, 'reset' => false), $this->translate('Map with Member Level'), array('class' => 'smoothbox buttonlink admin_fields_options_mapping', )) ?>
+  <a href="javascript:void(0);" onclick="void(0);" class="buttonlink admin_fields_options_saveorder" style="display:none;"><?php echo $this->translate("Save Order") ?></a>
 </div>
-
-<br />
-
 
 <ul class="admin_fields">
   <?php foreach( $this->secondLevelMaps as $map ): ?>
     <?php echo $this->adminFieldMeta($map) ?>
   <?php endforeach; ?>
 </ul>
-
-<br />
-<br />
-
-
+<script type="application/javascript">
+  scriptJquery('.core_admin_main_settings').parent().addClass('active');
+  scriptJquery('.core_admin_main_settings_fields').addClass('active');
+</script>

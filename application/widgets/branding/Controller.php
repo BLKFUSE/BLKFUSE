@@ -16,9 +16,19 @@
  * @copyright  Copyright 2006-2020 Webligo Developments
  * @license    http://www.socialengine.com/license/
  */
-class Widget_BrandingController extends Engine_Content_Widget_Abstract
-{
-  public function indexAction()
-  {
+class Widget_BrandingController extends Engine_Content_Widget_Abstract {
+
+  public function indexAction() {
+  
+    $this->view->version = 0;
+    $this->view->showVersion = $showVersion = $this->_getParam('showVersion', 0);
+    if(!empty($showVersion)) {
+      $table = Engine_Api::_()->getDbTable('modules', 'core');
+      $version = $table->select()
+                    ->from($table->info('name'), 'version')
+                    ->query()
+                    ->fetchColumn();
+      $this->view->version = $version;
+    }
   }
 }
