@@ -391,7 +391,12 @@ class Sesmember_Model_DbTable_Members extends Engine_Db_Table {
     if(isset($params['memberlevels']) && !empty($params['memberlevels'])) {
       $select->where($memberTableName.'.level_id NOT IN(?)', $params['memberlevels']);
     }
-
+    //Custom work
+    if(!empty($params["fromBrowse"])){
+        $user = Engine_Api::_()->user()->getViewer();
+        if($user->getIdentity() && $user->level_id != 1)
+            $select->where($memberTableName.'.level_id = ?',$user->level_id);
+    }
     if (isset($params['limit']) && !empty($params['limit']))
       $select->limit($params['limit']);
     if (!empty($params['limit_data']))
