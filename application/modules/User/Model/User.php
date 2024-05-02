@@ -844,7 +844,8 @@ class User_Model_User extends Core_Model_Item_Abstract
     $icon = '';
     if(!empty($this->is_verified)) {
       $verified_icon = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('user', $this, 'verified_icon');
-      $icon = !empty($verified_icon) ? Engine_Api::_()->core()->getFileUrl($verified_icon) :  'application/modules/User/externals/images/verify-icon.png';
+      $icon = !empty($verified_icon) ? $verified_icon :  ((!empty($_SERVER["HTTPS"]) &&  strtolower($_SERVER["HTTPS"]) == 'on') ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . 'application/modules/User/externals/images/verify-icon.png';
+      $icon = Engine_Api::_()->core()->getFileUrl($icon);
     }
     return $icon;
   }

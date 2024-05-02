@@ -388,14 +388,8 @@ class User_IndexController extends Sesapi_Controller_Action_Standard
           continue;
         endif;
         $result['notification'][$counterLoop]['user_id'] = $member->getIdentity();
-        $text = $member->getTitle();
-         if(Engine_Api::_()->getDbtable('modules', 'core')->isModuleEnabled('everification')) {
-          $verifieddocuments = $verifieddocuments = Engine_Api::_()->getDbTable('documents', 'everification')->getAllUserDocuments(array('user_id' => $member->getIdentity(), 'verified' => '1', 'fetchAll' => '1'));
-          if(count($verifieddocuments) > 0) {
-$text .= '&nbsp;<img src="https://blkfuse.com/application/modules/Sesbasic/externals/images/verify.png" />';
-          }
-        }
-        $result['notification'][$counterLoop]['title'] = $text;//preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
+        //Custom work
+        $result['notification'][$counterLoop]['title'] = $member->getTitle() . ' <img src="'.$member->verifiedIcon().'" />';;//preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $member->getTitle());
 
         //$age = $this->userAge($member);
         //if($age){

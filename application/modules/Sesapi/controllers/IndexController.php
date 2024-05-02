@@ -1230,7 +1230,7 @@ class Sesapi_IndexController extends Sesapi_Controller_Action_Standard
         $user_id = $user->getParent()->getIdentity();
       }
         $array[$counter]['user_href'] = $this->getBaseUrl(true,$user->getHref());
-      $array[$counter]['user_title'] = $user->getTitle();
+      $array[$counter]['user_title'] = $user->getTitle(). ' <img src="'.$user->verifiedIcon().'" />';;
       
       //GIF work
       if($activitycomments && isset($activitycomments->gif_url) && $activitycomments->gif_url) {

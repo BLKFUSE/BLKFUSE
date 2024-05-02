@@ -865,6 +865,11 @@ if ($action->getTypeInfo()->shareable == 1 && ($attachment = $action->getFirstAt
   $activity[$counter]['item_user']["title"] = $subjectModule->getTitle();
   $activity[$counter]['item_user']["user_image"] = $subjectModule->getType() == "user" ? $this->userImage($subjectModule->getIdentity(),"thumb.profile") : $this->getBaseUrl(true,$subjectModule->getPhotoUrl('thumb.profile'));
   $activity[$counter]['item_user']["user_type"] = $subjectModule->getType();
+  //Custom work
+  if($subjectModule->getType() == "user" && $subjectModule->is_verified) {
+    $activity[$counter]['item_user']["verified"] = $subjectModule->is_verified;
+    $activity[$counter]['item_user']["image_url"] = $subjectModule->verifiedIcon();
+  }
   $counterOptions = 0;
 
   if(!empty($fromActivityFeed)){

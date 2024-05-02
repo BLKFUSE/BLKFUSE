@@ -58,3 +58,16 @@ html .sescontest_contest_status_txt{padding:0 10px;}
 html [class*='feed_images_'] > .feed_attachment_album_photo{
   width:auto;
 }
+/*Landing Page*/
+.layout_user_login_or_signup div.form-element input[type="text"],
+.layout_user_login_or_signup div.form-element input[type="email"],
+.layout_user_login_or_signup div.form-element input[type="password"]{
+  width:100% !important;
+  padding: 12px;
+}
+html .layout_user_login_or_signup .user_signup_link{
+  margin-top: -100px;
+}
+html .layout_user_login_or_signup .user_signup_link:hover{
+  color:#fff !important;
+}

@@ -320,7 +320,8 @@ class User_ProfileController extends Sesapi_Controller_Action_Standard
         $result['mutual_friends'] = $mutualFriends;
       }
     }
-    $result['profile']['displayname'] = $subject->getTitle();
+    //Custom work
+    $result['profile']['displayname'] = $subject->getTitle() . ' <img src="'.$subject->verifiedIcon().'" />';
     Engine_Api::_()->getApi('response','sesapi')->sendResponse(array('error'=>'0','error_message'=>'', 'result' => $result));
   }
   protected function getProfileFriends($subject){
