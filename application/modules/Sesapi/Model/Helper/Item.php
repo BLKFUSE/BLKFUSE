@@ -33,7 +33,7 @@ class Sesapi_Model_Helper_Item extends Sesapi_Model_Helper_Abstract
 
     if( !isset($text) )
     {
-      $text = $item->getTitle();
+      $text = $item->getTitle(false);
       
       if($hideVerifiedIcon && $item->getType() == 'user' && $item->is_verified) {
         $text .= ' <img src="'.$item->verifiedIcon().'" />';

@@ -55,16 +55,16 @@ class Sescontest_Plugin_Core {
     $openPopup = 0;
     $script .= "var isOpenPopup = '" . $openPopup . "';var showAddnewContestIconShortCut = " . Engine_Api::_()->getApi('settings', 'core')->getSetting('sescontest.enable.addcontestshortcut', 1) . ";
   ";
-    if ($viewer->getIdentity() != 0 && Engine_Api::_()->authorization()->isAllowed('contest', $viewer, 'create')) {
-      $script .= 'scriptJquery(document).ready(function() {
-			if(scriptJquery("body").attr("id").search("sescontest") > -1 && typeof showAddnewContestIconShortCut != "undefined" && showAddnewContestIconShortCut && typeof isOpenPopup != "undefined" && isOpenPopup == 1){
-				scriptJquery("<a class=\'sesbasic_create_button sescontest_quick_create_button sessmoothbox sesbasic_animation\' href=\'' . $view->url(array('action' => 'create'), 'sescontest_general') . '\' title=\'Add New Contest\'><i class=\'fa fa-plus\'></i></a>").appendTo("body");
-			}
-            else if(scriptJquery("body").attr("id").search("sescontest") > -1 && typeof showAddnewContestIconShortCut != "undefined" && showAddnewContestIconShortCut){
-				scriptJquery("<a class=\'sesbasic_create_button sescontest_quick_create_button sesbasic_animation\' href=\'' . $view->url(array('action' => 'create'), 'sescontest_general') . '\' title=\'Add New Contest\'><i class=\'fa fa-plus\'></i></a>").appendTo("body");
-			}
-		});';
-    }
+//     if ($viewer->getIdentity() != 0 && Engine_Api::_()->authorization()->isAllowed('contest', $viewer, 'create')) {
+//       $script .= 'scriptJquery(document).ready(function() {
+// 			if(scriptJquery("body").attr("id").search("sescontest") > -1 && typeof showAddnewContestIconShortCut != "undefined" && showAddnewContestIconShortCut && typeof isOpenPopup != "undefined" && isOpenPopup == 1){
+// 				scriptJquery("<a class=\'sesbasic_create_button sescontest_quick_create_button sessmoothbox sesbasic_animation\' href=\'' . $view->url(array('action' => 'create'), 'sescontest_general') . '\' title=\'Add New Contest\'><i class=\'fa fa-plus\'></i></a>").appendTo("body");
+// 			}
+//             else if(scriptJquery("body").attr("id").search("sescontest") > -1 && typeof showAddnewContestIconShortCut != "undefined" && showAddnewContestIconShortCut){
+// 				scriptJquery("<a class=\'sesbasic_create_button sescontest_quick_create_button sesbasic_animation\' href=\'' . $view->url(array('action' => 'create'), 'sescontest_general') . '\' title=\'Add New Contest\'><i class=\'fa fa-plus\'></i></a>").appendTo("body");
+// 			}
+// 		});';
+//     }
     $view->headScript()->appendScript($script);
   }
 

@@ -197,8 +197,8 @@ class Sescontest_Model_DbTable_Participants extends Engine_Db_Table {
             ->query()
             ->fetchColumn();
     if (!$participate)
-      $message['can_join'] = 1;
-    if (time() < strtotime($joinEndTime) && time() >= strtotime($joinStartTime) && time() < strtotime($contest->endtime) && Engine_Api::_()->authorization()->isAllowed('participant', $viewer, 'auth_participant'))
+      $message['can_join'] = 1; 
+    if (time() < strtotime($joinEndTime) && time() >= strtotime($joinStartTime) && time() < strtotime($contest->endtime) && Engine_Api::_()->authorization()->getPermission($viewer, 'participant', 'auth_participant'))
       $message['show_button'] = 1;
     return $message;
   }

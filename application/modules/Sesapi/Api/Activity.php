@@ -83,7 +83,8 @@ class Sesapi_Api_Activity extends Core_Api_Abstract {
       $contentHelper = $helper;
       
       //Verified icon Work
-      if($key > 0 && $contentHelper == 'item') {
+      if($counter > 0 && $contentHelper == 'item') {
+      
         $helperArgs[1] = null;
         $helperArgs[2] = null;
         $helperArgs[3] = false;

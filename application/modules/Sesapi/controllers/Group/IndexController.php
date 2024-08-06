@@ -412,6 +412,10 @@ class Group_IndexController extends Sesapi_Controller_Action_Standard
       $values['subcat_id'] = 0;
     if (is_null($values['subsubcat_id']))
       $values['subsubcat_id'] = 0;
+      
+    //approve setting work
+      $values['approved'] = Engine_Api::_()->authorization()->getAdapter('levels')->getAllowed('group', $viewer, 'approve');
+      
     $db = Engine_Api::_()->getDbtable('groups', 'group')->getAdapter();
     $db->beginTransaction();
 

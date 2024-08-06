@@ -108,13 +108,13 @@ var openEventPhotoInLightBoxSesalbum = ".Engine_Api::_()->getApi('settings', 'co
 var showAddnewPhotoIconShortCut = ".Engine_Api::_()->getApi('settings', 'core')->getSetting('sesalbum.enable.addphotoshortcut',1).";
 ";
         $canCreate =  Engine_Api::_()->authorization()->isAllowed('album',Engine_Api::_()->user()->getViewer(), 'create');
-if($viewer->getIdentity() != 0 && empty($_GET['format']) && $canCreate){
-	$script .= 'scriptJquery(document).ready(function() {
-	if(scriptJquery("body").attr("id").search("sesalbum") > -1 && typeof showAddnewPhotoIconShortCut != "undefined" && showAddnewPhotoIconShortCut ){
-		scriptJquery("<a class=\'sesbasic_create_button sesbasic_animation\' href=\'albums/create\' title=\'Add New Photos\'><i class=\'fa fa-plus\'></i></a>").appendTo("body");
-	}
-});';
-}
+// if($viewer->getIdentity() != 0 && empty($_GET['format']) && $canCreate){
+// 	$script .= 'scriptJquery(document).ready(function() {
+// 	if(scriptJquery("body").attr("id").search("sesalbum") > -1 && typeof showAddnewPhotoIconShortCut != "undefined" && showAddnewPhotoIconShortCut ){
+// 		scriptJquery("<a class=\'sesbasic_create_button sesbasic_animation\' href=\'albums/create\' title=\'Add New Photos\'><i class=\'fa fa-plus\'></i></a>").appendTo("body");
+// 	}
+// });';
+// }
     $view->headScript()->appendScript($script);
 	}
   public function onUserPhotoUpload($event){
